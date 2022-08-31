@@ -15,9 +15,9 @@ async function main() {
   const indexer = create({
     endpoint: "https://processor.zeitgeist.pm/graphql",
   });
-  const { markets } = await indexer.market({ marketId: 1 });
+  const data = await indexer.market({ marketId: 1 });
 
-  markets.forEach((market) => {
+  data.markets.forEach((market) => {
     console.log(market.oracle);
   });
 }

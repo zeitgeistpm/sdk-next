@@ -1,4 +1,4 @@
-query market($marketId: Int!) {
+query markets($marketId: Int) {
   markets(where: { marketId_eq: $marketId }) {
     ...FullMarket
   }

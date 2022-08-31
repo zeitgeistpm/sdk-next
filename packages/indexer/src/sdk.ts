@@ -2167,14 +2167,14 @@ export type WeightWhereInput = {
   len_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
 };
 
-export type FullMarketFragment = { __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, scalarType?: string | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: number | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
-
 export type MarketQueryVariables = Exact<{
-  marketId: Scalars['Int'];
+  marketId?: InputMaybe<Scalars['Int']>;
 }>;
 
 
 export type MarketQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, scalarType?: string | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: number | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null }> };
+
+export type FullMarketFragment = { __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, scalarType?: string | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: number | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
 
 export const FullMarketFragmentDoc = gql`
     fragment FullMarket on Market {
@@ -2223,7 +2223,7 @@ export const FullMarketFragmentDoc = gql`
 }
     `;
 export const MarketDocument = gql`
-    query market($marketId: Int!) {
+    query market($marketId: Int) {
   markets(where: {marketId_eq: $marketId}) {
     ...FullMarket
   }
@@ -2237,7 +2237,7 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    market(variables: MarketQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketQuery> {
+    market(variables?: MarketQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MarketQuery>(MarketDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'market', 'query');
     }
   };
