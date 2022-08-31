@@ -1,0 +1,16 @@
+schema: https://processor.zeitgeist.pm/graphql
+documents: ./**/*.graphql
+generates:
+  ./src/sdk.ts: # output typescript file path
+    plugins:
+      - typescript
+      # for SDK generation
+      - typescript-operations
+      - typescript-graphql-request
+config:
+  # custom GraphQL Scalars to TypeScript types map
+  scalars:
+    Date: string
+    ObjectID: string
+    timestamptz: string
+    uuid: string

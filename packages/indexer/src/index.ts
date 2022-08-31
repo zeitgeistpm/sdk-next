@@ -1,17 +1,14 @@
-import { gql } from "graphql-request";
-import type { MarketsQuery, MarketsQueryVariables } from "../graphql/generated";
+import { GraphQLClient } from "graphql-request";
+import { getSdk } from "./sdk"; // THIS FILE IS THE GENERATED FILE
 
-export const fullMarketFragmet = gql`
-  fragment FullMarket on Market {
-    id
-  }
-`;
+async function main() {
+  const client = new GraphQLClient("https://processor.zeitgeist.pm/graphql");
+  const sdk = getSdk(client);
+  const { markets } = await sdk.market({ marketId: 1 }); // This is fully typed, based on the query
 
-export const marketsQueryDocument = gql`
-  ${fullMarketFragmet}
-  query Markets($marketId: Int!) {
-    markets(where: { marketId_eq: $marketId }) {
-      ...FullMarket
-    }
-  }
-`;
+  markets.forEach((market) => {
+    console.log(market.oracle);
+  });
+}
+
+main();

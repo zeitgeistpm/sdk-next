@@ -1,0 +1,50 @@
+query market($marketId: Int!) {
+  markets(where: { marketId_eq: $marketId }) {
+    ...FullMarket
+  }
+}
+
+fragment FullMarket on Market {
+  marketId
+  description
+  end
+  creator
+  creatorFee
+  creation
+  oracle
+  question
+  slug
+  img
+  tags
+  status
+  scoringRule
+  resolvedOutcome
+  poolId
+  scalarType
+  marketType {
+    categorical
+    scalar
+  }
+  period {
+    block
+    timestamp
+  }
+  report {
+    outcome {
+      categorical
+      scalar
+    }
+    at
+    by
+  }
+  disputeMechanism {
+    Authorized: authorized
+    Court: court
+    SimpleDisputes: simpleDisputes
+  }
+  categories {
+    ticker
+    name
+    color
+  }
+}

@@ -1,3 +1,6 @@
+import { GraphQLClient } from 'graphql-request';
+import * as Dom from 'graphql-request/dist/types.dom';
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -1124,6 +1127,8 @@ export type Market = {
   report?: Maybe<MarketReport>;
   /** Resolved outcome for the market */
   resolvedOutcome?: Maybe<Scalars['String']>;
+  /** Type of scalar range if market is of type scalar */
+  scalarType?: Maybe<Scalars['String']>;
   /** Scoring rule used for the market */
   scoringRule: Scalars['String'];
   /** Short name for the market */
@@ -1221,6 +1226,8 @@ export enum MarketOrderByInput {
   ReportByDesc = 'report_by_DESC',
   ResolvedOutcomeAsc = 'resolvedOutcome_ASC',
   ResolvedOutcomeDesc = 'resolvedOutcome_DESC',
+  ScalarTypeAsc = 'scalarType_ASC',
+  ScalarTypeDesc = 'scalarType_DESC',
   ScoringRuleAsc = 'scoringRule_ASC',
   ScoringRuleDesc = 'scoringRule_DESC',
   SlugAsc = 'slug_ASC',
@@ -1501,6 +1508,20 @@ export type MarketWhereInput = {
   resolvedOutcome_not_in?: InputMaybe<Array<Scalars['String']>>;
   resolvedOutcome_not_startsWith?: InputMaybe<Scalars['String']>;
   resolvedOutcome_startsWith?: InputMaybe<Scalars['String']>;
+  scalarType_contains?: InputMaybe<Scalars['String']>;
+  scalarType_endsWith?: InputMaybe<Scalars['String']>;
+  scalarType_eq?: InputMaybe<Scalars['String']>;
+  scalarType_gt?: InputMaybe<Scalars['String']>;
+  scalarType_gte?: InputMaybe<Scalars['String']>;
+  scalarType_in?: InputMaybe<Array<Scalars['String']>>;
+  scalarType_lt?: InputMaybe<Scalars['String']>;
+  scalarType_lte?: InputMaybe<Scalars['String']>;
+  scalarType_not_contains?: InputMaybe<Scalars['String']>;
+  scalarType_not_endsWith?: InputMaybe<Scalars['String']>;
+  scalarType_not_eq?: InputMaybe<Scalars['String']>;
+  scalarType_not_in?: InputMaybe<Array<Scalars['String']>>;
+  scalarType_not_startsWith?: InputMaybe<Scalars['String']>;
+  scalarType_startsWith?: InputMaybe<Scalars['String']>;
   scoringRule_contains?: InputMaybe<Scalars['String']>;
   scoringRule_endsWith?: InputMaybe<Scalars['String']>;
   scoringRule_eq?: InputMaybe<Scalars['String']>;
@@ -2146,11 +2167,79 @@ export type WeightWhereInput = {
   len_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
 };
 
-export type FullMarketFragment = { __typename?: 'Market', id: string };
+export type FullMarketFragment = { __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, scalarType?: string | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: number | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
 
-export type MarketsQueryVariables = Exact<{
+export type MarketQueryVariables = Exact<{
   marketId: Scalars['Int'];
 }>;
 
 
-export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string }> };
+export type MarketQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, scalarType?: string | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: number | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null }> };
+
+export const FullMarketFragmentDoc = gql`
+    fragment FullMarket on Market {
+  marketId
+  description
+  end
+  creator
+  creatorFee
+  creation
+  oracle
+  question
+  slug
+  img
+  tags
+  status
+  scoringRule
+  resolvedOutcome
+  poolId
+  scalarType
+  marketType {
+    categorical
+    scalar
+  }
+  period {
+    block
+    timestamp
+  }
+  report {
+    outcome {
+      categorical
+      scalar
+    }
+    at
+    by
+  }
+  disputeMechanism {
+    Authorized: authorized
+    Court: court
+    SimpleDisputes: simpleDisputes
+  }
+  categories {
+    ticker
+    name
+    color
+  }
+}
+    `;
+export const MarketDocument = gql`
+    query market($marketId: Int!) {
+  markets(where: {marketId_eq: $marketId}) {
+    ...FullMarket
+  }
+}
+    ${FullMarketFragmentDoc}`;
+
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
+
+
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
+
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    market(variables: MarketQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MarketQuery>(MarketDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'market', 'query');
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;
