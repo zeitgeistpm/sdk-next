@@ -1,10 +1,21 @@
 import { GraphQLClient } from "graphql-request";
-import { getSdk } from "./sdk"; // THIS FILE IS THE GENERATED FILE
+import { getSdk } from "./sdk";
+
+export type Config = {
+  endpoint: string;
+};
+
+export const create = (config: Config) => {
+  const client = new GraphQLClient(config.endpoint);
+  const sdk = getSdk(client);
+  return sdk;
+};
 
 async function main() {
-  const client = new GraphQLClient("https://processor.zeitgeist.pm/graphql");
-  const sdk = getSdk(client);
-  const { markets } = await sdk.market({ marketId: 1 }); // This is fully typed, based on the query
+  const indexer = create({
+    endpoint: "https://processor.zeitgeist.pm/graphql",
+  });
+  const { markets } = await indexer.market({ marketId: 1 });
 
   markets.forEach((market) => {
     console.log(market.oracle);
