@@ -18,7 +18,7 @@ export const create = (config, codec = JsonCodec(), curriedClient) => {
     const hashAlg = (_a = config.hashAlg) !== null && _a !== void 0 ? _a : `sha3-384`;
     return {
         put: async (data) => {
-            const { cid } = await client.add({ content: codec.encode(data) }, { hashAlg });
+            const { cid } = await client.add({ content: codec.decode(data) }, { hashAlg });
             if (config.cluster) {
                 await cluster.pin(cid.toString(), config.cluster);
             }
@@ -30,15 +30,12 @@ export const create = (config, codec = JsonCodec(), curriedClient) => {
                 content.push(chunk);
             }
             const data = content.map(u8aToString).reduce((acc, chunk) => acc + chunk);
-            return codec.decode(data);
+            return codec.encode(data);
         },
         del: async (cid) => {
             if (config.cluster) {
                 await cluster.unpin(cid.toString(), config.cluster);
             }
-        },
-        withCodec: codec => {
-            return create(config, codec, client);
         },
     };
 };

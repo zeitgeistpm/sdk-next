@@ -7,7 +7,7 @@ import { MetadataCodec } from '../types'
  * @generic T - the type of the metadata
  * @returns MetadataCodec<T, string>
  */
-export const JsonCodec = <T>(): MetadataCodec<T, string> => ({
-  encode: data => JSON.stringify(data),
-  decode: data => JSON.parse(data),
+export const JsonCodec = <T>(): MetadataCodec<string, T> => ({
+  encode: data => JSON.parse(data),
+  decode: data => JSON.stringify(data),
 })

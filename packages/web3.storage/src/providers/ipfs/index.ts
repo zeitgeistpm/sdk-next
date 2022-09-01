@@ -17,15 +17,15 @@ import { JsonCodec } from '../../codec/impl/json'
  */
 export const create = <T>(
   config: IPFSConfiguration,
-  codec: MetadataCodec<T, string> = JsonCodec(),
+  codec: MetadataCodec<string, T> = JsonCodec(),
   curriedClient?: IPFSHttpClient.IPFSHTTPClient,
-): MetadataStorage<T, IPFSHttpClient.CID | string, string> => {
+): MetadataStorage<T, IPFSHttpClient.CID | string> => {
   const client = curriedClient ?? IPFSHttpClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`
 
   return {
     put: async data => {
-      const { cid } = await client.add({ content: codec.encode(data) }, { hashAlg })
+      const { cid } = await client.add({ content: codec.decode(data) }, { hashAlg })
       if (config.cluster) {
         await cluster.pin(cid.toString(), config.cluster)
       }
@@ -40,15 +40,12 @@ export const create = <T>(
 
       const data = content.map(u8aToString).reduce((acc, chunk) => acc + chunk)
 
-      return codec.decode(data) as T
+      return codec.encode(data) as T
     },
     del: async cid => {
       if (config.cluster) {
         await cluster.unpin(cid.toString(), config.cluster)
       }
-    },
-    withCodec: codec => {
-      return create(config, codec, client)
     },
   }
 }

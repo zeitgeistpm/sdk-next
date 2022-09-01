@@ -6,7 +6,7 @@
  * @returns MetadataCodec<T, string>
  */
 export const JsonCodec = () => ({
-    encode: data => JSON.stringify(data),
-    decode: data => JSON.parse(data),
+    encode: data => JSON.parse(data),
+    decode: data => JSON.stringify(data),
 });
 //# sourceMappingURL=json.js.map
