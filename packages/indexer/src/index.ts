@@ -3,10 +3,11 @@ import { augments } from './augments'
 import { getSdk } from './graphql/sdk'
 import { Config, ZeitgeistIndexer } from './types'
 
+export * from './graphql/sdk'
 export * from './types'
 
 export const create = (config: Config): ZeitgeistIndexer => {
-  const client = new GraphQLClient(config.endpoint)
+  const client = new GraphQLClient(config.uri)
   const gql = getSdk(client)
   return {
     ...gql,

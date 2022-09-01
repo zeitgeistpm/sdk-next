@@ -1,12 +1,14 @@
 import { GraphQLClient } from 'graphql-request';
 import { augments } from './augments';
 import { getSdk } from './graphql/sdk';
+export * from './graphql/sdk';
+export * from './types';
 export const create = (config) => {
-    const client = new GraphQLClient(config.endpoint);
-    const sdk = getSdk(client);
+    const client = new GraphQLClient(config.uri);
+    const gql = getSdk(client);
     return {
-        ...sdk,
-        ...augments(sdk),
+        ...gql,
+        ...augments(gql),
     };
 };
 //# sourceMappingURL=index.js.map

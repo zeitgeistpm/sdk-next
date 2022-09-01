@@ -2194,7 +2194,6 @@ export declare type MarketsQuery = {
         scoringRule: string;
         resolvedOutcome?: string | null;
         poolId?: number | null;
-        scalarType?: string | null;
         marketType: {
             __typename?: 'MarketType';
             categorical?: string | null;
@@ -2246,7 +2245,6 @@ export declare type FullMarketFragment = {
     scoringRule: string;
     resolvedOutcome?: string | null;
     poolId?: number | null;
-    scalarType?: string | null;
     marketType: {
         __typename?: 'MarketType';
         categorical?: string | null;

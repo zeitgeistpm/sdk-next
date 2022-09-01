@@ -1,15 +1,13 @@
-import type { ApiPromise } from '@polkadot/api'
+import type { ApiPromise, WsProvider } from '@polkadot/api'
 import type { ZeitgeistIndexer } from '@zeitgeistpm/indexer'
 
 export type Context = FullContext | (ApiContext | IndexerContext)
 
-export type FullContext = {
-  api: ApiPromise
-  indexer: ZeitgeistIndexer
-}
+export type FullContext = ApiContext & IndexerContext
 
 export type ApiContext = {
   api: ApiPromise
+  provider: WsProvider
 }
 
 export type IndexerContext = {
@@ -29,52 +27,5 @@ export enum SupportedParachain {
   KUSAMA = 'kusama',
   ROCOCO = 'rococo',
   BSR = 'bsr',
-  CUSTOM = 'custom',
+  LOCAL = 'local',
 }
-
-// TODO: replace with stronger types
-export const endpoints = [
-  {
-    value: 'wss://rpc-0.zeitgeist.pm/',
-    label: 'ZeitgeistPM',
-    parachain: SupportedParachain.KUSAMA,
-  },
-  {
-    value: 'wss://zeitgeist-rpc.dwellir.com/',
-    label: 'Dwellir',
-    parachain: SupportedParachain.KUSAMA,
-  },
-  {
-    value: 'wss://zeitgeist.api.onfinality.io/public-ws',
-    label: 'OnFinality',
-    parachain: SupportedParachain.KUSAMA,
-  },
-  {
-    value: 'wss://bsr.zeitgeist.pm',
-    label: 'Battery Station',
-    parachain: SupportedParachain.BSR,
-  },
-  {
-    value: 'ws://127.0.0.1:9944',
-    label: 'Custom',
-    parachain: SupportedParachain.CUSTOM,
-  },
-]
-
-export const gqlEndpoints = [
-  {
-    value: 'https://processor.bsr.zeitgeist.pm/graphql',
-    label: 'Battery Park (Testnet)',
-    parachain: SupportedParachain.BSR,
-  },
-  {
-    value: 'https://processor.rpc-0.zeitgeist.pm/graphql',
-    label: 'Kusama (Live)',
-    parachain: SupportedParachain.KUSAMA,
-  },
-  {
-    value: 'http://localhost:4350/graphql',
-    label: 'Custom',
-    parachain: SupportedParachain.CUSTOM,
-  },
-]

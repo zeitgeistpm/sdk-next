@@ -297,7 +297,6 @@ export const FullMarketFragmentDoc = gql `
   scoringRule
   resolvedOutcome
   poolId
-  scalarType
   marketType {
     categorical
     scalar

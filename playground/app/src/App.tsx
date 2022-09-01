@@ -1,45 +1,56 @@
-import { options } from '@zeitgeistpm/api'
-import { ApiPromise, WsProvider } from '@polkadot/api'
-import { useEffect, useState } from 'react'
+import * as Sdk from '@zeitgeistpm/sdk'
+import { useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
-
-import * as Indexer from '@zeitgeistpm/indexer'
-import { AssetOrderByInput, MarketOrderByInput, PoolOrderByInput } from '@zeitgeistpm/indexer'
+import {
+  AssetOrderByInput,
+  MarketOrderByInput,
+  PoolOrderByInput,
+} from '@zeitgeistpm/indexer'
+import * as IPFS from '@zeitgeistpm/sdk/dist/storage/providers/ipfs'
+import { batteryStation } from '@zeitgeistpm/sdk'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const storage = IPFS.create({
+    node: { url: 'http://ipfs.zeitgeist.pm:5001' },
+    cluster: {
+      url: 'https://ipfs-cluster.zeitgeist.pm',
+      auth: {
+        username: 'zeitgeist',
+        password: '5ZpmQl*rWn%Z',
+      },
+    },
+  })
 
   useEffect(() => {
-    const provider = new WsProvider('wss://bsr.zeitgeist.pm')
-    const api = ApiPromise.create(options({ provider }))
-    const indexer = Indexer.create({
-      endpoint: 'https://processor.zeitgeist.pm/graphql',
-    })
-
-    indexer.markets({
-      order: MarketOrderByInput.IdAsc,
-      where: {},
-    })
-
-    indexer.assets({
-      order: AssetOrderByInput.IdAsc,
-      where: {},
-    })
-
-    indexer.pools({
-      order: PoolOrderByInput.CreatedAtAsc,
-      where: {
-        poolId_eq: 1,
-      },
-    })
-
-    api.then(api => {
-      api.query.predictionMarkets.disputes(null).then(markets => {
-        console.log(markets.toHuman())
-      })
-    })
+    ;(async () => {
+      const sdk = Sdk.create(await batteryStation())
+      const data = await Promise.all([
+        sdk.indexer.markets({
+          order: MarketOrderByInput.IdAsc,
+          where: {},
+        }),
+        sdk.indexer.assets({
+          order: AssetOrderByInput.IdAsc,
+          where: {},
+        }),
+        sdk.indexer.pools({
+          order: PoolOrderByInput.CreatedAtAsc,
+          where: {
+            poolId_eq: 1,
+          },
+        }),
+      ])
+      console.log(data)
+    })()
   }, [])
+
+  const onClickIpfstest = async () => {
+    const cid = await storage.put({ text: 'some data' })
+    const data = await storage.get(cid)
+    console.log('read data', data)
+    await storage.del(cid)
+  }
 
   return (
     <div className="App">
@@ -53,12 +64,8 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <button onClick={onClickIpfstest}>test ipfs</button>
       </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
     </div>
   )
 }

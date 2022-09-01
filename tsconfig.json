@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "paths": {
       "@zeitgeistpm/sdk": [
-        "./packages/api/sdk"
+        "./packages/api/src"
       ],
       "@zeitgeistpm/api": [
         "./packages/api/src"
@@ -26,6 +26,9 @@
       ],
       "@zeitgeistpm/type-defs": [
         "./packages/type-defs/src"
+      ],
+      "@zeitgeistpm/utility": [
+        "./packages/utility/src"
       ],
     },
     "skipLibCheck": true,

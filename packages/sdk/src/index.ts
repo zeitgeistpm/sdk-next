@@ -1,9 +1,10 @@
+import { assert } from '@zeitgeistpm/utility'
 import { Context, isApiContext, isFullContext, isIndexerContext } from './context'
 
 export * from './context'
 
-export const sdk = async (context: Context): Promise<Context> => {
-  ensure(
+export const create = <C extends Context>(context: C): C => {
+  assert(
     isFullContext(context) || isApiContext(context) || isIndexerContext(context),
     () =>
       new Error(
@@ -12,8 +13,4 @@ export const sdk = async (context: Context): Promise<Context> => {
   )
 
   return { ...context }
-}
-
-const ensure = (expression: boolean, onError: () => Error) => {
-  if (!expression) throw onError()
 }

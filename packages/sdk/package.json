@@ -8,6 +8,10 @@
   },
   "peerDependencies": {
     "@polkadot/api": "*",
-    "@polkadot/types": "*"
+    "@polkadot/types": "*",
+    "@polkadot/util": "*"
+  },
+  "dependencies": {
+    "ipfs-core": "^0.15.4"
   }
 }
