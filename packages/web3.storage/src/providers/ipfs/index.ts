@@ -1,4 +1,4 @@
-import * as IPFS from 'ipfs-http-client'
+import * as IPFSHttpClient from 'ipfs-http-client'
 import { u8aToString } from '@polkadot/util'
 import { MetadataCodec, MetadataStorage } from '../../types'
 import * as cluster from './cluster'
@@ -18,8 +18,8 @@ import { JsonCodec } from '../../codecs/json'
 export const create = <T>(
   config: IPFSConfiguration,
   codec: MetadataCodec<T, string> = JsonCodec(),
-): MetadataStorage<T, IPFS.CID> => {
-  const client = IPFS.create({ url: config.node.url })
+): MetadataStorage<T, IPFSHttpClient.CID> => {
+  const client = IPFSHttpClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`
 
   return {
