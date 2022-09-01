@@ -28,9 +28,11 @@ export const create = <T>(
         { content: codec.decode(data) },
         { hashAlg, pin: opts?.ephemeral ?? false },
       )
+
       if (config.cluster) {
         await cluster.pin(cid.toString(), config.cluster)
       }
+
       return cid
     },
     get: async cid => {
