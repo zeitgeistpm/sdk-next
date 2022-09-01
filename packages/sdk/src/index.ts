@@ -1,5 +1,7 @@
 import { Context, isApiContext, isFullContext, isIndexerContext } from './context'
 
+export * from './context'
+
 export const sdk = async (context: Context): Promise<Context> => {
   ensure(
     isFullContext(context) || isApiContext(context) || isIndexerContext(context),
