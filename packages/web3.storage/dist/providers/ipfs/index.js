@@ -10,7 +10,7 @@ import { JsonCodec } from '../../codec/impl/json';
  * @generic T - type of metadata
  * @param config IPFSConfiguration - configuration for the ipfs client
  * @param codec MetadataCodec<T, string> - the codec for the metadata, encode to and decode from string.
- * @returns MetadataStorage<T, IPFS.CID>
+ * @returns MetadataStorage<T, IPFS.CID | string>
  */
 export const create = (config, codec = JsonCodec()) => {
     var _a;
