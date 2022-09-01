@@ -1,5 +1,5 @@
-import * as IPFS from 'ipfs-http-client';
-import { MetadataCodec, MetadataStorage } from '../../types';
+import * as IPFSHttpClient from 'ipfs-http-client';
+import { MetadataCodec, MetadataStorage } from '../../codec/types';
 import { IPFSConfiguration } from './types';
 /**
  *
@@ -11,4 +11,4 @@ import { IPFSConfiguration } from './types';
  * @param codec MetadataCodec<T, string> - the codec for the metadata, encode to and decode from string.
  * @returns MetadataStorage<T, IPFS.CID>
  */
-export declare const create: <T>(config: IPFSConfiguration, codec?: MetadataCodec<T, string>) => MetadataStorage<T, IPFS.CID>;
+export declare const create: <T>(config: IPFSConfiguration, codec?: MetadataCodec<T, string>, curriedClient?: IPFSHttpClient.IPFSHTTPClient) => MetadataStorage<T, string | IPFSHttpClient.CID, string>;

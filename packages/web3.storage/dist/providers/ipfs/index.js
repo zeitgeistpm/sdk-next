@@ -1,7 +1,7 @@
-import * as IPFS from 'ipfs-http-client';
+import * as IPFSHttpClient from 'ipfs-http-client';
 import { u8aToString } from '@polkadot/util';
 import * as cluster from './cluster';
-import { JsonCodec } from '../../codecs/json';
+import { JsonCodec } from '../../codec/impl/json';
 /**
  *
  * Create a MetadataStorage object that can store data on an IPFS node
@@ -12,9 +12,9 @@ import { JsonCodec } from '../../codecs/json';
  * @param codec MetadataCodec<T, string> - the codec for the metadata, encode to and decode from string.
  * @returns MetadataStorage<T, IPFS.CID>
  */
-export const create = (config, codec = JsonCodec()) => {
+export const create = (config, codec = JsonCodec(), curriedClient) => {
     var _a;
-    const client = IPFS.create({ url: config.node.url });
+    const client = curriedClient !== null && curriedClient !== void 0 ? curriedClient : IPFSHttpClient.create({ url: config.node.url });
     const hashAlg = (_a = config.hashAlg) !== null && _a !== void 0 ? _a : `sha3-384`;
     return {
         put: async (data) => {
@@ -36,6 +36,9 @@ export const create = (config, codec = JsonCodec()) => {
             if (config.cluster) {
                 await cluster.unpin(cid.toString(), config.cluster);
             }
+        },
+        withCodec: codec => {
+            return create(config, codec, client);
         },
     };
 };

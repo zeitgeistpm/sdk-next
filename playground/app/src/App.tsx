@@ -11,7 +11,7 @@ import { IPFS } from '@zeitgeistpm/web3.storage'
 import { batteryStation } from '@zeitgeistpm/sdk'
 
 function App() {
-  const storage = IPFS.create({
+  const storage = IPFS.create<{}>({
     node: { url: 'http://ipfs.zeitgeist.pm:5001' },
     cluster: {
       url: 'https://ipfs-cluster.zeitgeist.pm',

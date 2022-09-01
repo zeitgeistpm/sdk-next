@@ -1,2 +1,3 @@
-export * from './providers/ipfs/types';
+export * from './providers/types';
+export * from './codec/types';
 //# sourceMappingURL=types.js.map
