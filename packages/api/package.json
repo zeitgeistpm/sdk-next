@@ -1,0 +1,11 @@
+{
+  "name": "@zeitgeistpm/api",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "@polkadot/api": "*",
+    "@polkadot/types": "*"
+  }
+}
