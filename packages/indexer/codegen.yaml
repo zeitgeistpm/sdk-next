@@ -1,7 +1,7 @@
 schema: https://processor.zeitgeist.pm/graphql
 documents: ./**/*.graphql
 generates:
-  ./src/sdk.ts: # output typescript file path
+  ./src/graphql/sdk.ts: # output typescript file path
     plugins:
       - typescript
       # for SDK generation

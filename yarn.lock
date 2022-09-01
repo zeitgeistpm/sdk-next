@@ -3811,6 +3811,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@zeitgeistpm/sdk@workspace:packages/sdk":
+  version: 0.0.0-use.local
+  resolution: "@zeitgeistpm/sdk@workspace:packages/sdk"
+  peerDependencies:
+    "@polkadot/api": "*"
+    "@polkadot/types": "*"
+  languageName: unknown
+  linkType: soft
+
 "@zeitgeistpm/type-defs@^0.8.0, @zeitgeistpm/type-defs@workspace:packages/type-defs":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/type-defs@workspace:packages/type-defs"

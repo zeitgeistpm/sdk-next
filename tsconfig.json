@@ -12,6 +12,9 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "paths": {
+      "@zeitgeistpm/sdk": [
+        "./packages/api/sdk"
+      ],
       "@zeitgeistpm/api": [
         "./packages/api/src"
       ],

@@ -1,14 +1,15 @@
 import { GraphQLClient } from 'graphql-request'
-import { getSdk } from './sdk'
+import { augments } from './augments'
+import { getSdk } from './graphql/sdk'
+import { Config, ZeitgeistIndexer } from './types'
 
-export * from './sdk'
+export * from './types'
 
-export type Config = {
-  endpoint: string
-}
-
-export const create = (config: Config) => {
+export const create = (config: Config): ZeitgeistIndexer => {
   const client = new GraphQLClient(config.endpoint)
-  const sdk = getSdk(client)
-  return sdk
+  const gql = getSdk(client)
+  return {
+    ...gql,
+    ...augments(gql),
+  }
 }

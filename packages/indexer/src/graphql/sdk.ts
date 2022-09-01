@@ -2227,6 +2227,11 @@ export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?:
 
 export type FullMarketFragment = { __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, scalarType?: string | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: number | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
 
+export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PingQueryQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string }> };
+
 export type PoolsQueryVariables = Exact<{
   where?: InputMaybe<PoolWhereInput>;
   order?: InputMaybe<Array<InputMaybe<PoolOrderByInput>> | InputMaybe<PoolOrderByInput>>;
@@ -2400,6 +2405,13 @@ export const MarketsDocument = gql`
   }
 }
     ${FullMarketFragmentDoc}`;
+export const PingQueryDocument = gql`
+    query pingQuery {
+  markets(limit: 1) {
+    id
+  }
+}
+    `;
 export const PoolsDocument = gql`
     query pools($where: PoolWhereInput, $order: [PoolOrderByInput], $offset: Int, $limit: Int) {
   pools(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
@@ -2429,6 +2441,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     markets(variables?: MarketsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MarketsQuery>(MarketsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'markets', 'query');
+    },
+    pingQuery(variables?: PingQueryQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<PingQueryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<PingQueryQuery>(PingQueryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'pingQuery', 'query');
     },
     pools(variables?: PoolsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<PoolsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PoolsQuery>(PoolsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'pools', 'query');

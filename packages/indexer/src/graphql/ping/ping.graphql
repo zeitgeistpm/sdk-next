@@ -1,0 +1,5 @@
+query pingQuery {
+  markets(limit: 1) {
+    id
+  }
+}
