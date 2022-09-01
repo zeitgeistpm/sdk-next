@@ -4813,6 +4813,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@zeitgeistpm/web3.storage@workspace:packages/web3.storage":
+  version: 0.0.0-use.local
+  resolution: "@zeitgeistpm/web3.storage@workspace:packages/web3.storage"
+  peerDependencies:
+    "@polkadot/api": "*"
+    "@polkadot/types": "*"
+  languageName: unknown
+  linkType: soft
+
 "abab@npm:^2.0.3, abab@npm:^2.0.5":
   version: 2.0.6
   resolution: "abab@npm:2.0.6"

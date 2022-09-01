@@ -21,6 +21,9 @@
       "@zeitgeistpm/indexer": [
         "./packages/indexer/src"
       ],
+      "@zeitgeistpm/web3.storage": [
+        "./packages/web3.storage/src"
+      ],
       "@zeitgeistpm/types": [
         "./packages/types/src"
       ],

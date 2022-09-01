@@ -7,7 +7,7 @@ import {
   MarketOrderByInput,
   PoolOrderByInput,
 } from '@zeitgeistpm/indexer'
-import * as IPFS from '@zeitgeistpm/sdk/dist/storage/providers/ipfs'
+import { IPFS } from '@zeitgeistpm/web3.storage'
 import { batteryStation } from '@zeitgeistpm/sdk'
 
 function App() {
