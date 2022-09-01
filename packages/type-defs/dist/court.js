@@ -2,10 +2,10 @@ export default {
     rpc: {},
     types: {
         Juror: {
-            status: "JurorStatus",
+            status: 'JurorStatus',
         },
         JurorStatus: {
-            _enum: ["OK", "Tardy"],
+            _enum: ['OK', 'Tardy'],
         },
     },
 };

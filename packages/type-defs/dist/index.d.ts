@@ -1,8 +1,8 @@
-export { default as court } from "./court";
-export { default as orderbook } from "./orderbook";
-export { default as predictionMarkets } from "./predictionMarkets";
-export { default as rikkido } from "./rikkido";
-export { default as swaps } from "./swaps";
+export { default as court } from './court';
+export { default as orderbook } from './orderbook';
+export { default as predictionMarkets } from './predictionMarkets';
+export { default as rikkido } from './rikkido';
+export { default as swaps } from './swaps';
 export declare const index: {
     rpc: {};
     typesAlias: {

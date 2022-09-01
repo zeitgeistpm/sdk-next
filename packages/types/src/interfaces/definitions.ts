@@ -1,4 +1,4 @@
-import { index, orderbook, predictionMarkets, rikkido, swaps } from "@zeitgeistpm/type-defs";
+import { index, orderbook, predictionMarkets, rikkido, swaps } from '@zeitgeistpm/type-defs'
 // import { default as runtime } from "./runtime/definitions";
 
 export {
@@ -7,5 +7,5 @@ export {
   predictionMarkets,
   rikkido,
   // runtime,
-  swaps
-};
+  swaps,
+}

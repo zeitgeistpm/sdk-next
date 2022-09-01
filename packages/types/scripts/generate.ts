@@ -2,36 +2,31 @@
 // @ts-nocheck
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
-import { generateTsDef } from "@polkadot/typegen/generate/tsDef";
-import { generateInterfaceTypes } from "@polkadot/typegen/generate/interfaceRegistry";
-import { generateDefaultErrors } from "@polkadot/typegen/generate";
+import { generateTsDef } from '@polkadot/typegen/generate/tsDef'
+import { generateInterfaceTypes } from '@polkadot/typegen/generate/interfaceRegistry'
+import { generateDefaultErrors } from '@polkadot/typegen/generate'
 // import {
 //   generateDefaultConsts,
 //   generateDefaultQuery,
 //   generateDefaultTx,
 //   generateDefaultRpc
 // } from '@polkadot/typegen/generate';
-import metadata from "../src/metadata/static-latest";
+import metadata from '../src/metadata/static-latest'
 
-import * as defaultDefinitions from "@polkadot/types/interfaces/definitions";
-import * as zgDefinitions from "../src/interfaces/definitions";
+import * as defaultDefinitions from '@polkadot/types/interfaces/definitions'
+import * as zgDefinitions from '../src/interfaces/definitions'
 
 // // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { ...substrateDefinitions } = defaultDefinitions;
+const { ...substrateDefinitions } = defaultDefinitions
 
 const definitions = {
-  "@polkadot/types/interfaces": substrateDefinitions,
-  "@zeitgeistpm/types/interfaces": zgDefinitions,
-} as any;
+  '@polkadot/types/interfaces': substrateDefinitions,
+  '@zeitgeistpm/types/interfaces': zgDefinitions,
+} as any
 
-generateTsDef(definitions, "./src/interfaces", "@zeitgeistpm/types/interfaces");
-generateInterfaceTypes(definitions, "./src/interfaces/augment-types.ts");
-generateDefaultErrors(
-  "./src/interfaces/augment-api-errors.ts",
-  metadata,
-  definitions,
-  false
-);
+generateTsDef(definitions, './src/interfaces', '@zeitgeistpm/types/interfaces')
+generateInterfaceTypes(definitions, './src/interfaces/augment-types.ts')
+generateDefaultErrors('./src/interfaces/augment-api-errors.ts', metadata, definitions, false)
 // generateDefaultConsts('packages/types/src/interfaces/augment-api-consts.ts', metadata, definitions);
 
 // generateDefaultTx('packages/types/src/interfaces/augment-api-tx.ts', metadata, definitions);

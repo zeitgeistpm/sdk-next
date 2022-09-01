@@ -1,1 +1,1 @@
-import './interfaces/augment-types';
+import './interfaces/augment-types'

@@ -1,4 +1,4 @@
-export * from "./sdk";
+export * from './sdk';
 export declare type Config = {
     endpoint: string;
 };

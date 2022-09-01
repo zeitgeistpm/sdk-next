@@ -1,5 +1,5 @@
-import { WsProvider } from "@polkadot/api";
-import "@zeitgeistpm/types";
+import { WsProvider } from '@polkadot/api';
+import '@zeitgeistpm/types';
 export declare type ZeitgeistApiOptions = {
     provider: WsProvider;
 };
