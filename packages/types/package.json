@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn types:getMetadata && yarn types:generate && yarn tsc",
+    "build": "yarn types:getMetadata && yarn types:generate && tsc",
     "types:getMetadata": "vite-node ./scripts/getMetadata.ts",
     "types:generate": "vite-node ./scripts/generate.ts"
   },

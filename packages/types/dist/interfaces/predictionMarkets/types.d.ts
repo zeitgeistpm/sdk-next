@@ -1,5 +1,6 @@
 import type { Bytes, Enum, Option, Range, RangeInclusive, Struct, u128, u16, u8 } from '@polkadot/types-codec';
 import type { AccountId, BlockNumber, Moment } from '@polkadot/types/interfaces/runtime';
+/** @name Market */
 export interface Market extends Struct {
     readonly creator: AccountId;
     readonly creation: MarketCreation;
@@ -14,16 +15,19 @@ export interface Market extends Struct {
     readonly resolvedOutcome: Option<OutcomeReport>;
     readonly disputeMechanism: MarketDisputeMechanism;
 }
+/** @name MarketCreation */
 export interface MarketCreation extends Enum {
     readonly isPermissionless: boolean;
     readonly isAdvised: boolean;
     readonly type: 'Permissionless' | 'Advised';
 }
+/** @name MarketDispute */
 export interface MarketDispute extends Struct {
     readonly at: BlockNumber;
     readonly by: AccountId;
     readonly outcome: OutcomeReport;
 }
+/** @name MarketDisputeMechanism */
 export interface MarketDisputeMechanism extends Enum {
     readonly isAuthorized: boolean;
     readonly asAuthorized: AccountId;
@@ -31,8 +35,10 @@ export interface MarketDisputeMechanism extends Enum {
     readonly isSimpleDisputes: boolean;
     readonly type: 'Authorized' | 'Court' | 'SimpleDisputes';
 }
+/** @name MarketId */
 export interface MarketId extends u128 {
 }
+/** @name MarketPeriod */
 export interface MarketPeriod extends Enum {
     readonly isBlock: boolean;
     readonly asBlock: Range<BlockNumber>;
@@ -40,6 +46,7 @@ export interface MarketPeriod extends Enum {
     readonly asTimestamp: Range<Moment>;
     readonly type: 'Block' | 'Timestamp';
 }
+/** @name MarketStatus */
 export interface MarketStatus extends Enum {
     readonly isProposed: boolean;
     readonly isActive: boolean;
@@ -52,6 +59,7 @@ export interface MarketStatus extends Enum {
     readonly isResolved: boolean;
     readonly type: 'Proposed' | 'Active' | 'Suspended' | 'Closed' | 'CollectingSubsidy' | 'InsufficientSubsidy' | 'Reported' | 'Disputed' | 'Resolved';
 }
+/** @name MarketType */
 export interface MarketType extends Enum {
     readonly isCategorical: boolean;
     readonly asCategorical: u16;
@@ -59,6 +67,7 @@ export interface MarketType extends Enum {
     readonly asScalar: RangeInclusive<u128>;
     readonly type: 'Categorical' | 'Scalar';
 }
+/** @name OutcomeReport */
 export interface OutcomeReport extends Enum {
     readonly isCategorical: boolean;
     readonly asCategorical: u16;
@@ -66,11 +75,13 @@ export interface OutcomeReport extends Enum {
     readonly asScalar: u128;
     readonly type: 'Categorical' | 'Scalar';
 }
+/** @name Report */
 export interface Report extends Struct {
     readonly at: BlockNumber;
     readonly by: AccountId;
     readonly outcome: OutcomeReport;
 }
+/** @name ScoringRule */
 export interface ScoringRule extends Enum {
     readonly isCpmm: boolean;
     readonly isRikiddoSigmoidFeeMarketEma: boolean;

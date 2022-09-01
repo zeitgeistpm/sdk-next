@@ -1,3 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+// Auto-generated via `yarn polkadot-types-from-defs`, do not edit
+/* eslint-disable */
+export {};
 //# sourceMappingURL=types.js.map

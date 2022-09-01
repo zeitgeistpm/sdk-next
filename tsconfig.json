@@ -7,11 +7,19 @@
   "compilerOptions": {
     "target": "es2019",
     "module": "ESNext",
+    "declaration": true,
     "baseUrl": ".",
+    "sourceMap": true,
     "resolveJsonModule": true,
     "paths": {
-      "@acala-network/api": [
+      "@zeitgeistpm/indexer": [
         "packages/indexer/src"
+      ],
+      "@zeitgeistpm/types": [
+        "packages/types/src"
+      ],
+      "@zeitgeistpm/type-defs": [
+        "packages/type-defs/src"
       ],
     },
     "skipLibCheck": true,

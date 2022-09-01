@@ -1,4 +1,2 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-require("./interfaces/augment-types");
+import './interfaces/augment-types';
 //# sourceMappingURL=index.js.map
