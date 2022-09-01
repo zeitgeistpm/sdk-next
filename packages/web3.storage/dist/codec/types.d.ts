@@ -4,8 +4,14 @@ export * from '../providers/ipfs/types';
  * has metadata stored in some external storage like IPFS.
  */
 export declare type MetadataStorage<T, ID = string> = {
+    /**
+     * @param id ID
+     * @returns Promise<T | undefined | null>
+     */
     get: (id: ID) => Promise<T | undefined | null>;
-    put: (data: T) => Promise<ID>;
+    put: (data: T, opts?: {
+        ephemeral?: boolean;
+    }) => Promise<ID>;
     del: (id: ID) => Promise<void>;
 };
 /**

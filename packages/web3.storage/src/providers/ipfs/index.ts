@@ -18,14 +18,16 @@ import { JsonCodec } from '../../codec/impl/json'
 export const create = <T>(
   config: IPFSConfiguration,
   codec: MetadataCodec<string, T> = JsonCodec(),
-  curriedClient?: IPFSHttpClient.IPFSHTTPClient,
 ): MetadataStorage<T, IPFSHttpClient.CID | string> => {
-  const client = curriedClient ?? IPFSHttpClient.create({ url: config.node.url })
+  const client = IPFSHttpClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`
 
   return {
-    put: async data => {
-      const { cid } = await client.add({ content: codec.decode(data) }, { hashAlg })
+    put: async (data, opts) => {
+      const { cid } = await client.add(
+        { content: codec.decode(data) },
+        { hashAlg, pin: opts?.ephemeral ?? false },
+      )
       if (config.cluster) {
         await cluster.pin(cid.toString(), config.cluster)
       }
