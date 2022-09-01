@@ -1,0 +1,34 @@
+{
+  "name": "@zeitgeistpm/types",
+  "version": "0.8.0",
+  "description": "Generated types for the Zeitgeist network.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "yarn types:getMetadata && yarn types:generate && yarn tsc",
+    "types:getMetadata": "vite-node ./scripts/getMetadata.ts",
+    "types:generate": "vite-node ./scripts/generate.ts"
+  },
+  "author": "Zeitgeist PM <contact@zeitgeist.pm>",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@polkadot/typegen": "9.2.2"
+  },
+  "dependencies": {
+    "@polkadot/types": "9.2.2",
+    "@zeitgeistpm/type-defs": "^0.8.0",
+    "axios": "^0.21.1"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    },
+    "./interfaces/predictionMarkets": {
+      "default": "./dist/interfaces/predictionMarkets/index.js"
+    },
+    "./interfaces/predictionMarkets.d.ts": {
+      "default": "./dist/interfaces/predictionMarkets/index.d.ts"
+    }
+  },
+  "gitHead": "f65183993419e36276711f4634c57536ffad93a1"
+}
