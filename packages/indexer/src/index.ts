@@ -1,14 +1,14 @@
-import { GraphQLClient } from "graphql-request";
-import { getSdk } from "./sdk";
+import { GraphQLClient } from 'graphql-request'
+import { getSdk } from './sdk'
 
-export * from "./sdk";
+export * from './sdk'
 
 export type Config = {
-  endpoint: string;
-};
+  endpoint: string
+}
 
 export const create = (config: Config) => {
-  const client = new GraphQLClient(config.endpoint);
-  const sdk = getSdk(client);
-  return sdk;
-};
+  const client = new GraphQLClient(config.endpoint)
+  const sdk = getSdk(client)
+  return sdk
+}
