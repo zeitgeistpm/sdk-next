@@ -1,0 +1,30 @@
+query pools(
+  $where: PoolWhereInput
+  $order: [PoolOrderByInput]
+  $offset: Int
+  $limit: Int
+) {
+  pools(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullPool
+  }
+}
+
+fragment FullPool on Pool {
+  id
+  accountId
+  baseAsset
+  createdAt
+  marketId
+  poolId
+  poolStatus
+  scoringRule
+  swapFee
+  totalSubsidy
+  totalWeight
+  volume
+  weights {
+    assetId
+    len
+  }
+  ztgQty
+}

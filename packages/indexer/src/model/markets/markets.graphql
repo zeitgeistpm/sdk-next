@@ -1,5 +1,10 @@
-query markets($marketId: Int) {
-  markets(where: { marketId_eq: $marketId }) {
+query markets(
+  $where: MarketWhereInput
+  $order: [MarketOrderByInput]
+  $limit: Int
+  $offset: Int
+) {
+  markets(where: $where, limit: $limit, offset: $offset, orderBy: $order) {
     ...FullMarket
   }
 }

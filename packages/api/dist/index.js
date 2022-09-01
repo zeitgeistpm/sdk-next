@@ -1,19 +1,7 @@
-import { ApiPromise, WsProvider } from "@polkadot/api";
 import * as zeitgeistDefinitions from "@zeitgeistpm/type-defs";
 import "@zeitgeistpm/types";
-export const create = (rpc = "wss://bsr.zeitgeist.pm") => {
-    return ApiPromise.create({
-        ...constructApiOptions(new WsProvider(rpc)),
-    });
-};
-const typesFromDefs = (definitions) => {
-    return Object.values(definitions).reduce((res, { types }) => ({
-        ...res,
-        ...types,
-    }), {});
-};
-const constructApiOptions = (provider) => ({
-    provider,
+export const options = (opts) => ({
+    provider: opts.provider,
     noInitWarn: true,
     rpc: {
         predictionMarkets: {
@@ -121,7 +109,10 @@ const constructApiOptions = (provider) => ({
         },
     },
     types: {
-        ...typesFromDefs(zeitgeistDefinitions),
+        ...Object.values(zeitgeistDefinitions).reduce((res, { types }) => ({
+            ...res,
+            ...types,
+        }), {}),
         BalanceInfo: {
             amount: "Balance",
         },

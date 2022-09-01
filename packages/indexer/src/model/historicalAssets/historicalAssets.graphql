@@ -1,0 +1,29 @@
+query historicalAssets(
+  $where: HistoricalAssetWhereInput
+  $order: [HistoricalAssetOrderByInput]
+  $offset: Int
+  $limit: Int
+) {
+  historicalAssets(
+    where: $where
+    orderBy: $order
+    offset: $offset
+    limit: $limit
+  ) {
+    ...FullHistoricalAssets
+  }
+}
+
+fragment FullHistoricalAssets on HistoricalAsset {
+  accountId
+  assetId
+  blockNumber
+  dAmountInPool
+  dPrice
+  event
+  id
+  newAmountInPool
+  newPrice
+  timestamp
+  ztgTraded
+}

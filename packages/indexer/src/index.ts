@@ -1,6 +1,8 @@
 import { GraphQLClient } from "graphql-request";
 import { getSdk } from "./sdk";
 
+export * from "./sdk";
+
 export type Config = {
   endpoint: string;
 };
@@ -10,16 +12,3 @@ export const create = (config: Config) => {
   const sdk = getSdk(client);
   return sdk;
 };
-
-async function main() {
-  const indexer = create({
-    endpoint: "https://processor.zeitgeist.pm/graphql",
-  });
-  const data = await indexer.markets({ marketId: 1 });
-
-  data.markets.forEach((market) => {
-    console.log(market.oracle);
-  });
-}
-
-main();

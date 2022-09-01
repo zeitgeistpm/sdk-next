@@ -1,0 +1,29 @@
+query accountBalances(
+  $where: AccountBalanceWhereInput
+  $order: [AccountBalanceOrderByInput]
+  $offset: Int
+  $limit: Int
+) {
+  accountBalances(
+    where: $where
+    orderBy: $order
+    offset: $offset
+    limit: $limit
+  ) {
+    ...FullAccountBalance
+  }
+}
+
+fragment FullAccountBalance on AccountBalance {
+  id
+  assetId
+  balance
+  value
+  account {
+    id
+    accountId
+    marketId
+    poolId
+    pvalue
+  }
+}

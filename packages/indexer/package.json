@@ -1,6 +1,8 @@
 {
   "name": "@zeitgeistpm/indexer",
   "version": "0.0.1",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "graphql-codegen && tsc"
   },
@@ -14,5 +16,13 @@
   "dependencies": {
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    },
+    "./types": {
+      "default": "./dist/index.d.ts"
+    }
   }
 }

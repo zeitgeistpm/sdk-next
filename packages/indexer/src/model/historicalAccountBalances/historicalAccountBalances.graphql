@@ -1,0 +1,29 @@
+query historicalAccountBalances(
+  $where: HistoricalAccountBalanceWhereInput
+  $order: [HistoricalAccountBalanceOrderByInput]
+  $offset: Int
+  $limit: Int
+) {
+  historicalAccountBalances(
+    where: $where
+    orderBy: $order
+    offset: $offset
+    limit: $limit
+  ) {
+    ...FullHistoricalAccountBalance
+  }
+}
+
+fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
+  id
+  assetId
+  accountId
+  balance
+  blockNumber
+  dBalance
+  dValue
+  event
+  pvalue
+  timestamp
+  value
+}

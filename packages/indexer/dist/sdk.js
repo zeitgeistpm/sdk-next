@@ -226,6 +226,60 @@ export var PoolOrderByInput;
     PoolOrderByInput["ZtgQtyAsc"] = "ztgQty_ASC";
     PoolOrderByInput["ZtgQtyDesc"] = "ztgQty_DESC";
 })(PoolOrderByInput || (PoolOrderByInput = {}));
+export const FullAccountBalanceFragmentDoc = gql `
+    fragment FullAccountBalance on AccountBalance {
+  id
+  assetId
+  balance
+  value
+  account {
+    id
+    accountId
+    marketId
+    poolId
+    pvalue
+  }
+}
+    `;
+export const FullAssetFragmentDoc = gql `
+    fragment FullAsset on Asset {
+  id
+  assetId
+  poolId
+  price
+  amountInPool
+}
+    `;
+export const FullHistoricalAccountBalanceFragmentDoc = gql `
+    fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
+  id
+  assetId
+  accountId
+  balance
+  blockNumber
+  dBalance
+  dValue
+  event
+  pvalue
+  timestamp
+  value
+}
+    `;
+export const FullHistoricalAssetsFragmentDoc = gql `
+    fragment FullHistoricalAssets on HistoricalAsset {
+  accountId
+  assetId
+  blockNumber
+  dAmountInPool
+  dPrice
+  event
+  id
+  newAmountInPool
+  newPrice
+  timestamp
+  ztgTraded
+}
+    `;
 export const FullMarketFragmentDoc = gql `
     fragment FullMarket on Market {
   marketId
@@ -272,18 +326,94 @@ export const FullMarketFragmentDoc = gql `
   }
 }
     `;
+export const FullPoolFragmentDoc = gql `
+    fragment FullPool on Pool {
+  id
+  accountId
+  baseAsset
+  createdAt
+  marketId
+  poolId
+  poolStatus
+  scoringRule
+  swapFee
+  totalSubsidy
+  totalWeight
+  volume
+  weights {
+    assetId
+    len
+  }
+  ztgQty
+}
+    `;
+export const AccountBalancesDocument = gql `
+    query accountBalances($where: AccountBalanceWhereInput, $order: [AccountBalanceOrderByInput], $offset: Int, $limit: Int) {
+  accountBalances(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullAccountBalance
+  }
+}
+    ${FullAccountBalanceFragmentDoc}`;
+export const AssetsDocument = gql `
+    query assets($where: AssetWhereInput, $order: [AssetOrderByInput], $offset: Int, $limit: Int) {
+  assets(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullAsset
+  }
+}
+    ${FullAssetFragmentDoc}`;
+export const HistoricalAccountBalancesDocument = gql `
+    query historicalAccountBalances($where: HistoricalAccountBalanceWhereInput, $order: [HistoricalAccountBalanceOrderByInput], $offset: Int, $limit: Int) {
+  historicalAccountBalances(
+    where: $where
+    orderBy: $order
+    offset: $offset
+    limit: $limit
+  ) {
+    ...FullHistoricalAccountBalance
+  }
+}
+    ${FullHistoricalAccountBalanceFragmentDoc}`;
+export const HistoricalAssetsDocument = gql `
+    query historicalAssets($where: HistoricalAssetWhereInput, $order: [HistoricalAssetOrderByInput], $offset: Int, $limit: Int) {
+  historicalAssets(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullHistoricalAssets
+  }
+}
+    ${FullHistoricalAssetsFragmentDoc}`;
 export const MarketsDocument = gql `
-    query markets($marketId: Int) {
-  markets(where: {marketId_eq: $marketId}) {
+    query markets($where: MarketWhereInput, $order: [MarketOrderByInput], $limit: Int, $offset: Int) {
+  markets(where: $where, limit: $limit, offset: $offset, orderBy: $order) {
     ...FullMarket
   }
 }
     ${FullMarketFragmentDoc}`;
+export const PoolsDocument = gql `
+    query pools($where: PoolWhereInput, $order: [PoolOrderByInput], $offset: Int, $limit: Int) {
+  pools(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullPool
+  }
+}
+    ${FullPoolFragmentDoc}`;
 const defaultWrapper = (action, _operationName, _operationType) => action();
 export function getSdk(client, withWrapper = defaultWrapper) {
     return {
+        accountBalances(variables, requestHeaders) {
+            return withWrapper((wrappedRequestHeaders) => client.request(AccountBalancesDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'accountBalances', 'query');
+        },
+        assets(variables, requestHeaders) {
+            return withWrapper((wrappedRequestHeaders) => client.request(AssetsDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'assets', 'query');
+        },
+        historicalAccountBalances(variables, requestHeaders) {
+            return withWrapper((wrappedRequestHeaders) => client.request(HistoricalAccountBalancesDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'historicalAccountBalances', 'query');
+        },
+        historicalAssets(variables, requestHeaders) {
+            return withWrapper((wrappedRequestHeaders) => client.request(HistoricalAssetsDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'historicalAssets', 'query');
+        },
         markets(variables, requestHeaders) {
             return withWrapper((wrappedRequestHeaders) => client.request(MarketsDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'markets', 'query');
+        },
+        pools(variables, requestHeaders) {
+            return withWrapper((wrappedRequestHeaders) => client.request(PoolsDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'pools', 'query');
         }
     };
 }

@@ -2167,8 +2167,59 @@ export type WeightWhereInput = {
   len_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
 };
 
+export type AccountBalancesQueryVariables = Exact<{
+  where?: InputMaybe<AccountBalanceWhereInput>;
+  order?: InputMaybe<Array<InputMaybe<AccountBalanceOrderByInput>> | InputMaybe<AccountBalanceOrderByInput>>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type AccountBalancesQuery = { __typename?: 'Query', accountBalances: Array<{ __typename?: 'AccountBalance', id: string, assetId: string, balance: any, value?: number | null, account: { __typename?: 'Account', id: string, accountId: string, marketId?: number | null, poolId?: number | null, pvalue: number } }> };
+
+export type FullAccountBalanceFragment = { __typename?: 'AccountBalance', id: string, assetId: string, balance: any, value?: number | null, account: { __typename?: 'Account', id: string, accountId: string, marketId?: number | null, poolId?: number | null, pvalue: number } };
+
+export type AssetsQueryVariables = Exact<{
+  where?: InputMaybe<AssetWhereInput>;
+  order?: InputMaybe<Array<InputMaybe<AssetOrderByInput>> | InputMaybe<AssetOrderByInput>>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: 'Asset', id: string, assetId: string, poolId?: number | null, price?: number | null, amountInPool?: any | null }> };
+
+export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, poolId?: number | null, price?: number | null, amountInPool?: any | null };
+
+export type HistoricalAccountBalancesQueryVariables = Exact<{
+  where?: InputMaybe<HistoricalAccountBalanceWhereInput>;
+  order?: InputMaybe<Array<InputMaybe<HistoricalAccountBalanceOrderByInput>> | InputMaybe<HistoricalAccountBalanceOrderByInput>>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type HistoricalAccountBalancesQuery = { __typename?: 'Query', historicalAccountBalances: Array<{ __typename?: 'HistoricalAccountBalance', id: string, assetId: string, accountId: string, balance: any, blockNumber: number, dBalance: any, dValue?: number | null, event: string, pvalue?: number | null, timestamp: any, value?: number | null }> };
+
+export type FullHistoricalAccountBalanceFragment = { __typename?: 'HistoricalAccountBalance', id: string, assetId: string, accountId: string, balance: any, blockNumber: number, dBalance: any, dValue?: number | null, event: string, pvalue?: number | null, timestamp: any, value?: number | null };
+
+export type HistoricalAssetsQueryVariables = Exact<{
+  where?: InputMaybe<HistoricalAssetWhereInput>;
+  order?: InputMaybe<Array<InputMaybe<HistoricalAssetOrderByInput>> | InputMaybe<HistoricalAssetOrderByInput>>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type HistoricalAssetsQuery = { __typename?: 'Query', historicalAssets: Array<{ __typename?: 'HistoricalAsset', accountId?: string | null, assetId: string, blockNumber: number, dAmountInPool?: any | null, dPrice?: number | null, event: string, id: string, newAmountInPool?: any | null, newPrice?: number | null, timestamp: any, ztgTraded?: any | null }> };
+
+export type FullHistoricalAssetsFragment = { __typename?: 'HistoricalAsset', accountId?: string | null, assetId: string, blockNumber: number, dAmountInPool?: any | null, dPrice?: number | null, event: string, id: string, newAmountInPool?: any | null, newPrice?: number | null, timestamp: any, ztgTraded?: any | null };
+
 export type MarketsQueryVariables = Exact<{
-  marketId?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<MarketWhereInput>;
+  order?: InputMaybe<Array<InputMaybe<MarketOrderByInput>> | InputMaybe<MarketOrderByInput>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
 }>;
 
 
@@ -2176,6 +2227,72 @@ export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?:
 
 export type FullMarketFragment = { __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, scalarType?: string | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: number | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
 
+export type PoolsQueryVariables = Exact<{
+  where?: InputMaybe<PoolWhereInput>;
+  order?: InputMaybe<Array<InputMaybe<PoolOrderByInput>> | InputMaybe<PoolOrderByInput>>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type PoolsQuery = { __typename?: 'Query', pools: Array<{ __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> }> };
+
+export type FullPoolFragment = { __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> };
+
+export const FullAccountBalanceFragmentDoc = gql`
+    fragment FullAccountBalance on AccountBalance {
+  id
+  assetId
+  balance
+  value
+  account {
+    id
+    accountId
+    marketId
+    poolId
+    pvalue
+  }
+}
+    `;
+export const FullAssetFragmentDoc = gql`
+    fragment FullAsset on Asset {
+  id
+  assetId
+  poolId
+  price
+  amountInPool
+}
+    `;
+export const FullHistoricalAccountBalanceFragmentDoc = gql`
+    fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
+  id
+  assetId
+  accountId
+  balance
+  blockNumber
+  dBalance
+  dValue
+  event
+  pvalue
+  timestamp
+  value
+}
+    `;
+export const FullHistoricalAssetsFragmentDoc = gql`
+    fragment FullHistoricalAssets on HistoricalAsset {
+  accountId
+  assetId
+  blockNumber
+  dAmountInPool
+  dPrice
+  event
+  id
+  newAmountInPool
+  newPrice
+  timestamp
+  ztgTraded
+}
+    `;
 export const FullMarketFragmentDoc = gql`
     fragment FullMarket on Market {
   marketId
@@ -2222,13 +2339,74 @@ export const FullMarketFragmentDoc = gql`
   }
 }
     `;
+export const FullPoolFragmentDoc = gql`
+    fragment FullPool on Pool {
+  id
+  accountId
+  baseAsset
+  createdAt
+  marketId
+  poolId
+  poolStatus
+  scoringRule
+  swapFee
+  totalSubsidy
+  totalWeight
+  volume
+  weights {
+    assetId
+    len
+  }
+  ztgQty
+}
+    `;
+export const AccountBalancesDocument = gql`
+    query accountBalances($where: AccountBalanceWhereInput, $order: [AccountBalanceOrderByInput], $offset: Int, $limit: Int) {
+  accountBalances(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullAccountBalance
+  }
+}
+    ${FullAccountBalanceFragmentDoc}`;
+export const AssetsDocument = gql`
+    query assets($where: AssetWhereInput, $order: [AssetOrderByInput], $offset: Int, $limit: Int) {
+  assets(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullAsset
+  }
+}
+    ${FullAssetFragmentDoc}`;
+export const HistoricalAccountBalancesDocument = gql`
+    query historicalAccountBalances($where: HistoricalAccountBalanceWhereInput, $order: [HistoricalAccountBalanceOrderByInput], $offset: Int, $limit: Int) {
+  historicalAccountBalances(
+    where: $where
+    orderBy: $order
+    offset: $offset
+    limit: $limit
+  ) {
+    ...FullHistoricalAccountBalance
+  }
+}
+    ${FullHistoricalAccountBalanceFragmentDoc}`;
+export const HistoricalAssetsDocument = gql`
+    query historicalAssets($where: HistoricalAssetWhereInput, $order: [HistoricalAssetOrderByInput], $offset: Int, $limit: Int) {
+  historicalAssets(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullHistoricalAssets
+  }
+}
+    ${FullHistoricalAssetsFragmentDoc}`;
 export const MarketsDocument = gql`
-    query markets($marketId: Int) {
-  markets(where: {marketId_eq: $marketId}) {
+    query markets($where: MarketWhereInput, $order: [MarketOrderByInput], $limit: Int, $offset: Int) {
+  markets(where: $where, limit: $limit, offset: $offset, orderBy: $order) {
     ...FullMarket
   }
 }
     ${FullMarketFragmentDoc}`;
+export const PoolsDocument = gql`
+    query pools($where: PoolWhereInput, $order: [PoolOrderByInput], $offset: Int, $limit: Int) {
+  pools(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullPool
+  }
+}
+    ${FullPoolFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -2237,8 +2415,23 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    accountBalances(variables?: AccountBalancesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AccountBalancesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AccountBalancesQuery>(AccountBalancesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'accountBalances', 'query');
+    },
+    assets(variables?: AssetsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AssetsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AssetsQuery>(AssetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'assets', 'query');
+    },
+    historicalAccountBalances(variables?: HistoricalAccountBalancesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalAccountBalancesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<HistoricalAccountBalancesQuery>(HistoricalAccountBalancesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalAccountBalances', 'query');
+    },
+    historicalAssets(variables?: HistoricalAssetsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalAssetsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<HistoricalAssetsQuery>(HistoricalAssetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalAssets', 'query');
+    },
     markets(variables?: MarketsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MarketsQuery>(MarketsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'markets', 'query');
+    },
+    pools(variables?: PoolsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<PoolsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<PoolsQuery>(PoolsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'pools', 'query');
     }
   };
 }

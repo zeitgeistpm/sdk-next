@@ -1,10 +1,49 @@
-//import * as ZApi from "@zeitgeistpm/api";
-import { useState } from "react";
+import { options } from "@zeitgeistpm/api";
+import { ApiPromise, WsProvider } from "@polkadot/api";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
+import * as Indexer from "@zeitgeistpm/indexer";
+import {
+  AssetOrderByInput,
+  MarketOrderByInput,
+  PoolOrderByInput,
+} from "@zeitgeistpm/indexer";
+
 function App() {
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const provider = new WsProvider("wss://bsr.zeitgeist.pm");
+    const api = ApiPromise.create(options({ provider }));
+    const indexer = Indexer.create({
+      endpoint: "https://processor.zeitgeist.pm/graphql",
+    });
+
+    indexer.markets({
+      order: MarketOrderByInput.IdAsc,
+      where: {},
+    });
+
+    indexer.assets({
+      order: AssetOrderByInput.IdAsc,
+      where: {},
+    });
+
+    indexer.pools({
+      order: PoolOrderByInput.CreatedAtAsc,
+      where: {
+        poolId_eq: 1,
+      },
+    });
+
+    api.then((api) => {
+      api.query.predictionMarkets.disputes(null).then((markets) => {
+        console.log(markets.toHuman());
+      });
+    });
+  }, []);
 
   return (
     <div className="App">

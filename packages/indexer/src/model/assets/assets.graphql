@@ -1,0 +1,18 @@
+query assets(
+  $where: AssetWhereInput
+  $order: [AssetOrderByInput]
+  $offset: Int
+  $limit: Int
+) {
+  assets(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullAsset
+  }
+}
+
+fragment FullAsset on Asset {
+  id
+  assetId
+  poolId
+  price
+  amountInPool
+}
