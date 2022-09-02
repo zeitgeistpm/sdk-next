@@ -1,4 +1,4 @@
-import { assert } from '@zeitgeistpm/utility'
+import { assert } from '@zeitgeistpm/utility/dist/assert'
 import { Context, isApiContext, isFullContext, isIndexerContext } from './context'
 
 export * from './context'

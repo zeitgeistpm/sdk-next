@@ -1,3 +1,4 @@
+import { either, tryCatch } from '@zeitgeistpm/utility/dist/either'
 import { MetadataCodec } from '../types'
 
 /**
@@ -8,6 +9,6 @@ import { MetadataCodec } from '../types'
  * @returns MetadataCodec<T, string>
  */
 export const JsonCodec = <T>(): MetadataCodec<string, T> => ({
-  encode: data => JSON.parse(data),
-  decode: data => JSON.stringify(data),
+  encode: output => either(tryCatch(() => JSON.parse(output))),
+  decode: input => either(tryCatch(() => JSON.stringify(input))),
 })

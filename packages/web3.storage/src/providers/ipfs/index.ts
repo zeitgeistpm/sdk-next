@@ -1,3 +1,5 @@
+import { either, left, right } from '@zeitgeistpm/utility/dist/either'
+import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as IPFSHttpClient from 'ipfs-http-client'
 import { u8aToString } from '@polkadot/util'
 import { MetadataCodec, MetadataStorage } from '../../codec/types'
@@ -18,37 +20,54 @@ import { JsonCodec } from '../../codec/impl/json'
 export const create = <T>(
   config: IPFSConfiguration,
   codec: MetadataCodec<string, T> = JsonCodec(),
-): MetadataStorage<T, IPFSHttpClient.CID | string> => {
+): MetadataStorage<T, string> => {
   const client = IPFSHttpClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`
 
   return {
     put: async (data, opts) => {
-      const { cid } = await client.add(
-        { content: codec.decode(data) },
-        { hashAlg, pin: opts?.ephemeral ?? false },
-      )
+      try {
+        const content = codec.decode(data).unrightOr(throws)
 
-      if (config.cluster) {
-        await cluster.pin(cid.toString(), config.cluster)
+        const { cid } = await client.add(
+          { content },
+          { hashAlg, pin: opts?.ephemeral ?? false },
+        )
+
+        if (config.cluster) {
+          await cluster.pin(cid.toString(), config.cluster)
+        }
+
+        return either(right(cid.toString()))
+      } catch (error) {
+        return either(left(error as Error))
       }
-
-      return cid
     },
     get: async cid => {
-      const content = []
+      try {
+        const content = []
 
-      for await (const chunk of client.cat(cid)) {
-        content.push(chunk)
+        for await (const chunk of client.cat(cid)) {
+          content.push(chunk)
+        }
+
+        const data = content.map(u8aToString).reduce((acc, chunk) => acc + chunk)
+
+        const encoded = codec.encode(data).unrightOr(throws)
+
+        return either(right(encoded))
+      } catch (error) {
+        return either(left(error as Error))
       }
-
-      const data = content.map(u8aToString).reduce((acc, chunk) => acc + chunk)
-
-      return codec.encode(data) as T
     },
     del: async cid => {
-      if (config.cluster) {
-        await cluster.unpin(cid.toString(), config.cluster)
+      try {
+        if (config.cluster) {
+          await cluster.unpin(cid.toString(), config.cluster)
+        }
+        return either(right(void 0))
+      } catch (error) {
+        return either(left(error as Error))
       }
     },
   }

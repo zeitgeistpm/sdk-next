@@ -1,7 +1,12 @@
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { options } from '@zeitgeistpm/api'
 import * as Indexer from '@zeitgeistpm/indexer'
-import { ApiContext, FullContext, IndexerContext, SupportedParachain } from './types'
+import {
+  ApiContext,
+  FullContext,
+  IndexerContext,
+  SupportedParachain,
+} from './types'
 
 export * from './types'
 

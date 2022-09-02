@@ -1,4 +1,4 @@
-import { b64 } from '@zeitgeistpm/utility'
+import * as b64 from '@zeitgeistpm/utility/dist/b64'
 import { IPFSClusterConfiguration } from './types'
 
 /**
@@ -45,7 +45,9 @@ export const pin = async (
 
   if (!response.ok) {
     throw new Error(
-      `[${data?.code ?? '500'}]: ${data?.message ?? 'Unknown cluster api error.'}`,
+      `[${data?.code ?? '500'}]: ${
+        data?.message ?? 'Unknown cluster api error.'
+      }`,
     )
   }
 
@@ -73,7 +75,9 @@ export const unpin = async (
 
   if (!response.ok) {
     throw new Error(
-      `[${data?.code ?? '500'}]: ${data?.message ?? 'Unknown cluster api error.'}`,
+      `[${data?.code ?? '500'}]: ${
+        data?.message ?? 'Unknown cluster api error.'
+      }`,
     )
   }
 

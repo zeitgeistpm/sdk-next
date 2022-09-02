@@ -13,13 +13,13 @@ export * from './impl/json'
  * @param codecb MetadataCodec<O, IO>
  * @returns MetadataCodec<I, O>
  */
-export const compose = <I, IO, O>(
-  codeca: MetadataCodec<I, IO>,
-  codecb: MetadataCodec<IO, O>,
-): MetadataCodec<I, O> => ({
-  encode: data => codecb.encode(codeca.encode(data)),
-  decode: data => codeca.decode(codecb.decode(data)),
-})
+// export const compose = <I, IO, O>(
+//   codeca: MetadataCodec<I, IO>,
+//   codecb: MetadataCodec<IO, O>,
+// ): MetadataCodec<I, O> => ({
+//   encode: data => codecb.encode(codeca.encode(data)),
+//   decode: data => codeca.decode(codecb.decode(data)),
+// })
 
 /**
  *

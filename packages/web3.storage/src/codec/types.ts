@@ -1,3 +1,4 @@
+import { MonadicEither } from '@zeitgeistpm/utility/dist/either'
 export * from '../providers/ipfs/types'
 
 /**
@@ -13,7 +14,7 @@ export type MetadataStorage<T, ID = string> = {
    * @param id ID
    * @returns Promise<T | undefined | null>
    */
-  get: (id: ID) => Promise<T | undefined | null>
+  get: (id: ID) => Promise<MonadicEither<Error, T>>
   /**
    * Put item to storage
    *
@@ -23,7 +24,10 @@ export type MetadataStorage<T, ID = string> = {
    * @param opts.ephemeral boolean - persist item, pinning for ipfs. defaults to false.
    * @returns Promise<ID>
    */
-  put: (data: T, opts?: { ephemeral?: boolean }) => Promise<ID>
+  put: (
+    data: T,
+    opts?: { ephemeral?: boolean },
+  ) => Promise<MonadicEither<Error, ID>>
   /**
    * delete item from storage
    *
@@ -31,7 +35,7 @@ export type MetadataStorage<T, ID = string> = {
    * @param id ID
    * @returns Promise<void>
    */
-  del: (id: ID) => Promise<void>
+  del: (id: ID) => Promise<MonadicEither<Error, undefined>>
 }
 
 /**
@@ -46,7 +50,7 @@ export type MetadataCodec<I, O> = {
    * @param data O - output
    * @returns I - input type
    */
-  decode: (data: O) => I
+  decode: (data: O) => MonadicEither<Error, I>
   /**
    * Encode input type to output
    *
@@ -55,5 +59,5 @@ export type MetadataCodec<I, O> = {
    * @param data I - input
    * @returns O - output type
    */
-  encode: (data: I) => O
+  encode: (data: I) => MonadicEither<Error, O>
 }

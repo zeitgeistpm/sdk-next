@@ -26,7 +26,12 @@ const definitions = {
 
 generateTsDef(definitions, './src/interfaces', '@zeitgeistpm/types/interfaces')
 generateInterfaceTypes(definitions, './src/interfaces/augment-types.ts')
-generateDefaultErrors('./src/interfaces/augment-api-errors.ts', metadata, definitions, false)
+generateDefaultErrors(
+  './src/interfaces/augment-api-errors.ts',
+  metadata,
+  definitions,
+  false,
+)
 // generateDefaultConsts('packages/types/src/interfaces/augment-api-consts.ts', metadata, definitions);
 
 // generateDefaultTx('packages/types/src/interfaces/augment-api-tx.ts', metadata, definitions);
