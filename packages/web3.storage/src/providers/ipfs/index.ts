@@ -18,7 +18,7 @@ import { MetadataStorage } from '../../storage'
  * @param codec MetadataCodec<T, string> - the codec for the metadata, encode to and decode from string.
  * @returns MetadataStorage<T, IPFS.CID | string>
  */
-export const create = <T>(
+export const storage = <T>(
   config: IPFSConfiguration,
   codec: Codec<string, T> = JsonCodec(),
 ): MetadataStorage<T, string> => {
