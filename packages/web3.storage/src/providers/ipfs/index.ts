@@ -1,10 +1,10 @@
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
-import * as IPFSHttpClient from 'ipfs-http-client'
 import { u8aToString } from '@polkadot/util'
+import * as IPFSHttpClient from 'ipfs-http-client'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
-import { JsonCodec } from '../../storage/impl/json'
+import { JsonCodec } from '../../codec/impl/json'
 import { Codec } from '../../codec'
 import { MetadataStorage } from '../../storage'
 
@@ -14,9 +14,6 @@ import { MetadataStorage } from '../../storage'
  * and cluster if configured to do so.
  *
  * @generic T - type of metadata
- * @param config IPFSConfiguration - configuration for the ipfs client
- * @param codec MetadataCodec<T, string> - the codec for the metadata, encode to and decode from string.
- * @returns MetadataStorage<T, IPFS.CID | string>
  */
 export const storage = <T>(
   config: IPFSConfiguration,

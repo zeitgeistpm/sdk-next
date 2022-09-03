@@ -24,10 +24,6 @@ export type IPFSClusterPinningResponse = {
 /**
  *
  * Pinns a cid to the cluster.
- *
- * @param cid string - the cid to pin to the cluster
- * @param config IPFSClusterConfiguration
- * @returns Promise<IPFSClusterPinningResponse>
  */
 export const pin = async (
   cid: string,
@@ -57,10 +53,6 @@ export const pin = async (
 /**
  *
  * Unpinns a cid from the cluster.
- *
- * @param cid string - the cid to unpin from the cluster
- * @param config IPFSClusterConfiguration
- * @returns Promise<IPFSClusterPinningResponse>
  */
 export const unpin = async (
   cid: string,

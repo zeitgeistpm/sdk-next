@@ -11,8 +11,6 @@ export type MetadataStorage<T, ID = string> = {
    *
    * @generic ID - id type
    * @generic T - type of data
-   * @param id ID
-   * @returns Promise<T | undefined | null>
    */
   get: (id: ID) => Promise<EitherInterface<Error, T>>
   /**
@@ -20,9 +18,6 @@ export type MetadataStorage<T, ID = string> = {
    *
    * @generic ID - id type
    * @generic T - type of data
-   * @param id ID
-   * @param opts.ephemeral boolean - persist item, pinning for ipfs. defaults to false.
-   * @returns Promise<ID>
    */
   put: (
     data: T,
@@ -32,8 +27,6 @@ export type MetadataStorage<T, ID = string> = {
    * delete item from storage
    *
    * @generic ID - id type
-   * @param id ID
-   * @returns Promise<void>
    */
   del: (id: ID) => Promise<EitherInterface<Error, undefined>>
 }
