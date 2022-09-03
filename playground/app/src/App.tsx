@@ -9,9 +9,10 @@ import {
 } from '@zeitgeistpm/indexer'
 import { IPFS } from '@zeitgeistpm/web3.storage'
 import { batteryStation } from '@zeitgeistpm/sdk'
+import { throws } from '@zeitgeistpm/utility/dist/error'
 
 function App() {
-  const storage = IPFS.create<{}>({
+  const storage = IPFS.storage<{}>({
     node: { url: 'http://ipfs.zeitgeist.pm:5001' },
     cluster: {
       url: 'https://ipfs-cluster.zeitgeist.pm',
@@ -46,8 +47,8 @@ function App() {
   }, [])
 
   const onClickIpfstest = async () => {
-    const cid = await storage.put({ text: 'some data' })
-    const data = await storage.get(cid)
+    const cid = (await storage.put({ text: 'some data' })).unrightOr(throws)
+    const data = (await storage.get(cid)).unrightOr(throws)
     console.log('read data', data)
     await storage.del(cid)
   }

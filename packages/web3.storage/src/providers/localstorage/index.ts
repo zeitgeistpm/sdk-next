@@ -36,16 +36,17 @@ export const storage = <T>(
         return either(left(error as Error))
       }
     },
-    get: async key => {
-      return codec.encode(
-        from<string>(localStorage.getItem(key)).unwrapOr(() =>
-          throws(`Could not fetch ${key} from localStorage.`),
+
+    get: async hash =>
+      from<string>(localStorage.getItem(hash))
+        .map(codec.encode)
+        .unwrapOr(() =>
+          either(left(new Error(`No value found for key ${hash}`))),
         ),
-      )
-    },
-    del: async cid => {
-      localStorage.removeItem(cid)
-      return either(right(void 0))
+
+    del: async hash => {
+      localStorage.removeItem(hash)
+      return either(right(null))
     },
   }
 }

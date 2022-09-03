@@ -1,4 +1,5 @@
 import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
+
 export * from '../providers/ipfs/types'
 
 /**
@@ -28,5 +29,5 @@ export type MetadataStorage<T, ID = string> = {
    *
    * @generic ID - id type
    */
-  del: (id: ID) => Promise<EitherInterface<Error, undefined>>
+  del: (id: ID) => Promise<EitherInterface<Error, null>>
 }

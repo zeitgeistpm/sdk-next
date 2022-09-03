@@ -2,6 +2,7 @@ import { throws } from '@zeitgeistpm/utility/dist/error'
 import { Codec } from './types'
 
 export * from './types'
+export * from './impl'
 
 /**
  * Compose two codecs.

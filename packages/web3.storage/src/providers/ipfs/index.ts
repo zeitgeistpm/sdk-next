@@ -63,7 +63,7 @@ export const storage = <T>(
         if (config.cluster) {
           await cluster.unpin(cid.toString(), config.cluster)
         }
-        return either(right(void 0))
+        return either(right(null))
       } catch (error) {
         return either(left(error as Error))
       }
