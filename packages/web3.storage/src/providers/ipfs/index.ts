@@ -2,10 +2,11 @@ import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as IPFSHttpClient from 'ipfs-http-client'
 import { u8aToString } from '@polkadot/util'
-import { MetadataCodec, MetadataStorage } from '../../codec/types'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
-import { JsonCodec } from '../../codec/impl/json'
+import { JsonCodec } from '../../storage/impl/json'
+import { Codec } from '../../codec'
+import { MetadataStorage } from '../../storage'
 
 /**
  *
@@ -19,7 +20,7 @@ import { JsonCodec } from '../../codec/impl/json'
  */
 export const create = <T>(
   config: IPFSConfiguration,
-  codec: MetadataCodec<string, T> = JsonCodec(),
+  codec: Codec<string, T> = JsonCodec(),
 ): MetadataStorage<T, string> => {
   const client = IPFSHttpClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`

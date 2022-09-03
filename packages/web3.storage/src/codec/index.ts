@@ -1,7 +1,7 @@
-import { MetadataCodec } from './types'
+import { throws } from '@zeitgeistpm/utility/dist/error'
+import { Codec } from './types'
 
 export * from './types'
-export * from './impl/json'
 
 /**
  * Compose two codecs.
@@ -13,13 +13,13 @@ export * from './impl/json'
  * @param codecb MetadataCodec<O, IO>
  * @returns MetadataCodec<I, O>
  */
-// export const compose = <I, IO, O>(
-//   codeca: MetadataCodec<I, IO>,
-//   codecb: MetadataCodec<IO, O>,
-// ): MetadataCodec<I, O> => ({
-//   encode: data => codecb.encode(codeca.encode(data)),
-//   decode: data => codeca.decode(codecb.decode(data)),
-// })
+export const compose = <I, IO, O>(
+  codeca: Codec<I, IO>,
+  codecb: Codec<IO, O>,
+): Codec<I, O> => ({
+  encode: data => codecb.encode(codeca.encode(data).unrightOr(throws)),
+  decode: data => codeca.decode(codecb.decode(data).unrightOr(throws)),
+})
 
 /**
  *
@@ -30,7 +30,7 @@ export * from './impl/json'
  * @param codec MetadataCodec<T, S>
  * @returns MetadataCodec<S, T>
  */
-export const flip = <I, O>(codec: MetadataCodec<O, I>): MetadataCodec<I, O> => ({
+export const flip = <I, O>(codec: Codec<O, I>): Codec<I, O> => ({
   encode: data => codec.decode(data),
   decode: data => codec.encode(data),
 })

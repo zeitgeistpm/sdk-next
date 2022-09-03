@@ -1,2 +1,2 @@
 export * from './providers/types'
-export * from './codec/types'
+export * from './storage/types'

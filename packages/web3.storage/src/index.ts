@@ -1,3 +1,3 @@
-export * from './codec/types'
+export * from './storage/types'
 export * from './providers'
-export * from './codec'
+export * from './storage'

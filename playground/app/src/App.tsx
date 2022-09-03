@@ -7,7 +7,7 @@ import {
   MarketOrderByInput,
   PoolOrderByInput,
 } from '@zeitgeistpm/indexer'
-import { IPFS, JsonCodec, compose } from '@zeitgeistpm/web3.storage'
+import { IPFS } from '@zeitgeistpm/web3.storage'
 import { batteryStation } from '@zeitgeistpm/sdk'
 
 function App() {
@@ -21,16 +21,6 @@ function App() {
       },
     },
   })
-
-  const codec = compose<string, { data: string }, { data: number }>(JsonCodec(), {
-    decode: ({ data }) => ({ data: data.toString() }),
-    encode: ({ data }) => ({ data: parseInt(data) }),
-  })
-
-  useEffect(() => {
-    console.log(codec.encode(`{ "data": 1 }`))
-    console.log(codec.decode({ data: 1 }))
-  }, [])
 
   useEffect(() => {
     ;(async () => {

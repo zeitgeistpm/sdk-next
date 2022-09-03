@@ -4,7 +4,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "rimraf ./dist && tsc"
   },
   "peerDependencies": {
     "@polkadot/api": "*",
@@ -12,6 +12,9 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
+    "@zeitgeistpm/api": "*",
+    "@zeitgeistpm/indexer": "*",
+    "@zeitgeistpm/utility": "*",
     "ipfs-core": "^0.15.4"
   }
 }

@@ -1,3 +1,3 @@
-export const throws = <E>(error: E) => {
+export const throws = <E = Error>(error: E) => {
   throw error
 }

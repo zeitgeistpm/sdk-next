@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf ./dist && tsc",
     "build:watch": "tsc --watch",
     "rebuild": "rm -rf dist; yarn dist",
     "test": "echo \"Error: no test specified\" && exit 0"
