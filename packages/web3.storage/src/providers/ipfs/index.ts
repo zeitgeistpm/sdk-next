@@ -29,7 +29,7 @@ export const storage = <T>(
 
         const { cid } = await client.add(
           { content },
-          { hashAlg, pin: opts?.ephemeral ?? false },
+          { hashAlg, pin: !opts?.ephemeral ?? true },
         )
 
         if (config.cluster) {
