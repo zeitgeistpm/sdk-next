@@ -25,6 +25,11 @@ export const map = <L, R, B>(
   f: (a: R) => B,
 ): Either<L, B> => (isLeft(either) ? either : { right: f(either.right) })
 
+export const chain = <L, R, B>(
+  either: Either<L, R>,
+  f: (a: R) => Either<L, B>,
+): Either<L, B> => (isLeft(either) ? either : f(either.right))
+
 export const unleft = <L, R>(either: Either<L, R>) =>
   option(isLeft(either) ? some(either.left) : none())
 
@@ -44,16 +49,18 @@ export type EitherInterface<L, R> = Either<L, R> & {
   unright: () => OptionInterface<R>
   unrightOr: (or: OrHandler<L, R>) => R
   unleftOr: (or: OrHandler<R, L>) => L
-  map: <B>(f: (a: R) => B) => Either<L, B>
+  map: <B>(f: (a: R) => B) => EitherInterface<L, B>
+  chain: <B>(f: (a: R) => Either<L, B>) => EitherInterface<L, B>
 }
 
-export const either = <L, R>(either: Either<L, R>): EitherInterface<L, R> => ({
-  ...either,
-  unleft: () => unleft(either),
-  unright: () => unright(either),
-  unrightOr: (or: OrHandler<L, R>) => unrightOr(either, or),
-  unleftOr: (or: OrHandler<R, L>) => unleftOr(either, or),
-  map: <B>(f: (a: R) => B) => map(either, f),
+export const either = <L, R>(_either: Either<L, R>): EitherInterface<L, R> => ({
+  ..._either,
+  unleft: () => unleft(_either),
+  unright: () => unright(_either),
+  unrightOr: (or: OrHandler<L, R>) => unrightOr(_either, or),
+  unleftOr: (or: OrHandler<R, L>) => unleftOr(_either, or),
+  map: <B>(f: (a: R) => B) => either(map(_either, f)),
+  chain: <B>(f: (a: R) => Either<L, B>) => either(chain(_either, f)),
 })
 
 export const tryCatch = <Error, R>(fn: () => R) => {
