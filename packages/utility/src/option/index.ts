@@ -36,6 +36,9 @@ export const chain = <A, B>(
   f: (a: A) => Option<B>,
 ): Option<B> => (isNone(option) ? option : f(option.value))
 
+export const from = <A>(value?: A | null): OptionInterface<A> =>
+  option(value ? some(value) : none())
+
 export const unwrapOr = <A>(option: Option<A>, or: OrHandler<A>): A => {
   if (isSome(option)) return option.value
   else if (isFunction(or)) return or()
