@@ -14,8 +14,8 @@
   "dependencies": {
     "@zeitgeistpm/api": "*",
     "@zeitgeistpm/indexer": "*",
-    "@zeitgeistpm/web3.storage": "*",
     "@zeitgeistpm/utility": "*",
+    "@zeitgeistpm/web3.storage": "*",
     "ipfs-core": "^0.15.4"
   }
 }

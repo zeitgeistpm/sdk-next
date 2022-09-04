@@ -1,8 +1,24 @@
 import { throws } from '@zeitgeistpm/utility/dist/error'
+import { tryCatch, either } from 'packages/utility/dist/either'
 import { Codec } from './types'
 
 export * from './types'
 export * from './impl'
+
+/**
+ * Construct a Codec<I, O> from functions that either returns the encoded/decoded as a Right value
+ * or throws an error that will result in a Left value
+ *
+ * @generic I - type of input
+ * @generic O - type of output
+ */
+export const codec = <I, O>(config: {
+  encode: (input: I) => O
+  decode: (input: O) => I
+}): Codec<I, O> => ({
+  encode: data => either(tryCatch(() => config.encode(data))),
+  decode: data => either(tryCatch(() => config.decode(data))),
+})
 
 /**
  * Compose two codecs.
