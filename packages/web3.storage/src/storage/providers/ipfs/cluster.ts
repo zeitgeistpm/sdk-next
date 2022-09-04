@@ -1,4 +1,5 @@
-import * as b64 from '@zeitgeistpm/utility/dist/b64'
+import { Base64Codec } from '@zeitgeistpm/utility/dist/codec'
+import { throws } from '@zeitgeistpm/utility/dist/error'
 import { IPFSClusterConfiguration } from './types'
 
 /**
@@ -20,6 +21,11 @@ export type IPFSClusterPinningResponse = {
   max_depth: number
   reference: string
 }
+
+/**
+ * Base64 Codec
+ */
+const b64 = Base64Codec()
 
 /**
  *
@@ -82,10 +88,10 @@ const headers = (config: IPFSClusterConfiguration) => {
   })
 
   if (config.auth) {
-    headers.append(
-      'Authorization',
-      `Basic ${b64.encode(`${config.auth.username}:${config.auth.password}`)}`,
-    )
+    const authorization = b64
+      .encode(`${config.auth.username}:${config.auth.password}`)
+      .unrightOr(throws)
+    headers.append('Authorization', `Basic ${authorization}`)
   }
 
   return headers
