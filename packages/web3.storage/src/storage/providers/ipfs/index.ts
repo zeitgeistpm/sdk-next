@@ -4,9 +4,9 @@ import { u8aToString } from '@polkadot/util'
 import * as IPFSHttpClient from 'ipfs-http-client'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
-import { JsonCodec } from '../../codec/impl/json'
-import { Codec } from '../../codec'
-import { MetadataStorage } from '../../storage'
+import { JsonCodec } from '@zeitgeistpm/utility/src/codec/impl/json'
+import { Codec } from '@zeitgeistpm/utility/src/codec'
+import { MetadataStorage } from '../..'
 
 /**
  *

@@ -1,5 +1,5 @@
-import { throws } from '@zeitgeistpm/utility/dist/error'
-import { tryCatch, either } from 'packages/utility/dist/either'
+import { throws } from '../error'
+import { tryCatch, either } from '../either'
 import { Codec } from './types'
 
 export * from './types'

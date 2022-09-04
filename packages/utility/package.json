@@ -4,7 +4,9 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@polkadot/api": "*",

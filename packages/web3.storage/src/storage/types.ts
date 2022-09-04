@@ -1,6 +1,6 @@
 import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 
-export * from '../providers/ipfs/types'
+export * from './providers/ipfs/types'
 
 /**
  * A generic metadata type for on chain objects that

@@ -1,5 +1,4 @@
-import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
-export * from '../providers/ipfs/types'
+import { EitherInterface } from '../either'
 
 /**
  * A encoder and decoder of metadata objects.
