@@ -29,5 +29,5 @@ export type MetadataStorage<T, ID = string> = {
    *
    * @generic ID - id type
    */
-  del: (id: ID) => Promise<EitherInterface<Error, null>>
+  del: (id: ID) => Promise<EitherInterface<Error, void>>
 }

@@ -43,7 +43,7 @@ export const storage = <T>(
     },
     get: async cid => {
       try {
-        const content = []
+        const content: Uint8Array[] = []
 
         for await (const chunk of client.cat(cid)) {
           content.push(chunk)
@@ -63,7 +63,7 @@ export const storage = <T>(
         if (config.cluster) {
           await cluster.unpin(cid.toString(), config.cluster)
         }
-        return either(right(null))
+        return either(right(undefined as void))
       } catch (error) {
         return either(left(error as Error))
       }

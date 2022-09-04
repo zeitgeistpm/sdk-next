@@ -1,4 +1,4 @@
-import { either, left, right } from '@zeitgeistpm/utility/dist/either'
+import { either, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
 import { from } from '@zeitgeistpm/utility/dist/option'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { JsonCodec } from '@zeitgeistpm/utility/src/codec/impl/json'
@@ -45,8 +45,11 @@ export const storage = <T>(
         ),
 
     del: async hash => {
-      localStorage.removeItem(hash)
-      return either(right(null))
+      return either(
+        tryCatch(() => {
+          localStorage.removeItem(hash)
+        }),
+      )
     },
   }
 }
