@@ -46,8 +46,8 @@ export const isLeft = <L, R>(either: Either<L, R>): either is Left<L> =>
  * ```
  */
 export const map = <L, R, B>(
-  either: Either<L, R>,
   f: (a: R) => B,
+  either: Either<L, R>,
 ): Either<L, B> => (isLeft(either) ? either : { right: f(either.right) })
 
 /**
@@ -59,17 +59,17 @@ export const map = <L, R, B>(
  * const validate = (str: string) =>
  *   str === 'correct' ? right(1) : left(new Error('string has to be "correct"'))
  *
- * chain(right('correct'), validate)
+ * chain(validate, right('correct'))
  *   .unrightOr(throws) // -> 1
  *
- * chain(left('error'), validate)
+ * chain(validate, left('error'))
  *   .unrightOr(throws) // -> throws error
  * ```
  * ```
  */
 export const chain = <L, R, B>(
-  either: Either<L, R>,
   f: (a: R) => Either<L, B>,
+  either: Either<L, R>,
 ): Either<L, B> => (isLeft(either) ? either : f(either.right))
 
 /**
@@ -108,7 +108,7 @@ export type OrHandler<P, A> = A | ((value: P) => A)
  *   unrightOr(left(NaN), 2) // -> 2
  * ```
  */
-export const unrightOr = <L, R>(either: Either<L, R>, or: OrHandler<L, R>): R =>
+export const unrightOr = <L, R>(or: OrHandler<L, R>, either: Either<L, R>): R =>
   isRight(either) ? either.right : isFunction(or) ? or(either.left) : or
 
 /**
@@ -120,7 +120,7 @@ export const unrightOr = <L, R>(either: Either<L, R>, or: OrHandler<L, R>): R =>
  *   unleftOr(left(NaN), 2) // -> NaN
  * ```
  */
-export const unleftOr = <L, R>(either: Either<L, R>, or: OrHandler<R, L>): L =>
+export const unleftOr = <L, R>(or: OrHandler<R, L>, either: Either<L, R>): L =>
   isLeft(either) ? either.left : isFunction(or) ? or(either.right) : or
 
 export type EitherInterface<L, R> = Either<L, R> & {
@@ -201,10 +201,10 @@ export const either = <L, R>(_either: Either<L, R>): EitherInterface<L, R> => ({
   ..._either,
   unright: () => unright(_either),
   unleft: () => unleft(_either),
-  unrightOr: (or: OrHandler<L, R>) => unrightOr(_either, or),
-  unleftOr: (or: OrHandler<R, L>) => unleftOr(_either, or),
-  map: <B>(f: (a: R) => B) => either(map(_either, f)),
-  chain: <B>(f: (a: R) => Either<L, B>) => either(chain(_either, f)),
+  unrightOr: (or: OrHandler<L, R>) => unrightOr(or, _either),
+  unleftOr: (or: OrHandler<R, L>) => unleftOr(or, _either),
+  map: <B>(f: (a: R) => B) => either(map(f, _either)),
+  chain: <B>(f: (a: R) => Either<L, B>) => either(chain(f, _either)),
 })
 
 /**
