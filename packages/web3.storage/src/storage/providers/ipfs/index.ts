@@ -34,7 +34,7 @@ export const storage = <T>(
         )
 
         if (config.cluster) {
-          await cluster.pin(cid.toString(), config.cluster).catch(error => {
+          await cluster.pin(cid.toString(), config.cluster).catch(_ => {
             if (config?.node.pin) {
               client.pin.rm(cid)
             }
