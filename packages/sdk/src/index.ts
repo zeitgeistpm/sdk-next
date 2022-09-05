@@ -1,7 +1,7 @@
 import polly from 'polly-js'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
-import { ApiContext, IndexerContext } from './context'
+import { ApiContext, FullContext, IndexerContext } from './context'
 import * as Indexer from '@zeitgeistpm/indexer'
 import {
   ApiConfig,
@@ -16,13 +16,21 @@ import {
 } from './types'
 import { options } from '@zeitgeistpm/api/dist'
 import { debug } from './debug'
+import * as Model from './model'
 
 export * from './context'
 export * from './configs'
 
-export async function create(config: FullConfig): Promise<Sdk<FullConfig>>
-export async function create(config: ApiConfig): Promise<Sdk<ApiConfig>>
-export async function create(config: IndexerConfig): Promise<Sdk<IndexerConfig>>
+/**
+ * Create an instance of the zeitgeist sdk.
+ * Can be configured to have indexer and node rpc api or on or the other.
+ *
+ * @param config Config - Can be full config containing configuration for the indexer and rpc or node or one or the other.
+ * @returns Promise<Sdk<FullContext | ApiContext | IndexerContext>>
+ */
+export async function create(config: FullConfig): Promise<Sdk<FullContext>>
+export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>>
+export async function create(config: ApiConfig): Promise<Sdk<ApiContext>>
 export async function create(config: Config) {
   assert(
     isFullConfig(config) || isApiConfig(config) || isIndexerConfig(config),
@@ -48,9 +56,16 @@ export async function create(config: Config) {
       createIndexerContext(config),
     ])
 
-    return {
+    const context: FullContext = {
       ...api,
       ...indexer,
+    }
+
+    const model = Model.create(context)
+
+    return {
+      ...context,
+      model,
     }
   } else if (isIndexerConfig(config)) {
     debug(
@@ -58,17 +73,33 @@ export async function create(config: Config) {
       config,
       'warn',
     )
-    return createIndexerContext(config)
+    const context = await createIndexerContext(config)
+    const model = Model.create(context)
+
+    return {
+      ...context,
+      model,
+    }
   } else {
     debug(
       `Using only rpc, querying data might be more limited and/or slower.`,
       config,
       'warn',
     )
-    return createApiContext(config)
+    const context = await createApiContext(config)
+    const model = Model.create(context)
+
+    return {
+      ...context,
+      model,
+    }
   }
 }
 
+/**
+ * Create the api context object.
+ * @private
+ */
 const createApiContext = async (config: ApiConfig): Promise<ApiContext> => {
   debug(`connecting to rpc: ${config.provider}`, config)
 
@@ -100,6 +131,10 @@ const createApiContext = async (config: ApiConfig): Promise<ApiContext> => {
   }
 }
 
+/**
+ * Create the indexer context object.
+ * @private
+ */
 const createIndexerContext = async (
   config: IndexerConfig,
 ): Promise<IndexerContext> => {
