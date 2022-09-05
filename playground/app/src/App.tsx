@@ -8,7 +8,7 @@ import {
   PoolOrderByInput,
 } from '@zeitgeistpm/indexer'
 import { IPFS } from '@zeitgeistpm/web3.storage'
-import { batterystation } from '@zeitgeistpm/sdk'
+import { batterystation, batterystationApi } from '@zeitgeistpm/sdk'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 
 function App() {
@@ -27,23 +27,19 @@ function App() {
     ;(async () => {
       //const sdk = await Sdk.create({ ...batterystation(), debug: true })
       const sdk = await Sdk.create({ ...batterystation(), debug: true })
-      const data = await Promise.all([
-        sdk.indexer.markets({
-          order: MarketOrderByInput.IdAsc,
-          where: {},
-        }),
-        sdk.indexer.assets({
-          order: AssetOrderByInput.IdAsc,
-          where: {},
-        }),
-        sdk.indexer.pools({
-          order: PoolOrderByInput.CreatedAtAsc,
-          where: {
-            poolId_eq: 1,
-          },
-        }),
-      ])
-      console.log(data)
+      const rpc = await Sdk.create({ ...batterystationApi(), debug: true })
+
+      const markets = await sdk.model.markets.list({
+        offset: 10,
+        limit: 10,
+      })
+
+      const rpcmarkets = await rpc.model.markets.list({
+        offset: 10,
+        limit: 10,
+      })
+
+      console.log(markets, rpcmarkets)
     })()
   }, [])
 

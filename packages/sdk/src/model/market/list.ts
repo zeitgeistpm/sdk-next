@@ -23,8 +23,26 @@ const rpcList = async <C extends ApiContext>(
   { api }: ApiContext,
   query: ListQuery<ApiContext>,
 ): Promise<MarketList<C>> => {
-  const data = await api.query.marketCommons.markets()
-  return (data.toHuman() as any).slice(query.offset, query.limit)
+  const entries = await api.query.marketCommons.markets.entries()
+
+  const list = entries.map(
+    ([
+      {
+        args: [val],
+      },
+      market,
+    ]) => {
+      return {
+        id: Number(val.toHuman()),
+        ...(market.toHuman() as any),
+      }
+    },
+  )
+
+  const offset = query.offset ?? 0
+  const limit = offset + (query.limit ?? list.length)
+
+  return list.slice(offset, limit) as any
 }
 
 const indexerList = async (
