@@ -1,52 +1,7 @@
-import { RpcConfig, FullConfig, IndexerConfig } from '../types'
-import { KnownPreset, KnownPresets, SupportedParachain } from './known'
+import { SupportedParachain } from './known'
 
 export * from './known'
 export * from './types'
-
-export const mainnet = (): KnownPreset<FullConfig> => {
-  return {
-    preset: KnownPresets.mainnet,
-    provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
-    indexer: indexers.zeitgeist.uri,
-  }
-}
-
-export const mainnetRpc = (): KnownPreset<RpcConfig> => {
-  return {
-    preset: KnownPresets.mainnetRpc,
-    provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
-  }
-}
-
-export const mainnetIndexer = (): KnownPreset<IndexerConfig> => {
-  return {
-    preset: KnownPresets.mainnetIndexer,
-    indexer: indexers.zeitgeist.uri,
-  }
-}
-
-export const batterystation = (): KnownPreset<FullConfig> => {
-  return {
-    preset: KnownPresets.bsr,
-    provider: [rpcs.bsr.uri],
-    indexer: indexers.bsr.uri,
-  }
-}
-
-export const batterystationRpc = (): KnownPreset<RpcConfig> => {
-  return {
-    preset: KnownPresets.bsrRpc,
-    provider: [rpcs.bsr.uri],
-  }
-}
-
-export const batterystationIndexer = (): KnownPreset<IndexerConfig> => {
-  return {
-    preset: KnownPresets.bsrIndexer,
-    indexer: indexers.bsr.uri,
-  }
-}
 
 export const rpcs = {
   zeitgeist: {

@@ -34,8 +34,6 @@ function App() {
         limit: 99,
       })
 
-      indexed.model.markets.create
-
       const rpcmarkets = await rpc.model.markets.list({
         offset: 10,
         limit: 99,

@@ -4,6 +4,10 @@ import { SupportedParachain } from './types'
 
 export * from './types'
 
+/**
+ * Connect to the mainnet rpc and indexer
+ * @returns KnownPreset<FullConfig>
+ */
 export const mainnet = (): KnownPreset<FullConfig> => {
   return {
     preset: KnownPresets.mainnet,
@@ -12,6 +16,10 @@ export const mainnet = (): KnownPreset<FullConfig> => {
   }
 }
 
+/**
+ * Connect to the mainnet rpc only
+ * @returns KnownPreset<RpcConfig>
+ */
 export const mainnetRpc = (): KnownPreset<RpcConfig> => {
   return {
     preset: KnownPresets.mainnetRpc,
@@ -19,6 +27,10 @@ export const mainnetRpc = (): KnownPreset<RpcConfig> => {
   }
 }
 
+/**
+ * Connect to the mainnet indexer only.
+ * @returns KnownPreset<IndexerConfig>
+ */
 export const mainnetIndexer = (): KnownPreset<IndexerConfig> => {
   return {
     preset: KnownPresets.mainnetIndexer,
@@ -26,6 +38,10 @@ export const mainnetIndexer = (): KnownPreset<IndexerConfig> => {
   }
 }
 
+/**
+ * Connect to the batterystation testnet rpc and indexer.
+ * @returns KnownPreset<FullConfig>
+ */
 export const batterystation = (): KnownPreset<FullConfig> => {
   return {
     preset: KnownPresets.bsr,
@@ -34,6 +50,10 @@ export const batterystation = (): KnownPreset<FullConfig> => {
   }
 }
 
+/**
+ * Connect to the batterystation rpc only
+ * @returns KnownPreset<RpcConfig>
+ */
 export const batterystationRpc = (): KnownPreset<RpcConfig> => {
   return {
     preset: KnownPresets.bsrRpc,
@@ -41,6 +61,10 @@ export const batterystationRpc = (): KnownPreset<RpcConfig> => {
   }
 }
 
+/**
+ * Connect to the batterystation indexer only
+ * @returns KnownPreset<IndexerConfig>
+ */
 export const batterystationIndexer = (): KnownPreset<IndexerConfig> => {
   return {
     preset: KnownPresets.bsrIndexer,

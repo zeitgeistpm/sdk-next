@@ -3,7 +3,7 @@ import * as Market from './market'
 import { Model } from './types'
 
 /**
- * Create top level enriched zeitgeist model interface.
+ * Create top level enriched zeitgeist models interface.
  *
  * @generic C - Context
  * @param context C
