@@ -6,6 +6,12 @@ import { Config, ZeitgeistIndexer } from './types'
 export * from './graphql/sdk'
 export * from './types'
 
+/**
+ * Create a zeitgeist indexer client.
+ *
+ * @param config Config
+ * @returns ZeitgeistIndexer
+ */
 export const create = (config: Config): ZeitgeistIndexer => {
   const client = new GraphQLClient(config.uri)
   const gql = getSdk(client)
