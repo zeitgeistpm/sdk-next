@@ -1,10 +1,11 @@
-import * as Sdk from '@zeitgeistpm/sdk'
 import { useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
-import { IPFS } from '@zeitgeistpm/web3.storage'
+import * as Sdk from '@zeitgeistpm/sdk'
 import { batterystationIndexer, batterystationRpc } from '@zeitgeistpm/sdk'
+import { IPFS } from '@zeitgeistpm/web3.storage'
 import { throws } from '@zeitgeistpm/utility/dist/error'
+
+import './App.css'
+import reactLogo from './assets/react.svg'
 
 function App() {
   const storage = IPFS.storage<{}>({

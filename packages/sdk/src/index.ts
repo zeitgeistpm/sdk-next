@@ -11,15 +11,15 @@ import {
   isRpcConfig,
   isFullConfig,
   isIndexerConfig,
-  isKnownPreset,
   Sdk,
 } from './types'
 import { options } from '@zeitgeistpm/api/dist'
 import { debug } from './debug'
 import * as Model from './model'
+import { isKnownPreset } from './config/known'
 
 export * from './context'
-export * from './configs'
+export * from './config'
 
 /**
  * Create an instance of the zeitgeist sdk with full features of both indexer and chain rpc.
@@ -72,8 +72,8 @@ export async function create(config: Config) {
 
   if (isFullConfig(config)) {
     const [rpc, indexer] = await Promise.all([
-      createRpcContext(config),
-      createIndexerContext(config),
+      rpcContext(config),
+      indexerContext(config),
     ])
 
     const context: FullContext = {
@@ -81,7 +81,7 @@ export async function create(config: Config) {
       ...indexer,
     }
 
-    const model = Model.create(context)
+    const model = Model.model(context)
 
     return {
       ...context,
@@ -93,8 +93,8 @@ export async function create(config: Config) {
       config,
       'warn',
     )
-    const context = await createIndexerContext(config)
-    const model = Model.create(context)
+    const context: IndexerContext = await indexerContext(config)
+    const model = Model.model(context)
 
     return {
       ...context,
@@ -106,8 +106,8 @@ export async function create(config: Config) {
       config,
       'warn',
     )
-    const context = await createRpcContext(config)
-    const model = Model.create(context)
+    const context: RpcContext = await rpcContext(config)
+    const model = Model.model(context)
 
     return {
       ...context,
@@ -120,7 +120,7 @@ export async function create(config: Config) {
  * Create the api context object.
  * @private
  */
-const createRpcContext = async (config: RpcConfig): Promise<RpcContext> => {
+const rpcContext = async (config: RpcConfig): Promise<RpcContext> => {
   debug(`connecting to rpc: ${config.provider}`, config)
 
   const provider = await polly()
@@ -155,9 +155,7 @@ const createRpcContext = async (config: RpcConfig): Promise<RpcContext> => {
  * Create the indexer context object.
  * @private
  */
-const createIndexerContext = async (
-  config: IndexerConfig,
-): Promise<IndexerContext> => {
+const indexerContext = async (config: IndexerConfig): Promise<IndexerContext> => {
   debug(`connecting to indexer: ${config.indexer}`, config)
 
   const indexer = Indexer.create({ uri: config.indexer })

@@ -1,12 +1,7 @@
-import {
-  RpcConfig,
-  FullConfig,
-  IndexerConfig,
-  KnownPreset,
-  KnownPresets,
-} from '../types'
-import { SupportedParachain } from './types'
+import { RpcConfig, FullConfig, IndexerConfig } from '../types'
+import { KnownPreset, KnownPresets, SupportedParachain } from './known'
 
+export * from './known'
 export * from './types'
 
 export const mainnet = (): KnownPreset<FullConfig> => {
