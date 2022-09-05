@@ -8,7 +8,7 @@ import './App.css'
 import reactLogo from './assets/react.svg'
 
 function App() {
-  const storage = IPFS.storage<{}>({
+  const storage = IPFS.storage<{ texts: string }>({
     node: { url: 'http://ipfs.zeitgeist.pm:5001' },
     cluster: {
       url: 'https://ipfs-cluster.zeitgeist.pm',
@@ -43,7 +43,7 @@ function App() {
   }, [])
 
   const onClickIpfstest = async () => {
-    const cid = (await storage.put({ text: 'some data' })).unrightOr(throws)
+    const cid = (await storage.put({ texts: 'some data' })).unrightOr(throws)
     const data = (await storage.get(cid)).unrightOr(throws)
     console.log('read data', data)
     await storage.del(cid)
