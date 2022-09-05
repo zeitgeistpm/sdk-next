@@ -1,12 +1,22 @@
 import { WsProvider } from '@polkadot/api'
+import { ApiOptions } from '@polkadot/api/types'
 import * as zeitgeistDefinitions from '@zeitgeistpm/type-defs'
 import '@zeitgeistpm/types'
 
+/**
+ * Configuration for provider.
+ */
 export type ZeitgeistApiOptions = {
   provider: WsProvider
 }
 
-export const options = (opts: ZeitgeistApiOptions) => ({
+/**
+ * Create options including types and typedefs for the zeitgeist rpc api.
+ *
+ * @param opts ZeitgeistApiOptions
+ * @returns ApiOptions
+ */
+export const options = (opts: ZeitgeistApiOptions): ApiOptions => ({
   provider: opts.provider,
   noInitWarn: true,
   rpc: {
