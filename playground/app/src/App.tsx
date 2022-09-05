@@ -25,7 +25,8 @@ function App() {
 
   useEffect(() => {
     ;(async () => {
-      const sdk = await Sdk.create(batterystation())
+      //const sdk = await Sdk.create({ ...batterystation(), debug: true })
+      const sdk = await Sdk.create({ ...batterystation(), debug: true })
       const data = await Promise.all([
         sdk.indexer.markets({
           order: MarketOrderByInput.IdAsc,

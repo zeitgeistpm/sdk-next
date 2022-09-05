@@ -16,6 +16,7 @@
     "@zeitgeistpm/indexer": "*",
     "@zeitgeistpm/utility": "*",
     "@zeitgeistpm/web3.storage": "*",
-    "ipfs-core": "^0.15.4"
+    "ipfs-core": "^0.15.4",
+    "polly-js": "^1.8.3"
   }
 }

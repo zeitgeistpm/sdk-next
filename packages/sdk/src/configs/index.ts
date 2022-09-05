@@ -1,42 +1,54 @@
-import { ApiConfig, FullConfig, IndexerConfig } from '../types'
+import {
+  ApiConfig,
+  FullConfig,
+  IndexerConfig,
+  KnownPreset,
+  KnownPresets,
+} from '../types'
 import { SupportedParachain } from './types'
 
 export * from './types'
 
-export const mainnet = (): FullConfig => {
+export const mainnet = (): KnownPreset<FullConfig> => {
   return {
-    ...mainnetApi(),
-    ...mainnetIndexer(),
-  }
-}
-
-export const mainnetApi = (): ApiConfig => {
-  return {
+    preset: KnownPresets.mainnet,
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
-  }
-}
-
-export const mainnetIndexer = (): IndexerConfig => {
-  return {
     indexer: indexers.zeitgeist.uri,
   }
 }
 
-export const batterystation = (): FullConfig => {
+export const mainnetApi = (): KnownPreset<ApiConfig> => {
   return {
-    ...batterystationApi(),
-    ...batterystationIndexer(),
+    preset: KnownPresets.mainnetRpc,
+    provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
   }
 }
 
-export const batterystationApi = (): ApiConfig => {
+export const mainnetIndexer = (): KnownPreset<IndexerConfig> => {
   return {
+    preset: KnownPresets.mainnetIndexer,
+    indexer: indexers.zeitgeist.uri,
+  }
+}
+
+export const batterystation = (): KnownPreset<FullConfig> => {
+  return {
+    preset: KnownPresets.bsr,
+    provider: [rpcs.bsr.uri],
+    indexer: indexers.bsr.uri,
+  }
+}
+
+export const batterystationApi = (): KnownPreset<ApiConfig> => {
+  return {
+    preset: KnownPresets.bsrRpc,
     provider: [rpcs.bsr.uri],
   }
 }
 
-export const batterystationIndexer = (): IndexerConfig => {
+export const batterystationIndexer = (): KnownPreset<IndexerConfig> => {
   return {
+    preset: KnownPresets.bsrIndexer,
     indexer: indexers.bsr.uri,
   }
 }

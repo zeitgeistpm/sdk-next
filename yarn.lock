@@ -4810,6 +4810,7 @@ __metadata:
     "@zeitgeistpm/utility": "*"
     "@zeitgeistpm/web3.storage": "*"
     ipfs-core: ^0.15.4
+    polly-js: ^1.8.3
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/types": "*"
@@ -13433,6 +13434,13 @@ __metadata:
   version: 8.0.0
   resolution: "pluralize@npm:8.0.0"
   checksum: 08931d4a6a4a5561a7f94f67a31c17e6632cb21e459ab3ff4f6f629d9a822984cf8afef2311d2005fbea5d7ef26016ebb090db008e2d8bce39d0a9a9d218736e
+  languageName: node
+  linkType: hard
+
+"polly-js@npm:^1.8.3":
+  version: 1.8.3
+  resolution: "polly-js@npm:1.8.3"
+  checksum: 81e8925caa957cee1c7af64d2c74f538f37b9edc3d057536fd02af65bd117b18ce63ed2203c27e2db306daee3e4513501399bc92d45a29d965538cbe4ffd7dfe
   languageName: node
   linkType: hard
 
