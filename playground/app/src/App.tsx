@@ -8,7 +8,7 @@ import {
   PoolOrderByInput,
 } from '@zeitgeistpm/indexer'
 import { IPFS } from '@zeitgeistpm/web3.storage'
-import { batteryStation } from '@zeitgeistpm/sdk'
+import { batterystation } from '@zeitgeistpm/sdk'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     ;(async () => {
-      const sdk = Sdk.create(await batteryStation())
+      const sdk = await Sdk.create(batterystation())
       const data = await Promise.all([
         sdk.indexer.markets({
           order: MarketOrderByInput.IdAsc,

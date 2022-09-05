@@ -22,10 +22,3 @@ export const isApiContext = (config: Context): config is ApiContext =>
 
 export const isIndexerContext = (config: Context): config is IndexerContext =>
   Boolean('indexer' in config && typeof config.indexer === 'object')
-
-export enum SupportedParachain {
-  KUSAMA = 'kusama',
-  ROCOCO = 'rococo',
-  BSR = 'bsr',
-  LOCAL = 'local',
-}
