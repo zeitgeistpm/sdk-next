@@ -143,7 +143,7 @@ const rpcContext = async (config: RpcConfig): Promise<RpcContext> => {
 
   const api = await ApiPromise.create({ ...options({ provider }) })
 
-  config.debug && debug(`connected to node rpc`, { ...config, color: '#36a4e3' })
+  debug(`connected to node rpc`, { ...config, color: '#36a4e3' })
 
   return {
     api,
@@ -167,11 +167,10 @@ const indexerContext = async (config: IndexerConfig): Promise<IndexerContext> =>
     .waitAndRetry(config.connectionRetries ?? 8)
     .executeForPromise(() => indexer.ping())
 
-  config.debug &&
-    debug(`connected to indexer, response time ${pinged}ms`, {
-      ...config,
-      color: '#52c45e',
-    })
+  debug(`connected to indexer, response time ${pinged}ms`, {
+    ...config,
+    color: '#52c45e',
+  })
 
   return { indexer }
 }

@@ -5,7 +5,7 @@ export const debug = (
   opts: { debug?: boolean; color?: string },
   level: 'debug' | 'warn' | 'log' | 'error' = 'log',
 ) =>
-  opts.debug &&
+  (opts.debug ?? true) &&
   console[level](
     `${__debugsymbol}: %c${str}`,
     'color: #a343a0;',

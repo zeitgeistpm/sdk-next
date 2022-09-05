@@ -21,12 +21,8 @@ function App() {
 
   useEffect(() => {
     ;(async () => {
-      const indexed = await Sdk.create({
-        ...batterystationIndexer(),
-        debug: true,
-      })
-
-      const rpc = await Sdk.create({ ...batterystationRpc(), debug: true })
+      const indexed = await Sdk.create(batterystationIndexer())
+      const rpc = await Sdk.create(batterystationRpc())
 
       const markets = await indexed.model.markets.list({
         offset: 10,
