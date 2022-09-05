@@ -1,6 +1,10 @@
 import { useEffect } from 'react'
 import * as Sdk from '@zeitgeistpm/sdk'
-import { batterystationIndexer, batterystationRpc } from '@zeitgeistpm/sdk'
+import {
+  batterystation,
+  batterystationIndexer,
+  batterystationRpc,
+} from '@zeitgeistpm/sdk'
 import { IPFS } from '@zeitgeistpm/web3.storage'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 
@@ -21,6 +25,7 @@ function App() {
 
   useEffect(() => {
     ;(async () => {
+      const full = await Sdk.create(batterystation())
       const indexed = await Sdk.create(batterystationIndexer())
       const rpc = await Sdk.create(batterystationRpc())
 
@@ -29,10 +34,14 @@ function App() {
         limit: 99,
       })
 
+      indexed.model.markets.create
+
       const rpcmarkets = await rpc.model.markets.list({
         offset: 10,
         limit: 99,
       })
+
+      rpc.model.markets.create
 
       console.log(markets, rpcmarkets)
     })()

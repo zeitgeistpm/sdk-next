@@ -4,8 +4,8 @@ import {
   IndexerContext,
   isFullContext,
   isIndexerContext,
-} from '../../context'
-import { MarketList, ListQuery } from './types'
+} from '../../../../context'
+import { MarketList, ListQuery } from '../../types'
 
 export const list = async <C extends Context>(
   context: C,
