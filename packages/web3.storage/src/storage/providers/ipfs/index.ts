@@ -20,7 +20,7 @@ export const storage = <T>(
   config: IPFSConfiguration,
   codec: Codec<string, T> = JsonCodec(),
 ): MetadataStorage<T, string> => {
-  const client = IPFSHttpClient.create({ url: config.node.url })
+  const node = IPFSHttpClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`
 
   return {
@@ -28,7 +28,7 @@ export const storage = <T>(
       try {
         const content = codec.decode(data).unrightOr(throws)
 
-        const { cid } = await client.add(
+        const { cid } = await node.add(
           { content },
           { hashAlg, pin: config?.node.pin ?? true },
         )
@@ -36,7 +36,7 @@ export const storage = <T>(
         if (config.cluster) {
           await cluster.pin(cid.toString(), config.cluster).catch(_ => {
             if (config?.node.pin) {
-              client.pin.rm(cid)
+              node.pin.rm(cid)
             }
           })
         }
@@ -48,7 +48,7 @@ export const storage = <T>(
     },
     get: async cid => {
       try {
-        const data = either(await read(client, cid))
+        const data = either(await read(node, cid))
         const encoded = data.chain(codec.encode).unrightOr(throws)
 
         return either(right(encoded))
@@ -72,14 +72,12 @@ export const storage = <T>(
 /**
  * Read data from a cid and parse it to a string.
  */
-const read = Te.from(
-  async (client: IPFSHttpClient.IPFSHTTPClient, cid: string) => {
-    const content: Uint8Array[] = []
+const read = Te.from(async (node: IPFSHttpClient.IPFSHTTPClient, cid: string) => {
+  const content: Uint8Array[] = []
 
-    for await (const chunk of client.cat(cid)) {
-      content.push(chunk)
-    }
+  for await (const chunk of node.cat(cid)) {
+    content.push(chunk)
+  }
 
-    return content.map(u8aToString).reduce((acc, chunk) => acc + chunk)
-  },
-)
+  return content.map(u8aToString).reduce((acc, chunk) => acc + chunk)
+})
