@@ -4,6 +4,10 @@ import { from } from '../../src/taskeither'
 import { throws } from '../../src/error'
 
 describe('taskeither', () => {
+  describe('chaining async tasks', () => {
+    it('should', async () => {})
+  })
+
   describe('from', () => {
     it('generic test', async () => {
       const fetcher = async (a: number, b: boolean) => {

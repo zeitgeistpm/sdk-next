@@ -1,5 +1,6 @@
 import { Base64Codec } from '@zeitgeistpm/utility/dist/codec'
 import { throws } from '@zeitgeistpm/utility/dist/error'
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { IPFSClusterConfiguration } from './types'
 
 /**
@@ -31,56 +32,61 @@ const b64 = Base64Codec()
  *
  * Pinns a cid to the cluster.
  */
-export const pin = async (
-  cid: string,
-  config: IPFSClusterConfiguration,
-): Promise<IPFSClusterPinningResponse> => {
-  const response = await fetch(
-    new URL(`/pins/${cid}?replication-min=2&replication-max=2`, config.url).href,
-    {
-      headers: headers(config),
-      method: `POST`,
-    },
-  )
-
-  const data = await response.json()
-
-  if (!response.ok) {
-    throw new Error(
-      `[${data?.code ?? '500'}]: ${
-        data?.message ?? 'Unknown cluster api error.'
-      }`,
+export const pin = Te.from(
+  async (
+    cid: string,
+    config: IPFSClusterConfiguration,
+  ): Promise<IPFSClusterPinningResponse> => {
+    const response = await fetch(
+      new URL(`/pins/${cid}?replication-min=2&replication-max=2`, config.url)
+        .href,
+      {
+        headers: headers(config),
+        method: `POST`,
+      },
     )
-  }
 
-  return data
-}
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(
+        `[${data?.code ?? '500'}]: ${
+          data?.message ?? 'Unknown cluster api error.'
+        }`,
+      )
+    }
+
+    return data
+  },
+)
 
 /**
  *
  * Unpinns a cid from the cluster.
  */
-export const unpin = async (
-  cid: string,
-  config: IPFSClusterConfiguration,
-): Promise<IPFSClusterPinningResponse> => {
-  const response = await fetch(new URL(`/pins/${cid}`, config.url).href, {
-    headers: headers(config),
-    method: `DELETE`,
-  })
+export const unpin = Te.from(
+  async (
+    cid: string,
+    config: IPFSClusterConfiguration,
+  ): Promise<IPFSClusterPinningResponse> => {
+    const response = await fetch(new URL(`/pins/${cid}`, config.url).href, {
+      headers: headers(config),
+      method: `DELETE`,
+    })
 
-  const data = await response.json()
+    const data = await response.json()
 
-  if (!response.ok) {
-    throw new Error(
-      `[${data?.code ?? '500'}]: ${
-        data?.message ?? 'Unknown cluster api error.'
-      }`,
-    )
-  }
+    if (!response.ok) {
+      throw new Error(
+        `[${data?.code ?? '500'}]: ${
+          data?.message ?? 'Unknown cluster api error.'
+        }`,
+      )
+    }
 
-  return data
-}
+    return data
+  },
+)
 
 const headers = (config: IPFSClusterConfiguration) => {
   const headers = new Headers({

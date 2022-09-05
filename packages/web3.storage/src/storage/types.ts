@@ -1,4 +1,5 @@
 import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
+import { Task } from '@zeitgeistpm/utility/dist/task'
 
 export * from './providers/ipfs/types'
 
@@ -13,21 +14,18 @@ export type MetadataStorage<T, ID = string> = {
    * @generic ID - id type
    * @generic T - type of data
    */
-  get: (id: ID) => Promise<EitherInterface<Error, T>>
+  get: Task<EitherInterface<Error, T>, [ID]>
   /**
    * Put item to storage
    *
    * @generic ID - id type
    * @generic T - type of data
    */
-  put: (
-    data: T,
-    opts?: { ephemeral?: boolean },
-  ) => Promise<EitherInterface<Error, ID>>
+  put: Task<EitherInterface<Error, ID>, [data: T]>
   /**
    * delete item from storage
    *
    * @generic ID - id type
    */
-  del: (id: ID) => Promise<EitherInterface<Error, void>>
+  del: Task<EitherInterface<Error, void>, [ID]>
 }

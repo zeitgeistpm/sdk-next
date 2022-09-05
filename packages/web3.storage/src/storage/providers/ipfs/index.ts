@@ -1,4 +1,5 @@
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { u8aToString } from '@polkadot/util'
 import * as IPFSHttpClient from 'ipfs-http-client'
@@ -23,17 +24,21 @@ export const storage = <T>(
   const hashAlg = config.hashAlg ?? `sha3-384`
 
   return {
-    put: async (data, opts) => {
+    put: async data => {
       try {
         const content = codec.decode(data).unrightOr(throws)
 
         const { cid } = await client.add(
           { content },
-          { hashAlg, pin: !opts?.ephemeral ?? true },
+          { hashAlg, pin: config?.node.pin ?? true },
         )
 
         if (config.cluster) {
-          await cluster.pin(cid.toString(), config.cluster)
+          await cluster.pin(cid.toString(), config.cluster).catch(error => {
+            if (config?.node.pin) {
+              client.pin.rm(cid)
+            }
+          })
         }
 
         return either(right(cid.toString()))
@@ -43,15 +48,8 @@ export const storage = <T>(
     },
     get: async cid => {
       try {
-        const content: Uint8Array[] = []
-
-        for await (const chunk of client.cat(cid)) {
-          content.push(chunk)
-        }
-
-        const data = content.map(u8aToString).reduce((acc, chunk) => acc + chunk)
-
-        const encoded = codec.encode(data).unrightOr(throws)
+        const data = either(await read(client, cid))
+        const encoded = data.chain(codec.encode).unrightOr(throws)
 
         return either(right(encoded))
       } catch (error) {
@@ -70,3 +68,18 @@ export const storage = <T>(
     },
   }
 }
+
+/**
+ * Read data from a cid and parse it to a string.
+ */
+const read = Te.from(
+  async (client: IPFSHttpClient.IPFSHTTPClient, cid: string) => {
+    const content: Uint8Array[] = []
+
+    for await (const chunk of client.cat(cid)) {
+      content.push(chunk)
+    }
+
+    return content.map(u8aToString).reduce((acc, chunk) => acc + chunk)
+  },
+)
