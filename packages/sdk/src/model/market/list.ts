@@ -1,5 +1,5 @@
 import {
-  ApiContext,
+  RpcContext,
   Context,
   IndexerContext,
   isFullContext,
@@ -19,9 +19,9 @@ export const list = async <C extends Context>(
   return data as MarketList<C>
 }
 
-const rpcList = async <C extends ApiContext>(
-  { api }: ApiContext,
-  query: ListQuery<ApiContext>,
+const rpcList = async <C extends RpcContext>(
+  { api }: RpcContext,
+  query: ListQuery<RpcContext>,
 ): Promise<MarketList<C>> => {
   const entries = await api.query.marketCommons.markets.entries()
 

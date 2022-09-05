@@ -8,15 +8,15 @@ export type Sdk<C extends Context> = C & {
   model: Model<C>
 }
 
-export type Config = FullConfig | (ApiConfig | IndexerConfig)
+export type Config = FullConfig | (RpcConfig | IndexerConfig)
 
 export type BaseConfig = {
   debug?: boolean
 }
 
-export type FullConfig = ApiConfig & IndexerConfig
+export type FullConfig = RpcConfig & IndexerConfig
 
-export type ApiConfig = BaseConfig & {
+export type RpcConfig = BaseConfig & {
   provider: string | string[]
 }
 

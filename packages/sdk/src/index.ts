@@ -1,14 +1,14 @@
 import polly from 'polly-js'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
-import { ApiContext, FullContext, IndexerContext } from './context'
+import { RpcContext, FullContext, IndexerContext } from './context'
 import * as Indexer from '@zeitgeistpm/indexer'
 import {
-  ApiConfig,
+  RpcConfig,
   Config,
   FullConfig,
   IndexerConfig,
-  isApiConfig,
+  isRpcConfig,
   isFullConfig,
   isIndexerConfig,
   isKnownPreset,
@@ -26,14 +26,15 @@ export * from './configs'
  * Can be configured to have indexer and node rpc api or on or the other.
  *
  * @param config Config - Can be full config containing configuration for the indexer and rpc or node or one or the other.
- * @returns Promise<Sdk<FullContext | ApiContext | IndexerContext>>
+ * @returns Promise<Sdk<FullContext | RpcContext | IndexerContext>>
  */
+
 export async function create(config: FullConfig): Promise<Sdk<FullContext>>
 export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>>
-export async function create(config: ApiConfig): Promise<Sdk<ApiContext>>
+export async function create(config: RpcConfig): Promise<Sdk<RpcContext>>
 export async function create(config: Config) {
   assert(
-    isFullConfig(config) || isApiConfig(config) || isIndexerConfig(config),
+    isFullConfig(config) || isRpcConfig(config) || isIndexerConfig(config),
     () =>
       new Error(
         `Initialization error. Config needs to specify at least a valid indexer option or api rpc option.`,
@@ -51,13 +52,13 @@ export async function create(config: Config) {
   }
 
   if (isFullConfig(config)) {
-    const [api, indexer] = await Promise.all([
-      createApiContext(config),
+    const [rpc, indexer] = await Promise.all([
+      createRpcContext(config),
       createIndexerContext(config),
     ])
 
     const context: FullContext = {
-      ...api,
+      ...rpc,
       ...indexer,
     }
 
@@ -86,7 +87,7 @@ export async function create(config: Config) {
       config,
       'warn',
     )
-    const context = await createApiContext(config)
+    const context = await createRpcContext(config)
     const model = Model.create(context)
 
     return {
@@ -100,7 +101,7 @@ export async function create(config: Config) {
  * Create the api context object.
  * @private
  */
-const createApiContext = async (config: ApiConfig): Promise<ApiContext> => {
+const createRpcContext = async (config: RpcConfig): Promise<RpcContext> => {
   debug(`connecting to rpc: ${config.provider}`, config)
 
   const provider = await polly()

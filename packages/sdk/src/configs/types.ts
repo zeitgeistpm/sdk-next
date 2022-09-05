@@ -1,4 +1,4 @@
-import { ApiConfig, Config, FullConfig, IndexerConfig } from '../types'
+import { RpcConfig, Config, FullConfig, IndexerConfig } from '../types'
 
 export enum KnownPresets {
   mainnet = 'Mainnet',
@@ -14,9 +14,9 @@ export type KnownPreset<C extends Config> = C & {
 }
 
 export const isFullConfig = (config: Config): config is FullConfig =>
-  isApiConfig(config) && isIndexerConfig(config)
+  isRpcConfig(config) && isIndexerConfig(config)
 
-export const isApiConfig = (config: Config): config is ApiConfig =>
+export const isRpcConfig = (config: Config): config is RpcConfig =>
   Boolean('provider' in config)
 
 export const isIndexerConfig = (config: Config): config is IndexerConfig =>
