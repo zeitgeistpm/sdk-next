@@ -17,7 +17,7 @@ export const mainnet = (): KnownPreset<FullConfig> => {
   }
 }
 
-export const mainnetApi = (): KnownPreset<RpcConfig> => {
+export const mainnetRpc = (): KnownPreset<RpcConfig> => {
   return {
     preset: KnownPresets.mainnetRpc,
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
@@ -39,7 +39,7 @@ export const batterystation = (): KnownPreset<FullConfig> => {
   }
 }
 
-export const batterystationApi = (): KnownPreset<RpcConfig> => {
+export const batterystationRpc = (): KnownPreset<RpcConfig> => {
   return {
     preset: KnownPresets.bsrRpc,
     provider: [rpcs.bsr.uri],

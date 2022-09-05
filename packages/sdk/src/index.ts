@@ -22,16 +22,35 @@ export * from './context'
 export * from './configs'
 
 /**
- * Create an instance of the zeitgeist sdk.
- * Can be configured to have indexer and node rpc api or on or the other.
+ * Create an instance of the zeitgeist sdk with full features of both indexer and chain rpc.
  *
- * @param config Config - Can be full config containing configuration for the indexer and rpc or node or one or the other.
- * @returns Promise<Sdk<FullContext | RpcContext | IndexerContext>>
+ * @mode full
+ * @note create with different config to enable indexer or rpc features.
+ * @param config FullConfig - Rpc and indexer config
+ * @returns Promise<Sdk<FullContext>>
  */
-
 export async function create(config: FullConfig): Promise<Sdk<FullContext>>
+
+/**
+ * Create an instance of the zeitgeist sdk with only indexer features.
+ *
+ * @mode indexer
+ * @note create with different config to enable indexer or rpc features.
+ * @param config IndexerConfig - Config for the indexer
+ * @returns Promise<Sdk<IndexerContext>>
+ */
 export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>>
+
+/**
+ * Create an instance of the zeitgeist sdk with only rpc features.
+ *
+ * @mode rpc
+ * @note create with different config to enable indexer or rpc features.
+ * @param config RpcConfig - Config for the rpc node
+ * @returns Promise<Sdk<RpcContext>>
+ */
 export async function create(config: RpcConfig): Promise<Sdk<RpcContext>>
+
 export async function create(config: Config) {
   assert(
     isFullConfig(config) || isRpcConfig(config) || isIndexerConfig(config),
@@ -108,7 +127,7 @@ const createRpcContext = async (config: RpcConfig): Promise<RpcContext> => {
     .logger(err => {
       debug(`rpc connection failed, retrying..`, config, 'warn')
     })
-    .waitAndRetry(5)
+    .waitAndRetry(config.connectionRetries ?? 8)
     .executeForPromise<WsProvider>(
       () =>
         new Promise((resolve, reject) => {
@@ -147,7 +166,7 @@ const createIndexerContext = async (
     .logger(err => {
       debug(`indexer connection failed, retrying..`, config, 'warn')
     })
-    .waitAndRetry(3)
+    .waitAndRetry(config.connectionRetries ?? 8)
     .executeForPromise(() => indexer.ping())
 
   config.debug &&

@@ -2,17 +2,8 @@ import * as Sdk from '@zeitgeistpm/sdk'
 import { useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
-import {
-  AssetOrderByInput,
-  MarketOrderByInput,
-  PoolOrderByInput,
-} from '@zeitgeistpm/indexer'
 import { IPFS } from '@zeitgeistpm/web3.storage'
-import {
-  batterystation,
-  batterystationApi,
-  batterystationIndexer,
-} from '@zeitgeistpm/sdk'
+import { batterystationIndexer, batterystationRpc } from '@zeitgeistpm/sdk'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 
 function App() {
@@ -34,7 +25,7 @@ function App() {
         debug: true,
       })
 
-      const rpc = await Sdk.create({ ...batterystationApi(), debug: true })
+      const rpc = await Sdk.create({ ...batterystationRpc(), debug: true })
 
       const markets = await indexed.model.markets.list({
         offset: 10,
