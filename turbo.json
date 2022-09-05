@@ -8,6 +8,9 @@
     "test": {
       "cache": false
     },
+    "coverage": {
+      "cache": false
+    },
     "start": {
       "dependsOn": ["^build"],
       "outputs": []

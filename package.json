@@ -6,7 +6,8 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "coverage": "turbo run coverage"
   },
   "packageManager": "yarn@3.2.2",
   "devDependencies": {
