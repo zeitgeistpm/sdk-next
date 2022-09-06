@@ -1,5 +1,13 @@
 const __debugsymbol = `%c@zeitgeistpm/sdk`
 
+/**
+ * Helper for debugging and verbose logging in the sdk.
+ *
+ * @param str string to log
+ * @param opts options
+ * @param level log level
+ * @returns void
+ */
 export const debug = (
   str: string,
   opts: { debug?: boolean; color?: string },

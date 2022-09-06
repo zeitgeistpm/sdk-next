@@ -1,3 +1,4 @@
+import { Market } from '@zeitgeistpm/types/dist/interfaces'
 import {
   RpcContext,
   Context,
@@ -5,8 +6,17 @@ import {
   isFullContext,
   isIndexerContext,
 } from '../../../../context'
-import { MarketList, ListQuery } from '../../types'
+import { MarketList, ListQuery, RpcMarket } from '../../types'
 
+/**
+ * Query for a list of markets.
+ * Query capabilities and returned data differentiates between a rpc and indexer context.
+ *
+ * @generic C - Context
+ * @param context C - the context to query inb
+ * @param query ListQuery<C>
+ * @returns Promise<MarketList<C>>
+ */
 export const list = async <C extends Context>(
   context: C,
   query: ListQuery<C>,
@@ -19,23 +29,37 @@ export const list = async <C extends Context>(
   return data as MarketList<C>
 }
 
+/**
+ * Concrete listing function for indexer context
+ * @private
+ */
+const indexerList = async (
+  context: IndexerContext,
+  query: ListQuery<IndexerContext>,
+): Promise<MarketList<IndexerContext>> => {
+  return (await context.indexer.markets(query)).markets
+}
+
+/**
+ * Concrete listing function for rpc context
+ * @private
+ */
 const rpcList = async <C extends RpcContext>(
   { api }: RpcContext,
   query: ListQuery<RpcContext>,
 ): Promise<MarketList<C>> => {
-  const entries = await api.query.marketCommons.markets.entries()
+  const entries = await api.query.marketCommons.markets.entries<Market>()
 
   const list = entries.map(
     ([
       {
-        args: [val],
+        args: [index],
       },
       market,
     ]) => {
-      return {
-        id: Number(val.toHuman()),
-        ...(market.toHuman() as any),
-      }
+      const marketId = Number(index.toHuman())
+      const rpcMarket: RpcMarket = Object.assign(market, { marketId })
+      return rpcMarket
     },
   )
 
@@ -43,11 +67,4 @@ const rpcList = async <C extends RpcContext>(
   const limit = offset + (query.limit ?? list.length)
 
   return list.slice(offset, limit) as any
-}
-
-const indexerList = async (
-  context: IndexerContext,
-  query: ListQuery<IndexerContext>,
-): Promise<MarketList<IndexerContext>> => {
-  return (await context.indexer.markets(query)).markets
 }

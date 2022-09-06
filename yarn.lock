@@ -4781,6 +4781,9 @@ __metadata:
 "@zeitgeistpm/api@*, @zeitgeistpm/api@workspace:packages/api":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/api@workspace:packages/api"
+  dependencies:
+    "@zeitgeistpm/type-defs": "*"
+    "@zeitgeistpm/types": "*"
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/types": "*"
@@ -4807,6 +4810,8 @@ __metadata:
   dependencies:
     "@zeitgeistpm/api": "*"
     "@zeitgeistpm/indexer": "*"
+    "@zeitgeistpm/type-defs": "*"
+    "@zeitgeistpm/types": "*"
     "@zeitgeistpm/utility": "*"
     "@zeitgeistpm/web3.storage": "*"
     ipfs-core: ^0.15.4
@@ -4818,13 +4823,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/type-defs@^0.8.0, @zeitgeistpm/type-defs@workspace:packages/type-defs":
+"@zeitgeistpm/type-defs@*, @zeitgeistpm/type-defs@^0.8.0, @zeitgeistpm/type-defs@workspace:packages/type-defs":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/type-defs@workspace:packages/type-defs"
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/types@workspace:packages/types":
+"@zeitgeistpm/types@*, @zeitgeistpm/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/types@workspace:packages/types"
   dependencies:

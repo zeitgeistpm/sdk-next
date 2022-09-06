@@ -6,6 +6,10 @@
   "scripts": {
     "build": "rimraf ./dist && tsc"
   },
+  "dependencies": {
+    "@zeitgeistpm/type-defs": "*",
+    "@zeitgeistpm/types": "*"
+  },
   "peerDependencies": {
     "@polkadot/api": "*",
     "@polkadot/types": "*"
