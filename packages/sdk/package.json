@@ -19,6 +19,7 @@
     "@zeitgeistpm/utility": "*",
     "@zeitgeistpm/web3.storage": "*",
     "ipfs-core": "^0.15.4",
-    "polly-js": "^1.8.3"
+    "polly-js": "^1.8.3",
+    "superstruct": "^0.16.0"
   }
 }

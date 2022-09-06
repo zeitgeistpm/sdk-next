@@ -4816,6 +4816,7 @@ __metadata:
     "@zeitgeistpm/web3.storage": "*"
     ipfs-core: ^0.15.4
     polly-js: ^1.8.3
+    superstruct: ^0.16.0
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/types": "*"
@@ -15102,6 +15103,13 @@ __metadata:
     function-timeout: ^0.1.0
     time-span: ^5.1.0
   checksum: 99865cb002a7e4af78cbfb51ef9636d51c1678319cf50e3cca8a7ef205eff41732430de1d36f2872949388c11506ef6e9c7dbf220bea6748a80edd98c8170866
+  languageName: node
+  linkType: hard
+
+"superstruct@npm:^0.16.0":
+  version: 0.16.0
+  resolution: "superstruct@npm:0.16.0"
+  checksum: 1979c287f95f2a9dece537f74f5330b0b831965030fe025e2d52dfb3ecdf8974251371cc22d5cdf36960639b039687e5a236881f6ec7cf33d5c8fdc348f13a46
   languageName: node
   linkType: hard
 
