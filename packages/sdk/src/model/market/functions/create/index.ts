@@ -12,6 +12,16 @@ import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketParams, isWithPool } from './types'
 import { MarketMetadata } from '../../meta/types'
 
+/**
+ * Create a market on chain.
+ *
+ * @generic MT extends MarketType['type']
+ * @generic MP extends MarketPeriod['type']
+ * @generic MD extends MarketDisputeMechanism['type']
+ * @param context RpcContext | FullContext
+ * @param params CreateMarketParams<MT, MP, MD>
+ * @returns void
+ */
 export const create = async <
   MT extends MarketType['type'],
   MP extends MarketPeriod['type'],

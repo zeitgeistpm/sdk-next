@@ -39,6 +39,11 @@ export const chain = <A, B>(
 export const from = <A>(value: A | null): OptionInterface<A> =>
   option(value ? some(value) : (none() as Option<A>))
 
+export const unwrap = <A>(option: Option<A>): A =>
+  unwrapOr<A>(() => {
+    throw new Error('')
+  }, option)
+
 export const unwrapOr = <A>(or: OrHandler<A>, option: Option<A>): A => {
   if (isSome(option)) return option.value
   else if (isFunction(or)) return or()
@@ -46,6 +51,7 @@ export const unwrapOr = <A>(or: OrHandler<A>, option: Option<A>): A => {
 }
 
 export type OptionInterface<A> = Option<A> & {
+  unwrap: (option: Option<A>) => A
   unwrapOr: (or: OrHandler<A>) => A
   map: <B>(f: (a: A) => B) => OptionInterface<B>
   chain: <B>(f: (a: A) => Option<B>) => OptionInterface<B>
@@ -53,7 +59,8 @@ export type OptionInterface<A> = Option<A> & {
 
 export const option = <A>(_option: Option<A>): OptionInterface<A> => ({
   ..._option,
-  unwrapOr: (or: OrHandler<A>) => unwrapOr(or, _option),
+  unwrap: option => unwrap(option),
+  unwrapOr: or => unwrapOr(or, _option),
   map: <B>(f: (a: A) => B) => option(map(f, _option)),
   chain: <B>(f: (a: A) => Option<B>) => option(chain(f, _option)),
 })

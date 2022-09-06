@@ -30,18 +30,17 @@ function App() {
       const rpc = await Sdk.create(batterystationRpc())
 
       const markets = await indexed.model.markets.list({
-        offset: 10,
-        limit: 99,
+        offset: 0,
+        limit: 2,
       })
+      console.log(markets)
 
       const rpcmarkets = await rpc.model.markets.list({
         offset: 10,
         limit: 99,
       })
 
-      rpc.model.markets.create
-
-      console.log(markets, rpcmarkets)
+      console.log(rpcmarkets)
     })()
   }, [])
 

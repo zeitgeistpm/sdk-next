@@ -39,7 +39,7 @@ export type IndexedList = IndexedMarket[]
 /**
  * Concrete Market type for rpc market list.
  */
-export type RpcMarket = Market & { marketId: number }
+export type RpcMarket = [number, Market]
 /**
  * Concrete MarketList for rpc context
  */
