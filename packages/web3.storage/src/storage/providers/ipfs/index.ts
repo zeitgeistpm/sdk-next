@@ -1,3 +1,4 @@
+import type { CID } from 'ipfs-core/dist/src/block-storage'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { throws } from '@zeitgeistpm/utility/dist/error'
@@ -19,7 +20,7 @@ import { MetadataStorage } from '../..'
 export const storage = <T>(
   config: IPFSConfiguration,
   codec: Codec<string, T> = JsonCodec(),
-): MetadataStorage<T, string> => {
+): MetadataStorage<T, CID> => {
   const node = IPFSHttpClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`
 
@@ -41,7 +42,7 @@ export const storage = <T>(
           })
         }
 
-        return either(right(cid.toString()))
+        return either(right(cid))
       } catch (error) {
         return either(left(error as Error))
       }
@@ -72,7 +73,7 @@ export const storage = <T>(
 /**
  * Read data from a cid and parse it to a string.
  */
-const read = Te.from(async (node: IPFSHttpClient.IPFSHTTPClient, cid: string) => {
+const read = Te.from(async (node: IPFSHttpClient.IPFSHTTPClient, cid: CID) => {
   const content: Uint8Array[] = []
 
   for await (const chunk of node.cat(cid)) {

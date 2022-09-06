@@ -3,6 +3,7 @@ import type { Model } from './model/types'
 
 export * from './context/types'
 export * from './config/types'
+export * from './keyring/types'
 
 export type Sdk<C extends Context> = C & {
   /**

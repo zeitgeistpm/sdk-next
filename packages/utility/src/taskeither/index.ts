@@ -1,8 +1,8 @@
-import { Either, left, right } from '../either'
+import { either, EitherInterface, left, right } from '../either'
 import { Task } from '../task'
 
 export type TaskEither<L, R, Args extends ReadonlyArray<unknown>> = Task<
-  Either<L, R>,
+  EitherInterface<L, R>,
   Args
 >
 
@@ -11,9 +11,10 @@ export const from = <R, Args extends ReadonlyArray<unknown>>(
 ): TaskEither<Error, R, Args> => {
   return async (...args) => {
     try {
-      return right(await fn(...args))
+      const value: R = await fn(...args)
+      return either(right(value))
     } catch (error) {
-      return left(error as Error)
+      return either(left(error as Error))
     }
   }
 }

@@ -1,3 +1,7 @@
+import { CID } from 'ipfs-core/dist/src/block-storage'
+import { MetadataStorage } from 'packages/web3.storage/dist'
+import { MarketMetadata } from '../model/market/meta/types'
+
 export * from './known'
 
 /**
@@ -18,11 +22,17 @@ export type BaseConfig = {
 
 export type FullConfig = RpcConfig & IndexerConfig
 
-export type RpcConfig = BaseConfig & {
+export type RpcConfig<MMT = MarketMetadata, MMId = CID> = BaseConfig & {
   /**
    * Rpc provider(s), uri or list of uris.
    */
   provider: string | string[]
+  /**
+   * Storage provider for metadata
+   */
+  storage?: {
+    markets: MetadataStorage<MMT, MMId>
+  }
 }
 
 export type IndexerConfig = BaseConfig & {

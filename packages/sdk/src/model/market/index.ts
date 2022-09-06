@@ -1,3 +1,8 @@
+import {
+  MarketPeriod,
+  MarketType,
+  MarketDisputeMechanism,
+} from '@zeitgeistpm/types/dist/interfaces'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { list } from './functions/list'
 import { create } from './functions/create'
@@ -23,7 +28,13 @@ export const markets = <C extends Context>(context: C): Markets<C> => {
 
   const rpc: MarketsRpc<RpcContext> | null = isRpcContext(context)
     ? {
-        create: (params: CreateMarketParams) => create(context, params),
+        create: <
+          MT extends MarketType['type'],
+          MP extends MarketPeriod['type'],
+          MD extends MarketDisputeMechanism['type'],
+        >(
+          params: CreateMarketParams<MT, MP, MD>,
+        ) => create(context, params),
       }
     : null
 

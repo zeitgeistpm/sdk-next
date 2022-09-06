@@ -148,6 +148,7 @@ const rpcContext = async (config: RpcConfig): Promise<RpcContext> => {
   return {
     api,
     provider,
+    storage: config.storage,
   }
 }
 

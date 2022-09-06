@@ -1,13 +1,19 @@
 import type { ApiPromise, WsProvider } from '@polkadot/api'
+import type { CID } from 'ipfs-core/dist/src/block-storage'
 import type { ZeitgeistIndexer } from '@zeitgeistpm/indexer'
+import type { MetadataStorage } from '@zeitgeistpm/web3.storage'
+import type { MarketMetadata } from '../model/market/meta/types'
 
 export type Context = FullContext | (RpcContext | IndexerContext)
 
 export type FullContext = RpcContext & IndexerContext
 
-export type RpcContext = {
+export type RpcContext<MMT = MarketMetadata, MMId = CID> = {
   api: ApiPromise
   provider: WsProvider
+  storage?: {
+    markets: MetadataStorage<MMT, MMId>
+  }
 }
 
 export type IndexerContext = {

@@ -1,8 +1,13 @@
+import {
+  MarketPeriod,
+  MarketType,
+  MarketDisputeMechanism,
+} from '@zeitgeistpm/types/dist/interfaces'
 import { Context, RpcContext } from '../../context'
 import { ListQuery, MarketList } from './functions/list/types'
 import {
-  CreateMarketParams,
   CreateMarketResponse,
+  CreateMarketParams,
 } from './functions/create/types'
 
 export * from './functions/types'
@@ -25,6 +30,12 @@ export type MarketsRpc<C> = C extends RpcContext
       /**
        * Create a market. Only available when connecting to rpc.
        */
-      create: (params: CreateMarketParams) => Promise<CreateMarketResponse>
+      create: <
+        MT extends MarketType['type'] = 'Categorical',
+        MP extends MarketPeriod['type'] = 'Timestamp',
+        MD extends MarketDisputeMechanism['type'] = 'Authorized',
+      >(
+        params: CreateMarketParams<MT, MP, MD>,
+      ) => Promise<CreateMarketResponse>
     }
   : {}
