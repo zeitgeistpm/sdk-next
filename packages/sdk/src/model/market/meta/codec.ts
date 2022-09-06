@@ -8,11 +8,19 @@ import {
   validate,
   string,
 } from 'superstruct'
-import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 import { AnyJson } from '@polkadot/types/types'
+import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 import { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { MarketMetadata } from './types'
 
+/**
+ * Official Zeitgeist metadata specification codec.
+ * Encodes, decodes and validates any json object to and from MarketMetadata.
+ *
+ * @note Use this to ensure your markets are compatible with the official zeitgeist frontend.
+ *
+ * @type Codec<AnyJson, MarketMetadata, StructError>
+ */
 export const ZeitgeistMetadataCodec: Codec<AnyJson, MarketMetadata, StructError> =
   {
     encode: input => {
@@ -31,14 +39,20 @@ export const ZeitgeistMetadataCodec: Codec<AnyJson, MarketMetadata, StructError>
     },
   }
 
-const IOMarketMetadataCategory = object({
+/**
+ * IO validation of Market Categories using superstruct
+ */
+export const IOMarketMetadataCategory = object({
   name: string(),
   ticker: optional(string()),
   img: optional(string()),
   color: optional(string()),
 })
 
-const IOMarketMetadata = object({
+/**
+ * IO validation of Market metadata object using superstruct
+ */
+export const IOMarketMetadata = object({
   slug: string(),
   description: string(),
   question: string(),
