@@ -1,16 +1,17 @@
 import { SubmittableExtrinsic } from '@polkadot/api/types'
-import { ISubmittableResult } from '@polkadot/types/types'
+import { ISubmittableResult, RegistryError } from '@polkadot/types/types'
 import {
   MarketPeriod,
   MarketType,
   MarketDisputeMechanism,
 } from '@zeitgeistpm/types/dist/interfaces'
-import { isExtSigner } from '@zeitgeistpm/sdk/src/keyring'
+import { isExtSigner, KeyringPairOrExtSigner } from '@zeitgeistpm/sdk/src/keyring'
 import { throws } from '@zeitgeistpm/utility/src/error'
 import * as Te from '@zeitgeistpm/utility/src/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketParams, isWithPool } from './types'
 import { MarketMetadata } from '../../meta/types'
+import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 
 /**
  * Create a market on chain.
@@ -58,45 +59,63 @@ export const create = async <
     )
   }
 
-  const callback = ({ dispatchError }: ISubmittableResult) => {
-    if (dispatchError) {
-      let errorInfo
+  return signAndSend(context, tx, params.signer)
+}
 
-      // decode the error
-      if (dispatchError.isModule) {
-        // for module errors, we have the section indexed, lookup
-        // (For specific known errors, we can also do a check against the
-        // api.errors.<module>.<ErrorName>.is(dispatchError.asModule) guard)
-        const decoded: any = context.api.registry.findMetaError(
-          dispatchError.asModule,
-        )
+const signAndSend: Te.TaskEither<
+  RegistryError | Error,
+  { block: number; hash: string },
+  [
+    RpcContext | FullContext,
+    SubmittableExtrinsic<'promise', ISubmittableResult>,
+    KeyringPairOrExtSigner,
+  ]
+> = async (context, transaction, signer) =>
+  new Promise(async (resolve, reject) => {
+    let block: number
 
-        console.log(decoded)
-
-        errorInfo = `${decoded.section}.${
-          decoded.name
-        } ${decoded.documentation.join('')}`
-      } else {
-        // Other, CannotLookup, BadOrigin, no extra info
-        errorInfo = dispatchError.toString()
+    const callback = async ({
+      dispatchError,
+      internalError,
+      status,
+    }: ISubmittableResult) => {
+      if (status.isInBlock) {
+        const signedBlock = await context.api.rpc.chain.getBlock(status.asInBlock)
+        block = signedBlock.block.header.number.toNumber()
       }
 
-      console.log('dispatchError', errorInfo)
+      if (status.isFinalized) {
+        resolve(either(right({ block, hash: status.hash.toString() })))
+        unsub()
+      }
+
+      if (dispatchError) {
+        if (dispatchError.isModule) {
+          reject(
+            either(
+              left(context.api.registry.findMetaError(dispatchError.asModule)),
+            ),
+          )
+        } else {
+          reject(either(left(new Error(dispatchError.toString()))))
+        }
+        unsub()
+      }
+
+      if (internalError) {
+        reject(either(left(internalError)))
+        unsub()
+      }
     }
-  }
 
-  if (isExtSigner(params.signer)) {
-    tx.signAndSend(
-      params.signer.address,
-      { signer: params.signer.signer },
-      callback,
-    )
-  } else {
-    tx.signAndSend(params.signer, callback)
-  }
-
-  return {}
-}
+    const unsub = isExtSigner(signer)
+      ? await transaction.signAndSend(
+          signer.address,
+          { signer: signer.signer },
+          callback,
+        )
+      : await transaction.signAndSend(signer, callback)
+  })
 
 /**
  * Put market metadata in storage if present, otherwise store empty `0x` as hash
