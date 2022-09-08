@@ -20,6 +20,7 @@ import { isKnownPreset } from './config/known'
 
 export * from './context'
 export * from './config'
+export * from './types'
 
 /**
  * Create an instance of the zeitgeist sdk with full features of both indexer and chain rpc.

@@ -58,7 +58,32 @@ export const create = async <
     )
   }
 
-  const callback = (result: ISubmittableResult) => {}
+  const callback = ({ dispatchError }: ISubmittableResult) => {
+    if (dispatchError) {
+      let errorInfo
+
+      // decode the error
+      if (dispatchError.isModule) {
+        // for module errors, we have the section indexed, lookup
+        // (For specific known errors, we can also do a check against the
+        // api.errors.<module>.<ErrorName>.is(dispatchError.asModule) guard)
+        const decoded: any = context.api.registry.findMetaError(
+          dispatchError.asModule,
+        )
+
+        console.log(decoded)
+
+        errorInfo = `${decoded.section}.${
+          decoded.name
+        } ${decoded.documentation.join('')}`
+      } else {
+        // Other, CannotLookup, BadOrigin, no extra info
+        errorInfo = dispatchError.toString()
+      }
+
+      console.log('dispatchError', errorInfo)
+    }
+  }
 
   if (isExtSigner(params.signer)) {
     tx.signAndSend(
@@ -82,6 +107,6 @@ const putMetadata = Te.from(
     if (!context.storage) return { Sha3_384: '0x' as `0x` }
     const response = await context.storage.markets.put(metadata)
     const cid = response.unrightOr(throws)
-    return { Sha3_384: cid.multihash }
+    return { Sha3_384: cid.multihash.bytes }
   },
 )
