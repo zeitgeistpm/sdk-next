@@ -1,12 +1,10 @@
+import { CID } from 'ipfs-core/dist/src/block-storage'
 import { SubmittableExtrinsic } from '@polkadot/api/types'
-import { AccountId32 } from '@polkadot/types/interfaces'
-import { IEventData, ISubmittableResult, ITuple } from '@polkadot/types/types'
+import { ISubmittableResult } from '@polkadot/types/types'
 import {
   MarketPeriod,
   MarketType,
   MarketDisputeMechanism,
-  Market,
-  MarketIdOf,
 } from '@zeitgeistpm/types/dist/interfaces'
 import { signAndSend } from '@zeitgeistpm/rpc'
 import { left, right } from '@zeitgeistpm/utility/dist/either'
@@ -17,7 +15,6 @@ import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketParams, isWithPool } from './types'
 import { MarketMetadata } from '../../meta/types'
 import { CMarketCreationEvent, RpcMarket } from '../types'
-import { CID } from 'ipfs-core/dist/src/block-storage'
 
 /**
  * Create a market on chain.
