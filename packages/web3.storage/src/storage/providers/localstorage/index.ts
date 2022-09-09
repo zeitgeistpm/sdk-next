@@ -1,8 +1,8 @@
 import { either, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
 import { from } from '@zeitgeistpm/utility/dist/option'
 import { throws } from '@zeitgeistpm/utility/dist/error'
-import { JsonCodec } from '@zeitgeistpm/utility/src/codec/impl/json'
-import { Codec } from '@zeitgeistpm/utility/src/codec'
+import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
+import { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { MetadataStorage } from '../..'
 
 /**

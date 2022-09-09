@@ -25,11 +25,8 @@ function App() {
 
     const address = 'dE2cVL9QAgh3MZEK3ZhPG5S2YSqZET8V1Qa36epaU4pQG4pd8'
     const { signer } = await web3FromAddress(address)
-    const [id, market] = await sdk.model.markets.create<
-      'Categorical',
-      'Timestamp',
-      'Authorized'
-    >({
+
+    const [id, market] = await sdk.model.markets.create({
       signer: {
         address,
         signer,
@@ -37,7 +34,7 @@ function App() {
       scoringRule: 'Cpmm',
       creationType: 'Permissionless',
       disputeMechanism: { Authorized: address },
-      marketType: { Categorical: 2 },
+      marketType: { Scalar: [1, 2] },
       oracle: address,
       period: { Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] },
       metadata: {

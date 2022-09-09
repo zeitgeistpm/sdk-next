@@ -12,8 +12,8 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/api": "*",
     "@zeitgeistpm/indexer": "*",
+    "@zeitgeistpm/rpc": "*",
     "@zeitgeistpm/type-defs": "*",
     "@zeitgeistpm/types": "*",
     "@zeitgeistpm/utility": "*",

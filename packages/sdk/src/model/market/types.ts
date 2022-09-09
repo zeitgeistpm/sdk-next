@@ -31,9 +31,9 @@ export type MarketsRpc<C> = C extends RpcContext
        * Create a market. Only available when connecting to rpc.
        */
       create: <
-        MT extends MarketType['type'] = 'Categorical',
-        MP extends MarketPeriod['type'] = 'Timestamp',
-        MD extends MarketDisputeMechanism['type'] = 'Authorized',
+        MT extends MarketType['type'],
+        MP extends MarketPeriod['type'],
+        MD extends MarketDisputeMechanism['type'],
       >(
         params: CreateMarketParams<MT, MP, MD>,
       ) => Promise<CreateMarketResponse>

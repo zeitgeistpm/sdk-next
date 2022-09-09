@@ -3,6 +3,9 @@ import { ApiOptions } from '@polkadot/api/types'
 import * as zeitgeistDefinitions from '@zeitgeistpm/type-defs'
 import '@zeitgeistpm/types'
 
+export * from './types'
+export * from './lib'
+
 /**
  * Configuration for provider.
  */

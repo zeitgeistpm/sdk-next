@@ -3,9 +3,9 @@ import {
   MarketsQuery,
   MarketWhereInput,
 } from '@zeitgeistpm/indexer/dist'
-import { Context, IndexerContext } from '@zeitgeistpm/sdk/src/context'
 import { Market } from '@zeitgeistpm/types/dist/interfaces'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
+import { Context, IndexerContext } from '../../../../context'
 
 /**
  * List of Markets.

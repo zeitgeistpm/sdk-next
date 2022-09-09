@@ -6,8 +6,8 @@ import { u8aToString } from '@polkadot/util'
 import * as IPFSHttpClient from 'ipfs-http-client'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
-import { JsonCodec } from '@zeitgeistpm/utility/src/codec/impl/json'
-import { Codec } from '@zeitgeistpm/utility/src/codec'
+import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
+import { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { MetadataStorage } from '../..'
 
 /**
@@ -62,6 +62,7 @@ export const storage = <T>(
         if (config.cluster) {
           await cluster.unpin(cid.toString(), config.cluster)
         }
+        await node.pin.rm(cid.toString())
         return either(right(undefined as void))
       } catch (error) {
         return either(left(error as Error))

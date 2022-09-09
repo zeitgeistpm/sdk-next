@@ -13,7 +13,7 @@ import {
   isIndexerConfig,
   Sdk,
 } from './types'
-import { options } from '@zeitgeistpm/api/dist'
+import { options } from '@zeitgeistpm/rpc/dist'
 import { debug } from './debug'
 import * as Model from './model'
 import { isKnownPreset } from './config/known'
