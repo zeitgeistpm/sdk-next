@@ -7,12 +7,15 @@ import './App.css'
 import reactLogo from './assets/react.svg'
 
 function App() {
-  const [sdk, setSdk] = useState<Sdk.Sdk<Sdk.FullContext>>()
+  const [sdk, setSdk] = useState<Sdk.Sdk<Sdk.RpcContext>>()
 
   useEffect(() => {
     web3Enable('sdkv2-test')
     ;(async () => {
-      const full = await Sdk.create(batterystation())
+      const full = await Sdk.create({
+        ...batterystation(),
+        provider: 'ws://127.0.0.1:9944',
+      })
       setSdk(full)
     })()
   }, [])
@@ -22,7 +25,11 @@ function App() {
 
     const address = 'dE2cVL9QAgh3MZEK3ZhPG5S2YSqZET8V1Qa36epaU4pQG4pd8'
     const { signer } = await web3FromAddress(address)
-    await sdk.model.markets.create<'Categorical', 'Timestamp', 'Authorized'>({
+    const [id, market] = await sdk.model.markets.create<
+      'Categorical',
+      'Timestamp',
+      'Authorized'
+    >({
       signer: {
         address,
         signer,
@@ -49,6 +56,8 @@ function App() {
         ],
       },
     })
+
+    console.log(`created: ${id}`, market.toHuman())
   }
 
   return (

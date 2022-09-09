@@ -1,9 +1,16 @@
 import { SubmittableExtrinsic } from '@polkadot/api/types'
-import { ISubmittableResult, RegistryError } from '@polkadot/types/types'
+import {
+  IEventData,
+  ISubmittableResult,
+  ITuple,
+  RegistryError,
+} from '@polkadot/types/types'
 import {
   MarketPeriod,
   MarketType,
   MarketDisputeMechanism,
+  Market,
+  MarketIdOf,
 } from '@zeitgeistpm/types/dist/interfaces'
 import { isExtSigner, KeyringPairOrExtSigner } from '@zeitgeistpm/sdk/src/keyring'
 import { throws } from '@zeitgeistpm/utility/src/error'
@@ -12,6 +19,8 @@ import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketParams, isWithPool } from './types'
 import { MarketMetadata } from '../../meta/types'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
+import { RpcMarket } from '../types'
+import { AccountId32 } from '@polkadot/types/interfaces'
 
 /**
  * Create a market on chain.
@@ -59,12 +68,15 @@ export const create = async <
     )
   }
 
-  return signAndSend(context, tx, params.signer)
+  const response = await signAndSend(context, tx, params.signer)
+  const [id, market] = response.unrightOr(throws)
+
+  return [id, market] as RpcMarket
 }
 
 const signAndSend: Te.TaskEither<
   RegistryError | Error,
-  { block: number; hash: string },
+  [number, Market],
   [
     RpcContext | FullContext,
     SubmittableExtrinsic<'promise', ISubmittableResult>,
@@ -78,17 +90,8 @@ const signAndSend: Te.TaskEither<
       dispatchError,
       internalError,
       status,
+      events,
     }: ISubmittableResult) => {
-      if (status.isInBlock) {
-        const signedBlock = await context.api.rpc.chain.getBlock(status.asInBlock)
-        block = signedBlock.block.header.number.toNumber()
-      }
-
-      if (status.isFinalized) {
-        resolve(either(right({ block, hash: status.hash.toString() })))
-        unsub()
-      }
-
       if (dispatchError) {
         if (dispatchError.isModule) {
           reject(
@@ -105,6 +108,28 @@ const signAndSend: Te.TaskEither<
       if (internalError) {
         reject(either(left(internalError)))
         unsub()
+      }
+
+      if (status.isInBlock) {
+        const signedBlock = await context.api.rpc.chain.getBlock(status.asInBlock)
+        block = signedBlock.block.header.number.toNumber()
+        console.log(block)
+      }
+
+      if (status.isFinalized) {
+        events.forEach(({ event }) => {
+          if (context.api.events.predictionMarkets.MarketCreated.is(event)) {
+            const [id, _, market] = event.data as ITuple<
+              [MarketIdOf, AccountId32, Market]
+            > &
+              IEventData
+
+            if (market.creator.eq(signer.address)) {
+              resolve(either(right([Number(id.toHuman()), market])))
+              unsub()
+            }
+          }
+        })
       }
     }
 

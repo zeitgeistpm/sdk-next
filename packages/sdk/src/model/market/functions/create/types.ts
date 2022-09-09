@@ -7,6 +7,7 @@ import {
 } from '@zeitgeistpm/types/dist/interfaces'
 import { KeyringPairOrExtSigner } from '../../../../keyring'
 import { MarketMetadata } from '../../meta/types'
+import { RpcMarket } from '../types'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -155,4 +156,4 @@ export type DisputeMechanism<MD extends MarketDisputeMechanism['type']> =
     ? { SimpleDisputes: null }
     : { Court: null }
 
-export type CreateMarketResponse = {}
+export type CreateMarketResponse = RpcMarket

@@ -14753,6 +14753,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"scripts@workspace:playground/scripts":
+  version: 0.0.0-use.local
+  resolution: "scripts@workspace:playground/scripts"
+  dependencies:
+    "@polkadot/extension-dapp": ^0.44.6
+    "@types/react": ^18.0.17
+    "@types/react-dom": ^18.0.6
+    "@vitejs/plugin-react": ^2.0.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.6.4
+    vite: ^3.0.7
+  languageName: unknown
+  linkType: soft
+
 "scuid@npm:^1.1.0":
   version: 1.1.0
   resolution: "scuid@npm:1.1.0"
