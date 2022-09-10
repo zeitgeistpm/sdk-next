@@ -176,3 +176,5 @@ const indexerContext = async (config: IndexerConfig): Promise<IndexerContext> =>
 
   return { indexer }
 }
+
+export default create

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import * as Sdk from '@zeitgeistpm/sdk'
+import ZDK, { Sdk, RpcContext } from '@zeitgeistpm/sdk'
 import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp'
 import { batterystation } from '@zeitgeistpm/sdk'
 
@@ -7,12 +7,12 @@ import './App.css'
 import reactLogo from './assets/react.svg'
 
 function App() {
-  const [sdk, setSdk] = useState<Sdk.Sdk<Sdk.RpcContext>>()
+  const [sdk, setSdk] = useState<Sdk<RpcContext>>()
 
   useEffect(() => {
     web3Enable('sdkv2-test')
     ;(async () => {
-      const full = await Sdk.create({
+      const full = await ZDK({
         ...batterystation(),
         provider: 'ws://127.0.0.1:9944',
       })
