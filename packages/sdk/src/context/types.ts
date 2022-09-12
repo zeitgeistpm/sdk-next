@@ -6,7 +6,11 @@ import type { MarketMetadata } from '../model/market/meta/types'
 
 export type Context = FullContext | (RpcContext | IndexerContext)
 
-export type FullContext = RpcContext & IndexerContext
+export type FullContext<MMT = MarketMetadata, MMId = CID> = RpcContext<
+  MMT,
+  MMId
+> &
+  IndexerContext
 
 export type RpcContext<MMT = MarketMetadata, MMId = CID> = {
   api: ApiPromise
