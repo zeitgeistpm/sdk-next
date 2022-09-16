@@ -68,11 +68,6 @@ import type { ClassDetails, ClassId, ClassMetadata, DepositBalance, DepositBalan
 import type { Multisig, Timepoint } from '@polkadot/types/interfaces/utility';
 import type { VestingInfo } from '@polkadot/types/interfaces/vesting';
 import type { AssetInstance, AssetInstanceV0, AssetInstanceV1, AssetInstanceV2, BodyId, BodyPart, DoubleEncodedCall, Fungibility, FungibilityV0, FungibilityV1, FungibilityV2, InboundStatus, InstructionV2, InteriorMultiLocation, Junction, JunctionV0, JunctionV1, JunctionV2, Junctions, JunctionsV1, JunctionsV2, MultiAsset, MultiAssetFilter, MultiAssetFilterV1, MultiAssetFilterV2, MultiAssetV0, MultiAssetV1, MultiAssetV2, MultiAssets, MultiAssetsV1, MultiAssetsV2, MultiLocation, MultiLocationV0, MultiLocationV1, MultiLocationV2, NetworkId, OriginKindV0, OriginKindV1, OriginKindV2, OutboundStatus, Outcome, QueryId, QueryStatus, QueueConfigData, Response, ResponseV0, ResponseV1, ResponseV2, ResponseV2Error, ResponseV2Result, VersionMigrationStage, VersionedMultiAsset, VersionedMultiAssets, VersionedMultiLocation, VersionedResponse, VersionedXcm, WeightLimitV2, WildFungibility, WildFungibilityV0, WildFungibilityV1, WildFungibilityV2, WildMultiAsset, WildMultiAssetV1, WildMultiAssetV2, Xcm, XcmAssetId, XcmError, XcmErrorV0, XcmErrorV1, XcmErrorV2, XcmOrder, XcmOrderV0, XcmOrderV1, XcmOrderV2, XcmOrigin, XcmOriginKind, XcmV0, XcmV1, XcmV2, XcmVersion, XcmpMessageFormat } from '@polkadot/types/interfaces/xcm';
-import type { Amount, AmountOf, Asset, AuthorId, Bond, CategoryIndex, Collator2, CollatorSnapshot, CollatorStatus, Currency, CurrencyId, CurrencyIdOf, DelegatorStatus, ExitQ, InflationInfo, Lookup, MarketIdOf, MaxRuntimeUsize, MultiHash, Nominator2, NominatorAdded, OrderedSet, OwnedValuesParams, ParachainBondConfig, RangeBalance, RangePerbill, RelayChainAccountId, RewardInfo, RoundIndex, RoundInfo, ScalarPosition, SerdeWrapper, VestingBlockNumber } from '@zeitgeistpm/types/interfaces/index';
-import type { Order, OrderSide } from '@zeitgeistpm/types/interfaces/orderbook';
-import type { Market, MarketCreation, MarketDispute, MarketDisputeMechanism, MarketId, MarketPeriod, MarketStatus, MarketType, OutcomeReport, Report, ScoringRule } from '@zeitgeistpm/types/interfaces/predictionMarkets';
-import type { EmaConfig, EmaMarketVolume, FeeSigmoid, FeeSigmoidConfig, MarketVolumeState, Rikiddo, RikiddoConfig, Timespan, UnixTimestamp } from '@zeitgeistpm/types/interfaces/rikkido';
-import type { CommonPoolEventParams, Pool, PoolAssetEvent, PoolAssetsEvent, PoolId, PoolStatus, SubsidyUntil, SwapEvent } from '@zeitgeistpm/types/interfaces/swaps';
 
 declare module '@polkadot/types/types/registry' {
   interface InterfaceTypes {
@@ -104,8 +99,6 @@ declare module '@polkadot/types/types/registry' {
     Address: Address;
     AliveContractInfo: AliveContractInfo;
     AllowedSlots: AllowedSlots;
-    Amount: Amount;
-    AmountOf: AmountOf;
     AnySignature: AnySignature;
     ApiId: ApiId;
     ApplyExtrinsicResult: ApplyExtrinsicResult;
@@ -113,7 +106,6 @@ declare module '@polkadot/types/types/registry' {
     ApprovalFlag: ApprovalFlag;
     Approvals: Approvals;
     ArithmeticError: ArithmeticError;
-    Asset: Asset;
     AssetApproval: AssetApproval;
     AssetApprovalKey: AssetApprovalKey;
     AssetBalance: AssetBalance;
@@ -131,7 +123,6 @@ declare module '@polkadot/types/types/registry' {
     AttestedCandidate: AttestedCandidate;
     AuctionIndex: AuctionIndex;
     AuthIndex: AuthIndex;
-    AuthorId: AuthorId;
     AuthorityDiscoveryId: AuthorityDiscoveryId;
     AuthorityId: AuthorityId;
     AuthorityIndex: AuthorityIndex;
@@ -192,7 +183,6 @@ declare module '@polkadot/types/types/registry' {
     BlockWeights: BlockWeights;
     BodyId: BodyId;
     BodyPart: BodyPart;
-    Bond: Bond;
     bool: bool;
     Bool: Bool;
     Bounty: Bounty;
@@ -219,7 +209,6 @@ declare module '@polkadot/types/types/registry' {
     CandidateInfo: CandidateInfo;
     CandidatePendingAvailability: CandidatePendingAvailability;
     CandidateReceipt: CandidateReceipt;
-    CategoryIndex: CategoryIndex;
     ChainId: ChainId;
     ChainProperties: ChainProperties;
     ChainType: ChainType;
@@ -237,14 +226,10 @@ declare module '@polkadot/types/types/registry' {
     CodeUploadResultValue: CodeUploadResultValue;
     CollationInfo: CollationInfo;
     CollationInfoV1: CollationInfoV1;
-    Collator2: Collator2;
     CollatorId: CollatorId;
     CollatorSignature: CollatorSignature;
-    CollatorSnapshot: CollatorSnapshot;
-    CollatorStatus: CollatorStatus;
     CollectiveOrigin: CollectiveOrigin;
     CommittedCandidateReceipt: CommittedCandidateReceipt;
-    CommonPoolEventParams: CommonPoolEventParams;
     CompactAssignments: CompactAssignments;
     CompactAssignmentsTo257: CompactAssignmentsTo257;
     CompactAssignmentsTo265: CompactAssignmentsTo265;
@@ -327,16 +312,12 @@ declare module '@polkadot/types/types/registry' {
     CoreState: CoreState;
     CrateVersion: CrateVersion;
     CreatedBlock: CreatedBlock;
-    Currency: Currency;
-    CurrencyId: CurrencyId;
-    CurrencyIdOf: CurrencyIdOf;
     Data: Data;
     DeferredOffenceOf: DeferredOffenceOf;
     DefunctVoter: DefunctVoter;
     DelayKind: DelayKind;
     DelayKindBest: DelayKindBest;
     Delegations: Delegations;
-    DelegatorStatus: DelegatorStatus;
     DeletedContract: DeletedContract;
     DeliveredMessages: DeliveredMessages;
     DepositBalance: DepositBalance;
@@ -381,8 +362,6 @@ declare module '@polkadot/types/types/registry' {
     ElectionScore: ElectionScore;
     ElectionSize: ElectionSize;
     ElectionStatus: ElectionStatus;
-    EmaConfig: EmaConfig;
-    EmaMarketVolume: EmaMarketVolume;
     EncodedFinalityProofs: EncodedFinalityProofs;
     EncodedJustification: EncodedJustification;
     Epoch: Epoch;
@@ -456,7 +435,6 @@ declare module '@polkadot/types/types/registry' {
     ExecReturnValue: ExecReturnValue;
     ExitError: ExitError;
     ExitFatal: ExitFatal;
-    ExitQ: ExitQ;
     ExitReason: ExitReason;
     ExitRevert: ExitRevert;
     ExitSucceed: ExitSucceed;
@@ -485,8 +463,6 @@ declare module '@polkadot/types/types/registry' {
     f64: f64;
     F64: F64;
     FeeDetails: FeeDetails;
-    FeeSigmoid: FeeSigmoid;
-    FeeSigmoidConfig: FeeSigmoidConfig;
     Fixed128: Fixed128;
     Fixed64: Fixed64;
     FixedI128: FixedI128;
@@ -587,7 +563,6 @@ declare module '@polkadot/types/types/registry' {
     Index: Index;
     IndicesLookupSource: IndicesLookupSource;
     IndividualExposure: IndividualExposure;
-    InflationInfo: InflationInfo;
     InherentData: InherentData;
     InherentIdentifier: InherentIdentifier;
     InitializationData: InitializationData;
@@ -634,21 +609,9 @@ declare module '@polkadot/types/types/registry' {
     LimitsTo264: LimitsTo264;
     LocalValidationData: LocalValidationData;
     LockIdentifier: LockIdentifier;
-    Lookup: Lookup;
     LookupSource: LookupSource;
     LookupTarget: LookupTarget;
     LotteryConfig: LotteryConfig;
-    Market: Market;
-    MarketCreation: MarketCreation;
-    MarketDispute: MarketDispute;
-    MarketDisputeMechanism: MarketDisputeMechanism;
-    MarketId: MarketId;
-    MarketIdOf: MarketIdOf;
-    MarketPeriod: MarketPeriod;
-    MarketStatus: MarketStatus;
-    MarketType: MarketType;
-    MarketVolumeState: MarketVolumeState;
-    MaxRuntimeUsize: MaxRuntimeUsize;
     MaybeRandomness: MaybeRandomness;
     MaybeVrf: MaybeVrf;
     MemberCount: MemberCount;
@@ -708,7 +671,6 @@ declare module '@polkadot/types/types/registry' {
     MultiAssetV1: MultiAssetV1;
     MultiAssetV2: MultiAssetV2;
     MultiDisputeStatementSet: MultiDisputeStatementSet;
-    MultiHash: MultiHash;
     MultiLocation: MultiLocation;
     MultiLocationV0: MultiLocationV0;
     MultiLocationV1: MultiLocationV1;
@@ -727,8 +689,6 @@ declare module '@polkadot/types/types/registry' {
     NextConfigDescriptorV1: NextConfigDescriptorV1;
     NodeRole: NodeRole;
     Nominations: Nominations;
-    Nominator2: Nominator2;
-    NominatorAdded: NominatorAdded;
     NominatorIndex: NominatorIndex;
     NominatorIndexCompact: NominatorIndexCompact;
     NotConnectedPeer: NotConnectedPeer;
@@ -754,9 +714,6 @@ declare module '@polkadot/types/types/registry' {
     OpenTipTo225: OpenTipTo225;
     OperatingMode: OperatingMode;
     OptionBool: OptionBool;
-    Order: Order;
-    OrderedSet: OrderedSet;
-    OrderSide: OrderSide;
     Origin: Origin;
     OriginCaller: OriginCaller;
     OriginKindV0: OriginKindV0;
@@ -768,9 +725,7 @@ declare module '@polkadot/types/types/registry' {
     OutboundPayload: OutboundPayload;
     OutboundStatus: OutboundStatus;
     Outcome: Outcome;
-    OutcomeReport: OutcomeReport;
     OverweightIndex: OverweightIndex;
-    OwnedValuesParams: OwnedValuesParams;
     Owner: Owner;
     PageCounter: PageCounter;
     PageIndexData: PageIndexData;
@@ -789,7 +744,6 @@ declare module '@polkadot/types/types/registry' {
     PalletStorageMetadataLatest: PalletStorageMetadataLatest;
     PalletStorageMetadataV14: PalletStorageMetadataV14;
     PalletVersion: PalletVersion;
-    ParachainBondConfig: ParachainBondConfig;
     ParachainDispatchOrigin: ParachainDispatchOrigin;
     ParachainInherentData: ParachainInherentData;
     ParachainProposal: ParachainProposal;
@@ -832,11 +786,6 @@ declare module '@polkadot/types/types/registry' {
     Phase: Phase;
     PhragmenScore: PhragmenScore;
     Points: Points;
-    Pool: Pool;
-    PoolAssetEvent: PoolAssetEvent;
-    PoolAssetsEvent: PoolAssetsEvent;
-    PoolId: PoolId;
-    PoolStatus: PoolStatus;
     PortableType: PortableType;
     PortableTypeV14: PortableTypeV14;
     Precommits: Precommits;
@@ -861,8 +810,6 @@ declare module '@polkadot/types/types/registry' {
     QueueConfigData: QueueConfigData;
     QueuedParathread: QueuedParathread;
     Randomness: Randomness;
-    RangeBalance: RangeBalance;
-    RangePerbill: RangePerbill;
     Raw: Raw;
     RawAuraPreDigest: RawAuraPreDigest;
     RawBabePreDigest: RawBabePreDigest;
@@ -897,7 +844,6 @@ declare module '@polkadot/types/types/registry' {
     RegistrationJudgement: RegistrationJudgement;
     RegistrationTo198: RegistrationTo198;
     RelayBlockNumber: RelayBlockNumber;
-    RelayChainAccountId: RelayChainAccountId;
     RelayChainBlockNumber: RelayChainBlockNumber;
     RelayChainHash: RelayChainHash;
     RelayerId: RelayerId;
@@ -907,7 +853,6 @@ declare module '@polkadot/types/types/registry' {
     Renouncing: Renouncing;
     RentProjection: RentProjection;
     ReplacementTimes: ReplacementTimes;
-    Report: Report;
     ReportedRoundStates: ReportedRoundStates;
     Reporter: Reporter;
     ReportIdOf: ReportIdOf;
@@ -921,12 +866,7 @@ declare module '@polkadot/types/types/registry' {
     ResponseV2Result: ResponseV2Result;
     Retriable: Retriable;
     RewardDestination: RewardDestination;
-    RewardInfo: RewardInfo;
     RewardPoint: RewardPoint;
-    Rikiddo: Rikiddo;
-    RikiddoConfig: RikiddoConfig;
-    RoundIndex: RoundIndex;
-    RoundInfo: RoundInfo;
     RoundSnapshot: RoundSnapshot;
     RoundState: RoundState;
     RpcMethods: RpcMethods;
@@ -937,7 +877,6 @@ declare module '@polkadot/types/types/registry' {
     RuntimeVersionPartial: RuntimeVersionPartial;
     RuntimeVersionPre3: RuntimeVersionPre3;
     RuntimeVersionPre4: RuntimeVersionPre4;
-    ScalarPosition: ScalarPosition;
     Schedule: Schedule;
     Scheduled: Scheduled;
     ScheduledCore: ScheduledCore;
@@ -948,13 +887,11 @@ declare module '@polkadot/types/types/registry' {
     ScheduleTo258: ScheduleTo258;
     ScheduleTo264: ScheduleTo264;
     Scheduling: Scheduling;
-    ScoringRule: ScoringRule;
     ScrapedOnChainVotes: ScrapedOnChainVotes;
     Seal: Seal;
     SealV0: SealV0;
     SeatHolder: SeatHolder;
     SeedOf: SeedOf;
-    SerdeWrapper: SerdeWrapper;
     ServiceQuality: ServiceQuality;
     SessionIndex: SessionIndex;
     SessionInfo: SessionInfo;
@@ -1102,9 +1039,7 @@ declare module '@polkadot/types/types/registry' {
     StrikeCount: StrikeCount;
     SubId: SubId;
     SubmissionIndicesOf: SubmissionIndicesOf;
-    SubsidyUntil: SubsidyUntil;
     Supports: Supports;
-    SwapEvent: SwapEvent;
     SyncState: SyncState;
     SystemInherentData: SystemInherentData;
     SystemOrigin: SystemOrigin;
@@ -1114,7 +1049,6 @@ declare module '@polkadot/types/types/registry' {
     TAssetDepositBalance: TAssetDepositBalance;
     Text: Text;
     Timepoint: Timepoint;
-    Timespan: Timespan;
     TokenError: TokenError;
     TombstoneContractInfo: TombstoneContractInfo;
     TraceBlockResponse: TraceBlockResponse;
@@ -1152,7 +1086,6 @@ declare module '@polkadot/types/types/registry' {
     UnappliedSlash: UnappliedSlash;
     UnappliedSlashOther: UnappliedSlashOther;
     UncleEntryItem: UncleEntryItem;
-    UnixTimestamp: UnixTimestamp;
     UnknownTransaction: UnknownTransaction;
     UnlockChunk: UnlockChunk;
     UnrewardedRelayer: UnrewardedRelayer;
@@ -1190,7 +1123,6 @@ declare module '@polkadot/types/types/registry' {
     VersionedResponse: VersionedResponse;
     VersionedXcm: VersionedXcm;
     VersionMigrationStage: VersionMigrationStage;
-    VestingBlockNumber: VestingBlockNumber;
     VestingInfo: VestingInfo;
     VestingSchedule: VestingSchedule;
     Vote: Vote;

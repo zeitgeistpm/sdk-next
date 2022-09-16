@@ -3,7 +3,7 @@ import {
   PoolsQuery,
   PoolWhereInput,
 } from '@zeitgeistpm/indexer/dist'
-import { Pool } from '@zeitgeistpm/types/dist/interfaces'
+import { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import { Context, IndexerContext } from '../../../../context'
 
@@ -39,7 +39,7 @@ export type IndexedPoolList = IndexedPool[]
 /**
  * Concrete Pool type for rpc market list.
  */
-export type RpcPool = [number, Pool]
+export type RpcPool = [number, ZeitgeistPrimitivesPool]
 /**
  * Concrete PoolList for rpc context
  */

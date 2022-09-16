@@ -12,10 +12,9 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
+    "@zeitgeistpm/augment-api": "workspace:*",
     "@zeitgeistpm/indexer": "*",
     "@zeitgeistpm/rpc": "*",
-    "@zeitgeistpm/type-defs": "*",
-    "@zeitgeistpm/types": "*",
     "@zeitgeistpm/utility": "*",
     "@zeitgeistpm/web3.storage": "*",
     "ipfs-core": "^0.15.4",

@@ -52,10 +52,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The given weight bound for the proposal was too low.
        **/
       WrongProposalWeight: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     advisoryCommitteeMembership: {
       /**
@@ -66,10 +62,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Not a member.
        **/
       NotMember: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     assetManager: {
       /**
@@ -84,10 +76,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Deposit result is not expected
        **/
       DepositFailed: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     authorInherent: {
       /**
@@ -102,10 +90,6 @@ declare module '@polkadot/api-base/types/errors' {
        * No AccountId was found to be associated with this author
        **/
       NoAccountId: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     authorized: {
       /**
@@ -124,10 +108,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The report does not match the market's type.
        **/
       OutcomeMismatch: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     authorMapping: {
       /**
@@ -146,10 +126,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The association can't be cleared because it belongs to another account.
        **/
       NotYourAssociation: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     balances: {
       /**
@@ -184,10 +160,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Vesting balance too high to send value
        **/
       VestingBalance: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     council: {
       /**
@@ -230,10 +202,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The given weight bound for the proposal was too low.
        **/
       WrongProposalWeight: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     councilMembership: {
       /**
@@ -244,10 +212,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Not a member.
        **/
       NotMember: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     court: {
       /**
@@ -270,10 +234,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Forbids voting of unknown accounts
        **/
       OnlyJurorsCanVote: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     crowdloan: {
       /**
@@ -341,16 +301,8 @@ declare module '@polkadot/api-base/types/errors' {
        * Provided vesting period is not valid
        **/
       VestingPeriodNonValid: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     cumulusXcm: {
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     democracy: {
       /**
@@ -466,10 +418,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Invalid upper bound.
        **/
       WrongUpperBound: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     dmpQueue: {
       /**
@@ -480,10 +428,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The message index given is unknown.
        **/
       Unknown: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     identity: {
       /**
@@ -550,20 +494,12 @@ declare module '@polkadot/api-base/types/errors' {
        * Too many subs-accounts.
        **/
       TooManySubAccounts: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     liquidityMining: {
       /**
        * Pallet account does not have enough funds
        **/
       FundDoesNotHaveEnoughBalance: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     marketCommons: {
       /**
@@ -587,10 +523,6 @@ declare module '@polkadot/api-base/types/errors' {
        * There's a pool registered for this market already.
        **/
       PoolAlreadyExists: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     multiSig: {
       /**
@@ -649,10 +581,6 @@ declare module '@polkadot/api-base/types/errors' {
        * A different timepoint was given to the multisig operation that is underway.
        **/
       WrongTimepoint: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     parachainStaking: {
       AlreadyActive: AugmentedError<ApiType>;
@@ -696,10 +624,6 @@ declare module '@polkadot/api-base/types/errors' {
       TooLowCandidateDelegationCountToLeaveCandidates: AugmentedError<ApiType>;
       TooLowDelegationCountToDelegate: AugmentedError<ApiType>;
       TooLowDelegationCountToLeaveDelegators: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     parachainSystem: {
       /**
@@ -735,10 +659,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The inherent which supplies the validation data did not run this block
        **/
       ValidationDataNotAvailable: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     polkadotXcm: {
       /**
@@ -796,10 +716,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The message's weight could not be determined.
        **/
       UnweighableMessage: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     predictionMarkets: {
       /**
@@ -911,10 +827,6 @@ declare module '@polkadot/api-base/types/errors' {
        * An amount was illegally specified as zero.
        **/
       ZeroAmount: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     preimage: {
       /**
@@ -941,10 +853,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Preimage is too large to store on-chain.
        **/
       TooLarge: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     proxy: {
       /**
@@ -979,10 +887,6 @@ declare module '@polkadot/api-base/types/errors' {
        * A call which is incompatible with the proxy type's filter was attempted.
        **/
       Unproxyable: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     rikiddoSigmoidFeeMarketEma: {
       /**
@@ -997,10 +901,6 @@ declare module '@polkadot/api-base/types/errors' {
        * For a given `poolid`, no Rikiddo instance could be found.
        **/
       RikiddoNotFoundForPool: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     scheduler: {
       /**
@@ -1019,10 +919,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Given target block number is in the past.
        **/
       TargetBlockNumberInPast: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     simpleDisputes: {
       /**
@@ -1034,10 +930,6 @@ declare module '@polkadot/api-base/types/errors' {
        * On dispute or resolution, someone tried to pass a non-simple-disputes market type
        **/
       MarketDoesNotHaveSimpleDisputesMechanism: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     styx: {
       /**
@@ -1048,20 +940,12 @@ declare module '@polkadot/api-base/types/errors' {
        * Account has already crossed.
        **/
       HasAlreadyCrossed: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     sudo: {
       /**
        * Sender must be the Sudo account
        **/
       RequireSudo: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     swaps: {
       /**
@@ -1228,10 +1112,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Some amount in a transaction equals zero.
        **/
       ZeroAmount: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     system: {
       /**
@@ -1262,10 +1142,6 @@ declare module '@polkadot/api-base/types/errors' {
        * and the new runtime.
        **/
       SpecVersionNeedsToIncrease: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     technicalCommittee: {
       /**
@@ -1308,10 +1184,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The given weight bound for the proposal was too low.
        **/
       WrongProposalWeight: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     technicalCommitteeMembership: {
       /**
@@ -1322,10 +1194,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Not a member.
        **/
       NotMember: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     tokens: {
       /**
@@ -1357,10 +1225,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       MaxLocksExceeded: AugmentedError<ApiType>;
       TooManyReserves: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     treasury: {
       /**
@@ -1375,20 +1239,12 @@ declare module '@polkadot/api-base/types/errors' {
        * Too many approvals in the queue.
        **/
       TooManyApprovals: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     utility: {
       /**
        * Too many calls batched.
        **/
       TooManyCalls: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     vesting: {
       /**
@@ -1412,10 +1268,6 @@ declare module '@polkadot/api-base/types/errors' {
        * An index was out of bounds of the vesting schedules.
        **/
       ScheduleIndexOutOfBounds: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
     xcmpQueue: {
       /**
@@ -1438,10 +1290,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Provided weight is possibly not enough to execute the message.
        **/
       WeightOverLimit: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
     };
   } // AugmentedErrors
 } // declare module

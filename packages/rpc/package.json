@@ -7,8 +7,7 @@
     "build": "rimraf ./dist && tsc"
   },
   "dependencies": {
-    "@zeitgeistpm/type-defs": "*",
-    "@zeitgeistpm/types": "*"
+    "@zeitgeistpm/augment-api": "workspace:*"
   },
   "peerDependencies": {
     "@polkadot/api": "*",

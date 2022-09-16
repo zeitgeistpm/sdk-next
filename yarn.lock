@@ -5046,6 +5046,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zeitgeistpm/augment-api@workspace:*, @zeitgeistpm/augment-api@workspace:packages/augment-api":
+  version: 0.0.0-use.local
+  resolution: "@zeitgeistpm/augment-api@workspace:packages/augment-api"
+  dependencies:
+    "@polkadot/typegen": 9.2.2
+    "@polkadot/types": 9.2.2
+    "@zeitgeistpm/type-defs": ^0.8.0
+    axios: ^0.21.1
+  languageName: unknown
+  linkType: soft
+
 "@zeitgeistpm/indexer@*, @zeitgeistpm/indexer@workspace:packages/indexer":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/indexer@workspace:packages/indexer"
@@ -5064,8 +5075,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/rpc@workspace:packages/rpc"
   dependencies:
-    "@zeitgeistpm/type-defs": "*"
-    "@zeitgeistpm/types": "*"
+    "@zeitgeistpm/augment-api": "workspace:*"
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/keyring": "*"
@@ -5077,10 +5087,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/sdk@workspace:packages/sdk"
   dependencies:
+    "@zeitgeistpm/augment-api": "workspace:*"
     "@zeitgeistpm/indexer": "*"
     "@zeitgeistpm/rpc": "*"
-    "@zeitgeistpm/type-defs": "*"
-    "@zeitgeistpm/types": "*"
     "@zeitgeistpm/utility": "*"
     "@zeitgeistpm/web3.storage": "*"
     ipfs-core: ^0.15.4
@@ -5093,20 +5102,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/type-defs@*, @zeitgeistpm/type-defs@^0.8.0, @zeitgeistpm/type-defs@workspace:packages/type-defs":
+"@zeitgeistpm/type-defs@^0.8.0, @zeitgeistpm/type-defs@workspace:packages/type-defs":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/type-defs@workspace:packages/type-defs"
-  languageName: unknown
-  linkType: soft
-
-"@zeitgeistpm/types@*, @zeitgeistpm/types@workspace:packages/types":
-  version: 0.0.0-use.local
-  resolution: "@zeitgeistpm/types@workspace:packages/types"
-  dependencies:
-    "@polkadot/typegen": 9.2.2
-    "@polkadot/types": 9.2.2
-    "@zeitgeistpm/type-defs": ^0.8.0
-    axios: ^0.21.1
   languageName: unknown
   linkType: soft
 

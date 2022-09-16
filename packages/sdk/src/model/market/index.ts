@@ -1,8 +1,8 @@
 import {
-  MarketPeriod,
-  MarketType,
-  MarketDisputeMechanism,
-} from '@zeitgeistpm/types/dist/interfaces'
+  ZeitgeistPrimitivesMarketMarketPeriod,
+  ZeitgeistPrimitivesMarketMarketType,
+  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
+} from '@polkadot/types/lookup'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { list } from './functions/list'
 import { create } from './functions/create'
@@ -29,9 +29,9 @@ export const markets = <C extends Context>(context: C): Markets<C> => {
   const rpc: MarketsRpc<RpcContext> | null = isRpcContext(context)
     ? {
         create: <
-          MT extends MarketType['type'],
-          MP extends MarketPeriod['type'],
-          MD extends MarketDisputeMechanism['type'],
+          MT extends ZeitgeistPrimitivesMarketMarketType['type'],
+          MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
+          MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
         >(
           params: CreateMarketParams<MT, MP, MD>,
         ) => create(context, params),

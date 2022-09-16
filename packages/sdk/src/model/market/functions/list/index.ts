@@ -1,5 +1,3 @@
-import { Option } from '@polkadot/types'
-import { Market } from '@zeitgeistpm/types/dist/interfaces'
 import {
   RpcContext,
   Context,
@@ -49,7 +47,7 @@ const rpcList = async <C extends RpcContext>(
   { api }: RpcContext,
   query: MarketsListQuery<RpcContext>,
 ): Promise<MarketList<C>> => {
-  const entries = await api.query.marketCommons.markets.entries<Option<Market>>()
+  const entries = await api.query.marketCommons.markets.entries()
 
   const list = entries.map(
     ([

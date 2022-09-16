@@ -1,13 +1,13 @@
 {
-  "name": "@zeitgeistpm/types",
+  "name": "@zeitgeistpm/augment-api",
   "version": "0.8.0",
   "description": "Generated types for the Zeitgeist network.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn types:getMetadata && yarn types:generate && rimraf ./dist && tsc",
-    "types:getMetadata": "vite-node ./scripts/getMetadata.ts",
-    "types:generate": "vite-node ./scripts/generate.ts"
+    "build": "yarn generate:defs && yarn generate:meta && rimraf ./dist && tsc",
+    "generate:defs": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-defs --package @zeitgeistpm/augment-api --input ./src/interfaces --endpoint ./src/metadata/latest.json",
+    "generate:meta": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-chain --package @zeitgeistpm/augment-api --endpoint ./src/metadata/latest.json --output ./src/interfaces  --strict"
   },
   "author": "Zeitgeist PM <contact@zeitgeist.pm>",
   "license": "GPL-3.0",

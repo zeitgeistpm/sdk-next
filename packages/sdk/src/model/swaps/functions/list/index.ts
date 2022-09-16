@@ -1,5 +1,3 @@
-import { Option } from '@polkadot/types'
-import { Market, Pool } from '@zeitgeistpm/types/dist/interfaces'
 import {
   RpcContext,
   Context,
@@ -49,7 +47,7 @@ const rpcList = async <C extends RpcContext>(
   { api }: RpcContext,
   query: PoolsListQuery<RpcContext>,
 ): Promise<PoolList<C>> => {
-  const entries = await api.query.swaps.pools.entries<Option<Pool>>()
+  const entries = await api.query.swaps.pools.entries()
 
   const list = entries.map(
     ([

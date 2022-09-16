@@ -3,7 +3,7 @@ import {
   MarketsQuery,
   MarketWhereInput,
 } from '@zeitgeistpm/indexer/dist'
-import { Market } from '@zeitgeistpm/types/dist/interfaces'
+import { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import { Context, IndexerContext } from '../../../../context'
 
@@ -39,7 +39,7 @@ export type IndexedMarketList = IndexedMarket[]
 /**
  * Concrete Market type for rpc market list.
  */
-export type RpcMarket = [number, Market]
+export type RpcMarket = [number, ZeitgeistPrimitivesMarket]
 /**
  * Concrete MarketList for rpc context
  */

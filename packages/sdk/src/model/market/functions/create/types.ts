@@ -1,17 +1,13 @@
 import {
-  MarketPeriod,
-  MarketType,
-  MarketDisputeMechanism,
-  ScoringRule,
-  MarketCreation,
-  Market,
-  MarketIdOf,
-} from '@zeitgeistpm/types/dist/interfaces'
-import { IEventData, ITuple } from '@polkadot/types/types'
+  ZeitgeistPrimitivesMarketMarketPeriod,
+  ZeitgeistPrimitivesMarketMarketType,
+  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
+  ZeitgeistPrimitivesPoolScoringRule,
+  ZeitgeistPrimitivesMarketMarketCreation,
+} from '@polkadot/types/lookup'
 import { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import { MarketMetadata } from '../../meta/types'
 import { RpcMarket } from '../types'
-import { AccountId32 } from '@polkadot/types/interfaces'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -21,9 +17,9 @@ import { AccountId32 } from '@polkadot/types/interfaces'
  * @generic MD extends MarketDisputeMechanism['type'] - disputmechanism type
  */
 export type CreateMarketParams<
-  MT extends MarketType['type'],
-  MP extends MarketPeriod['type'],
-  MD extends MarketDisputeMechanism['type'],
+  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
+  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
+  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
 > =
   | CreateStandaloneMarketParams<MT, MP, MD>
   | CreateMarketWithPoolParams<MT, MP, MD>
@@ -36,9 +32,9 @@ export type CreateMarketParams<
  * @generic MD extends MarketDisputeMechanism['type'] - disputmechanism type
  */
 export type CreateMarketBaseParams<
-  MT extends MarketType['type'],
-  MP extends MarketPeriod['type'],
-  MD extends MarketDisputeMechanism['type'],
+  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
+  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
+  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
 > = {
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
@@ -75,9 +71,9 @@ export type CreateMarketBaseParams<
  * @generic MD extends MarketDisputeMechanism['type'] - disputmechanism type
  */
 export type CreateStandaloneMarketParams<
-  MT extends MarketType['type'],
-  MP extends MarketPeriod['type'],
-  MD extends MarketDisputeMechanism['type'],
+  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
+  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
+  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
 > = CreateMarketBaseParams<MT, MP, MD> & {
   /**
    * Market scoring rule.
@@ -85,11 +81,11 @@ export type CreateStandaloneMarketParams<
    * @default Cpmm
    * @note Cpmm is the only one available atm. Rikkido will become available in a future update.
    */
-  scoringRule?: ScoringRule['type']
+  scoringRule?: ZeitgeistPrimitivesPoolScoringRule['type']
   /**
    * Market creation type, permissionless or advised.
    */
-  creationType: MarketCreation['type']
+  creationType: ZeitgeistPrimitivesMarketMarketCreation['type']
 }
 
 /**
@@ -100,9 +96,9 @@ export type CreateStandaloneMarketParams<
  * @generic MD extends MarketDisputeMechanism['type'] - disputmechanism type
  */
 export type CreateMarketWithPoolParams<
-  MT extends MarketType['type'],
-  MP extends MarketPeriod['type'],
-  MD extends MarketDisputeMechanism['type'],
+  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
+  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
+  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
 > = CreateMarketBaseParams<MT, MP, MD> & {
   pool: {
     /**
@@ -131,9 +127,9 @@ export type CreateMarketWithPoolParams<
  * @returns params is CreateMarketWithPoolParams<MT, MP, MD>
  */
 export const isWithPool = <
-  MT extends MarketType['type'],
-  MP extends MarketPeriod['type'],
-  MD extends MarketDisputeMechanism['type'],
+  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
+  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
+  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
 >(
   params: CreateMarketParams<MT, MP, MD>,
 ): params is CreateMarketWithPoolParams<MT, MP, MD> => {
@@ -143,34 +139,34 @@ export const isWithPool = <
 /**
  * Helper type to differentiate market types
  */
-export type MarketTypeOf<MT extends MarketType['type']> = MT extends 'Categorical'
-  ? {
-      Categorical: number
-    }
-  : {
-      Scalar: [number, number]
-    }
+export type MarketTypeOf<MT extends ZeitgeistPrimitivesMarketMarketType['type']> =
+  MT extends 'Categorical'
+    ? {
+        Categorical: number
+      }
+    : {
+        Scalar: [number, number]
+      }
 
 /**
  * Helper type to differentiate period type
  */
-export type Period<MP extends MarketPeriod['type']> = MP extends 'Block'
-  ? { Block: [number, number] }
-  : { Timestamp: [number, number] }
+export type Period<MP extends ZeitgeistPrimitivesMarketMarketPeriod['type']> =
+  MP extends 'Block'
+    ? { Block: [number, number] }
+    : { Timestamp: [number, number] }
 
 /**
  * Helper type to differentiate dispute mechanism type.
  */
-export type DisputeMechanism<MD extends MarketDisputeMechanism['type']> =
-  MD extends 'Authorized'
-    ? {
-        Authorized: string
-      }
-    : MD extends 'SimpleDisputes'
-    ? { SimpleDisputes: null }
-    : { Court: null }
+export type DisputeMechanism<
+  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
+> = MD extends 'Authorized'
+  ? {
+      Authorized: string
+    }
+  : MD extends 'SimpleDisputes'
+  ? { SimpleDisputes: null }
+  : { Court: null }
 
 export type CreateMarketResponse = RpcMarket
-
-export type CMarketCreationEvent = IEventData &
-  ITuple<[MarketIdOf, AccountId32, Market]>

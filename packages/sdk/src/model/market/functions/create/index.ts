@@ -2,19 +2,17 @@ import { CID } from 'ipfs-core/dist/src/block-storage'
 import { SubmittableExtrinsic } from '@polkadot/api/types'
 import { ISubmittableResult } from '@polkadot/types/types'
 import {
-  MarketPeriod,
-  MarketType,
-  MarketDisputeMechanism,
-} from '@zeitgeistpm/types/dist/interfaces'
+  ZeitgeistPrimitivesMarketMarketPeriod,
+  ZeitgeistPrimitivesMarketMarketType,
+  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
+} from '@polkadot/types/lookup'
 import { signAndSend } from '@zeitgeistpm/rpc'
-import { left, right } from '@zeitgeistpm/utility/dist/either'
+import { right } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import { Either } from '@zeitgeistpm/utility/dist/either'
 import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketParams, isWithPool } from './types'
 import { MarketMetadata } from '../../meta/types'
-import { CMarketCreationEvent, RpcMarket } from '../types'
 
 /**
  * Create a market on chain.
@@ -27,9 +25,9 @@ import { CMarketCreationEvent, RpcMarket } from '../types'
  * @returns void
  */
 export const create = async <
-  MT extends MarketType['type'],
-  MP extends MarketPeriod['type'],
-  MD extends MarketDisputeMechanism['type'],
+  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
+  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
+  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
 >(
   context: RpcContext | FullContext,
   params: CreateMarketParams<MT, MP, MD>,
@@ -58,30 +56,18 @@ export const create = async <
       params.creationType,
       params.marketType,
       params.disputeMechanism,
-      params.scoringRule,
+      params.scoringRule === 'Cpmm' ? 'CPMM' : params.scoringRule ?? 'CPMM',
     )
   }
 
   const response = await signAndSend(context.api, tx, params.signer)
 
-  const { events } = response.unrightOr(error => {
+  return response.unrightOr(error => {
     if (cid) {
       rollbackMetadata(context, cid)
     }
     throw error
   })
-
-  for (const { event } of events) {
-    if (context.api.events.predictionMarkets.MarketCreated.is(event)) {
-      const [id, _, market] = event.data as CMarketCreationEvent
-
-      if (market.creator.eq(params.signer.address)) {
-        return right([Number(id.toHuman()), market])
-      }
-    }
-  }
-
-  return events
 }
 
 /**
