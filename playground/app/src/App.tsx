@@ -26,6 +26,8 @@ function App() {
     const address = 'dE2cVL9QAgh3MZEK3ZhPG5S2YSqZET8V1Qa36epaU4pQG4pd8'
     const { signer } = await web3FromAddress(address)
 
+    const baseWeight = (1 / 2) * 10 * 10 ** 10
+
     const [id, market] = await sdk.model.markets.create({
       signer: {
         address,
@@ -51,6 +53,11 @@ function App() {
             ticker: 'N',
           },
         ],
+      },
+      pool: {
+        amount: `${300 * 10 ** 10}`,
+        swapFee: `${0.1 * 10 ** 10}`,
+        weights: [`${baseWeight}`, `${baseWeight}`],
       },
     })
 

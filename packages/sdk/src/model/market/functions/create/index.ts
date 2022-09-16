@@ -64,31 +64,24 @@ export const create = async <
 
   const response = await signAndSend(context.api, tx, params.signer)
 
-  const market = response
-    .chain(({ events }): Either<Error, RpcMarket> => {
-      for (const { event } of events) {
-        if (context.api.events.predictionMarkets.MarketCreated.is(event)) {
-          const [id, _, market] = event.data as CMarketCreationEvent
+  const { events } = response.unrightOr(error => {
+    if (cid) {
+      rollbackMetadata(context, cid)
+    }
+    throw error
+  })
 
-          if (market.creator.eq(params.signer.address)) {
-            return right([Number(id.toHuman()), market])
-          }
-        }
-      }
-      return left(
-        new Error(
-          `Could not find event "MarketCreated" for created market in finalized block events.`,
-        ),
-      )
-    })
-    .unrightOr(error => {
-      if (cid) {
-        rollbackMetadata(context, cid)
-      }
-      throw error
-    })
+  for (const { event } of events) {
+    if (context.api.events.predictionMarkets.MarketCreated.is(event)) {
+      const [id, _, market] = event.data as CMarketCreationEvent
 
-  return market
+      if (market.creator.eq(params.signer.address)) {
+        return right([Number(id.toHuman()), market])
+      }
+    }
+  }
+
+  return events
 }
 
 /**

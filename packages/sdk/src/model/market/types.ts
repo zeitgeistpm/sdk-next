@@ -4,7 +4,7 @@ import {
   MarketDisputeMechanism,
 } from '@zeitgeistpm/types/dist/interfaces'
 import { Context, RpcContext } from '../../context'
-import { ListQuery, MarketList } from './functions/list/types'
+import { MarketsListQuery, MarketList } from './functions/list/types'
 import {
   CreateMarketResponse,
   CreateMarketParams,
@@ -22,7 +22,7 @@ export type MarketsShared<C extends Context> = {
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.
    */
-  list: (query: ListQuery<C>) => Promise<MarketList<C>>
+  list: (query: MarketsListQuery<C>) => Promise<MarketList<C>>
 }
 
 export type MarketsRpc<C> = C extends RpcContext

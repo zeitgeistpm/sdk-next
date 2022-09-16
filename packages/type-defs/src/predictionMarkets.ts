@@ -22,6 +22,11 @@ export default {
       },
     },
   },
+  events: {
+    MarketCreated: {
+      _enum: {},
+    },
+  },
   types: {
     MarketCreation: {
       _enum: ['Permissionless', 'Advised'],

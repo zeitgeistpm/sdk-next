@@ -14,8 +14,8 @@ import { Context, IndexerContext } from '../../../../context'
  * @generic C Context - the context to fetch the marketlist for.
  */
 export type MarketList<C extends Context> = C extends IndexerContext
-  ? IndexedList
-  : RpcList
+  ? IndexedMarketList
+  : RpcMarketList
 
 /**
  * Markets list Query type
@@ -23,9 +23,9 @@ export type MarketList<C extends Context> = C extends IndexerContext
  *
  * @generic C Context - the context to query in.
  */
-export type ListQuery<C extends Context> = C extends IndexerContext
-  ? IndexerQuery
-  : RpcQuery
+export type MarketsListQuery<C extends Context> = C extends IndexerContext
+  ? MarketsIndexerQuery
+  : MarketsRpcQuery
 
 /**
  * Concrete Market type for indexed market list.
@@ -34,7 +34,7 @@ export type IndexedMarket = Unpacked<MarketsQuery['markets']>
 /**
  * Concrete MarketList for indexed context
  */
-export type IndexedList = IndexedMarket[]
+export type IndexedMarketList = IndexedMarket[]
 
 /**
  * Concrete Market type for rpc market list.
@@ -43,12 +43,12 @@ export type RpcMarket = [number, Market]
 /**
  * Concrete MarketList for rpc context
  */
-export type RpcList = RpcMarket[]
+export type RpcMarketList = RpcMarket[]
 
 /**
  * Concrete markets Query for rpc context
  */
-export type RpcQuery = {
+export type MarketsRpcQuery = {
   offset?: number
   limit?: number
 }
@@ -56,7 +56,7 @@ export type RpcQuery = {
 /**
  * Concrete markets Query for indexed context
  */
-export type IndexerQuery = {
+export type MarketsIndexerQuery = {
   where?: MarketWhereInput
   order?: MarketOrderByInput
   offset?: number

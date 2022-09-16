@@ -8,7 +8,7 @@ import { list } from './functions/list'
 import { create } from './functions/create'
 import {
   Markets,
-  ListQuery,
+  MarketsListQuery,
   CreateMarketParams,
   MarketsRpc,
   MarketsShared,
@@ -23,7 +23,7 @@ import {
  */
 export const markets = <C extends Context>(context: C): Markets<C> => {
   let base: MarketsShared<C> = {
-    list: (query: ListQuery<C>) => list(context, query),
+    list: (query: MarketsListQuery<C>) => list(context, query),
   }
 
   const rpc: MarketsRpc<RpcContext> | null = isRpcContext(context)

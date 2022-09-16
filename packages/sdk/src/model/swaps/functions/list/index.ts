@@ -1,5 +1,5 @@
 import { Option } from '@polkadot/types'
-import { Market } from '@zeitgeistpm/types/dist/interfaces'
+import { Market, Pool } from '@zeitgeistpm/types/dist/interfaces'
 import {
   RpcContext,
   Context,
@@ -7,7 +7,7 @@ import {
   isFullContext,
   isIndexerContext,
 } from '../../../../context'
-import { MarketList, MarketsListQuery, RpcMarket } from '../../types'
+import { PoolList, PoolsListQuery, RpcPool } from '../../types'
 
 /**
  * Query for a list of markets.
@@ -18,16 +18,16 @@ import { MarketList, MarketsListQuery, RpcMarket } from '../../types'
  * @param query ListQuery<C>
  * @returns Promise<MarketList<C>>
  */
-export const list = async <C extends Context>(
+export const listPools = async <C extends Context>(
   context: C,
-  query: MarketsListQuery<C>,
-): Promise<MarketList<C>> => {
+  query: PoolsListQuery<C>,
+): Promise<PoolList<C>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await indexerList(context, query)
       : await rpcList(context, query)
 
-  return data as MarketList<C>
+  return data as PoolList<C>
 }
 
 /**
@@ -36,9 +36,9 @@ export const list = async <C extends Context>(
  */
 const indexerList = async (
   context: IndexerContext,
-  query: MarketsListQuery<IndexerContext>,
-): Promise<MarketList<IndexerContext>> => {
-  return (await context.indexer.markets(query)).markets
+  query: PoolsListQuery<IndexerContext>,
+): Promise<PoolList<IndexerContext>> => {
+  return (await context.indexer.pools(query)).pools
 }
 
 /**
@@ -47,20 +47,20 @@ const indexerList = async (
  */
 const rpcList = async <C extends RpcContext>(
   { api }: RpcContext,
-  query: MarketsListQuery<RpcContext>,
-): Promise<MarketList<C>> => {
-  const entries = await api.query.marketCommons.markets.entries<Option<Market>>()
+  query: PoolsListQuery<RpcContext>,
+): Promise<PoolList<C>> => {
+  const entries = await api.query.swaps.pools.entries<Option<Pool>>()
 
   const list = entries.map(
     ([
       {
         args: [index],
       },
-      market,
+      pool,
     ]) => {
-      const marketId = Number(index.toHuman())
-      const rpcMarket: RpcMarket = [marketId, market.unwrap()]
-      return rpcMarket
+      const poolId = Number(index.toHuman())
+      const rpcPool: RpcPool = [poolId, pool.unwrap()]
+      return rpcPool
     },
   )
 

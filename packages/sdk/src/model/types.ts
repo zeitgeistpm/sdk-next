@@ -1,7 +1,9 @@
 import type { Markets } from './market/types'
+import type { Swaps } from './swaps/types'
 import { Context } from '../context'
 
 export * from './market/types'
+export * from './swaps/types'
 
 /**
  * High level model for interacting with the zeitgeist nodels like markets, assets, liquidity pools etc.
@@ -16,4 +18,9 @@ export type Model<C extends Context> = {
    * If you connect to the zeitgeist main or testnet, this should be configured automatically over IPFS.
    */
   markets: Markets<C>
+  /**
+   * Model for interacting with zeitgeist swaps module.
+   * Has functionality ti List liqudity pools, join pools with liquidity and swap assets in and out.
+   */
+  swaps: Swaps<C>
 }

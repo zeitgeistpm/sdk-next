@@ -1,5 +1,6 @@
 import { Context } from '../context'
 import * as Market from './market'
+import * as Swaps from './swaps'
 import { Model } from './types'
 
 /**
@@ -12,5 +13,6 @@ import { Model } from './types'
 export const model = <C extends Context>(context: C): Model<C> => {
   return {
     markets: Market.markets(context),
+    swaps: Swaps.swaps(context),
   }
 }
