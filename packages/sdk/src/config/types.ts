@@ -1,5 +1,5 @@
 import { CID } from 'ipfs-core/dist/src/block-storage'
-import { MetadataStorage } from 'packages/web3.storage/dist'
+import { MetadataStorage } from '@zeitgeistpm/web3.storage/dist'
 import { MarketMetadata } from '../model/market/meta/types'
 
 export * from './known'

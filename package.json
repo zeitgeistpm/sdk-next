@@ -2,7 +2,8 @@
   "name": "sdk-v2",
   "workspaces": [
     "packages/*",
-    "playground/*"
+    "playground/*",
+    "config/*"
   ],
   "scripts": {
     "build": "turbo run build",

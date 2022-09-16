@@ -1111,8 +1111,8 @@ export type Market = {
   marketId: Scalars['Int'];
   /** Type of the market */
   marketType: MarketType;
-  /** Can be `authorized` or `court` or `simpleDisputes` */
-  mdm: MarketDisputeMechanism;
+  /** IPFS cid for market metadata */
+  metadata: Scalars['String'];
   /** Account designated to report on the market */
   oracle: Scalars['String'];
   /** Share identifiers */
@@ -1204,12 +1204,8 @@ export enum MarketOrderByInput {
   MarketTypeCategoricalDesc = 'marketType_categorical_DESC',
   MarketTypeScalarAsc = 'marketType_scalar_ASC',
   MarketTypeScalarDesc = 'marketType_scalar_DESC',
-  MdmAuthorizedAsc = 'mdm_authorized_ASC',
-  MdmAuthorizedDesc = 'mdm_authorized_DESC',
-  MdmCourtAsc = 'mdm_court_ASC',
-  MdmCourtDesc = 'mdm_court_DESC',
-  MdmSimpleDisputesAsc = 'mdm_simpleDisputes_ASC',
-  MdmSimpleDisputesDesc = 'mdm_simpleDisputes_DESC',
+  MetadataAsc = 'metadata_ASC',
+  MetadataDesc = 'metadata_DESC',
   OracleAsc = 'oracle_ASC',
   OracleDesc = 'oracle_DESC',
   PeriodBlockAsc = 'period_block_ASC',
@@ -1452,7 +1448,20 @@ export type MarketWhereInput = {
   marketId_not_eq?: InputMaybe<Scalars['Int']>;
   marketId_not_in?: InputMaybe<Array<Scalars['Int']>>;
   marketType?: InputMaybe<MarketTypeWhereInput>;
-  mdm?: InputMaybe<MarketDisputeMechanismWhereInput>;
+  metadata_contains?: InputMaybe<Scalars['String']>;
+  metadata_endsWith?: InputMaybe<Scalars['String']>;
+  metadata_eq?: InputMaybe<Scalars['String']>;
+  metadata_gt?: InputMaybe<Scalars['String']>;
+  metadata_gte?: InputMaybe<Scalars['String']>;
+  metadata_in?: InputMaybe<Array<Scalars['String']>>;
+  metadata_lt?: InputMaybe<Scalars['String']>;
+  metadata_lte?: InputMaybe<Scalars['String']>;
+  metadata_not_contains?: InputMaybe<Scalars['String']>;
+  metadata_not_endsWith?: InputMaybe<Scalars['String']>;
+  metadata_not_eq?: InputMaybe<Scalars['String']>;
+  metadata_not_in?: InputMaybe<Array<Scalars['String']>>;
+  metadata_not_startsWith?: InputMaybe<Scalars['String']>;
+  metadata_startsWith?: InputMaybe<Scalars['String']>;
   oracle_contains?: InputMaybe<Scalars['String']>;
   oracle_endsWith?: InputMaybe<Scalars['String']>;
   oracle_eq?: InputMaybe<Scalars['String']>;
@@ -1586,7 +1595,7 @@ export type OutcomeReport = {
   /** Index of the categories. Null if market is scalar */
   categorical?: Maybe<Scalars['Int']>;
   /** Resultant value from the scalar range. Null if market is categorical */
-  scalar?: Maybe<Scalars['Int']>;
+  scalar?: Maybe<Scalars['BigInt']>;
 };
 
 export type OutcomeReportWhereInput = {
@@ -1598,14 +1607,14 @@ export type OutcomeReportWhereInput = {
   categorical_lte?: InputMaybe<Scalars['Int']>;
   categorical_not_eq?: InputMaybe<Scalars['Int']>;
   categorical_not_in?: InputMaybe<Array<Scalars['Int']>>;
-  scalar_eq?: InputMaybe<Scalars['Int']>;
-  scalar_gt?: InputMaybe<Scalars['Int']>;
-  scalar_gte?: InputMaybe<Scalars['Int']>;
-  scalar_in?: InputMaybe<Array<Scalars['Int']>>;
-  scalar_lt?: InputMaybe<Scalars['Int']>;
-  scalar_lte?: InputMaybe<Scalars['Int']>;
-  scalar_not_eq?: InputMaybe<Scalars['Int']>;
-  scalar_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  scalar_eq?: InputMaybe<Scalars['BigInt']>;
+  scalar_gt?: InputMaybe<Scalars['BigInt']>;
+  scalar_gte?: InputMaybe<Scalars['BigInt']>;
+  scalar_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  scalar_lt?: InputMaybe<Scalars['BigInt']>;
+  scalar_lte?: InputMaybe<Scalars['BigInt']>;
+  scalar_not_eq?: InputMaybe<Scalars['BigInt']>;
+  scalar_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
 };
 
 export type PageInfo = {
@@ -2223,9 +2232,9 @@ export type MarketsQueryVariables = Exact<{
 }>;
 
 
-export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: number | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null }> };
+export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null }> };
 
-export type FullMarketFragment = { __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: number | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
+export type FullMarketFragment = { __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
 
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
