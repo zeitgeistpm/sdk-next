@@ -6,6 +6,7 @@ import { batterystation } from '@zeitgeistpm/sdk'
 
 import './App.css'
 import reactLogo from './assets/react.svg'
+import { CreateMarketWithPoolParams } from 'packages/sdk/dist/model/types'
 
 function App() {
   const [sdk, setSdk] = useState<Sdk<FullContext>>()
@@ -29,15 +30,11 @@ function App() {
 
     const baseWeight = (1 / 2) * 10 * 10 ** 10
 
-    sdk.model.markets.list({})
-
-    const result = await sdk.model.markets.create({
+    const params: CreateMarketWithPoolParams = {
       signer: {
         address,
         signer,
       },
-      scoringRule: 'Cpmm',
-      creationType: 'Permissionless',
       disputeMechanism: { Authorized: address },
       marketType: { Scalar: [1, 2] },
       oracle: address,
@@ -62,7 +59,9 @@ function App() {
         swapFee: `${0.1 * 10 ** 10}`,
         weights: [`${baseWeight}`, `${baseWeight}`],
       },
-    })
+    }
+
+    const result = await sdk.model.markets.create(params)
 
     const {
       market: [marketId, market],

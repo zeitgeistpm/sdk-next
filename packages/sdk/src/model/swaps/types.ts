@@ -16,4 +16,4 @@ export type SwapsShared<C extends Context> = {
   listPools: (query: PoolsListQuery<C>) => Promise<PoolList<C>>
 }
 
-export type SwapsRpc<C> = C extends RpcContext ? {} : {}
+export type SwapsRpc<C extends Context> = C extends RpcContext ? {} : {}

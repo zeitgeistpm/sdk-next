@@ -22,7 +22,7 @@ export type MarketsShared<C extends Context> = {
   list: (query: MarketsListQuery<C>) => Promise<MarketList<C>>
 }
 
-export type MarketsRpc<C> = C extends RpcContext
+export type MarketsRpc<C extends Context> = C extends RpcContext
   ? {
       /**
        * Create a market. Only available when connecting to rpc.

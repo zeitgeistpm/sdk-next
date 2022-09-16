@@ -62,7 +62,7 @@ export const create = async <
 
   const result = response.unrightOr(error => {
     if (cid) {
-      rollbackMetadata(context, cid)
+      deleteMetadata(context, cid)
     }
     throw error
   })
@@ -91,8 +91,16 @@ export const create = async <
       }
 
       if (!createdMarket) {
-        return either(left(new Error('')))
-      } else if (isWithPool(params) && createdPool) {
+        return either(
+          left(
+            new Error(
+              'No market creation event found on finalized block. Should not happen.',
+            ),
+          ),
+        )
+      }
+
+      if (isWithPool(params) && createdPool) {
         return either(
           right({
             market: createdMarket,
@@ -127,10 +135,10 @@ const putMetadata = Te.from(
 )
 
 /**
- * Put market metadata in storage if present, otherwise store empty `0x` as hash
+ * Delete the metadata from storage. Used when market create transaction fails.
  * @private
  */
-const rollbackMetadata = Te.from(
+const deleteMetadata = Te.from(
   async (context: RpcContext | FullContext, cid: CID) => {
     if (!context.storage) return
     await context.storage.markets.del(cid)

@@ -5102,11 +5102,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/type-defs@^0.8.0, @zeitgeistpm/type-defs@workspace:packages/type-defs":
-  version: 0.0.0-use.local
-  resolution: "@zeitgeistpm/type-defs@workspace:packages/type-defs"
-  languageName: unknown
-  linkType: soft
+"@zeitgeistpm/type-defs@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "@zeitgeistpm/type-defs@npm:0.8.0"
+  checksum: e0cac049a0fbae2ef47677dc322e56c553b76aa8c0aade77ff46ce2b77f5fd0831deb1efeb6eab43f089ca66cb03cc4d7c92891b07cac39272bebfca37d4c789
+  languageName: node
+  linkType: hard
 
 "@zeitgeistpm/utility@*, @zeitgeistpm/utility@workspace:packages/utility":
   version: 0.0.0-use.local
