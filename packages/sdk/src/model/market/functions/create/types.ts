@@ -1,41 +1,25 @@
 import {
-  ZeitgeistPrimitivesMarketMarketPeriod,
-  ZeitgeistPrimitivesMarketMarketType,
-  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
   ZeitgeistPrimitivesPoolScoringRule,
   ZeitgeistPrimitivesMarketMarketCreation,
+  ZeitgeistPrimitivesMarket,
+  ZeitgeistPrimitivesPool,
 } from '@polkadot/types/lookup'
+import { ISubmittableResult } from '@polkadot/types/types'
 import { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
+import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { MarketMetadata } from '../../meta/types'
-import { RpcMarket } from '../types'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
- *
- * @generic MT extends MarketType['type'] - market type
- * @generic MP extends MarketPeriod['type'] - period type
- * @generic MD extends MarketDisputeMechanism['type'] - disputmechanism type
  */
-export type CreateMarketParams<
-  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
-  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
-  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
-> =
-  | CreateStandaloneMarketParams<MT, MP, MD>
-  | CreateMarketWithPoolParams<MT, MP, MD>
+export type CreateMarketParams =
+  | CreateStandaloneMarketParams
+  | CreateMarketWithPoolParams
 
 /**
  * Base parameters for creating a market.
- *
- * @generic MT extends MarketType['type'] - market type
- * @generic MP extends MarketPeriod['type'] - period type
- * @generic MD extends MarketDisputeMechanism['type'] - disputmechanism type
  */
-export type CreateMarketBaseParams<
-  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
-  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
-  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
-> = {
+export type CreateMarketBaseParams = {
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
@@ -47,7 +31,13 @@ export type CreateMarketBaseParams<
   /**
    * Type of market, categorical or scalar
    */
-  marketType: MarketTypeOf<MT>
+  marketType:
+    | {
+        Categorical: number
+      }
+    | {
+        Scalar: [number, number]
+      }
   /**
    * The resolver of the market outcome
    */
@@ -55,26 +45,21 @@ export type CreateMarketBaseParams<
   /**
    * The period of the market in tuple of timestamps or block numbers.
    */
-  period: Period<MP>
+  period: { Block: [number, number] } | { Timestamp: [number, number] }
   /**
    * Market dispute mechanism.
    * @note Authorized is the only one available atm.
    */
-  disputeMechanism: DisputeMechanism<MD>
+  disputeMechanism:
+    | { Authorized: string }
+    | { SimpleDisputes: null }
+    | { Court: null }
 }
 
 /**
  * Parameters for creating a market without a pool
- *
- * @generic MT extends MarketType['type'] - market type
- * @generic MP extends MarketPeriod['type'] - period type
- * @generic MD extends MarketDisputeMechanism['type'] - disputmechanism type
  */
-export type CreateStandaloneMarketParams<
-  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
-  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
-  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
-> = CreateMarketBaseParams<MT, MP, MD> & {
+export type CreateStandaloneMarketParams = CreateMarketBaseParams & {
   /**
    * Market scoring rule.
    *
@@ -90,16 +75,8 @@ export type CreateStandaloneMarketParams<
 
 /**
  * Parameters for creating a market with a pool.
- *
- * @generic MT extends MarketType['type'] - market type
- * @generic MP extends MarketPeriod['type'] - period type
- * @generic MD extends MarketDisputeMechanism['type'] - disputmechanism type
  */
-export type CreateMarketWithPoolParams<
-  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
-  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
-  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
-> = CreateMarketBaseParams<MT, MP, MD> & {
+export type CreateMarketWithPoolParams = CreateMarketBaseParams & {
   pool: {
     /**
      * The fee to swap in and out of the pool.
@@ -119,54 +96,37 @@ export type CreateMarketWithPoolParams<
 /**
  * Check if params is with pool
  *
- * @generic MT extends MarketType['type'] - market type
- * @generic MP extends MarketPeriod['type'] - period type
- * @generic MD extends MarketDisputeMechanism['type'] - disputmechanism type
- *
  * @param params CreateMarketParams<MT, MP, MD>
  * @returns params is CreateMarketWithPoolParams<MT, MP, MD>
  */
-export const isWithPool = <
-  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
-  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
-  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
->(
-  params: CreateMarketParams<MT, MP, MD>,
-): params is CreateMarketWithPoolParams<MT, MP, MD> => {
+export const isWithPool = (
+  params: CreateMarketParams,
+): params is CreateMarketWithPoolParams => {
   return 'pool' in params
 }
 
-/**
- * Helper type to differentiate market types
- */
-export type MarketTypeOf<MT extends ZeitgeistPrimitivesMarketMarketType['type']> =
-  MT extends 'Categorical'
-    ? {
-        Categorical: number
-      }
-    : {
-        Scalar: [number, number]
-      }
-
-/**
- * Helper type to differentiate period type
- */
-export type Period<MP extends ZeitgeistPrimitivesMarketMarketPeriod['type']> =
-  MP extends 'Block'
-    ? { Block: [number, number] }
-    : { Timestamp: [number, number] }
-
-/**
- * Helper type to differentiate dispute mechanism type.
- */
-export type DisputeMechanism<
-  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
-> = MD extends 'Authorized'
-  ? {
-      Authorized: string
-    }
-  : MD extends 'SimpleDisputes'
-  ? { SimpleDisputes: null }
-  : { Court: null }
-
-export type CreateMarketResponse = RpcMarket
+export type CreateMarketResult<P extends CreateMarketParams> = {
+  raw: ISubmittableResult
+  data: () => EitherInterface<
+    Error,
+    {
+      /**
+       * The market created by the extrinsic.
+       */
+      market: [number, ZeitgeistPrimitivesMarket]
+    } & (P extends CreateMarketWithPoolParams
+      ? {
+          /**
+           * The pool created for the market by the extrinsic.
+           */
+          pool: [number, ZeitgeistPrimitivesPool]
+        }
+      : {
+          /**
+           * Pool is not created without pool parameters passed to the create function
+           * @deprecated
+           */
+          pool: undefined
+        })
+  >
+}

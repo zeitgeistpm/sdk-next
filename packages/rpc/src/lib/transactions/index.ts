@@ -19,16 +19,6 @@ export const signAndSend: Te.TaskEither<
     let block: number
     let unsub: () => void
 
-    // if (Math.random() > 0.1) {
-    //   console.log('will fail')
-    //   await delay(1800)
-    //   return resolve(
-    //     either(
-    //       left(new RetractedError('Transaction retracted') as TransactionError),
-    //     ),
-    //   )
-    // }
-
     const callback = async (result: ISubmittableResult) => {
       if (result.status.isRetracted) {
         resolve(
@@ -72,7 +62,6 @@ export const signAndSend: Te.TaskEither<
       if (result.status.isInBlock) {
         const signedBlock = await api.rpc.chain.getBlock(result.status.asInBlock)
         block = signedBlock.block.header.number.toNumber()
-        console.log(block)
       }
 
       if (result.status.isFinalized) {

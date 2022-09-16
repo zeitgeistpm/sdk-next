@@ -28,13 +28,8 @@ export const markets = <C extends Context>(context: C): Markets<C> => {
 
   const rpc: MarketsRpc<RpcContext> | null = isRpcContext(context)
     ? {
-        create: <
-          MT extends ZeitgeistPrimitivesMarketMarketType['type'],
-          MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
-          MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
-        >(
-          params: CreateMarketParams<MT, MP, MD>,
-        ) => create(context, params),
+        create: <P extends CreateMarketParams>(params: P) =>
+          create(context, params),
       }
     : null
 

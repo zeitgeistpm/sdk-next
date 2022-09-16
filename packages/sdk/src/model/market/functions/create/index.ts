@@ -2,17 +2,16 @@ import { CID } from 'ipfs-core/dist/src/block-storage'
 import { SubmittableExtrinsic } from '@polkadot/api/types'
 import { ISubmittableResult } from '@polkadot/types/types'
 import {
-  ZeitgeistPrimitivesMarketMarketPeriod,
-  ZeitgeistPrimitivesMarketMarketType,
-  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
+  ZeitgeistPrimitivesMarket,
+  ZeitgeistPrimitivesPool,
 } from '@polkadot/types/lookup'
 import { signAndSend } from '@zeitgeistpm/rpc'
-import { right } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
-import { CreateMarketParams, isWithPool } from './types'
+import { CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 import { MarketMetadata } from '../../meta/types'
+import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 
 /**
  * Create a market on chain.
@@ -25,13 +24,12 @@ import { MarketMetadata } from '../../meta/types'
  * @returns void
  */
 export const create = async <
-  MT extends ZeitgeistPrimitivesMarketMarketType['type'],
-  MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
-  MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
+  C extends RpcContext | FullContext,
+  P extends CreateMarketParams,
 >(
-  context: RpcContext | FullContext,
-  params: CreateMarketParams<MT, MP, MD>,
-) => {
+  context: C,
+  params: P,
+): Promise<CreateMarketResult<P>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
   const metadata = await putMetadata(context, params.metadata)
@@ -62,12 +60,54 @@ export const create = async <
 
   const response = await signAndSend(context.api, tx, params.signer)
 
-  return response.unrightOr(error => {
+  const result = response.unrightOr(error => {
     if (cid) {
       rollbackMetadata(context, cid)
     }
     throw error
   })
+
+  return {
+    raw: result,
+    data: () => {
+      let createdMarket: [number, ZeitgeistPrimitivesMarket] | undefined
+      let createdPool: [number, ZeitgeistPrimitivesPool] | undefined
+
+      for (const { event } of result.events) {
+        if (context.api.events.predictionMarkets.MarketCreated.is(event)) {
+          const [id, , market] = event.data
+          if (market.creator.eq(params.signer.address)) {
+            createdMarket = [Number(id.toHuman()), market]
+          }
+        } else if (
+          isWithPool(params) &&
+          context.api.events.swaps.PoolCreate.is(event)
+        ) {
+          const [{ poolId, who }, pool] = event.data
+          if (who.eq(params.signer.address)) {
+            createdPool = [Number(poolId.toHuman()), pool]
+          }
+        }
+      }
+
+      if (!createdMarket) {
+        return either(left(new Error('')))
+      } else if (isWithPool(params) && createdPool) {
+        return either(
+          right({
+            market: createdMarket,
+            pool: createdPool,
+          }),
+        )
+      } else {
+        return either(
+          right({
+            market: createdMarket,
+          }),
+        )
+      }
+    },
+  } as CreateMarketResult<P>
 }
 
 /**

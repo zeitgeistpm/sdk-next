@@ -5,11 +5,7 @@ import {
 } from '@polkadot/types/lookup'
 import { Context, RpcContext } from '../../context'
 import { MarketsListQuery, MarketList } from './functions/list/types'
-import {
-  CreateMarketResponse,
-  CreateMarketParams,
-} from './functions/create/types'
-import { ISubmittableResult } from '@polkadot/types/types'
+import { CreateMarketParams, CreateMarketResult } from './functions/create/types'
 
 export * from './functions/types'
 
@@ -31,12 +27,8 @@ export type MarketsRpc<C> = C extends RpcContext
       /**
        * Create a market. Only available when connecting to rpc.
        */
-      create: <
-        MT extends ZeitgeistPrimitivesMarketMarketType['type'],
-        MP extends ZeitgeistPrimitivesMarketMarketPeriod['type'],
-        MD extends ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
-      >(
-        params: CreateMarketParams<MT, MP, MD>,
-      ) => Promise<ISubmittableResult>
+      create: <P extends CreateMarketParams>(
+        params: P,
+      ) => Promise<CreateMarketResult<P>>
     }
   : {}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import ZDK, { Sdk, RpcContext } from '@zeitgeistpm/sdk'
+import ZDK, { Sdk, FullContext } from '@zeitgeistpm/sdk'
+import { throws } from '@zeitgeistpm/utility/dist/error'
 import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp'
 import { batterystation } from '@zeitgeistpm/sdk'
 
@@ -7,7 +8,7 @@ import './App.css'
 import reactLogo from './assets/react.svg'
 
 function App() {
-  const [sdk, setSdk] = useState<Sdk<RpcContext>>()
+  const [sdk, setSdk] = useState<Sdk<FullContext>>()
 
   useEffect(() => {
     web3Enable('sdkv2-test')
@@ -28,7 +29,9 @@ function App() {
 
     const baseWeight = (1 / 2) * 10 * 10 ** 10
 
-    const [id, market] = await sdk.model.markets.create({
+    sdk.model.markets.list({})
+
+    const result = await sdk.model.markets.create({
       signer: {
         address,
         signer,
@@ -61,7 +64,13 @@ function App() {
       },
     })
 
-    console.log(`created: ${id}`, market.toHuman())
+    const {
+      market: [marketId, market],
+      pool: [poolId, pool],
+    } = result.data().unrightOr(throws)
+
+    console.log(`created: market ${marketId}`, market.toHuman())
+    console.log(`created: pool ${poolId}`, pool.toHuman())
   }
 
   return (

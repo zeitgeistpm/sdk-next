@@ -15,7 +15,7 @@ import { Context, IndexerContext } from '../../../../context'
  */
 export type MarketList<C extends Context> = C extends IndexerContext
   ? IndexedMarketList
-  : RpcMarketList
+  : ZeitgeistPrimitivesMarket[]
 
 /**
  * Markets list Query type
@@ -35,15 +35,6 @@ export type IndexedMarket = Unpacked<MarketsQuery['markets']>
  * Concrete MarketList for indexed context
  */
 export type IndexedMarketList = IndexedMarket[]
-
-/**
- * Concrete Market type for rpc market list.
- */
-export type RpcMarket = [number, ZeitgeistPrimitivesMarket]
-/**
- * Concrete MarketList for rpc context
- */
-export type RpcMarketList = RpcMarket[]
 
 /**
  * Concrete markets Query for rpc context

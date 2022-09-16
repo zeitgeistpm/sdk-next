@@ -5,7 +5,7 @@ import {
   isFullContext,
   isIndexerContext,
 } from '../../../../context'
-import { MarketList, MarketsListQuery, RpcMarket } from '../../types'
+import { MarketList, MarketsListQuery } from '../../types'
 
 /**
  * Query for a list of markets.
@@ -57,7 +57,7 @@ const rpcList = async <C extends RpcContext>(
       market,
     ]) => {
       const marketId = Number(index.toHuman())
-      const rpcMarket: RpcMarket = [marketId, market.unwrap()]
+      const rpcMarket = [marketId, market.unwrap()]
       return rpcMarket
     },
   )
