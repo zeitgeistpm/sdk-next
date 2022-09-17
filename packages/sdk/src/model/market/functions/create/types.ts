@@ -106,33 +106,41 @@ export const isWithPool = (
 }
 
 /**
- * @generic P extends CreateMarketParams - Lazy data function will extract market ond pool based on of the params include pool.
- *
  * The result of creating a market.
  * Market and pool(if created) can be lazily extracted from events using the data function.
+ *
+ * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
 export type CreateMarketResult<P extends CreateMarketParams> = {
   raw: ISubmittableResult
-  data: () => EitherInterface<
-    Error,
-    {
-      /**
-       * The market created by the extrinsic.
-       */
-      market: [number, ZeitgeistPrimitivesMarket]
-    } & (P extends CreateMarketWithPoolParams
-      ? {
-          /**
-           * The pool created for the market by the extrinsic.
-           */
-          pool: [number, ZeitgeistPrimitivesPool]
-        }
-      : {
-          /**
-           * Pool is not created without pool parameters passed to the create function
-           * @deprecated
-           */
-          pool: undefined
-        })
-  >
+  /**
+   * Lazy function to extract created Market and Pool.
+   * @returns EitherInterface<Error, CreateMarketData<P>>
+   */
+  data: () => EitherInterface<Error, CreateMarketData<P>>
 }
+
+/**
+ * The lazy data extracted from the market creation result.
+ *
+ * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
+ */
+export type CreateMarketData<P extends CreateMarketParams> = {
+  /**
+   * The market created by the extrinsic.
+   */
+  market: [number, ZeitgeistPrimitivesMarket]
+} & (P extends CreateMarketWithPoolParams
+  ? {
+      /**
+       * The pool created for the market by the extrinsic.
+       */
+      pool: [number, ZeitgeistPrimitivesPool]
+    }
+  : {
+      /**
+       * Pool is not created without pool parameters passed to the create function
+       * @deprecated
+       */
+      pool: undefined
+    })

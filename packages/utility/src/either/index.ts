@@ -144,7 +144,7 @@ export type EitherInterface<L, R> = Either<L, R> & {
   unleft: () => OptionInterface<L>
   /**
    * Tries to unwrap the right value or uses the default value or lazy function
-   * to produce the correct result.
+   * to produce the correct result(or throw error).
    *
    * @example ```typescript
    *   either(right(1)).rightOr(2) // -> 1
