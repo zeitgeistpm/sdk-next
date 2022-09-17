@@ -6,7 +6,10 @@ import { batterystation } from '@zeitgeistpm/sdk'
 
 import './App.css'
 import reactLogo from './assets/react.svg'
-import { CreateMarketWithPoolParams } from 'packages/sdk/dist/model/types'
+import {
+  CreateMarketParams,
+  CreateMarketWithPoolParams,
+} from 'packages/sdk/dist/model/types'
 
 function App() {
   const [sdk, setSdk] = useState<Sdk<FullContext>>()
@@ -30,11 +33,13 @@ function App() {
 
     const baseWeight = (1 / 2) * 10 * 10 ** 10
 
-    const params: CreateMarketWithPoolParams = {
+    const params: CreateMarketParams = {
       signer: {
         address,
         signer,
       },
+      creationType: 'Permissionless',
+      scoringRule: 'Cpmm',
       disputeMechanism: { Authorized: address },
       marketType: { Scalar: [1, 2] },
       oracle: address,
@@ -54,22 +59,22 @@ function App() {
           },
         ],
       },
-      pool: {
-        amount: `${300 * 10 ** 10}`,
-        swapFee: `${0.1 * 10 ** 10}`,
-        weights: [`${baseWeight}`, `${baseWeight}`],
-      },
+      // pool: {
+      //   amount: `${300 * 10 ** 10}`,
+      //   swapFee: `${0.1 * 10 ** 10}`,
+      //   weights: [`${baseWeight}`, `${baseWeight}`],
+      // },
     }
 
     const result = await sdk.model.markets.create(params)
 
     const {
       market: [marketId, market],
-      pool: [poolId, pool],
+      //pool: [poolId, pool],
     } = result.data().unrightOr(throws)
 
     console.log(`created: market ${marketId}`, market.toHuman())
-    console.log(`created: pool ${poolId}`, pool.toHuman())
+    //console.log(`created: pool ${poolId}`, pool.toHuman())
   }
 
   return (

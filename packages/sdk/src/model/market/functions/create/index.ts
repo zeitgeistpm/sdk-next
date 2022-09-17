@@ -9,11 +9,29 @@ import { signAndSend } from '@zeitgeistpm/rpc'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
-import { CreateMarketParams, CreateMarketResult, isWithPool } from './types'
+import {
+  CreateMarketData,
+  CreateMarketParams,
+  CreateMarketResult,
+  isWithPool,
+} from './types'
 import { MarketMetadata } from '../../meta/types'
-import { either, left, right } from '@zeitgeistpm/utility/dist/either'
+import {
+  Either,
+  either,
+  EitherInterface,
+  left,
+  right,
+  tryCatch,
+} from '@zeitgeistpm/utility/dist/either'
 import { ApiPromise } from '@polkadot/api'
 import { EventRecord } from '@polkadot/types/interfaces'
+import {
+  OptionInterface,
+  option,
+  some,
+  none,
+} from '@zeitgeistpm/utility/dist/option'
 
 /**
  * Create a market on chain.
@@ -72,48 +90,30 @@ export const create = async <
   return {
     raw: result,
     data: () => {
-      const createdMarket = extractMarketCreationEventForAddress(
-        context.api,
-        result.events,
-        params.signer.address,
-      )
-
-      if (!createdMarket) {
-        return either(
-          left(
-            new Error(
-              'No market creation event found on finalized block. Should not happen.',
-            ),
-          ),
-        )
-      }
-
-      const createdPool = isWithPool(params)
-        ? extractPoolCreationEventForMarket(
+      return either(
+        tryCatch<Error, CreateMarketData<P>>(() => {
+          const createdMarket = extractMarketCreationEventForAddress(
             context.api,
             result.events,
-            createdMarket[0],
-          )
-        : null
+            params.signer.address,
+          ).unrightOr(throws)
 
-      if (isWithPool(params) && !createdPool) {
-        return either(
-          left(
-            new Error(
-              'No pool creation event found on finalized block. Should not happen when creating with pool.',
-            ),
-          ),
-        )
-      }
+          const createdPool = isWithPool(params)
+            ? extractPoolCreationEventForMarket(
+                context.api,
+                result.events,
+                createdMarket[0],
+              ).unrightOr(throws)
+            : undefined
 
-      return either(
-        right({
-          market: createdMarket,
-          pool: createdPool,
+          return {
+            market: createdMarket,
+            pool: createdPool,
+          } as CreateMarketData<P>
         }),
       )
     },
-  } as CreateMarketResult<P>
+  }
 }
 
 /**
@@ -151,16 +151,22 @@ const extractMarketCreationEventForAddress = (
   api: ApiPromise,
   events: EventRecord[],
   address: AddressOrPair,
-): [number, ZeitgeistPrimitivesMarket] | null => {
+): EitherInterface<Error, [number, ZeitgeistPrimitivesMarket]> => {
   for (const { event } of events) {
     if (api.events.predictionMarkets.MarketCreated.is(event)) {
       const [id, , market] = event.data
       if (market.creator.eq(address)) {
-        return [Number(id.toHuman()), market]
+        return either(right([Number(id.toHuman()), market]))
       }
     }
   }
-  return null
+  return either(
+    left(
+      new Error(
+        'No market creation event found on finalized block. Should not happen.',
+      ),
+    ),
+  )
 }
 
 /**
@@ -171,14 +177,20 @@ const extractPoolCreationEventForMarket = (
   api: ApiPromise,
   events: EventRecord[],
   marketId: number,
-): [number, ZeitgeistPrimitivesPool] | null => {
+): EitherInterface<Error, [number, ZeitgeistPrimitivesPool]> => {
   for (const { event } of events) {
     if (api.events.swaps.PoolCreate.is(event)) {
       const [{ poolId, who }, pool] = event.data
       if (pool.marketId.eq(marketId)) {
-        return [Number(poolId.toHuman()), pool]
+        return either(right([Number(poolId.toHuman()), pool]))
       }
     }
   }
-  return null
+  return either(
+    left(
+      new Error(
+        'No pool creation event found on finalized block. Should not happen when creating with pool.',
+      ),
+    ),
+  )
 }
