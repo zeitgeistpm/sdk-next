@@ -9,7 +9,8 @@ import reactLogo from './assets/react.svg'
 import {
   CreateMarketParams,
   CreateMarketWithPoolParams,
-} from 'packages/sdk/dist/model/types'
+  CreateStandaloneMarketParams,
+} from '@zeitgeistpm/sdk/dist/model/types'
 
 function App() {
   const [sdk, setSdk] = useState<Sdk<FullContext>>()
@@ -33,7 +34,7 @@ function App() {
 
     const baseWeight = (1 / 2) * 10 * 10 ** 10
 
-    const params: CreateMarketParams = {
+    const params: CreateStandaloneMarketParams = {
       signer: {
         address,
         signer,
@@ -59,11 +60,6 @@ function App() {
           },
         ],
       },
-      // pool: {
-      //   amount: `${300 * 10 ** 10}`,
-      //   swapFee: `${0.1 * 10 ** 10}`,
-      //   weights: [`${baseWeight}`, `${baseWeight}`],
-      // },
     }
 
     const result = await sdk.model.markets.create(params)

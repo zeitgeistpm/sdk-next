@@ -11,5 +11,8 @@
   "peerDependencies": {
     "@polkadot/api": "*",
     "@polkadot/types": "*"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.1.0"
   }
 }
