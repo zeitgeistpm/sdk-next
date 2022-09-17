@@ -125,7 +125,7 @@ const rpcContext = async (config: RpcConfig): Promise<RpcContext> => {
   debug(`connecting to rpc: ${config.provider}`, config)
 
   const provider = await polly()
-    .logger(err => {
+    .logger(_ => {
       debug(`rpc connection failed, retrying..`, config, 'warn')
     })
     .waitAndRetry(config.connectionRetries ?? 8)
