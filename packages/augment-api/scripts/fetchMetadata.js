@@ -39,6 +39,7 @@ async function main() {
   })
 
   console.log('Metadata written.')
+  process.exit()
 }
 
 main()
