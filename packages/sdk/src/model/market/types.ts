@@ -1,8 +1,3 @@
-import {
-  ZeitgeistPrimitivesMarketMarketType,
-  ZeitgeistPrimitivesMarketMarketPeriod,
-  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
-} from '@polkadot/types/lookup'
 import { Context, RpcContext } from '../../context'
 import { MarketsListQuery, MarketList } from './functions/list/types'
 import { CreateMarketParams, CreateMarketResult } from './functions/create/types'

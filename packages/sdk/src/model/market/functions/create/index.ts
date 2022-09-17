@@ -1,5 +1,5 @@
 import { CID } from 'ipfs-core/dist/src/block-storage'
-import { SubmittableExtrinsic } from '@polkadot/api/types'
+import { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
 import { ISubmittableResult } from '@polkadot/types/types'
 import {
   ZeitgeistPrimitivesMarket,
@@ -12,6 +12,8 @@ import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 import { MarketMetadata } from '../../meta/types'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
+import { ApiPromise } from '@polkadot/api'
+import { EventRecord } from '@polkadot/types/interfaces'
 
 /**
  * Create a market on chain.
@@ -20,7 +22,7 @@ import { either, left, right } from '@zeitgeistpm/utility/dist/either'
  * @generic MP extends MarketPeriod['type']
  * @generic MD extends MarketDisputeMechanism['type']
  * @param context RpcContext | FullContext
- * @param params CreateMarketParams<MT, MP, MD>
+ * @param params CreateMarketParams
  * @returns void
  */
 export const create = async <
@@ -70,25 +72,11 @@ export const create = async <
   return {
     raw: result,
     data: () => {
-      let createdMarket: [number, ZeitgeistPrimitivesMarket] | undefined
-      let createdPool: [number, ZeitgeistPrimitivesPool] | undefined
-
-      for (const { event } of result.events) {
-        if (context.api.events.predictionMarkets.MarketCreated.is(event)) {
-          const [id, , market] = event.data
-          if (market.creator.eq(params.signer.address)) {
-            createdMarket = [Number(id.toHuman()), market]
-          }
-        } else if (
-          isWithPool(params) &&
-          context.api.events.swaps.PoolCreate.is(event)
-        ) {
-          const [{ poolId, who }, pool] = event.data
-          if (who.eq(params.signer.address)) {
-            createdPool = [Number(poolId.toHuman()), pool]
-          }
-        }
-      }
+      const createdMarket = extractMarketCreationEventForAddress(
+        context.api,
+        result.events,
+        params.signer.address,
+      )
 
       if (!createdMarket) {
         return either(
@@ -100,20 +88,30 @@ export const create = async <
         )
       }
 
-      if (isWithPool(params) && createdPool) {
+      const createdPool = isWithPool(params)
+        ? extractPoolCreationEventForMarket(
+            context.api,
+            result.events,
+            createdMarket[0],
+          )
+        : null
+
+      if (isWithPool(params) && !createdPool) {
         return either(
-          right({
-            market: createdMarket,
-            pool: createdPool,
-          }),
-        )
-      } else {
-        return either(
-          right({
-            market: createdMarket,
-          }),
+          left(
+            new Error(
+              'No pool creation event found on finalized block. Should not happen when creating with pool.',
+            ),
+          ),
         )
       }
+
+      return either(
+        right({
+          market: createdMarket,
+          pool: createdPool,
+        }),
+      )
     },
   } as CreateMarketResult<P>
 }
@@ -144,3 +142,43 @@ const deleteMetadata = Te.from(
     await context.storage.markets.del(cid)
   },
 )
+
+/**
+ * Get the market creation event from the finalized block events.
+ * @private
+ */
+const extractMarketCreationEventForAddress = (
+  api: ApiPromise,
+  events: EventRecord[],
+  address: AddressOrPair,
+): [number, ZeitgeistPrimitivesMarket] | null => {
+  for (const { event } of events) {
+    if (api.events.predictionMarkets.MarketCreated.is(event)) {
+      const [id, , market] = event.data
+      if (market.creator.eq(address)) {
+        return [Number(id.toHuman()), market]
+      }
+    }
+  }
+  return null
+}
+
+/**
+ * Get the pool creation event from the finalized block events.
+ * @private
+ */
+const extractPoolCreationEventForMarket = (
+  api: ApiPromise,
+  events: EventRecord[],
+  marketId: number,
+): [number, ZeitgeistPrimitivesPool] | null => {
+  for (const { event } of events) {
+    if (api.events.swaps.PoolCreate.is(event)) {
+      const [{ poolId, who }, pool] = event.data
+      if (pool.marketId.eq(marketId)) {
+        return [Number(poolId.toHuman()), pool]
+      }
+    }
+  }
+  return null
+}

@@ -96,8 +96,8 @@ export type CreateMarketWithPoolParams = CreateMarketBaseParams & {
 /**
  * Check if params is with pool
  *
- * @param params CreateMarketParams<MT, MP, MD>
- * @returns params is CreateMarketWithPoolParams<MT, MP, MD>
+ * @param params CreateMarketParams
+ * @returns params is CreateMarketWithPoolParams
  */
 export const isWithPool = (
   params: CreateMarketParams,
@@ -105,6 +105,12 @@ export const isWithPool = (
   return 'pool' in params
 }
 
+/**
+ * @generic P extends CreateMarketParams - Lazy data function will extract market ond pool based on of the params include pool.
+ *
+ * The result of creating a market.
+ * Market and pool(if created) can be lazily extracted from events using the data function.
+ */
 export type CreateMarketResult<P extends CreateMarketParams> = {
   raw: ISubmittableResult
   data: () => EitherInterface<

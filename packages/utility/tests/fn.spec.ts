@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { compose } from '../src/fn'
+import { compose } from '../src/function'
 
 describe('fn', () => {
   describe('compose', () => {

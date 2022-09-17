@@ -7,7 +7,8 @@
   "scripts": {
     "build": "yarn generate:defs && yarn generate:meta && rimraf ./dist && tsc",
     "generate:defs": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-defs --package @zeitgeistpm/augment-api --input ./src/interfaces --endpoint ./src/metadata/latest.json",
-    "generate:meta": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-chain --package @zeitgeistpm/augment-api --endpoint ./src/metadata/latest.json --output ./src/interfaces  --strict"
+    "generate:meta": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-chain --package @zeitgeistpm/augment-api --endpoint ./src/metadata/latest.json --output ./src/interfaces  --strict",
+    "fetch:metadata": "node ./scripts/fetchMetadata.js -o './src/metadata/latest.json' -e 'wss://bsr.zeitgeist.pm'"
   },
   "author": "Zeitgeist PM <contact@zeitgeist.pm>",
   "license": "GPL-3.0",
