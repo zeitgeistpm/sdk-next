@@ -5,7 +5,7 @@ const fs = require('fs')
 const { argv } = yargs
   .option('endpoint', {
     alias: 'e',
-    description: 'http or ws endpoint from which to fetch metadata',
+    description: 'endpoint to fetch from',
     type: 'string',
     demandOption: true,
     requiresArg: true,
@@ -13,7 +13,7 @@ const { argv } = yargs
   })
   .option('outfile', {
     alias: 'o',
-    description: 'path to output file',
+    description: 'output file path',
     type: 'string',
     demandOption: true,
     requiresArg: true,
