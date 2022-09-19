@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { T } from 'vitest/dist/global-ea084c9f'
-import { channel, returnes } from '../../src/async/channel'
-import { delay } from '../../src/async/delay'
+import { channel } from '../../src/async/channel'
 
 describe('async', () => {
   describe('channel', () => {
@@ -10,9 +8,7 @@ describe('async', () => {
       chan.put(1)
       chan.put(2)
       chan.end(3)
-      expect([await chan.take(), await chan.take(), await chan.take()]).toEqual([
-        1, 2, 3,
-      ])
+      expect([await chan.take(), await chan.take(), await chan.take()]).toEqual([1, 2, 3])
     })
 
     it('should wait for new values in the correct order', async () => {
@@ -27,15 +23,10 @@ describe('async', () => {
       setTimeout(() => {
         chan.put(3)
       }, 50)
-      expect([
-        await chan.take(),
-        await chan.take(),
-        await chan.take(),
-        await chan.take(),
-      ]).toEqual([1, 2, 3, 4])
+      expect([await chan.take(), await chan.take(), await chan.take(), await chan.take()]).toEqual([1, 2, 3, 4])
     })
 
-    it('generator', async () => {
+    it('should be a async iterable', async () => {
       const chan = channel<number>()
       chan.put(1)
       setTimeout(() => {
@@ -50,13 +41,22 @@ describe('async', () => {
 
       let acc: number[] = []
 
-      const gen = chan.generator()
-
-      for await (const n of gen) {
+      for await (const n of chan) {
         acc = [...acc, n]
       }
 
-      expect(acc).toEqual([1, 2, 3])
+      expect(acc).toEqual([1, 2, 3, 4])
+    })
+
+    it('should be able to awai last value', async () => {
+      const chan = channel<number>()
+      chan.put(1)
+      chan.put(2)
+      setTimeout(() => {
+        chan.end(3)
+      }, 50)
+      const last = await chan
+      expect(last).toBe(3)
     })
   })
 })

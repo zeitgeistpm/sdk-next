@@ -34,13 +34,11 @@ function App() {
 
     const baseWeight = (1 / 2) * 10 * 10 ** 10
 
-    const params: CreateStandaloneMarketParams = {
+    const params: CreateMarketWithPoolParams = {
       signer: {
         address,
         signer,
       },
-      creationType: 'Permissionless',
-      scoringRule: 'Cpmm',
       disputeMechanism: { Authorized: address },
       marketType: { Scalar: [1, 2] },
       oracle: address,
@@ -60,17 +58,22 @@ function App() {
           },
         ],
       },
+      pool: {
+        amount: `${300 * 10 ** 10}`,
+        swapFee: `${1000}`,
+        weights: [`${baseWeight}`, `${baseWeight}`],
+      },
     }
 
     const result = await sdk.model.markets.create(params)
 
     const {
       market: [marketId, market],
-      //pool: [poolId, pool],
-    } = result.data().unrightOr(throws)
+      pool: [poolId, pool],
+    } = result.extract().unrightOr(throws)
 
     console.log(`created: market ${marketId}`, market.toHuman())
-    //console.log(`created: pool ${poolId}`, pool.toHuman())
+    console.log(`created: pool ${poolId}`, pool.toHuman())
   }
 
   return (

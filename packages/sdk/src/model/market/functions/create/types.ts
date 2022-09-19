@@ -12,9 +12,7 @@ import { MarketMetadata } from '../../meta/types'
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
  */
-export type CreateMarketParams =
-  | CreateStandaloneMarketParams
-  | CreateMarketWithPoolParams
+export type CreateMarketParams = CreateStandaloneMarketParams | CreateMarketWithPoolParams
 
 /**
  * Base parameters for creating a market.
@@ -50,10 +48,7 @@ export type CreateMarketBaseParams = {
    * Market dispute mechanism.
    * @note Authorized is the only one available atm.
    */
-  disputeMechanism:
-    | { Authorized: string }
-    | { SimpleDisputes: null }
-    | { Court: null }
+  disputeMechanism: { Authorized: string } | { SimpleDisputes: null } | { Court: null }
 }
 
 /**
@@ -99,9 +94,7 @@ export type CreateMarketWithPoolParams = CreateMarketBaseParams & {
  * @param params CreateMarketParams
  * @returns params is CreateMarketWithPoolParams
  */
-export const isWithPool = (
-  params: CreateMarketParams,
-): params is CreateMarketWithPoolParams => {
+export const isWithPool = (params: CreateMarketParams): params is CreateMarketWithPoolParams => {
   return 'pool' in params
 }
 
@@ -115,9 +108,15 @@ export type CreateMarketResult<P extends CreateMarketParams> = {
   raw: ISubmittableResult
   /**
    * Lazy function to extract created Market and Pool.
+   *
+   * @example ```ts
+   * const result = await sdk.model.markets.create(...params)
+   * const { market, pool } = result.extract().unrightOr(throws)
+   * ```
+   *
    * @returns EitherInterface<Error, CreateMarketData<P>>
    */
-  data: () => EitherInterface<Error, CreateMarketData<P>>
+  extract: () => EitherInterface<Error, CreateMarketData<P>>
 }
 
 /**

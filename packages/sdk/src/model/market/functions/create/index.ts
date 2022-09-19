@@ -1,52 +1,27 @@
 import { CID } from 'ipfs-core/dist/src/block-storage'
 import { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
 import { ISubmittableResult } from '@polkadot/types/types'
-import {
-  ZeitgeistPrimitivesMarket,
-  ZeitgeistPrimitivesPool,
-} from '@polkadot/types/lookup'
+import { ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { signAndSend } from '@zeitgeistpm/rpc'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
-import {
-  CreateMarketData,
-  CreateMarketParams,
-  CreateMarketResult,
-  isWithPool,
-} from './types'
+import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 import { MarketMetadata } from '../../meta/types'
-import {
-  Either,
-  either,
-  EitherInterface,
-  left,
-  right,
-  tryCatch,
-} from '@zeitgeistpm/utility/dist/either'
+import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
 import { ApiPromise } from '@polkadot/api'
 import { EventRecord } from '@polkadot/types/interfaces'
-import {
-  OptionInterface,
-  option,
-  some,
-  none,
-} from '@zeitgeistpm/utility/dist/option'
 
 /**
  * Create a market on chain.
  *
- * @generic MT extends MarketType['type']
- * @generic MP extends MarketPeriod['type']
- * @generic MD extends MarketDisputeMechanism['type']
+ * @generic C extends RpcContext | FullContext
+ * @generic P extends CreateMarketParams
  * @param context RpcContext | FullContext
- * @param params CreateMarketParams
+ * @param params P
  * @returns void
  */
-export const create = async <
-  C extends RpcContext | FullContext,
-  P extends CreateMarketParams,
->(
+export const create = async <C extends RpcContext | FullContext, P extends CreateMarketParams>(
   context: C,
   params: P,
 ): Promise<CreateMarketResult<P>> => {
@@ -89,36 +64,47 @@ export const create = async <
 
   return {
     raw: result,
-    data: () => {
-      return either(
-        tryCatch<Error, CreateMarketData<P>>(() => {
-          const createdMarket = extractMarketCreationEventForAddress(
-            context.api,
-            result.events,
-            params.signer.address,
-          ).unrightOr(throws)
-
-          const createdPool = isWithPool(params)
-            ? extractPoolCreationEventForMarket(
-                context.api,
-                result.events,
-                createdMarket[0],
-              ).unrightOr(throws)
-            : undefined
-
-          return {
-            market: createdMarket,
-            pool: createdPool,
-          } as CreateMarketData<P>
-        }),
-      )
-    },
+    extract: extract(context, result, params),
   }
 }
 
 /**
+ * Lazily extract metadata from the market creation block.
+ *
+ * @generic P extends CreateMarketParams
+ * @param context RpcContext
+ * @param result ISubmittableResult
+ * @param params P
+ * @returns () => EitherInterface<Error, CreateMarketData<P>>
+ */
+const extract =
+  <P extends CreateMarketParams>(context: RpcContext, result: ISubmittableResult, params: P) =>
+  () =>
+    either(
+      tryCatch<Error, CreateMarketData<P>>(() => {
+        const createdMarket = extractMarketCreationEventForAddress(
+          context.api,
+          result.events,
+          params.signer.address,
+        ).unrightOr(throws)
+
+        const createdPool = isWithPool(params)
+          ? extractPoolCreationEventForMarket(context.api, result.events, createdMarket[0]).unrightOr(throws)
+          : undefined
+
+        return {
+          market: createdMarket,
+          pool: createdPool,
+        } as CreateMarketData<P>
+      }),
+    )
+
+/**
  * Put market metadata in storage if present, otherwise store empty `0x` as hash
  * @private
+ *
+ * @param context RpcContext | FullContext,
+ * @param metadata MarketMetadata,
  */
 const putMetadata = Te.from(
   async (
@@ -134,18 +120,25 @@ const putMetadata = Te.from(
 
 /**
  * Delete the metadata from storage. Used when market create transaction fails.
+ *
  * @private
+ *
+ * @param context RpcContext | FullContext
+ * @param cid CID
  */
-const deleteMetadata = Te.from(
-  async (context: RpcContext | FullContext, cid: CID) => {
-    if (!context.storage) return
-    await context.storage.markets.del(cid)
-  },
-)
+const deleteMetadata = Te.from(async (context: RpcContext | FullContext, cid: CID) => {
+  if (!context.storage) return
+  await context.storage.markets.del(cid)
+})
 
 /**
  * Get the market creation event from the finalized block events.
+ *
  * @private
+ *
+ * @param api ApiPromise
+ * @param events EventRecord[]
+ * @param address AddressOrPair
  */
 const extractMarketCreationEventForAddress = (
   api: ApiPromise,
@@ -160,18 +153,17 @@ const extractMarketCreationEventForAddress = (
       }
     }
   }
-  return either(
-    left(
-      new Error(
-        'No market creation event found on finalized block. Should not happen.',
-      ),
-    ),
-  )
+  return either(left(new Error('No market creation event found on finalized block. Should not happen.')))
 }
 
 /**
  * Get the pool creation event from the finalized block events.
+ *
  * @private
+ *
+ * @param api ApiPromise
+ * @param events EventRecord[]
+ * @param marketId number
  */
 const extractPoolCreationEventForMarket = (
   api: ApiPromise,
@@ -180,7 +172,7 @@ const extractPoolCreationEventForMarket = (
 ): EitherInterface<Error, [number, ZeitgeistPrimitivesPool]> => {
   for (const { event } of events) {
     if (api.events.swaps.PoolCreate.is(event)) {
-      const [{ poolId, who }, pool] = event.data
+      const [{ poolId }, pool] = event.data
       if (pool.marketId.eq(marketId)) {
         return either(right([Number(poolId.toHuman()), pool]))
       }
@@ -188,9 +180,7 @@ const extractPoolCreationEventForMarket = (
   }
   return either(
     left(
-      new Error(
-        'No pool creation event found on finalized block. Should not happen when creating with pool.',
-      ),
+      new Error('No pool creation event found on finalized block. Should not happen when creating with pool.'),
     ),
   )
 }

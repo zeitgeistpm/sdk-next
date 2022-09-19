@@ -22,8 +22,8 @@ export type MarketsRpc<C extends Context> = C extends RpcContext
       /**
        * Create a market. Only available when connecting to rpc.
        */
-      create: <P extends CreateMarketParams>(
-        params: P,
-      ) => Promise<CreateMarketResult<P>>
+      create: {
+        <P extends CreateMarketParams>(params: P): Promise<CreateMarketResult<P>>
+      }
     }
   : {}

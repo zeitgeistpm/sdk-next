@@ -28,14 +28,12 @@ export const left = <A>(left: A): Left<A> => ({
 /**
  * Typeguard for right values
  */
-export const isRight = <L, R>(either: Either<L, R>): either is Right<R> =>
-  'right' in either
+export const isRight = <L, R>(either: Either<L, R>): either is Right<R> => 'right' in either
 
 /**
  * Typeguard for left values
  */
-export const isLeft = <L, R>(either: Either<L, R>): either is Left<L> =>
-  'left' in either
+export const isLeft = <L, R>(either: Either<L, R>): either is Left<L> => 'left' in either
 
 /**
  * Maps the right value if present with the mapping function.
@@ -45,10 +43,8 @@ export const isLeft = <L, R>(either: Either<L, R>): either is Left<L> =>
  * map(left("error"), num => num + 1) === left("error")
  * ```
  */
-export const map = <L, R, B>(
-  f: (a: R) => B,
-  either: Either<L, R>,
-): Either<L, B> => (isLeft(either) ? either : { right: f(either.right) })
+export const map = <L, R, B>(f: (a: R) => B, either: Either<L, R>): Either<L, B> =>
+  isLeft(either) ? either : { right: f(either.right) }
 
 /**
  * Chains eithers, where it returns out a Left if one of the composed functions returns left.
@@ -67,10 +63,8 @@ export const map = <L, R, B>(
  * ```
  * ```
  */
-export const chain = <L, R, B>(
-  f: (a: R) => Either<L, B>,
-  either: Either<L, R>,
-): Either<L, B> => (isLeft(either) ? either : f(either.right))
+export const chain = <L, R, B>(f: (a: R) => Either<L, B>, either: Either<L, R>): Either<L, B> =>
+  isLeft(either) ? either : f(either.right)
 
 /**
  * Unwraps a the right value into an Option<R>
@@ -80,8 +74,7 @@ export const chain = <L, R, B>(
  * unright(left(NaN)).unwrapOr(2) === 2
  * ```
  */
-export const unright = <L, R>(either: Either<L, R>) =>
-  option(isRight(either) ? some(either.right) : none())
+export const unright = <L, R>(either: Either<L, R>) => option(isRight(either) ? some(either.right) : none())
 
 /**
  * Unwraps a the left value into an Option<L>
@@ -91,8 +84,7 @@ export const unright = <L, R>(either: Either<L, R>) =>
  * unleft(left(NaN)).unwrapOr(2) === NaN
  * ```
  */
-export const unleft = <L, R>(either: Either<L, R>) =>
-  option(isLeft(either) ? some(either.left) : none())
+export const unleft = <L, R>(either: Either<L, R>) => option(isLeft(either) ? some(either.left) : none())
 
 /**
  * @generic P - the input value, in case of Left it will be R and vice versa.
