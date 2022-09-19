@@ -13,30 +13,29 @@ describe('async', () => {
 
     it('should wait for new values in the correct order', async () => {
       const chan = channel<number>()
-      chan.put(1)
       setTimeout(() => {
-        chan.put(2)
+        chan.put(1)
       }, 10)
       setTimeout(() => {
-        chan.end(4)
+        chan.end(3)
       }, 130)
       setTimeout(() => {
-        chan.put(3)
+        chan.put(2)
       }, 50)
-      expect([await chan.take(), await chan.take(), await chan.take(), await chan.take()]).toEqual([1, 2, 3, 4])
+      expect([await chan.take(), await chan.take(), await chan.take()]).toEqual([1, 2, 3])
     })
 
     it('should be a async iterable', async () => {
       const chan = channel<number>()
-      chan.put(1)
+
       setTimeout(() => {
-        chan.put(2)
+        chan.put(1)
       }, 10)
       setTimeout(() => {
-        chan.end(4)
+        chan.end(3)
       }, 90)
       setTimeout(() => {
-        chan.put(3)
+        chan.put(2)
       }, 50)
 
       let acc: number[] = []
@@ -45,18 +44,20 @@ describe('async', () => {
         acc = [...acc, n]
       }
 
-      expect(acc).toEqual([1, 2, 3, 4])
+      expect(acc).toEqual([1, 2, 3])
     })
 
-    it('should be able to awai last value', async () => {
+    it('should be able to await last value', async () => {
       const chan = channel<number>()
+
       chan.put(1)
       chan.put(2)
+
       setTimeout(() => {
         chan.end(3)
       }, 50)
-      const last = await chan
-      expect(last).toBe(3)
+
+      expect(await chan).toBe(3)
     })
   })
 })
