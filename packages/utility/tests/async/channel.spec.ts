@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { channel } from '../../src/async/channel'
+import { T } from 'vitest/dist/global-ea084c9f'
+import { channel, returnes } from '../../src/async/channel'
 import { delay } from '../../src/async/delay'
 
 describe('async', () => {
@@ -8,7 +9,7 @@ describe('async', () => {
       const chan = channel<number>()
       chan.put(1)
       chan.put(2)
-      chan.put(3)
+      chan.end(3)
       expect([await chan.take(), await chan.take(), await chan.take()]).toEqual([
         1, 2, 3,
       ])
@@ -21,7 +22,7 @@ describe('async', () => {
         chan.put(2)
       }, 10)
       setTimeout(() => {
-        chan.put(4)
+        chan.end(4)
       }, 130)
       setTimeout(() => {
         chan.put(3)
@@ -34,21 +35,28 @@ describe('async', () => {
       ]).toEqual([1, 2, 3, 4])
     })
 
-    it('should throw error when trying to take from terminated channel', async () => {
+    it('generator', async () => {
       const chan = channel<number>()
       chan.put(1)
-      expect(await chan.take()).toBe(1)
-      chan.terminate()
-      await expect(() => chan.take()).rejects.toThrowError(/terminated channel/)
-    })
+      setTimeout(() => {
+        chan.put(2)
+      }, 10)
+      setTimeout(() => {
+        chan.end(4)
+      }, 90)
+      setTimeout(() => {
+        chan.put(3)
+      }, 50)
 
-    it('should reject all unfinished takers if terminating with dangling takers', async () => {
-      const chan = channel<number>()
-      let error: any
-      chan.take().catch(_error => (error = _error))
-      chan.terminate()
-      await delay(33)
-      expect(error.message).toMatch(/terminated before taker received value/)
+      let acc: number[] = []
+
+      const gen = chan.generator()
+
+      for await (const n of gen) {
+        acc = [...acc, n]
+      }
+
+      expect(acc).toEqual([1, 2, 3])
     })
   })
 })

@@ -1,32 +1,40 @@
-export type Channel<T> = {
-  put: (value: T) => void
-  take: () => Promise<T | Terminated>
-  terminate: () => void
+import { deferred, Deferred, isDeferred } from './deferred'
+
+export type Channel<T, R = T> = {
+  put: (value: T | Returned<R>) => void
+  end: (value: R) => void
+  take: () => Promise<T | R>
+  generator: () => AsyncGenerator<T, R>
 }
 
-export const Terminated: unique symbol = Symbol()
-export type Terminated = typeof Terminated
+export type Returned<R> = { returned: R }
 
-export const channel = <T>(): Channel<T> => {
-  const buffer: Array<T | Deferred<T>> = []
-  let terminated = false
+export const isReturned = <R>(value: unknown): value is Returned<R> =>
+  typeof value === 'object' && value !== null && 'returned' in value
 
-  const put = (value: T) => {
-    if (terminated) throw new Error('trying to put value on terminated channel')
+export const channel = <T, R = T>(): Channel<T, R> => {
+  const buffer: Array<T | Deferred<T> | Returned<R>> = []
 
+  const put = (value: T | Returned<R>) => {
     const taker = buffer[0] && isDeferred(buffer[0]) ? buffer[0] : null
 
     if (taker) {
       buffer.splice(0, 1)
       return taker.resolve(value)
-    } else {
+    }
+
+    if (isReturned(value)) {
       return buffer.push(value)
     }
+
+    return buffer.push(value)
+  }
+
+  const end = (value: R) => {
+    put({ returned: value })
   }
 
   const take = async () => {
-    if (terminated) throw new Error('trying to take from a terminated channel')
-
     const next = buffer.shift()
 
     if (next && isDeferred<T>(next)) {
@@ -40,48 +48,20 @@ export const channel = <T>(): Channel<T> => {
     }
   }
 
-  const terminate = () => {
-    terminated = true
-    const unresolved = buffer.filter((value): value is Deferred<T> =>
-      isDeferred(value),
-    )
-    unresolved.forEach(value => {
-      value.reject(new Error('Channel terminated before taker received value.'))
-    })
+  async function* generator() {
+    while (true) {
+      const value = await take()
+      if (isReturned<R>(value)) {
+        return value.returned
+      }
+      yield value as T
+    }
   }
 
   return {
     put,
-    take,
-    terminate,
+    end,
+    take: () => take().then(value => (isReturned(value) ? value.returned : value)),
+    generator,
   }
 }
-
-export type Deferred<T> = {
-  resolve: (value: T | PromiseLike<T>) => void
-  reject: (reason?: any) => void
-  value: Promise<T>
-}
-
-export const deferred = <T>(): Deferred<T> => {
-  let resolve!: Deferred<T>['resolve']
-  let reject!: Deferred<T>['reject']
-
-  const value = new Promise<T>((_resolve, _reject) => {
-    resolve = _resolve
-    reject = _reject
-  })
-
-  return {
-    resolve,
-    reject,
-    value,
-  }
-}
-
-export const isDeferred = <T>(value: any): value is Deferred<T> =>
-  typeof value === 'object' &&
-  'resolve' in value &&
-  'reject' in value &&
-  'value' in value &&
-  'then' in value.value
