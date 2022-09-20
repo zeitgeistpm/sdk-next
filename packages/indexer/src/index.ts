@@ -1,7 +1,7 @@
 import { GraphQLClient } from 'graphql-request'
 import { augments } from './augments'
 import { getSdk } from './graphql/sdk'
-import { Config, ZeitgeistIndexer } from './types'
+import type { Config, ZeitgeistIndexer } from './types'
 
 export * from './graphql/sdk'
 export * from './types'
