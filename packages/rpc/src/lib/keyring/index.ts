@@ -1,4 +1,4 @@
-import { ExtSigner, KeyringPairOrExtSigner } from './types'
+import type { ExtSigner, KeyringPairOrExtSigner } from './types'
 
 export * from './types'
 
@@ -8,8 +8,6 @@ export * from './types'
  * @param signer KeyringPairOrExtSigner
  * @returns signer is ExtSigner
  */
-export const isExtSigner = (
-  signer: KeyringPairOrExtSigner,
-): signer is ExtSigner => {
+export const isExtSigner = (signer: KeyringPairOrExtSigner): signer is ExtSigner => {
   return (signer as ExtSigner).signer !== undefined
 }

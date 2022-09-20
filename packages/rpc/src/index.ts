@@ -1,5 +1,5 @@
-import { WsProvider } from '@polkadot/api'
-import { ApiOptions } from '@polkadot/api/types'
+import type { WsProvider } from '@polkadot/api'
+import type { ApiOptions } from '@polkadot/api/types'
 import '@zeitgeistpm/augment-api'
 
 export * from './types'

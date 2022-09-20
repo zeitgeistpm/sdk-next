@@ -1,7 +1,7 @@
 import polly from 'polly-js'
-import { ApiPromise, WsProvider } from '@polkadot/api'
+import type { ApiPromise, WsProvider } from '@polkadot/api'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
-import { RpcContext, FullContext, IndexerContext } from './context'
+import type { RpcContext, FullContext, IndexerContext } from './context'
 import * as Indexer from '@zeitgeistpm/indexer'
 import {
   RpcConfig,
@@ -72,10 +72,7 @@ export async function create(config: Config) {
   }
 
   if (isFullConfig(config)) {
-    const [rpc, indexer] = await Promise.all([
-      rpcContext(config),
-      indexerContext(config),
-    ])
+    const [rpc, indexer] = await Promise.all([rpcContext(config), indexerContext(config)])
 
     const context: FullContext = {
       ...rpc,
@@ -102,11 +99,7 @@ export async function create(config: Config) {
       model,
     }
   } else {
-    debug(
-      `Using only rpc, querying data might be more limited and/or slower.`,
-      config,
-      'warn',
-    )
+    debug(`Using only rpc, querying data might be more limited and/or slower.`, config, 'warn')
     const context: RpcContext = await rpcContext(config)
     const model = Model.model(context)
 
@@ -122,6 +115,8 @@ export async function create(config: Config) {
  * @private
  */
 const rpcContext = async (config: RpcConfig): Promise<RpcContext> => {
+  const { ApiPromise, WsProvider } = await import('@polkadot/api')
+
   debug(`connecting to rpc: ${config.provider}`, config)
 
   const provider = await polly()

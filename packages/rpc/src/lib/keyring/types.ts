@@ -1,5 +1,5 @@
-import { KeyringPair } from '@polkadot/keyring/types'
-import { Signer } from '@polkadot/types/types'
+import type { KeyringPair } from '@polkadot/keyring/types'
+import type { Signer } from '@polkadot/types/types'
 
 export type ExtSigner = { address: string; signer: Signer }
 
