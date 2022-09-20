@@ -1,16 +1,7 @@
-import {
-  StructError,
-  object,
-  optional,
-  union,
-  array,
-  literal,
-  validate,
-  string,
-} from 'superstruct'
-import { AnyJson } from '@polkadot/types/types'
+import { StructError, object, optional, union, array, literal, validate, string } from 'superstruct'
+import type { AnyJson } from '@polkadot/types/types'
+import type { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
-import { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { MarketMetadata } from './types'
 
 /**
@@ -21,23 +12,22 @@ import { MarketMetadata } from './types'
  *
  * @type Codec<AnyJson, MarketMetadata, StructError>
  */
-export const ZeitgeistMetadataCodec: Codec<AnyJson, MarketMetadata, StructError> =
-  {
-    encode: input => {
-      const [error, encoded] = validate(input, IOMarketMetadata)
-      if (IOMarketMetadata.is(encoded)) {
-        return either(right(encoded))
-      }
-      return either(left(error as StructError))
-    },
-    decode: output => {
-      const [error, encoded] = validate(output, IOMarketMetadata)
-      if (IOMarketMetadata.is(encoded)) {
-        return either(right(encoded as AnyJson))
-      }
-      return either(left(error as StructError))
-    },
-  }
+export const ZeitgeistMetadataCodec: Codec<AnyJson, MarketMetadata, StructError> = {
+  encode: input => {
+    const [error, encoded] = validate(input, IOMarketMetadata)
+    if (IOMarketMetadata.is(encoded)) {
+      return either(right(encoded))
+    }
+    return either(left(error as StructError))
+  },
+  decode: output => {
+    const [error, encoded] = validate(output, IOMarketMetadata)
+    if (IOMarketMetadata.is(encoded)) {
+      return either(right(encoded as AnyJson))
+    }
+    return either(left(error as StructError))
+  },
+}
 
 /**
  * IO validation of Market Categories using superstruct

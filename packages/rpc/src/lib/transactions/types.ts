@@ -1,11 +1,7 @@
-import RpcError from '@polkadot/rpc-provider/coder/error'
-import { RegistryError } from '@polkadot/types/types'
+import type RpcError from '@polkadot/rpc-provider/coder/error'
+import type { RegistryError } from '@polkadot/types/types'
 
-export type TransactionError =
-  | RpcError
-  | RegistryError
-  | RetractedError
-  | UnknownDispatchError
+export type TransactionError = RpcError | RegistryError | RetractedError | UnknownDispatchError
 
 export class RetractedError extends Error {
   constructor(message: string) {

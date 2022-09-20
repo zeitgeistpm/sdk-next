@@ -2,7 +2,7 @@ import type { CID } from 'ipfs-core/dist/src/block-storage'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { throws } from '@zeitgeistpm/utility/dist/error'
-import { u8aToString } from '@polkadot/util'
+import { u8aToString } from '@polkadot/util/u8a'
 import * as IPFSHttpClient from 'ipfs-http-client'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
@@ -29,10 +29,7 @@ export const storage = <T>(
       try {
         const content = codec.decode(data).unrightOr(throws)
 
-        const { cid } = await node.add(
-          { content },
-          { hashAlg, pin: config?.node.pin ?? true },
-        )
+        const { cid } = await node.add({ content }, { hashAlg, pin: config?.node.pin ?? true })
 
         if (config.cluster) {
           await cluster.pin(cid.toString(), config.cluster).catch(_ => {

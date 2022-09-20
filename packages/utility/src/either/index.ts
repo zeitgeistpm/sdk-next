@@ -1,4 +1,4 @@
-import { isFunction } from '@polkadot/util'
+import { isFunction } from '@polkadot/util/is/function'
 import { OptionInterface, none, option, some } from '../option'
 
 /**

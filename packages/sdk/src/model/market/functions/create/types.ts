@@ -1,13 +1,13 @@
-import {
+import type {
   ZeitgeistPrimitivesPoolScoringRule,
   ZeitgeistPrimitivesMarketMarketCreation,
   ZeitgeistPrimitivesMarket,
   ZeitgeistPrimitivesPool,
 } from '@polkadot/types/lookup'
-import { ISubmittableResult } from '@polkadot/types/types'
-import { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
-import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
-import { MarketMetadata } from '../../meta/types'
+import type { ISubmittableResult } from '@polkadot/types/types'
+import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
+import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
+import type { MarketMetadata } from '../../meta/types'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.

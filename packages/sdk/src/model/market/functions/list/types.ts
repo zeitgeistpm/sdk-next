@@ -1,10 +1,6 @@
-import {
-  MarketOrderByInput,
-  MarketsQuery,
-  MarketWhereInput,
-} from '@zeitgeistpm/indexer/dist'
-import { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
-import { Unpacked } from '@zeitgeistpm/utility/dist/array'
+import type { MarketOrderByInput, MarketsQuery, MarketWhereInput } from '@zeitgeistpm/indexer/dist'
+import type { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
+import type { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import { Context, IndexerContext } from '../../../../context'
 
 /**

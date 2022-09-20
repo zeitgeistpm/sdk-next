@@ -1,4 +1,4 @@
-import { isFunction } from '@polkadot/util'
+import { isFunction } from '@polkadot/util/is/function'
 
 export type Option<A> = Some<A> | None
 
@@ -22,19 +22,15 @@ export const none = (): None => ({
 
 export type OrHandler<A> = A | (() => A)
 
-export const isSome = <A>(option: Option<A>): option is Some<A> =>
-  option.__tag === 'some'
+export const isSome = <A>(option: Option<A>): option is Some<A> => option.__tag === 'some'
 
-export const isNone = <A>(option: Option<A>): option is None =>
-  option.__tag === 'none'
+export const isNone = <A>(option: Option<A>): option is None => option.__tag === 'none'
 
 export const map = <A, B>(f: (a: A) => B, option: Option<A>): Option<B> =>
   isNone(option) ? option : some(f(option.value))
 
-export const chain = <A, B>(
-  f: (a: A) => Option<B>,
-  option: Option<A>,
-): Option<B> => (isNone(option) ? option : f(option.value))
+export const chain = <A, B>(f: (a: A) => Option<B>, option: Option<A>): Option<B> =>
+  isNone(option) ? option : f(option.value)
 
 export const from = <A>(value: A | null): OptionInterface<A> =>
   option(value ? some(value) : (none() as Option<A>))
