@@ -1,4 +1,4 @@
-import type { CID } from 'ipfs-core/dist/src/block-storage'
+import type { CID } from 'ipfs-http-client'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { throws } from '@zeitgeistpm/utility/dist/error'
@@ -9,7 +9,6 @@ import { IPFSConfiguration } from './types'
 import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
 import { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { MetadataStorage } from '../..'
-
 /**
  *
  * Create a MetadataStorage object that can store data on an IPFS node
@@ -48,7 +47,6 @@ export const storage = <T>(
       try {
         const data = either(await read(node, cid))
         const encoded = data.chain(codec.encode).unrightOr(throws)
-
         return either(right(encoded))
       } catch (error) {
         return either(left(error as Error))

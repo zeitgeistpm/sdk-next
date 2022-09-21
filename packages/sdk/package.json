@@ -17,6 +17,7 @@
     "@zeitgeistpm/rpc": "*",
     "@zeitgeistpm/utility": "*",
     "@zeitgeistpm/web3.storage": "*",
+    "cids": "^1.1.9",
     "ipfs-core": "^0.15.4",
     "polly-js": "^1.8.3",
     "superstruct": "^0.16.0"

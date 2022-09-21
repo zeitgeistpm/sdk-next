@@ -7,7 +7,8 @@
     "build": "rimraf ./dist && tsc"
   },
   "dependencies": {
-    "@zeitgeistpm/utility": "*"
+    "@zeitgeistpm/utility": "*",
+    "cids": "^1.1.9"
   },
   "peerDependencies": {
     "@polkadot/api": "*",

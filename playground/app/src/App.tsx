@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ZDK, { Sdk, FullContext } from '@zeitgeistpm/sdk'
+import ZDK, { Sdk, FullContext, batterystationRpc, RpcContext } from '@zeitgeistpm/sdk'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp'
 import { batterystation } from '@zeitgeistpm/sdk'
@@ -13,14 +13,14 @@ import {
 } from '@zeitgeistpm/sdk/dist/model/types'
 
 function App() {
-  const [sdk, setSdk] = useState<Sdk<FullContext>>()
+  const [sdk, setSdk] = useState<Sdk<RpcContext>>()
 
   useEffect(() => {
     web3Enable('sdkv2-test')
     ;(async () => {
       const full = await ZDK({
-        ...batterystation(),
-        provider: 'ws://127.0.0.1:9944',
+        ...batterystationRpc(),
+        //provider: 'ws://127.0.0.1:9944',
       })
       setSdk(full)
     })()
@@ -75,6 +75,22 @@ function App() {
     console.log(`created: market ${marketId}`, market.toHuman())
     console.log(`created: pool ${poolId}`, pool.toHuman())
   }
+
+  const listMarkets = async () => {
+    if (!sdk) return
+
+    const data = await sdk.model.markets.list()
+
+    const metas = await Promise.all(
+      data.map(m => m.storage().then(d => d.unright().unwrapOr(() => null as any))),
+    )
+
+    console.log(metas)
+  }
+
+  useEffect(() => {
+    listMarkets()
+  }, [sdk])
 
   return (
     <div className="App">

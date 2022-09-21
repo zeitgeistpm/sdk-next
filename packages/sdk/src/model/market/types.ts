@@ -14,7 +14,7 @@ export type MarketsShared<C extends Context> = {
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.
    */
-  list: (query: MarketsListQuery<C>) => Promise<MarketList<C>>
+  list: (query?: MarketsListQuery<C>) => Promise<MarketList<C>>
 }
 
 export type MarketsRpc<C extends Context> = C extends RpcContext

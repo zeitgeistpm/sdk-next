@@ -1,6 +1,6 @@
+import type { CID } from 'ipfs-http-client'
 import type { ApiPromise } from '@polkadot/api'
 import type { EventRecord } from '@polkadot/types/interfaces'
-import type { CID } from 'ipfs-core/dist/src/block-storage'
 import type { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import type { ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
@@ -112,7 +112,7 @@ const putMetadata = Te.from(
     metadata: MarketMetadata,
   ): Promise<[CID | null, { Sha3_384: '0x' } | { Sha3_384: Uint8Array }]> => {
     if (!context.storage) return [null, { Sha3_384: '0x' as `0x` }]
-    const response = await context.storage.markets.put(metadata)
+    const response = await context.storage.put(metadata)
     const cid = response.unrightOr(throws)
     return [cid, { Sha3_384: cid.multihash.bytes }]
   },
@@ -128,7 +128,7 @@ const putMetadata = Te.from(
  */
 const deleteMetadata = Te.from(async (context: RpcContext | FullContext, cid: CID) => {
   if (!context.storage) return
-  await context.storage.markets.del(cid)
+  await context.storage.del(cid)
 })
 
 /**

@@ -1,11 +1,6 @@
-import {
-  RpcContext,
-  Context,
-  IndexerContext,
-  isFullContext,
-  isIndexerContext,
-} from '../../../../context'
-import { MarketList, MarketsListQuery } from '../../types'
+import CID from 'cids'
+import { RpcContext, Context, IndexerContext, isFullContext, isIndexerContext } from '../../../../context'
+import { MarketList, MarketsListQuery, RpcMarket } from '../../types'
 
 /**
  * Query for a list of markets.
@@ -18,7 +13,7 @@ import { MarketList, MarketsListQuery } from '../../types'
  */
 export const list = async <C extends Context>(
   context: C,
-  query: MarketsListQuery<C>,
+  query?: MarketsListQuery<C>,
 ): Promise<MarketList<C>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
@@ -34,7 +29,7 @@ export const list = async <C extends Context>(
  */
 const indexerList = async (
   context: IndexerContext,
-  query: MarketsListQuery<IndexerContext>,
+  query?: MarketsListQuery<IndexerContext>,
 ): Promise<MarketList<IndexerContext>> => {
   return (await context.indexer.markets(query)).markets
 }
@@ -44,26 +39,30 @@ const indexerList = async (
  * @private
  */
 const rpcList = async <C extends RpcContext>(
-  { api }: RpcContext,
-  query: MarketsListQuery<RpcContext>,
+  { api, storage }: C,
+  query?: MarketsListQuery<C>,
 ): Promise<MarketList<C>> => {
   const entries = await api.query.marketCommons.markets.entries()
 
   const list = entries.map(
     ([
       {
-        args: [index],
+        args: [marketId],
       },
       market,
     ]) => {
-      const marketId = Number(index.toHuman())
-      const rpcMarket = [marketId, market.unwrap()]
+      const rpcMarket = market.unwrap() as RpcMarket
+      rpcMarket.marketId = marketId
+      rpcMarket.storage = async () => {
+        const hex = rpcMarket.metadata.toHex()
+        return storage.get(new CID('f0155' + hex.slice(2)) as any)
+      }
       return rpcMarket
     },
   )
 
-  const offset = query.offset ?? 0
-  const limit = offset + (query.limit ?? list.length)
+  const offset = query?.offset ?? 0
+  const limit = offset + (query?.limit ?? list.length)
 
-  return list.slice(offset, limit) as any
+  return list.slice(offset, limit) as MarketList<C>
 }

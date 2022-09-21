@@ -1,7 +1,9 @@
 import type { MarketOrderByInput, MarketsQuery, MarketWhereInput } from '@zeitgeistpm/indexer/dist'
 import type { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
 import type { Unpacked } from '@zeitgeistpm/utility/dist/array'
-import { Context, IndexerContext } from '../../../../context'
+import { Context, IndexerContext, RpcContext } from '../../../../context'
+import { u128 } from '@polkadot/types'
+import { IndexedMarket, RpcMarket } from '../types'
 
 /**
  * List of Markets.
@@ -9,9 +11,7 @@ import { Context, IndexerContext } from '../../../../context'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type MarketList<C extends Context> = C extends IndexerContext
-  ? IndexedMarketList
-  : ZeitgeistPrimitivesMarket[]
+export type MarketList<C extends Context> = C extends IndexerContext ? IndexedMarketList : RpcMarket[]
 
 /**
  * Markets list Query type
@@ -23,10 +23,6 @@ export type MarketsListQuery<C extends Context> = C extends IndexerContext
   ? MarketsIndexerQuery
   : MarketsRpcQuery
 
-/**
- * Concrete Market type for indexed market list.
- */
-export type IndexedMarket = Unpacked<MarketsQuery['markets']>
 /**
  * Concrete MarketList for indexed context
  */
