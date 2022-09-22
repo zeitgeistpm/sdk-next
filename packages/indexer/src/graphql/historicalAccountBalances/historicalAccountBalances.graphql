@@ -1,6 +1,6 @@
 query historicalAccountBalances(
   $where: HistoricalAccountBalanceWhereInput
-  $order: [HistoricalAccountBalanceOrderByInput]
+  $order: [HistoricalAccountBalanceOrderByInput!]
   $offset: Int
   $limit: Int
 ) {

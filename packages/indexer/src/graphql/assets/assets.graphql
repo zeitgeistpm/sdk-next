@@ -1,6 +1,6 @@
 query assets(
   $where: AssetWhereInput
-  $order: [AssetOrderByInput]
+  $order: [AssetOrderByInput!]
   $offset: Int
   $limit: Int
 ) {

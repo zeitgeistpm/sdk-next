@@ -1,6 +1,6 @@
 query accountBalances(
   $where: AccountBalanceWhereInput
-  $order: [AccountBalanceOrderByInput]
+  $order: [AccountBalanceOrderByInput!]
   $offset: Int
   $limit: Int
 ) {

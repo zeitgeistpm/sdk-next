@@ -1,6 +1,6 @@
 query historicalAssets(
   $where: HistoricalAssetWhereInput
-  $order: [HistoricalAssetOrderByInput]
+  $order: [HistoricalAssetOrderByInput!]
   $offset: Int
   $limit: Int
 ) {

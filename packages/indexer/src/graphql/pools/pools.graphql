@@ -1,6 +1,6 @@
 query pools(
   $where: PoolWhereInput
-  $order: [PoolOrderByInput]
+  $order: [PoolOrderByInput!]
   $offset: Int
   $limit: Int
 ) {

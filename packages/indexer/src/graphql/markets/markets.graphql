@@ -1,6 +1,6 @@
 query markets(
   $where: MarketWhereInput
-  $order: [MarketOrderByInput]
+  $order: [MarketOrderByInput!]
   $limit: Int
   $offset: Int
 ) {
