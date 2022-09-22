@@ -4,7 +4,6 @@ import { isCodec } from '@polkadot/util'
 import { MarketsQuery } from '@zeitgeistpm/indexer'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
-import { RpcContext } from 'context'
 import { MarketMetadata } from '../meta/types'
 
 export * from './list/types'
