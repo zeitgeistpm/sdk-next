@@ -1,8 +1,8 @@
 import type {
-  ZeitgeistPrimitivesPoolScoringRule,
-  ZeitgeistPrimitivesMarketMarketCreation,
   ZeitgeistPrimitivesMarket,
+  ZeitgeistPrimitivesMarketMarketCreation,
   ZeitgeistPrimitivesPool,
+  ZeitgeistPrimitivesPoolScoringRule,
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
@@ -43,12 +43,27 @@ export type CreateMarketBaseParams = {
   /**
    * The period of the market in tuple of timestamps or block numbers.
    */
-  period: { Block: [number, number] } | { Timestamp: [number, number] }
+  period:
+    | {
+        Block: [number, number]
+      }
+    | {
+        Timestamp: [number, number]
+      }
   /**
    * Market dispute mechanism.
    * @note Authorized is the only one available atm.
    */
-  disputeMechanism: { Authorized: string } | { SimpleDisputes: null } | { Court: null }
+  disputeMechanism:
+    | {
+        Authorized: string
+      }
+    | {
+        SimpleDisputes: null
+      }
+    | {
+        Court: null
+      }
 }
 
 /**
