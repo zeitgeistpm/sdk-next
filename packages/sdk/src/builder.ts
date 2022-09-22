@@ -1,9 +1,9 @@
-import { Observable, from, merge } from 'rxjs'
+import { assign } from '@zeitgeistpm/utility/dist/observable/operators'
+import { from, merge, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { Sdk, FullContext, FullConfig } from './types'
 import { createIndexerContext, createRpcContext } from './create'
 import * as Model from './model'
-import { assign } from '@zeitgeistpm/utility/dist/observable/operators'
+import { FullConfig, FullContext, Sdk } from './types'
 
 /**
  * Initialize the indexer and rpc concurrently and emit partially applied intances of the Sdk.
