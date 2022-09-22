@@ -1,22 +1,22 @@
-import polly from 'polly-js'
-import type { ApiPromise, WsProvider } from '@polkadot/api'
-import { assert } from '@zeitgeistpm/utility/dist/assert'
-import type { RpcContext, FullContext, IndexerContext } from './context'
+import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
+import { options } from '@zeitgeistpm/rpc/dist'
+import { assert } from '@zeitgeistpm/utility/dist/assert'
+import polly from 'polly-js'
+import { isKnownPreset } from './config/known'
+import type { FullContext, IndexerContext, RpcContext } from './context'
+import { debug } from './debug'
+import * as Model from './model'
 import {
-  RpcConfig,
   Config,
   FullConfig,
   IndexerConfig,
-  isRpcConfig,
   isFullConfig,
   isIndexerConfig,
+  isRpcConfig,
+  RpcConfig,
   Sdk,
 } from './types'
-import { options } from '@zeitgeistpm/rpc/dist'
-import { debug } from './debug'
-import * as Model from './model'
-import { isKnownPreset } from './config/known'
 
 /**
  * Create an instance of the zeitgeist sdk with full features of both indexer and chain rpc.
@@ -27,7 +27,6 @@ import { isKnownPreset } from './config/known'
  * @returns Promise<Sdk<FullContext>>
  */
 export async function create(config: FullConfig): Promise<Sdk<FullContext>>
-
 /**
  * Create an instance of the zeitgeist sdk with only indexer features.
  *
@@ -37,7 +36,6 @@ export async function create(config: FullConfig): Promise<Sdk<FullContext>>
  * @returns Promise<Sdk<IndexerContext>>
  */
 export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>>
-
 /**
  * Create an instance of the zeitgeist sdk with only rpc features.
  *
@@ -47,7 +45,6 @@ export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>
  * @returns Promise<Sdk<RpcContext>>
  */
 export async function create(config: RpcConfig): Promise<Sdk<RpcContext>>
-
 export async function create(config: Config) {
   assert(
     isFullConfig(config) || isRpcConfig(config) || isIndexerConfig(config),
