@@ -104,8 +104,10 @@ export async function create(config: Config) {
 }
 
 /**
- * Create the api context object.
- * @private
+ * Create an indexer context that only connects to the rpc api.
+ *
+ * @param config RpcConfig
+ * @returns Promise<RpcContext>
  */
 export const createRpcContext = async (config: RpcConfig): Promise<RpcContext> => {
   const { ApiPromise, WsProvider } = await import('@polkadot/api')
@@ -142,8 +144,10 @@ export const createRpcContext = async (config: RpcConfig): Promise<RpcContext> =
 }
 
 /**
- * Create the indexer context object.
- * @private
+ * Create an indexer context that only connects to the gql indexer.
+ *
+ * @param config IndexerConfig
+ * @returns Promise<IndexerContext>
  */
 export const createIndexerContext = async (config: IndexerConfig): Promise<IndexerContext> => {
   debug(`connecting to indexer: ${config.indexer}`, config)
