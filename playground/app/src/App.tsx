@@ -3,7 +3,6 @@ import { batterystation, builder, Context, isIndexedSdk, isRpcSdk, Sdk } from '@
 import { useEffect, useState } from 'react'
 
 import { IndexedMarket, isRpcMarket, RpcMarket } from '@zeitgeistpm/sdk/dist/model/types'
-import './App.css'
 
 const App: React.FC = () => {
   const [sdk, setSdk] = useState<Partial<Sdk<Context>>>()
