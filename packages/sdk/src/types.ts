@@ -1,19 +1,12 @@
-import type { CID } from 'ipfs-http-client'
+import { Context, FullContext, IndexerContext, isIndexerContext, isRpcContext, RpcContext } from './context'
 import type { Model } from './model/types'
-import {
-  Context,
-  FullContext,
-  IndexerContext,
-  isFullContext,
-  isIndexerContext,
-  isRpcContext,
-  RpcContext,
-} from './context'
-import { MarketMetadata } from './model/market/meta/types'
 
-export * from './context/types'
 export * from './config/types'
+export * from './context/types'
 
+/**
+ * Top level Zeitgeist SDK type.
+ */
 export type Sdk<C extends Context> = C & {
   /**
    * Enriched zeitgeist models with features for qyerying data on chain and indexer,
@@ -23,10 +16,25 @@ export type Sdk<C extends Context> = C & {
   model: Model<C>
 }
 
+/**
+ * Typeguard for full sdk
+ * @param sdk
+ * @returns sdk is Sdk<FullContext>
+ */
 export const isFullSdk = (sdk: unknown): sdk is Sdk<FullContext> => isIndexedSdk(sdk) && isRpcSdk(sdk)
 
+/**
+ * Typeguard for indexer sdk
+ * @param sdk
+ * @returns sdk is Sdk<IndexerContext>
+ */
 export const isIndexedSdk = (sdk: unknown): sdk is Sdk<IndexerContext> =>
   typeof sdk === 'object' && sdk !== null && isIndexerContext(sdk)
 
+/**
+ * Typeguard for rpc sdk
+ * @param sdk
+ * @returns sdk is Sdk<RpcContext>
+ */
 export const isRpcSdk = (sdk: unknown): sdk is Sdk<RpcContext> =>
   typeof sdk === 'object' && sdk !== null && isRpcContext(sdk)
