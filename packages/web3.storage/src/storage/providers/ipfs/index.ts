@@ -1,14 +1,14 @@
-import type { CID } from 'ipfs-http-client'
-import { either, left, right } from '@zeitgeistpm/utility/dist/either'
-import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import { throws } from '@zeitgeistpm/utility/dist/error'
 import { u8aToString } from '@polkadot/util/u8a'
+import { Codec } from '@zeitgeistpm/utility/dist/codec'
+import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
+import { either, left, right } from '@zeitgeistpm/utility/dist/either'
+import { throws } from '@zeitgeistpm/utility/dist/error'
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import type { CID } from 'ipfs-http-client'
 import * as IPFSHttpClient from 'ipfs-http-client'
+import { MetadataStorage } from '../..'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
-import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
-import { Codec } from '@zeitgeistpm/utility/dist/codec'
-import { MetadataStorage } from '../..'
 /**
  *
  * Create a MetadataStorage object that can store data on an IPFS node

@@ -7,23 +7,18 @@ import { MetadataStorage } from '../..'
 
 /**
  *
- * Create a MetadataStorage object that can store data on an IPFS node
- * and cluster if configured to do so.
+ * Create a MetadataStorage object that can store data to localstorage.
+ * Only meant for local development on dev nodes with ephemeral block storage.
  *
  * @generic T - type of metadata
  */
-export const storage = <T>(
-  codec: Codec<string, T> = JsonCodec(),
-): MetadataStorage<T, string> => {
+export const storage = <T>(codec: Codec<string, T> = JsonCodec()): MetadataStorage<T, string> => {
   return {
     put: async data => {
       try {
         const content = codec.decode(data).unrightOr(throws)
 
-        const buffer = await crypto.subtle.digest(
-          'SHA-256',
-          new TextEncoder().encode(content),
-        )
+        const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(content))
 
         const hash = Array.prototype.map
           .call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2))
@@ -40,9 +35,7 @@ export const storage = <T>(
     get: async hash =>
       from<string>(localStorage.getItem(hash))
         .map(codec.encode)
-        .unwrapOr(() =>
-          either(left(new Error(`No value found for key ${hash}`))),
-        ),
+        .unwrapOr(() => either(left(new Error(`No value found for key ${hash}`)))),
 
     del: async hash => {
       return either(
