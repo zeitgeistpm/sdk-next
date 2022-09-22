@@ -14,6 +14,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   BigInt: any;
+  Bytes: any;
   DateTime: any;
 };
 
@@ -26,7 +27,7 @@ export type Account = {
   /** Account address */
   accountId: Scalars['String'];
   /** Unique identifier of the object */
-  id: Scalars['String'];
+  id: Scalars['ID'];
   /** Zeitgeist's identifier for market. Valid only for market account. */
   marketId?: Maybe<Scalars['Int']>;
   /** Zeitgeist's identifier for pool. Valid only for pool account. */
@@ -45,7 +46,7 @@ export type AccountBalance = {
   /** Balance of the asset */
   balance: Scalars['BigInt'];
   /** Unique identifier of the object */
-  id: Scalars['String'];
+  id: Scalars['ID'];
   /** Computed based on the spot price of the asset */
   value?: Maybe<Scalars['Float']>;
 };
@@ -81,19 +82,15 @@ export type AccountBalanceWhereInput = {
   AND?: InputMaybe<Array<AccountBalanceWhereInput>>;
   OR?: InputMaybe<Array<AccountBalanceWhereInput>>;
   account?: InputMaybe<AccountWhereInput>;
-  account_isNull?: InputMaybe<Scalars['Boolean']>;
   assetId_contains?: InputMaybe<Scalars['String']>;
-  assetId_containsInsensitive?: InputMaybe<Scalars['String']>;
   assetId_endsWith?: InputMaybe<Scalars['String']>;
   assetId_eq?: InputMaybe<Scalars['String']>;
   assetId_gt?: InputMaybe<Scalars['String']>;
   assetId_gte?: InputMaybe<Scalars['String']>;
   assetId_in?: InputMaybe<Array<Scalars['String']>>;
-  assetId_isNull?: InputMaybe<Scalars['Boolean']>;
   assetId_lt?: InputMaybe<Scalars['String']>;
   assetId_lte?: InputMaybe<Scalars['String']>;
   assetId_not_contains?: InputMaybe<Scalars['String']>;
-  assetId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   assetId_not_endsWith?: InputMaybe<Scalars['String']>;
   assetId_not_eq?: InputMaybe<Scalars['String']>;
   assetId_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -103,37 +100,36 @@ export type AccountBalanceWhereInput = {
   balance_gt?: InputMaybe<Scalars['BigInt']>;
   balance_gte?: InputMaybe<Scalars['BigInt']>;
   balance_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  balance_isNull?: InputMaybe<Scalars['Boolean']>;
   balance_lt?: InputMaybe<Scalars['BigInt']>;
   balance_lte?: InputMaybe<Scalars['BigInt']>;
   balance_not_eq?: InputMaybe<Scalars['BigInt']>;
   balance_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['ID']>;
+  id_endsWith?: InputMaybe<Scalars['ID']>;
+  id_eq?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  id_not_endsWith?: InputMaybe<Scalars['ID']>;
+  id_not_eq?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_startsWith?: InputMaybe<Scalars['ID']>;
+  id_startsWith?: InputMaybe<Scalars['ID']>;
   value_eq?: InputMaybe<Scalars['Float']>;
   value_gt?: InputMaybe<Scalars['Float']>;
   value_gte?: InputMaybe<Scalars['Float']>;
   value_in?: InputMaybe<Array<Scalars['Float']>>;
-  value_isNull?: InputMaybe<Scalars['Boolean']>;
   value_lt?: InputMaybe<Scalars['Float']>;
   value_lte?: InputMaybe<Scalars['Float']>;
   value_not_eq?: InputMaybe<Scalars['Float']>;
   value_not_in?: InputMaybe<Array<Scalars['Float']>>;
+};
+
+export type AccountBalanceWhereUniqueInput = {
+  id: Scalars['ID'];
 };
 
 export type AccountBalancesConnection = {
@@ -166,44 +162,37 @@ export type AccountWhereInput = {
   AND?: InputMaybe<Array<AccountWhereInput>>;
   OR?: InputMaybe<Array<AccountWhereInput>>;
   accountId_contains?: InputMaybe<Scalars['String']>;
-  accountId_containsInsensitive?: InputMaybe<Scalars['String']>;
   accountId_endsWith?: InputMaybe<Scalars['String']>;
   accountId_eq?: InputMaybe<Scalars['String']>;
   accountId_gt?: InputMaybe<Scalars['String']>;
   accountId_gte?: InputMaybe<Scalars['String']>;
   accountId_in?: InputMaybe<Array<Scalars['String']>>;
-  accountId_isNull?: InputMaybe<Scalars['Boolean']>;
   accountId_lt?: InputMaybe<Scalars['String']>;
   accountId_lte?: InputMaybe<Scalars['String']>;
   accountId_not_contains?: InputMaybe<Scalars['String']>;
-  accountId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   accountId_not_endsWith?: InputMaybe<Scalars['String']>;
   accountId_not_eq?: InputMaybe<Scalars['String']>;
   accountId_not_in?: InputMaybe<Array<Scalars['String']>>;
   accountId_not_startsWith?: InputMaybe<Scalars['String']>;
   accountId_startsWith?: InputMaybe<Scalars['String']>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['ID']>;
+  id_endsWith?: InputMaybe<Scalars['ID']>;
+  id_eq?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  id_not_endsWith?: InputMaybe<Scalars['ID']>;
+  id_not_eq?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_startsWith?: InputMaybe<Scalars['ID']>;
+  id_startsWith?: InputMaybe<Scalars['ID']>;
   marketId_eq?: InputMaybe<Scalars['Int']>;
   marketId_gt?: InputMaybe<Scalars['Int']>;
   marketId_gte?: InputMaybe<Scalars['Int']>;
   marketId_in?: InputMaybe<Array<Scalars['Int']>>;
-  marketId_isNull?: InputMaybe<Scalars['Boolean']>;
   marketId_lt?: InputMaybe<Scalars['Int']>;
   marketId_lte?: InputMaybe<Scalars['Int']>;
   marketId_not_eq?: InputMaybe<Scalars['Int']>;
@@ -212,7 +201,6 @@ export type AccountWhereInput = {
   poolId_gt?: InputMaybe<Scalars['Int']>;
   poolId_gte?: InputMaybe<Scalars['Int']>;
   poolId_in?: InputMaybe<Array<Scalars['Int']>>;
-  poolId_isNull?: InputMaybe<Scalars['Boolean']>;
   poolId_lt?: InputMaybe<Scalars['Int']>;
   poolId_lte?: InputMaybe<Scalars['Int']>;
   poolId_not_eq?: InputMaybe<Scalars['Int']>;
@@ -221,11 +209,14 @@ export type AccountWhereInput = {
   pvalue_gt?: InputMaybe<Scalars['Float']>;
   pvalue_gte?: InputMaybe<Scalars['Float']>;
   pvalue_in?: InputMaybe<Array<Scalars['Float']>>;
-  pvalue_isNull?: InputMaybe<Scalars['Boolean']>;
   pvalue_lt?: InputMaybe<Scalars['Float']>;
   pvalue_lte?: InputMaybe<Scalars['Float']>;
   pvalue_not_eq?: InputMaybe<Scalars['Float']>;
   pvalue_not_in?: InputMaybe<Array<Scalars['Float']>>;
+};
+
+export type AccountWhereUniqueInput = {
+  id: Scalars['ID'];
 };
 
 export type AccountsConnection = {
@@ -246,7 +237,7 @@ export type Asset = {
   /** Zeitgeist's identifier for asset */
   assetId: Scalars['String'];
   /** Unique identifier of the object */
-  id: Scalars['String'];
+  id: Scalars['ID'];
   /** Zeitgeist's identifier for pool */
   poolId?: Maybe<Scalars['Int']>;
   /** Spot price of the asset in the pool */
@@ -279,50 +270,42 @@ export type AssetWhereInput = {
   amountInPool_gt?: InputMaybe<Scalars['BigInt']>;
   amountInPool_gte?: InputMaybe<Scalars['BigInt']>;
   amountInPool_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  amountInPool_isNull?: InputMaybe<Scalars['Boolean']>;
   amountInPool_lt?: InputMaybe<Scalars['BigInt']>;
   amountInPool_lte?: InputMaybe<Scalars['BigInt']>;
   amountInPool_not_eq?: InputMaybe<Scalars['BigInt']>;
   amountInPool_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   assetId_contains?: InputMaybe<Scalars['String']>;
-  assetId_containsInsensitive?: InputMaybe<Scalars['String']>;
   assetId_endsWith?: InputMaybe<Scalars['String']>;
   assetId_eq?: InputMaybe<Scalars['String']>;
   assetId_gt?: InputMaybe<Scalars['String']>;
   assetId_gte?: InputMaybe<Scalars['String']>;
   assetId_in?: InputMaybe<Array<Scalars['String']>>;
-  assetId_isNull?: InputMaybe<Scalars['Boolean']>;
   assetId_lt?: InputMaybe<Scalars['String']>;
   assetId_lte?: InputMaybe<Scalars['String']>;
   assetId_not_contains?: InputMaybe<Scalars['String']>;
-  assetId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   assetId_not_endsWith?: InputMaybe<Scalars['String']>;
   assetId_not_eq?: InputMaybe<Scalars['String']>;
   assetId_not_in?: InputMaybe<Array<Scalars['String']>>;
   assetId_not_startsWith?: InputMaybe<Scalars['String']>;
   assetId_startsWith?: InputMaybe<Scalars['String']>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['ID']>;
+  id_endsWith?: InputMaybe<Scalars['ID']>;
+  id_eq?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  id_not_endsWith?: InputMaybe<Scalars['ID']>;
+  id_not_eq?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_startsWith?: InputMaybe<Scalars['ID']>;
+  id_startsWith?: InputMaybe<Scalars['ID']>;
   poolId_eq?: InputMaybe<Scalars['Int']>;
   poolId_gt?: InputMaybe<Scalars['Int']>;
   poolId_gte?: InputMaybe<Scalars['Int']>;
   poolId_in?: InputMaybe<Array<Scalars['Int']>>;
-  poolId_isNull?: InputMaybe<Scalars['Boolean']>;
   poolId_lt?: InputMaybe<Scalars['Int']>;
   poolId_lte?: InputMaybe<Scalars['Int']>;
   poolId_not_eq?: InputMaybe<Scalars['Int']>;
@@ -331,11 +314,14 @@ export type AssetWhereInput = {
   price_gt?: InputMaybe<Scalars['Float']>;
   price_gte?: InputMaybe<Scalars['Float']>;
   price_in?: InputMaybe<Array<Scalars['Float']>>;
-  price_isNull?: InputMaybe<Scalars['Boolean']>;
   price_lt?: InputMaybe<Scalars['Float']>;
   price_lte?: InputMaybe<Scalars['Float']>;
   price_not_eq?: InputMaybe<Scalars['Float']>;
   price_not_in?: InputMaybe<Array<Scalars['Float']>>;
+};
+
+export type AssetWhereUniqueInput = {
+  id: Scalars['ID'];
 };
 
 export type AssetsConnection = {
@@ -356,6 +342,65 @@ export type CategoryMetadata = {
   name?: Maybe<Scalars['String']>;
   /** Short abbreviation ex. `LMDRAW` */
   ticker?: Maybe<Scalars['String']>;
+};
+
+export type CategoryMetadataWhereInput = {
+  color_contains?: InputMaybe<Scalars['String']>;
+  color_endsWith?: InputMaybe<Scalars['String']>;
+  color_eq?: InputMaybe<Scalars['String']>;
+  color_gt?: InputMaybe<Scalars['String']>;
+  color_gte?: InputMaybe<Scalars['String']>;
+  color_in?: InputMaybe<Array<Scalars['String']>>;
+  color_lt?: InputMaybe<Scalars['String']>;
+  color_lte?: InputMaybe<Scalars['String']>;
+  color_not_contains?: InputMaybe<Scalars['String']>;
+  color_not_endsWith?: InputMaybe<Scalars['String']>;
+  color_not_eq?: InputMaybe<Scalars['String']>;
+  color_not_in?: InputMaybe<Array<Scalars['String']>>;
+  color_not_startsWith?: InputMaybe<Scalars['String']>;
+  color_startsWith?: InputMaybe<Scalars['String']>;
+  img_contains?: InputMaybe<Scalars['String']>;
+  img_endsWith?: InputMaybe<Scalars['String']>;
+  img_eq?: InputMaybe<Scalars['String']>;
+  img_gt?: InputMaybe<Scalars['String']>;
+  img_gte?: InputMaybe<Scalars['String']>;
+  img_in?: InputMaybe<Array<Scalars['String']>>;
+  img_lt?: InputMaybe<Scalars['String']>;
+  img_lte?: InputMaybe<Scalars['String']>;
+  img_not_contains?: InputMaybe<Scalars['String']>;
+  img_not_endsWith?: InputMaybe<Scalars['String']>;
+  img_not_eq?: InputMaybe<Scalars['String']>;
+  img_not_in?: InputMaybe<Array<Scalars['String']>>;
+  img_not_startsWith?: InputMaybe<Scalars['String']>;
+  img_startsWith?: InputMaybe<Scalars['String']>;
+  name_contains?: InputMaybe<Scalars['String']>;
+  name_endsWith?: InputMaybe<Scalars['String']>;
+  name_eq?: InputMaybe<Scalars['String']>;
+  name_gt?: InputMaybe<Scalars['String']>;
+  name_gte?: InputMaybe<Scalars['String']>;
+  name_in?: InputMaybe<Array<Scalars['String']>>;
+  name_lt?: InputMaybe<Scalars['String']>;
+  name_lte?: InputMaybe<Scalars['String']>;
+  name_not_contains?: InputMaybe<Scalars['String']>;
+  name_not_endsWith?: InputMaybe<Scalars['String']>;
+  name_not_eq?: InputMaybe<Scalars['String']>;
+  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  name_not_startsWith?: InputMaybe<Scalars['String']>;
+  name_startsWith?: InputMaybe<Scalars['String']>;
+  ticker_contains?: InputMaybe<Scalars['String']>;
+  ticker_endsWith?: InputMaybe<Scalars['String']>;
+  ticker_eq?: InputMaybe<Scalars['String']>;
+  ticker_gt?: InputMaybe<Scalars['String']>;
+  ticker_gte?: InputMaybe<Scalars['String']>;
+  ticker_in?: InputMaybe<Array<Scalars['String']>>;
+  ticker_lt?: InputMaybe<Scalars['String']>;
+  ticker_lte?: InputMaybe<Scalars['String']>;
+  ticker_not_contains?: InputMaybe<Scalars['String']>;
+  ticker_not_endsWith?: InputMaybe<Scalars['String']>;
+  ticker_not_eq?: InputMaybe<Scalars['String']>;
+  ticker_not_in?: InputMaybe<Array<Scalars['String']>>;
+  ticker_not_startsWith?: InputMaybe<Scalars['String']>;
+  ticker_startsWith?: InputMaybe<Scalars['String']>;
 };
 
 /**
@@ -379,7 +424,7 @@ export type HistoricalAccountBalance = {
   /** Event method which initiated this change */
   event: Scalars['String'];
   /** Unique identifier of the object */
-  id: Scalars['String'];
+  id: Scalars['ID'];
   /** Portfolio value or sum of all asset values in an account */
   pvalue?: Maybe<Scalars['Float']>;
   /** Timestamp of the block */
@@ -423,34 +468,28 @@ export type HistoricalAccountBalanceWhereInput = {
   AND?: InputMaybe<Array<HistoricalAccountBalanceWhereInput>>;
   OR?: InputMaybe<Array<HistoricalAccountBalanceWhereInput>>;
   accountId_contains?: InputMaybe<Scalars['String']>;
-  accountId_containsInsensitive?: InputMaybe<Scalars['String']>;
   accountId_endsWith?: InputMaybe<Scalars['String']>;
   accountId_eq?: InputMaybe<Scalars['String']>;
   accountId_gt?: InputMaybe<Scalars['String']>;
   accountId_gte?: InputMaybe<Scalars['String']>;
   accountId_in?: InputMaybe<Array<Scalars['String']>>;
-  accountId_isNull?: InputMaybe<Scalars['Boolean']>;
   accountId_lt?: InputMaybe<Scalars['String']>;
   accountId_lte?: InputMaybe<Scalars['String']>;
   accountId_not_contains?: InputMaybe<Scalars['String']>;
-  accountId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   accountId_not_endsWith?: InputMaybe<Scalars['String']>;
   accountId_not_eq?: InputMaybe<Scalars['String']>;
   accountId_not_in?: InputMaybe<Array<Scalars['String']>>;
   accountId_not_startsWith?: InputMaybe<Scalars['String']>;
   accountId_startsWith?: InputMaybe<Scalars['String']>;
   assetId_contains?: InputMaybe<Scalars['String']>;
-  assetId_containsInsensitive?: InputMaybe<Scalars['String']>;
   assetId_endsWith?: InputMaybe<Scalars['String']>;
   assetId_eq?: InputMaybe<Scalars['String']>;
   assetId_gt?: InputMaybe<Scalars['String']>;
   assetId_gte?: InputMaybe<Scalars['String']>;
   assetId_in?: InputMaybe<Array<Scalars['String']>>;
-  assetId_isNull?: InputMaybe<Scalars['Boolean']>;
   assetId_lt?: InputMaybe<Scalars['String']>;
   assetId_lte?: InputMaybe<Scalars['String']>;
   assetId_not_contains?: InputMaybe<Scalars['String']>;
-  assetId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   assetId_not_endsWith?: InputMaybe<Scalars['String']>;
   assetId_not_eq?: InputMaybe<Scalars['String']>;
   assetId_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -460,7 +499,6 @@ export type HistoricalAccountBalanceWhereInput = {
   balance_gt?: InputMaybe<Scalars['BigInt']>;
   balance_gte?: InputMaybe<Scalars['BigInt']>;
   balance_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  balance_isNull?: InputMaybe<Scalars['Boolean']>;
   balance_lt?: InputMaybe<Scalars['BigInt']>;
   balance_lte?: InputMaybe<Scalars['BigInt']>;
   balance_not_eq?: InputMaybe<Scalars['BigInt']>;
@@ -469,7 +507,6 @@ export type HistoricalAccountBalanceWhereInput = {
   blockNumber_gt?: InputMaybe<Scalars['Int']>;
   blockNumber_gte?: InputMaybe<Scalars['Int']>;
   blockNumber_in?: InputMaybe<Array<Scalars['Int']>>;
-  blockNumber_isNull?: InputMaybe<Scalars['Boolean']>;
   blockNumber_lt?: InputMaybe<Scalars['Int']>;
   blockNumber_lte?: InputMaybe<Scalars['Int']>;
   blockNumber_not_eq?: InputMaybe<Scalars['Int']>;
@@ -478,7 +515,6 @@ export type HistoricalAccountBalanceWhereInput = {
   dBalance_gt?: InputMaybe<Scalars['BigInt']>;
   dBalance_gte?: InputMaybe<Scalars['BigInt']>;
   dBalance_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  dBalance_isNull?: InputMaybe<Scalars['Boolean']>;
   dBalance_lt?: InputMaybe<Scalars['BigInt']>;
   dBalance_lte?: InputMaybe<Scalars['BigInt']>;
   dBalance_not_eq?: InputMaybe<Scalars['BigInt']>;
@@ -487,50 +523,42 @@ export type HistoricalAccountBalanceWhereInput = {
   dValue_gt?: InputMaybe<Scalars['Float']>;
   dValue_gte?: InputMaybe<Scalars['Float']>;
   dValue_in?: InputMaybe<Array<Scalars['Float']>>;
-  dValue_isNull?: InputMaybe<Scalars['Boolean']>;
   dValue_lt?: InputMaybe<Scalars['Float']>;
   dValue_lte?: InputMaybe<Scalars['Float']>;
   dValue_not_eq?: InputMaybe<Scalars['Float']>;
   dValue_not_in?: InputMaybe<Array<Scalars['Float']>>;
   event_contains?: InputMaybe<Scalars['String']>;
-  event_containsInsensitive?: InputMaybe<Scalars['String']>;
   event_endsWith?: InputMaybe<Scalars['String']>;
   event_eq?: InputMaybe<Scalars['String']>;
   event_gt?: InputMaybe<Scalars['String']>;
   event_gte?: InputMaybe<Scalars['String']>;
   event_in?: InputMaybe<Array<Scalars['String']>>;
-  event_isNull?: InputMaybe<Scalars['Boolean']>;
   event_lt?: InputMaybe<Scalars['String']>;
   event_lte?: InputMaybe<Scalars['String']>;
   event_not_contains?: InputMaybe<Scalars['String']>;
-  event_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   event_not_endsWith?: InputMaybe<Scalars['String']>;
   event_not_eq?: InputMaybe<Scalars['String']>;
   event_not_in?: InputMaybe<Array<Scalars['String']>>;
   event_not_startsWith?: InputMaybe<Scalars['String']>;
   event_startsWith?: InputMaybe<Scalars['String']>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['ID']>;
+  id_endsWith?: InputMaybe<Scalars['ID']>;
+  id_eq?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  id_not_endsWith?: InputMaybe<Scalars['ID']>;
+  id_not_eq?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_startsWith?: InputMaybe<Scalars['ID']>;
+  id_startsWith?: InputMaybe<Scalars['ID']>;
   pvalue_eq?: InputMaybe<Scalars['Float']>;
   pvalue_gt?: InputMaybe<Scalars['Float']>;
   pvalue_gte?: InputMaybe<Scalars['Float']>;
   pvalue_in?: InputMaybe<Array<Scalars['Float']>>;
-  pvalue_isNull?: InputMaybe<Scalars['Boolean']>;
   pvalue_lt?: InputMaybe<Scalars['Float']>;
   pvalue_lte?: InputMaybe<Scalars['Float']>;
   pvalue_not_eq?: InputMaybe<Scalars['Float']>;
@@ -539,7 +567,6 @@ export type HistoricalAccountBalanceWhereInput = {
   timestamp_gt?: InputMaybe<Scalars['DateTime']>;
   timestamp_gte?: InputMaybe<Scalars['DateTime']>;
   timestamp_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']>;
   timestamp_lt?: InputMaybe<Scalars['DateTime']>;
   timestamp_lte?: InputMaybe<Scalars['DateTime']>;
   timestamp_not_eq?: InputMaybe<Scalars['DateTime']>;
@@ -548,11 +575,14 @@ export type HistoricalAccountBalanceWhereInput = {
   value_gt?: InputMaybe<Scalars['Float']>;
   value_gte?: InputMaybe<Scalars['Float']>;
   value_in?: InputMaybe<Array<Scalars['Float']>>;
-  value_isNull?: InputMaybe<Scalars['Boolean']>;
   value_lt?: InputMaybe<Scalars['Float']>;
   value_lte?: InputMaybe<Scalars['Float']>;
   value_not_eq?: InputMaybe<Scalars['Float']>;
   value_not_in?: InputMaybe<Array<Scalars['Float']>>;
+};
+
+export type HistoricalAccountBalanceWhereUniqueInput = {
+  id: Scalars['ID'];
 };
 
 export type HistoricalAccountBalancesConnection = {
@@ -581,7 +611,7 @@ export type HistoricalAsset = {
   /** Event method which initiated this change */
   event: Scalars['String'];
   /** Unique identifier of the object */
-  id: Scalars['String'];
+  id: Scalars['ID'];
   /** Units of asset present in the pool account */
   newAmountInPool?: Maybe<Scalars['BigInt']>;
   /** Price of the asset after trade execution/market resolution */
@@ -627,34 +657,28 @@ export type HistoricalAssetWhereInput = {
   AND?: InputMaybe<Array<HistoricalAssetWhereInput>>;
   OR?: InputMaybe<Array<HistoricalAssetWhereInput>>;
   accountId_contains?: InputMaybe<Scalars['String']>;
-  accountId_containsInsensitive?: InputMaybe<Scalars['String']>;
   accountId_endsWith?: InputMaybe<Scalars['String']>;
   accountId_eq?: InputMaybe<Scalars['String']>;
   accountId_gt?: InputMaybe<Scalars['String']>;
   accountId_gte?: InputMaybe<Scalars['String']>;
   accountId_in?: InputMaybe<Array<Scalars['String']>>;
-  accountId_isNull?: InputMaybe<Scalars['Boolean']>;
   accountId_lt?: InputMaybe<Scalars['String']>;
   accountId_lte?: InputMaybe<Scalars['String']>;
   accountId_not_contains?: InputMaybe<Scalars['String']>;
-  accountId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   accountId_not_endsWith?: InputMaybe<Scalars['String']>;
   accountId_not_eq?: InputMaybe<Scalars['String']>;
   accountId_not_in?: InputMaybe<Array<Scalars['String']>>;
   accountId_not_startsWith?: InputMaybe<Scalars['String']>;
   accountId_startsWith?: InputMaybe<Scalars['String']>;
   assetId_contains?: InputMaybe<Scalars['String']>;
-  assetId_containsInsensitive?: InputMaybe<Scalars['String']>;
   assetId_endsWith?: InputMaybe<Scalars['String']>;
   assetId_eq?: InputMaybe<Scalars['String']>;
   assetId_gt?: InputMaybe<Scalars['String']>;
   assetId_gte?: InputMaybe<Scalars['String']>;
   assetId_in?: InputMaybe<Array<Scalars['String']>>;
-  assetId_isNull?: InputMaybe<Scalars['Boolean']>;
   assetId_lt?: InputMaybe<Scalars['String']>;
   assetId_lte?: InputMaybe<Scalars['String']>;
   assetId_not_contains?: InputMaybe<Scalars['String']>;
-  assetId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   assetId_not_endsWith?: InputMaybe<Scalars['String']>;
   assetId_not_eq?: InputMaybe<Scalars['String']>;
   assetId_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -664,7 +688,6 @@ export type HistoricalAssetWhereInput = {
   blockNumber_gt?: InputMaybe<Scalars['Int']>;
   blockNumber_gte?: InputMaybe<Scalars['Int']>;
   blockNumber_in?: InputMaybe<Array<Scalars['Int']>>;
-  blockNumber_isNull?: InputMaybe<Scalars['Boolean']>;
   blockNumber_lt?: InputMaybe<Scalars['Int']>;
   blockNumber_lte?: InputMaybe<Scalars['Int']>;
   blockNumber_not_eq?: InputMaybe<Scalars['Int']>;
@@ -673,7 +696,6 @@ export type HistoricalAssetWhereInput = {
   dAmountInPool_gt?: InputMaybe<Scalars['BigInt']>;
   dAmountInPool_gte?: InputMaybe<Scalars['BigInt']>;
   dAmountInPool_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  dAmountInPool_isNull?: InputMaybe<Scalars['Boolean']>;
   dAmountInPool_lt?: InputMaybe<Scalars['BigInt']>;
   dAmountInPool_lte?: InputMaybe<Scalars['BigInt']>;
   dAmountInPool_not_eq?: InputMaybe<Scalars['BigInt']>;
@@ -682,50 +704,42 @@ export type HistoricalAssetWhereInput = {
   dPrice_gt?: InputMaybe<Scalars['Float']>;
   dPrice_gte?: InputMaybe<Scalars['Float']>;
   dPrice_in?: InputMaybe<Array<Scalars['Float']>>;
-  dPrice_isNull?: InputMaybe<Scalars['Boolean']>;
   dPrice_lt?: InputMaybe<Scalars['Float']>;
   dPrice_lte?: InputMaybe<Scalars['Float']>;
   dPrice_not_eq?: InputMaybe<Scalars['Float']>;
   dPrice_not_in?: InputMaybe<Array<Scalars['Float']>>;
   event_contains?: InputMaybe<Scalars['String']>;
-  event_containsInsensitive?: InputMaybe<Scalars['String']>;
   event_endsWith?: InputMaybe<Scalars['String']>;
   event_eq?: InputMaybe<Scalars['String']>;
   event_gt?: InputMaybe<Scalars['String']>;
   event_gte?: InputMaybe<Scalars['String']>;
   event_in?: InputMaybe<Array<Scalars['String']>>;
-  event_isNull?: InputMaybe<Scalars['Boolean']>;
   event_lt?: InputMaybe<Scalars['String']>;
   event_lte?: InputMaybe<Scalars['String']>;
   event_not_contains?: InputMaybe<Scalars['String']>;
-  event_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   event_not_endsWith?: InputMaybe<Scalars['String']>;
   event_not_eq?: InputMaybe<Scalars['String']>;
   event_not_in?: InputMaybe<Array<Scalars['String']>>;
   event_not_startsWith?: InputMaybe<Scalars['String']>;
   event_startsWith?: InputMaybe<Scalars['String']>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['ID']>;
+  id_endsWith?: InputMaybe<Scalars['ID']>;
+  id_eq?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  id_not_endsWith?: InputMaybe<Scalars['ID']>;
+  id_not_eq?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_startsWith?: InputMaybe<Scalars['ID']>;
+  id_startsWith?: InputMaybe<Scalars['ID']>;
   newAmountInPool_eq?: InputMaybe<Scalars['BigInt']>;
   newAmountInPool_gt?: InputMaybe<Scalars['BigInt']>;
   newAmountInPool_gte?: InputMaybe<Scalars['BigInt']>;
   newAmountInPool_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  newAmountInPool_isNull?: InputMaybe<Scalars['Boolean']>;
   newAmountInPool_lt?: InputMaybe<Scalars['BigInt']>;
   newAmountInPool_lte?: InputMaybe<Scalars['BigInt']>;
   newAmountInPool_not_eq?: InputMaybe<Scalars['BigInt']>;
@@ -734,7 +748,6 @@ export type HistoricalAssetWhereInput = {
   newPrice_gt?: InputMaybe<Scalars['Float']>;
   newPrice_gte?: InputMaybe<Scalars['Float']>;
   newPrice_in?: InputMaybe<Array<Scalars['Float']>>;
-  newPrice_isNull?: InputMaybe<Scalars['Boolean']>;
   newPrice_lt?: InputMaybe<Scalars['Float']>;
   newPrice_lte?: InputMaybe<Scalars['Float']>;
   newPrice_not_eq?: InputMaybe<Scalars['Float']>;
@@ -743,7 +756,6 @@ export type HistoricalAssetWhereInput = {
   timestamp_gt?: InputMaybe<Scalars['DateTime']>;
   timestamp_gte?: InputMaybe<Scalars['DateTime']>;
   timestamp_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']>;
   timestamp_lt?: InputMaybe<Scalars['DateTime']>;
   timestamp_lte?: InputMaybe<Scalars['DateTime']>;
   timestamp_not_eq?: InputMaybe<Scalars['DateTime']>;
@@ -752,11 +764,14 @@ export type HistoricalAssetWhereInput = {
   ztgTraded_gt?: InputMaybe<Scalars['BigInt']>;
   ztgTraded_gte?: InputMaybe<Scalars['BigInt']>;
   ztgTraded_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  ztgTraded_isNull?: InputMaybe<Scalars['Boolean']>;
   ztgTraded_lt?: InputMaybe<Scalars['BigInt']>;
   ztgTraded_lte?: InputMaybe<Scalars['BigInt']>;
   ztgTraded_not_eq?: InputMaybe<Scalars['BigInt']>;
   ztgTraded_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+};
+
+export type HistoricalAssetWhereUniqueInput = {
+  id: Scalars['ID'];
 };
 
 export type HistoricalAssetsConnection = {
@@ -776,7 +791,7 @@ export type HistoricalMarket = {
   blockNumber: Scalars['Int'];
   /** Event method which initiated this change */
   event: Scalars['String'];
-  id: Scalars['String'];
+  id: Scalars['ID'];
   /** Zeitgeist's identifier for market */
   marketId: Scalars['Int'];
   /** Zeitgeist's identifier for pool */
@@ -827,50 +842,42 @@ export type HistoricalMarketWhereInput = {
   blockNumber_gt?: InputMaybe<Scalars['Int']>;
   blockNumber_gte?: InputMaybe<Scalars['Int']>;
   blockNumber_in?: InputMaybe<Array<Scalars['Int']>>;
-  blockNumber_isNull?: InputMaybe<Scalars['Boolean']>;
   blockNumber_lt?: InputMaybe<Scalars['Int']>;
   blockNumber_lte?: InputMaybe<Scalars['Int']>;
   blockNumber_not_eq?: InputMaybe<Scalars['Int']>;
   blockNumber_not_in?: InputMaybe<Array<Scalars['Int']>>;
   event_contains?: InputMaybe<Scalars['String']>;
-  event_containsInsensitive?: InputMaybe<Scalars['String']>;
   event_endsWith?: InputMaybe<Scalars['String']>;
   event_eq?: InputMaybe<Scalars['String']>;
   event_gt?: InputMaybe<Scalars['String']>;
   event_gte?: InputMaybe<Scalars['String']>;
   event_in?: InputMaybe<Array<Scalars['String']>>;
-  event_isNull?: InputMaybe<Scalars['Boolean']>;
   event_lt?: InputMaybe<Scalars['String']>;
   event_lte?: InputMaybe<Scalars['String']>;
   event_not_contains?: InputMaybe<Scalars['String']>;
-  event_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   event_not_endsWith?: InputMaybe<Scalars['String']>;
   event_not_eq?: InputMaybe<Scalars['String']>;
   event_not_in?: InputMaybe<Array<Scalars['String']>>;
   event_not_startsWith?: InputMaybe<Scalars['String']>;
   event_startsWith?: InputMaybe<Scalars['String']>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['ID']>;
+  id_endsWith?: InputMaybe<Scalars['ID']>;
+  id_eq?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  id_not_endsWith?: InputMaybe<Scalars['ID']>;
+  id_not_eq?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_startsWith?: InputMaybe<Scalars['ID']>;
+  id_startsWith?: InputMaybe<Scalars['ID']>;
   marketId_eq?: InputMaybe<Scalars['Int']>;
   marketId_gt?: InputMaybe<Scalars['Int']>;
   marketId_gte?: InputMaybe<Scalars['Int']>;
   marketId_in?: InputMaybe<Array<Scalars['Int']>>;
-  marketId_isNull?: InputMaybe<Scalars['Boolean']>;
   marketId_lt?: InputMaybe<Scalars['Int']>;
   marketId_lte?: InputMaybe<Scalars['Int']>;
   marketId_not_eq?: InputMaybe<Scalars['Int']>;
@@ -879,42 +886,34 @@ export type HistoricalMarketWhereInput = {
   poolId_gt?: InputMaybe<Scalars['Int']>;
   poolId_gte?: InputMaybe<Scalars['Int']>;
   poolId_in?: InputMaybe<Array<Scalars['Int']>>;
-  poolId_isNull?: InputMaybe<Scalars['Boolean']>;
   poolId_lt?: InputMaybe<Scalars['Int']>;
   poolId_lte?: InputMaybe<Scalars['Int']>;
   poolId_not_eq?: InputMaybe<Scalars['Int']>;
   poolId_not_in?: InputMaybe<Array<Scalars['Int']>>;
   report?: InputMaybe<MarketReportWhereInput>;
-  report_isNull?: InputMaybe<Scalars['Boolean']>;
   resolvedOutcome_contains?: InputMaybe<Scalars['String']>;
-  resolvedOutcome_containsInsensitive?: InputMaybe<Scalars['String']>;
   resolvedOutcome_endsWith?: InputMaybe<Scalars['String']>;
   resolvedOutcome_eq?: InputMaybe<Scalars['String']>;
   resolvedOutcome_gt?: InputMaybe<Scalars['String']>;
   resolvedOutcome_gte?: InputMaybe<Scalars['String']>;
   resolvedOutcome_in?: InputMaybe<Array<Scalars['String']>>;
-  resolvedOutcome_isNull?: InputMaybe<Scalars['Boolean']>;
   resolvedOutcome_lt?: InputMaybe<Scalars['String']>;
   resolvedOutcome_lte?: InputMaybe<Scalars['String']>;
   resolvedOutcome_not_contains?: InputMaybe<Scalars['String']>;
-  resolvedOutcome_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   resolvedOutcome_not_endsWith?: InputMaybe<Scalars['String']>;
   resolvedOutcome_not_eq?: InputMaybe<Scalars['String']>;
   resolvedOutcome_not_in?: InputMaybe<Array<Scalars['String']>>;
   resolvedOutcome_not_startsWith?: InputMaybe<Scalars['String']>;
   resolvedOutcome_startsWith?: InputMaybe<Scalars['String']>;
   status_contains?: InputMaybe<Scalars['String']>;
-  status_containsInsensitive?: InputMaybe<Scalars['String']>;
   status_endsWith?: InputMaybe<Scalars['String']>;
   status_eq?: InputMaybe<Scalars['String']>;
   status_gt?: InputMaybe<Scalars['String']>;
   status_gte?: InputMaybe<Scalars['String']>;
   status_in?: InputMaybe<Array<Scalars['String']>>;
-  status_isNull?: InputMaybe<Scalars['Boolean']>;
   status_lt?: InputMaybe<Scalars['String']>;
   status_lte?: InputMaybe<Scalars['String']>;
   status_not_contains?: InputMaybe<Scalars['String']>;
-  status_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   status_not_endsWith?: InputMaybe<Scalars['String']>;
   status_not_eq?: InputMaybe<Scalars['String']>;
   status_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -924,11 +923,14 @@ export type HistoricalMarketWhereInput = {
   timestamp_gt?: InputMaybe<Scalars['DateTime']>;
   timestamp_gte?: InputMaybe<Scalars['DateTime']>;
   timestamp_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']>;
   timestamp_lt?: InputMaybe<Scalars['DateTime']>;
   timestamp_lte?: InputMaybe<Scalars['DateTime']>;
   timestamp_not_eq?: InputMaybe<Scalars['DateTime']>;
   timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type HistoricalMarketWhereUniqueInput = {
+  id: Scalars['ID'];
 };
 
 export type HistoricalMarketsConnection = {
@@ -948,7 +950,7 @@ export type HistoricalPool = {
   blockNumber: Scalars['Int'];
   /** Event method which initiated this change */
   event: Scalars['String'];
-  id: Scalars['String'];
+  id: Scalars['ID'];
   /** Zeitgeist's identifier for pool */
   poolId: Scalars['Int'];
   /** New status of the pool */
@@ -993,66 +995,55 @@ export type HistoricalPoolWhereInput = {
   blockNumber_gt?: InputMaybe<Scalars['Int']>;
   blockNumber_gte?: InputMaybe<Scalars['Int']>;
   blockNumber_in?: InputMaybe<Array<Scalars['Int']>>;
-  blockNumber_isNull?: InputMaybe<Scalars['Boolean']>;
   blockNumber_lt?: InputMaybe<Scalars['Int']>;
   blockNumber_lte?: InputMaybe<Scalars['Int']>;
   blockNumber_not_eq?: InputMaybe<Scalars['Int']>;
   blockNumber_not_in?: InputMaybe<Array<Scalars['Int']>>;
   event_contains?: InputMaybe<Scalars['String']>;
-  event_containsInsensitive?: InputMaybe<Scalars['String']>;
   event_endsWith?: InputMaybe<Scalars['String']>;
   event_eq?: InputMaybe<Scalars['String']>;
   event_gt?: InputMaybe<Scalars['String']>;
   event_gte?: InputMaybe<Scalars['String']>;
   event_in?: InputMaybe<Array<Scalars['String']>>;
-  event_isNull?: InputMaybe<Scalars['Boolean']>;
   event_lt?: InputMaybe<Scalars['String']>;
   event_lte?: InputMaybe<Scalars['String']>;
   event_not_contains?: InputMaybe<Scalars['String']>;
-  event_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   event_not_endsWith?: InputMaybe<Scalars['String']>;
   event_not_eq?: InputMaybe<Scalars['String']>;
   event_not_in?: InputMaybe<Array<Scalars['String']>>;
   event_not_startsWith?: InputMaybe<Scalars['String']>;
   event_startsWith?: InputMaybe<Scalars['String']>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['ID']>;
+  id_endsWith?: InputMaybe<Scalars['ID']>;
+  id_eq?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  id_not_endsWith?: InputMaybe<Scalars['ID']>;
+  id_not_eq?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_startsWith?: InputMaybe<Scalars['ID']>;
+  id_startsWith?: InputMaybe<Scalars['ID']>;
   poolId_eq?: InputMaybe<Scalars['Int']>;
   poolId_gt?: InputMaybe<Scalars['Int']>;
   poolId_gte?: InputMaybe<Scalars['Int']>;
   poolId_in?: InputMaybe<Array<Scalars['Int']>>;
-  poolId_isNull?: InputMaybe<Scalars['Boolean']>;
   poolId_lt?: InputMaybe<Scalars['Int']>;
   poolId_lte?: InputMaybe<Scalars['Int']>;
   poolId_not_eq?: InputMaybe<Scalars['Int']>;
   poolId_not_in?: InputMaybe<Array<Scalars['Int']>>;
   poolStatus_contains?: InputMaybe<Scalars['String']>;
-  poolStatus_containsInsensitive?: InputMaybe<Scalars['String']>;
   poolStatus_endsWith?: InputMaybe<Scalars['String']>;
   poolStatus_eq?: InputMaybe<Scalars['String']>;
   poolStatus_gt?: InputMaybe<Scalars['String']>;
   poolStatus_gte?: InputMaybe<Scalars['String']>;
   poolStatus_in?: InputMaybe<Array<Scalars['String']>>;
-  poolStatus_isNull?: InputMaybe<Scalars['Boolean']>;
   poolStatus_lt?: InputMaybe<Scalars['String']>;
   poolStatus_lte?: InputMaybe<Scalars['String']>;
   poolStatus_not_contains?: InputMaybe<Scalars['String']>;
-  poolStatus_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   poolStatus_not_endsWith?: InputMaybe<Scalars['String']>;
   poolStatus_not_eq?: InputMaybe<Scalars['String']>;
   poolStatus_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -1062,7 +1053,6 @@ export type HistoricalPoolWhereInput = {
   timestamp_gt?: InputMaybe<Scalars['DateTime']>;
   timestamp_gte?: InputMaybe<Scalars['DateTime']>;
   timestamp_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']>;
   timestamp_lt?: InputMaybe<Scalars['DateTime']>;
   timestamp_lte?: InputMaybe<Scalars['DateTime']>;
   timestamp_not_eq?: InputMaybe<Scalars['DateTime']>;
@@ -1071,7 +1061,6 @@ export type HistoricalPoolWhereInput = {
   volume_gt?: InputMaybe<Scalars['BigInt']>;
   volume_gte?: InputMaybe<Scalars['BigInt']>;
   volume_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  volume_isNull?: InputMaybe<Scalars['Boolean']>;
   volume_lt?: InputMaybe<Scalars['BigInt']>;
   volume_lte?: InputMaybe<Scalars['BigInt']>;
   volume_not_eq?: InputMaybe<Scalars['BigInt']>;
@@ -1080,11 +1069,14 @@ export type HistoricalPoolWhereInput = {
   ztgQty_gt?: InputMaybe<Scalars['BigInt']>;
   ztgQty_gte?: InputMaybe<Scalars['BigInt']>;
   ztgQty_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  ztgQty_isNull?: InputMaybe<Scalars['Boolean']>;
   ztgQty_lt?: InputMaybe<Scalars['BigInt']>;
   ztgQty_lte?: InputMaybe<Scalars['BigInt']>;
   ztgQty_not_eq?: InputMaybe<Scalars['BigInt']>;
   ztgQty_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+};
+
+export type HistoricalPoolWhereUniqueInput = {
+  id: Scalars['ID'];
 };
 
 export type HistoricalPoolsConnection = {
@@ -1112,7 +1104,7 @@ export type Market = {
   /** Timestamp at which market should end */
   end: Scalars['BigInt'];
   /** Unique identifier of the object */
-  id: Scalars['String'];
+  id: Scalars['ID'];
   /** Image for the market */
   img?: Maybe<Scalars['String']>;
   /** Zeitgeist's identifier for market */
@@ -1160,27 +1152,22 @@ export type MarketDisputeMechanism = {
 
 export type MarketDisputeMechanismWhereInput = {
   authorized_contains?: InputMaybe<Scalars['String']>;
-  authorized_containsInsensitive?: InputMaybe<Scalars['String']>;
   authorized_endsWith?: InputMaybe<Scalars['String']>;
   authorized_eq?: InputMaybe<Scalars['String']>;
   authorized_gt?: InputMaybe<Scalars['String']>;
   authorized_gte?: InputMaybe<Scalars['String']>;
   authorized_in?: InputMaybe<Array<Scalars['String']>>;
-  authorized_isNull?: InputMaybe<Scalars['Boolean']>;
   authorized_lt?: InputMaybe<Scalars['String']>;
   authorized_lte?: InputMaybe<Scalars['String']>;
   authorized_not_contains?: InputMaybe<Scalars['String']>;
-  authorized_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   authorized_not_endsWith?: InputMaybe<Scalars['String']>;
   authorized_not_eq?: InputMaybe<Scalars['String']>;
   authorized_not_in?: InputMaybe<Array<Scalars['String']>>;
   authorized_not_startsWith?: InputMaybe<Scalars['String']>;
   authorized_startsWith?: InputMaybe<Scalars['String']>;
   court_eq?: InputMaybe<Scalars['Boolean']>;
-  court_isNull?: InputMaybe<Scalars['Boolean']>;
   court_not_eq?: InputMaybe<Scalars['Boolean']>;
   simpleDisputes_eq?: InputMaybe<Scalars['Boolean']>;
-  simpleDisputes_isNull?: InputMaybe<Scalars['Boolean']>;
   simpleDisputes_not_eq?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1256,34 +1243,28 @@ export type MarketPeriod = {
 
 export type MarketPeriodWhereInput = {
   block_contains?: InputMaybe<Scalars['String']>;
-  block_containsInsensitive?: InputMaybe<Scalars['String']>;
   block_endsWith?: InputMaybe<Scalars['String']>;
   block_eq?: InputMaybe<Scalars['String']>;
   block_gt?: InputMaybe<Scalars['String']>;
   block_gte?: InputMaybe<Scalars['String']>;
   block_in?: InputMaybe<Array<Scalars['String']>>;
-  block_isNull?: InputMaybe<Scalars['Boolean']>;
   block_lt?: InputMaybe<Scalars['String']>;
   block_lte?: InputMaybe<Scalars['String']>;
   block_not_contains?: InputMaybe<Scalars['String']>;
-  block_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   block_not_endsWith?: InputMaybe<Scalars['String']>;
   block_not_eq?: InputMaybe<Scalars['String']>;
   block_not_in?: InputMaybe<Array<Scalars['String']>>;
   block_not_startsWith?: InputMaybe<Scalars['String']>;
   block_startsWith?: InputMaybe<Scalars['String']>;
   timestamp_contains?: InputMaybe<Scalars['String']>;
-  timestamp_containsInsensitive?: InputMaybe<Scalars['String']>;
   timestamp_endsWith?: InputMaybe<Scalars['String']>;
   timestamp_eq?: InputMaybe<Scalars['String']>;
   timestamp_gt?: InputMaybe<Scalars['String']>;
   timestamp_gte?: InputMaybe<Scalars['String']>;
   timestamp_in?: InputMaybe<Array<Scalars['String']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']>;
   timestamp_lt?: InputMaybe<Scalars['String']>;
   timestamp_lte?: InputMaybe<Scalars['String']>;
   timestamp_not_contains?: InputMaybe<Scalars['String']>;
-  timestamp_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   timestamp_not_endsWith?: InputMaybe<Scalars['String']>;
   timestamp_not_eq?: InputMaybe<Scalars['String']>;
   timestamp_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -1295,9 +1276,9 @@ export type MarketPeriodWhereInput = {
 export type MarketReport = {
   __typename?: 'MarketReport';
   /** Block number */
-  at?: Maybe<Scalars['Int']>;
+  at: Scalars['Int'];
   /** Account which reported */
-  by?: Maybe<Scalars['String']>;
+  by: Scalars['String'];
   /** Outcome details */
   outcome: OutcomeReport;
 };
@@ -1307,30 +1288,25 @@ export type MarketReportWhereInput = {
   at_gt?: InputMaybe<Scalars['Int']>;
   at_gte?: InputMaybe<Scalars['Int']>;
   at_in?: InputMaybe<Array<Scalars['Int']>>;
-  at_isNull?: InputMaybe<Scalars['Boolean']>;
   at_lt?: InputMaybe<Scalars['Int']>;
   at_lte?: InputMaybe<Scalars['Int']>;
   at_not_eq?: InputMaybe<Scalars['Int']>;
   at_not_in?: InputMaybe<Array<Scalars['Int']>>;
   by_contains?: InputMaybe<Scalars['String']>;
-  by_containsInsensitive?: InputMaybe<Scalars['String']>;
   by_endsWith?: InputMaybe<Scalars['String']>;
   by_eq?: InputMaybe<Scalars['String']>;
   by_gt?: InputMaybe<Scalars['String']>;
   by_gte?: InputMaybe<Scalars['String']>;
   by_in?: InputMaybe<Array<Scalars['String']>>;
-  by_isNull?: InputMaybe<Scalars['Boolean']>;
   by_lt?: InputMaybe<Scalars['String']>;
   by_lte?: InputMaybe<Scalars['String']>;
   by_not_contains?: InputMaybe<Scalars['String']>;
-  by_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   by_not_endsWith?: InputMaybe<Scalars['String']>;
   by_not_eq?: InputMaybe<Scalars['String']>;
   by_not_in?: InputMaybe<Array<Scalars['String']>>;
   by_not_startsWith?: InputMaybe<Scalars['String']>;
   by_startsWith?: InputMaybe<Scalars['String']>;
   outcome?: InputMaybe<OutcomeReportWhereInput>;
-  outcome_isNull?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** Market's types */
@@ -1344,34 +1320,28 @@ export type MarketType = {
 
 export type MarketTypeWhereInput = {
   categorical_contains?: InputMaybe<Scalars['String']>;
-  categorical_containsInsensitive?: InputMaybe<Scalars['String']>;
   categorical_endsWith?: InputMaybe<Scalars['String']>;
   categorical_eq?: InputMaybe<Scalars['String']>;
   categorical_gt?: InputMaybe<Scalars['String']>;
   categorical_gte?: InputMaybe<Scalars['String']>;
   categorical_in?: InputMaybe<Array<Scalars['String']>>;
-  categorical_isNull?: InputMaybe<Scalars['Boolean']>;
   categorical_lt?: InputMaybe<Scalars['String']>;
   categorical_lte?: InputMaybe<Scalars['String']>;
   categorical_not_contains?: InputMaybe<Scalars['String']>;
-  categorical_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   categorical_not_endsWith?: InputMaybe<Scalars['String']>;
   categorical_not_eq?: InputMaybe<Scalars['String']>;
   categorical_not_in?: InputMaybe<Array<Scalars['String']>>;
   categorical_not_startsWith?: InputMaybe<Scalars['String']>;
   categorical_startsWith?: InputMaybe<Scalars['String']>;
   scalar_contains?: InputMaybe<Scalars['String']>;
-  scalar_containsInsensitive?: InputMaybe<Scalars['String']>;
   scalar_endsWith?: InputMaybe<Scalars['String']>;
   scalar_eq?: InputMaybe<Scalars['String']>;
   scalar_gt?: InputMaybe<Scalars['String']>;
   scalar_gte?: InputMaybe<Scalars['String']>;
   scalar_in?: InputMaybe<Array<Scalars['String']>>;
-  scalar_isNull?: InputMaybe<Scalars['Boolean']>;
   scalar_lt?: InputMaybe<Scalars['String']>;
   scalar_lte?: InputMaybe<Scalars['String']>;
   scalar_not_contains?: InputMaybe<Scalars['String']>;
-  scalar_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   scalar_not_endsWith?: InputMaybe<Scalars['String']>;
   scalar_not_eq?: InputMaybe<Scalars['String']>;
   scalar_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -1382,19 +1352,15 @@ export type MarketTypeWhereInput = {
 export type MarketWhereInput = {
   AND?: InputMaybe<Array<MarketWhereInput>>;
   OR?: InputMaybe<Array<MarketWhereInput>>;
-  categories_isNull?: InputMaybe<Scalars['Boolean']>;
   creation_contains?: InputMaybe<Scalars['String']>;
-  creation_containsInsensitive?: InputMaybe<Scalars['String']>;
   creation_endsWith?: InputMaybe<Scalars['String']>;
   creation_eq?: InputMaybe<Scalars['String']>;
   creation_gt?: InputMaybe<Scalars['String']>;
   creation_gte?: InputMaybe<Scalars['String']>;
   creation_in?: InputMaybe<Array<Scalars['String']>>;
-  creation_isNull?: InputMaybe<Scalars['Boolean']>;
   creation_lt?: InputMaybe<Scalars['String']>;
   creation_lte?: InputMaybe<Scalars['String']>;
   creation_not_contains?: InputMaybe<Scalars['String']>;
-  creation_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   creation_not_endsWith?: InputMaybe<Scalars['String']>;
   creation_not_eq?: InputMaybe<Scalars['String']>;
   creation_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -1404,85 +1370,70 @@ export type MarketWhereInput = {
   creatorFee_gt?: InputMaybe<Scalars['Int']>;
   creatorFee_gte?: InputMaybe<Scalars['Int']>;
   creatorFee_in?: InputMaybe<Array<Scalars['Int']>>;
-  creatorFee_isNull?: InputMaybe<Scalars['Boolean']>;
   creatorFee_lt?: InputMaybe<Scalars['Int']>;
   creatorFee_lte?: InputMaybe<Scalars['Int']>;
   creatorFee_not_eq?: InputMaybe<Scalars['Int']>;
   creatorFee_not_in?: InputMaybe<Array<Scalars['Int']>>;
   creator_contains?: InputMaybe<Scalars['String']>;
-  creator_containsInsensitive?: InputMaybe<Scalars['String']>;
   creator_endsWith?: InputMaybe<Scalars['String']>;
   creator_eq?: InputMaybe<Scalars['String']>;
   creator_gt?: InputMaybe<Scalars['String']>;
   creator_gte?: InputMaybe<Scalars['String']>;
   creator_in?: InputMaybe<Array<Scalars['String']>>;
-  creator_isNull?: InputMaybe<Scalars['Boolean']>;
   creator_lt?: InputMaybe<Scalars['String']>;
   creator_lte?: InputMaybe<Scalars['String']>;
   creator_not_contains?: InputMaybe<Scalars['String']>;
-  creator_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   creator_not_endsWith?: InputMaybe<Scalars['String']>;
   creator_not_eq?: InputMaybe<Scalars['String']>;
   creator_not_in?: InputMaybe<Array<Scalars['String']>>;
   creator_not_startsWith?: InputMaybe<Scalars['String']>;
   creator_startsWith?: InputMaybe<Scalars['String']>;
   description_contains?: InputMaybe<Scalars['String']>;
-  description_containsInsensitive?: InputMaybe<Scalars['String']>;
   description_endsWith?: InputMaybe<Scalars['String']>;
   description_eq?: InputMaybe<Scalars['String']>;
   description_gt?: InputMaybe<Scalars['String']>;
   description_gte?: InputMaybe<Scalars['String']>;
   description_in?: InputMaybe<Array<Scalars['String']>>;
-  description_isNull?: InputMaybe<Scalars['Boolean']>;
   description_lt?: InputMaybe<Scalars['String']>;
   description_lte?: InputMaybe<Scalars['String']>;
   description_not_contains?: InputMaybe<Scalars['String']>;
-  description_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   description_not_endsWith?: InputMaybe<Scalars['String']>;
   description_not_eq?: InputMaybe<Scalars['String']>;
   description_not_in?: InputMaybe<Array<Scalars['String']>>;
   description_not_startsWith?: InputMaybe<Scalars['String']>;
   description_startsWith?: InputMaybe<Scalars['String']>;
   disputeMechanism?: InputMaybe<MarketDisputeMechanismWhereInput>;
-  disputeMechanism_isNull?: InputMaybe<Scalars['Boolean']>;
   end_eq?: InputMaybe<Scalars['BigInt']>;
   end_gt?: InputMaybe<Scalars['BigInt']>;
   end_gte?: InputMaybe<Scalars['BigInt']>;
   end_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  end_isNull?: InputMaybe<Scalars['Boolean']>;
   end_lt?: InputMaybe<Scalars['BigInt']>;
   end_lte?: InputMaybe<Scalars['BigInt']>;
   end_not_eq?: InputMaybe<Scalars['BigInt']>;
   end_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['ID']>;
+  id_endsWith?: InputMaybe<Scalars['ID']>;
+  id_eq?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  id_not_endsWith?: InputMaybe<Scalars['ID']>;
+  id_not_eq?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_startsWith?: InputMaybe<Scalars['ID']>;
+  id_startsWith?: InputMaybe<Scalars['ID']>;
   img_contains?: InputMaybe<Scalars['String']>;
-  img_containsInsensitive?: InputMaybe<Scalars['String']>;
   img_endsWith?: InputMaybe<Scalars['String']>;
   img_eq?: InputMaybe<Scalars['String']>;
   img_gt?: InputMaybe<Scalars['String']>;
   img_gte?: InputMaybe<Scalars['String']>;
   img_in?: InputMaybe<Array<Scalars['String']>>;
-  img_isNull?: InputMaybe<Scalars['Boolean']>;
   img_lt?: InputMaybe<Scalars['String']>;
   img_lte?: InputMaybe<Scalars['String']>;
   img_not_contains?: InputMaybe<Scalars['String']>;
-  img_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   img_not_endsWith?: InputMaybe<Scalars['String']>;
   img_not_eq?: InputMaybe<Scalars['String']>;
   img_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -1492,170 +1443,143 @@ export type MarketWhereInput = {
   marketId_gt?: InputMaybe<Scalars['Int']>;
   marketId_gte?: InputMaybe<Scalars['Int']>;
   marketId_in?: InputMaybe<Array<Scalars['Int']>>;
-  marketId_isNull?: InputMaybe<Scalars['Boolean']>;
   marketId_lt?: InputMaybe<Scalars['Int']>;
   marketId_lte?: InputMaybe<Scalars['Int']>;
   marketId_not_eq?: InputMaybe<Scalars['Int']>;
   marketId_not_in?: InputMaybe<Array<Scalars['Int']>>;
   marketType?: InputMaybe<MarketTypeWhereInput>;
-  marketType_isNull?: InputMaybe<Scalars['Boolean']>;
   metadata_contains?: InputMaybe<Scalars['String']>;
-  metadata_containsInsensitive?: InputMaybe<Scalars['String']>;
   metadata_endsWith?: InputMaybe<Scalars['String']>;
   metadata_eq?: InputMaybe<Scalars['String']>;
   metadata_gt?: InputMaybe<Scalars['String']>;
   metadata_gte?: InputMaybe<Scalars['String']>;
   metadata_in?: InputMaybe<Array<Scalars['String']>>;
-  metadata_isNull?: InputMaybe<Scalars['Boolean']>;
   metadata_lt?: InputMaybe<Scalars['String']>;
   metadata_lte?: InputMaybe<Scalars['String']>;
   metadata_not_contains?: InputMaybe<Scalars['String']>;
-  metadata_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   metadata_not_endsWith?: InputMaybe<Scalars['String']>;
   metadata_not_eq?: InputMaybe<Scalars['String']>;
   metadata_not_in?: InputMaybe<Array<Scalars['String']>>;
   metadata_not_startsWith?: InputMaybe<Scalars['String']>;
   metadata_startsWith?: InputMaybe<Scalars['String']>;
   oracle_contains?: InputMaybe<Scalars['String']>;
-  oracle_containsInsensitive?: InputMaybe<Scalars['String']>;
   oracle_endsWith?: InputMaybe<Scalars['String']>;
   oracle_eq?: InputMaybe<Scalars['String']>;
   oracle_gt?: InputMaybe<Scalars['String']>;
   oracle_gte?: InputMaybe<Scalars['String']>;
   oracle_in?: InputMaybe<Array<Scalars['String']>>;
-  oracle_isNull?: InputMaybe<Scalars['Boolean']>;
   oracle_lt?: InputMaybe<Scalars['String']>;
   oracle_lte?: InputMaybe<Scalars['String']>;
   oracle_not_contains?: InputMaybe<Scalars['String']>;
-  oracle_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   oracle_not_endsWith?: InputMaybe<Scalars['String']>;
   oracle_not_eq?: InputMaybe<Scalars['String']>;
   oracle_not_in?: InputMaybe<Array<Scalars['String']>>;
   oracle_not_startsWith?: InputMaybe<Scalars['String']>;
   oracle_startsWith?: InputMaybe<Scalars['String']>;
-  outcomeAssets_containsAll?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  outcomeAssets_containsAny?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  outcomeAssets_containsNone?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  outcomeAssets_isNull?: InputMaybe<Scalars['Boolean']>;
+  outcomeAssets_containsAll?: InputMaybe<Array<Scalars['String']>>;
+  outcomeAssets_containsAny?: InputMaybe<Array<Scalars['String']>>;
+  outcomeAssets_containsNone?: InputMaybe<Array<Scalars['String']>>;
   period?: InputMaybe<MarketPeriodWhereInput>;
-  period_isNull?: InputMaybe<Scalars['Boolean']>;
   poolId_eq?: InputMaybe<Scalars['Int']>;
   poolId_gt?: InputMaybe<Scalars['Int']>;
   poolId_gte?: InputMaybe<Scalars['Int']>;
   poolId_in?: InputMaybe<Array<Scalars['Int']>>;
-  poolId_isNull?: InputMaybe<Scalars['Boolean']>;
   poolId_lt?: InputMaybe<Scalars['Int']>;
   poolId_lte?: InputMaybe<Scalars['Int']>;
   poolId_not_eq?: InputMaybe<Scalars['Int']>;
   poolId_not_in?: InputMaybe<Array<Scalars['Int']>>;
   question_contains?: InputMaybe<Scalars['String']>;
-  question_containsInsensitive?: InputMaybe<Scalars['String']>;
   question_endsWith?: InputMaybe<Scalars['String']>;
   question_eq?: InputMaybe<Scalars['String']>;
   question_gt?: InputMaybe<Scalars['String']>;
   question_gte?: InputMaybe<Scalars['String']>;
   question_in?: InputMaybe<Array<Scalars['String']>>;
-  question_isNull?: InputMaybe<Scalars['Boolean']>;
   question_lt?: InputMaybe<Scalars['String']>;
   question_lte?: InputMaybe<Scalars['String']>;
   question_not_contains?: InputMaybe<Scalars['String']>;
-  question_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   question_not_endsWith?: InputMaybe<Scalars['String']>;
   question_not_eq?: InputMaybe<Scalars['String']>;
   question_not_in?: InputMaybe<Array<Scalars['String']>>;
   question_not_startsWith?: InputMaybe<Scalars['String']>;
   question_startsWith?: InputMaybe<Scalars['String']>;
   report?: InputMaybe<MarketReportWhereInput>;
-  report_isNull?: InputMaybe<Scalars['Boolean']>;
   resolvedOutcome_contains?: InputMaybe<Scalars['String']>;
-  resolvedOutcome_containsInsensitive?: InputMaybe<Scalars['String']>;
   resolvedOutcome_endsWith?: InputMaybe<Scalars['String']>;
   resolvedOutcome_eq?: InputMaybe<Scalars['String']>;
   resolvedOutcome_gt?: InputMaybe<Scalars['String']>;
   resolvedOutcome_gte?: InputMaybe<Scalars['String']>;
   resolvedOutcome_in?: InputMaybe<Array<Scalars['String']>>;
-  resolvedOutcome_isNull?: InputMaybe<Scalars['Boolean']>;
   resolvedOutcome_lt?: InputMaybe<Scalars['String']>;
   resolvedOutcome_lte?: InputMaybe<Scalars['String']>;
   resolvedOutcome_not_contains?: InputMaybe<Scalars['String']>;
-  resolvedOutcome_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   resolvedOutcome_not_endsWith?: InputMaybe<Scalars['String']>;
   resolvedOutcome_not_eq?: InputMaybe<Scalars['String']>;
   resolvedOutcome_not_in?: InputMaybe<Array<Scalars['String']>>;
   resolvedOutcome_not_startsWith?: InputMaybe<Scalars['String']>;
   resolvedOutcome_startsWith?: InputMaybe<Scalars['String']>;
   scalarType_contains?: InputMaybe<Scalars['String']>;
-  scalarType_containsInsensitive?: InputMaybe<Scalars['String']>;
   scalarType_endsWith?: InputMaybe<Scalars['String']>;
   scalarType_eq?: InputMaybe<Scalars['String']>;
   scalarType_gt?: InputMaybe<Scalars['String']>;
   scalarType_gte?: InputMaybe<Scalars['String']>;
   scalarType_in?: InputMaybe<Array<Scalars['String']>>;
-  scalarType_isNull?: InputMaybe<Scalars['Boolean']>;
   scalarType_lt?: InputMaybe<Scalars['String']>;
   scalarType_lte?: InputMaybe<Scalars['String']>;
   scalarType_not_contains?: InputMaybe<Scalars['String']>;
-  scalarType_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   scalarType_not_endsWith?: InputMaybe<Scalars['String']>;
   scalarType_not_eq?: InputMaybe<Scalars['String']>;
   scalarType_not_in?: InputMaybe<Array<Scalars['String']>>;
   scalarType_not_startsWith?: InputMaybe<Scalars['String']>;
   scalarType_startsWith?: InputMaybe<Scalars['String']>;
   scoringRule_contains?: InputMaybe<Scalars['String']>;
-  scoringRule_containsInsensitive?: InputMaybe<Scalars['String']>;
   scoringRule_endsWith?: InputMaybe<Scalars['String']>;
   scoringRule_eq?: InputMaybe<Scalars['String']>;
   scoringRule_gt?: InputMaybe<Scalars['String']>;
   scoringRule_gte?: InputMaybe<Scalars['String']>;
   scoringRule_in?: InputMaybe<Array<Scalars['String']>>;
-  scoringRule_isNull?: InputMaybe<Scalars['Boolean']>;
   scoringRule_lt?: InputMaybe<Scalars['String']>;
   scoringRule_lte?: InputMaybe<Scalars['String']>;
   scoringRule_not_contains?: InputMaybe<Scalars['String']>;
-  scoringRule_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   scoringRule_not_endsWith?: InputMaybe<Scalars['String']>;
   scoringRule_not_eq?: InputMaybe<Scalars['String']>;
   scoringRule_not_in?: InputMaybe<Array<Scalars['String']>>;
   scoringRule_not_startsWith?: InputMaybe<Scalars['String']>;
   scoringRule_startsWith?: InputMaybe<Scalars['String']>;
   slug_contains?: InputMaybe<Scalars['String']>;
-  slug_containsInsensitive?: InputMaybe<Scalars['String']>;
   slug_endsWith?: InputMaybe<Scalars['String']>;
   slug_eq?: InputMaybe<Scalars['String']>;
   slug_gt?: InputMaybe<Scalars['String']>;
   slug_gte?: InputMaybe<Scalars['String']>;
   slug_in?: InputMaybe<Array<Scalars['String']>>;
-  slug_isNull?: InputMaybe<Scalars['Boolean']>;
   slug_lt?: InputMaybe<Scalars['String']>;
   slug_lte?: InputMaybe<Scalars['String']>;
   slug_not_contains?: InputMaybe<Scalars['String']>;
-  slug_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   slug_not_endsWith?: InputMaybe<Scalars['String']>;
   slug_not_eq?: InputMaybe<Scalars['String']>;
   slug_not_in?: InputMaybe<Array<Scalars['String']>>;
   slug_not_startsWith?: InputMaybe<Scalars['String']>;
   slug_startsWith?: InputMaybe<Scalars['String']>;
   status_contains?: InputMaybe<Scalars['String']>;
-  status_containsInsensitive?: InputMaybe<Scalars['String']>;
   status_endsWith?: InputMaybe<Scalars['String']>;
   status_eq?: InputMaybe<Scalars['String']>;
   status_gt?: InputMaybe<Scalars['String']>;
   status_gte?: InputMaybe<Scalars['String']>;
   status_in?: InputMaybe<Array<Scalars['String']>>;
-  status_isNull?: InputMaybe<Scalars['Boolean']>;
   status_lt?: InputMaybe<Scalars['String']>;
   status_lte?: InputMaybe<Scalars['String']>;
   status_not_contains?: InputMaybe<Scalars['String']>;
-  status_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   status_not_endsWith?: InputMaybe<Scalars['String']>;
   status_not_eq?: InputMaybe<Scalars['String']>;
   status_not_in?: InputMaybe<Array<Scalars['String']>>;
   status_not_startsWith?: InputMaybe<Scalars['String']>;
   status_startsWith?: InputMaybe<Scalars['String']>;
-  tags_containsAll?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  tags_containsAny?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  tags_containsNone?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  tags_isNull?: InputMaybe<Scalars['Boolean']>;
+  tags_containsAll?: InputMaybe<Array<Scalars['String']>>;
+  tags_containsAny?: InputMaybe<Array<Scalars['String']>>;
+  tags_containsNone?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type MarketWhereUniqueInput = {
+  id: Scalars['ID'];
 };
 
 export type MarketsConnection = {
@@ -1679,7 +1603,6 @@ export type OutcomeReportWhereInput = {
   categorical_gt?: InputMaybe<Scalars['Int']>;
   categorical_gte?: InputMaybe<Scalars['Int']>;
   categorical_in?: InputMaybe<Array<Scalars['Int']>>;
-  categorical_isNull?: InputMaybe<Scalars['Boolean']>;
   categorical_lt?: InputMaybe<Scalars['Int']>;
   categorical_lte?: InputMaybe<Scalars['Int']>;
   categorical_not_eq?: InputMaybe<Scalars['Int']>;
@@ -1688,7 +1611,6 @@ export type OutcomeReportWhereInput = {
   scalar_gt?: InputMaybe<Scalars['BigInt']>;
   scalar_gte?: InputMaybe<Scalars['BigInt']>;
   scalar_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  scalar_isNull?: InputMaybe<Scalars['Boolean']>;
   scalar_lt?: InputMaybe<Scalars['BigInt']>;
   scalar_lte?: InputMaybe<Scalars['BigInt']>;
   scalar_not_eq?: InputMaybe<Scalars['BigInt']>;
@@ -1712,7 +1634,7 @@ export type Pool = {
   baseAsset: Scalars['String'];
   /** Timestamp of pool creation */
   createdAt: Scalars['DateTime'];
-  id: Scalars['String'];
+  id: Scalars['ID'];
   marketId: Scalars['Int'];
   /** Zeitgeist's identifier for pool */
   poolId: Scalars['Int'];
@@ -1773,34 +1695,28 @@ export type PoolWhereInput = {
   AND?: InputMaybe<Array<PoolWhereInput>>;
   OR?: InputMaybe<Array<PoolWhereInput>>;
   accountId_contains?: InputMaybe<Scalars['String']>;
-  accountId_containsInsensitive?: InputMaybe<Scalars['String']>;
   accountId_endsWith?: InputMaybe<Scalars['String']>;
   accountId_eq?: InputMaybe<Scalars['String']>;
   accountId_gt?: InputMaybe<Scalars['String']>;
   accountId_gte?: InputMaybe<Scalars['String']>;
   accountId_in?: InputMaybe<Array<Scalars['String']>>;
-  accountId_isNull?: InputMaybe<Scalars['Boolean']>;
   accountId_lt?: InputMaybe<Scalars['String']>;
   accountId_lte?: InputMaybe<Scalars['String']>;
   accountId_not_contains?: InputMaybe<Scalars['String']>;
-  accountId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   accountId_not_endsWith?: InputMaybe<Scalars['String']>;
   accountId_not_eq?: InputMaybe<Scalars['String']>;
   accountId_not_in?: InputMaybe<Array<Scalars['String']>>;
   accountId_not_startsWith?: InputMaybe<Scalars['String']>;
   accountId_startsWith?: InputMaybe<Scalars['String']>;
   baseAsset_contains?: InputMaybe<Scalars['String']>;
-  baseAsset_containsInsensitive?: InputMaybe<Scalars['String']>;
   baseAsset_endsWith?: InputMaybe<Scalars['String']>;
   baseAsset_eq?: InputMaybe<Scalars['String']>;
   baseAsset_gt?: InputMaybe<Scalars['String']>;
   baseAsset_gte?: InputMaybe<Scalars['String']>;
   baseAsset_in?: InputMaybe<Array<Scalars['String']>>;
-  baseAsset_isNull?: InputMaybe<Scalars['Boolean']>;
   baseAsset_lt?: InputMaybe<Scalars['String']>;
   baseAsset_lte?: InputMaybe<Scalars['String']>;
   baseAsset_not_contains?: InputMaybe<Scalars['String']>;
-  baseAsset_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   baseAsset_not_endsWith?: InputMaybe<Scalars['String']>;
   baseAsset_not_eq?: InputMaybe<Scalars['String']>;
   baseAsset_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -1810,33 +1726,28 @@ export type PoolWhereInput = {
   createdAt_gt?: InputMaybe<Scalars['DateTime']>;
   createdAt_gte?: InputMaybe<Scalars['DateTime']>;
   createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  createdAt_isNull?: InputMaybe<Scalars['Boolean']>;
   createdAt_lt?: InputMaybe<Scalars['DateTime']>;
   createdAt_lte?: InputMaybe<Scalars['DateTime']>;
   createdAt_not_eq?: InputMaybe<Scalars['DateTime']>;
   createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_endsWith?: InputMaybe<Scalars['String']>;
-  id_eq?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']>;
-  id_not_eq?: InputMaybe<Scalars['String']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']>;
-  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['ID']>;
+  id_endsWith?: InputMaybe<Scalars['ID']>;
+  id_eq?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  id_not_endsWith?: InputMaybe<Scalars['ID']>;
+  id_not_eq?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_not_startsWith?: InputMaybe<Scalars['ID']>;
+  id_startsWith?: InputMaybe<Scalars['ID']>;
   marketId_eq?: InputMaybe<Scalars['Int']>;
   marketId_gt?: InputMaybe<Scalars['Int']>;
   marketId_gte?: InputMaybe<Scalars['Int']>;
   marketId_in?: InputMaybe<Array<Scalars['Int']>>;
-  marketId_isNull?: InputMaybe<Scalars['Boolean']>;
   marketId_lt?: InputMaybe<Scalars['Int']>;
   marketId_lte?: InputMaybe<Scalars['Int']>;
   marketId_not_eq?: InputMaybe<Scalars['Int']>;
@@ -1845,91 +1756,75 @@ export type PoolWhereInput = {
   poolId_gt?: InputMaybe<Scalars['Int']>;
   poolId_gte?: InputMaybe<Scalars['Int']>;
   poolId_in?: InputMaybe<Array<Scalars['Int']>>;
-  poolId_isNull?: InputMaybe<Scalars['Boolean']>;
   poolId_lt?: InputMaybe<Scalars['Int']>;
   poolId_lte?: InputMaybe<Scalars['Int']>;
   poolId_not_eq?: InputMaybe<Scalars['Int']>;
   poolId_not_in?: InputMaybe<Array<Scalars['Int']>>;
   poolStatus_contains?: InputMaybe<Scalars['String']>;
-  poolStatus_containsInsensitive?: InputMaybe<Scalars['String']>;
   poolStatus_endsWith?: InputMaybe<Scalars['String']>;
   poolStatus_eq?: InputMaybe<Scalars['String']>;
   poolStatus_gt?: InputMaybe<Scalars['String']>;
   poolStatus_gte?: InputMaybe<Scalars['String']>;
   poolStatus_in?: InputMaybe<Array<Scalars['String']>>;
-  poolStatus_isNull?: InputMaybe<Scalars['Boolean']>;
   poolStatus_lt?: InputMaybe<Scalars['String']>;
   poolStatus_lte?: InputMaybe<Scalars['String']>;
   poolStatus_not_contains?: InputMaybe<Scalars['String']>;
-  poolStatus_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   poolStatus_not_endsWith?: InputMaybe<Scalars['String']>;
   poolStatus_not_eq?: InputMaybe<Scalars['String']>;
   poolStatus_not_in?: InputMaybe<Array<Scalars['String']>>;
   poolStatus_not_startsWith?: InputMaybe<Scalars['String']>;
   poolStatus_startsWith?: InputMaybe<Scalars['String']>;
   scoringRule_contains?: InputMaybe<Scalars['String']>;
-  scoringRule_containsInsensitive?: InputMaybe<Scalars['String']>;
   scoringRule_endsWith?: InputMaybe<Scalars['String']>;
   scoringRule_eq?: InputMaybe<Scalars['String']>;
   scoringRule_gt?: InputMaybe<Scalars['String']>;
   scoringRule_gte?: InputMaybe<Scalars['String']>;
   scoringRule_in?: InputMaybe<Array<Scalars['String']>>;
-  scoringRule_isNull?: InputMaybe<Scalars['Boolean']>;
   scoringRule_lt?: InputMaybe<Scalars['String']>;
   scoringRule_lte?: InputMaybe<Scalars['String']>;
   scoringRule_not_contains?: InputMaybe<Scalars['String']>;
-  scoringRule_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   scoringRule_not_endsWith?: InputMaybe<Scalars['String']>;
   scoringRule_not_eq?: InputMaybe<Scalars['String']>;
   scoringRule_not_in?: InputMaybe<Array<Scalars['String']>>;
   scoringRule_not_startsWith?: InputMaybe<Scalars['String']>;
   scoringRule_startsWith?: InputMaybe<Scalars['String']>;
   swapFee_contains?: InputMaybe<Scalars['String']>;
-  swapFee_containsInsensitive?: InputMaybe<Scalars['String']>;
   swapFee_endsWith?: InputMaybe<Scalars['String']>;
   swapFee_eq?: InputMaybe<Scalars['String']>;
   swapFee_gt?: InputMaybe<Scalars['String']>;
   swapFee_gte?: InputMaybe<Scalars['String']>;
   swapFee_in?: InputMaybe<Array<Scalars['String']>>;
-  swapFee_isNull?: InputMaybe<Scalars['Boolean']>;
   swapFee_lt?: InputMaybe<Scalars['String']>;
   swapFee_lte?: InputMaybe<Scalars['String']>;
   swapFee_not_contains?: InputMaybe<Scalars['String']>;
-  swapFee_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   swapFee_not_endsWith?: InputMaybe<Scalars['String']>;
   swapFee_not_eq?: InputMaybe<Scalars['String']>;
   swapFee_not_in?: InputMaybe<Array<Scalars['String']>>;
   swapFee_not_startsWith?: InputMaybe<Scalars['String']>;
   swapFee_startsWith?: InputMaybe<Scalars['String']>;
   totalSubsidy_contains?: InputMaybe<Scalars['String']>;
-  totalSubsidy_containsInsensitive?: InputMaybe<Scalars['String']>;
   totalSubsidy_endsWith?: InputMaybe<Scalars['String']>;
   totalSubsidy_eq?: InputMaybe<Scalars['String']>;
   totalSubsidy_gt?: InputMaybe<Scalars['String']>;
   totalSubsidy_gte?: InputMaybe<Scalars['String']>;
   totalSubsidy_in?: InputMaybe<Array<Scalars['String']>>;
-  totalSubsidy_isNull?: InputMaybe<Scalars['Boolean']>;
   totalSubsidy_lt?: InputMaybe<Scalars['String']>;
   totalSubsidy_lte?: InputMaybe<Scalars['String']>;
   totalSubsidy_not_contains?: InputMaybe<Scalars['String']>;
-  totalSubsidy_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   totalSubsidy_not_endsWith?: InputMaybe<Scalars['String']>;
   totalSubsidy_not_eq?: InputMaybe<Scalars['String']>;
   totalSubsidy_not_in?: InputMaybe<Array<Scalars['String']>>;
   totalSubsidy_not_startsWith?: InputMaybe<Scalars['String']>;
   totalSubsidy_startsWith?: InputMaybe<Scalars['String']>;
   totalWeight_contains?: InputMaybe<Scalars['String']>;
-  totalWeight_containsInsensitive?: InputMaybe<Scalars['String']>;
   totalWeight_endsWith?: InputMaybe<Scalars['String']>;
   totalWeight_eq?: InputMaybe<Scalars['String']>;
   totalWeight_gt?: InputMaybe<Scalars['String']>;
   totalWeight_gte?: InputMaybe<Scalars['String']>;
   totalWeight_in?: InputMaybe<Array<Scalars['String']>>;
-  totalWeight_isNull?: InputMaybe<Scalars['Boolean']>;
   totalWeight_lt?: InputMaybe<Scalars['String']>;
   totalWeight_lte?: InputMaybe<Scalars['String']>;
   totalWeight_not_contains?: InputMaybe<Scalars['String']>;
-  totalWeight_not_containsInsensitive?: InputMaybe<Scalars['String']>;
   totalWeight_not_endsWith?: InputMaybe<Scalars['String']>;
   totalWeight_not_eq?: InputMaybe<Scalars['String']>;
   totalWeight_not_in?: InputMaybe<Array<Scalars['String']>>;
@@ -1939,21 +1834,22 @@ export type PoolWhereInput = {
   volume_gt?: InputMaybe<Scalars['BigInt']>;
   volume_gte?: InputMaybe<Scalars['BigInt']>;
   volume_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  volume_isNull?: InputMaybe<Scalars['Boolean']>;
   volume_lt?: InputMaybe<Scalars['BigInt']>;
   volume_lte?: InputMaybe<Scalars['BigInt']>;
   volume_not_eq?: InputMaybe<Scalars['BigInt']>;
   volume_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  weights_isNull?: InputMaybe<Scalars['Boolean']>;
   ztgQty_eq?: InputMaybe<Scalars['BigInt']>;
   ztgQty_gt?: InputMaybe<Scalars['BigInt']>;
   ztgQty_gte?: InputMaybe<Scalars['BigInt']>;
   ztgQty_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  ztgQty_isNull?: InputMaybe<Scalars['Boolean']>;
   ztgQty_lt?: InputMaybe<Scalars['BigInt']>;
   ztgQty_lte?: InputMaybe<Scalars['BigInt']>;
   ztgQty_not_eq?: InputMaybe<Scalars['BigInt']>;
   ztgQty_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+};
+
+export type PoolWhereUniqueInput = {
+  id: Scalars['ID'];
 };
 
 export type PoolsConnection = {
@@ -1966,68 +1862,67 @@ export type PoolsConnection = {
 export type Query = {
   __typename?: 'Query';
   accountBalanceById?: Maybe<AccountBalance>;
-  /** @deprecated Use accountBalanceById */
+  /** @deprecated Use `accountBalanceById` */
   accountBalanceByUniqueInput?: Maybe<AccountBalance>;
   accountBalances: Array<AccountBalance>;
   accountBalancesConnection: AccountBalancesConnection;
   accountById?: Maybe<Account>;
-  /** @deprecated Use accountById */
+  /** @deprecated Use `accountById` */
   accountByUniqueInput?: Maybe<Account>;
   accounts: Array<Account>;
   accountsConnection: AccountsConnection;
   assetById?: Maybe<Asset>;
-  /** @deprecated Use assetById */
+  /** @deprecated Use `assetById` */
   assetByUniqueInput?: Maybe<Asset>;
   assets: Array<Asset>;
   assetsConnection: AssetsConnection;
   historicalAccountBalanceById?: Maybe<HistoricalAccountBalance>;
-  /** @deprecated Use historicalAccountBalanceById */
+  /** @deprecated Use `historicalAccountBalanceById` */
   historicalAccountBalanceByUniqueInput?: Maybe<HistoricalAccountBalance>;
   historicalAccountBalances: Array<HistoricalAccountBalance>;
   historicalAccountBalancesConnection: HistoricalAccountBalancesConnection;
   historicalAssetById?: Maybe<HistoricalAsset>;
-  /** @deprecated Use historicalAssetById */
+  /** @deprecated Use `historicalAssetById` */
   historicalAssetByUniqueInput?: Maybe<HistoricalAsset>;
   historicalAssets: Array<HistoricalAsset>;
   historicalAssetsConnection: HistoricalAssetsConnection;
   historicalMarketById?: Maybe<HistoricalMarket>;
-  /** @deprecated Use historicalMarketById */
+  /** @deprecated Use `historicalMarketById` */
   historicalMarketByUniqueInput?: Maybe<HistoricalMarket>;
   historicalMarkets: Array<HistoricalMarket>;
   historicalMarketsConnection: HistoricalMarketsConnection;
   historicalPoolById?: Maybe<HistoricalPool>;
-  /** @deprecated Use historicalPoolById */
+  /** @deprecated Use `historicalPoolById` */
   historicalPoolByUniqueInput?: Maybe<HistoricalPool>;
   historicalPools: Array<HistoricalPool>;
   historicalPoolsConnection: HistoricalPoolsConnection;
   marketById?: Maybe<Market>;
-  /** @deprecated Use marketById */
+  /** @deprecated Use `marketById` */
   marketByUniqueInput?: Maybe<Market>;
   markets: Array<Market>;
   marketsConnection: MarketsConnection;
   poolById?: Maybe<Pool>;
-  /** @deprecated Use poolById */
+  /** @deprecated Use `poolById` */
   poolByUniqueInput?: Maybe<Pool>;
   pools: Array<Pool>;
   poolsConnection: PoolsConnection;
-  squidStatus?: Maybe<SquidStatus>;
 };
 
 
 export type QueryAccountBalanceByIdArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryAccountBalanceByUniqueInputArgs = {
-  where: WhereIdInput;
+  where: AccountBalanceWhereUniqueInput;
 };
 
 
 export type QueryAccountBalancesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<AccountBalanceOrderByInput>>;
+  orderBy?: InputMaybe<Array<InputMaybe<AccountBalanceOrderByInput>>>;
   where?: InputMaybe<AccountBalanceWhereInput>;
 };
 
@@ -2041,19 +1936,19 @@ export type QueryAccountBalancesConnectionArgs = {
 
 
 export type QueryAccountByIdArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryAccountByUniqueInputArgs = {
-  where: WhereIdInput;
+  where: AccountWhereUniqueInput;
 };
 
 
 export type QueryAccountsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<AccountOrderByInput>>;
+  orderBy?: InputMaybe<Array<InputMaybe<AccountOrderByInput>>>;
   where?: InputMaybe<AccountWhereInput>;
 };
 
@@ -2067,19 +1962,19 @@ export type QueryAccountsConnectionArgs = {
 
 
 export type QueryAssetByIdArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryAssetByUniqueInputArgs = {
-  where: WhereIdInput;
+  where: AssetWhereUniqueInput;
 };
 
 
 export type QueryAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<AssetOrderByInput>>;
+  orderBy?: InputMaybe<Array<InputMaybe<AssetOrderByInput>>>;
   where?: InputMaybe<AssetWhereInput>;
 };
 
@@ -2093,19 +1988,19 @@ export type QueryAssetsConnectionArgs = {
 
 
 export type QueryHistoricalAccountBalanceByIdArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryHistoricalAccountBalanceByUniqueInputArgs = {
-  where: WhereIdInput;
+  where: HistoricalAccountBalanceWhereUniqueInput;
 };
 
 
 export type QueryHistoricalAccountBalancesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<HistoricalAccountBalanceOrderByInput>>;
+  orderBy?: InputMaybe<Array<InputMaybe<HistoricalAccountBalanceOrderByInput>>>;
   where?: InputMaybe<HistoricalAccountBalanceWhereInput>;
 };
 
@@ -2119,19 +2014,19 @@ export type QueryHistoricalAccountBalancesConnectionArgs = {
 
 
 export type QueryHistoricalAssetByIdArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryHistoricalAssetByUniqueInputArgs = {
-  where: WhereIdInput;
+  where: HistoricalAssetWhereUniqueInput;
 };
 
 
 export type QueryHistoricalAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<HistoricalAssetOrderByInput>>;
+  orderBy?: InputMaybe<Array<InputMaybe<HistoricalAssetOrderByInput>>>;
   where?: InputMaybe<HistoricalAssetWhereInput>;
 };
 
@@ -2145,19 +2040,19 @@ export type QueryHistoricalAssetsConnectionArgs = {
 
 
 export type QueryHistoricalMarketByIdArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryHistoricalMarketByUniqueInputArgs = {
-  where: WhereIdInput;
+  where: HistoricalMarketWhereUniqueInput;
 };
 
 
 export type QueryHistoricalMarketsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<HistoricalMarketOrderByInput>>;
+  orderBy?: InputMaybe<Array<InputMaybe<HistoricalMarketOrderByInput>>>;
   where?: InputMaybe<HistoricalMarketWhereInput>;
 };
 
@@ -2171,19 +2066,19 @@ export type QueryHistoricalMarketsConnectionArgs = {
 
 
 export type QueryHistoricalPoolByIdArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryHistoricalPoolByUniqueInputArgs = {
-  where: WhereIdInput;
+  where: HistoricalPoolWhereUniqueInput;
 };
 
 
 export type QueryHistoricalPoolsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<HistoricalPoolOrderByInput>>;
+  orderBy?: InputMaybe<Array<InputMaybe<HistoricalPoolOrderByInput>>>;
   where?: InputMaybe<HistoricalPoolWhereInput>;
 };
 
@@ -2197,19 +2092,19 @@ export type QueryHistoricalPoolsConnectionArgs = {
 
 
 export type QueryMarketByIdArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryMarketByUniqueInputArgs = {
-  where: WhereIdInput;
+  where: MarketWhereUniqueInput;
 };
 
 
 export type QueryMarketsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<MarketOrderByInput>>;
+  orderBy?: InputMaybe<Array<InputMaybe<MarketOrderByInput>>>;
   where?: InputMaybe<MarketWhereInput>;
 };
 
@@ -2223,19 +2118,19 @@ export type QueryMarketsConnectionArgs = {
 
 
 export type QueryPoolByIdArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryPoolByUniqueInputArgs = {
-  where: WhereIdInput;
+  where: PoolWhereUniqueInput;
 };
 
 
 export type QueryPoolsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<PoolOrderByInput>>;
+  orderBy?: InputMaybe<Array<InputMaybe<PoolOrderByInput>>>;
   where?: InputMaybe<PoolWhereInput>;
 };
 
@@ -2247,12 +2142,6 @@ export type QueryPoolsConnectionArgs = {
   where?: InputMaybe<PoolWhereInput>;
 };
 
-export type SquidStatus = {
-  __typename?: 'SquidStatus';
-  /** The height of the processed part of the chain */
-  height?: Maybe<Scalars['Int']>;
-};
-
 /** Asset weightage details */
 export type Weight = {
   __typename?: 'Weight';
@@ -2262,8 +2151,29 @@ export type Weight = {
   len: Scalars['BigInt'];
 };
 
-export type WhereIdInput = {
-  id: Scalars['String'];
+export type WeightWhereInput = {
+  assetId_contains?: InputMaybe<Scalars['String']>;
+  assetId_endsWith?: InputMaybe<Scalars['String']>;
+  assetId_eq?: InputMaybe<Scalars['String']>;
+  assetId_gt?: InputMaybe<Scalars['String']>;
+  assetId_gte?: InputMaybe<Scalars['String']>;
+  assetId_in?: InputMaybe<Array<Scalars['String']>>;
+  assetId_lt?: InputMaybe<Scalars['String']>;
+  assetId_lte?: InputMaybe<Scalars['String']>;
+  assetId_not_contains?: InputMaybe<Scalars['String']>;
+  assetId_not_endsWith?: InputMaybe<Scalars['String']>;
+  assetId_not_eq?: InputMaybe<Scalars['String']>;
+  assetId_not_in?: InputMaybe<Array<Scalars['String']>>;
+  assetId_not_startsWith?: InputMaybe<Scalars['String']>;
+  assetId_startsWith?: InputMaybe<Scalars['String']>;
+  len_eq?: InputMaybe<Scalars['BigInt']>;
+  len_gt?: InputMaybe<Scalars['BigInt']>;
+  len_gte?: InputMaybe<Scalars['BigInt']>;
+  len_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  len_lt?: InputMaybe<Scalars['BigInt']>;
+  len_lte?: InputMaybe<Scalars['BigInt']>;
+  len_not_eq?: InputMaybe<Scalars['BigInt']>;
+  len_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
 };
 
 export type AccountBalancesQueryVariables = Exact<{
@@ -2322,9 +2232,9 @@ export type MarketsQueryVariables = Exact<{
 }>;
 
 
-export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null }> };
+export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null }> };
 
-export type FullMarketFragment = { __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
+export type FullMarketFragment = { __typename?: 'Market', marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at: number, by: string, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
 
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
