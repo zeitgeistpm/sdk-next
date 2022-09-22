@@ -77,6 +77,9 @@ export const batterystationIndexer = (): KnownPreset<IndexerConfig> => {
   }
 }
 
+/**
+ * Known rpc endpoints.
+ */
 export const rpcs = {
   zeitgeist: {
     uri: 'wss://rpc-0.zeitgeist.pm/',
@@ -100,6 +103,9 @@ export const rpcs = {
   },
 }
 
+/**
+ * Known indexer endpoints.
+ */
 export const indexers = {
   zeitgeist: {
     uri: 'https://processor.rpc-0.zeitgeist.pm/graphql',
