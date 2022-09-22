@@ -5102,6 +5102,7 @@ __metadata:
     cids: ^1.1.9
     ipfs-core: ^0.15.4
     polly-js: ^1.8.3
+    rxjs: 7.5.6
     superstruct: ^0.16.0
   peerDependencies:
     "@polkadot/api": "*"
@@ -5122,6 +5123,7 @@ __metadata:
   resolution: "@zeitgeistpm/utility@workspace:packages/utility"
   dependencies:
     bignumber.js: ^9.1.0
+    rxjs: ^7.2.0
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/types": "*"
@@ -14738,7 +14740,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.5.5, rxjs@npm:^7.5.6":
+"rxjs@npm:7.5.6, rxjs@npm:^7.2.0, rxjs@npm:^7.5.5, rxjs@npm:^7.5.6":
   version: 7.5.6
   resolution: "rxjs@npm:7.5.6"
   dependencies:

@@ -22,7 +22,7 @@ export type BaseConfig = {
 
 export type FullConfig = RpcConfig & IndexerConfig
 
-export type RpcConfig<MMT = MarketMetadata, MMId = CID> = BaseConfig & {
+export type RpcConfig = BaseConfig & {
   /**
    * Rpc provider(s), uri or list of uris.
    */
@@ -30,7 +30,7 @@ export type RpcConfig<MMT = MarketMetadata, MMId = CID> = BaseConfig & {
   /**
    * Storage provider for metadata
    */
-  storage: MetadataStorage<MMT, MMId>
+  storage: MetadataStorage<MarketMetadata, CID>
 }
 
 export type IndexerConfig = BaseConfig & {
@@ -43,7 +43,7 @@ export type IndexerConfig = BaseConfig & {
 export const isFullConfig = (config: Config): config is FullConfig =>
   isRpcConfig(config) && isIndexerConfig(config)
 
-export const isRpcConfig = (config: Config): config is RpcConfig => Boolean('provider' in config)
+export const isRpcConfig = (config?: Config): config is RpcConfig => Boolean(config && 'provider' in config)
 
-export const isIndexerConfig = (config: Config): config is IndexerConfig =>
-  Boolean('indexer' in config && typeof config.indexer === 'string')
+export const isIndexerConfig = (config?: Config): config is IndexerConfig =>
+  Boolean(config && 'indexer' in config && typeof config.indexer === 'string')
