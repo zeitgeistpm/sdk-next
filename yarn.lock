@@ -14422,6 +14422,7 @@ __metadata:
     "@vitest/coverage-c8": ^0.23.1
     delay: ^5.0.0
     rimraf: ^3.0.2
+    ts-node: ^10.9.1
     turbo: ^1.4.3
     typedoc: ^0.23.15
     typescript: ^4.8.2
@@ -15381,7 +15382,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.7.0, ts-node@npm:^10.8.1":
+"ts-node@npm:^10.7.0, ts-node@npm:^10.8.1, ts-node@npm:^10.9.1":
   version: 10.9.1
   resolution: "ts-node@npm:10.9.1"
   dependencies:
