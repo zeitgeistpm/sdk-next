@@ -17,7 +17,7 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market = FullMarket | AugmentedRpcMarket
+export type Market<M = MarketMetadata> = FullMarket | AugmentedRpcMarket<M>
 
 /**
  * Concrete Market type for a indexed market.
@@ -27,7 +27,7 @@ export type FullMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type AugmentedRpcMarket = ZeitgeistPrimitivesMarket & {
+export type AugmentedRpcMarket<M = MarketMetadata> = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -35,7 +35,7 @@ export type AugmentedRpcMarket = ZeitgeistPrimitivesMarket & {
   /**
    * Fetch metadata from external storage(default IPFS).
    */
-  fetchMetadata: () => Promise<EitherInterface<Error, MarketMetadata>>
+  fetchMetadata: () => Promise<EitherInterface<Error, M>>
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid and decoding data.
    */
