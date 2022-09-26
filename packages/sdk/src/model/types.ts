@@ -1,8 +1,8 @@
-import type { Markets } from './market/types'
+import type { Markets } from './markets/types'
 import type { Swaps } from './swaps/types'
 import { Context } from '../context'
 
-export * from './market/types'
+export * from './markets/types'
 export * from './swaps/types'
 
 /**

@@ -2,6 +2,7 @@ import type { PoolOrderByInput, PoolsQuery, PoolWhereInput } from '@zeitgeistpm/
 import type { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import { Context, IndexerContext } from '../../../../context'
+import { u128 } from '@polkadot/types'
 
 /**
  * List of Pools.
@@ -31,7 +32,9 @@ export type IndexedPoolList = IndexedPool[]
 /**
  * Concrete Pool type for rpc market list.
  */
-export type RpcPool = [number, ZeitgeistPrimitivesPool]
+export type RpcPool = ZeitgeistPrimitivesPool & {
+  poolId: u128
+}
 /**
  * Concrete PoolList for rpc context
  */

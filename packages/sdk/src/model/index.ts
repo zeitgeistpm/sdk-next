@@ -1,5 +1,5 @@
 import { Context } from '../context'
-import * as Market from './market'
+import * as Market from './markets'
 import * as Swaps from './swaps'
 import { Model } from './types'
 

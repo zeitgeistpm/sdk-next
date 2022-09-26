@@ -1,5 +1,5 @@
 import { IPFS } from '@zeitgeistpm/web3.storage'
-import { MarketMetadata } from '../../model/market/meta/types'
+import { MarketMetadata } from '../../model/markets/meta/types'
 
 /**
  * Default IPFS metadata storage for the zeitgeist ecosystem.

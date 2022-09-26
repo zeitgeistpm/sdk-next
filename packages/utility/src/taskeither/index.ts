@@ -1,12 +1,9 @@
 import { either, EitherInterface, left, right } from '../either'
 import { Task } from '../task'
 
-export type TaskEither<L, R, Args extends ReadonlyArray<unknown>> = Task<
-  EitherInterface<L, R>,
-  Args
->
+export type TaskEither<L, R, Args extends ReadonlyArray<unknown>> = Task<EitherInterface<L, R>, Args>
 
-export const from = <R, Args extends ReadonlyArray<unknown>>(
+export const from = <R, Args extends ReadonlyArray<unknown> = []>(
   fn: (...args: Args) => Promise<R>,
 ): TaskEither<Error, R, Args> => {
   return async (...args) => {

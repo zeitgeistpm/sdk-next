@@ -1,12 +1,9 @@
-import {
-  ZeitgeistPrimitivesMarketMarketPeriod,
-  ZeitgeistPrimitivesMarketMarketType,
-  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
-} from '@polkadot/types/lookup'
 import { Context, isRpcContext, RpcContext } from '../../context'
-import { list } from './functions/list'
 import { create } from './functions/create'
-import { Markets, MarketsListQuery, CreateMarketParams, MarketsRpc, MarketsShared } from './types'
+import { list } from './functions/list'
+import { CreateMarketParams, Markets, MarketsListQuery, MarketsRpc, MarketsShared } from './types'
+
+export * from './types'
 
 /**
  * Create top level enriched zeitgeist Markets model.

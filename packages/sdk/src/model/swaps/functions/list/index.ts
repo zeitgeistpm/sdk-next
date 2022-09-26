@@ -1,20 +1,15 @@
-import {
-  RpcContext,
-  Context,
-  IndexerContext,
-  isFullContext,
-  isIndexerContext,
-} from '../../../../context'
-import { PoolList, PoolsListQuery, RpcPool } from '../../types'
+import { isPaginated } from '../../../../types/query'
+import { RpcContext, Context, IndexerContext, isFullContext, isIndexerContext } from '../../../../context'
+import { PoolList, PoolsListQuery, RpcPool, RpcPoolList } from '../../types'
 
 /**
- * Query for a list of markets.
+ * Query for a list of pools.
  * Query capabilities and returned data differentiates between a rpc and indexer context.
  *
  * @generic C - Context
- * @param context C - the context to query inb
+ * @param context C - the context to query in
  * @param query ListQuery<C>
- * @returns Promise<MarketList<C>>
+ * @returns Promise<PoolList<C>>
  */
 export const listPools = async <C extends Context>(
   context: C,
@@ -45,25 +40,28 @@ const indexerList = async (
  */
 const rpcList = async <C extends RpcContext>(
   { api }: RpcContext,
-  query: PoolsListQuery<RpcContext>,
+  query?: PoolsListQuery<RpcContext>,
 ): Promise<PoolList<C>> => {
-  const entries = await api.query.swaps.pools.entries()
+  const entries = isPaginated(query)
+    ? await api.query.swaps.pools.entriesPaged({
+        args: [],
+        pageSize: query.limit,
+        startKey: `${query.offset}`,
+      })
+    : await api.query.swaps.pools.entries()
 
-  const list = entries.map(
+  const list: RpcPoolList = entries.map(
     ([
       {
-        args: [index],
+        args: [poolId],
       },
       pool,
     ]) => {
-      const poolId = Number(index.toHuman())
-      const rpcPool: RpcPool = [poolId, pool.unwrap()]
+      const rpcPool = pool.unwrap() as RpcPool
+      rpcPool.poolId = poolId
       return rpcPool
     },
   )
 
-  const offset = query.offset ?? 0
-  const limit = offset + (query.limit ?? list.length)
-
-  return list.slice(offset, limit) as any
+  return list as PoolList<C>
 }
