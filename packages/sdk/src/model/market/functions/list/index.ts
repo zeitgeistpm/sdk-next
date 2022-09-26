@@ -1,6 +1,7 @@
 import CID from 'cids'
+import { isPaginated } from 'types/query'
 import { RpcContext, Context, IndexerContext, isFullContext, isIndexerContext } from '../../../../context'
-import { MarketList, MarketsListQuery, RpcMarket } from '../../types'
+import { MarketList, MarketsListQuery, RpcMarket, RpcMarketList } from '../../types'
 
 /**
  * Query for a list of markets.
@@ -42,9 +43,15 @@ const rpcList = async <C extends RpcContext>(
   { api, storage }: C,
   query?: MarketsListQuery<C>,
 ): Promise<MarketList<C>> => {
-  const entries = await api.query.marketCommons.markets.entries()
+  const entries = isPaginated(query)
+    ? await api.query.marketCommons.markets.entriesPaged({
+        args: [],
+        pageSize: query.limit,
+        startKey: `${query.offset}`,
+      })
+    : await api.query.marketCommons.markets.entries()
 
-  const list = entries.map(
+  const list: RpcMarketList = entries.map(
     ([
       {
         args: [marketId],
@@ -61,8 +68,5 @@ const rpcList = async <C extends RpcContext>(
     },
   )
 
-  const offset = query?.offset ?? 0
-  const limit = offset + (query?.limit ?? list.length)
-
-  return list.slice(offset, limit) as MarketList<C>
+  return list as MarketList<C>
 }

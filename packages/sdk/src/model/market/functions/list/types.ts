@@ -1,8 +1,7 @@
-import type { MarketOrderByInput, MarketsQuery, MarketWhereInput } from '@zeitgeistpm/indexer/dist'
-import type { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
-import type { Unpacked } from '@zeitgeistpm/utility/dist/array'
-import { Context, IndexerContext, RpcContext } from '../../../../context'
-import { u128 } from '@polkadot/types'
+import type { MarketOrderByInput, MarketWhereInput } from '@zeitgeistpm/indexer'
+import type { Unpartial } from '@zeitgeistpm/utility/dist/object'
+import { Context, IndexerContext } from '../../../../context'
+import { PaginationQuery } from '../../../../types/query'
 import { IndexedMarket, RpcMarket } from '../types'
 
 /**
@@ -11,7 +10,7 @@ import { IndexedMarket, RpcMarket } from '../types'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type MarketList<C extends Context> = C extends IndexerContext ? IndexedMarketList : RpcMarket[]
+export type MarketList<C extends Context> = C extends IndexerContext ? IndexedMarketList : RpcMarketList
 
 /**
  * Markets list Query type
@@ -29,19 +28,19 @@ export type MarketsListQuery<C extends Context> = C extends IndexerContext
 export type IndexedMarketList = IndexedMarket[]
 
 /**
+ * Concrete MarketList for rpc context
+ */
+export type RpcMarketList = RpcMarket[]
+
+/**
  * Concrete markets Query for rpc context
  */
-export type MarketsRpcQuery = {
-  offset?: number
-  limit?: number
-}
+export type MarketsRpcQuery = Unpartial<PaginationQuery>
 
 /**
  * Concrete markets Query for indexed context
  */
-export type MarketsIndexerQuery = {
+export type MarketsIndexerQuery = Unpartial<PaginationQuery> & {
   where?: MarketWhereInput
   order?: MarketOrderByInput
-  offset?: number
-  limit?: number
 }
