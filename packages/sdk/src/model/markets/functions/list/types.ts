@@ -2,7 +2,7 @@ import type { MarketOrderByInput, MarketWhereInput } from '@zeitgeistpm/indexer'
 import type { Unpartial } from '@zeitgeistpm/utility/dist/object'
 import { Context, IndexerContext } from '../../../../context'
 import { PaginationQuery } from '../../../../types/query'
-import { FullMarket, RpcMarket } from '../../types'
+import { FullMarket, AugmentedRpcMarket } from '../../types'
 
 /**
  * List of Markets.
@@ -10,7 +10,7 @@ import { FullMarket, RpcMarket } from '../../types'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type MarketList<C extends Context> = C extends IndexerContext ? FullMarketList : RpcMarketList
+export type MarketList<C extends Context> = C extends IndexerContext ? FullMarketList : AugmentedRpcMarketList
 
 /**
  * Markets list Query type
@@ -30,7 +30,7 @@ export type FullMarketList = { items: FullMarket[] }
 /**
  * Concrete MarketList for rpc context
  */
-export type RpcMarketList = { items: RpcMarket[] }
+export type AugmentedRpcMarketList = { items: AugmentedRpcMarket[] }
 
 /**
  * Concrete markets Query for rpc context

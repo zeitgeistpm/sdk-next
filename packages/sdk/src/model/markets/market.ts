@@ -17,7 +17,7 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market = FullMarket | RpcMarket
+export type Market = FullMarket | AugmentedRpcMarket
 
 /**
  * Concrete Market type for a indexed market.
@@ -27,7 +27,7 @@ export type FullMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type RpcMarket = ZeitgeistPrimitivesMarket & {
+export type AugmentedRpcMarket = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -35,28 +35,79 @@ export type RpcMarket = ZeitgeistPrimitivesMarket & {
   /**
    * Fetch metadata from external storage(default IPFS).
    */
-  external: () => Promise<EitherInterface<Error, MarketMetadata>>
+  fetchMetadata: () => Promise<EitherInterface<Error, MarketMetadata>>
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid and decoding data.
    */
-  conformed: () => Promise<EitherInterface<Error, FullMarket>>
+  expand: () => Promise<EitherInterface<Error, FullMarket>>
 }
 
 /**
  * Typeguard for rpc markets.
  *
  * @param market unknown
- * @returns market is RpcMarket
+ * @returns market is AugmentedRpcMarket
  */
-export const isRpcMarket = (market: unknown): market is RpcMarket =>
+export const isAugmentedRpcMarket = (market: unknown): market is AugmentedRpcMarket =>
   typeof market === 'object' && market !== null && isCodec(market) && 'marketId' in market
 
 /**
- * Create a RpcMarket from a on chain storage entry.
+ * Augment a market primitive with id and data expanding utility functions.
+ *
+ * @param context RpcContext
+ * @param id u128
+ * @param market ZeitgeistPrimitivesMarket
+ * @returns AugmentedAugmentedRpcMarket
+ */
+export const augment = (
+  context: RpcContext,
+  id: u128,
+  market: ZeitgeistPrimitivesMarket,
+): AugmentedRpcMarket => {
+  let augmented = market as AugmentedRpcMarket
+
+  augmented.marketId = id.toNumber()
+
+  augmented.fetchMetadata = async () => {
+    const hex = augmented.metadata.toHex()
+    return context.storage.get(new CID('f0155' + hex.slice(2)) as any)
+  }
+
+  augmented.expand = Te.from<FullMarket>(async () => {
+    const [metadata, poolId, end] = await Promise.all([
+      augmented.fetchMetadata().then(m => m.unrightOr(throws)),
+      context.api.query.marketCommons.marketPool(id),
+      projectEndTimestamp(context.api, augmented),
+    ])
+
+    return {
+      marketId: Number(id.toHuman()),
+      creation: market.creation.type,
+      creator: market.creator.toHuman(),
+      oracle: market.oracle.toHuman(),
+      end: end,
+      creatorFee: market.creatorFee.toNumber(),
+      poolId: poolId.isSome ? poolId.unwrap().toNumber() : undefined,
+      scoringRule: market.scoringRule.type,
+      status: market.status.toHuman() as FullMarket['status'],
+      period: market.period.toHuman() as FullMarket['period'],
+      marketType: market.marketType.toHuman() as FullMarket['marketType'],
+      disputeMechanism: market.disputeMechanism.toHuman() as FullMarket['disputeMechanism'],
+      report: market.report.toHuman() as FullMarket['report'],
+      resolvedOutcome: market.resolvedOutcome.toHuman() as FullMarket['resolvedOutcome'],
+      ...metadata,
+    }
+  })
+
+  return augmented
+}
+
+/**
+ * Create a AugmentedRpcMarket from a on chain storage entry.
  *
  * @param context RpcContext
  * @param entry [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>]
- * @returns RpcMarket
+ * @returns AugmentedAugmentedRpcMarketRpcMarket
  */
 export const fromEntry = (
   context: RpcContext,
@@ -66,43 +117,8 @@ export const fromEntry = (
     },
     market,
   ]: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>],
-): RpcMarket => {
-  const rpcMarket = market.unwrap() as RpcMarket
-
-  rpcMarket.marketId = marketId.toNumber()
-
-  rpcMarket.external = async () => {
-    const hex = rpcMarket.metadata.toHex()
-    return context.storage.get(new CID('f0155' + hex.slice(2)) as any)
-  }
-
-  rpcMarket.conformed = Te.from<FullMarket>(async () => {
-    const [metadata, poolId, end] = await Promise.all([
-      rpcMarket.external().then(m => m.unrightOr(throws)),
-      context.api.query.marketCommons.marketPool(marketId),
-      projectEndTimestamp(context.api, rpcMarket),
-    ])
-
-    return {
-      marketId: Number(marketId.toHuman()),
-      creation: rpcMarket.creation.type,
-      creator: rpcMarket.creator.toHuman(),
-      oracle: rpcMarket.oracle.toHuman(),
-      end: end,
-      creatorFee: rpcMarket.creatorFee.toNumber(),
-      poolId: poolId.isSome ? poolId.unwrap().toNumber() : undefined,
-      scoringRule: rpcMarket.scoringRule.type,
-      status: rpcMarket.status.toHuman() as FullMarket['status'],
-      period: rpcMarket.period.toHuman() as FullMarket['period'],
-      marketType: rpcMarket.marketType.toHuman() as FullMarket['marketType'],
-      disputeMechanism: rpcMarket.disputeMechanism.toHuman() as FullMarket['disputeMechanism'],
-      report: rpcMarket.report.toHuman() as FullMarket['report'],
-      resolvedOutcome: rpcMarket.resolvedOutcome.toHuman() as FullMarket['resolvedOutcome'],
-      ...metadata,
-    }
-  })
-
-  return rpcMarket
+): AugmentedRpcMarket => {
+  return augment(context, marketId, market.unwrap())
 }
 
 /**
@@ -112,10 +128,10 @@ export const fromEntry = (
  * it will project a approximate end timestamp based on the on chain current block and block time.
  *
  * @param context RpcContext
- * @param market RpcMarket
+ * @param market AugmentedRpcMarket
  * @returns Promise<number>
  */
-export const projectEndTimestamp = async (api: ApiPromise, market: RpcMarket): Promise<number> => {
+export const projectEndTimestamp = async (api: ApiPromise, market: AugmentedRpcMarket): Promise<number> => {
   if (market.period.isTimestamp) {
     return Number(market.period.asTimestamp[1].toHuman())
   } else {

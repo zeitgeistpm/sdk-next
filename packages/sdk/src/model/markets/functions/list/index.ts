@@ -1,7 +1,7 @@
 import { Context, IndexerContext, isFullContext, isIndexerContext, RpcContext } from '../../../../context'
 import { isPaginated } from '../../../../types/query'
 import { fromEntry } from '../../market'
-import { MarketList, MarketsListQuery, RpcMarketList } from '../../types'
+import { MarketList, MarketsListQuery, AugmentedRpcMarketList } from '../../types'
 
 /**
  * Query for a list of markets.
@@ -53,7 +53,7 @@ const rpcList = async <C extends RpcContext>(
       })
     : await context.api.query.marketCommons.markets.entries()
 
-  const list: RpcMarketList = {
+  const list: AugmentedRpcMarketList = {
     items: entries.map(m => fromEntry(context, m)),
   }
 

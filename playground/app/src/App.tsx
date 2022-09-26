@@ -1,17 +1,8 @@
 import { web3Enable } from '@polkadot/extension-dapp'
-import {
-  batterystation,
-  batterystationRpc,
-  builder,
-  Context,
-  create,
-  isIndexedSdk,
-  isRpcSdk,
-  Sdk,
-} from '@zeitgeistpm/sdk'
+import { batterystation, builder, Context, isIndexedSdk, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { useEffect, useState } from 'react'
-import { FullMarket, isRpcMarket, Market, RpcMarket } from '@zeitgeistpm/sdk/dist/model/types'
+import { FullMarket, isAugmentedRpcMarket, Market, AugmentedRpcMarket } from '@zeitgeistpm/sdk/dist/model/types'
 
 const App: React.FC = () => {
   const [sdk, setSdk] = useState<Partial<Sdk<Context>>>()
@@ -44,13 +35,13 @@ const App: React.FC = () => {
   )
 }
 
-const MarketComponent = (props: { market: RpcMarket | FullMarket }) => {
+const MarketComponent = (props: { market: AugmentedRpcMarket | FullMarket }) => {
   const [market, setMarket] = useState(props.market)
 
   useEffect(() => {
-    if (isRpcMarket(props.market)) {
+    if (isAugmentedRpcMarket(props.market)) {
       props.market
-        .conformed()
+        .expand()
         .then(market => {
           setMarket(market.unrightOr(throws))
         })
@@ -62,12 +53,16 @@ const MarketComponent = (props: { market: RpcMarket | FullMarket }) => {
 
   return (
     <div style={{ padding: 8, gridColumnStart: 1, gridColumnEnd: 3 }}>
-      {isRpcMarket(market) ? <RpcMarketComponent market={market} /> : <FullMarketComponent market={market} />}
+      {isAugmentedRpcMarket(market) ? (
+        <AugmentedRpcMarketComponent market={market} />
+      ) : (
+        <FullMarketComponent market={market} />
+      )}
     </div>
   )
 }
 
-const RpcMarketComponent = (props: { market: RpcMarket }) => {
+const AugmentedRpcMarketComponent = (props: { market: AugmentedRpcMarket }) => {
   return <div>{props.market.marketId}: ...</div>
 }
 
