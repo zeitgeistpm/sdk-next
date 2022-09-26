@@ -1,5 +1,5 @@
 import { isNumber } from '@polkadot/util'
-import { RpcContext } from 'context'
+import { RpcContext } from '../../context'
 
 /**
  * Union type of timespan dealing with blocknumbers or dates.
