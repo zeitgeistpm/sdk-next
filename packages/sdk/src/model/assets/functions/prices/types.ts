@@ -1,5 +1,6 @@
+import { Timespan } from '../../../time'
+
 export type PricesQuery = {
   pool: number
-  start: number
-  end: number
+  period: Timespan
 }
