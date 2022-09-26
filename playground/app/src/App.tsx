@@ -35,7 +35,7 @@ const App: React.FC = () => {
   )
 }
 
-const MarketComponent = (props: { market: AugmentedRpcMarket | FullMarket }) => {
+const MarketComponent = (props: { market: Market }) => {
   const [market, setMarket] = useState(props.market)
 
   useEffect(() => {
