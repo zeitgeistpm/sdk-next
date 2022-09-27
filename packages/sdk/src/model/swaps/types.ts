@@ -4,16 +4,15 @@ import { PoolsListQuery, PoolList } from './functions/list/types'
 export * from './functions/types'
 
 /**
- * Zeitgeist Markets model.
- * Query and create markets.
+ * Zeitgeist Swaps model..
  */
 export type Swaps<C extends Context> = SwapsShared<C> & SwapsRpc<C>
 
 export type SwapsShared<C extends Context> = {
   /**
-   * List markets. Stronger quering is enabled when connecting to indexer.
+   * List Liquidity Pools. Stronger quering is enabled when connecting to indexer.
    */
-  listPools: (query: PoolsListQuery<C>) => Promise<PoolList<C>>
+  pools: (query: PoolsListQuery<C>) => Promise<PoolList<C>>
 }
 
 export type SwapsRpc<C extends Context> = C extends RpcContext ? {} : {}

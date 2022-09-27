@@ -11,14 +11,11 @@ import { PoolList, PoolsListQuery, RpcPool, RpcPoolList } from '../../types'
  * @param query ListQuery<C>
  * @returns Promise<PoolList<C>>
  */
-export const listPools = async <C extends Context>(
-  context: C,
-  query: PoolsListQuery<C>,
-): Promise<PoolList<C>> => {
+export const pools = async <C extends Context>(context: C, query: PoolsListQuery<C>): Promise<PoolList<C>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
-      ? await indexerList(context, query)
-      : await rpcList(context, query)
+      ? await indexer(context, query)
+      : await rpc(context, query)
 
   return data as PoolList<C>
 }
@@ -27,7 +24,7 @@ export const listPools = async <C extends Context>(
  * Concrete listing function for indexer context
  * @private
  */
-const indexerList = async (
+const indexer = async (
   context: IndexerContext,
   query: PoolsListQuery<IndexerContext>,
 ): Promise<PoolList<IndexerContext>> => {
@@ -38,7 +35,7 @@ const indexerList = async (
  * Concrete listing function for rpc context
  * @private
  */
-const rpcList = async <C extends RpcContext>(
+const rpc = async <C extends RpcContext>(
   { api }: RpcContext,
   query?: PoolsListQuery<RpcContext>,
 ): Promise<PoolList<C>> => {

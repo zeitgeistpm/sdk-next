@@ -1,5 +1,5 @@
 import { Context, isRpcContext, RpcContext } from '../../context'
-import { listPools } from './functions/list'
+import { pools } from './functions/list'
 import { Swaps, PoolsListQuery, SwapsRpc, SwapsShared } from './types'
 
 /**
@@ -11,7 +11,7 @@ import { Swaps, PoolsListQuery, SwapsRpc, SwapsShared } from './types'
  */
 export const swaps = <C extends Context>(context: C): Swaps<C> => {
   let base: SwapsShared<C> = {
-    listPools: (query: PoolsListQuery<C>) => listPools(context, query),
+    pools: (query: PoolsListQuery<C>) => pools(context, query),
   }
 
   const rpc: SwapsRpc<RpcContext> | null = isRpcContext(context) ? {} : null

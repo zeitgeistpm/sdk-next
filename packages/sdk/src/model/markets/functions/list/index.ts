@@ -18,8 +18,8 @@ export const list = async <C extends Context>(
 ): Promise<MarketList<C>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
-      ? await indexerList(context, query)
-      : await rpcList(context, query)
+      ? await indexer(context, query)
+      : await rpc(context, query)
 
   return data as MarketList<C>
 }
@@ -28,7 +28,7 @@ export const list = async <C extends Context>(
  * Concrete listing function for indexer context
  * @private
  */
-const indexerList = async (
+const indexer = async (
   context: IndexerContext,
   query?: MarketsListQuery<IndexerContext>,
 ): Promise<MarketList<IndexerContext>> => {
@@ -41,10 +41,7 @@ const indexerList = async (
  * Concrete listing function for rpc context
  * @private
  */
-const rpcList = async <C extends RpcContext>(
-  context: C,
-  query?: MarketsListQuery<C>,
-): Promise<MarketList<C>> => {
+const rpc = async <C extends RpcContext>(context: C, query?: MarketsListQuery<C>): Promise<MarketList<C>> => {
   const entries = isPaginated(query)
     ? await context.api.query.marketCommons.markets.entriesPaged({
         args: [],
