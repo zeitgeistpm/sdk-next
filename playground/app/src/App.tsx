@@ -25,7 +25,7 @@ const App: React.FC = () => {
     if (isRpcSdk(sdk)) {
       rpcPrices(sdk, {
         pool: 22,
-        period: {
+        timespan: {
           start: new Date(Date.now() - 1 * 60 * 60 * 1000),
           end: new Date(Date.now() - 12 * 2 * 1000),
         },
