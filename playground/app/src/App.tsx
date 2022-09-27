@@ -30,8 +30,11 @@ const App: React.FC = () => {
           end: new Date(Date.now() - 12 * 2 * 1000),
         },
       }).then(prices => {
-        console.log(prices[0][1].toArray().map((n: any) => n.toNumber() / 10 ** 10))
-        console.log(prices[1][1].toArray().map((n: any) => n.toNumber() / 10 ** 10))
+        prices.forEach(([asset, prices]) => {
+          prices.forEach(([block, price]) => {
+            console.log(asset, block, price.toNumber() / 10 ** 10)
+          })
+        })
       })
     }
   }, [sdk])
