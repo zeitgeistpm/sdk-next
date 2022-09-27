@@ -1,1 +1,1 @@
-export { default as extra } from './extra/definitions'
+export { default as swaps } from './swaps/definitions'

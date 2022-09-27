@@ -5,9 +5,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "paths": {
-      "@zeitgeistpm/types/*": [
-        "./src/*"
-      ]
+      "@zeitgeistpm/augment-api/*": ["src/*"],
     },
     "outDir": "dist"
   },

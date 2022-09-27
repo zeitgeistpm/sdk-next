@@ -1,5 +1,6 @@
 import { web3Enable } from '@polkadot/extension-dapp'
-import { batterystation, builder, Context, isIndexedSdk, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
+import { batterystation, mainnet, builder, Context, isIndexedSdk, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
+import { rpcPrices } from '@zeitgeistpm/sdk/dist/model/assets/functions/prices'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { useEffect, useState } from 'react'
 import { FullMarket, isAugmentedRpcMarket, Market, AugmentedRpcMarket } from '@zeitgeistpm/sdk/dist/model/types'
@@ -15,10 +16,25 @@ const App: React.FC = () => {
 
   useEffect(() => {
     web3Enable('sdkv2')
-    builder(batterystation()).subscribe(sdk => {
+    builder(mainnet()).subscribe(sdk => {
       setSdk(sdk)
     })
   }, [])
+
+  useEffect(() => {
+    if (isRpcSdk(sdk)) {
+      rpcPrices(sdk, {
+        pool: 22,
+        period: {
+          start: new Date(Date.now() - 1 * 60 * 60 * 1000),
+          end: new Date(Date.now() - 12 * 2 * 1000),
+        },
+      }).then(prices => {
+        console.log(prices[0][1].toArray().map((n: any) => n.toNumber() / 10 ** 10))
+        console.log(prices[1][1].toArray().map((n: any) => n.toNumber() / 10 ** 10))
+      })
+    }
+  }, [sdk])
 
   useEffect(() => {
     if (isRpcSdk(sdk) || isIndexedSdk(sdk)) {

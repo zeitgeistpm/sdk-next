@@ -40,8 +40,8 @@ export type DateTimespan = {
  * @param timespan Timespan
  * @returns timespan is BlockTimespan
  */
-export const isBlockTimespan = (timespan: Timespan): timespan is BlockTimespan =>
-  timespan.start instanceof Date && timespan.end instanceof Date
+export const isBlocks = (timespan: Timespan): timespan is BlockTimespan =>
+  isNumber(timespan.start) && isNumber(timespan.end)
 
 /**
  * Typeguard for DateTimespan
@@ -49,8 +49,8 @@ export const isBlockTimespan = (timespan: Timespan): timespan is BlockTimespan =
  * @param timespan Timespan
  * @returns timespan is DateTimespan
  */
-export const isDateTimespan = (timespan: Timespan): timespan is DateTimespan =>
-  isNumber(timespan.start) && isNumber(timespan.end)
+export const isDates = (timespan: Timespan): timespan is DateTimespan =>
+  timespan.start instanceof Date && timespan.end instanceof Date
 
 /**
  * Convert DateTimespan to BlockTimespan
@@ -69,8 +69,18 @@ export async function from(ctx: RpcContext, timespan: DateTimespan): Promise<Blo
  */
 export async function from(ctx: RpcContext, timespan: BlockTimespan): Promise<DateTimespan>
 export async function from(ctx: RpcContext, timespan: Timespan) {
-  return isDateTimespan(timespan) ? datesToBlocks(ctx, timespan) : blocksToDates(ctx, timespan)
+  return isDates(timespan) ? datesToBlocks(ctx, timespan) : blocksToDates(ctx, timespan)
 }
+
+/**
+ * Convert timespan to blocks.
+ *
+ * @param ctx RpcContext
+ * @param timespan Timespan
+ * @returns Promise<BlockTimespan>
+ */
+export const asBlocks = async (ctx: RpcContext, timespan: Timespan): Promise<BlockTimespan> =>
+  isDates(timespan) ? from(ctx, timespan) : timespan
 
 /**
  * Convert a timespan of dates to block range.

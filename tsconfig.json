@@ -21,6 +21,7 @@
       "@zeitgeistpm/indexer": [ "./packages/indexer/src" ],
       "@zeitgeistpm/web3.storage": [ "./packages/web3.storage/src" ],
       "@zeitgeistpm/augment-api": [ "./packages/augment-api/src" ],
+      "@zeitgeistpm/augment-api/*": [ "./packages/augment-api/src/*" ],
       "@zeitgeistpm/utility": [ "./packages/utility/src" ],
     },
     "skipLibCheck": true,
