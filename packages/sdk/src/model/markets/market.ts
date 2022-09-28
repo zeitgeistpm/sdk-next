@@ -1,14 +1,13 @@
 import { ApiPromise } from '@polkadot/api'
 import { Option, StorageKey, u128 } from '@polkadot/types'
 import { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
-import { isCodec } from '@polkadot/util'
+import { isCodec, isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
-import { delay } from '@zeitgeistpm/utility/dist/async/delay'
 import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { RpcContext } from '../../context'
+import { Context, IndexerContext, RpcContext } from '../../context'
 import { MarketMetadata } from './meta/types'
 
 export * from './functions/create/types'
@@ -17,7 +16,9 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<M = MarketMetadata> = FullMarket | AugmentedRpcMarket<M>
+export type Market<C extends Context, M = MarketMetadata> = C extends IndexerContext
+  ? FullMarket
+  : AugmentedRpcMarket<M>
 
 /**
  * Concrete Market type for a indexed market.
@@ -59,14 +60,14 @@ export const isAugmentedRpcMarket = (market: unknown): market is AugmentedRpcMar
  * @param market ZeitgeistPrimitivesMarket
  * @returns AugmentedAugmentedRpcMarket
  */
-export const augment = (
-  context: RpcContext,
-  id: u128,
+export const augment = <M = MarketMetadata>(
+  context: RpcContext<M>,
+  id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
-): AugmentedRpcMarket => {
-  let augmented = market as AugmentedRpcMarket
+): AugmentedRpcMarket<M> => {
+  let augmented = market as AugmentedRpcMarket<M>
 
-  augmented.marketId = id.toNumber()
+  augmented.marketId = isNumber(id) ? id : id.toNumber()
 
   augmented.fetchMetadata = async () => {
     const hex = augmented.metadata.toHex()
@@ -81,7 +82,7 @@ export const augment = (
     ])
 
     return {
-      marketId: Number(id.toHuman()),
+      marketId: isNumber(id) ? id : id.toNumber(),
       creation: market.creation.type,
       creator: market.creator.toHuman(),
       oracle: market.oracle.toHuman(),
@@ -131,7 +132,10 @@ export const fromEntry = (
  * @param market AugmentedRpcMarket
  * @returns Promise<number>
  */
-export const projectEndTimestamp = async (api: ApiPromise, market: AugmentedRpcMarket): Promise<number> => {
+export const projectEndTimestamp = async <M = MarketMetadata>(
+  api: ApiPromise,
+  market: AugmentedRpcMarket<M>,
+): Promise<number> => {
   if (market.period.isTimestamp) {
     return Number(market.period.asTimestamp[1].toHuman())
   } else {

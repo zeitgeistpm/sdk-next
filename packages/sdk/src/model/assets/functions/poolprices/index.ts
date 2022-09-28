@@ -6,14 +6,16 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
-import { asBlocks, isBlocks } from '../../../time'
+import { asBlock, asBlocks, BlockNumber, isBlocks, now } from '../../../time'
 import type {
   IndexedPoolPrices,
   PoolPrices,
   PoolPricesQuery,
+  PoolPricesStreamQuery,
   RpcPoolPrice,
   RpcPoolPrices,
 } from './types'
+import { Observable, of } from 'rxjs'
 
 export const poolPrices = async <C extends Context>(
   context: C,
@@ -29,7 +31,7 @@ export const poolPrices = async <C extends Context>(
 const rpc = async (ctx: RpcContext, query: PoolPricesQuery<RpcContext>): Promise<RpcPoolPrices> => {
   const [pool, { start, end }] = await Promise.all([
     ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()),
-    asBlocks(ctx, query.timespan),
+    asBlocks(await now(ctx), query.timespan),
   ])
 
   const ztg = { Ztg: null }
@@ -40,7 +42,7 @@ const rpc = async (ctx: RpcContext, query: PoolPricesQuery<RpcContext>): Promise
   const prices = await Promise.all(
     assets.map(async asset => {
       const prices = await ctx.api.rpc.swaps.getSpotPrices(query.pool, ztg, asset, blocks)
-      return [asset, zip(blocks, prices.toArray())] as RpcPoolPrice
+      return zip(blocks, prices.toArray()) as RpcPoolPrice
     }),
   )
 
@@ -75,4 +77,60 @@ const indexer = async (
   })
 
   return historicalAssets
+}
+
+export const poolPrices$ = <C extends Context>(
+  context: C,
+  query: PoolPricesStreamQuery,
+): Observable<PoolPrices<C>> => {
+  const data =
+    isFullContext(context) || isIndexerContext(context)
+      ? indexedPoolPrices$(context, query)
+      : rpcPoolPrices$(context, query)
+  return data
+}
+
+export const indexedPoolPrices$ = (
+  ctx: IndexerContext,
+  query: { pool: number; tail: BlockNumber | Date },
+) => {
+  return new Observable<any>(sub => {})
+}
+
+export const rpcPoolPrices$ = (
+  ctx: RpcContext,
+  query: { pool: number; tail: BlockNumber | Date },
+): Observable<RpcPoolPrices> => {
+  return new Observable(sub => {
+    const ztg = { Ztg: null }
+
+    Promise.all([ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()), now(ctx)])
+      .then(async ([pool, now]) => ({ pool, now }))
+      .then(async ({ pool, now }) => {
+        const head = await rpc(ctx, {
+          pool: query.pool,
+          timespan: {
+            start: asBlock(now, query.tail),
+            end: now.block,
+          },
+        })
+
+        const assets = pool.assets.toArray().slice(0, -1)
+        const prices$ = of(head)
+
+        setInterval(async () => {
+          const head = await ctx.api.rpc.chain.getHeader()
+          const blocks = [head.number.toNumber()]
+          const prices: RpcPoolPrices = await Promise.all(
+            assets.map(async asset => {
+              const prices = await ctx.api.rpc.swaps.getSpotPrices(query.pool, ztg, asset, blocks)
+              return zip(blocks, prices.toArray()) as RpcPoolPrice
+            }),
+          )
+          sub.next(prices)
+        }, now.period)
+
+        prices$.subscribe(v => sub.next(v))
+      })
+  })
 }

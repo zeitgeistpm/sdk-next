@@ -1,6 +1,6 @@
 import { isNumber } from '@polkadot/util'
-import { RpcContext } from '../../context'
-import { blockDate, dateBlock, time } from './time'
+import { BlockNumber } from './block'
+import { blockDate, ChainTime, dateBlock } from './time'
 
 /**
  * Union type of timespan dealing with blocknumbers or dates.
@@ -14,11 +14,11 @@ export type BlockTimespan = {
   /**
    * The start block.
    */
-  start: number
+  start: BlockNumber
   /**
    * The end block.
    */
-  end: number
+  end: BlockNumber
 }
 
 /**
@@ -60,7 +60,7 @@ export const isDates = (timespan: Timespan): timespan is DateTimespan =>
  * @param timespan DateTimespan
  * @return Promise<BlockTimespan>
  */
-export async function from(ctx: RpcContext, timespan: DateTimespan): Promise<BlockTimespan>
+export function from(now: ChainTime, timespan: DateTimespan): BlockTimespan
 /**
  * Convert BlockTimespan to DateTimespan
  *
@@ -68,9 +68,9 @@ export async function from(ctx: RpcContext, timespan: DateTimespan): Promise<Blo
  * @param timespan BlockTimespan
  * @return Promise<DateTimespan>
  */
-export async function from(ctx: RpcContext, timespan: BlockTimespan): Promise<DateTimespan>
-export async function from(ctx: RpcContext, timespan: Timespan) {
-  return isDates(timespan) ? datesToBlocks(ctx, timespan) : blocksToDates(ctx, timespan)
+export function from(now: ChainTime, timespan: BlockTimespan): DateTimespan
+export function from(now: ChainTime, timespan: Timespan) {
+  return isDates(timespan) ? datesToBlocks(now, timespan) : blocksToDates(now, timespan)
 }
 
 /**
@@ -80,8 +80,8 @@ export async function from(ctx: RpcContext, timespan: Timespan) {
  * @param timespan Timespan
  * @returns Promise<BlockTimespan>
  */
-export const asBlocks = async (ctx: RpcContext, timespan: Timespan): Promise<BlockTimespan> =>
-  isDates(timespan) ? from(ctx, timespan) : timespan
+export const asBlocks = (now: ChainTime, timespan: Timespan): BlockTimespan =>
+  isDates(timespan) ? from(now, timespan) : timespan
 
 /**
  * Convert a timespan of dates to block range.
@@ -92,11 +92,10 @@ export const asBlocks = async (ctx: RpcContext, timespan: Timespan): Promise<Blo
  * @param dates DateTimespan
  * @returns Promise<BlockTimespan>
  */
-export const datesToBlocks = async (ctx: RpcContext, dates: DateTimespan): Promise<BlockTimespan> => {
-  const chaintime = await time(ctx)
+export const datesToBlocks = (now: ChainTime, dates: DateTimespan): BlockTimespan => {
   return {
-    start: dateBlock(chaintime, dates.start),
-    end: dateBlock(chaintime, dates.end),
+    start: dateBlock(now, dates.start),
+    end: dateBlock(now, dates.end),
   }
 }
 
@@ -109,10 +108,9 @@ export const datesToBlocks = async (ctx: RpcContext, dates: DateTimespan): Promi
  * @param dates DateTimespan
  * @returns Promise<BlockTimespan>
  */
-export const blocksToDates = async (ctx: RpcContext, dates: BlockTimespan): Promise<DateTimespan> => {
-  const chaintime = await time(ctx)
+export const blocksToDates = (now: ChainTime, dates: BlockTimespan): DateTimespan => {
   return {
-    start: blockDate(chaintime, dates.start),
-    end: blockDate(chaintime, dates.end),
+    start: blockDate(now, dates.start),
+    end: blockDate(now, dates.end),
   }
 }

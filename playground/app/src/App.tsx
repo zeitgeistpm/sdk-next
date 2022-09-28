@@ -1,14 +1,5 @@
 import { web3Enable } from '@polkadot/extension-dapp'
-import {
-  batterystation,
-  mainnet,
-  builder,
-  Context,
-  isIndexedSdk,
-  isRpcSdk,
-  Sdk,
-} from '@zeitgeistpm/sdk'
-import { blockDate, dateBlock, time } from '@zeitgeistpm/sdk/dist/model/time'
+import { Context, isIndexedSdk, isRpcSdk, Sdk, mainnetRpc, create } from '@zeitgeistpm/sdk'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { useEffect, useState } from 'react'
 import {
@@ -17,10 +8,12 @@ import {
   Market,
   AugmentedRpcMarket,
 } from '@zeitgeistpm/sdk/dist/model/types'
+import { MarketList } from './components/MarketList'
+import { MarketComponent } from './components/Market'
 
 const App: React.FC = () => {
   const [sdk, setSdk] = useState<Partial<Sdk<Context>>>()
-  const [markets, setMarkets] = useState<Market[]>([])
+  const [markets, setMarkets] = useState<Market<Context>[]>([])
 
   const load = async (sdk: Sdk<Context>) => {
     const { items } = await sdk.model.markets.list()
@@ -29,19 +22,26 @@ const App: React.FC = () => {
 
   useEffect(() => {
     web3Enable('sdkv2')
-    builder(mainnet()).subscribe(sdk => {
-      setSdk(sdk)
-    })
+    create(mainnetRpc()).then(setSdk)
+    // builder(mainnetRpc()).subscribe(sdk => {
+    //   setSdk(sdk)
+    // })
   }, [])
 
   useEffect(() => {
     if (isRpcSdk(sdk)) {
-      ;(async () => {
-        const head = await sdk.api.rpc.chain.getHeader()
-        const t = await time(sdk)
-        console.log(blockDate(t, head.number.toNumber()))
-        console.log(dateBlock(t, new Date()))
-      })()
+      sdk.model.assets.poolPrices
+        .$({
+          pool: 22,
+          tail: new Date(Date.now() - 12 * 1000 * 10),
+        })
+        .subscribe(assetPrices => {
+          assetPrices.forEach(prices => {
+            prices.forEach(([block, price]) => {
+              console.log(block, price.toNumber() / 10 ** 10)
+            })
+          })
+        })
     }
   }, [sdk])
 
@@ -53,101 +53,13 @@ const App: React.FC = () => {
 
   return (
     <div style={{ display: 'grid', columnGap: '50px' }}>
-      {markets.map(market => (
-        <MarketComponent key={market.marketId} market={market} />
-      ))}
-    </div>
-  )
-}
-
-const MarketComponent = (props: { market: Market }) => {
-  const [market, setMarket] = useState(props.market)
-
-  useEffect(() => {
-    if (isAugmentedRpcMarket(props.market)) {
-      props.market
-        .expand()
-        .then(market => {
-          setMarket(market.unrightOr(throws))
-        })
-        .catch(() => console.debug(`Missing metadata for market: ${market.marketId}`))
-    } else {
-      setMarket(props.market)
-    }
-  }, [props.market])
-
-  return (
-    <div style={{ padding: 8, gridColumnStart: 1, gridColumnEnd: 3 }}>
-      {isAugmentedRpcMarket(market) ? (
-        <AugmentedRpcMarketComponent market={market} />
-      ) : (
-        <FullMarketComponent market={market} />
+      {sdk && (
+        <>
+          <MarketComponent sdk={sdk} marketId={20} />
+          <MarketList sdk={sdk} />
+        </>
       )}
     </div>
   )
 }
-
-const AugmentedRpcMarketComponent = (props: { market: AugmentedRpcMarket }) => {
-  return <div>{props.market.marketId}: ...</div>
-}
-
-const FullMarketComponent = (props: { market: FullMarket }) => {
-  return (
-    <div>
-      {props.market.marketId}: {props.market.question}
-    </div>
-  )
-}
-
 export default App
-
-// ------------------------------------------------------------
-// const createMarket = async () => {
-//   if (!isRpcSdk(sdk)) return
-
-//   const address = 'dE2cVL9QAgh3MZEK3ZhPG5S2YSqZET8V1Qa36epaU4pQG4pd8'
-//   const { signer } = await web3FromAddress(address)
-
-//   const baseWeight = (1 / 2) * 10 * 10 ** 10
-
-//   const params: CreateMarketWithPoolParams = {
-//     signer: {
-//       address,
-//       signer,
-//     },
-//     disputeMechanism: { Authorized: address },
-//     marketType: { Scalar: [1, 2] },
-//     oracle: address,
-//     period: { Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] },
-//     metadata: {
-//       question: 'Testing Jørn',
-//       description: 'just a test market, can be removed',
-//       slug: 'yornaath_test',
-//       categories: [
-//         {
-//           name: 'yes',
-//           ticker: 'Y',
-//         },
-//         {
-//           name: 'no',
-//           ticker: 'N',
-//         },
-//       ],
-//     },
-//     pool: {
-//       amount: `${300 * 10 ** 10}`,
-//       swapFee: `${1000}`,
-//       weights: [`${baseWeight}`, `${baseWeight}`],
-//     },
-//   }
-
-//   const result = await sdk.model.markets.create(params)
-
-//   const {
-//     market: [marketId, market],
-//     pool: [poolId, pool],
-//   } = result.extract().unrightOr(throws)
-
-//   console.log(`created: market ${marketId}`, market.toHuman())
-//   console.log(`created: pool ${poolId}`, pool.toHuman())
-// }

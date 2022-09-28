@@ -1,6 +1,7 @@
 import { u128 } from '@polkadot/types'
 import { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
 import { FullHistoricalAssetsFragment } from '@zeitgeistpm/indexer'
+import { BlockNumber } from '../../../time/block'
 import { Context, IndexerContext } from '../../../../context'
 import { Timespan } from '../../../time'
 
@@ -21,4 +22,6 @@ export type PoolPrice = RpcPoolPrice | IndexedPoolPrice
 
 export type IndexedPoolPrice = FullHistoricalAssetsFragment
 
-export type RpcPoolPrice = [ZeitgeistPrimitivesAsset, [number, u128][]]
+export type RpcPoolPrice = [BlockNumber, u128][]
+
+export type PoolPricesStreamQuery = { pool: number; tail: BlockNumber | Date }

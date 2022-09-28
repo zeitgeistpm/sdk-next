@@ -1,6 +1,6 @@
 import { Context, isRpcContext, RpcContext } from '../../context'
-import { pools } from './functions/list'
-import { Swaps, PoolsListQuery, SwapsRpc, SwapsShared } from './types'
+import { listPools } from './functions/listpools'
+import { PoolsListQuery, Swaps, SwapsRpc, SwapsShared } from './types'
 
 /**
  * Create top level enriched zeitgeist Swaps model.
@@ -11,7 +11,7 @@ import { Swaps, PoolsListQuery, SwapsRpc, SwapsShared } from './types'
  */
 export const swaps = <C extends Context>(context: C): Swaps<C> => {
   let base: SwapsShared<C> = {
-    pools: (query: PoolsListQuery<C>) => pools(context, query),
+    listPools: (query: PoolsListQuery<C>) => listPools(context, query),
   }
 
   const rpc: SwapsRpc<RpcContext> | null = isRpcContext(context) ? {} : null

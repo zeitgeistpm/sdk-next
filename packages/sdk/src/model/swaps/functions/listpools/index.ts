@@ -1,5 +1,11 @@
+import {
+  Context,
+  IndexerContext,
+  isFullContext,
+  isIndexerContext,
+  RpcContext,
+} from '../../../../context'
 import { isPaginated } from '../../../../types/query'
-import { RpcContext, Context, IndexerContext, isFullContext, isIndexerContext } from '../../../../context'
 import { PoolList, PoolsListQuery, RpcPool, RpcPoolList } from '../../types'
 
 /**
@@ -11,7 +17,10 @@ import { PoolList, PoolsListQuery, RpcPool, RpcPoolList } from '../../types'
  * @param query ListQuery<C>
  * @returns Promise<PoolList<C>>
  */
-export const pools = async <C extends Context>(context: C, query: PoolsListQuery<C>): Promise<PoolList<C>> => {
+export const listPools = async <C extends Context>(
+  context: C,
+  query: PoolsListQuery<C>,
+): Promise<PoolList<C>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await indexer(context, query)

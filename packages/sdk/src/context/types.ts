@@ -17,10 +17,10 @@ export type FullContext = RpcContext & IndexerContext
 /**
  * Zeitgeist SDK context with rpc and storage features enabled.
  */
-export type RpcContext = {
+export type RpcContext<M = MarketMetadata> = {
   api: ApiPromise
   provider: WsProvider
-  storage: MetadataStorage<MarketMetadata, CID>
+  storage: MetadataStorage<M, CID>
 }
 
 /**

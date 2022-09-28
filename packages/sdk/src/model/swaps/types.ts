@@ -1,5 +1,5 @@
 import { Context, RpcContext } from '../../context'
-import { PoolsListQuery, PoolList } from './functions/list/types'
+import { PoolsListQuery, PoolList } from './functions/listpools/types'
 
 export * from './functions/types'
 
@@ -12,7 +12,7 @@ export type SwapsShared<C extends Context> = {
   /**
    * List Liquidity Pools. Stronger quering is enabled when connecting to indexer.
    */
-  pools: (query: PoolsListQuery<C>) => Promise<PoolList<C>>
+  listPools: (query: PoolsListQuery<C>) => Promise<PoolList<C>>
 }
 
 export type SwapsRpc<C extends Context> = C extends RpcContext ? {} : {}

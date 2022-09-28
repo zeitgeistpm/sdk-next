@@ -1,5 +1,12 @@
+import { Functor } from '@zeitgeistpm/utility/dist/functor'
+import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
-import { PoolPricesQuery, PoolPrices } from './functions/poolprices/types'
+import {
+  PoolPrices,
+  PoolPricesQuery,
+  PoolPricesStreamQuery,
+  RpcPoolPrices,
+} from './functions/poolprices/types'
 
 /**
  * Zeitgeist Assets Model
@@ -13,4 +20,16 @@ export type AssetsShared<C extends Context> = {
   poolPrices: (query: PoolPricesQuery<C>) => Promise<PoolPrices<C>>
 }
 
-export type AssetsRpc<C extends Context> = C extends RpcContext ? {} : {}
+export type AssetsRpc<C extends Context> = C extends RpcContext
+  ? {
+      poolPrices: Functor<
+        AssetsShared<RpcContext>['poolPrices'],
+        {
+          /**
+           * Stream pool prices from the node
+           */
+          $: (query: PoolPricesStreamQuery) => Observable<RpcPoolPrices>
+        }
+      >
+    }
+  : {}
