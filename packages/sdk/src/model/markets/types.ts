@@ -3,6 +3,8 @@ import { CreateMarketParams, CreateMarketResult } from './functions/create/types
 import { MarketList, MarketsListQuery } from './functions/list/types'
 
 export * from './market'
+export * from './functions/create/types'
+export * from './functions/list/types'
 
 /**
  * Zeitgeist Markets model.

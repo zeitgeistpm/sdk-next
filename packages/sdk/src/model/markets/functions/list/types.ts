@@ -10,7 +10,9 @@ import { FullMarket, AugmentedRpcMarket } from '../../types'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type MarketList<C extends Context> = C extends IndexerContext ? FullMarketList : AugmentedRpcMarketList
+export type MarketList<C extends Context> = C extends IndexerContext
+  ? FullMarketList
+  : AugmentedRpcMarketList
 
 /**
  * Markets list Query type

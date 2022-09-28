@@ -1,9 +1,22 @@
 import { web3Enable } from '@polkadot/extension-dapp'
-import { batterystation, mainnet, builder, Context, isIndexedSdk, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
-import { rpcPrices } from '@zeitgeistpm/sdk/dist/model/assets/functions/prices'
+import {
+  batterystation,
+  mainnet,
+  builder,
+  Context,
+  isIndexedSdk,
+  isRpcSdk,
+  Sdk,
+} from '@zeitgeistpm/sdk'
+import { blockDate, dateBlock, time } from '@zeitgeistpm/sdk/dist/model/time'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { useEffect, useState } from 'react'
-import { FullMarket, isAugmentedRpcMarket, Market, AugmentedRpcMarket } from '@zeitgeistpm/sdk/dist/model/types'
+import {
+  FullMarket,
+  isAugmentedRpcMarket,
+  Market,
+  AugmentedRpcMarket,
+} from '@zeitgeistpm/sdk/dist/model/types'
 
 const App: React.FC = () => {
   const [sdk, setSdk] = useState<Partial<Sdk<Context>>>()
@@ -23,19 +36,12 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (isRpcSdk(sdk)) {
-      rpcPrices(sdk, {
-        pool: 22,
-        timespan: {
-          start: new Date(Date.now() - 1 * 60 * 60 * 1000),
-          end: new Date(Date.now() - 12 * 2 * 1000),
-        },
-      }).then(prices => {
-        prices.forEach(([asset, prices]) => {
-          prices.forEach(([block, price]) => {
-            console.log(asset, block, price.toNumber() / 10 ** 10)
-          })
-        })
-      })
+      ;(async () => {
+        const head = await sdk.api.rpc.chain.getHeader()
+        const t = await time(sdk)
+        console.log(blockDate(t, head.number.toNumber()))
+        console.log(dateBlock(t, new Date()))
+      })()
     }
   }, [sdk])
 

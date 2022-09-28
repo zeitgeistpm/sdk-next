@@ -25,3 +25,24 @@ export const range = (start: number, end: number) => [
  * @returns [A, B][]
  */
 export const zip = <A, B>(as: A[], bs: B[]): [A, B][] => as.map((a, i) => [a, bs[i]])
+
+/**
+ * Project every N item of an array based on a step.
+ *
+ * @generic A - item type of array
+ * @param array A[]
+ * @param step number
+ * @returns A[]
+ */
+export const project = <A>(array: A[], step: number): A[] => {
+  let acc: A[] = []
+  let curr = step
+  for (let i = 0; i < array.length; i++) {
+    if (curr === step) {
+      acc.push(array[i])
+      step = 0
+    }
+    step++
+  }
+  return acc
+}

@@ -1,5 +1,6 @@
 import { isNumber } from '@polkadot/util'
 import { RpcContext } from '../../context'
+import { blockDate, dateBlock, time } from './time'
 
 /**
  * Union type of timespan dealing with blocknumbers or dates.
@@ -92,23 +93,10 @@ export const asBlocks = async (ctx: RpcContext, timespan: Timespan): Promise<Blo
  * @returns Promise<BlockTimespan>
  */
 export const datesToBlocks = async (ctx: RpcContext, dates: DateTimespan): Promise<BlockTimespan> => {
-  const [now, head] = await Promise.all([
-    ctx.api.query.timestamp.now().then(now => now.toNumber()),
-    ctx.api.rpc.chain.getHeader(),
-  ])
-
-  const blockTime = ctx.api.consts.timestamp.minimumPeriod.toNumber() * 2
-  const currentBlock = head.number.toNumber()
-
-  const deltaStart = dates.start.getTime() - now
-  const deltaEnd = dates.end.getTime() - now
-
-  const start = Math.floor(currentBlock + deltaStart / blockTime)
-  const end = Math.ceil(currentBlock + deltaEnd / blockTime)
-
+  const chaintime = await time(ctx)
   return {
-    start,
-    end,
+    start: dateBlock(chaintime, dates.start),
+    end: dateBlock(chaintime, dates.end),
   }
 }
 
@@ -122,15 +110,9 @@ export const datesToBlocks = async (ctx: RpcContext, dates: DateTimespan): Promi
  * @returns Promise<BlockTimespan>
  */
 export const blocksToDates = async (ctx: RpcContext, dates: BlockTimespan): Promise<DateTimespan> => {
-  const [now, head] = await Promise.all([
-    ctx.api.query.timestamp.now().then(now => now.toNumber()),
-    ctx.api.rpc.chain.getHeader(),
-  ])
-
-  // !TODO: sleep now..
-
+  const chaintime = await time(ctx)
   return {
-    start: new Date(),
-    end: new Date(),
+    start: blockDate(chaintime, dates.start),
+    end: blockDate(chaintime, dates.end),
   }
 }
