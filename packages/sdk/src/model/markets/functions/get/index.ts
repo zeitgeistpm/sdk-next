@@ -8,7 +8,7 @@ import {
 } from '../../../../context'
 import { augment } from '../../market'
 import { Market, AugmentedRpcMarket, FullMarket } from '../../types'
-import { MarketQuery } from './types'
+import { MarketGetQuery } from './types'
 
 /**
  * Fetch a market by its market id
@@ -21,7 +21,7 @@ import { MarketQuery } from './types'
  */
 export const get = async <C extends Context, M = MarketMetadata>(
   context: C,
-  query: MarketQuery,
+  query: MarketGetQuery,
 ): Promise<Market<C, M>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
@@ -35,7 +35,7 @@ export const get = async <C extends Context, M = MarketMetadata>(
  * Concrete get function for indexer context
  * @private
  */
-const indexer = async (context: IndexerContext, query: MarketQuery): Promise<FullMarket> => {
+const indexer = async (context: IndexerContext, query: MarketGetQuery): Promise<FullMarket> => {
   const {
     markets: [market],
   } = await context.indexer.markets({ where: { marketId_eq: query.marketId } })
@@ -48,7 +48,7 @@ const indexer = async (context: IndexerContext, query: MarketQuery): Promise<Ful
  */
 const rpc = async <M = MarketMetadata>(
   context: RpcContext<M>,
-  query: MarketQuery,
+  query: MarketGetQuery,
 ): Promise<Market<RpcContext, M> | null> => {
   const market = await context.api.query.marketCommons.markets(query.marketId)
   if (!market.isSome) return null

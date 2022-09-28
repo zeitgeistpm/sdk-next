@@ -17,7 +17,7 @@ export type AssetsShared<C extends Context> = {
   /**
    * List prices of assets in a pool for a certain timespan.
    */
-  poolPrices: (query: PoolPricesQuery<C>) => Promise<PoolPrices<C>>
+  poolPrices: (query: PoolPricesQuery) => Promise<PoolPrices<C>>
 }
 
 export type AssetsRpc<C extends Context> = C extends RpcContext

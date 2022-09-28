@@ -19,7 +19,7 @@ import { Observable, of } from 'rxjs'
 
 export const poolPrices = async <C extends Context>(
   context: C,
-  query: PoolPricesQuery<C>,
+  query: PoolPricesQuery,
 ): Promise<PoolPrices<C>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
@@ -28,7 +28,7 @@ export const poolPrices = async <C extends Context>(
   return data as PoolPrices<C>
 }
 
-const rpc = async (ctx: RpcContext, query: PoolPricesQuery<RpcContext>): Promise<RpcPoolPrices> => {
+const rpc = async (ctx: RpcContext, query: PoolPricesQuery): Promise<RpcPoolPrices> => {
   const [pool, { start, end }] = await Promise.all([
     ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()),
     asBlocks(await now(ctx), query.timespan),
@@ -51,7 +51,7 @@ const rpc = async (ctx: RpcContext, query: PoolPricesQuery<RpcContext>): Promise
 
 const indexer = async (
   context: IndexerContext,
-  query: PoolPricesQuery<IndexerContext>,
+  query: PoolPricesQuery,
 ): Promise<IndexedPoolPrices> => {
   const {
     pools: [pool],

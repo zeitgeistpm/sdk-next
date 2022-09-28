@@ -1,6 +1,6 @@
 import { Context, RpcContext } from '../../context'
 import { CreateMarketParams, CreateMarketResult } from './functions/create/types'
-import { MarketQuery } from './functions/get/types'
+import { MarketGetQuery } from './functions/get/types'
 import { MarketList, MarketsListQuery } from './functions/list/types'
 import { MarketMetadata } from './meta/types'
 import { Market } from '../types'
@@ -23,7 +23,7 @@ export type MarketsShared<C extends Context, M = MarketMetadata> = {
   /**
    * Get a market by its id.
    */
-  get: (query: MarketQuery) => Promise<Market<C, M>>
+  get: (query: MarketGetQuery) => Promise<Market<C, M>>
 }
 
 export type MarketsRpc<C extends Context> = C extends RpcContext

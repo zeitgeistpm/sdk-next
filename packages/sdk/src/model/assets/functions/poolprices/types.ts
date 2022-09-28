@@ -1,11 +1,10 @@
 import { u128 } from '@polkadot/types'
-import { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
 import { FullHistoricalAssetsFragment } from '@zeitgeistpm/indexer'
-import { BlockNumber } from '../../../time/block'
 import { Context, IndexerContext } from '../../../../context'
 import { Timespan } from '../../../time'
+import { BlockNumber } from '../../../time/block'
 
-export type PoolPricesQuery<C extends Context> = {
+export type PoolPricesQuery = {
   pool: number
   timespan: Timespan
 }

@@ -1,3 +1,5 @@
+import { isNumber, isObject } from '@polkadot/util'
+
 /**
  * Pagination query parameters
  */
@@ -19,12 +21,4 @@ export type PaginationQuery = {
  * @returns query is PaginationQuery
  */
 export const isPaginated = (query: any): query is PaginationQuery =>
-  Boolean(
-    query &&
-      typeof query === 'object' &&
-      query !== null &&
-      'offset' in query &&
-      typeof query['offset'] === 'number' &&
-      'limit' in query &&
-      typeof query['limit'] === 'number',
-  )
+  Boolean(query && isObject(query) && isNumber(query['offset']) && isNumber(query['limit']))
