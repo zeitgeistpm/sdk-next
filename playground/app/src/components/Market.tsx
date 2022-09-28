@@ -37,7 +37,7 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
   useEffect(() => {
     if (sdk && market) {
       sdk.model?.swaps
-        .pools({
+        .listPools({
           where: {
             marketId_eq: marketId,
           },
