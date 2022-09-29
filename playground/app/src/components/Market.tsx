@@ -49,14 +49,6 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
     }
   }, [market])
 
-  if (pool && isRpcData(pool)) {
-    pool
-  }
-
-  if (pool && isIndexedData(pool)) {
-    pool
-  }
-
   return (
     <div>
       {/* 
