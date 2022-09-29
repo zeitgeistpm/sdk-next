@@ -1,13 +1,12 @@
-import { web3Enable } from '@polkadot/extension-dapp'
-import { Context, isIndexedSdk, isRpcSdk, Sdk, mainnetRpc, create } from '@zeitgeistpm/sdk'
-import { throws } from '@zeitgeistpm/utility/dist/error'
-import { useEffect, useState } from 'react'
+import { Context, isIndexedSdk, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
 import {
+  AugmentedRpcMarket,
   IndexedMarket,
   isAugmentedRpcMarket,
   Market,
-  AugmentedRpcMarket,
 } from '@zeitgeistpm/sdk/dist/model/types'
+import { throws } from '@zeitgeistpm/utility/dist/error'
+import { useEffect, useState } from 'react'
 
 export const MarketList: React.FC<{ sdk: Partial<Sdk<Context>> }> = ({ sdk }) => {
   const [markets, setMarkets] = useState<Market[]>([])

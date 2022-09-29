@@ -67,7 +67,7 @@ const getFromRpc = async <M = MarketMetadata>(
   if (mPool.isNone) return null
 
   let pool = mPool.unwrap() as RpcPool
-  pool.poolId = context.api.createType('u128', poolId)
+  pool.poolId = poolId
 
   return pool
 }
@@ -92,7 +92,7 @@ export const getPool$ = (
       const unsub = context.api.query.swaps.pools(pool.poolId, pool => {
         if (pool.isNone) return subscription.complete()
         let rpcPool = pool.unwrap() as RpcPool
-        rpcPool.poolId = poolId
+        rpcPool.poolId = poolId.toNumber()
         subscription.next(rpcPool)
       })
 

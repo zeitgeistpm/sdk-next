@@ -13,8 +13,8 @@ export type IndexedData = {
   id: string
 }
 
-export const isRpcData = <R extends Codec, I extends IndexedData>(object: R | I): object is R =>
-  isCodec(object)
+export const isRpcData = <R extends Codec, I extends IndexedData>(object?: R | I): object is R =>
+  Boolean(object && isCodec(object))
 
-export const isIndexedData = <R extends Codec, I extends IndexedData>(object: R | I): object is I =>
-  !isCodec(object)
+export const isIndexedData = <R extends Codec, I extends IndexedData>(object?: R | I): object is I =>
+  !isRpcData(object)

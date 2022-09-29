@@ -7,8 +7,8 @@ import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
+import { Context, RpcContext } from '../../context'
 import { Data } from '../../primitives'
-import { Context, IndexerContext, RpcContext } from '../../context'
 import { MarketMetadata } from './meta/types'
 
 export * from './functions/create/types'
@@ -17,7 +17,7 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<C extends Context, M = MarketMetadata> = Data<
+export type Market<C extends Context = Context, M = MarketMetadata> = Data<
   C,
   AugmentedRpcMarket<M>,
   IndexedMarket

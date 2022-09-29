@@ -22,5 +22,5 @@ export type IndexedPool = Unpacked<PoolsQuery['pools']>
  * Concrete Pool type for rpc Pool.
  */
 export type RpcPool = ZeitgeistPrimitivesPool & {
-  poolId: u128
+  poolId: number
 }

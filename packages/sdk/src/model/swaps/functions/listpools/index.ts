@@ -65,7 +65,7 @@ const listFromRpc = async <C extends RpcContext>(
       pool,
     ]) => {
       const rpcPool = pool.unwrap() as RpcPool
-      rpcPool.poolId = poolId
+      rpcPool.poolId = poolId.toNumber()
       return rpcPool
     },
   )
