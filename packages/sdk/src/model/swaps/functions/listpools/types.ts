@@ -1,8 +1,6 @@
-import { u128 } from '@polkadot/types'
-import type { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
-import type { PoolOrderByInput, PoolsQuery, PoolWhereInput } from '@zeitgeistpm/indexer/dist'
-import { Unpacked } from '@zeitgeistpm/utility/dist/array'
-import { Context, IndexerContext } from '../../../../context'
+import type { PoolOrderByInput, PoolWhereInput } from '@zeitgeistpm/indexer/dist'
+import { Context, IndexerContext, RpcContext } from '../../../../context'
+import { IndexedPool, Pool, RpcPool } from '../../pool'
 
 /**
  * List of Pools.
@@ -23,24 +21,14 @@ export type PoolsListQuery<C extends Context> = C extends IndexerContext
   : PoolsRpcQuery
 
 /**
- * Concrete Pool type for indexed market list.
- */
-export type IndexedPool = Unpacked<PoolsQuery['pools']>
-/**
  * Concrete PoolList for indexed context
  */
-export type IndexedPoolList = IndexedPool[]
+export type IndexedPoolList = Pool<IndexerContext>[]
 
-/**
- * Concrete Pool type for rpc market list.
- */
-export type RpcPool = ZeitgeistPrimitivesPool & {
-  poolId: u128
-}
 /**
  * Concrete PoolList for rpc context
  */
-export type RpcPoolList = RpcPool[]
+export type RpcPoolList = Pool<RpcContext>[]
 
 /**
  * Concrete pool Query for rpc context

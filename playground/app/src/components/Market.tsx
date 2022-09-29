@@ -12,7 +12,6 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
   useEffect(() => {
     if (isRpcSdk(sdk)) {
       sdk.model.markets.get.$({ marketId }).subscribe(updated => {
-        console.log(updated.toHuman())
         setMarket(updated)
       })
     }

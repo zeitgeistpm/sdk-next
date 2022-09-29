@@ -26,8 +26,8 @@ export const get = async <C extends Context, M = MarketMetadata>(
 ): Promise<Market<C, M>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
-      ? await indexer(context, query)
-      : await rpc(context, query)
+      ? await getFromIndexer(context, query)
+      : await getFromRpc(context, query)
 
   return data as Market<C, M>
 }
@@ -36,7 +36,10 @@ export const get = async <C extends Context, M = MarketMetadata>(
  * Concrete get function for indexer context
  * @private
  */
-const indexer = async (context: IndexerContext, query: MarketGetQuery): Promise<FullMarket> => {
+const getFromIndexer = async (
+  context: IndexerContext,
+  query: MarketGetQuery,
+): Promise<FullMarket> => {
   const {
     markets: [market],
   } = await context.indexer.markets({ where: { marketId_eq: query.marketId } })
@@ -47,7 +50,7 @@ const indexer = async (context: IndexerContext, query: MarketGetQuery): Promise<
  * Concrete get function for rpc context
  * @private
  */
-const rpc = async <M = MarketMetadata>(
+const getFromRpc = async <M = MarketMetadata>(
   context: RpcContext<M>,
   query: MarketGetQuery,
 ): Promise<Market<RpcContext, M> | null> => {
@@ -57,7 +60,7 @@ const rpc = async <M = MarketMetadata>(
 }
 
 /**
- * Fetch market and stream changes.
+ * Fetch market and stream changes from rpc.
  *
  * @param context RpcContext<M>
  * @param query MarketGetQuery

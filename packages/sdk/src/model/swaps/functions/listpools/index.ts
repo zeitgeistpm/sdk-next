@@ -6,7 +6,8 @@ import {
   RpcContext,
 } from '../../../../context'
 import { isPaginated } from '../../../../types/query'
-import { PoolList, PoolsListQuery, RpcPool, RpcPoolList } from '../../types'
+import { PoolList, PoolsListQuery, RpcPoolList } from '../../types'
+import { RpcPool } from '../../pool'
 
 /**
  * Query for a list of pools.
@@ -23,8 +24,8 @@ export const listPools = async <C extends Context>(
 ): Promise<PoolList<C>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
-      ? await indexer(context, query)
-      : await rpc(context, query)
+      ? await listFromIndexer(context, query)
+      : await listFromRpc(context, query)
 
   return data as PoolList<C>
 }
@@ -33,7 +34,7 @@ export const listPools = async <C extends Context>(
  * Concrete listing function for indexer context
  * @private
  */
-const indexer = async (
+const listFromIndexer = async (
   context: IndexerContext,
   query: PoolsListQuery<IndexerContext>,
 ): Promise<PoolList<IndexerContext>> => {
@@ -44,7 +45,7 @@ const indexer = async (
  * Concrete listing function for rpc context
  * @private
  */
-const rpc = async <C extends RpcContext>(
+const listFromRpc = async <C extends RpcContext>(
   { api }: RpcContext,
   query?: PoolsListQuery<RpcContext>,
 ): Promise<PoolList<C>> => {
