@@ -10,6 +10,7 @@ query markets(
 }
 
 fragment FullMarket on Market {
+  id
   marketId
   description
   end

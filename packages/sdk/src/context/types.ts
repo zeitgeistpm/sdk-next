@@ -7,7 +7,7 @@ import type { MarketMetadata } from '../model/markets/meta/types'
 /**
  * Union type that can be either rpc, indexer or full context.
  */
-export type Context = FullContext | (RpcContext | IndexerContext)
+export type Context = FullContext | RpcContext | IndexerContext
 
 /**
  * Zeitgeist SDK context with both rpc and indexer features enabled.

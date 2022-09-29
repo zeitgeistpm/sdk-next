@@ -7,6 +7,7 @@ import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
+import { Data } from '../../primitives'
 import { Context, IndexerContext, RpcContext } from '../../context'
 import { MarketMetadata } from './meta/types'
 
@@ -16,14 +17,16 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<C extends Context, M = MarketMetadata> = C extends IndexerContext
-  ? FullMarket
-  : AugmentedRpcMarket<M>
+export type Market<C extends Context, M = MarketMetadata> = Data<
+  C,
+  AugmentedRpcMarket<M>,
+  IndexedMarket
+>
 
 /**
  * Concrete Market type for a indexed market.
  */
-export type FullMarket = FullMarketFragment
+export type IndexedMarket = FullMarketFragment
 
 /**
  * Concrete Market type for a rpc market.
@@ -40,7 +43,7 @@ export type AugmentedRpcMarket<M = MarketMetadata> = ZeitgeistPrimitivesMarket &
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid and decoding data.
    */
-  expand: () => Promise<EitherInterface<Error, FullMarket>>
+  expand: () => Promise<EitherInterface<Error, IndexedMarket>>
 }
 
 /**
@@ -74,7 +77,7 @@ export const augment = <M = MarketMetadata>(
     return context.storage.get(new CID('f0155' + hex.slice(2)) as any)
   }
 
-  augmented.expand = Te.from<FullMarket>(async () => {
+  augmented.expand = Te.from<IndexedMarket>(async () => {
     const [metadata, poolId, end] = await Promise.all([
       augmented.fetchMetadata().then(m => m.unrightOr(throws)),
       context.api.query.marketCommons.marketPool(id),
@@ -82,6 +85,7 @@ export const augment = <M = MarketMetadata>(
     ])
 
     return {
+      id: `${isNumber(id) ? id : id.toNumber()}`,
       marketId: isNumber(id) ? id : id.toNumber(),
       creation: market.creation.type,
       creator: market.creator.toHuman(),
@@ -90,12 +94,12 @@ export const augment = <M = MarketMetadata>(
       creatorFee: market.creatorFee.toNumber(),
       poolId: poolId.isSome ? poolId.unwrap().toNumber() : undefined,
       scoringRule: market.scoringRule.type,
-      status: market.status.toHuman() as FullMarket['status'],
-      period: market.period.toHuman() as FullMarket['period'],
-      marketType: market.marketType.toHuman() as FullMarket['marketType'],
-      disputeMechanism: market.disputeMechanism.toHuman() as FullMarket['disputeMechanism'],
-      report: market.report.toHuman() as FullMarket['report'],
-      resolvedOutcome: market.resolvedOutcome.toHuman() as FullMarket['resolvedOutcome'],
+      status: market.status.toHuman() as IndexedMarket['status'],
+      period: market.period.toHuman() as IndexedMarket['period'],
+      marketType: market.marketType.toHuman() as IndexedMarket['marketType'],
+      disputeMechanism: market.disputeMechanism.toHuman() as IndexedMarket['disputeMechanism'],
+      report: market.report.toHuman() as IndexedMarket['report'],
+      resolvedOutcome: market.resolvedOutcome.toHuman() as IndexedMarket['resolvedOutcome'],
       ...metadata,
     }
   })

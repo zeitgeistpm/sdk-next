@@ -2,15 +2,16 @@ import { u128 } from '@polkadot/types'
 import { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
-import { Context, IndexerContext } from '../../context'
+import { Data } from '../../primitives/contextualobject'
+import { Context } from '../../context'
 
 /**
- * List of Pools.
+ * Union Pool type of indexed and rpc types.
  * Will differentiate between indexer and rpc context
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type Pool<C extends Context> = C extends IndexerContext ? IndexedPool : RpcPool
+export type Pool<C extends Context> = Data<C, RpcPool, IndexedPool>
 
 /**
  * Concrete Pool type for indexed Pool.

@@ -5,6 +5,7 @@ import { Pool } from './pool'
 import { Functor } from '@zeitgeistpm/utility/dist/functor'
 import { Observable } from 'rxjs'
 
+export * from './pool'
 export * from './functions/types'
 
 /**

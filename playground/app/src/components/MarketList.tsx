@@ -3,7 +3,7 @@ import { Context, isIndexedSdk, isRpcSdk, Sdk, mainnetRpc, create } from '@zeitg
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { useEffect, useState } from 'react'
 import {
-  FullMarket,
+  IndexedMarket,
   isAugmentedRpcMarket,
   Market,
   AugmentedRpcMarket,
@@ -63,7 +63,7 @@ const AugmentedRpcMarketComponent = (props: { market: AugmentedRpcMarket }) => {
   return <div>{props.market.marketId}: ...</div>
 }
 
-const FullMarketComponent = (props: { market: FullMarket }) => {
+const FullMarketComponent = (props: { market: IndexedMarket }) => {
   return (
     <div>
       {props.market.marketId}: {props.market.question}

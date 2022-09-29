@@ -8,7 +8,7 @@ import {
   RpcContext,
 } from '../../../../context'
 import { augment } from '../../market'
-import { Market, AugmentedRpcMarket, FullMarket } from '../../types'
+import { Market, AugmentedRpcMarket, IndexedMarket } from '../../types'
 import { MarketGetQuery } from './types'
 
 /**
@@ -39,7 +39,7 @@ export const get = async <C extends Context, M = MarketMetadata>(
 const getFromIndexer = async (
   context: IndexerContext,
   query: MarketGetQuery,
-): Promise<FullMarket> => {
+): Promise<IndexedMarket> => {
   const {
     markets: [market],
   } = await context.indexer.markets({ where: { marketId_eq: query.marketId } })

@@ -8,6 +8,9 @@ import {
   RpcPoolPrices,
 } from './functions/poolprices/types'
 
+export * from './asset'
+export * from './functions/types'
+
 /**
  * Zeitgeist Assets Model
  */

@@ -15,13 +15,13 @@ query historicalAssets(
 }
 
 fragment FullHistoricalAssets on HistoricalAsset {
+  id
   accountId
   assetId
   blockNumber
   dAmountInPool
   dPrice
   event
-  id
   newAmountInPool
   newPrice
   timestamp

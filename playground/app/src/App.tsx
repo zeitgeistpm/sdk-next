@@ -11,7 +11,7 @@ import {
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { useEffect, useState } from 'react'
 import {
-  FullMarket,
+  IndexedMarket,
   isAugmentedRpcMarket,
   Market,
   AugmentedRpcMarket,
