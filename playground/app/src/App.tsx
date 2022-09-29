@@ -15,7 +15,7 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <div style={{ display: 'grid', columnGap: '50px' }}>
+    <div>
       {sdk && (
         <>
           <MarketComponent sdk={sdk} marketId={467} />

@@ -4,6 +4,7 @@ import { Pool } from '@zeitgeistpm/sdk/dist/model/swaps/pool'
 import { Market } from '@zeitgeistpm/sdk/dist/model/types'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { useEffect, useState } from 'react'
+import ms from 'ms'
 
 export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Context>> }> = ({
   sdk,
@@ -57,7 +58,7 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
   }
 
   return (
-    <div style={{ display: 'grid', columnGap: '50px' }}>
+    <div>
       {/* 
         Market and Pool can be either rpc data or indexed data.
         Render accordingly.
