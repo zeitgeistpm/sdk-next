@@ -1,10 +1,10 @@
-import { Context, isIndexedData, isRpcData, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
+import { Context, isRpcData, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
 import { RpcPoolPrices } from '@zeitgeistpm/sdk/dist/model/assets'
 import { Pool } from '@zeitgeistpm/sdk/dist/model/swaps/pool'
 import { Market } from '@zeitgeistpm/sdk/dist/model/types'
 import { throws } from '@zeitgeistpm/utility/dist/error'
-import { useEffect, useState } from 'react'
 import ms from 'ms'
+import { useEffect, useState } from 'react'
 
 export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Context>> }> = ({
   sdk,
