@@ -1,4 +1,5 @@
 import { range, zip } from '@zeitgeistpm/utility/dist/array'
+import { Observable, of } from 'rxjs'
 import {
   Context,
   IndexerContext,
@@ -11,11 +12,9 @@ import type {
   IndexedPoolPrices,
   PoolPrices,
   PoolPricesQuery,
-  PoolPricesStreamQuery,
   RpcPoolPrice,
   RpcPoolPrices,
 } from './types'
-import { Observable, of } from 'rxjs'
 
 export const poolPrices = async <C extends Context>(
   context: C,
@@ -77,24 +76,6 @@ const indexer = async (
   })
 
   return historicalAssets
-}
-
-export const poolPrices$ = <C extends Context>(
-  context: C,
-  query: PoolPricesStreamQuery,
-): Observable<PoolPrices<C>> => {
-  const data =
-    isFullContext(context) || isIndexerContext(context)
-      ? indexedPoolPrices$(context, query)
-      : rpcPoolPrices$(context, query)
-  return data
-}
-
-export const indexedPoolPrices$ = (
-  ctx: IndexerContext,
-  query: { pool: number; tail: BlockNumber | Date },
-) => {
-  return new Observable<any>(sub => {})
 }
 
 export const rpcPoolPrices$ = (

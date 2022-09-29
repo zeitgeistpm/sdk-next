@@ -1,6 +1,6 @@
 import { functor } from '@zeitgeistpm/utility/dist/functor'
 import { Context, isRpcContext, RpcContext } from '../../context'
-import { poolPrices, poolPrices$, rpcPoolPrices$ } from './functions/poolprices'
+import { poolPrices, rpcPoolPrices$ } from './functions/poolprices'
 import { PoolPricesQuery, PoolPricesStreamQuery } from './functions/poolprices/types'
 import { Assets, AssetsShared, AssetsRpc } from './types'
 
@@ -15,13 +15,13 @@ export * from './types'
  */
 export const assets = <C extends Context>(ctx: C): Assets<C> => {
   let base: AssetsShared<C> = {
-    poolPrices: (query: PoolPricesQuery<C>) => poolPrices(ctx, query),
+    poolPrices: (query: PoolPricesQuery) => poolPrices(ctx, query),
   }
 
   const rpc: AssetsRpc<RpcContext> | null = isRpcContext(ctx)
     ? {
-        poolPrices: functor((query: PoolPricesQuery<RpcContext>) => poolPrices(ctx, query), {
-          $: (query: PoolPricesStreamQuery) => poolPrices$<RpcContext>(ctx, query),
+        poolPrices: functor((query: PoolPricesQuery) => poolPrices<RpcContext>(ctx, query), {
+          $: (query: PoolPricesStreamQuery) => rpcPoolPrices$(ctx, query),
         }),
       }
     : null

@@ -1,4 +1,5 @@
 import { MarketMetadata } from 'model/markets/meta/types'
+import { EMPTY, Observable } from 'rxjs'
 import {
   Context,
   IndexerContext,
@@ -53,4 +54,30 @@ const rpc = async <M = MarketMetadata>(
   const market = await context.api.query.marketCommons.markets(query.marketId)
   if (!market.isSome) return null
   return augment<M>(context, query.marketId, market.unwrap())
+}
+
+/**
+ * Fetch market and stream changes.
+ *
+ * @param context RpcContext<M>
+ * @param query MarketGetQuery
+ * @returns Observable<Market<RpcContext, M>>
+ */
+export const get$ = <M = MarketMetadata>(
+  context: RpcContext<M>,
+  query: MarketGetQuery,
+): Observable<Market<RpcContext, M>> => {
+  return new Observable(subscription => {
+    const unsub = context.api.query.marketCommons.markets(query.marketId, market => {
+      if (!market.isSome) {
+        return subscription.unsubscribe()
+      }
+      subscription.next(augment<M>(context, query.marketId, market.unwrap()))
+    })
+
+    return async () => {
+      subscription.unsubscribe()
+      unsub.then(unsub => unsub())
+    }
+  })
 }

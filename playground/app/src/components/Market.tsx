@@ -10,8 +10,11 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
   const [market, setMarket] = useState<Market<Context>>()
 
   useEffect(() => {
-    if (isRpcSdk(sdk) || isIndexedSdk(sdk)) {
-      sdk.model.markets.get({ marketId }).then(setMarket)
+    if (isRpcSdk(sdk)) {
+      sdk.model.markets.get.$({ marketId }).subscribe(updated => {
+        console.log(updated.toHuman())
+        setMarket(updated)
+      })
     }
   }, [sdk])
 
@@ -27,18 +30,6 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
       setMarket(market)
     }
   }, [market])
-
-  useEffect(() => {
-    if (sdk && market) {
-      sdk.model?.swaps
-        .listPools({
-          where: {
-            marketId_eq: marketId,
-          },
-        })
-        .then(a => {})
-    }
-  }, [sdk, market])
 
   return (
     <div style={{ display: 'grid', columnGap: '50px' }}>

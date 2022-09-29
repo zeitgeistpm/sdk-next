@@ -1,7 +1,8 @@
+import { functor } from '@zeitgeistpm/utility/dist/functor'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { create } from './functions/create'
-import { get } from './functions/get'
-import { GetMarketQuery } from './functions/get/types'
+import { get, get$ } from './functions/get'
+import { MarketGetQuery } from './functions/get/types'
 import { list } from './functions/list'
 import { CreateMarketParams, Markets, MarketsListQuery, MarketsRpc, MarketsShared } from './types'
 
@@ -14,15 +15,18 @@ export * from './types'
  * @param context C
  * @returns Markets<C>
  */
-export const markets = <C extends Context>(context: C): Markets<C> => {
+export const markets = <C extends Context>(ctx: C): Markets<C> => {
   let base: MarketsShared<C> = {
-    list: (query?: MarketsListQuery<C>) => list(context, query),
-    get: (query: GetMarketQuery) => get(context, query),
+    list: (query?: MarketsListQuery<C>) => list(ctx, query),
+    get: (query: MarketGetQuery) => get(ctx, query),
   }
 
-  const rpc: MarketsRpc<RpcContext> | null = isRpcContext(context)
+  const rpc: MarketsRpc<RpcContext> | null = isRpcContext(ctx)
     ? {
-        create: <P extends CreateMarketParams>(params: P) => create(context, params),
+        create: <P extends CreateMarketParams>(params: P) => create(ctx, params),
+        get: functor((query: MarketGetQuery) => get<RpcContext>(ctx, query), {
+          $: (query: MarketGetQuery) => get$(ctx, query),
+        }),
       }
     : null
 

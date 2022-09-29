@@ -1,5 +1,13 @@
 import { web3Enable } from '@polkadot/extension-dapp'
-import { Context, isIndexedSdk, isRpcSdk, Sdk, mainnetRpc, create } from '@zeitgeistpm/sdk'
+import {
+  Context,
+  isIndexedSdk,
+  isRpcSdk,
+  Sdk,
+  mainnetRpc,
+  create,
+  batterystation,
+} from '@zeitgeistpm/sdk'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { useEffect, useState } from 'react'
 import {
@@ -22,28 +30,28 @@ const App: React.FC = () => {
 
   useEffect(() => {
     web3Enable('sdkv2')
-    create(mainnetRpc()).then(setSdk)
+    create(batterystation()).then(setSdk)
     // builder(mainnetRpc()).subscribe(sdk => {
     //   setSdk(sdk)
     // })
   }, [])
 
-  useEffect(() => {
-    if (isRpcSdk(sdk)) {
-      sdk.model.assets.poolPrices
-        .$({
-          pool: 22,
-          tail: new Date(Date.now() - 12 * 1000 * 10),
-        })
-        .subscribe(assetPrices => {
-          assetPrices.forEach(prices => {
-            prices.forEach(([block, price]) => {
-              console.log(block, price.toNumber() / 10 ** 10)
-            })
-          })
-        })
-    }
-  }, [sdk])
+  // useEffect(() => {
+  //   if (isRpcSdk(sdk)) {
+  //     sdk.model.assets.poolPrices
+  //       .$({
+  //         pool: 22,
+  //         tail: new Date(Date.now() - 12 * 1000 * 10),
+  //       })
+  //       .subscribe(assetPrices => {
+  //         assetPrices.forEach(prices => {
+  //           prices.forEach(([block, price]) => {
+  //             console.log(block, price.toNumber() / 10 ** 10)
+  //           })
+  //         })
+  //       })
+  //   }
+  // }, [sdk])
 
   useEffect(() => {
     if (isRpcSdk(sdk) || isIndexedSdk(sdk)) {
@@ -55,7 +63,7 @@ const App: React.FC = () => {
     <div style={{ display: 'grid', columnGap: '50px' }}>
       {sdk && (
         <>
-          <MarketComponent sdk={sdk} marketId={20} />
+          <MarketComponent sdk={sdk} marketId={467} />
           <MarketList sdk={sdk} />
         </>
       )}
