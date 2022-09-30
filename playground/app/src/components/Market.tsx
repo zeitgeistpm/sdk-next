@@ -86,6 +86,11 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
               price.toNumber() / 10 ** 10
             } ZTG at block ${block}`,
           )
+
+          if (market.status === 'Closed') {
+            console.log('Market has closed.')
+            process.exit()
+          }
         })
       })
 
@@ -144,43 +149,3 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
     </Box>
   )
 }
-
-/**
- * Fetch market and expand if the market is fetched from rpc.
- * Expand will fetch ipfs data and conform the market to same type as returned from indexer.
- */
-const market$ = sdk.model.markets.get
-  .$({ marketId })
-  .pipe(
-    switchMap(market =>
-      from(isRpcData(market) ? market.expand().then(market => market.unrightOr(throws)) : market),
-    ),
-  )
-
-/**
- * Fetch pool prices stream for market.
- * Will produce prices for every hour of the last 24 hours.
- */
-const poolPrices$ = sdk.model.swaps.getPool.$({ marketId }).pipe(
-  switchMap(pool =>
-    sdk.model.assets.poolPrices.$({
-      pool: pool.poolId,
-      tail: '-24 hour',
-      resolution: '1 hour',
-    }),
-  ),
-)
-
-/**
- * Subscribe to pool prices and log corespondingly to market and asset token.
- */
-poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
-  market.categories?.map((category, index) => {
-    const [block, price] = prices[index]
-    console.log(
-      `Market ${market.marketId} token(${category?.ticker}) at price ${
-        price.toNumber() / 10 ** 10
-      } ZTG at block ${block}`,
-    )
-  })
-})
