@@ -3,11 +3,11 @@ import { PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk/dist/model/swaps'
 import { Pool } from '@zeitgeistpm/sdk/dist/model/swaps/pool'
 import { Market } from '@zeitgeistpm/sdk/dist/model/types'
 import { throws } from '@zeitgeistpm/utility/dist/error'
-import { from } from 'rxjs'
+import { from, Subscription } from 'rxjs'
 import { map, mergeWith, switchMap, withLatestFrom, scan } from 'rxjs/operators'
 import ms from 'ms'
 import { useEffect, useState } from 'react'
-import { useToast, Box, Heading, Text } from '@chakra-ui/react'
+import { useToast, Box, Heading, Text, Button } from '@chakra-ui/react'
 import { last } from 'lodash'
 
 export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Context>> }> = ({
@@ -54,6 +54,8 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
   //   }
   // }, [market])
 
+  const [sub, setSub] = useState<Subscription>()
+
   useEffect(() => {
     if (isRpcSdk(sdk)) {
       const marketId = 190
@@ -72,13 +74,13 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
         switchMap(pool =>
           sdk.model.swaps.poolPrices.$({
             pool: pool.poolId,
-            tail: '-24 hour',
-            resolution: '1 hour',
+            tail: '-10 days',
+            resolution: '5 hours',
           }),
         ),
       )
 
-      poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
+      const sub = poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
         market.categories?.map((category, index) => {
           const [block, price] = prices[index]
           console.log(
@@ -93,6 +95,8 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
           }
         })
       })
+
+      setSub(sub)
 
       // const pricecessub = sdk.model.assets.poolPrices
       //   .$({
@@ -127,10 +131,16 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
     }
   }, [sdk, pool, market])
 
-  console.log(prices)
-
   return (
     <Box>
+      <Button
+        onClick={() => {
+          if (sub) {
+            sub.unsubscribe()
+          }
+        }}>
+        Unsub
+      </Button>
       {isIndexedData(market) && (
         <>
           <Heading>{market.question}</Heading>

@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import { Duration, Timespan } from '../../../time'
-import { BlockNumber } from '../../../time/block'
+import { BlockNumber } from '../../../../primitives/blocknumber'
 
 export type PoolPricesQuery = {
   /**

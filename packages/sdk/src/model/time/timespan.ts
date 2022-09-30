@@ -1,5 +1,5 @@
 import { isNumber } from '@polkadot/util'
-import { BlockNumber } from './block'
+import { BlockNumber } from '../../primitives/blocknumber'
 import { blockDate, ChainTime, dateBlock } from './time'
 
 /**

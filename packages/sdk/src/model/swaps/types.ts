@@ -10,7 +10,6 @@ import {
   PoolPricesStreamQuery,
   PoolAssetPricesAtBlock,
 } from './functions/poolprices/types'
-import { AssetsShared } from '../assets'
 
 export * from './pool'
 export * from './functions/types'

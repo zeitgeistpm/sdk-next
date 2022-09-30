@@ -1,7 +1,7 @@
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import { RpcContext } from '../../context'
-import { BlockNumber, isBlockNumber } from './block'
+import { BlockNumber, isBlockNumber } from '../../primitives/blocknumber'
 import { Duration, isDuration } from './duration'
 
 /**

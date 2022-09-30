@@ -1,7 +1,6 @@
 import type { Markets } from './markets/types'
 import type { Swaps } from './swaps/types'
 import { Context } from '../context'
-import { Assets } from './assets'
 
 export * from './markets/types'
 export * from './swaps/types'
@@ -24,8 +23,4 @@ export type Model<C extends Context> = {
    * Has functionality ti List liqudity pools, join pools with liquidity and swap assets in and out.
    */
   swaps: Swaps<C>
-  /**
-   * Model for interacting with zeitgeist assets like listing prices for assets in a pool etc.
-   */
-  assets: Assets<C>
 }

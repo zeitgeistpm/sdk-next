@@ -1,4 +1,5 @@
 import { isFunction } from '@polkadot/util/is/function'
+import { throws } from '../error'
 
 export type Option<A> = Some<A> | None
 
@@ -35,10 +36,7 @@ export const chain = <A, B>(f: (a: A) => Option<B>, option: Option<A>): Option<B
 export const from = <A>(value: A | null): OptionInterface<A> =>
   option(value ? some(value) : (none() as Option<A>))
 
-export const unwrap = <A>(option: Option<A>): A =>
-  unwrapOr<A>(() => {
-    throw new Error('')
-  }, option)
+export const unwrap = <A>(option: Option<A>): A => unwrapOr<A>(throws as OrHandler<A>, option)
 
 export const unwrapOr = <A>(or: OrHandler<A>, option: Option<A>): A => {
   if (isSome(option)) return option.value

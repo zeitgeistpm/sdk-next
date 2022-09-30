@@ -10,7 +10,7 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
-import { getIndexOf, IOAssetId } from '../../../assets/asset'
+import { getIndexOf, IOAssetId } from '../../../../primitives/assetid'
 import { asBlock, asBlocks, BlockNumber, isBlocks, now } from '../../../time'
 import type {
   AssetPriceAtBlock,
