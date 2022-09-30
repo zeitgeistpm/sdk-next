@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js'
-import { Resolution, Timespan } from '../../../time'
+import { Duration, Timespan } from '../../../time'
 import { BlockNumber } from '../../../time/block'
 
 export type PoolPricesQuery = {
@@ -18,7 +18,7 @@ export type PoolPricesQuery = {
    * sdk.model.assets.poolPrices({resolution: '1 hour', timespan: {start, end} marketId})
    * ```
    */
-  resolution?: Resolution
+  resolution?: Duration
 }
 
 /**
@@ -47,7 +47,7 @@ export type PoolPricesStreamQuery = {
   /**
    * The blocknumber or date to tail prices from.
    */
-  tail: BlockNumber | Date | Resolution
+  tail: BlockNumber | Date | Duration
   /**
    * Projected space between blocks.
    * @example ```ts
@@ -55,5 +55,5 @@ export type PoolPricesStreamQuery = {
    * sdk.model.assets.poolPrices.$({tail: '-24 hour', resolution: '1 hour', marketId})
    * ```
    */
-  resolution?: Resolution
+  resolution?: Duration
 }

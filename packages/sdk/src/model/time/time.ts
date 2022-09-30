@@ -1,7 +1,8 @@
-import { RpcContext } from '../../context'
 import ms from 'ms'
+import { Observable } from 'rxjs'
+import { RpcContext } from '../../context'
 import { BlockNumber, isBlockNumber } from './block'
-import { isResolution, Resolution } from './resolution'
+import { Duration, isDuration } from './duration'
 
 /**
  * Chain time data.
@@ -44,6 +45,43 @@ export const now = async (ctx: RpcContext): Promise<ChainTime> => {
 }
 
 /**
+ * Stream the current chain time pr block.
+ *
+ * @param ctx RpcContext
+ * @returns Observable<ChainTime>
+ */
+export const now$ = (ctx: RpcContext): Observable<ChainTime> =>
+  new Observable(sub => {
+    const period = ctx.api.consts.timestamp.minimumPeriod.toNumber() * 2
+
+    Promise.all([
+      ctx.api.query.timestamp.now().then(now => now.toNumber()),
+      ctx.api.rpc.chain.getHeader().then(head => head.number.toNumber() as BlockNumber),
+    ]).then(([now, block]) => {
+      sub.next({
+        now,
+        block,
+        period,
+      })
+    })
+
+    const unsub = ctx.api.rpc.chain.subscribeFinalizedHeads(async head => {
+      const now = await ctx.api.query.timestamp.now().then(now => now.toNumber())
+      const block = head.number.toNumber() as BlockNumber
+      sub.next({
+        now,
+        block,
+        period,
+      })
+    })
+
+    return () => {
+      unsub.then(unsub => unsub())
+      sub.unsubscribe()
+    }
+  })
+
+/**
  * Get projected blocknumber of date.
  *
  * @param time ChainTime
@@ -74,9 +112,9 @@ export const blockDate = (time: ChainTime, block: BlockNumber | number): Date =>
  * @param instant Date | BlockNumber
  * @returns BlockNumber
  */
-export const asBlock = (time: ChainTime, instant: Date | BlockNumber | Resolution): BlockNumber =>
+export const asBlock = (time: ChainTime, instant: Date | BlockNumber | Duration): BlockNumber =>
   isBlockNumber(instant)
     ? instant
-    : isResolution(instant)
+    : isDuration(instant)
     ? dateBlock(time, new Date(Date.now() + ms(instant)))
     : dateBlock(time, instant)
