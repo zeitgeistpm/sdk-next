@@ -1,5 +1,8 @@
-import { range, zip } from '@zeitgeistpm/utility/dist/array'
-import { Observable, of } from 'rxjs'
+import { HistoricalAssetOrderByInput } from '@zeitgeistpm/indexer'
+import { project, range, zip } from '@zeitgeistpm/utility/dist/array'
+import { BigNumber } from 'bignumber.js'
+import ms from 'ms'
+import { Observable } from 'rxjs'
 import {
   Context,
   IndexerContext,
@@ -7,62 +10,69 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
+import { getIndexOf, IOAssetId } from '../../../assets/asset'
 import { asBlock, asBlocks, BlockNumber, isBlocks, now } from '../../../time'
 import type {
-  IndexedPoolPrices,
+  AssetPriceAtBlock,
+  PoolAssetPricesAtBlock,
   PoolPrices,
   PoolPricesQuery,
-  RpcPoolPrice,
-  RpcPoolPrices,
+  PoolPricesStreamQuery,
 } from './types'
 
 export const poolPrices = async <C extends Context>(
   context: C,
   query: PoolPricesQuery,
-): Promise<PoolPrices<C>> => {
+): Promise<PoolPrices> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await indexer(context, query)
       : await rpc(context, query)
-  return data as PoolPrices<C>
+  return data
 }
 
-const rpc = async (ctx: RpcContext, query: PoolPricesQuery): Promise<RpcPoolPrices> => {
-  const [pool, { start, end }] = await Promise.all([
+const rpc = async (ctx: RpcContext, query: PoolPricesQuery): Promise<PoolPrices> => {
+  const [time, pool, { start, end }] = await Promise.all([
+    now(ctx),
     ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()),
     asBlocks(await now(ctx), query.timespan),
   ])
 
   const ztg = { Ztg: null }
 
-  const blocks = range(start, end)
+  let blocks = range(start, end)
+
+  if (query.resolution) {
+    const step = ms(query.resolution) / time.period
+    blocks = project(blocks, step)
+  }
+
   const assets = pool.assets.toArray().slice(0, -1)
 
   const prices = await Promise.all(
     assets.map(async asset => {
       const prices = await ctx.api.rpc.swaps.getSpotPrices(query.pool, ztg, asset, blocks)
-      return zip(blocks, prices.toArray()) as RpcPoolPrice
+      return zip(
+        blocks,
+        prices.map(price => new BigNumber(price.toString())),
+      ) as PoolAssetPricesAtBlock
     }),
   )
 
   return prices
 }
 
-const indexer = async (
-  context: IndexerContext,
-  query: PoolPricesQuery,
-): Promise<IndexedPoolPrices> => {
-  const {
-    pools: [pool],
-  } = await context.indexer.pools({
+const indexer = async (context: IndexerContext, query: PoolPricesQuery): Promise<PoolPrices> => {
+  const { assets } = await context.indexer.assets({
     where: {
       poolId_eq: query.pool,
     },
   })
 
   const { historicalAssets } = await context.indexer.historicalAssets({
+    order: [HistoricalAssetOrderByInput.BlockNumberAsc],
     where: {
-      accountId_eq: pool.accountId,
+      assetId_in: assets.map(id => id.assetId),
       ...(isBlocks(query.timespan)
         ? {
             blockNumber_gte: query.timespan.start,
@@ -75,43 +85,71 @@ const indexer = async (
     },
   })
 
-  return historicalAssets
+  let prices: PoolPrices = []
+
+  for (const record of historicalAssets) {
+    if (!record.newPrice) continue
+
+    const assetId = JSON.parse(record.assetId)
+
+    if (!IOAssetId.is(assetId)) {
+      console.warn('found wrongly formated asset id', assetId)
+      continue
+    }
+
+    const index = getIndexOf(assetId)
+
+    if (index === null) {
+      continue
+    }
+
+    prices[index] = [
+      ...(prices[index] || []),
+      [record.blockNumber as BlockNumber, new BigNumber(record.newPrice * 10 ** 10)],
+    ]
+  }
+
+  return prices
 }
 
 export const rpcPoolPrices$ = (
   ctx: RpcContext,
-  query: { pool: number; tail: BlockNumber | Date },
-): Observable<RpcPoolPrices> => {
+  query: PoolPricesStreamQuery,
+): Observable<PoolAssetPricesAtBlock> => {
   return new Observable(sub => {
     const ztg = { Ztg: null }
 
-    Promise.all([ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()), now(ctx)])
-      .then(async ([pool, now]) => ({ pool, now }))
-      .then(async ({ pool, now }) => {
-        const head = await rpc(ctx, {
-          pool: query.pool,
-          timespan: {
-            start: asBlock(now, query.tail),
-            end: now.block,
-          },
-        })
+    const unsub = Promise.all([
+      ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()),
+      now(ctx),
+    ]).then(async ([pool, now]) => {
+      const assets = pool.assets.toArray().slice(0, -1)
 
-        const assets = pool.assets.toArray().slice(0, -1)
-        const prices$ = of(head)
-
-        setInterval(async () => {
-          const head = await ctx.api.rpc.chain.getHeader()
-          const blocks = [head.number.toNumber()]
-          const prices: RpcPoolPrices = await Promise.all(
-            assets.map(async asset => {
-              const prices = await ctx.api.rpc.swaps.getSpotPrices(query.pool, ztg, asset, blocks)
-              return zip(blocks, prices.toArray()) as RpcPoolPrice
-            }),
-          )
-          sub.next(prices)
-        }, now.period)
-
-        prices$.subscribe(v => sub.next(v))
+      const head = await rpc(ctx, {
+        pool: query.pool,
+        resolution: query.resolution,
+        timespan: {
+          start: asBlock(now, query.tail),
+          end: now.block,
+        },
       })
+
+      head[0].forEach((_, index) => sub.next(head.map(prices => prices[index])))
+
+      return ctx.api.rpc.chain.subscribeFinalizedHeads(async header => {
+        const block = header.number.toNumber()
+        const prices: PoolAssetPricesAtBlock = await Promise.all(
+          assets.map(async asset => {
+            const [price] = await ctx.api.rpc.swaps.getSpotPrices(query.pool, ztg, asset, [block])
+            return [block, new BigNumber(price.toString())] as AssetPriceAtBlock
+          }),
+        )
+        sub.next(prices)
+      })
+    })
+    return () => {
+      unsub.then(unsub => unsub())
+      sub.unsubscribe()
+    }
   })
 }

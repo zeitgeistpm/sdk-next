@@ -2,7 +2,7 @@ import { u128 } from '@polkadot/types'
 import { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
-import { Data } from '../../primitives/contextualobject'
+import { Data } from '../../primitives/data'
 import { Context } from '../../context'
 
 /**

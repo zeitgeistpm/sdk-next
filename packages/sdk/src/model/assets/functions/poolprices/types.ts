@@ -1,26 +1,30 @@
-import { u128 } from '@polkadot/types'
-import { FullHistoricalAssetsFragment } from '@zeitgeistpm/indexer'
-import { Context, IndexerContext } from '../../../../context'
-import { Timespan } from '../../../time'
+import { BigNumber } from 'bignumber.js'
+import { Resolution, Timespan } from '../../../time'
 import { BlockNumber } from '../../../time/block'
 
 export type PoolPricesQuery = {
   pool: number
   timespan: Timespan
+  resolution?: Resolution
 }
 
-export type PoolPrices<C extends Context> = C extends IndexerContext
-  ? IndexedPoolPrices
-  : RpcPoolPrices
+export type PoolPrices = Array<PoolAssetPricesAtBlock>
 
-export type RpcPoolPrices = RpcPoolPrice[]
+export type PoolAssetPricesAtBlock = Array<AssetPriceAtBlock>
 
-export type IndexedPoolPrices = IndexedPoolPrice[]
+export type AssetPriceAtBlock = [BlockNumber, BigNumber]
 
-export type PoolPrice = RpcPoolPrice | IndexedPoolPrice
-
-export type IndexedPoolPrice = FullHistoricalAssetsFragment
-
-export type RpcPoolPrice = [BlockNumber, u128][]
-
-export type PoolPricesStreamQuery = { pool: number; tail: BlockNumber | Date }
+export type PoolPricesStreamQuery = {
+  /**
+   * The pool to fetch prices for
+   */
+  pool: number
+  /**
+   * The blocknumber or date to tail prices from.
+   */
+  tail: BlockNumber | Date | Resolution
+  /**
+   * Projected space between blocks
+   */
+  resolution?: Resolution
+}

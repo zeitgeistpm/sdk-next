@@ -1,10 +1,14 @@
-import { Context, isRpcData, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
-import { RpcPoolPrices } from '@zeitgeistpm/sdk/dist/model/assets'
+import { Context, isIndexedData, isIndexedSdk, isRpcData, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
+import { PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk/dist/model/assets'
 import { Pool } from '@zeitgeistpm/sdk/dist/model/swaps/pool'
 import { Market } from '@zeitgeistpm/sdk/dist/model/types'
 import { throws } from '@zeitgeistpm/utility/dist/error'
+import { from } from 'rxjs'
+import { map, mergeWith, switchMap, withLatestFrom, scan } from 'rxjs/operators'
 import ms from 'ms'
 import { useEffect, useState } from 'react'
+import { useToast, Box, Heading, Text } from '@chakra-ui/react'
+import { last } from 'lodash'
 
 export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Context>> }> = ({
   sdk,
@@ -12,49 +16,171 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
 }) => {
   const [market, setMarket] = useState<Market<Context>>()
   const [pool, setPool] = useState<Pool<Context>>()
-  const [prices, setPrices] = useState<RpcPoolPrices>([])
+  const [prices, setPrices] = useState<PoolAssetPricesAtBlock>([])
+
+  const toast = useToast()
+
+  // useEffect(() => {
+  //   if (isRpcSdk(sdk)) {
+  //     const marketsub = sdk.model.markets.get
+  //       .$({ marketId })
+  //       .pipe(switchMap(m => from(m.expand().then(market => market.unrightOr(throws)))))
+  //       .subscribe({
+  //         next: setMarket,
+  //         error: error => {
+  //           toast({
+  //             title: 'Fetching ipfs data for market failed.',
+  //             status: 'warning',
+  //           })
+  //         },
+  //       })
+  //     const poolsub = sdk.model.swaps.getPool.$({ marketId }).subscribe(setPool)
+  //     return () => {
+  //       marketsub.unsubscribe()
+  //       poolsub.unsubscribe()
+  //     }
+  //   }
+  // }, [sdk])
+
+  // useEffect(() => {
+  //   if (isRpcData(market)) {
+  //     market
+  //       .expand()
+  //       .then(market => market.unrightOr(throws))
+  //       .then(setMarket)
+  //       .catch(() => console.debug(`Missing metadata for market: ${market.marketId}`))
+  //   } else {
+  //     setMarket(market)
+  //   }
+  // }, [market])
 
   useEffect(() => {
     if (isRpcSdk(sdk)) {
-      const marketsub = sdk.model.markets.get.$({ marketId }).subscribe(setMarket)
-      const poolsub = sdk.model.swaps.getPool.$({ marketId }).subscribe(setPool)
-      return () => {
-        marketsub.unsubscribe()
-        poolsub.unsubscribe()
-      }
-    }
-  }, [sdk])
+      const marketId = 190
 
-  useEffect(() => {
-    if (isRpcData(market)) {
-      market
-        .expand()
-        .then(market => market.unrightOr(throws))
-        .then(setMarket)
-        .catch(() => console.debug(`Missing metadata for market: ${market.marketId}`))
-    } else {
-      setMarket(market)
-    }
-  }, [market])
+      const market$ = sdk.model.markets.get
+        .$({ marketId })
+        .pipe(
+          switchMap(market =>
+            from(
+              isRpcData(market) ? market.expand().then(market => market.unrightOr(throws)) : market,
+            ),
+          ),
+        )
 
-  useEffect(() => {
-    if (pool && isRpcSdk(sdk)) {
-      const pricecessub = sdk.model.assets.poolPrices
-        .$({
-          pool: pool.poolId,
-          tail: new Date(Date.now() - ms('24 hours')),
+      const poolPrices$ = sdk.model.swaps.getPool.$({ marketId }).pipe(
+        switchMap(pool =>
+          sdk.model.assets.poolPrices.$({
+            pool: pool.poolId,
+            tail: '-24 hour',
+            resolution: '1 hour',
+          }),
+        ),
+      )
+
+      poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
+        market.categories?.map((category, index) => {
+          const [block, price] = prices[index]
+          console.log(
+            `Market ${market.marketId} token(${category?.ticker}) at price ${
+              price.toNumber() / 10 ** 10
+            } ZTG at block ${block}`,
+          )
         })
-        .subscribe(setPrices)
-      return () => pricecessub.unsubscribe()
+      })
+
+      // const pricecessub = sdk.model.assets.poolPrices
+      //   .$({
+      //     pool: pool.poolId,
+      //     tail: '-30 day',
+      //     resolution: '1 day',
+      //   })
+      //   .subscribe(setPrices)
+
+      // const market$ = sdk.model.markets.get
+      //   .$({ marketId })
+      //   .pipe(switchMap(m => from(m.expand().then(market => market.unrightOr(throws)))))
+
+      // const poolPrices$ = sdk.model.assets.poolPrices.$({
+      //   pool: pool.poolId,
+      //   tail: '-24 hour',
+      //   resolution: '1 hour',
+      // })
+
+      // poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
+      //   market.categories?.map((category, index) => {
+      //     const [block, price] = prices[index]
+      //     console.log(
+      //       `Market ${market.marketId} token(${category?.ticker}) at price ${
+      //         price.toNumber() / 10 ** 10
+      //       } ZTG at block ${block}`,
+      //     )
+      //   })
+      // })
+
+      // return () => pricecessub.unsubscribe()
     }
-  }, [market])
+  }, [sdk, pool, market])
+
+  console.log(prices)
 
   return (
-    <div>
-      {/* 
-        Market and Pool can be either rpc data or indexed data.
-        Render accordingly.
-      */}
-    </div>
+    <Box>
+      {isIndexedData(market) && (
+        <>
+          <Heading>{market.question}</Heading>
+          <Text>{market.description}</Text>
+          {market.categories?.map((category, index) => {
+            return (
+              <Box key={index}>
+                {category?.ticker}
+                {': '}
+                {(prices[index]?.[1].toNumber() ?? 0) / 10 ** 10}
+              </Box>
+            )
+          })}
+        </>
+      )}
+    </Box>
   )
 }
+
+/**
+ * Fetch market and expand if the market is fetched from rpc.
+ * Expand will fetch ipfs data and conform the market to same type as returned from indexer.
+ */
+const market$ = sdk.model.markets.get
+  .$({ marketId })
+  .pipe(
+    switchMap(market =>
+      from(isRpcData(market) ? market.expand().then(market => market.unrightOr(throws)) : market),
+    ),
+  )
+
+/**
+ * Fetch pool prices stream for market.
+ * Will produce prices for every hour of the last 24 hours.
+ */
+const poolPrices$ = sdk.model.swaps.getPool.$({ marketId }).pipe(
+  switchMap(pool =>
+    sdk.model.assets.poolPrices.$({
+      pool: pool.poolId,
+      tail: '-24 hour',
+      resolution: '1 hour',
+    }),
+  ),
+)
+
+/**
+ * Subscribe to pool prices and log corespondingly to market and asset token.
+ */
+poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
+  market.categories?.map((category, index) => {
+    const [block, price] = prices[index]
+    console.log(
+      `Market ${market.marketId} token(${category?.ticker}) at price ${
+        price.toNumber() / 10 ** 10
+      } ZTG at block ${block}`,
+    )
+  })
+})

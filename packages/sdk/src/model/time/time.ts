@@ -1,5 +1,7 @@
 import { RpcContext } from '../../context'
+import ms from 'ms'
 import { BlockNumber, isBlockNumber } from './block'
+import { isResolution, Resolution } from './resolution'
 
 /**
  * Chain time data.
@@ -72,5 +74,9 @@ export const blockDate = (time: ChainTime, block: BlockNumber | number): Date =>
  * @param instant Date | BlockNumber
  * @returns BlockNumber
  */
-export const asBlock = (time: ChainTime, instant: Date | BlockNumber): BlockNumber =>
-  isBlockNumber(instant) ? instant : dateBlock(time, instant)
+export const asBlock = (time: ChainTime, instant: Date | BlockNumber | Resolution): BlockNumber =>
+  isBlockNumber(instant)
+    ? instant
+    : isResolution(instant)
+    ? dateBlock(time, new Date(Date.now() + ms(instant)))
+    : dateBlock(time, instant)
