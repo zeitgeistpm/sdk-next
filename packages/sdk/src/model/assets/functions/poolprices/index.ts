@@ -20,6 +20,14 @@ import type {
   PoolPricesStreamQuery,
 } from './types'
 
+/**
+ * Fetch poolprices for a cetain timespan. Will prefer indexer but use rpc if indexer isnt available.
+ *
+ * @generic C extends Context
+ * @param context C
+ * @param query PoolPricesQuery
+ * @returns Promise<PoolPrices>
+ */
 export const poolPrices = async <C extends Context>(
   context: C,
   query: PoolPricesQuery,
@@ -31,6 +39,14 @@ export const poolPrices = async <C extends Context>(
   return data
 }
 
+/**
+ * Fetch poolprices for a cetain timespan from rpc.
+ *
+ * @private
+ * @param context RpcContext
+ * @param query PoolPricesQuery
+ * @returns Promise<PoolPrices>
+ */
 const rpc = async (ctx: RpcContext, query: PoolPricesQuery): Promise<PoolPrices> => {
   const [time, pool, { start, end }] = await Promise.all([
     now(ctx),
@@ -62,6 +78,14 @@ const rpc = async (ctx: RpcContext, query: PoolPricesQuery): Promise<PoolPrices>
   return prices
 }
 
+/**
+ * Fetch poolprices for a cetain timespan from indexer.
+ *
+ * @private
+ * @param context IndexerContext
+ * @param query PoolPricesQuery
+ * @returns Promise<PoolPrices>
+ */
 const indexer = async (context: IndexerContext, query: PoolPricesQuery): Promise<PoolPrices> => {
   const { assets } = await context.indexer.assets({
     where: {
@@ -112,6 +136,15 @@ const indexer = async (context: IndexerContext, query: PoolPricesQuery): Promise
   return prices
 }
 
+/**
+ * Will stream prices for a given pool tailed after a block or date.
+ * Will emit the price at each block in the stream as dictated by the resolution passed.
+ * When it reaches the end it starts to listen for new blocks and emits an item for every block.
+ *
+ * @param ctx RpcContext
+ * @param query PoolPricesStreamQuery
+ * @returns Observable<PoolAssetPricesAtBlock>
+ */
 export const rpcPoolPrices$ = (
   ctx: RpcContext,
   query: PoolPricesStreamQuery,

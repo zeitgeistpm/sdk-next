@@ -41,7 +41,7 @@ export type AugmentedRpcMarket<M = MarketMetadata> = ZeitgeistPrimitivesMarket &
    */
   fetchMetadata: () => Promise<EitherInterface<Error, M>>
   /**
-   * Conform a rpc market to a indexed market type by fetching metadata, poolid and decoding data.
+   * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
   expand: () => Promise<EitherInterface<Error, IndexedMarket>>
 }
