@@ -1,17 +1,17 @@
+import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
 import { Context, isRpcContext, RpcContext } from '../../context'
-import { listPools } from './functions/listpools'
 import { getPool, getPool$ } from './functions/getpool'
+import { listPools } from './functions/listpools'
+import { poolPrices, rpcPoolPrices$ } from './functions/poolprices'
 import {
+  PoolGetQuery,
+  PoolPricesQuery,
+  PoolPricesStreamQuery,
   PoolsListQuery,
   Swaps,
   SwapsRpc,
   SwapsShared,
-  PoolGetQuery,
-  PoolPricesQuery,
-  PoolPricesStreamQuery,
 } from './types'
-import { functor } from '@zeitgeistpm/utility/dist/functor'
-import { poolPrices, rpcPoolPrices$ } from './functions/poolprices'
 
 export * from './types'
 
@@ -31,10 +31,10 @@ export const swaps = <C extends Context>(ctx: C): Swaps<C> => {
 
   const rpc: SwapsRpc<RpcContext> | null = isRpcContext(ctx)
     ? {
-        getPool: functor((query: PoolGetQuery) => getPool<RpcContext>(ctx, query), {
+        getPool: pfunctor((query: PoolGetQuery) => getPool<RpcContext>(ctx, query), {
           $: (query: PoolGetQuery) => getPool$(ctx, query),
         }),
-        poolPrices: functor((query: PoolPricesQuery) => poolPrices<RpcContext>(ctx, query), {
+        poolPrices: pfunctor((query: PoolPricesQuery) => poolPrices<RpcContext>(ctx, query), {
           $: (query: PoolPricesStreamQuery) => rpcPoolPrices$(ctx, query),
         }),
       }

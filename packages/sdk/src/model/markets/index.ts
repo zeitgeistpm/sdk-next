@@ -1,4 +1,4 @@
-import { functor } from '@zeitgeistpm/utility/dist/functor'
+import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { create } from './functions/create'
 import { get, get$ } from './functions/get'
@@ -24,7 +24,7 @@ export const markets = <C extends Context>(ctx: C): Markets<C> => {
   const rpc: MarketsRpc<RpcContext> | null = isRpcContext(ctx)
     ? {
         create: <P extends CreateMarketParams>(params: P) => create(ctx, params),
-        get: functor((query: MarketGetQuery) => get<RpcContext>(ctx, query), {
+        get: pfunctor((query: MarketGetQuery) => get<RpcContext>(ctx, query), {
           $: (query: MarketGetQuery) => get$(ctx, query),
         }),
       }

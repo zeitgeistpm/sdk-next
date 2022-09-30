@@ -1,18 +1,18 @@
-import { Context, RpcContext } from '../../context'
-import { PoolsListQuery, PoolList } from './functions/listpools/types'
-import { PoolGetQuery } from './functions/getpool/types'
-import { Pool } from './pool'
-import { Functor } from '@zeitgeistpm/utility/dist/functor'
+import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
 import { Observable } from 'rxjs'
+import { Context, RpcContext } from '../../context'
+import { PoolGetQuery } from './functions/getpool/types'
+import { PoolList, PoolsListQuery } from './functions/listpools/types'
 import {
-  PoolPricesQuery,
-  PoolPrices,
-  PoolPricesStreamQuery,
   PoolAssetPricesAtBlock,
+  PoolPrices,
+  PoolPricesQuery,
+  PoolPricesStreamQuery,
 } from './functions/poolprices/types'
+import { Pool } from './pool'
 
-export * from './pool'
 export * from './functions/types'
+export * from './pool'
 
 /**
  * Zeitgeist Swaps model..
@@ -44,8 +44,8 @@ export type SwapsShared<C extends Context> = {
 
 export type SwapsRpc<C extends Context> = C extends RpcContext
   ? {
-      getPool: Functor<
-        SwapsShared<RpcContext>['getPool'],
+      getPool: PFunctor<
+        SwapsShared<C>['getPool'],
         {
           /**
            * Stream changes to a pool object.
@@ -55,8 +55,8 @@ export type SwapsRpc<C extends Context> = C extends RpcContext
           $: (query: PoolGetQuery) => Observable<Pool<RpcContext>>
         }
       >
-      poolPrices: Functor<
-        SwapsShared<RpcContext>['poolPrices'],
+      poolPrices: PFunctor<
+        SwapsShared<C>['poolPrices'],
         {
           /**
            * Will stream prices for a given pool tailed after a block or date.
