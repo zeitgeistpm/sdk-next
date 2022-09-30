@@ -52,19 +52,9 @@ export const now = async (ctx: RpcContext): Promise<ChainTime> => {
  */
 export const now$ = (ctx: RpcContext): Observable<ChainTime> =>
   new Observable(sub => {
+    now(ctx).then(time => sub.next(time))
+
     const period = ctx.api.consts.timestamp.minimumPeriod.toNumber() * 2
-
-    Promise.all([
-      ctx.api.query.timestamp.now().then(now => now.toNumber()),
-      ctx.api.rpc.chain.getHeader().then(head => head.number.toNumber() as BlockNumber),
-    ]).then(([now, block]) => {
-      sub.next({
-        now,
-        block,
-        period,
-      })
-    })
-
     const unsub = ctx.api.rpc.chain.subscribeFinalizedHeads(async head => {
       const now = await ctx.api.query.timestamp.now().then(now => now.toNumber())
       const block = head.number.toNumber() as BlockNumber
