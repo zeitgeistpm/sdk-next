@@ -1,5 +1,5 @@
 import { Context, isIndexedData, isIndexedSdk, isRpcData, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
-import { PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk/dist/model/assets'
+import { PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk/dist/model/swaps'
 import { Pool } from '@zeitgeistpm/sdk/dist/model/swaps/pool'
 import { Market } from '@zeitgeistpm/sdk/dist/model/types'
 import { throws } from '@zeitgeistpm/utility/dist/error'
@@ -70,7 +70,7 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
 
       const poolPrices$ = sdk.model.swaps.getPool.$({ marketId }).pipe(
         switchMap(pool =>
-          sdk.model.assets.poolPrices.$({
+          sdk.model.swaps.poolPrices.$({
             pool: pool.poolId,
             tail: '-24 hour',
             resolution: '1 hour',
