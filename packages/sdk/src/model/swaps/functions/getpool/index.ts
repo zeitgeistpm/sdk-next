@@ -19,16 +19,16 @@ import { Pool, IndexedPool, RpcPool } from '../../pool'
  * @param query PoolGetQuery
  * @returns Promise<Pool<C>>
  */
-export const getPool = async <C extends Context>(
+export const getPool = async <C extends Context<M>, M = MarketMetadata>(
   context: C,
   query: PoolGetQuery,
-): Promise<Pool<C>> => {
+): Promise<Pool<C, M>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await getFromIndexer(context, query)
-      : await getFromRpc(context, query)
+      : await getFromRpc<M>(context, query)
 
-  return data as Pool<C>
+  return data as Pool<C, M>
 }
 
 /**

@@ -8,7 +8,7 @@ import {
   RpcContext,
 } from '../../../../context'
 import { augment } from '../../market'
-import { Market, AugmentedRpcMarket, IndexedMarket } from '../../types'
+import { Market, RpcMarket, IndexedMarket } from '../../types'
 import { MarketGetQuery } from './types'
 
 /**

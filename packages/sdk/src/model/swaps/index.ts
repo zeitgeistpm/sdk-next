@@ -25,9 +25,9 @@ export * from './types'
  */
 export const swaps = <C extends Context<M>, M = MarketMetadata>(ctx: C): Swaps<C, M> => {
   let base: SwapsShared<C, M> = {
-    listPools: (query: PoolsListQuery<C, M>) => listPools(ctx, query),
-    getPool: (query: PoolGetQuery) => getPool(ctx, query),
-    poolPrices: (query: PoolPricesQuery) => poolPrices(ctx, query),
+    listPools: (query: PoolsListQuery<C, M>) => listPools<C, M>(ctx, query),
+    getPool: (query: PoolGetQuery) => getPool<C, M>(ctx, query),
+    poolPrices: (query: PoolPricesQuery) => poolPrices<C, M>(ctx, query),
   }
 
   const rpc: SwapsRpc<RpcContext> | null = isRpcContext(ctx)
@@ -44,5 +44,5 @@ export const swaps = <C extends Context<M>, M = MarketMetadata>(ctx: C): Swaps<C
   return {
     ...base,
     ...rpc,
-  } as Swaps<C>
+  } as Swaps<C, M>
 }

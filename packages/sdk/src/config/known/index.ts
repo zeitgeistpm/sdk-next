@@ -1,8 +1,9 @@
 import { FullConfig, IndexerConfig, RpcConfig } from '../types'
-import { zeitgeistIpfs } from './storage'
+import { ZeitgeistIpfs } from './storage'
 import { KnownPreset, KnownPresets } from './types'
 import { SupportedParachain } from './types'
 
+export * from './storage'
 export * from './types'
 
 /**
@@ -14,7 +15,7 @@ export const mainnet = (): KnownPreset<FullConfig> => {
     preset: KnownPresets.mainnet,
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
     indexer: indexers.zeitgeist.uri,
-    storage: zeitgeistIpfs,
+    storage: ZeitgeistIpfs,
   }
 }
 
@@ -26,7 +27,7 @@ export const mainnetRpc = (): KnownPreset<RpcConfig> => {
   return {
     preset: KnownPresets.mainnetRpc,
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
-    storage: zeitgeistIpfs,
+    storage: ZeitgeistIpfs,
   }
 }
 
@@ -50,7 +51,7 @@ export const batterystation = (): KnownPreset<FullConfig> => {
     preset: KnownPresets.bsr,
     provider: [rpcs.bsr.uri],
     indexer: indexers.bsr.uri,
-    storage: zeitgeistIpfs,
+    storage: ZeitgeistIpfs,
   }
 }
 
@@ -62,7 +63,7 @@ export const batterystationRpc = (): KnownPreset<RpcConfig> => {
   return {
     preset: KnownPresets.bsrRpc,
     provider: [rpcs.bsr.uri],
-    storage: zeitgeistIpfs,
+    storage: ZeitgeistIpfs,
   }
 }
 

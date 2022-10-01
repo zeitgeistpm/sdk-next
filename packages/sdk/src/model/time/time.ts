@@ -1,3 +1,4 @@
+import { MarketMetadata } from '../markets/meta/types'
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import { RpcContext } from '../../context'
@@ -28,7 +29,7 @@ export type ChainTime = {
  * @param ctx RpcContext
  * @returns Promise<ChainTime>
  */
-export const now = async (ctx: RpcContext): Promise<ChainTime> => {
+export const now = async <M = MarketMetadata>(ctx: RpcContext<M>): Promise<ChainTime> => {
   const [now, head] = await Promise.all([
     ctx.api.query.timestamp.now().then(now => now.toNumber()),
     ctx.api.rpc.chain.getHeader(),

@@ -1,8 +1,9 @@
-import { either, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
-import { from } from '@zeitgeistpm/utility/dist/option'
-import { throws } from '@zeitgeistpm/utility/dist/error'
-import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
 import { Codec } from '@zeitgeistpm/utility/dist/codec'
+import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
+import { either, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
+import { throws } from '@zeitgeistpm/utility/dist/error'
+import { from } from '@zeitgeistpm/utility/dist/option'
+import { CID } from 'ipfs-http-client'
 import { MetadataStorage } from '../..'
 
 /**
@@ -12,7 +13,7 @@ import { MetadataStorage } from '../..'
  *
  * @generic T - type of metadata
  */
-export const storage = <T>(codec: Codec<string, T> = JsonCodec()): MetadataStorage<T, string> => {
+export const storage = <T>(codec: Codec<string, T> = JsonCodec()): MetadataStorage<T, CID> => {
   return {
     put: async data => {
       try {
@@ -26,21 +27,21 @@ export const storage = <T>(codec: Codec<string, T> = JsonCodec()): MetadataStora
 
         localStorage.setItem(hash, content)
 
-        return either(right(hash))
+        return either(right(CID.parse(hash)))
       } catch (error) {
         return either(left(error as Error))
       }
     },
 
-    get: async hash =>
-      from<string>(localStorage.getItem(hash))
+    get: async cid =>
+      from<string>(localStorage.getItem(cid.toString()))
         .map(codec.encode)
-        .unwrapOr(() => either(left(new Error(`No value found for key ${hash}`)))),
+        .unwrapOr(() => either(left(new Error(`No value found for key ${cid.toString()}`)))),
 
-    del: async hash => {
+    del: async cid => {
       return either(
         tryCatch(() => {
-          localStorage.removeItem(hash)
+          localStorage.removeItem(cid.toString())
         }),
       )
     },

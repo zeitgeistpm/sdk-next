@@ -15,7 +15,7 @@ export * from './context/types'
 /**
  * Top level Zeitgeist SDK type.
  */
-export type Sdk<C extends Context, M = MarketMetadata> = C & {
+export type Sdk<C extends Context<M>, M = MarketMetadata> = C & {
   /**
    * Enriched zeitgeist models with features for qyerying data on chain and indexer,
    * and for creating transaction flows with for example richer validation to ensure that
@@ -45,5 +45,5 @@ export const isIndexedSdk = (sdk: unknown): sdk is Sdk<IndexerContext> =>
  * @param sdk
  * @returns sdk is Sdk<RpcContext>
  */
-export const isRpcSdk = <M = MarketMetadata>(sdk: unknown): sdk is Sdk<RpcContext, M> =>
+export const isRpcSdk = <M = MarketMetadata>(sdk: unknown): sdk is Sdk<RpcContext<M>, M> =>
   typeof sdk === 'object' && sdk !== null && isRpcContext(sdk)

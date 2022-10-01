@@ -26,7 +26,7 @@ export const listPools = async <C extends Context<M>, M = MarketMetadata>(
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await listFromIndexer(context, query)
-      : await listFromRpc(context, query)
+      : await listFromRpc<RpcContext<M>, M>(context, query)
 
   return data as PoolList<C, M>
 }
@@ -46,10 +46,10 @@ const listFromIndexer = async (
  * Concrete listing function for rpc context
  * @private
  */
-const listFromRpc = async <C extends RpcContext>(
-  { api }: RpcContext,
+const listFromRpc = async <C extends RpcContext<M>, M = MarketMetadata>(
+  { api }: RpcContext<M>,
   query?: PoolsListQuery<RpcContext>,
-): Promise<PoolList<C>> => {
+): Promise<PoolList<C, M>> => {
   const entries = isPaginated(query)
     ? await api.query.swaps.pools.entriesPaged({
         args: [],
@@ -71,5 +71,5 @@ const listFromRpc = async <C extends RpcContext>(
     },
   )
 
-  return list as PoolList<C>
+  return list as PoolList<C, M>
 }

@@ -27,7 +27,9 @@ import {
  * @param config FullConfig - Rpc and indexer config
  * @returns Promise<Sdk<FullContext>>
  */
-export async function create<M = MarketMetadata>(config: FullConfig): Promise<Sdk<FullContext<M>>>
+export async function create<M = MarketMetadata>(
+  config: FullConfig<M>,
+): Promise<Sdk<FullContext<M>, M>>
 /**
  * Create an instance of the zeitgeist sdk with only indexer features.
  *
@@ -45,8 +47,8 @@ export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>
  * @param config RpcConfig - Config for the rpc node
  * @returns Promise<Sdk<RpcContext>>
  */
-export async function create<M = MarketMetadata>(config: RpcConfig): Promise<Sdk<RpcContext, M>>
-export async function create(config: Config) {
+export async function create<M = MarketMetadata>(config: RpcConfig<M>): Promise<Sdk<RpcContext<M>, M>>
+export async function create<M = MarketMetadata>(config: Config<M>) {
   assert(
     isFullConfig(config) || isRpcConfig(config) || isIndexerConfig(config),
     () =>
@@ -66,9 +68,12 @@ export async function create(config: Config) {
   }
 
   if (isFullConfig(config)) {
-    const [rpc, indexer] = await Promise.all([createRpcContext(config), createIndexerContext(config)])
+    const [rpc, indexer] = await Promise.all([
+      createRpcContext<M>(config),
+      createIndexerContext(config),
+    ])
 
-    const context: FullContext = {
+    const context: FullContext<M> = {
       ...rpc,
       ...indexer,
     }
@@ -94,8 +99,8 @@ export async function create(config: Config) {
     }
   } else {
     debug(`Using only rpc, querying data might be more limited and/or slower.`, config, 'warn')
-    const context: RpcContext = await createRpcContext(config)
-    const model = Model.model(context)
+    const context = await createRpcContext(config)
+    const model = Model.model<RpcContext<M>, M>(context)
 
     return {
       ...context,

@@ -4,7 +4,7 @@ import { from, merge, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'
 import * as Model from './model'
-import { FullConfig, FullContext, Sdk } from './types'
+import { FullConfig, FullContext, Sdk, Context } from './types'
 
 /**
  * Initialize the indexer and rpc concurrently and emit partially applied intances of the Sdk.
@@ -15,7 +15,7 @@ import { FullConfig, FullContext, Sdk } from './types'
 export const builder = <M = MarketMetadata>(config: FullConfig<M>) => {
   const context$ = merge(from(createIndexerContext(config)), from(createRpcContext(config)))
 
-  const sdk$: Observable<Partial<Sdk<FullContext, M>>> = context$.pipe(
+  const sdk$: Observable<Partial<Sdk<FullContext<M>, M>>> = context$.pipe(
     assign(),
     map(context => ({
       ...context,

@@ -1,6 +1,6 @@
 import { Context, isIndexedSdk, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
 import {
-  AugmentedRpcMarket,
+  RpcMarket,
   IndexedMarket,
   isAugmentedRpcMarket,
   Market,
@@ -58,7 +58,7 @@ const MarketComponent = (props: { market: Market }) => {
   )
 }
 
-const AugmentedRpcMarketComponent = (props: { market: AugmentedRpcMarket }) => {
+const AugmentedRpcMarketComponent = (props: { market: RpcMarket }) => {
   return <div>{props.market.marketId}: ...</div>
 }
 

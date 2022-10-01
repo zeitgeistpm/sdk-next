@@ -40,11 +40,11 @@ export type IndexerConfig = BaseConfig & {
   indexer: string
 }
 
-export const isFullConfig = (config: Config): config is FullConfig =>
+export const isFullConfig = <M = MarketMetadata>(config: Config<M>): config is FullConfig<M> =>
   isRpcConfig(config) && isIndexerConfig(config)
 
-export const isRpcConfig = (config?: Config): config is RpcConfig =>
+export const isRpcConfig = <M = MarketMetadata>(config?: Config<M>): config is RpcConfig<M> =>
   Boolean(config && 'provider' in config)
 
-export const isIndexerConfig = (config?: Config): config is IndexerConfig =>
+export const isIndexerConfig = <M = MarketMetadata>(config?: Config<M>): config is IndexerConfig =>
   Boolean(config && 'indexer' in config && typeof config.indexer === 'string')
