@@ -20,14 +20,14 @@ import { MarketGetQuery } from './types'
  * @param query MarketQuery
  * @returns Promise<Market<C>>
  */
-export const get = async <C extends Context, M = MarketMetadata>(
+export const get = async <C extends Context<M>, M = MarketMetadata>(
   context: C,
   query: MarketGetQuery,
 ): Promise<Market<C, M>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await getFromIndexer(context, query)
-      : await getFromRpc(context, query)
+      : await getFromRpc<M>(context, query)
 
   return data as Market<C, M>
 }
@@ -53,7 +53,7 @@ const getFromIndexer = async (
 const getFromRpc = async <M = MarketMetadata>(
   context: RpcContext<M>,
   query: MarketGetQuery,
-): Promise<Market<RpcContext, M> | null> => {
+): Promise<Market<RpcContext<M>, M> | null> => {
   const market = await context.api.query.marketCommons.markets(query.marketId)
   if (!market.isSome) return null
   return augment<M>(context, query.marketId, market.unwrap())
@@ -69,7 +69,7 @@ const getFromRpc = async <M = MarketMetadata>(
 export const get$ = <M = MarketMetadata>(
   context: RpcContext<M>,
   query: MarketGetQuery,
-): Observable<Market<RpcContext, M>> => {
+): Observable<Market<RpcContext<M>, M>> => {
   return new Observable(subscription => {
     const unsub = context.api.query.marketCommons.markets(query.marketId, market => {
       if (!market.isSome) {

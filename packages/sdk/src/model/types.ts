@@ -1,6 +1,7 @@
 import type { Markets } from './markets/types'
 import type { Swaps } from './swaps/types'
 import { Context } from '../context'
+import { MarketMetadata } from './markets/meta/types'
 
 export * from './markets/types'
 export * from './swaps/types'
@@ -11,16 +12,16 @@ export * from './swaps/types'
  * require a rpc connection while querying markets etc have more fine graned query filters and ordering when connected
  * to the indexer.
  */
-export type Model<C extends Context> = {
+export type Model<C extends Context<M>, M = MarketMetadata> = {
   /**
    * Model for interacting with zeitgeist markets.
    * Will also handle metadata storage if configured to do so.
    * If you connect to the zeitgeist main or testnet, this should be configured automatically over IPFS.
    */
-  markets: Markets<C>
+  markets: Markets<C, M>
   /**
    * Model for interacting with zeitgeist swaps module.
    * Has functionality ti List liqudity pools, join pools with liquidity and swap assets in and out.
    */
-  swaps: Swaps<C>
+  swaps: Swaps<C, M>
 }

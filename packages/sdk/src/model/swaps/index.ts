@@ -1,4 +1,5 @@
 import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { MarketMetadata } from 'model/markets/meta/types'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { getPool, getPool$ } from './functions/getpool'
 import { listPools } from './functions/listpools'
@@ -22,7 +23,7 @@ export * from './types'
  * @param ctx C
  * @returns Swaps<C>
  */
-export const swaps = <C extends Context>(ctx: C): Swaps<C> => {
+export const swaps = <C extends Context<M>, M = MarketMetadata>(ctx: C): Swaps<C, M> => {
   let base: SwapsShared<C> = {
     listPools: (query: PoolsListQuery<C>) => listPools(ctx, query),
     getPool: (query: PoolGetQuery) => getPool(ctx, query),

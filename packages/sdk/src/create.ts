@@ -2,6 +2,7 @@ import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
 import { options } from '@zeitgeistpm/rpc/dist'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
+import { MarketMetadata } from 'model/markets/meta/types'
 import polly from 'polly-js'
 import { isKnownPreset } from './config/known'
 import type { FullContext, IndexerContext, RpcContext } from './context'
@@ -26,7 +27,7 @@ import {
  * @param config FullConfig - Rpc and indexer config
  * @returns Promise<Sdk<FullContext>>
  */
-export async function create(config: FullConfig): Promise<Sdk<FullContext>>
+export async function create<M = MarketMetadata>(config: FullConfig): Promise<Sdk<FullContext<M>>>
 /**
  * Create an instance of the zeitgeist sdk with only indexer features.
  *
@@ -44,7 +45,7 @@ export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>
  * @param config RpcConfig - Config for the rpc node
  * @returns Promise<Sdk<RpcContext>>
  */
-export async function create(config: RpcConfig): Promise<Sdk<RpcContext>>
+export async function create<M = MarketMetadata>(config: RpcConfig): Promise<Sdk<RpcContext, M>>
 export async function create(config: Config) {
   assert(
     isFullConfig(config) || isRpcConfig(config) || isIndexerConfig(config),
@@ -109,7 +110,9 @@ export async function create(config: Config) {
  * @param config RpcConfig
  * @returns Promise<RpcContext>
  */
-export const createRpcContext = async (config: RpcConfig): Promise<RpcContext> => {
+export const createRpcContext = async <M = MarketMetadata>(
+  config: RpcConfig<M>,
+): Promise<RpcContext<M>> => {
   const { ApiPromise, WsProvider } = await import('@polkadot/api')
 
   debug(`connecting to rpc: ${config.provider}`, config)

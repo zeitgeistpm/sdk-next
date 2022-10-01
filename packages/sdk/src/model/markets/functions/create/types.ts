@@ -12,12 +12,14 @@ import type { MarketMetadata } from '../../meta/types'
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
  */
-export type CreateMarketParams = CreateStandaloneMarketParams | CreateMarketWithPoolParams
+export type CreateMarketParams<M = MarketMetadata> =
+  | CreateStandaloneMarketParams<M>
+  | CreateMarketWithPoolParams<M>
 
 /**
  * Base parameters for creating a market.
  */
-export type CreateMarketBaseParams = {
+export type CreateMarketBaseParams<M = MarketMetadata> = {
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
@@ -25,7 +27,7 @@ export type CreateMarketBaseParams = {
   /**
    * Metadata to store in external storage alongside the market.
    */
-  metadata: MarketMetadata
+  metadata: M
   /**
    * Type of market, categorical or scalar
    */
@@ -69,7 +71,7 @@ export type CreateMarketBaseParams = {
 /**
  * Parameters for creating a market without a pool
  */
-export type CreateStandaloneMarketParams = CreateMarketBaseParams & {
+export type CreateStandaloneMarketParams<M = MarketMetadata> = CreateMarketBaseParams<M> & {
   /**
    * Market scoring rule.
    *
@@ -86,7 +88,7 @@ export type CreateStandaloneMarketParams = CreateMarketBaseParams & {
 /**
  * Parameters for creating a market with a pool.
  */
-export type CreateMarketWithPoolParams = CreateMarketBaseParams & {
+export type CreateMarketWithPoolParams<M = MarketMetadata> = CreateMarketBaseParams<M> & {
   pool: {
     /**
      * The fee to swap in and out of the pool.
@@ -109,7 +111,9 @@ export type CreateMarketWithPoolParams = CreateMarketBaseParams & {
  * @param params CreateMarketParams
  * @returns params is CreateMarketWithPoolParams
  */
-export const isWithPool = (params: CreateMarketParams): params is CreateMarketWithPoolParams => {
+export const isWithPool = <M = MarketMetadata>(
+  params: CreateMarketParams<M>,
+): params is CreateMarketWithPoolParams<M> => {
   return 'pool' in params
 }
 
@@ -119,7 +123,7 @@ export const isWithPool = (params: CreateMarketParams): params is CreateMarketWi
  *
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
-export type CreateMarketResult<P extends CreateMarketParams> = {
+export type CreateMarketResult<P extends CreateMarketParams<M>, M = MarketMetadata> = {
   raw: ISubmittableResult
   /**
    * Lazy function to extract created Market and Pool.
@@ -131,7 +135,7 @@ export type CreateMarketResult<P extends CreateMarketParams> = {
    *
    * @returns EitherInterface<Error, CreateMarketData<P>>
    */
-  extract: () => EitherInterface<Error, CreateMarketData<P>>
+  extract: () => EitherInterface<Error, CreateMarketData<P, M>>
 }
 
 /**
@@ -139,12 +143,12 @@ export type CreateMarketResult<P extends CreateMarketParams> = {
  *
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
-export type CreateMarketData<P extends CreateMarketParams> = {
+export type CreateMarketData<P extends CreateMarketParams<M>, M = MarketMetadata> = {
   /**
    * The market created by the extrinsic.
    */
   market: [number, ZeitgeistPrimitivesMarket]
-} & (P extends CreateMarketWithPoolParams
+} & (P extends CreateMarketWithPoolParams<M>
   ? {
       /**
        * The pool created for the market by the extrinsic.

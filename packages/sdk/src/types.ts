@@ -1,4 +1,12 @@
-import { Context, FullContext, IndexerContext, isIndexerContext, isRpcContext, RpcContext } from './context'
+import { MarketMetadata } from 'model/markets/meta/types'
+import {
+  Context,
+  FullContext,
+  IndexerContext,
+  isIndexerContext,
+  isRpcContext,
+  RpcContext,
+} from './context'
 import type { Model } from './model/types'
 
 export * from './config/types'
@@ -7,13 +15,13 @@ export * from './context/types'
 /**
  * Top level Zeitgeist SDK type.
  */
-export type Sdk<C extends Context> = C & {
+export type Sdk<C extends Context, M = MarketMetadata> = C & {
   /**
    * Enriched zeitgeist models with features for qyerying data on chain and indexer,
    * and for creating transaction flows with for example richer validation to ensure that
    * the markets you have the official standard of metadata so that they show up in the official frontend.
    */
-  model: Model<C>
+  model: Model<C, M>
 }
 
 /**
@@ -21,7 +29,8 @@ export type Sdk<C extends Context> = C & {
  * @param sdk
  * @returns sdk is Sdk<FullContext>
  */
-export const isFullSdk = (sdk: unknown): sdk is Sdk<FullContext> => isIndexedSdk(sdk) && isRpcSdk(sdk)
+export const isFullSdk = <M = MarketMetadata>(sdk: unknown): sdk is Sdk<FullContext<M>> =>
+  isIndexedSdk(sdk) && isRpcSdk(sdk)
 
 /**
  * Typeguard for indexer sdk
@@ -36,5 +45,5 @@ export const isIndexedSdk = (sdk: unknown): sdk is Sdk<IndexerContext> =>
  * @param sdk
  * @returns sdk is Sdk<RpcContext>
  */
-export const isRpcSdk = (sdk: unknown): sdk is Sdk<RpcContext> =>
+export const isRpcSdk = <M = MarketMetadata>(sdk: unknown): sdk is Sdk<RpcContext, M> =>
   typeof sdk === 'object' && sdk !== null && isRpcContext(sdk)

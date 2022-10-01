@@ -1,4 +1,5 @@
 import { assign } from '@zeitgeistpm/utility/dist/observable/operators'
+import { MarketMetadata } from 'model/markets/meta/types'
 import { from, merge, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'
@@ -11,10 +12,10 @@ import { FullConfig, FullContext, Sdk } from './types'
  * @param config FullConfig
  * @returns Observable<Partial<Sdk<FullContext>>>
  */
-export const builder = (config: FullConfig) => {
+export const builder = <M = MarketMetadata>(config: FullConfig<M>) => {
   const context$ = merge(from(createIndexerContext(config)), from(createRpcContext(config)))
 
-  const sdk$: Observable<Partial<Sdk<FullContext>>> = context$.pipe(
+  const sdk$: Observable<Partial<Sdk<FullContext, M>>> = context$.pipe(
     assign(),
     map(context => ({
       ...context,

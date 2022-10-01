@@ -1,4 +1,5 @@
 import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { MarketMetadata } from '../markets/meta/types'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { PoolGetQuery } from './functions/getpool/types'
@@ -17,22 +18,22 @@ export * from './pool'
 /**
  * Zeitgeist Swaps model..
  */
-export type Swaps<C extends Context> = SwapsShared<C> & SwapsRpc<C>
+export type Swaps<C extends Context<M>, M = MarketMetadata> = SwapsShared<C, M> & SwapsRpc<C, M>
 
-export type SwapsShared<C extends Context> = {
+export type SwapsShared<C extends Context<M>, M = MarketMetadata> = {
   /**
    * List liquidity pools.
    * @param query PoolsListQuery<C>
    * @returns Promise<PoolList<C>>
    */
-  listPools: (query: PoolsListQuery<C>) => Promise<PoolList<C>>
+  listPools: (query: PoolsListQuery<C, M>) => Promise<PoolList<C, M>>
 
   /**
    * Get a pool by either market id or pool id.
    * @param query PoolGetQuery
    * @returns Promise<Pool<C>>
    */
-  getPool: (query: PoolGetQuery) => Promise<Pool<C>>
+  getPool: (query: PoolGetQuery) => Promise<Pool<C, M>>
   /**
    * Fetch poolprices for a cetain timespan. Will prefer indexer but use rpc if indexer isnt available.
    *
@@ -42,7 +43,7 @@ export type SwapsShared<C extends Context> = {
   poolPrices: (query: PoolPricesQuery) => Promise<PoolPrices>
 }
 
-export type SwapsRpc<C extends Context> = C extends RpcContext
+export type SwapsRpc<C extends Context<M>, M = MarketMetadata> = C extends RpcContext
   ? {
       getPool: PFunctor<
         SwapsShared<C>['getPool'],

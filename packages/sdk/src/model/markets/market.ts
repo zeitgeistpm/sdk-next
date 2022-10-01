@@ -17,10 +17,11 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<C extends Context = Context, M = MarketMetadata> = Data<
+export type Market<C extends Context<M>, M = MarketMetadata> = Data<
   C,
   AugmentedRpcMarket<M>,
-  IndexedMarket
+  IndexedMarket,
+  M
 >
 
 /**
@@ -114,16 +115,16 @@ export const augment = <M = MarketMetadata>(
  * @param entry [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>]
  * @returns AugmentedAugmentedRpcMarketRpcMarket
  */
-export const fromEntry = (
-  context: RpcContext,
+export const fromEntry = <M = MarketMetadata>(
+  context: RpcContext<M>,
   [
     {
       args: [marketId],
     },
     market,
   ]: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>],
-): AugmentedRpcMarket => {
-  return augment(context, marketId, market.unwrap())
+): AugmentedRpcMarket<M> => {
+  return augment<M>(context, marketId, market.unwrap())
 }
 
 /**

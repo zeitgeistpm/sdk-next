@@ -1,16 +1,16 @@
-import type { CID } from 'ipfs-http-client'
 import type { ApiPromise } from '@polkadot/api'
-import type { EventRecord } from '@polkadot/types/interfaces'
 import type { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
-import type { ISubmittableResult } from '@polkadot/types/types'
+import type { EventRecord } from '@polkadot/types/interfaces'
 import type { ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
-import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
+import type { ISubmittableResult } from '@polkadot/types/types'
 import { signAndSend } from '@zeitgeistpm/rpc'
+import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
-import { FullContext, RpcContext } from '../../../../context'
+import type { CID } from 'ipfs-http-client'
+import { RpcContext } from '../../../../context'
 import { MarketMetadata } from '../../meta/types'
+import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 
 /**
  * Create a market on chain.
@@ -21,10 +21,14 @@ import { MarketMetadata } from '../../meta/types'
  * @param params P
  * @returns void
  */
-export const create = async <C extends RpcContext | FullContext, P extends CreateMarketParams>(
+export const create = async <
+  C extends RpcContext<M>,
+  P extends CreateMarketParams<M>,
+  M = MarketMetadata,
+>(
   context: C,
   params: P,
-): Promise<CreateMarketResult<P>> => {
+): Promise<CreateMarketResult<P, M>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
   const metadata = await putMetadata(context, params.metadata)
@@ -78,10 +82,14 @@ export const create = async <C extends RpcContext | FullContext, P extends Creat
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
 const extract =
-  <P extends CreateMarketParams>(context: RpcContext, result: ISubmittableResult, params: P) =>
+  <P extends CreateMarketParams<M>, M = MarketMetadata>(
+    context: RpcContext<M>,
+    result: ISubmittableResult,
+    params: P,
+  ) =>
   () =>
     either(
-      tryCatch<Error, CreateMarketData<P>>(() => {
+      tryCatch<Error, CreateMarketData<P, M>>(() => {
         const createdMarket = extractMarketCreationEventForAddress(
           context.api,
           result.events,
@@ -89,13 +97,15 @@ const extract =
         ).unrightOr(throws)
 
         const createdPool = isWithPool(params)
-          ? extractPoolCreationEventForMarket(context.api, result.events, createdMarket[0]).unrightOr(throws)
+          ? extractPoolCreationEventForMarket(context.api, result.events, createdMarket[0]).unrightOr(
+              throws,
+            )
           : undefined
 
         return {
           market: createdMarket,
           pool: createdPool,
-        } as CreateMarketData<P>
+        } as CreateMarketData<P, M>
       }),
     )
 
@@ -103,13 +113,13 @@ const extract =
  * Put market metadata in storage if present, otherwise store empty `0x` as hash
  * @private
  *
- * @param context RpcContext | FullContext,
+ * @param context RpcContext
  * @param metadata MarketMetadata,
  */
 const putMetadata = Te.from(
-  async (
-    context: RpcContext | FullContext,
-    metadata: MarketMetadata,
+  async <M = MarketMetadata>(
+    context: RpcContext<M>,
+    metadata: M,
   ): Promise<[CID | null, { Sha3_384: '0x' } | { Sha3_384: Uint8Array }]> => {
     if (!context.storage) return [null, { Sha3_384: '0x' as `0x` }]
     const response = await context.storage.put(metadata)
@@ -123,10 +133,10 @@ const putMetadata = Te.from(
  *
  * @private
  *
- * @param context RpcContext | FullContext
+ * @param context RpcContext
  * @param cid CID
  */
-const deleteMetadata = Te.from(async (context: RpcContext | FullContext, cid: CID) => {
+const deleteMetadata = Te.from(async <M = MarketMetadata>(context: RpcContext<M>, cid: CID) => {
   if (!context.storage) return
   await context.storage.del(cid)
 })
@@ -153,7 +163,9 @@ const extractMarketCreationEventForAddress = (
       }
     }
   }
-  return either(left(new Error('No market creation event found on finalized block. Should not happen.')))
+  return either(
+    left(new Error('No market creation event found on finalized block. Should not happen.')),
+  )
 }
 
 /**
@@ -180,7 +192,9 @@ const extractPoolCreationEventForMarket = (
   }
   return either(
     left(
-      new Error('No pool creation event found on finalized block. Should not happen when creating with pool.'),
+      new Error(
+        'No pool creation event found on finalized block. Should not happen when creating with pool.',
+      ),
     ),
   )
 }
