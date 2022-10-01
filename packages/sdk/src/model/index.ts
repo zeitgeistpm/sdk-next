@@ -14,6 +14,6 @@ import { Model } from './types'
 export const model = <C extends Context<M>, M = MarketMetadata>(context: C): Model<C, M> => {
   return {
     markets: Market.markets<C, M>(context),
-    swaps: Swaps.swaps(context),
+    swaps: Swaps.swaps<C, M>(context),
   }
 }

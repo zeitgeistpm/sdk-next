@@ -24,8 +24,8 @@ export * from './types'
  * @returns Swaps<C>
  */
 export const swaps = <C extends Context<M>, M = MarketMetadata>(ctx: C): Swaps<C, M> => {
-  let base: SwapsShared<C> = {
-    listPools: (query: PoolsListQuery<C>) => listPools(ctx, query),
+  let base: SwapsShared<C, M> = {
+    listPools: (query: PoolsListQuery<C, M>) => listPools(ctx, query),
     getPool: (query: PoolGetQuery) => getPool(ctx, query),
     poolPrices: (query: PoolPricesQuery) => poolPrices(ctx, query),
   }

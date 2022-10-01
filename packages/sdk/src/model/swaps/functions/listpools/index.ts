@@ -8,6 +8,7 @@ import {
 import { isPaginated } from '../../../../types/query'
 import { PoolList, PoolsListQuery, RpcPoolList } from '../../types'
 import { RpcPool } from '../../pool'
+import { MarketMetadata } from 'model/markets/meta/types'
 
 /**
  * Query for a list of pools.
@@ -18,16 +19,16 @@ import { RpcPool } from '../../pool'
  * @param query ListQuery<C>
  * @returns Promise<PoolList<C>>
  */
-export const listPools = async <C extends Context>(
+export const listPools = async <C extends Context<M>, M = MarketMetadata>(
   context: C,
-  query: PoolsListQuery<C>,
-): Promise<PoolList<C>> => {
+  query: PoolsListQuery<C, M>,
+): Promise<PoolList<C, M>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await listFromIndexer(context, query)
       : await listFromRpc(context, query)
 
-  return data as PoolList<C>
+  return data as PoolList<C, M>
 }
 
 /**
