@@ -1,5 +1,5 @@
 import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { MarketMetadata } from 'model/markets/meta/types'
+import { MarketMetadata } from 'meta/market'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { getPool, getPool$ } from './functions/getpool'
 import { listPools } from './functions/listpools'

@@ -8,7 +8,7 @@ import {
 import { isPaginated } from '../../../../types/query'
 import { PoolList, PoolsListQuery, RpcPoolList } from '../../types'
 import { RpcPool } from '../../pool'
-import { MarketMetadata } from 'model/markets/meta/types'
+import { MarketMetadata } from 'meta/market'
 
 /**
  * Query for a list of pools.

@@ -1,6 +1,6 @@
 import { Codec } from '@polkadot/types/types'
 import { isCodec } from '@polkadot/util'
-import { MarketMetadata } from 'model/markets/meta/types'
+import { MarketMetadata } from '../meta/market'
 import { FullContext, IndexerContext, RpcContext } from '../context'
 
 export declare type Data<

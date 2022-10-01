@@ -1,4 +1,4 @@
-import { MarketMetadata } from 'model/markets/meta/types'
+import { MarketMetadata } from 'meta/market'
 import {
   Context,
   IndexerContext,

@@ -9,7 +9,7 @@ import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { CID } from 'ipfs-http-client'
 import { RpcContext } from '../../../../context'
-import { MarketMetadata } from '../../meta/types'
+import { MarketMetadata } from '../../../../meta/market'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 
 /**

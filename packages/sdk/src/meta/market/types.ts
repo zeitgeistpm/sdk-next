@@ -1,3 +1,5 @@
+import { StructError, object, optional, union, array, literal, validate, string } from 'superstruct'
+
 export type MarketMetadata = {
   // The short name for the market, ex. 'TEAM 1 v.s TEAM 2'.
   slug: string
@@ -28,3 +30,27 @@ export type CategoryMetadata = {
 }
 
 export type ScalarRangeType = 'number' | 'date'
+
+/**
+ * IO validation of Market Categories using superstruct
+ */
+export const IOMarketMetadataCategory = object({
+  name: string(),
+  ticker: optional(string()),
+  img: optional(string()),
+  color: optional(string()),
+})
+
+/**
+ * IO validation of Market metadata object using superstruct
+ */
+export const IOMarketMetadata = object({
+  slug: string(),
+  description: string(),
+  question: string(),
+  tags: optional(array(string())),
+  confidentialId: optional(string()),
+  img: optional(string()),
+  scalarType: optional(union([literal('date'), literal('number')])),
+  categories: optional(array(IOMarketMetadataCategory)),
+})

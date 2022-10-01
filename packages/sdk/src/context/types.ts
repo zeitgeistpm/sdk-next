@@ -2,7 +2,7 @@ import type { CID } from 'ipfs-http-client'
 import type { ApiPromise, WsProvider } from '@polkadot/api'
 import type { ZeitgeistIndexer } from '@zeitgeistpm/indexer'
 import type { MetadataStorage } from '@zeitgeistpm/web3.storage'
-import type { MarketMetadata } from '../model/markets/meta/types'
+import type { MarketMetadata } from '../meta/market'
 
 /**
  * Union type that can be either rpc, indexer or full context.

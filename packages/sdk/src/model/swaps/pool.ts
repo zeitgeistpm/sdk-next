@@ -4,7 +4,7 @@ import { PoolsQuery } from '@zeitgeistpm/indexer'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import { Data } from '../../primitives/data'
 import { Context } from '../../context'
-import { MarketMetadata } from '../markets/meta/types'
+import { MarketMetadata } from '../../meta/market'
 
 /**
  * Union Pool type of indexed and rpc types.

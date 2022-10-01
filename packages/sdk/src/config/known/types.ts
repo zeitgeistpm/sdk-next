@@ -2,7 +2,7 @@
  * Known preset types
  */
 
-import { MarketMetadata } from 'model/markets/meta/types'
+import { MarketMetadata } from 'meta/market'
 import { Config } from '../types'
 
 export type KnownPreset<C extends Config<M>, M = MarketMetadata> = C & {

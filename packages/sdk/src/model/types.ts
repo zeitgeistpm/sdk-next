@@ -1,7 +1,7 @@
 import type { Markets } from './markets/types'
 import type { Swaps } from './swaps/types'
 import { Context } from '../context'
-import { MarketMetadata } from './markets/meta/types'
+import { MarketMetadata } from '../meta/market'
 
 export * from './markets/types'
 export * from './swaps/types'

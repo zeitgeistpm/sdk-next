@@ -7,7 +7,7 @@ import type {
 import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
-import type { MarketMetadata } from '../../meta/types'
+import type { MarketMetadata } from '../../../../meta/market'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
