@@ -2,22 +2,22 @@ import type { CID } from 'ipfs-http-client'
 import type { ApiPromise, WsProvider } from '@polkadot/api'
 import type { ZeitgeistIndexer } from '@zeitgeistpm/indexer'
 import type { MetadataStorage } from '@zeitgeistpm/web3.storage'
-import type { MarketMetadata } from '../meta/market'
+import type { Metadata } from '../meta/market'
 
 /**
  * Union type that can be either rpc, indexer or full context.
  */
-export type Context<M = MarketMetadata> = FullContext | RpcContext<M> | IndexerContext
+export type Context<M = Metadata> = FullContext | RpcContext<M> | IndexerContext
 
 /**
  * Zeitgeist SDK context with both rpc and indexer features enabled.
  */
-export type FullContext<M = MarketMetadata> = RpcContext<M> & IndexerContext
+export type FullContext<M = Metadata> = RpcContext<M> & IndexerContext
 
 /**
  * Zeitgeist SDK context with rpc and storage features enabled.
  */
-export type RpcContext<M = MarketMetadata> = {
+export type RpcContext<M = Metadata> = {
   api: ApiPromise
   provider: WsProvider
   storage: MetadataStorage<M, CID>
@@ -36,7 +36,7 @@ export type IndexerContext = {
  * @param ctx unknown
  * @returns config is FullContext
  */
-export const isFullContext = <M = MarketMetadata>(ctx?: unknown): ctx is FullContext<M> =>
+export const isFullContext = <M = Metadata>(ctx?: unknown): ctx is FullContext<M> =>
   isRpcContext(ctx) && isIndexerContext(ctx)
 
 /**
@@ -45,7 +45,7 @@ export const isFullContext = <M = MarketMetadata>(ctx?: unknown): ctx is FullCon
  * @param ctx unknown
  * @returns config is RpcContext
  */
-export const isRpcContext = <M = MarketMetadata>(ctx?: unknown): ctx is RpcContext<M> =>
+export const isRpcContext = <M = Metadata>(ctx?: unknown): ctx is RpcContext<M> =>
   Boolean(ctx && typeof ctx === 'object' && ctx !== null && 'api' in ctx)
 
 /**

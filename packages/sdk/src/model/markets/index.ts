@@ -4,7 +4,7 @@ import { create } from './functions/create'
 import { get, get$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
 import { list } from './functions/list'
-import { MarketMetadata } from '../../meta/market'
+import { Metadata } from '../../meta/market'
 import { CreateMarketParams, Markets, MarketsListQuery, MarketsRpc, MarketsShared } from './types'
 
 export * from './types'
@@ -16,7 +16,7 @@ export * from './types'
  * @param context C
  * @returns Markets<C>
  */
-export const markets = <C extends Context<M>, M = MarketMetadata>(ctx: C): Markets<C, M> => {
+export const markets = <C extends Context<M>, M = Metadata>(ctx: C): Markets<C, M> => {
   let base: MarketsShared<C, M> = {
     list: (query?: MarketsListQuery<C, M>) => list(ctx, query),
     get: (query: MarketGetQuery) => get(ctx, query),

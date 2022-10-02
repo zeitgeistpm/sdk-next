@@ -1,7 +1,7 @@
 import { HistoricalAssetOrderByInput } from '@zeitgeistpm/indexer'
 import { project, range, zip } from '@zeitgeistpm/utility/dist/array'
 import { BigNumber } from 'bignumber.js'
-import { MarketMetadata } from '../../../../meta/market'
+import { Metadata } from '../../../../meta/market'
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import {
@@ -29,7 +29,7 @@ import type {
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-export const poolPrices = async <C extends Context<M>, M = MarketMetadata>(
+export const poolPrices = async <C extends Context<M>, M = Metadata>(
   context: C,
   query: PoolPricesQuery,
 ): Promise<PoolPrices> => {
@@ -48,10 +48,7 @@ export const poolPrices = async <C extends Context<M>, M = MarketMetadata>(
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-const rpc = async <M = MarketMetadata>(
-  ctx: RpcContext<M>,
-  query: PoolPricesQuery,
-): Promise<PoolPrices> => {
+const rpc = async <M = Metadata>(ctx: RpcContext<M>, query: PoolPricesQuery): Promise<PoolPrices> => {
   const [time, pool, { start, end }] = await Promise.all([
     now(ctx),
     ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()),

@@ -1,6 +1,6 @@
 import { Context } from '../context'
 import * as Market from './markets'
-import { MarketMetadata } from '../meta/market'
+import { Metadata } from '../meta/market'
 import * as Swaps from './swaps'
 import { Model } from './types'
 
@@ -11,7 +11,7 @@ import { Model } from './types'
  * @param context C
  * @returns Model<C>
  */
-export const model = <C extends Context<M>, M = MarketMetadata>(context: C): Model<C, M> => {
+export const model = <C extends Context<M>, M = Metadata>(context: C): Model<C, M> => {
   return {
     markets: Market.markets<C, M>(context),
     swaps: Swaps.swaps<C, M>(context),

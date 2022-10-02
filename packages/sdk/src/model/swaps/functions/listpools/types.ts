@@ -1,5 +1,5 @@
 import type { PoolOrderByInput, PoolWhereInput } from '@zeitgeistpm/indexer/dist'
-import { MarketMetadata } from 'meta/market'
+import { Metadata } from 'meta/market'
 import { Context, IndexerContext, RpcContext } from '../../../../context'
 import { IndexedPool, Pool, RpcPool } from '../../pool'
 
@@ -9,7 +9,7 @@ import { IndexedPool, Pool, RpcPool } from '../../pool'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type PoolList<C extends Context<M>, M = MarketMetadata> = C extends IndexerContext
+export type PoolList<C extends Context<M>, M = Metadata> = C extends IndexerContext
   ? IndexedPoolList
   : RpcPoolList
 
@@ -19,7 +19,7 @@ export type PoolList<C extends Context<M>, M = MarketMetadata> = C extends Index
  *
  * @generic C Context - the context to query in.
  */
-export type PoolsListQuery<C extends Context<M>, M = MarketMetadata> = C extends IndexerContext
+export type PoolsListQuery<C extends Context<M>, M = Metadata> = C extends IndexerContext
   ? PoolsIndexerQuery
   : PoolsRpcQuery
 

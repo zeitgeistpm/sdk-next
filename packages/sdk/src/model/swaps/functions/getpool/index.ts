@@ -1,4 +1,4 @@
-import { MarketMetadata } from 'meta/market'
+import { Metadata } from 'meta/market'
 import { EMPTY, Observable } from 'rxjs'
 import {
   Context,
@@ -19,7 +19,7 @@ import { Pool, IndexedPool, RpcPool } from '../../pool'
  * @param query PoolGetQuery
  * @returns Promise<Pool<C>>
  */
-export const getPool = async <C extends Context<M>, M = MarketMetadata>(
+export const getPool = async <C extends Context<M>, M = Metadata>(
   context: C,
   query: PoolGetQuery,
 ): Promise<Pool<C, M>> => {
@@ -48,7 +48,7 @@ const getFromIndexer = async (context: IndexerContext, query: PoolGetQuery): Pro
  * Concrete get function for rpc context
  * @private
  */
-const getFromRpc = async <M = MarketMetadata>(
+const getFromRpc = async <M = Metadata>(
   context: RpcContext<M>,
   query: PoolGetQuery,
 ): Promise<RpcPool | null> => {

@@ -9,7 +9,7 @@ import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { CID } from 'ipfs-http-client'
 import { RpcContext } from '../../../../context'
-import { MarketMetadata } from '../../../../meta/market'
+import { Metadata } from '../../../../meta/market'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 
 /**
@@ -21,11 +21,7 @@ import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } 
  * @param params P
  * @returns void
  */
-export const create = async <
-  C extends RpcContext<M>,
-  P extends CreateMarketParams<M>,
-  M = MarketMetadata,
->(
+export const create = async <C extends RpcContext<M>, P extends CreateMarketParams<M>, M = Metadata>(
   context: C,
   params: P,
 ): Promise<CreateMarketResult<P, M>> => {
@@ -82,7 +78,7 @@ export const create = async <
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
 const extract =
-  <P extends CreateMarketParams<M>, M = MarketMetadata>(
+  <P extends CreateMarketParams<M>, M = Metadata>(
     context: RpcContext<M>,
     result: ISubmittableResult,
     params: P,
@@ -117,7 +113,7 @@ const extract =
  * @param metadata MarketMetadata,
  */
 const putMetadata = Te.from(
-  async <M = MarketMetadata>(
+  async <M = Metadata>(
     context: RpcContext<M>,
     metadata: M,
   ): Promise<[CID | null, { Sha3_384: '0x' } | { Sha3_384: Uint8Array }]> => {
@@ -136,7 +132,7 @@ const putMetadata = Te.from(
  * @param context RpcContext
  * @param cid CID
  */
-const deleteMetadata = Te.from(async <M = MarketMetadata>(context: RpcContext<M>, cid: CID) => {
+const deleteMetadata = Te.from(async <M = Metadata>(context: RpcContext<M>, cid: CID) => {
   if (!context.storage) return
   await context.storage.del(cid)
 })

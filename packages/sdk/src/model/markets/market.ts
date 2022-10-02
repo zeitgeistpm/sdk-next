@@ -9,7 +9,7 @@ import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
 import { Context, RpcContext } from '../../context'
 import { Data } from '../../primitives'
-import { MarketMetadata } from '../../meta/market'
+import { Metadata } from '../../meta/market'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -17,7 +17,7 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<C extends Context<M>, M = MarketMetadata> = Data<C, RpcMarket<M>, IndexedMarket, M>
+export type Market<C extends Context<M>, M = Metadata> = Data<C, RpcMarket<M>, IndexedMarket, M>
 
 /**
  * Concrete Market type for a indexed market.
@@ -27,7 +27,7 @@ export type IndexedMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type RpcMarket<M = MarketMetadata> = ZeitgeistPrimitivesMarket & {
+export type RpcMarket<M = Metadata> = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -48,9 +48,9 @@ export type RpcMarket<M = MarketMetadata> = ZeitgeistPrimitivesMarket & {
  *
  * @generic M = MarketMetadata
  */
-export type ExpandedMarket<M = MarketMetadata> = M extends MarketMetadata
+export type ExpandedMarket<M = Metadata> = M extends Metadata
   ? IndexedMarket
-  : Omit<IndexedMarket, keyof MarketMetadata> & M
+  : Omit<IndexedMarket, keyof Metadata> & M
 
 /**
  * Typeguard for rpc markets.
@@ -69,7 +69,7 @@ export const isAugmentedRpcMarket = (market: unknown): market is RpcMarket =>
  * @param market ZeitgeistPrimitivesMarket
  * @returns AugmentedAugmentedRpcMarket
  */
-export const augment = <M = MarketMetadata>(
+export const augment = <M = Metadata>(
   context: RpcContext<M>,
   id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
@@ -120,7 +120,7 @@ export const augment = <M = MarketMetadata>(
  * @param entry [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>]
  * @returns AugmentedAugmentedRpcMarketRpcMarket
  */
-export const fromEntry = <M = MarketMetadata>(
+export const fromEntry = <M = Metadata>(
   context: RpcContext<M>,
   [
     {
@@ -142,7 +142,7 @@ export const fromEntry = <M = MarketMetadata>(
  * @param market AugmentedRpcMarket
  * @returns Promise<number>
  */
-export const projectEndTimestamp = async <M = MarketMetadata>(
+export const projectEndTimestamp = async <M = Metadata>(
   api: ApiPromise,
   market: RpcMarket<M>,
 ): Promise<number> => {

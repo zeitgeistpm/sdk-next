@@ -2,14 +2,14 @@
  * Known preset types
  */
 
-import { MarketMetadata } from 'meta/market'
+import { Metadata } from 'meta/market'
 import { Config } from '../types'
 
-export type KnownPreset<C extends Config<M>, M = MarketMetadata> = C & {
+export type KnownPreset<C extends Config<M>, M = Metadata> = C & {
   preset: KnownPresets
 }
 
-export const isKnownPreset = <C extends Config<M>, M = MarketMetadata>(
+export const isKnownPreset = <C extends Config<M>, M = Metadata>(
   config: Config<M>,
 ): config is KnownPreset<C, M> => Boolean('preset' in config)
 

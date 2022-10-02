@@ -1,4 +1,4 @@
-import { MarketMetadata } from 'meta/market'
+import { Metadata } from 'meta/market'
 import {
   Context,
   IndexerContext,
@@ -19,7 +19,7 @@ import { MarketList, MarketsListQuery, AugmentedRpcMarketList } from '../../type
  * @param query ListQuery<C>
  * @returns Promise<MarketList<C>>
  */
-export const list = async <C extends Context<M>, M = MarketMetadata>(
+export const list = async <C extends Context<M>, M = Metadata>(
   context: C,
   query?: MarketsListQuery<C, M>,
 ): Promise<MarketList<C, M>> => {
@@ -48,7 +48,7 @@ const indexer = async (
  * Concrete listing function for rpc context
  * @private
  */
-const rpc = async <C extends RpcContext<M>, M = MarketMetadata>(
+const rpc = async <C extends RpcContext<M>, M = Metadata>(
   context: C,
   query?: MarketsListQuery<C, M>,
 ): Promise<MarketList<C, M>> => {

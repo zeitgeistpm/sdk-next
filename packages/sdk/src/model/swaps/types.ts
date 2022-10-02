@@ -1,5 +1,5 @@
 import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { MarketMetadata } from '../../meta/market'
+import { Metadata } from '../../meta/market'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { PoolGetQuery } from './functions/getpool/types'
@@ -18,9 +18,9 @@ export * from './pool'
 /**
  * Zeitgeist Swaps model..
  */
-export type Swaps<C extends Context<M>, M = MarketMetadata> = SwapsShared<C, M> & SwapsRpc<C, M>
+export type Swaps<C extends Context<M>, M = Metadata> = SwapsShared<C, M> & SwapsRpc<C, M>
 
-export type SwapsShared<C extends Context<M>, M = MarketMetadata> = {
+export type SwapsShared<C extends Context<M>, M = Metadata> = {
   /**
    * List liquidity pools.
    * @param query PoolsListQuery<C>
@@ -43,7 +43,7 @@ export type SwapsShared<C extends Context<M>, M = MarketMetadata> = {
   poolPrices: (query: PoolPricesQuery) => Promise<PoolPrices>
 }
 
-export type SwapsRpc<C extends Context<M>, M = MarketMetadata> = C extends RpcContext
+export type SwapsRpc<C extends Context<M>, M = Metadata> = C extends RpcContext
   ? {
       getPool: PFunctor<
         SwapsShared<C>['getPool'],
