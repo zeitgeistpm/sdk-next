@@ -12,7 +12,7 @@ import { FullConfig, FullContext, Sdk } from './types'
  * @param config FullConfig
  * @returns Observable<Partial<Sdk<FullContext>>>
  */
-export const builder = <M = Metadata>(config: FullConfig<M>) => {
+export const builder$ = <M = Metadata>(config: FullConfig<M>) => {
   const context$ = merge(from(createIndexerContext(config)), from(createRpcContext(config)))
 
   const sdk$: Observable<Partial<Sdk<FullContext<M>, M>>> = context$.pipe(

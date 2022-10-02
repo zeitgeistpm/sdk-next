@@ -1,5 +1,5 @@
 import { web3Enable } from '@polkadot/extension-dapp'
-import { batterystation, builder, Context, Sdk } from '@zeitgeistpm/sdk'
+import { batterystation, builder$, Context, Sdk } from '@zeitgeistpm/sdk'
 import { useEffect, useState } from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
 import { MarketComponent } from './components/Market'
@@ -10,7 +10,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     web3Enable('sdkv2-test-app')
-    builder(batterystation()).subscribe(sdk => {
+    builder$(batterystation()).subscribe(sdk => {
       setSdk(sdk)
     })
   }, [])
