@@ -1,10 +1,9 @@
-import { u128 } from '@polkadot/types'
 import { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
-import { Data } from '../../primitives/data'
+import { Metadata } from 'meta/types'
 import { Context } from '../../context'
-import { Metadata } from '../../meta/market'
+import { Data } from '../../primitives/data'
 
 /**
  * Union Pool type of indexed and rpc types.

@@ -1,10 +1,10 @@
 import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { Context, IndexerContext, isRpcContext, RpcContext } from '../../context'
+import { Metadata } from 'meta/types'
+import { Context, isRpcContext, RpcContext } from '../../context'
 import { create } from './functions/create'
 import { get, get$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
 import { list } from './functions/list'
-import { Metadata } from '../../meta/market'
 import { CreateMarketParams, Markets, MarketsListQuery, MarketsRpc, MarketsShared } from './types'
 
 export * from './types'

@@ -1,5 +1,5 @@
 import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { Metadata } from '../../meta/market'
+import { Metadata } from 'meta/types'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { PoolGetQuery } from './functions/getpool/types'

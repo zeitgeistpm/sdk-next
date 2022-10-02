@@ -1,4 +1,4 @@
-import { Metadata } from 'meta/market'
+import { Metadata } from 'meta/types'
 import {
   Context,
   IndexerContext,
@@ -8,7 +8,7 @@ import {
 } from '../../../../context'
 import { isPaginated } from '../../../../types/query'
 import { fromEntry } from '../../market'
-import { MarketList, MarketsListQuery, AugmentedRpcMarketList } from '../../types'
+import { AugmentedRpcMarketList, MarketList, MarketsListQuery } from '../../types'
 
 /**
  * Query for a list of markets.

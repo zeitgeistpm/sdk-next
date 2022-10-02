@@ -5,7 +5,7 @@ import { object, optional, union, array, literal, string } from 'superstruct'
  * @note If the market doest not adhere to this type the market will not be properly
  * indexed by the Zeitgeist indexer and might not show up in the Zeitgeist.pm application.
  */
-export type Metadata = {
+export type MarketMetadata = {
   /**
    * The short name for the market, ex. 'TEAM 1 v.s TEAM 2'.
    */

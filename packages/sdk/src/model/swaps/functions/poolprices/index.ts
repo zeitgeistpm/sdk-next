@@ -1,7 +1,7 @@
 import { HistoricalAssetOrderByInput } from '@zeitgeistpm/indexer'
 import { project, range, zip } from '@zeitgeistpm/utility/dist/array'
 import { BigNumber } from 'bignumber.js'
-import { Metadata } from '../../../../meta/market'
+import { Metadata } from 'meta/types'
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import {

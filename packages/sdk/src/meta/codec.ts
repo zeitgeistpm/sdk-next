@@ -2,7 +2,7 @@ import { StructError, validate } from 'superstruct'
 import type { AnyJson } from '@polkadot/types/types'
 import type { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
-import { Metadata, IOMarketMetadata } from '.'
+import { Metadata, IOMetadata } from './types'
 
 /**
  * Official Zeitgeist metadata specification codec.
@@ -10,18 +10,18 @@ import { Metadata, IOMarketMetadata } from '.'
  *
  * @note Use this to ensure your markets are compatible with the official zeitgeist frontend.
  *
- * @type Codec<AnyJson, Metadata, StructError>
+ * @type Codec<AnyJson, MarketMetadata, StructError>
  */
 export const MarketMetadataCodec: Codec<AnyJson, Metadata, StructError> = {
   encode: input => {
-    const [error, encoded] = validate(input, IOMarketMetadata)
+    const [error, encoded] = validate(input, IOMetadata)
     if (encoded) {
       return either(right(encoded))
     }
     return either(left(error))
   },
   decode: output => {
-    const [error, encoded] = validate(output, IOMarketMetadata)
+    const [error, encoded] = validate(output, IOMetadata)
     if (encoded) {
       return either(right(encoded as AnyJson))
     }

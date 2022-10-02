@@ -1,4 +1,4 @@
-import { Metadata } from '../../meta/market'
+import { Metadata } from 'meta/types'
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import { RpcContext } from '../../context'

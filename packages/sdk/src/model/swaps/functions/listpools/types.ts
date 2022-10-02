@@ -1,7 +1,7 @@
 import type { PoolOrderByInput, PoolWhereInput } from '@zeitgeistpm/indexer/dist'
-import { Metadata } from 'meta/market'
+import { Metadata } from 'meta/types'
 import { Context, IndexerContext, RpcContext } from '../../../../context'
-import { IndexedPool, Pool, RpcPool } from '../../pool'
+import { Pool } from '../../pool'
 
 /**
  * List of Pools.

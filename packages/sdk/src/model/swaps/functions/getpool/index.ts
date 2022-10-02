@@ -1,4 +1,4 @@
-import { Metadata } from 'meta/market'
+import { Metadata } from 'meta/types'
 import { EMPTY, Observable } from 'rxjs'
 import {
   Context,
@@ -7,8 +7,8 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
-import { PoolGetQuery, isMarketIdQuery } from '../../types'
-import { Pool, IndexedPool, RpcPool } from '../../pool'
+import { IndexedPool, Pool, RpcPool } from '../../pool'
+import { isMarketIdQuery, PoolGetQuery } from '../../types'
 
 /**
  * Fetch a pool by its market id or pool id.

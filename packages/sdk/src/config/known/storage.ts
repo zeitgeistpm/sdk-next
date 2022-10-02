@@ -1,11 +1,11 @@
 import { IPFS } from '@zeitgeistpm/web3.storage'
-import { Metadata } from '../../meta/market'
+import { MarketMetadata } from '../../meta/market'
 
 /**
  * Default IPFS metadata storage for the zeitgeist ecosystem.
  * @typeof IPFS.storage<MarketMetadata>
  */
-export const ZeitgeistIpfs = IPFS.storage<Metadata>({
+export const ZeitgeistIpfs = IPFS.storage<MarketMetadata>({
   node: { url: 'http://ipfs.zeitgeist.pm:5001' },
   cluster: {
     url: 'https://ipfs-cluster.zeitgeist.pm',

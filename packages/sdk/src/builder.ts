@@ -1,5 +1,6 @@
 import { assign } from '@zeitgeistpm/utility/dist/observable/operators'
-import { Metadata } from 'meta/market'
+import { MarketMetadata } from 'meta/market'
+import { Metadata } from 'meta/types'
 import { from, merge, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'

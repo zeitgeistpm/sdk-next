@@ -1,5 +1,5 @@
-import { Metadata } from 'meta/market'
-import { EMPTY, Observable } from 'rxjs'
+import { Metadata } from 'meta/types'
+import { Observable } from 'rxjs'
 import {
   Context,
   IndexerContext,
@@ -8,7 +8,7 @@ import {
   RpcContext,
 } from '../../../../context'
 import { augment } from '../../market'
-import { Market, RpcMarket, IndexedMarket } from '../../types'
+import { IndexedMarket, Market } from '../../types'
 import { MarketGetQuery } from './types'
 
 /**

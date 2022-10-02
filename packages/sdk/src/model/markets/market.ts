@@ -7,9 +7,10 @@ import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
+import { Metadata } from 'meta/types'
 import { Context, RpcContext } from '../../context'
+import { MarketMetadata } from '../../meta/market'
 import { Data } from '../../primitives'
-import { Metadata } from '../../meta/market'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -46,11 +47,11 @@ export type RpcMarket<M = Metadata> = ZeitgeistPrimitivesMarket & {
  * Expanded market with assigned metadata. If the metadata type
  * is the official zeitgeist metadata it will be the same as the indexed data type.
  *
- * @generic M = MarketMetadata
+ * @generic M = Metadata
  */
-export type ExpandedMarket<M = Metadata> = M extends Metadata
+export type ExpandedMarket<M = Metadata> = M extends MarketMetadata
   ? IndexedMarket
-  : Omit<IndexedMarket, keyof Metadata> & M
+  : Omit<IndexedMarket, keyof MarketMetadata> & M
 
 /**
  * Typeguard for rpc markets.

@@ -1,7 +1,7 @@
+import { Metadata } from 'meta/types'
+import { Context } from '../context'
 import type { Markets } from './markets/types'
 import type { Swaps } from './swaps/types'
-import { Context } from '../context'
-import { Metadata } from '../meta/market'
 
 export * from './markets/types'
 export * from './swaps/types'

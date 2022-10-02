@@ -1,4 +1,4 @@
-import { Metadata } from 'meta/market'
+import { Metadata } from 'meta/types'
 import {
   Context,
   FullContext,

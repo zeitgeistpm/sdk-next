@@ -1,15 +1,15 @@
+import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { Metadata } from 'meta/types'
+import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
+import { Market } from '../types'
 import { CreateMarketParams, CreateMarketResult } from './functions/create/types'
 import { MarketGetQuery } from './functions/get/types'
 import { MarketList, MarketsListQuery } from './functions/list/types'
-import { Metadata } from '../../meta/market'
-import { Market } from '../types'
-import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { Observable } from 'rxjs'
 
-export * from './market'
 export * from './functions/create/types'
 export * from './functions/list/types'
+export * from './market'
 
 /**
  * Zeitgeist Markets model.

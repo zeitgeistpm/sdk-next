@@ -1,6 +1,6 @@
+import { Metadata } from 'meta/types'
 import { Context } from '../context'
 import * as Market from './markets'
-import { Metadata } from '../meta/market'
 import * as Swaps from './swaps'
 import { Model } from './types'
 

@@ -9,7 +9,7 @@ import { throws } from '@zeitgeistpm/utility/dist/error'
 import { useEffect, useState } from 'react'
 
 export const MarketList: React.FC<{ sdk: Partial<Sdk<Context>> }> = ({ sdk }) => {
-  const [markets, setMarkets] = useState<Market[]>([])
+  const [markets, setMarkets] = useState<Market<Sdk<Context>>[]>([])
 
   const load = async (sdk: Sdk<Context>) => {
     const { items } = await sdk.model.markets.list()

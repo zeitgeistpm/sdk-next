@@ -1,3 +1,4 @@
+import { Metadata } from 'meta/types'
 import {
   Context,
   IndexerContext,
@@ -6,9 +7,8 @@ import {
   RpcContext,
 } from '../../../../context'
 import { isPaginated } from '../../../../types/query'
-import { PoolList, PoolsListQuery, RpcPoolList } from '../../types'
 import { RpcPool } from '../../pool'
-import { Metadata } from 'meta/market'
+import { PoolList, PoolsListQuery, RpcPoolList } from '../../types'
 
 /**
  * Query for a list of pools.
