@@ -7,10 +7,6 @@ import { object, optional, union, array, literal, string } from 'superstruct'
  */
 export type MarketMetadata = {
   /**
-   * Tagged type market.
-   */
-  __type: 'market'
-  /**
    * The short name for the market, ex. 'TEAM 1 v.s TEAM 2'.
    */
   slug: string
