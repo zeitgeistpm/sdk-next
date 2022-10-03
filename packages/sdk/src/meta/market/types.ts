@@ -1,13 +1,13 @@
 import { array, Infer, literal, object, optional, string, union } from 'superstruct'
 
 export type MarketMetadata = Infer<typeof IOMarketMetadata>
-export type CategoryMetadata = Infer<typeof IOMarketMetadataCategory>
+export type CategoryMetadata = Infer<typeof IOMarketCategoryMetadata>
 export type ScalarRangeType = Infer<typeof IOScalarRangeType>
 
 /**
  * IO validation of Market Categories using superstruct
  */
-export const IOMarketMetadataCategory = object({
+export const IOMarketCategoryMetadata = object({
   name: string(),
   ticker: optional(string()),
   img: optional(string()),
@@ -30,5 +30,5 @@ export const IOMarketMetadata = object({
   confidentialId: optional(string()),
   img: optional(string()),
   scalarType: optional(union([literal('date'), literal('number')])),
-  categories: optional(array(IOMarketMetadataCategory)),
+  categories: optional(array(IOMarketCategoryMetadata)),
 })

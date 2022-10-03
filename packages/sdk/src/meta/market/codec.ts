@@ -1,7 +1,7 @@
-import { StructError, object, optional, union, array, literal, validate, string } from 'superstruct'
 import type { AnyJson } from '@polkadot/types/types'
 import type { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
+import { StructError, validate } from 'superstruct'
 import { IOMarketMetadata, MarketMetadata } from '.'
 
 /**
