@@ -1,5 +1,6 @@
+import { MarketMetadata } from 'meta/market'
 import { FullConfig, IndexerConfig, RpcConfig } from '../types'
-import { zeitgeistIpfs } from './storage'
+import { ZeitgeistIpfs } from './storage'
 import { KnownPreset, KnownPresets } from './types'
 import { SupportedParachain } from './types'
 
@@ -9,12 +10,12 @@ export * from './types'
  * Connect to the mainnet rpc and indexer
  * @returns KnownPreset<FullConfig>
  */
-export const mainnet = (): KnownPreset<FullConfig> => {
+export const mainnet = <M = MarketMetadata>(): KnownPreset<FullConfig<M>> => {
   return {
     preset: KnownPresets.mainnet,
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
     indexer: indexers.zeitgeist.uri,
-    storage: zeitgeistIpfs,
+    storage: ZeitgeistIpfs<M>(),
   }
 }
 
@@ -22,11 +23,11 @@ export const mainnet = (): KnownPreset<FullConfig> => {
  * Connect to the mainnet rpc only
  * @returns KnownPreset<RpcConfig>
  */
-export const mainnetRpc = (): KnownPreset<RpcConfig> => {
+export const mainnetRpc = <M = MarketMetadata>(): KnownPreset<RpcConfig<M>, M> => {
   return {
     preset: KnownPresets.mainnetRpc,
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
-    storage: zeitgeistIpfs,
+    storage: ZeitgeistIpfs<M>(),
   }
 }
 
@@ -45,12 +46,12 @@ export const mainnetIndexer = (): KnownPreset<IndexerConfig> => {
  * Connect to the batterystation testnet rpc and indexer.
  * @returns KnownPreset<FullConfig>
  */
-export const batterystation = (): KnownPreset<FullConfig> => {
+export const batterystation = <M = MarketMetadata>(): KnownPreset<FullConfig<M>> => {
   return {
     preset: KnownPresets.bsr,
     provider: [rpcs.bsr.uri],
     indexer: indexers.bsr.uri,
-    storage: zeitgeistIpfs,
+    storage: ZeitgeistIpfs<M>(),
   }
 }
 
@@ -58,11 +59,11 @@ export const batterystation = (): KnownPreset<FullConfig> => {
  * Connect to the batterystation rpc only
  * @returns KnownPreset<RpcConfig>
  */
-export const batterystationRpc = (): KnownPreset<RpcConfig> => {
+export const batterystationRpc = <M = MarketMetadata>(): KnownPreset<RpcConfig<M>, M> => {
   return {
     preset: KnownPresets.bsrRpc,
     provider: [rpcs.bsr.uri],
-    storage: zeitgeistIpfs,
+    storage: ZeitgeistIpfs<M>(),
   }
 }
 

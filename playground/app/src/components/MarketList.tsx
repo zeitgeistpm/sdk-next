@@ -17,8 +17,11 @@ export const MarketList: React.FC<{ sdk: Partial<Sdk<Context>> }> = ({ sdk }) =>
   }
 
   useEffect(() => {
-    if (isRpcSdk(sdk) || isIndexedSdk(sdk)) {
+    if (isRpcSdk(sdk)) {
       load(sdk)
+      sdk.model.markets.create({
+        metadata: {},
+      })
     }
   }, [sdk])
 

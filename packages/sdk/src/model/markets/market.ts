@@ -74,7 +74,7 @@ export const augment = <M = MarketMetadata>(
 
   augmented.fetchMetadata = async () => {
     const hex = augmented.metadata.toHex()
-    return context.storage.get(new CID('f0155' + hex.slice(2)) as any)
+    return context.storage.markets.get(new CID('f0155' + hex.slice(2)) as any)
   }
 
   augmented.expand = Te.from<IndexedMarket>(async () => {

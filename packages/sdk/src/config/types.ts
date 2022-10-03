@@ -1,13 +1,14 @@
 import type { CID } from 'ipfs-http-client'
-import { MetadataStorage } from '@zeitgeistpm/web3.storage/dist'
+import { Storage } from '@zeitgeistpm/web3.storage/dist'
 import { MarketMetadata } from '../meta/market'
+import { MetadataStorage } from 'meta/types'
 
 export * from './known'
 
 /**
  * Union type of possible configurations.
  */
-export type Config = FullConfig | (RpcConfig | IndexerConfig)
+export type Config<M = MarketMetadata> = FullConfig<M> | (RpcConfig<M> | IndexerConfig)
 
 export type BaseConfig = {
   /**
@@ -20,9 +21,9 @@ export type BaseConfig = {
   connectionRetries?: number
 }
 
-export type FullConfig = RpcConfig & IndexerConfig
+export type FullConfig<M = MarketMetadata> = RpcConfig<M> & IndexerConfig
 
-export type RpcConfig = BaseConfig & {
+export type RpcConfig<M = MarketMetadata> = BaseConfig & {
   /**
    * Rpc provider(s), uri or list of uris.
    */
@@ -30,7 +31,7 @@ export type RpcConfig = BaseConfig & {
   /**
    * Storage provider for metadata
    */
-  storage: MetadataStorage<MarketMetadata, CID>
+  storage: MetadataStorage<M>
 }
 
 export type IndexerConfig = BaseConfig & {

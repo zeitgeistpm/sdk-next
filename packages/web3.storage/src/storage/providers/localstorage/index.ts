@@ -3,7 +3,7 @@ import { from } from '@zeitgeistpm/utility/dist/option'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
 import { Codec } from '@zeitgeistpm/utility/dist/codec'
-import { MetadataStorage } from '../..'
+import { Storage } from '../..'
 
 /**
  *
@@ -12,7 +12,7 @@ import { MetadataStorage } from '../..'
  *
  * @generic T - type of metadata
  */
-export const storage = <T>(codec: Codec<string, T> = JsonCodec()): MetadataStorage<T, string> => {
+export const storage = <T>(codec: Codec<string, T> = JsonCodec()): Storage<T, string> => {
   return {
     put: async data => {
       try {
