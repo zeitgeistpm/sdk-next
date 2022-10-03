@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import { MarketComponent } from './Market'
 
 type CustomMarketMetadata = {
-  foo: 'bar'
+  foo: `foo ${string}`
 }
 
 type CustomComment = {
@@ -62,7 +62,7 @@ const CustomStorage: React.FC = () => {
 
   useEffect(() => {
     if (sdk) {
-      sdk.model.markets.get({ marketId: 0 }).then(market => {
+      sdk.model.markets.get({ marketId: 1 }).then(market => {
         console.log(market)
         market.expand().then(m => {
           const market = m.unright().unwrap()
@@ -99,7 +99,7 @@ const CustomStorage: React.FC = () => {
     const a = await sdk.model.markets.create({
       ...params,
       metadata: {
-        foo: 'bar',
+        foo: 'foo something or other',
       },
     })
 

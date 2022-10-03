@@ -1,6 +1,3 @@
-import type { CID } from 'ipfs-http-client'
-import { Storage } from '@zeitgeistpm/web3.storage/dist'
-import { MarketMetadata } from '../meta/market'
 import { MetadataStorage } from 'meta/types'
 
 export * from './known'
