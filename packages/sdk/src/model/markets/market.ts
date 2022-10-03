@@ -11,6 +11,7 @@ import { Context, RpcContext } from '../../context'
 import { Data } from '../../primitives'
 import { MarketMetadata } from '../../meta/market'
 import { MetadataStorage } from 'meta'
+import { Storage } from '@zeitgeistpm/web3.storage'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -33,7 +34,10 @@ export type IndexedMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type AugmentedRpcMarket<M extends MetadataStorage> = ZeitgeistPrimitivesMarket & {
+export type AugmentedRpcMarket<
+  M extends MetadataStorage,
+  Md = M['markets'] extends Storage<infer T> ? T : never,
+> = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -41,12 +45,16 @@ export type AugmentedRpcMarket<M extends MetadataStorage> = ZeitgeistPrimitivesM
   /**
    * Fetch metadata from external storage(default IPFS).
    */
-  fetchMetadata: () => Promise<EitherInterface<Error, M>>
+  fetchMetadata: () => Promise<EitherInterface<Error, Md>>
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
-  expand: () => Promise<EitherInterface<Error, IndexedMarket>>
+  expand: () => Promise<
+    EitherInterface<Error, Md extends MarketMetadata ? IndexedMarket : IndexedBase & Md>
+  >
 }
+
+export type IndexedBase = Omit<IndexedMarket, keyof MarketMetadata>
 
 /**
  * Typeguard for rpc markets.
@@ -81,7 +89,7 @@ export const augment = <M extends MetadataStorage>(
     return context.storage.markets.get(new CID('f0155' + hex.slice(2)) as any) as any
   }
 
-  augmented.expand = Te.from<IndexedMarket>(async () => {
+  augmented.expand = Te.from(async () => {
     const [metadata, poolId, end] = await Promise.all([
       augmented.fetchMetadata().then(m => m.unrightOr(throws)),
       context.api.query.marketCommons.marketPool(id),
@@ -104,7 +112,7 @@ export const augment = <M extends MetadataStorage>(
       disputeMechanism: market.disputeMechanism.toHuman() as IndexedMarket['disputeMechanism'],
       report: market.report.toHuman() as IndexedMarket['report'],
       resolvedOutcome: market.resolvedOutcome.toHuman() as IndexedMarket['resolvedOutcome'],
-      ...metadata,
+      ...(metadata as any),
     }
   })
 

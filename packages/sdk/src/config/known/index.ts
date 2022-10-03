@@ -24,10 +24,7 @@ export const mainnet = <M extends MetadataStorage>(): KnownPreset<FullConfig<M>,
  * Connect to the mainnet rpc only
  * @returns KnownPreset<RpcConfig>
  */
-export const mainnetRpc = <M extends MetadataStorage<MarketMetadata, Comment>>(): KnownPreset<
-  RpcConfig<M>,
-  M
-> => {
+export const mainnetRpc = <M extends MetadataStorage>(): KnownPreset<RpcConfig<M>, M> => {
   return {
     preset: KnownPresets.mainnetRpc,
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
@@ -39,10 +36,7 @@ export const mainnetRpc = <M extends MetadataStorage<MarketMetadata, Comment>>()
  * Connect to the mainnet indexer only.
  * @returns KnownPreset<IndexerConfig>
  */
-export const mainnetIndexer = <M extends MetadataStorage<MarketMetadata, Comment>>(): KnownPreset<
-  IndexerConfig,
-  M
-> => {
+export const mainnetIndexer = <M extends MetadataStorage>(): KnownPreset<IndexerConfig, M> => {
   return {
     preset: KnownPresets.mainnetIndexer,
     indexer: indexers.zeitgeist.uri,
@@ -53,10 +47,7 @@ export const mainnetIndexer = <M extends MetadataStorage<MarketMetadata, Comment
  * Connect to the batterystation testnet rpc and indexer.
  * @returns KnownPreset<FullConfig>
  */
-export const batterystation = <M extends MetadataStorage<MarketMetadata, Comment>>(): KnownPreset<
-  FullConfig<M>,
-  M
-> => {
+export const batterystation = <M extends MetadataStorage>(): KnownPreset<FullConfig<M>, M> => {
   return {
     preset: KnownPresets.bsr,
     provider: [rpcs.bsr.uri],
@@ -69,10 +60,7 @@ export const batterystation = <M extends MetadataStorage<MarketMetadata, Comment
  * Connect to the batterystation rpc only
  * @returns KnownPreset<RpcConfig>
  */
-export const batterystationRpc = <M extends MetadataStorage<MarketMetadata, Comment>>(): KnownPreset<
-  RpcConfig<M>,
-  M
-> => {
+export const batterystationRpc = <M extends MetadataStorage>(): KnownPreset<RpcConfig<M>, M> => {
   return {
     preset: KnownPresets.bsrRpc,
     provider: [rpcs.bsr.uri],
@@ -84,9 +72,7 @@ export const batterystationRpc = <M extends MetadataStorage<MarketMetadata, Comm
  * Connect to the batterystation indexer only
  * @returns KnownPreset<IndexerConfig>
  */
-export const batterystationIndexer = <
-  M extends MetadataStorage<MarketMetadata, Comment>,
->(): KnownPreset<IndexerConfig, M> => {
+export const batterystationIndexer = <M extends MetadataStorage>(): KnownPreset<IndexerConfig, M> => {
   return {
     preset: KnownPresets.bsrIndexer,
     indexer: indexers.bsr.uri,

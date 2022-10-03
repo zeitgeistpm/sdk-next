@@ -24,21 +24,21 @@ import { MetadataStorage } from 'meta'
  */
 export const create = async <
   C extends RpcContext<M> | FullContext<M>,
-  P extends CreateMarketParams,
   M extends MetadataStorage,
+  P extends CreateMarketParams<M>,
 >(
   context: C,
   params: P,
-): Promise<CreateMarketResult<P>> => {
+): Promise<CreateMarketResult<M, P>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
-  const cid = (await context.storage.markets.put(params.metadata)).unright().unwrap()
+  const cid = (await context.storage.markets.put(params.metadata as any)).unright().unwrap()
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
       params.oracle,
       params.period,
-      cid.multihash.bytes,
+      { Sha3_384: cid.multihash.bytes },
       params.marketType,
       params.disputeMechanism,
       params.pool.swapFee,
@@ -49,7 +49,7 @@ export const create = async <
     tx = context.api.tx.predictionMarkets.createMarket(
       params.oracle,
       params.period,
-      cid.multihash.bytes,
+      { Sha3_384: cid.multihash.bytes },
       params.creationType,
       params.marketType,
       params.disputeMechanism,
@@ -82,14 +82,14 @@ export const create = async <
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
 const extract =
-  <P extends CreateMarketParams, M extends MetadataStorage>(
+  <C extends RpcContext<M>, M extends MetadataStorage, P extends CreateMarketParams<M>>(
     context: RpcContext<M>,
     result: ISubmittableResult,
     params: P,
   ) =>
   () =>
     either(
-      tryCatch<Error, CreateMarketData<P>>(() => {
+      tryCatch<Error, CreateMarketData<M, P>>(() => {
         const createdMarket = extractMarketCreationEventForAddress(
           context.api,
           result.events,
@@ -105,7 +105,7 @@ const extract =
         return {
           market: createdMarket,
           pool: createdPool,
-        } as CreateMarketData<P>
+        } as CreateMarketData<M, P>
       }),
     )
 

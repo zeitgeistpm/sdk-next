@@ -24,7 +24,7 @@ export const markets = <C extends Context<M>, M extends MetadataStorage>(ctx: C)
 
   const rpc: MarketsRpc<RpcContext<M>, M> | null = isRpcContext(ctx)
     ? {
-        create: <P extends CreateMarketParams>(params: P) => create(ctx, params),
+        create: <P extends CreateMarketParams<M>>(params: P) => create(ctx, params),
         get: pfunctor((query: MarketGetQuery) => get<RpcContext<M>, M>(ctx, query), {
           $: (query: MarketGetQuery) => get$<M>(ctx, query),
         }),

@@ -27,7 +27,7 @@ import {
  * @param config FullConfig - Rpc and indexer config
  * @returns Promise<Sdk<FullContext>>
  */
-export async function create<M extends MetadataStorage = MetadataStorage<MarketMetadata, Comment>>(
+export async function create<M extends MetadataStorage>(
   config: FullConfig<M>,
 ): Promise<Sdk<FullContext<M>, M>>
 /**
@@ -38,9 +38,9 @@ export async function create<M extends MetadataStorage = MetadataStorage<MarketM
  * @param config IndexerConfig - Config for the indexer
  * @returns Promise<Sdk<IndexerContext>>
  */
-export async function create<M extends MetadataStorage = MetadataStorage<MarketMetadata, Comment>>(
+export async function create<M extends MetadataStorage>(
   config: IndexerConfig,
-): Promise<Sdk<IndexerContext<M>, M>>
+): Promise<Sdk<IndexerContext, M>>
 /**
  * Create an instance of the zeitgeist sdk with only rpc features.
  *
@@ -49,12 +49,10 @@ export async function create<M extends MetadataStorage = MetadataStorage<MarketM
  * @param config RpcConfig - Config for the rpc node
  * @returns Promise<Sdk<RpcContext>>
  */
-export async function create<M extends MetadataStorage = MetadataStorage<MarketMetadata, Comment>>(
+export async function create<M extends MetadataStorage>(
   config: RpcConfig<M>,
 ): Promise<Sdk<RpcContext<M>, M>>
-export async function create<M extends MetadataStorage = MetadataStorage<MarketMetadata, Comment>>(
-  config: Config<M>,
-): Promise<Sdk<Context<M>, M>> {
+export async function create<M extends MetadataStorage>(config: Config<M>) {
   assert(
     isFullConfig<M>(config) || isRpcConfig<M>(config) || isIndexerConfig<M>(config),
     () =>
@@ -81,7 +79,7 @@ export async function create<M extends MetadataStorage = MetadataStorage<MarketM
       ...indexer,
     }
 
-    const model = Model.model<FullContext<M>, M>(context)
+    const model = Model.model(context)
 
     return {
       ...context,
@@ -93,8 +91,8 @@ export async function create<M extends MetadataStorage = MetadataStorage<MarketM
       config,
       'warn',
     )
-    const context: IndexerContext<M> = await createIndexerContext(config)
-    const model = Model.model<IndexerContext<M>, M>(context)
+    const context: IndexerContext = await createIndexerContext(config)
+    const model = Model.model(context)
 
     return {
       ...context,
@@ -103,7 +101,7 @@ export async function create<M extends MetadataStorage = MetadataStorage<MarketM
   } else {
     debug(`Using only rpc, querying data might be more limited and/or slower.`, config, 'warn')
     const context: RpcContext<M> = await createRpcContext(config)
-    const model = Model.model<RpcContext<M>, M>(context)
+    const model = Model.model(context)
 
     return {
       ...context,
@@ -160,9 +158,7 @@ export const createRpcContext = async <M extends MetadataStorage>(
  * @param config IndexerConfig
  * @returns Promise<IndexerContext>
  */
-export const createIndexerContext = async <M extends MetadataStorage>(
-  config: IndexerConfig,
-): Promise<IndexerContext<M>> => {
+export const createIndexerContext = async (config: IndexerConfig): Promise<IndexerContext> => {
   debug(`connecting to indexer: ${config.indexer}`, config)
 
   const indexer = Indexer.create({ uri: config.indexer })

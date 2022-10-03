@@ -8,12 +8,15 @@ import { MetadataStorage } from 'meta/types'
 /**
  * Union type that can be either rpc, indexer or full context.
  */
-export type Context<M extends MetadataStorage> = FullContext<M> | RpcContext<M> | IndexerContext<M>
+export type Context<M extends MetadataStorage = MetadataStorage> =
+  | FullContext<M>
+  | RpcContext<M>
+  | IndexerContext
 
 /**
  * Zeitgeist SDK context with both rpc and indexer features enabled.
  */
-export type FullContext<M extends MetadataStorage> = RpcContext<M> & IndexerContext<M>
+export type FullContext<M extends MetadataStorage> = RpcContext<M> & IndexerContext
 
 /**
  * Zeitgeist SDK context with rpc and storage features enabled.
@@ -27,7 +30,7 @@ export type RpcContext<M extends MetadataStorage> = {
 /**
  * Zeitgeist SDK context with indexer features enabled.
  */
-export type IndexerContext<M extends MetadataStorage> = {
+export type IndexerContext = {
   indexer: ZeitgeistIndexer
 }
 
@@ -55,7 +58,5 @@ export const isRpcContext = <M extends MetadataStorage>(ctx?: unknown): ctx is R
  * @param ctx unknown
  * @returns config is IndexerContext
  */
-export const isIndexerContext = <M extends MetadataStorage>(
-  ctx?: unknown,
-): ctx is IndexerContext<M> =>
+export const isIndexerContext = (ctx?: unknown): ctx is IndexerContext =>
   Boolean(ctx && typeof ctx === 'object' && ctx !== null && 'indexer' in ctx)

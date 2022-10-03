@@ -17,7 +17,7 @@ export * from './functions/list/types'
  * Query and create markets.
  */
 export type Markets<C extends Context<M>, M extends MetadataStorage> = MarketsShared<C, M> &
-  MarketsRpc<C, M>
+  (C extends RpcContext<M> ? MarketsRpc<C, M> : never)
 
 export type MarketsShared<C extends Context<M>, M extends MetadataStorage> = {
   /**
@@ -30,22 +30,20 @@ export type MarketsShared<C extends Context<M>, M extends MetadataStorage> = {
   get: (query: MarketGetQuery) => Promise<Market<C, M>>
 }
 
-export type MarketsRpc<C extends Context<M>, M extends MetadataStorage> = C extends RpcContext<M>
-  ? {
+export type MarketsRpc<C extends RpcContext<M>, M extends MetadataStorage> = {
+  /**
+   * Create a market. Only available when connecting to rpc.
+   */
+  create: {
+    (params: CreateMarketParams<M>): Promise<CreateMarketResult<M, CreateMarketParams<M>>>
+  }
+  get: PFunctor<
+    MarketsShared<C, M>['get'],
+    {
       /**
-       * Create a market. Only available when connecting to rpc.
+       * Stream pool prices from the node
        */
-      create: {
-        <P extends CreateMarketParams>(params: P): Promise<CreateMarketResult<P>>
-      }
-      get: PFunctor<
-        MarketsShared<C, M>['get'],
-        {
-          /**
-           * Stream pool prices from the node
-           */
-          $: (query: MarketGetQuery) => Observable<Market<RpcContext<M>, M>>
-        }
-      >
+      $: (query: MarketGetQuery) => Observable<Market<RpcContext<M>, M>>
     }
-  : {}
+  >
+}
