@@ -1,6 +1,6 @@
 import type { CID } from 'ipfs-http-client'
 import { MetadataStorage } from '@zeitgeistpm/web3.storage/dist'
-import { MarketMetadata } from '../model/markets/meta/types'
+import { MarketMetadata } from '../meta/market'
 
 export * from './known'
 
@@ -43,7 +43,8 @@ export type IndexerConfig = BaseConfig & {
 export const isFullConfig = (config: Config): config is FullConfig =>
   isRpcConfig(config) && isIndexerConfig(config)
 
-export const isRpcConfig = (config?: Config): config is RpcConfig => Boolean(config && 'provider' in config)
+export const isRpcConfig = (config?: Config): config is RpcConfig =>
+  Boolean(config && 'provider' in config)
 
 export const isIndexerConfig = (config?: Config): config is IndexerConfig =>
   Boolean(config && 'indexer' in config && typeof config.indexer === 'string')

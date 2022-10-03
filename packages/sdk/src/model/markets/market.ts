@@ -9,7 +9,7 @@ import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
 import { Context, RpcContext } from '../../context'
 import { Data } from '../../primitives'
-import { MarketMetadata } from './meta/types'
+import { MarketMetadata } from '../../meta/market'
 
 export * from './functions/create/types'
 export * from './functions/list/types'

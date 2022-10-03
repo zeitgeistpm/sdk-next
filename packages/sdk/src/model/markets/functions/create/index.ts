@@ -10,7 +10,7 @@ import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 import { FullContext, RpcContext } from '../../../../context'
-import { MarketMetadata } from '../../meta/types'
+import { MarketMetadata } from '../../../../meta/market'
 
 /**
  * Create a market on chain.
@@ -89,7 +89,9 @@ const extract =
         ).unrightOr(throws)
 
         const createdPool = isWithPool(params)
-          ? extractPoolCreationEventForMarket(context.api, result.events, createdMarket[0]).unrightOr(throws)
+          ? extractPoolCreationEventForMarket(context.api, result.events, createdMarket[0]).unrightOr(
+              throws,
+            )
           : undefined
 
         return {
@@ -153,7 +155,9 @@ const extractMarketCreationEventForAddress = (
       }
     }
   }
-  return either(left(new Error('No market creation event found on finalized block. Should not happen.')))
+  return either(
+    left(new Error('No market creation event found on finalized block. Should not happen.')),
+  )
 }
 
 /**
@@ -180,7 +184,9 @@ const extractPoolCreationEventForMarket = (
   }
   return either(
     left(
-      new Error('No pool creation event found on finalized block. Should not happen when creating with pool.'),
+      new Error(
+        'No pool creation event found on finalized block. Should not happen when creating with pool.',
+      ),
     ),
   )
 }

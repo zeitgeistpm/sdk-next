@@ -1,4 +1,4 @@
-import { MarketMetadata } from 'model/markets/meta/types'
+import { MarketMetadata } from 'meta/market'
 import { EMPTY, Observable } from 'rxjs'
 import {
   Context,

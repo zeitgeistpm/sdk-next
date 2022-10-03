@@ -2,7 +2,7 @@ import { StructError, object, optional, union, array, literal, validate, string 
 import type { AnyJson } from '@polkadot/types/types'
 import type { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
-import { MarketMetadata } from './types'
+import { IOMarketMetadata, MarketMetadata } from '.'
 
 /**
  * Official Zeitgeist metadata specification codec.
@@ -15,40 +15,16 @@ import { MarketMetadata } from './types'
 export const ZeitgeistMetadataCodec: Codec<AnyJson, MarketMetadata, StructError> = {
   encode: input => {
     const [error, encoded] = validate(input, IOMarketMetadata)
-    if (IOMarketMetadata.is(encoded)) {
+    if (encoded) {
       return either(right(encoded))
     }
-    return either(left(error as StructError))
+    return either(left(error))
   },
   decode: output => {
     const [error, encoded] = validate(output, IOMarketMetadata)
-    if (IOMarketMetadata.is(encoded)) {
+    if (encoded) {
       return either(right(encoded as AnyJson))
     }
-    return either(left(error as StructError))
+    return either(left(error))
   },
 }
-
-/**
- * IO validation of Market Categories using superstruct
- */
-export const IOMarketMetadataCategory = object({
-  name: string(),
-  ticker: optional(string()),
-  img: optional(string()),
-  color: optional(string()),
-})
-
-/**
- * IO validation of Market metadata object using superstruct
- */
-export const IOMarketMetadata = object({
-  slug: string(),
-  description: string(),
-  question: string(),
-  tags: optional(array(string())),
-  confidentialId: optional(string()),
-  img: optional(string()),
-  scalarType: optional(union([literal('date'), literal('number')])),
-  categories: optional(array(IOMarketMetadataCategory)),
-})
