@@ -1,3 +1,4 @@
+import { TaggedMarketMetadata } from 'meta/types'
 import { object, optional, union, array, literal, string } from 'superstruct'
 
 /**
@@ -5,7 +6,7 @@ import { object, optional, union, array, literal, string } from 'superstruct'
  * @note If the market doest not adhere to this type the market will not be properly
  * indexed by the Zeitgeist indexer and might not show up in the Zeitgeist.pm application.
  */
-export type MarketMetadata = {
+export type MarketMetadata = TaggedMarketMetadata & {
   /**
    * The short name for the market, ex. 'TEAM 1 v.s TEAM 2'.
    */
@@ -85,6 +86,7 @@ export const IOMarketMetadataCategory = object({
  * IO validation of Market metadata object using superstruct
  */
 export const IOMarketMetadata = object({
+  __meta: literal('market'),
   slug: string(),
   description: string(),
   question: string(),

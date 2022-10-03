@@ -7,7 +7,7 @@ export * from './providers/ipfs/types'
  * A generic metadata type for on chain objects that
  * has metadata stored in some external storage like IPFS.
  */
-export type MetadataStorage<T, ID = string> = {
+export type Storage<T, ID = string> = {
   /**
    * Get item from storage
    *

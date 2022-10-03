@@ -1,4 +1,4 @@
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import {
   Context,
   IndexerContext,
@@ -19,7 +19,7 @@ import { PoolList, PoolsListQuery, RpcPoolList } from '../../types'
  * @param query ListQuery<C>
  * @returns Promise<PoolList<C>>
  */
-export const listPools = async <C extends Context<M>, M = Metadata>(
+export const listPools = async <C extends Context<M>, M extends TaggedMetadata = Metadata>(
   context: C,
   query: PoolsListQuery<C, M>,
 ): Promise<PoolList<C, M>> => {
@@ -46,7 +46,7 @@ const listFromIndexer = async (
  * Concrete listing function for rpc context
  * @private
  */
-const listFromRpc = async <C extends RpcContext<M>, M = Metadata>(
+const listFromRpc = async <C extends RpcContext<M>, M extends TaggedMetadata = Metadata>(
   { api }: RpcContext<M>,
   query?: PoolsListQuery<RpcContext>,
 ): Promise<PoolList<C, M>> => {

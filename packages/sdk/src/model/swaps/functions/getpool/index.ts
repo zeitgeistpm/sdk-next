@@ -1,4 +1,4 @@
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { EMPTY, Observable } from 'rxjs'
 import {
   Context,
@@ -19,7 +19,7 @@ import { isMarketIdQuery, PoolGetQuery } from '../../types'
  * @param query PoolGetQuery
  * @returns Promise<Pool<C>>
  */
-export const getPool = async <C extends Context<M>, M = Metadata>(
+export const getPool = async <C extends Context<M>, M extends TaggedMetadata = Metadata>(
   context: C,
   query: PoolGetQuery,
 ): Promise<Pool<C, M>> => {
@@ -48,7 +48,7 @@ const getFromIndexer = async (context: IndexerContext, query: PoolGetQuery): Pro
  * Concrete get function for rpc context
  * @private
  */
-const getFromRpc = async <M = Metadata>(
+const getFromRpc = async <M extends TaggedMetadata = Metadata>(
   context: RpcContext<M>,
   query: PoolGetQuery,
 ): Promise<RpcPool | null> => {

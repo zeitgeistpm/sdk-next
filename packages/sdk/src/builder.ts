@@ -1,5 +1,5 @@
 import { assign } from '@zeitgeistpm/utility/dist/observable/operators'
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { from, merge, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'
@@ -12,7 +12,7 @@ import { FullConfig, FullContext, Sdk } from './types'
  * @param config FullConfig
  * @returns Observable<Partial<Sdk<FullContext>>>
  */
-export const builder$ = <M = Metadata>(config: FullConfig<M>) => {
+export const builder$ = <M extends TaggedMetadata = Metadata>(config: FullConfig<M>) => {
   const context$ = merge(from(createIndexerContext(config)), from(createRpcContext(config)))
 
   const sdk$: Observable<Partial<Sdk<FullContext<M>, M>>> = context$.pipe(

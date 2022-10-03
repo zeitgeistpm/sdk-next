@@ -1,4 +1,4 @@
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import {
   Context,
   FullContext,
@@ -15,7 +15,7 @@ export * from './context/types'
 /**
  * Top level Zeitgeist SDK type.
  */
-export type Sdk<C extends Context<M>, M = Metadata> = C & {
+export type Sdk<C extends Context<M>, M extends TaggedMetadata = Metadata> = C & {
   /**
    * Enriched zeitgeist models with features for qyerying data on chain and indexer,
    * and for creating transaction flows with for example richer validation to ensure that
@@ -29,8 +29,9 @@ export type Sdk<C extends Context<M>, M = Metadata> = C & {
  * @param sdk
  * @returns sdk is Sdk<FullContext>
  */
-export const isFullSdk = <M = Metadata>(sdk: unknown): sdk is Sdk<FullContext<M>> =>
-  isIndexedSdk(sdk) && isRpcSdk(sdk)
+export const isFullSdk = <M extends TaggedMetadata = Metadata>(
+  sdk: unknown,
+): sdk is Sdk<FullContext<M>> => isIndexedSdk(sdk) && isRpcSdk(sdk)
 
 /**
  * Typeguard for indexer sdk
@@ -45,5 +46,6 @@ export const isIndexedSdk = (sdk: unknown): sdk is Sdk<IndexerContext> =>
  * @param sdk
  * @returns sdk is Sdk<RpcContext>
  */
-export const isRpcSdk = <M = Metadata>(sdk: unknown): sdk is Sdk<RpcContext<M>, M> =>
-  typeof sdk === 'object' && sdk !== null && isRpcContext(sdk)
+export const isRpcSdk = <M extends TaggedMetadata = Metadata>(
+  sdk: unknown,
+): sdk is Sdk<RpcContext<M>, M> => typeof sdk === 'object' && sdk !== null && isRpcContext(sdk)

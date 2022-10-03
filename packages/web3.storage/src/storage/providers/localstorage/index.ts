@@ -4,7 +4,7 @@ import { either, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import { from } from '@zeitgeistpm/utility/dist/option'
 import { CID } from 'ipfs-http-client'
-import { MetadataStorage } from '../..'
+import { Storage } from '../..'
 
 /**
  *
@@ -13,7 +13,7 @@ import { MetadataStorage } from '../..'
  *
  * @generic T - type of metadata
  */
-export const storage = <T>(codec: Codec<string, T> = JsonCodec()): MetadataStorage<T, CID> => {
+export const storage = <T>(codec: Codec<string, T> = JsonCodec()): Storage<T, CID> => {
   return {
     put: async data => {
       try {

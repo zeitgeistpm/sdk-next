@@ -1,6 +1,6 @@
 import { Codec } from '@polkadot/types/types'
 import { isCodec } from '@polkadot/util'
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { FullContext, IndexerContext, RpcContext } from '../context'
 
 /**
@@ -9,13 +9,13 @@ import { FullContext, IndexerContext, RpcContext } from '../context'
  * @gemeric C extends RpcContext<M> | IndexerContext | FullContext<M>,
  * @gemeric R extends Codec,
  * @gemeric I extends IndexedData,
- * @gemeric M = Metadata,
+ * @gemeric M extends TaggedMetadata = Metadata,
  */
 export declare type Data<
   C extends RpcContext<M> | IndexerContext | FullContext<M>,
   R extends Codec,
   I extends IndexedData,
-  M = Metadata,
+  M extends TaggedMetadata = Metadata,
 > = C extends IndexerContext ? I : R
 
 /**

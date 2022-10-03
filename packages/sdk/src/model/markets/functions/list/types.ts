@@ -1,6 +1,6 @@
 import type { MarketOrderByInput, MarketWhereInput } from '@zeitgeistpm/indexer'
 import type { Unpartial } from '@zeitgeistpm/utility/dist/object'
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { Context, IndexerContext } from '../../../../context'
 import { PaginationQuery } from '../../../../types/query'
 import { IndexedMarket, RpcMarket } from '../../types'
@@ -11,9 +11,10 @@ import { IndexedMarket, RpcMarket } from '../../types'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type MarketList<C extends Context<M>, M = Metadata> = C extends IndexerContext
-  ? FullMarketList
-  : AugmentedRpcMarketList<M>
+export type MarketList<
+  C extends Context<M>,
+  M extends TaggedMetadata = Metadata,
+> = C extends IndexerContext ? FullMarketList : AugmentedRpcMarketList<M>
 
 /**
  * Markets list Query type
@@ -21,9 +22,10 @@ export type MarketList<C extends Context<M>, M = Metadata> = C extends IndexerCo
  *
  * @generic C Context - the context to query in.
  */
-export type MarketsListQuery<C extends Context<M>, M = Metadata> = C extends IndexerContext
-  ? MarketsIndexerQuery
-  : MarketsRpcQuery
+export type MarketsListQuery<
+  C extends Context<M>,
+  M extends TaggedMetadata = Metadata,
+> = C extends IndexerContext ? MarketsIndexerQuery : MarketsRpcQuery
 
 /**
  * Concrete MarketList for indexed context
@@ -33,7 +35,7 @@ export type FullMarketList = { items: IndexedMarket[] }
 /**
  * Concrete MarketList for rpc context
  */
-export type AugmentedRpcMarketList<M = Metadata> = { items: RpcMarket<M>[] }
+export type AugmentedRpcMarketList<M extends TaggedMetadata = Metadata> = { items: RpcMarket<M>[] }
 
 /**
  * Concrete markets Query for rpc context

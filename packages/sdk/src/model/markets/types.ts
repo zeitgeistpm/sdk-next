@@ -1,5 +1,5 @@
 import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { Market } from '../types'
@@ -15,9 +15,10 @@ export * from './market'
  * Zeitgeist Markets model.
  * Query and create markets.
  */
-export type Markets<C extends Context<M>, M = Metadata> = MarketsShared<C, M> & MarketsRpc<C, M>
+export type Markets<C extends Context<M>, M extends TaggedMetadata = Metadata> = MarketsShared<C, M> &
+  MarketsRpc<C, M>
 
-export type MarketsShared<C extends Context<M>, M = Metadata> = {
+export type MarketsShared<C extends Context<M>, M extends TaggedMetadata = Metadata> = {
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.
    */
@@ -28,7 +29,10 @@ export type MarketsShared<C extends Context<M>, M = Metadata> = {
   get: (query: MarketGetQuery) => Promise<Market<C, M>>
 }
 
-export type MarketsRpc<C extends Context<M>, M = Metadata> = C extends RpcContext<M>
+export type MarketsRpc<
+  C extends Context<M>,
+  M extends TaggedMetadata = Metadata,
+> = C extends RpcContext<M>
   ? {
       /**
        * Create a market. Only available when connecting to rpc.

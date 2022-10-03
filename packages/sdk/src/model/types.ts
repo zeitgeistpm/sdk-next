@@ -1,4 +1,4 @@
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { Context } from '../context'
 import type { Markets } from './markets/types'
 import type { Swaps } from './swaps/types'
@@ -12,7 +12,7 @@ export * from './swaps/types'
  * require a rpc connection while querying markets etc have more fine graned query filters and ordering when connected
  * to the indexer.
  */
-export type Model<C extends Context<M>, M = Metadata> = {
+export type Model<C extends Context<M>, M extends TaggedMetadata = Metadata> = {
   /**
    * Model for interacting with zeitgeist markets.
    * Will also handle metadata storage if configured to do so.

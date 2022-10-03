@@ -8,7 +8,7 @@ import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/uti
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { CID } from 'ipfs-http-client'
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { RpcContext } from '../../../../context'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 
@@ -21,7 +21,11 @@ import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } 
  * @param params P
  * @returns void
  */
-export const create = async <C extends RpcContext<M>, P extends CreateMarketParams<M>, M = Metadata>(
+export const create = async <
+  C extends RpcContext<M>,
+  P extends CreateMarketParams<M>,
+  M extends TaggedMetadata = Metadata,
+>(
   context: C,
   params: P,
 ): Promise<CreateMarketResult<P, M>> => {
@@ -78,7 +82,7 @@ export const create = async <C extends RpcContext<M>, P extends CreateMarketPara
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
 const extract =
-  <P extends CreateMarketParams<M>, M = Metadata>(
+  <P extends CreateMarketParams<M>, M extends TaggedMetadata = Metadata>(
     context: RpcContext<M>,
     result: ISubmittableResult,
     params: P,
@@ -113,7 +117,7 @@ const extract =
  * @param metadata MarketMetadata,
  */
 const putMetadata = Te.from(
-  async <M = Metadata>(
+  async <M extends TaggedMetadata = Metadata>(
     context: RpcContext<M>,
     metadata: M,
   ): Promise<[CID | null, { Sha3_384: '0x' } | { Sha3_384: Uint8Array }]> => {
@@ -132,10 +136,12 @@ const putMetadata = Te.from(
  * @param context RpcContext
  * @param cid CID
  */
-const deleteMetadata = Te.from(async <M = Metadata>(context: RpcContext<M>, cid: CID) => {
-  if (!context.storage) return
-  await context.storage.del(cid)
-})
+const deleteMetadata = Te.from(
+  async <M extends TaggedMetadata = Metadata>(context: RpcContext<M>, cid: CID) => {
+    if (!context.storage) return
+    await context.storage.del(cid)
+  },
+)
 
 /**
  * Get the market creation event from the finalized block events.

@@ -6,7 +6,7 @@ import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { CID } from 'ipfs-http-client'
 import * as IPFSHttpClient from 'ipfs-http-client'
-import { MetadataStorage } from '../..'
+import { Storage } from '../..'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
 /**
@@ -19,7 +19,7 @@ import { IPFSConfiguration } from './types'
 export const storage = <T>(
   config: IPFSConfiguration,
   codec: Codec<string, T> = JsonCodec(),
-): MetadataStorage<T, CID> => {
+): Storage<T, CID> => {
   const node = IPFSHttpClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`
 

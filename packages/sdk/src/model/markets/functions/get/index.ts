@@ -1,4 +1,4 @@
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { Observable } from 'rxjs'
 import {
   Context,
@@ -20,7 +20,7 @@ import { MarketGetQuery } from './types'
  * @param query MarketQuery
  * @returns Promise<Market<C>>
  */
-export const get = async <C extends Context<M>, M = Metadata>(
+export const get = async <C extends Context<M>, M extends TaggedMetadata = Metadata>(
   context: C,
   query: MarketGetQuery,
 ): Promise<Market<C, M>> => {
@@ -50,7 +50,7 @@ const getFromIndexer = async (
  * Concrete get function for rpc context
  * @private
  */
-const getFromRpc = async <M = Metadata>(
+const getFromRpc = async <M extends TaggedMetadata = Metadata>(
   context: RpcContext<M>,
   query: MarketGetQuery,
 ): Promise<Market<RpcContext<M>, M> | null> => {
@@ -66,7 +66,7 @@ const getFromRpc = async <M = Metadata>(
  * @param query MarketGetQuery
  * @returns Observable<Market<RpcContext, M>>
  */
-export const get$ = <M = Metadata>(
+export const get$ = <M extends TaggedMetadata = Metadata>(
   context: RpcContext<M>,
   query: MarketGetQuery,
 ): Observable<Market<RpcContext<M>, M>> => {

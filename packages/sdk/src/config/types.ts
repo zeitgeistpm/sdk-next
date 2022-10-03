@@ -1,13 +1,13 @@
-import { MetadataStorage } from '@zeitgeistpm/web3.storage/dist'
+import { Storage } from '@zeitgeistpm/web3.storage/dist'
 import type { CID } from 'ipfs-http-client'
-import { Metadata } from 'meta/types'
+import { Metadata, MetadataStorage, TaggedMetadata } from 'meta/types'
 
 export * from './known'
 
 /**
  * Union type of possible configurations.
  */
-export type Config<M = Metadata> = FullConfig | (RpcConfig<M> | IndexerConfig)
+export type Config<M extends TaggedMetadata = Metadata> = FullConfig | (RpcConfig<M> | IndexerConfig)
 
 export type BaseConfig = {
   /**
@@ -20,9 +20,9 @@ export type BaseConfig = {
   connectionRetries?: number
 }
 
-export type FullConfig<M = Metadata> = RpcConfig<M> & IndexerConfig
+export type FullConfig<M extends TaggedMetadata = Metadata> = RpcConfig<M> & IndexerConfig
 
-export type RpcConfig<M = Metadata> = BaseConfig & {
+export type RpcConfig<M extends TaggedMetadata = Metadata> = BaseConfig & {
   /**
    * Rpc provider(s), uri or list of uris.
    */
@@ -30,7 +30,7 @@ export type RpcConfig<M = Metadata> = BaseConfig & {
   /**
    * Storage provider for metadata
    */
-  storage: MetadataStorage<M, CID>
+  storage: MetadataStorage<M>
 }
 
 export type IndexerConfig = BaseConfig & {
@@ -40,11 +40,15 @@ export type IndexerConfig = BaseConfig & {
   indexer: string
 }
 
-export const isFullConfig = <M = Metadata>(config: Config<M>): config is FullConfig<M> =>
-  isRpcConfig(config) && isIndexerConfig(config)
+export const isFullConfig = <M extends TaggedMetadata = Metadata>(
+  config: Config<M>,
+): config is FullConfig<M> => isRpcConfig(config) && isIndexerConfig(config)
 
-export const isRpcConfig = <M = Metadata>(config?: Config<M>): config is RpcConfig<M> =>
-  Boolean(config && 'provider' in config)
+export const isRpcConfig = <M extends TaggedMetadata = Metadata>(
+  config?: Config<M>,
+): config is RpcConfig<M> => Boolean(config && 'provider' in config)
 
-export const isIndexerConfig = <M = Metadata>(config?: Config<M>): config is IndexerConfig =>
+export const isIndexerConfig = <M extends TaggedMetadata = Metadata>(
+  config?: Config<M>,
+): config is IndexerConfig =>
   Boolean(config && 'indexer' in config && typeof config.indexer === 'string')

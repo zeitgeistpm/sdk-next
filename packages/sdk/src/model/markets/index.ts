@@ -1,5 +1,5 @@
 import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { Metadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { create } from './functions/create'
 import { get, get$ } from './functions/get'
@@ -16,7 +16,9 @@ export * from './types'
  * @param context C
  * @returns Markets<C>
  */
-export const markets = <C extends Context<M>, M = Metadata>(ctx: C): Markets<C, M> => {
+export const markets = <C extends Context<M>, M extends TaggedMetadata = Metadata>(
+  ctx: C,
+): Markets<C, M> => {
   let base: MarketsShared<C, M> = {
     list: (query?: MarketsListQuery<C, M>) => list(ctx, query),
     get: (query: MarketGetQuery) => get(ctx, query),
