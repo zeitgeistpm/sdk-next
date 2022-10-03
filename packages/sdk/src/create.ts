@@ -20,17 +20,6 @@ import {
 } from './types'
 
 /**
- * Create an instance of the zeitgeist sdk with full features of both indexer and chain rpc.
- *
- * @mode full
- * @note create with different config to enable indexer or rpc features.
- * @param config FullConfig - Rpc and indexer config
- * @returns Promise<Sdk<FullContext>>
- */
-export async function create<M extends MetadataStorage>(
-  config: FullConfig<M>,
-): Promise<Sdk<FullContext<M>, M>>
-/**
  * Create an instance of the zeitgeist sdk with only indexer features.
  *
  * @mode indexer
@@ -41,6 +30,17 @@ export async function create<M extends MetadataStorage>(
 export async function create<M extends MetadataStorage>(
   config: IndexerConfig,
 ): Promise<Sdk<IndexerContext, M>>
+/**
+ * Create an instance of the zeitgeist sdk with full features of both indexer and chain rpc.
+ *
+ * @mode full
+ * @note create with different config to enable indexer or rpc features.
+ * @param config FullConfig - Rpc and indexer config
+ * @returns Promise<Sdk<FullContext>>
+ */
+export async function create<M extends MetadataStorage>(
+  config: FullConfig<M>,
+): Promise<Sdk<FullContext<M>, M>>
 /**
  * Create an instance of the zeitgeist sdk with only rpc features.
  *

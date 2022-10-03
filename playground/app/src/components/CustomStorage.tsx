@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react'
 import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp'
-import { create, MetadataStorage, RpcContext, Sdk } from '@zeitgeistpm/sdk'
+import { create, MetadataStorage, RpcConfig, RpcContext, Sdk } from '@zeitgeistpm/sdk'
 import { IPFS, Storage } from '@zeitgeistpm/web3.storage'
 import { useEffect, useState } from 'react'
 
@@ -16,11 +16,10 @@ type CustomComment = {
  * Default IPFS metadata storage for the zeitgeist ecosystem.
  * @typeof IPFS.storage<MarketMetadata>
  */
-export const CustomStorageProvider = <M = CustomMarketMetadata, C = CustomComment>(): MetadataStorage<
-  M,
-  C
-> => {
-  const storage = IPFS.storage<M | C>({
+export function CustomStorageProvider<
+  M extends MetadataStorage<CustomMarketMetadata, CustomComment>,
+>(): M {
+  const storage = IPFS.storage<any>({
     node: { url: 'http://ipfs.zeitgeist.pm:5001' },
     cluster: {
       url: 'https://ipfs-cluster.zeitgeist.pm',
@@ -32,9 +31,9 @@ export const CustomStorageProvider = <M = CustomMarketMetadata, C = CustomCommen
   })
 
   return {
-    markets: storage as Storage<M>,
-    comments: storage as Storage<C>,
-  }
+    markets: storage,
+    comments: storage,
+  } as M
 }
 
 const CustomStorage: React.FC = () => {
@@ -50,10 +49,13 @@ const CustomStorage: React.FC = () => {
 
   useEffect(() => {
     if (!sdk) {
-      create({
+      const config = {
         provider: 'ws://127.0.0.1:9944',
         storage: CustomStorageProvider(),
-      }).then(setSdk)
+      }
+      create(config).then(sdk => {
+        sdk
+      })
     }
   }, [sdk])
 

@@ -5,7 +5,7 @@ export * from './known'
 /**
  * Union type of possible configurations.
  */
-export type Config<M extends MetadataStorage> = FullConfig<M> | (RpcConfig<M> | IndexerConfig)
+export type Config<M extends MetadataStorage> = FullConfig<M> | RpcConfig<M> | IndexerConfig
 
 export type BaseConfig = {
   /**
