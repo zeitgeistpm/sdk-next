@@ -1,4 +1,5 @@
 import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { MetadataStorage } from 'meta'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { create } from './functions/create'
 import { get, get$ } from './functions/get'
@@ -15,17 +16,17 @@ export * from './types'
  * @param context C
  * @returns Markets<C>
  */
-export const markets = <C extends Context>(ctx: C): Markets<C> => {
-  let base: MarketsShared<C> = {
-    list: (query?: MarketsListQuery<C>) => list(ctx, query),
+export const markets = <C extends Context<M>, M extends MetadataStorage>(ctx: C): Markets<C, M> => {
+  let base: MarketsShared<C, M> = {
+    list: (query?: MarketsListQuery<C, M>) => list(ctx, query),
     get: (query: MarketGetQuery) => get(ctx, query),
   }
 
-  const rpc: MarketsRpc<RpcContext> | null = isRpcContext(ctx)
+  const rpc: MarketsRpc<RpcContext<M>, M> | null = isRpcContext(ctx)
     ? {
         create: <P extends CreateMarketParams>(params: P) => create(ctx, params),
-        get: pfunctor((query: MarketGetQuery) => get<RpcContext>(ctx, query), {
-          $: (query: MarketGetQuery) => get$(ctx, query),
+        get: pfunctor((query: MarketGetQuery) => get<RpcContext<M>, M>(ctx, query), {
+          $: (query: MarketGetQuery) => get$<M>(ctx, query),
         }),
       }
     : null
@@ -33,5 +34,5 @@ export const markets = <C extends Context>(ctx: C): Markets<C> => {
   return {
     ...base,
     ...rpc,
-  } as Markets<C>
+  } as Markets<C, M>
 }

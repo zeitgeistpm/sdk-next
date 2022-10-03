@@ -4,6 +4,7 @@ import { PoolsQuery } from '@zeitgeistpm/indexer'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import { Data } from '../../primitives/data'
 import { Context } from '../../context'
+import { MetadataStorage } from 'meta'
 
 /**
  * Union Pool type of indexed and rpc types.
@@ -11,7 +12,7 @@ import { Context } from '../../context'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type Pool<C extends Context> = Data<C, RpcPool, IndexedPool>
+export type Pool<C extends Context<M>, M extends MetadataStorage> = Data<C, RpcPool, IndexedPool, M>
 
 /**
  * Concrete Pool type for indexed Pool.

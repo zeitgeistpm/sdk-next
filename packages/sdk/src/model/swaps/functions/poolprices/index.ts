@@ -1,6 +1,7 @@
 import { HistoricalAssetOrderByInput } from '@zeitgeistpm/indexer'
 import { project, range, zip } from '@zeitgeistpm/utility/dist/array'
 import { BigNumber } from 'bignumber.js'
+import { MetadataStorage } from 'meta'
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import {
@@ -28,7 +29,7 @@ import type {
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-export const poolPrices = async <C extends Context>(
+export const poolPrices = async <C extends Context<M>, M extends MetadataStorage>(
   context: C,
   query: PoolPricesQuery,
 ): Promise<PoolPrices> => {
@@ -47,7 +48,10 @@ export const poolPrices = async <C extends Context>(
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-const rpc = async (ctx: RpcContext, query: PoolPricesQuery): Promise<PoolPrices> => {
+const rpc = async <M extends MetadataStorage>(
+  ctx: RpcContext<M>,
+  query: PoolPricesQuery,
+): Promise<PoolPrices> => {
   const [time, pool, { start, end }] = await Promise.all([
     now(ctx),
     ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()),
@@ -145,8 +149,8 @@ const indexer = async (context: IndexerContext, query: PoolPricesQuery): Promise
  * @param query PoolPricesStreamQuery
  * @returns Observable<PoolAssetPricesAtBlock>
  */
-export const rpcPoolPrices$ = (
-  ctx: RpcContext,
+export const rpcPoolPrices$ = <M extends MetadataStorage>(
+  ctx: RpcContext<M>,
   query: PoolPricesStreamQuery,
 ): Observable<PoolAssetPricesAtBlock> => {
   return new Observable(sub => {

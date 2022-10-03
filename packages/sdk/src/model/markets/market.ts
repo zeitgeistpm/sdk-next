@@ -10,6 +10,7 @@ import CID from 'cids'
 import { Context, RpcContext } from '../../context'
 import { Data } from '../../primitives'
 import { MarketMetadata } from '../../meta/market'
+import { MetadataStorage } from 'meta'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -17,10 +18,11 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<C extends Context = Context, M = MarketMetadata> = Data<
+export type Market<C extends Context<M>, M extends MetadataStorage> = Data<
   C,
   AugmentedRpcMarket<M>,
-  IndexedMarket
+  IndexedMarket,
+  M
 >
 
 /**
@@ -31,7 +33,7 @@ export type IndexedMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type AugmentedRpcMarket<M = MarketMetadata> = ZeitgeistPrimitivesMarket & {
+export type AugmentedRpcMarket<M extends MetadataStorage> = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -52,7 +54,9 @@ export type AugmentedRpcMarket<M = MarketMetadata> = ZeitgeistPrimitivesMarket &
  * @param market unknown
  * @returns market is AugmentedRpcMarket
  */
-export const isAugmentedRpcMarket = (market: unknown): market is AugmentedRpcMarket =>
+export const isAugmentedRpcMarket = <M extends MetadataStorage>(
+  market: unknown,
+): market is AugmentedRpcMarket<M> =>
   typeof market === 'object' && market !== null && isCodec(market) && 'marketId' in market
 
 /**
@@ -63,7 +67,7 @@ export const isAugmentedRpcMarket = (market: unknown): market is AugmentedRpcMar
  * @param market ZeitgeistPrimitivesMarket
  * @returns AugmentedAugmentedRpcMarket
  */
-export const augment = <M = MarketMetadata>(
+export const augment = <M extends MetadataStorage>(
   context: RpcContext<M>,
   id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
@@ -74,7 +78,7 @@ export const augment = <M = MarketMetadata>(
 
   augmented.fetchMetadata = async () => {
     const hex = augmented.metadata.toHex()
-    return context.storage.markets.get(new CID('f0155' + hex.slice(2)) as any)
+    return context.storage.markets.get(new CID('f0155' + hex.slice(2)) as any) as any
   }
 
   augmented.expand = Te.from<IndexedMarket>(async () => {
@@ -114,15 +118,15 @@ export const augment = <M = MarketMetadata>(
  * @param entry [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>]
  * @returns AugmentedAugmentedRpcMarketRpcMarket
  */
-export const fromEntry = (
-  context: RpcContext,
+export const fromEntry = <M extends MetadataStorage>(
+  context: RpcContext<M>,
   [
     {
       args: [marketId],
     },
     market,
   ]: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>],
-): AugmentedRpcMarket => {
+): AugmentedRpcMarket<M> => {
   return augment(context, marketId, market.unwrap())
 }
 
@@ -136,7 +140,7 @@ export const fromEntry = (
  * @param market AugmentedRpcMarket
  * @returns Promise<number>
  */
-export const projectEndTimestamp = async <M = MarketMetadata>(
+export const projectEndTimestamp = async <M extends MetadataStorage>(
   api: ApiPromise,
   market: AugmentedRpcMarket<M>,
 ): Promise<number> => {

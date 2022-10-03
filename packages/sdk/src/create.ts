@@ -2,9 +2,10 @@ import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
 import { options } from '@zeitgeistpm/rpc/dist'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
+import { MarketMetadata, MetadataStorage } from 'meta'
 import polly from 'polly-js'
 import { isKnownPreset } from './config/known'
-import type { FullContext, IndexerContext, RpcContext } from './context'
+import type { Context, FullContext, IndexerContext, RpcContext } from './context'
 import { debug } from './debug'
 import * as Model from './model'
 import {
@@ -26,7 +27,9 @@ import {
  * @param config FullConfig - Rpc and indexer config
  * @returns Promise<Sdk<FullContext>>
  */
-export async function create(config: FullConfig): Promise<Sdk<FullContext>>
+export async function create<M extends MetadataStorage = MetadataStorage<MarketMetadata, Comment>>(
+  config: FullConfig<M>,
+): Promise<Sdk<FullContext<M>, M>>
 /**
  * Create an instance of the zeitgeist sdk with only indexer features.
  *
@@ -35,7 +38,9 @@ export async function create(config: FullConfig): Promise<Sdk<FullContext>>
  * @param config IndexerConfig - Config for the indexer
  * @returns Promise<Sdk<IndexerContext>>
  */
-export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>>
+export async function create<M extends MetadataStorage = MetadataStorage<MarketMetadata, Comment>>(
+  config: IndexerConfig,
+): Promise<Sdk<IndexerContext<M>, M>>
 /**
  * Create an instance of the zeitgeist sdk with only rpc features.
  *
@@ -44,17 +49,21 @@ export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>
  * @param config RpcConfig - Config for the rpc node
  * @returns Promise<Sdk<RpcContext>>
  */
-export async function create(config: RpcConfig): Promise<Sdk<RpcContext>>
-export async function create(config: Config) {
+export async function create<M extends MetadataStorage = MetadataStorage<MarketMetadata, Comment>>(
+  config: RpcConfig<M>,
+): Promise<Sdk<RpcContext<M>, M>>
+export async function create<M extends MetadataStorage = MetadataStorage<MarketMetadata, Comment>>(
+  config: Config<M>,
+): Promise<Sdk<Context<M>, M>> {
   assert(
-    isFullConfig(config) || isRpcConfig(config) || isIndexerConfig(config),
+    isFullConfig<M>(config) || isRpcConfig<M>(config) || isIndexerConfig<M>(config),
     () =>
       new Error(
         `Initialization error. Config needs to specify at least a valid indexer option or api rpc option.`,
       ),
   )
 
-  if (isKnownPreset(config)) {
+  if (isKnownPreset<Config<M>, M>(config)) {
     debug(`Using known preset ${config.preset}`, config)
   } else {
     debug(
@@ -64,28 +73,28 @@ export async function create(config: Config) {
     )
   }
 
-  if (isFullConfig(config)) {
+  if (isFullConfig<M>(config)) {
     const [rpc, indexer] = await Promise.all([createRpcContext(config), createIndexerContext(config)])
 
-    const context: FullContext = {
+    const context: FullContext<M> = {
       ...rpc,
       ...indexer,
     }
 
-    const model = Model.model(context)
+    const model = Model.model<FullContext<M>, M>(context)
 
     return {
       ...context,
       model,
     }
-  } else if (isIndexerConfig(config)) {
+  } else if (isIndexerConfig<M>(config)) {
     debug(
       `Using only indexer, no rpc methods or transactions on chain are available to the sdk.`,
       config,
       'warn',
     )
-    const context: IndexerContext = await createIndexerContext(config)
-    const model = Model.model(context)
+    const context: IndexerContext<M> = await createIndexerContext(config)
+    const model = Model.model<IndexerContext<M>, M>(context)
 
     return {
       ...context,
@@ -93,8 +102,8 @@ export async function create(config: Config) {
     }
   } else {
     debug(`Using only rpc, querying data might be more limited and/or slower.`, config, 'warn')
-    const context: RpcContext = await createRpcContext(config)
-    const model = Model.model(context)
+    const context: RpcContext<M> = await createRpcContext(config)
+    const model = Model.model<RpcContext<M>, M>(context)
 
     return {
       ...context,
@@ -109,7 +118,9 @@ export async function create(config: Config) {
  * @param config RpcConfig
  * @returns Promise<RpcContext>
  */
-export const createRpcContext = async (config: RpcConfig): Promise<RpcContext> => {
+export const createRpcContext = async <M extends MetadataStorage>(
+  config: RpcConfig<M>,
+): Promise<RpcContext<M>> => {
   const { ApiPromise, WsProvider } = await import('@polkadot/api')
 
   debug(`connecting to rpc: ${config.provider}`, config)
@@ -149,7 +160,9 @@ export const createRpcContext = async (config: RpcConfig): Promise<RpcContext> =
  * @param config IndexerConfig
  * @returns Promise<IndexerContext>
  */
-export const createIndexerContext = async (config: IndexerConfig): Promise<IndexerContext> => {
+export const createIndexerContext = async <M extends MetadataStorage>(
+  config: IndexerConfig,
+): Promise<IndexerContext<M>> => {
   debug(`connecting to indexer: ${config.indexer}`, config)
 
   const indexer = Indexer.create({ uri: config.indexer })

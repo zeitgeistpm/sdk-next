@@ -11,6 +11,7 @@ import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 import { FullContext, RpcContext } from '../../../../context'
 import { MarketMetadata } from '../../../../meta/market'
+import { MetadataStorage } from 'meta'
 
 /**
  * Create a market on chain.
@@ -21,7 +22,11 @@ import { MarketMetadata } from '../../../../meta/market'
  * @param params P
  * @returns void
  */
-export const create = async <C extends RpcContext | FullContext, P extends CreateMarketParams>(
+export const create = async <
+  C extends RpcContext<M> | FullContext<M>,
+  P extends CreateMarketParams,
+  M extends MetadataStorage,
+>(
   context: C,
   params: P,
 ): Promise<CreateMarketResult<P>> => {
@@ -77,7 +82,11 @@ export const create = async <C extends RpcContext | FullContext, P extends Creat
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
 const extract =
-  <P extends CreateMarketParams>(context: RpcContext, result: ISubmittableResult, params: P) =>
+  <P extends CreateMarketParams, M extends MetadataStorage>(
+    context: RpcContext<M>,
+    result: ISubmittableResult,
+    params: P,
+  ) =>
   () =>
     either(
       tryCatch<Error, CreateMarketData<P>>(() => {
@@ -108,10 +117,12 @@ const extract =
  * @param context RpcContext | FullContext
  * @param cid CID
  */
-const deleteMetadata = Te.from(async (context: RpcContext | FullContext, cid: CID) => {
-  if (!context.storage) return
-  await context.storage.markets.del(cid)
-})
+const deleteMetadata = Te.from(
+  async <M extends MetadataStorage>(context: RpcContext<M> | FullContext<M>, cid: CID) => {
+    if (!context.storage) return
+    await context.storage.markets.del(cid)
+  },
+)
 
 /**
  * Get the market creation event from the finalized block events.

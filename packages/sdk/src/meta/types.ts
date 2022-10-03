@@ -4,6 +4,6 @@ import { Comment } from './comment'
 import { MarketMetadata } from './market'
 
 export type MetadataStorage<M = MarketMetadata, C = Comment> = {
-  markets: Storage<M, CID>
-  comments: Storage<C, CID>
+  markets: Storage<unknown, CID>
+  comments: Storage<unknown, CID>
 }

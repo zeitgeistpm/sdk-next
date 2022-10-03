@@ -1,11 +1,13 @@
 import { Codec } from '@polkadot/types/types'
 import { isCodec } from '@polkadot/util'
+import { MetadataStorage } from 'meta'
 import { FullContext, IndexerContext, RpcContext } from '../context'
 
 export declare type Data<
-  C extends RpcContext | IndexerContext | FullContext,
+  C extends RpcContext<M> | IndexerContext | FullContext<M>,
   R extends Codec,
   I extends IndexedData,
+  M extends MetadataStorage,
 > = C extends IndexerContext ? I : R
 
 export type IndexedData = {

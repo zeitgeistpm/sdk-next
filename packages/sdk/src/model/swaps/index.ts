@@ -1,4 +1,5 @@
 import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { MetadataStorage } from 'meta'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { getPool, getPool$ } from './functions/getpool'
 import { listPools } from './functions/listpools'
@@ -22,19 +23,19 @@ export * from './types'
  * @param ctx C
  * @returns Swaps<C>
  */
-export const swaps = <C extends Context>(ctx: C): Swaps<C> => {
-  let base: SwapsShared<C> = {
-    listPools: (query: PoolsListQuery<C>) => listPools(ctx, query),
+export const swaps = <C extends Context<M>, M extends MetadataStorage>(ctx: C): Swaps<C, M> => {
+  let base: SwapsShared<C, M> = {
+    listPools: (query: PoolsListQuery<C, M>) => listPools(ctx, query),
     getPool: (query: PoolGetQuery) => getPool(ctx, query),
     poolPrices: (query: PoolPricesQuery) => poolPrices(ctx, query),
   }
 
-  const rpc: SwapsRpc<RpcContext> | null = isRpcContext(ctx)
+  const rpc: SwapsRpc<RpcContext<M>, M> | null = isRpcContext(ctx)
     ? {
-        getPool: pfunctor((query: PoolGetQuery) => getPool<RpcContext>(ctx, query), {
+        getPool: pfunctor((query: PoolGetQuery) => getPool<RpcContext<M>, M>(ctx, query), {
           $: (query: PoolGetQuery) => getPool$(ctx, query),
         }),
-        poolPrices: pfunctor((query: PoolPricesQuery) => poolPrices<RpcContext>(ctx, query), {
+        poolPrices: pfunctor((query: PoolPricesQuery) => poolPrices<RpcContext<M>, M>(ctx, query), {
           $: (query: PoolPricesStreamQuery) => rpcPoolPrices$(ctx, query),
         }),
       }
@@ -43,5 +44,5 @@ export const swaps = <C extends Context>(ctx: C): Swaps<C> => {
   return {
     ...base,
     ...rpc,
-  } as Swaps<C>
+  } as Swaps<C, M>
 }

@@ -9,6 +9,7 @@ import {
 } from '../../../../context'
 import { PoolGetQuery, isMarketIdQuery } from '../../types'
 import { Pool, IndexedPool, RpcPool } from '../../pool'
+import { MetadataStorage } from 'meta'
 
 /**
  * Fetch a pool by its market id or pool id.
@@ -19,16 +20,16 @@ import { Pool, IndexedPool, RpcPool } from '../../pool'
  * @param query PoolGetQuery
  * @returns Promise<Pool<C>>
  */
-export const getPool = async <C extends Context>(
+export const getPool = async <C extends Context<M>, M extends MetadataStorage>(
   context: C,
   query: PoolGetQuery,
-): Promise<Pool<C>> => {
+): Promise<Pool<C, M>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await getFromIndexer(context, query)
       : await getFromRpc(context, query)
 
-  return data as Pool<C>
+  return data as Pool<C, M>
 }
 
 /**
@@ -48,7 +49,7 @@ const getFromIndexer = async (context: IndexerContext, query: PoolGetQuery): Pro
  * Concrete get function for rpc context
  * @private
  */
-const getFromRpc = async <M = MarketMetadata>(
+const getFromRpc = async <M extends MetadataStorage>(
   context: RpcContext<M>,
   query: PoolGetQuery,
 ): Promise<RpcPool | null> => {
@@ -79,8 +80,8 @@ const getFromRpc = async <M = MarketMetadata>(
  * @param query PoolGetQuery
  * @returns Observable<RpcPool> | typeof EMPTY
  */
-export const getPool$ = (
-  context: RpcContext,
+export const getPool$ = <M extends MetadataStorage>(
+  context: RpcContext<M>,
   query: PoolGetQuery,
 ): Observable<RpcPool> | typeof EMPTY => {
   return new Observable(subscription => {

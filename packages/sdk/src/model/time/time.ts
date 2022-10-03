@@ -1,6 +1,7 @@
+import { MarketMetadata, MetadataStorage } from 'meta'
 import ms from 'ms'
 import { Observable } from 'rxjs'
-import { RpcContext } from '../../context'
+import { Context, RpcContext } from '../../context'
 import { BlockNumber, isBlockNumber } from '../../primitives/blocknumber'
 import { Duration, isDuration } from './duration'
 
@@ -28,7 +29,7 @@ export type ChainTime = {
  * @param ctx RpcContext
  * @returns Promise<ChainTime>
  */
-export const now = async (ctx: RpcContext): Promise<ChainTime> => {
+export const now = async <M extends MetadataStorage>(ctx: RpcContext<M>): Promise<ChainTime> => {
   const [now, head] = await Promise.all([
     ctx.api.query.timestamp.now().then(now => now.toNumber()),
     ctx.api.rpc.chain.getHeader(),
@@ -50,7 +51,7 @@ export const now = async (ctx: RpcContext): Promise<ChainTime> => {
  * @param ctx RpcContext
  * @returns Observable<ChainTime>
  */
-export const now$ = (ctx: RpcContext): Observable<ChainTime> =>
+export const now$ = <M extends MetadataStorage>(ctx: RpcContext<M>): Observable<ChainTime> =>
   new Observable(sub => {
     now(ctx).then(time => sub.next(time))
 

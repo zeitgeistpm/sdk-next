@@ -1,3 +1,4 @@
+import { MetadataStorage } from 'meta'
 import { Context } from '../context'
 import * as Market from './markets'
 import * as Swaps from './swaps'
@@ -10,7 +11,7 @@ import { Model } from './types'
  * @param context C
  * @returns Model<C>
  */
-export const model = <C extends Context>(context: C): Model<C> => {
+export const model = <C extends Context<M>, M extends MetadataStorage>(context: C): Model<C, M> => {
   return {
     markets: Market.markets(context),
     swaps: Swaps.swaps(context),
