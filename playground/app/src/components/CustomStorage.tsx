@@ -1,11 +1,8 @@
 import { Button } from '@chakra-ui/react'
 import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp'
-import { create, RpcContext, Sdk } from '@zeitgeistpm/sdk'
-import { MetadataStorage } from '@zeitgeistpm/sdk'
-import { CreateMarketParams } from '@zeitgeistpm/sdk/dist/model/types'
+import { create, MetadataStorage, RpcContext, Sdk } from '@zeitgeistpm/sdk'
 import { IPFS, Storage } from '@zeitgeistpm/web3.storage'
 import { useEffect, useState } from 'react'
-import { MarketComponent } from './Market'
 
 type CustomMarketMetadata = {
   foo: `foo ${string}`
