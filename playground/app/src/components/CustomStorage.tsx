@@ -49,11 +49,10 @@ const CustomStorage: React.FC = () => {
 
   useEffect(() => {
     if (!sdk) {
-      const config = {
+      create({
         provider: 'ws://127.0.0.1:9944',
         storage: CustomStorageProvider(),
-      }
-      create(config).then(sdk => {
+      }).then(sdk => {
         sdk
       })
     }

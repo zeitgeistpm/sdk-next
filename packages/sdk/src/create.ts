@@ -52,7 +52,9 @@ export async function create<M extends MetadataStorage>(
 export async function create<M extends MetadataStorage>(
   config: RpcConfig<M>,
 ): Promise<Sdk<RpcContext<M>, M>>
-export async function create<M extends MetadataStorage>(config: Config<M>) {
+export async function create<M extends MetadataStorage>(
+  config: Config<M>,
+): Promise<Sdk<FullContext<M>, M> | Sdk<RpcContext<M>, M> | Sdk<IndexerContext, M>> {
   assert(
     isFullConfig<M>(config) || isRpcConfig<M>(config) || isIndexerConfig<M>(config),
     () =>
@@ -79,7 +81,7 @@ export async function create<M extends MetadataStorage>(config: Config<M>) {
       ...indexer,
     }
 
-    const model = Model.model(context)
+    const model = Model.model<FullContext<M>, M>(context)
 
     return {
       ...context,
@@ -92,7 +94,7 @@ export async function create<M extends MetadataStorage>(config: Config<M>) {
       'warn',
     )
     const context: IndexerContext = await createIndexerContext(config)
-    const model = Model.model(context)
+    const model = Model.model<IndexerContext, M>(context)
 
     return {
       ...context,
@@ -101,7 +103,7 @@ export async function create<M extends MetadataStorage>(config: Config<M>) {
   } else {
     debug(`Using only rpc, querying data might be more limited and/or slower.`, config, 'warn')
     const context: RpcContext<M> = await createRpcContext(config)
-    const model = Model.model(context)
+    const model = Model.model<RpcContext<M>, M>(context)
 
     return {
       ...context,
