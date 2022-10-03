@@ -2,11 +2,11 @@ import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
 import { options } from '@zeitgeistpm/rpc/dist'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
-import { MarketMetadata, MetadataStorage, saturate } from './meta'
 import polly from 'polly-js'
 import { isKnownPreset } from './config/known'
-import type { Context, FullContext, IndexerContext, RpcContext } from './context'
+import type { FullContext, IndexerContext, RpcContext } from './context'
 import { debug } from './debug'
+import { MetadataStorage, saturate } from './meta'
 import * as Model from './model'
 import {
   Config,
