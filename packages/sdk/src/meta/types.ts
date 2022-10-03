@@ -8,6 +8,12 @@ export interface MetadataStorage<M extends TaggedMetadata = Metadata> {
   readonly marketComments: Storage<M & TaggedMarketCommentMetadata, CID>
 }
 
+export type StorageTypeOf<
+  M extends TaggedMetadata,
+  K extends keyof MS,
+  MS = MetadataStorage<M>,
+> = MS[K] extends Storage<infer T, CID> ? T : never
+
 /**
  * Union type for the official zeitgeist.pm metadata super type.
  */

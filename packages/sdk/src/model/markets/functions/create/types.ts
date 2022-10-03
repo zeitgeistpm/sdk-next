@@ -7,7 +7,7 @@ import type {
 import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
-import { Metadata, TaggedMetadata } from 'meta/types'
+import { Metadata, MetadataStorage, StorageTypeOf, TaggedMetadata } from 'meta/types'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -27,7 +27,7 @@ export type CreateMarketBaseParams<M extends TaggedMetadata = Metadata> = {
   /**
    * Metadata to store in external storage alongside the market.
    */
-  metadata: M
+  metadata: StorageTypeOf<M, 'markets'>
   /**
    * Type of market, categorical or scalar
    */

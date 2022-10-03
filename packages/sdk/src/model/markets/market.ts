@@ -7,7 +7,7 @@ import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { Metadata, TaggedMetadata } from 'meta/types'
+import { Metadata, StorageTypeOf, TaggedMarketMetadata, TaggedMetadata } from 'meta/types'
 import { Context, RpcContext } from '../../context'
 import { MarketMetadata } from '../../meta/market'
 import { Data } from '../../primitives'
@@ -41,22 +41,14 @@ export type RpcMarket<M extends TaggedMetadata = Metadata> = ZeitgeistPrimitives
   /**
    * Fetch metadata from external storage(default IPFS).
    */
-  fetchMetadata: () => Promise<EitherInterface<Error, M>>
+  fetchMetadata: () => Promise<EitherInterface<Error, StorageTypeOf<M, 'markets'>>>
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
-  expand: () => Promise<EitherInterface<Error, ExpandedMarket<M>>>
+  expand: () => Promise<EitherInterface<Error, IndexedMarketBase & StorageTypeOf<M, 'markets'>>>
 }
 
-/**
- * Expanded market with assigned metadata. If the metadata type
- * is the official zeitgeist metadata it will be the same as the indexed data type.
- *
- * @generic M extends TaggedMetadata = Metadata
- */
-export type ExpandedMarket<M extends TaggedMetadata = Metadata> = M extends MarketMetadata
-  ? IndexedMarket
-  : Omit<IndexedMarket, keyof MarketMetadata> & M
+export type IndexedMarketBase = Omit<IndexedMarket, keyof MarketMetadata>
 
 /**
  * Typeguard for rpc markets.
@@ -79,24 +71,24 @@ export const augment = <M extends TaggedMetadata = Metadata>(
   context: RpcContext<M>,
   id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
-): RpcMarket<M> => {
-  let augmented = market as RpcMarket<M>
+): RpcMarket<M & TaggedMarketMetadata> => {
+  let augmented = market as RpcMarket<M & TaggedMarketMetadata>
 
   augmented.marketId = isNumber(id) ? id : id.toNumber()
 
   augmented.fetchMetadata = async () => {
     const hex = augmented.metadata.toHex()
-    return context.storage.get(new CID('f0155' + hex.slice(2)) as any)
+    return context.storage.markets.get(new CID('f0155' + hex.slice(2)) as any)
   }
 
-  augmented.expand = Te.from<ExpandedMarket<M>>(async () => {
+  augmented.expand = Te.from(async () => {
     const [metadata, poolId, end] = await Promise.all([
       augmented.fetchMetadata().then(m => m.unrightOr(throws)),
       context.api.query.marketCommons.marketPool(id),
       projectEndTimestamp(context.api, augmented),
     ])
 
-    return {
+    const baseIndexedFields: IndexedMarketBase = {
       id: `${isNumber(id) ? id : id.toNumber()}`,
       marketId: isNumber(id) ? id : id.toNumber(),
       creation: market.creation.type,
@@ -112,8 +104,14 @@ export const augment = <M extends TaggedMetadata = Metadata>(
       disputeMechanism: market.disputeMechanism.toHuman() as IndexedMarket['disputeMechanism'],
       report: market.report.toHuman() as IndexedMarket['report'],
       resolvedOutcome: market.resolvedOutcome.toHuman() as IndexedMarket['resolvedOutcome'],
+    }
+
+    const expanded: IndexedMarketBase & StorageTypeOf<M, 'markets'> = {
+      ...baseIndexedFields,
       ...metadata,
-    } as ExpandedMarket<M>
+    }
+
+    return expanded
   })
 
   return augmented

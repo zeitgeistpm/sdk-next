@@ -31,14 +31,13 @@ export const create = async <
 ): Promise<CreateMarketResult<P, M>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
-  const metadata = await putMetadata(context, params.metadata)
-  const [cid, multihash] = metadata.unrightOr(throws)
+  const cid = (await context.storage.markets.put(params.metadata)).unright().unwrap()
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
       params.oracle,
       params.period,
-      multihash,
+      cid.multihash.bytes,
       params.marketType,
       params.disputeMechanism,
       params.pool.swapFee,
@@ -49,7 +48,7 @@ export const create = async <
     tx = context.api.tx.predictionMarkets.createMarket(
       params.oracle,
       params.period,
-      multihash,
+      cid.multihash.bytes,
       params.creationType,
       params.marketType,
       params.disputeMechanism,
@@ -110,25 +109,6 @@ const extract =
     )
 
 /**
- * Put market metadata in storage if present, otherwise store empty `0x` as hash
- * @private
- *
- * @param context RpcContext
- * @param metadata MarketMetadata,
- */
-const putMetadata = Te.from(
-  async <M extends TaggedMetadata = Metadata>(
-    context: RpcContext<M>,
-    metadata: M,
-  ): Promise<[CID | null, { Sha3_384: '0x' } | { Sha3_384: Uint8Array }]> => {
-    if (!context.storage) return [null, { Sha3_384: '0x' as `0x` }]
-    const response = await context.storage.put(metadata)
-    const cid = response.unrightOr(throws)
-    return [cid, { Sha3_384: cid.multihash.bytes }]
-  },
-)
-
-/**
  * Delete the metadata from storage. Used when market create transaction fails.
  *
  * @private
@@ -139,7 +119,7 @@ const putMetadata = Te.from(
 const deleteMetadata = Te.from(
   async <M extends TaggedMetadata = Metadata>(context: RpcContext<M>, cid: CID) => {
     if (!context.storage) return
-    await context.storage.del(cid)
+    await context.storage.markets.del(cid)
   },
 )
 
