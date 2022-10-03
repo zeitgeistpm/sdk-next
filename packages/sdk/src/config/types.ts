@@ -7,7 +7,9 @@ export * from './known'
 /**
  * Union type of possible configurations.
  */
-export type Config<M extends TaggedMetadata = Metadata> = FullConfig | (RpcConfig<M> | IndexerConfig)
+export type Config<M extends TaggedMetadata = Metadata> =
+  | FullConfig<M>
+  | (RpcConfig<M> | IndexerConfig)
 
 export type BaseConfig = {
   /**

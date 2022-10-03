@@ -25,13 +25,13 @@ export const markets = <C extends Context<M>, M extends TaggedMetadata = Metadat
   }
 
   const rpc = isRpcContext<M>(ctx)
-    ? ({
-        create: (params: CreateMarketParams<M>) =>
-          create<RpcContext<M>, CreateMarketParams<M>, M>(ctx, params),
-        get: pfunctor((query: MarketGetQuery) => get(ctx, query), {
+    ? {
+        create: (params: CreateMarketParams<RpcContext<M>, M>) =>
+          create<RpcContext<M>, CreateMarketParams<RpcContext<M>, M>, M>(ctx, params),
+        get: pfunctor((query: MarketGetQuery) => get<RpcContext<M>, M>(ctx, query), {
           $: (query: MarketGetQuery) => get$(ctx, query),
         }),
-      } as MarketsRpc<RpcContext<M>, M>)
+      }
     : {}
 
   return {

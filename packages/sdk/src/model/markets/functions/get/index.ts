@@ -56,7 +56,7 @@ const getFromRpc = async <M extends TaggedMetadata = Metadata>(
 ): Promise<Market<RpcContext<M>, M> | null> => {
   const market = await context.api.query.marketCommons.markets(query.marketId)
   if (!market.isSome) return null
-  return augment<M>(context, query.marketId, market.unwrap())
+  return augment<RpcContext<M>, M>(context, query.marketId, market.unwrap())
 }
 
 /**
@@ -75,7 +75,7 @@ export const get$ = <M extends TaggedMetadata = Metadata>(
       if (!market.isSome) {
         return subscription.unsubscribe()
       }
-      subscription.next(augment<M>(context, query.marketId, market.unwrap()))
+      subscription.next(augment<RpcContext<M>, M>(context, query.marketId, market.unwrap()))
     })
 
     return async () => {

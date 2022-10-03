@@ -38,7 +38,7 @@ export type MarketsRpc<
        * Create a market. Only available when connecting to rpc.
        */
       create: {
-        <P extends CreateMarketParams<M>>(params: P): Promise<CreateMarketResult<P, M>>
+        <P extends CreateMarketParams<C, M>>(params: P): Promise<CreateMarketResult<C, P, M>>
       }
       get: PFunctor<
         MarketsShared<C, M>['get'],

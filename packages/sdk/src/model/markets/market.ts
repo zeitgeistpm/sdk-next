@@ -7,8 +7,8 @@ import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { Metadata, StorageTypeOf, TaggedMarketMetadata, TaggedMetadata } from 'meta/types'
-import { Context, RpcContext } from '../../context'
+import { Metadata, TaggedMarketMetadata, TaggedMetadata } from 'meta/types'
+import { Context, RpcContext, StorageTypeOf } from '../../context'
 import { MarketMetadata } from '../../meta/market'
 import { Data } from '../../primitives'
 
@@ -20,7 +20,7 @@ export * from './functions/list/types'
  */
 export type Market<C extends Context<M>, M extends TaggedMetadata = Metadata> = Data<
   C,
-  RpcMarket<M>,
+  RpcMarket<RpcContext<M>, M>,
   IndexedMarket,
   M
 >
@@ -33,7 +33,10 @@ export type IndexedMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type RpcMarket<M extends TaggedMetadata = Metadata> = ZeitgeistPrimitivesMarket & {
+export type RpcMarket<
+  C extends RpcContext<M>,
+  M extends TaggedMetadata,
+> = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -41,11 +44,11 @@ export type RpcMarket<M extends TaggedMetadata = Metadata> = ZeitgeistPrimitives
   /**
    * Fetch metadata from external storage(default IPFS).
    */
-  fetchMetadata: () => Promise<EitherInterface<Error, StorageTypeOf<M, 'markets'>>>
+  fetchMetadata: () => Promise<EitherInterface<Error, StorageTypeOf<C, 'markets', M>>>
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
-  expand: () => Promise<EitherInterface<Error, IndexedMarketBase & StorageTypeOf<M, 'markets'>>>
+  expand: () => Promise<EitherInterface<Error, IndexedMarketBase & StorageTypeOf<C, 'markets', M>>>
 }
 
 export type IndexedMarketBase = Omit<IndexedMarket, keyof MarketMetadata>
@@ -56,7 +59,9 @@ export type IndexedMarketBase = Omit<IndexedMarket, keyof MarketMetadata>
  * @param market unknown
  * @returns market is AugmentedRpcMarket
  */
-export const isAugmentedRpcMarket = (market: unknown): market is RpcMarket =>
+export const isAugmentedRpcMarket = <C extends RpcContext<M>, M extends TaggedMetadata>(
+  market: unknown,
+): market is RpcMarket<C, M> =>
   typeof market === 'object' && market !== null && isCodec(market) && 'marketId' in market
 
 /**
@@ -67,19 +72,20 @@ export const isAugmentedRpcMarket = (market: unknown): market is RpcMarket =>
  * @param market ZeitgeistPrimitivesMarket
  * @returns AugmentedAugmentedRpcMarket
  */
-export const augment = <M extends TaggedMetadata = Metadata>(
+export const augment = <C extends RpcContext<M>, M extends TaggedMetadata>(
   context: RpcContext<M>,
   id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
-): RpcMarket<M & TaggedMarketMetadata> => {
-  let augmented = market as RpcMarket<M & TaggedMarketMetadata>
+): RpcMarket<C, M> => {
+  let augmented = market as RpcMarket<C, M>
 
   augmented.marketId = isNumber(id) ? id : id.toNumber()
 
-  augmented.fetchMetadata = async () => {
+  augmented.fetchMetadata = Te.from(async () => {
     const hex = augmented.metadata.toHex()
-    return context.storage.markets.get(new CID('f0155' + hex.slice(2)) as any)
-  }
+    const metadata = await context.storage.markets.get(new CID('f0155' + hex.slice(2)) as any)
+    return metadata.unright().unwrap() as StorageTypeOf<C, 'markets', M>
+  })
 
   augmented.expand = Te.from(async () => {
     const [metadata, poolId, end] = await Promise.all([
@@ -106,7 +112,7 @@ export const augment = <M extends TaggedMetadata = Metadata>(
       resolvedOutcome: market.resolvedOutcome.toHuman() as IndexedMarket['resolvedOutcome'],
     }
 
-    const expanded: IndexedMarketBase & StorageTypeOf<M, 'markets'> = {
+    const expanded: IndexedMarketBase & StorageTypeOf<C, 'markets', M> = {
       ...baseIndexedFields,
       ...metadata,
     }
@@ -124,7 +130,7 @@ export const augment = <M extends TaggedMetadata = Metadata>(
  * @param entry [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>]
  * @returns AugmentedAugmentedRpcMarketRpcMarket
  */
-export const fromEntry = <M extends TaggedMetadata = Metadata>(
+export const fromEntry = <C extends RpcContext<M>, M extends TaggedMetadata>(
   context: RpcContext<M>,
   [
     {
@@ -132,8 +138,8 @@ export const fromEntry = <M extends TaggedMetadata = Metadata>(
     },
     market,
   ]: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>],
-): RpcMarket<M> => {
-  return augment<M>(context, marketId, market.unwrap())
+): RpcMarket<C, M> => {
+  return augment<C, M>(context, marketId, market.unwrap())
 }
 
 /**
@@ -146,9 +152,9 @@ export const fromEntry = <M extends TaggedMetadata = Metadata>(
  * @param market AugmentedRpcMarket
  * @returns Promise<number>
  */
-export const projectEndTimestamp = async <M extends TaggedMetadata = Metadata>(
+export const projectEndTimestamp = async <C extends RpcContext<M>, M extends TaggedMetadata>(
   api: ApiPromise,
-  market: RpcMarket<M>,
+  market: RpcMarket<C, M>,
 ): Promise<number> => {
   if (market.period.isTimestamp) {
     return Number(market.period.asTimestamp[1].toHuman())

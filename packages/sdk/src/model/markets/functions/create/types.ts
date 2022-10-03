@@ -7,19 +7,20 @@ import type {
 import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
-import { Metadata, MetadataStorage, StorageTypeOf, TaggedMetadata } from 'meta/types'
+import { Context, RpcContext, StorageTypeOf } from 'context'
+import { Metadata, TaggedMetadata } from 'meta/types'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
  */
-export type CreateMarketParams<M extends TaggedMetadata = Metadata> =
-  | CreateStandaloneMarketParams<M>
-  | CreateMarketWithPoolParams<M>
+export type CreateMarketParams<C extends RpcContext<M>, M extends TaggedMetadata = Metadata> =
+  | CreateStandaloneMarketParams<C, M>
+  | CreateMarketWithPoolParams<C, M>
 
 /**
  * Base parameters for creating a market.
  */
-export type CreateMarketBaseParams<M extends TaggedMetadata = Metadata> = {
+export type CreateMarketBaseParams<C extends RpcContext<M>, M extends TaggedMetadata = Metadata> = {
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
@@ -27,7 +28,7 @@ export type CreateMarketBaseParams<M extends TaggedMetadata = Metadata> = {
   /**
    * Metadata to store in external storage alongside the market.
    */
-  metadata: StorageTypeOf<M, 'markets'>
+  metadata: StorageTypeOf<C, 'markets', M>
   /**
    * Type of market, categorical or scalar
    */
@@ -71,41 +72,45 @@ export type CreateMarketBaseParams<M extends TaggedMetadata = Metadata> = {
 /**
  * Parameters for creating a market without a pool
  */
-export type CreateStandaloneMarketParams<M extends TaggedMetadata = Metadata> =
-  CreateMarketBaseParams<M> & {
-    /**
-     * Market scoring rule.
-     *
-     * @default Cpmm
-     * @note Cpmm is the only one available atm. Rikkido will become available in a future update.
-     */
-    scoringRule?: ZeitgeistPrimitivesPoolScoringRule['type']
-    /**
-     * Market creation type, permissionless or advised.
-     */
-    creationType: ZeitgeistPrimitivesMarketMarketCreation['type']
-  }
+export type CreateStandaloneMarketParams<
+  C extends RpcContext<M>,
+  M extends TaggedMetadata = Metadata,
+> = CreateMarketBaseParams<C, M> & {
+  /**
+   * Market scoring rule.
+   *
+   * @default Cpmm
+   * @note Cpmm is the only one available atm. Rikkido will become available in a future update.
+   */
+  scoringRule?: ZeitgeistPrimitivesPoolScoringRule['type']
+  /**
+   * Market creation type, permissionless or advised.
+   */
+  creationType: ZeitgeistPrimitivesMarketMarketCreation['type']
+}
 
 /**
  * Parameters for creating a market with a pool.
  */
-export type CreateMarketWithPoolParams<M extends TaggedMetadata = Metadata> =
-  CreateMarketBaseParams<M> & {
-    pool: {
-      /**
-       * The fee to swap in and out of the pool.
-       */
-      swapFee: string
-      /**
-       * The ammount to deploy in ZTG
-       */
-      amount: string
-      /**
-       * Weighting of the assets.
-       */
-      weights: string[]
-    }
+export type CreateMarketWithPoolParams<
+  C extends RpcContext<M>,
+  M extends TaggedMetadata = Metadata,
+> = CreateMarketBaseParams<C, M> & {
+  pool: {
+    /**
+     * The fee to swap in and out of the pool.
+     */
+    swapFee: string
+    /**
+     * The ammount to deploy in ZTG
+     */
+    amount: string
+    /**
+     * Weighting of the assets.
+     */
+    weights: string[]
   }
+}
 
 /**
  * Check if params is with pool
@@ -113,9 +118,9 @@ export type CreateMarketWithPoolParams<M extends TaggedMetadata = Metadata> =
  * @param params CreateMarketParams
  * @returns params is CreateMarketWithPoolParams
  */
-export const isWithPool = <M extends TaggedMetadata = Metadata>(
-  params: CreateMarketParams<M>,
-): params is CreateMarketWithPoolParams<M> => {
+export const isWithPool = <C extends RpcContext<M>, M extends TaggedMetadata = Metadata>(
+  params: CreateMarketParams<C, M>,
+): params is CreateMarketWithPoolParams<C, M> => {
   return 'pool' in params
 }
 
@@ -126,7 +131,8 @@ export const isWithPool = <M extends TaggedMetadata = Metadata>(
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
 export type CreateMarketResult<
-  P extends CreateMarketParams<M>,
+  C extends RpcContext<M>,
+  P extends CreateMarketParams<C, M>,
   M extends TaggedMetadata = Metadata,
 > = {
   raw: ISubmittableResult
@@ -140,7 +146,7 @@ export type CreateMarketResult<
    *
    * @returns EitherInterface<Error, CreateMarketData<P>>
    */
-  extract: () => EitherInterface<Error, CreateMarketData<P, M>>
+  extract: () => EitherInterface<Error, CreateMarketData<C, P, M>>
 }
 
 /**
@@ -148,12 +154,16 @@ export type CreateMarketResult<
  *
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
-export type CreateMarketData<P extends CreateMarketParams<M>, M extends TaggedMetadata = Metadata> = {
+export type CreateMarketData<
+  C extends RpcContext<M>,
+  P extends CreateMarketParams<C, M>,
+  M extends TaggedMetadata = Metadata,
+> = {
   /**
    * The market created by the extrinsic.
    */
   market: [number, ZeitgeistPrimitivesMarket]
-} & (P extends CreateMarketWithPoolParams<M>
+} & (P extends CreateMarketWithPoolParams<C, M>
   ? {
       /**
        * The pool created for the market by the extrinsic.

@@ -61,7 +61,7 @@ const rpc = async <C extends RpcContext<M>, M extends TaggedMetadata = Metadata>
     : await context.api.query.marketCommons.markets.entries()
 
   const list: AugmentedRpcMarketList<M> = {
-    items: entries.map(m => fromEntry<M>(context, m)),
+    items: entries.map(m => fromEntry<RpcContext<M>, M>(context, m)),
   }
 
   return list as MarketList<C, M>

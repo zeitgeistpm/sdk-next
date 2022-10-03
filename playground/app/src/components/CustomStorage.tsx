@@ -36,7 +36,7 @@ export const CustomStorage = (): MetadataStorage<CustomMetadata> => {
 
 export const CustomStorageComponents: FC<{}> = props => {
   useEffect(() => {
-    create({
+    create<CustomMetadata>({
       provider: '',
       storage: CustomStorage(),
     }).then(async sdk => {
@@ -50,6 +50,8 @@ export const CustomStorageComponents: FC<{}> = props => {
       })
 
       const expanded = (await market.expand()).unrightOr(throws)
+
+      expanded.__meta
 
       sdk.model.markets.create({
         signer: {

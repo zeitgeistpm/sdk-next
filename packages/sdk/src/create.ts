@@ -47,10 +47,10 @@ export async function create(config: IndexerConfig): Promise<Sdk<IndexerContext>
  * @param config RpcConfig - Config for the rpc node
  * @returns Promise<Sdk<RpcContext>>
  */
-export async function create<M extends TaggedMetadata = Metadata>(
+export async function create<M extends TaggedMetadata>(
   config: RpcConfig<M>,
 ): Promise<Sdk<RpcContext<M>, M>>
-export async function create<M extends TaggedMetadata = Metadata>(config: Config<M>) {
+export async function create<M extends TaggedMetadata>(config: Config<M>) {
   assert(
     isFullConfig(config) || isRpcConfig(config) || isIndexerConfig(config),
     () =>

@@ -6,8 +6,8 @@ import { scan } from 'rxjs/operators'
  *
  * @returns OperatorFunction<T, T>
  */
-export const assign = <T>(): OperatorFunction<T, T> => {
-  return scan((a: T, b: T) => ({
+export const assign = <T>(): OperatorFunction<Partial<T>, Partial<T>> => {
+  return scan((a: Partial<T>, b: Partial<T>) => ({
     ...a,
     ...b,
   }))

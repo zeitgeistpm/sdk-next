@@ -8,7 +8,7 @@ import { Metadata, MetadataStorage, TaggedMetadata } from 'meta/types'
  * Union type that can be either rpc, indexer or full context.
  */
 export type Context<M extends TaggedMetadata = Metadata> =
-  | FullContext
+  | FullContext<M>
   | RpcContext<M>
   | IndexerContext
 
@@ -25,6 +25,14 @@ export type RpcContext<M extends TaggedMetadata = Metadata> = {
   provider: WsProvider
   storage: MetadataStorage<M>
 }
+
+export type StorageTypeOf<
+  C extends RpcContext<M>,
+  K extends keyof C['storage'],
+  M extends TaggedMetadata,
+> = C['storage'][K] extends Storage<infer T extends TaggedMetadata, CID> ? T : never
+
+//MS[K] extends Storage<infer T, CID> ? T : never
 
 /**
  * Zeitgeist SDK context with indexer features enabled.

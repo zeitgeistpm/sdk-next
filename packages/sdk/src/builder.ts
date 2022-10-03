@@ -13,13 +13,13 @@ import { FullConfig, FullContext, Sdk } from './types'
  * @returns Observable<Partial<Sdk<FullContext>>>
  */
 export const builder$ = <M extends TaggedMetadata = Metadata>(config: FullConfig<M>) => {
-  const context$ = merge(from(createIndexerContext(config)), from(createRpcContext(config)))
+  const context$ = merge(from(createIndexerContext(config)), from(createRpcContext<M>(config)))
 
   const sdk$: Observable<Partial<Sdk<FullContext<M>, M>>> = context$.pipe(
     assign(),
     map(context => ({
       ...context,
-      model: Model.model(context),
+      model: Model.model(context as any),
     })),
   )
 
