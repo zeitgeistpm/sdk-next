@@ -66,6 +66,7 @@ const CustomStorage: React.FC = () => {
         console.log(market)
         market.expand().then(m => {
           const market = m.unright().unwrap()
+          console.log(market.foo)
         })
       })
     }

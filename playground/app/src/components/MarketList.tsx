@@ -1,29 +1,38 @@
-import { Context, isIndexedSdk, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
 import {
-  AugmentedRpcMarket,
-  IndexedMarket,
-  isAugmentedRpcMarket,
-  Market,
-} from '@zeitgeistpm/sdk/dist/model/types'
-import { throws } from '@zeitgeistpm/utility/dist/error'
+  Context,
+  IndexerContext,
+  isIndexedSdk,
+  isRpcData,
+  isRpcSdk,
+  RpcContext,
+  Sdk,
+} from '@zeitgeistpm/sdk'
+import { IndexedMarket, Market } from '@zeitgeistpm/sdk/dist/model/types'
 import { useEffect, useState } from 'react'
 
 export const MarketList: React.FC<{ sdk: Partial<Sdk<Context>> }> = ({ sdk }) => {
-  const [markets, setMarkets] = useState<Market[]>([])
+  const [markets, setMarkets] = useState<Market<Context>[]>([])
 
   const load = async (sdk: Sdk<Context>) => {
+    /**
+     * Context is RpcContext | IndexedContext | FullContext
+     * So markets will Market<RpcContext | IndexedContext | FullContext>
+     */
     const { items } = await sdk.model.markets.list()
-    setMarkets(items.sort((a, b) => (a.marketId > b.marketId ? -1 : 1)).slice(200))
+    setMarkets(items)
   }
 
   useEffect(() => {
-    if (isRpcSdk(sdk)) {
+    /**
+     * As soon as sdk is ready in any capacity we load markets.
+     */
+    if (isRpcSdk(sdk) || isIndexedSdk(sdk)) {
       load(sdk)
     }
   }, [sdk])
 
   return (
-    <div style={{ display: 'grid', columnGap: '50px' }}>
+    <div>
       {markets.map(market => (
         <MarketComponent key={market.marketId} market={market} />
       ))}
@@ -31,15 +40,23 @@ export const MarketList: React.FC<{ sdk: Partial<Sdk<Context>> }> = ({ sdk }) =>
   )
 }
 
-const MarketComponent = (props: { market: Market }) => {
+const MarketComponent = (props: { market: Market<Context> }) => {
   const [market, setMarket] = useState(props.market)
 
   useEffect(() => {
-    if (isAugmentedRpcMarket(props.market)) {
+    /**
+     * If market loaded is RpcMarket then we expand it.
+     * Expanding it will fetch from ipfs and update local state.
+     */
+    if (isRpcData(props.market)) {
       props.market
         .expand()
         .then(market => {
-          setMarket(market.unrightOr(throws))
+          /**
+           * If fetching and unwrapping is a success, the local market state will conform to the indexed state
+           * and the <IndexedMarketComponent /> will be rendered.
+           */
+          setMarket(market.unright().unwrap())
         })
         .catch(() => console.debug(`Missing metadata for market: ${market.marketId}`))
     } else {
@@ -48,21 +65,21 @@ const MarketComponent = (props: { market: Market }) => {
   }, [props.market])
 
   return (
-    <div style={{ padding: 8, gridColumnStart: 1, gridColumnEnd: 3 }}>
-      {isAugmentedRpcMarket(market) ? (
-        <AugmentedRpcMarketComponent market={market} />
+    <div>
+      {isRpcData(market) ? (
+        <RpcMarketComponent market={market} />
       ) : (
-        <FullMarketComponent market={market} />
+        <IndexedMarketComponent market={market} />
       )}
     </div>
   )
 }
 
-const AugmentedRpcMarketComponent = (props: { market: AugmentedRpcMarket }) => {
+const RpcMarketComponent = (props: { market: Market<RpcContext> }) => {
   return <div>{props.market.marketId}: ...</div>
 }
 
-const FullMarketComponent = (props: { market: IndexedMarket }) => {
+const IndexedMarketComponent = (props: { market: Market<IndexerContext> }) => {
   return (
     <div>
       {props.market.marketId}: {props.market.question}

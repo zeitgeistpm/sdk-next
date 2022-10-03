@@ -16,12 +16,12 @@ export type Context<M extends MetadataStorage = MetadataStorage> =
 /**
  * Zeitgeist SDK context with both rpc and indexer features enabled.
  */
-export type FullContext<M extends MetadataStorage> = RpcContext<M> & IndexerContext
+export type FullContext<M extends MetadataStorage = MetadataStorage> = RpcContext<M> & IndexerContext
 
 /**
  * Zeitgeist SDK context with rpc and storage features enabled.
  */
-export type RpcContext<M extends MetadataStorage> = {
+export type RpcContext<M extends MetadataStorage = MetadataStorage> = {
   api: ApiPromise
   provider: WsProvider
   storage: M

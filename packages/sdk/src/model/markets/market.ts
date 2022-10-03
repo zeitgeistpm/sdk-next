@@ -19,7 +19,7 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<C extends Context<M>, M extends MetadataStorage> = Data<
+export type Market<C extends Context<M>, M extends MetadataStorage = MetadataStorage> = Data<
   C,
   AugmentedRpcMarket<M>,
   IndexedMarket,
