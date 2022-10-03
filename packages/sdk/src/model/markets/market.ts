@@ -54,18 +54,10 @@ export type AugmentedRpcMarket<
   >
 }
 
-export type IndexedBase = Omit<IndexedMarket, keyof MarketMetadata>
-
 /**
- * Typeguard for rpc markets.
- *
- * @param market unknown
- * @returns market is AugmentedRpcMarket
+ * The base type of indexed data that also can be deduced from the rpc data.
  */
-export const isAugmentedRpcMarket = <M extends MetadataStorage>(
-  market: unknown,
-): market is AugmentedRpcMarket<M> =>
-  typeof market === 'object' && market !== null && isCodec(market) && 'marketId' in market
+export type IndexedBase = Omit<IndexedMarket, keyof MarketMetadata>
 
 /**
  * Augment a market primitive with id and data expanding utility functions.

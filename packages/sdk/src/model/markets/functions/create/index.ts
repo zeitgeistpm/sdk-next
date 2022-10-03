@@ -11,7 +11,8 @@ import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 import { FullContext, RpcContext } from '../../../../context'
 import { MarketMetadata } from '../../../../meta/market'
-import { MetadataStorage } from 'meta'
+import { MetadataStorage, StorageTypeOf } from 'meta'
+import { Storage } from '@zeitgeistpm/web3.storage'
 
 /**
  * Create a market on chain.
@@ -32,7 +33,14 @@ export const create = async <
 ): Promise<CreateMarketResult<M, P>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
-  const cid = (await context.storage.markets.put(params.metadata as any)).unright().unwrap()
+  const cid = (
+    await context.storage.markets
+      //.as<M['markets'] extends Storage<infer T, CID> ? T : never>()
+      .as<StorageTypeOf<M, 'markets'>>()
+      .put(params.metadata)
+  )
+    .unright()
+    .unwrap()
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
@@ -82,7 +90,7 @@ export const create = async <
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
 const extract =
-  <C extends RpcContext<M>, M extends MetadataStorage, P extends CreateMarketParams<M>>(
+  <M extends MetadataStorage, P extends CreateMarketParams<M>>(
     context: RpcContext<M>,
     result: ISubmittableResult,
     params: P,

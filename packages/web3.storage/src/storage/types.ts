@@ -29,4 +29,6 @@ export type Storage<T, ID = CID> = {
    * @generic ID - id type
    */
   del: Task<EitherInterface<Error, void>, [ID]>
+
+  as<T>(): Storage<T>
 }

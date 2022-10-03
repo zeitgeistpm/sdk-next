@@ -44,5 +44,9 @@ export const storage = <T>(codec: Codec<string, T> = JsonCodec()): Storage<T, st
         }),
       )
     },
+
+    as<T>() {
+      return this as unknown as Storage<T>
+    },
   }
 }

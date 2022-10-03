@@ -63,6 +63,9 @@ export const storage = <T>(
         return either(left(error as Error))
       }
     },
+    as<T>() {
+      return this as unknown as Storage<T>
+    },
   }
 }
 

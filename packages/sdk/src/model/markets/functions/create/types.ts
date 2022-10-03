@@ -8,9 +8,7 @@ import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { Storage } from '@zeitgeistpm/web3.storage'
-import { RpcContext } from 'context'
 import { MetadataStorage, StorageTypeOf } from 'meta'
-import type { MarketMetadata } from '../../../../meta/market'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -22,7 +20,10 @@ export type CreateMarketParams<M extends MetadataStorage> =
 /**
  * Base parameters for creating a market.
  */
-export type CreateMarketBaseParams<M extends MetadataStorage> = {
+export type CreateMarketBaseParams<
+  M extends MetadataStorage,
+  Md = M['markets'] extends Storage<infer T> ? T : never,
+> = {
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
@@ -30,7 +31,7 @@ export type CreateMarketBaseParams<M extends MetadataStorage> = {
   /**
    * Metadata to store in external storage alongside the market.
    */
-  metadata: M['markets'] extends Storage<infer T> ? T : never
+  metadata: Md //StorageTypeOf<M, 'markets'>
   /**
    * Type of market, categorical or scalar
    */
