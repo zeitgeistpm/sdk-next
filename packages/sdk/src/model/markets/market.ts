@@ -7,7 +7,7 @@ import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { Metadata, TaggedMarketMetadata, TaggedMetadata } from 'meta/types'
+import { Metadata, TaggedMetadata } from 'meta/types'
 import { Context, RpcContext, StorageTypeOf } from '../../context'
 import { MarketMetadata } from '../../meta/market'
 import { Data } from '../../primitives'
@@ -84,7 +84,7 @@ export const augment = <C extends RpcContext<M>, M extends TaggedMetadata>(
   augmented.fetchMetadata = Te.from(async () => {
     const hex = augmented.metadata.toHex()
     const metadata = await context.storage.markets.get(new CID('f0155' + hex.slice(2)) as any)
-    return metadata.unright().unwrap() as StorageTypeOf<C, 'markets', M>
+    return metadata.unright().unwrap()
   })
 
   augmented.expand = Te.from(async () => {

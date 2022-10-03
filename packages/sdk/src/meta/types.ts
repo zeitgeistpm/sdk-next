@@ -3,12 +3,9 @@ import type { CID } from 'ipfs-http-client'
 import { Infer, union } from 'superstruct'
 import { IOMarketMetadata, MarketMetadata } from './market'
 
-export interface MetadataStorage<
-  M extends TaggedMarketMetadata,
-  MC extends TaggedMarketCommentMetadata,
-> {
-  readonly markets: Storage<M, CID>
-  readonly marketComments: Storage<MC, CID>
+export interface MetadataStorage<M extends TaggedMetadata> {
+  readonly markets: Storage<M & TaggedMarketMetadata, CID>
+  readonly marketComments: Storage<M & TaggedMarketCommentMetadata, CID>
 }
 
 /**
