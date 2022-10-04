@@ -1,13 +1,15 @@
 import { create, createStorage } from '@zeitgeistpm/sdk'
-import { CreateStandaloneMarketParams } from '@zeitgeistpm/sdk/dist/model/types'
-import { isRight } from '@zeitgeistpm/utility/dist/either'
+import {
+  CreateMarketWithPoolParams,
+  CreateStandaloneMarketParams,
+} from '@zeitgeistpm/sdk/dist/model/types'
 import { IPFS } from '@zeitgeistpm/web3.storage'
 
 type CustomMarket = { description: string }
 
 const storage = createStorage<CustomMarket>(
   IPFS.storage({
-    node: { url: 'http://ipfs.zeitgeist.pm:5001' },
+    node: { url: 'http://ipfs.zeitgeist.pm:5001', pin: false },
   }),
 )
 
@@ -17,16 +19,18 @@ async function main() {
     storage: storage,
   })
 
-  const response = await sdk.model.markets.create({
+  const params = {
     metadata: {
       description: 'som description',
     },
-  })
+  } as CreateMarketWithPoolParams<typeof storage>
 
-  const m = response.extract()
-  if (isRight(m)) {
-    m.right.market.expand
-  }
+  const response = await sdk.model.markets.create(params)
+
+  const { market, pool } = response.extract().unwrap()
+  const metadata = (await market.fetchMetadata()).unwrap()
+
+  metadata.description === 'some description'
 }
 
 main()

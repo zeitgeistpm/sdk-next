@@ -1,5 +1,6 @@
 import { isFunction } from '@polkadot/util/is/function'
-import { OptionInterface, none, option, some } from '../option'
+import { throws } from 'error'
+import * as O from '../option'
 
 /**
  * Either type.
@@ -74,7 +75,8 @@ export const chain = <L, R, B>(f: (a: R) => Either<L, B>, either: Either<L, R>):
  * unright(left(NaN)).unwrapOr(2) === 2
  * ```
  */
-export const unright = <L, R>(either: Either<L, R>) => option(isRight(either) ? some(either.right) : none())
+export const unright = <L, R>(either: Either<L, R>) =>
+  O.option(isRight(either) ? O.some(either.right) : O.none())
 
 /**
  * Unwraps a the left value into an Option<L>
@@ -84,7 +86,8 @@ export const unright = <L, R>(either: Either<L, R>) => option(isRight(either) ? 
  * unleft(left(NaN)).unwrapOr(2) === NaN
  * ```
  */
-export const unleft = <L, R>(either: Either<L, R>) => option(isLeft(either) ? some(either.left) : none())
+export const unleft = <L, R>(either: Either<L, R>) =>
+  O.option(isLeft(either) ? O.some(either.left) : O.none())
 
 /**
  * @generic P - the input value, in case of Left it will be R and vice versa.
@@ -116,6 +119,7 @@ export const unleftOr = <L, R>(or: OrHandler<R, L>, either: Either<L, R>): L =>
   isLeft(either) ? either.left : isFunction(or) ? or(either.right) : or
 
 export type EitherInterface<L, R> = Either<L, R> & {
+  unwrap: () => R
   /**
    * Unwraps a the right value into an Option<R>
    *
@@ -124,7 +128,7 @@ export type EitherInterface<L, R> = Either<L, R> & {
    * either(left(NaN)).unright().unwrapOr(2) === 2
    * ```
    */
-  unright: () => OptionInterface<R>
+  unright: () => O.OptionInterface<R>
   /**
    * Unwraps a the left value into an Option<L>
    *
@@ -133,7 +137,7 @@ export type EitherInterface<L, R> = Either<L, R> & {
    * either(left(NaN)).unleft().unwrapOr(2) === NaN
    * ```
    */
-  unleft: () => OptionInterface<L>
+  unleft: () => O.OptionInterface<L>
   /**
    * Tries to unwrap the right value or uses the default value or lazy function
    * to produce the correct result(or throw error).
@@ -191,6 +195,7 @@ export type EitherInterface<L, R> = Either<L, R> & {
  */
 export const either = <L, R>(_either: Either<L, R>): EitherInterface<L, R> => ({
   ..._either,
+  unwrap: () => O.unwrap(unright(_either)),
   unright: () => unright(_either),
   unleft: () => unleft(_either),
   unrightOr: (or: OrHandler<L, R>) => unrightOr(or, _either),

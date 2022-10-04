@@ -5,6 +5,7 @@ import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import { Data } from '../../primitives/data'
 import { Context } from '../../context'
 import { MetadataStorage } from '../../meta'
+import { isNumber } from '@polkadot/util'
 
 /**
  * Union Pool type of indexed and rpc types.
@@ -29,4 +30,10 @@ export type IndexedPool = Unpacked<PoolsQuery['pools']>
  */
 export type RpcPool = ZeitgeistPrimitivesPool & {
   poolId: number
+}
+
+export const rpcPool = (poolId: number | u128, pool: ZeitgeistPrimitivesPool): RpcPool => {
+  let rpcPool = pool as RpcPool
+  rpcPool.poolId = isNumber(poolId) ? poolId : poolId.toNumber()
+  return rpcPool
 }

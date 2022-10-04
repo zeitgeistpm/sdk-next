@@ -60,7 +60,7 @@ export type IndexedBase = Omit<IndexedMarket, keyof MarketMetadata>
  * @param market ZeitgeistPrimitivesMarket
  * @returns AugmentedAugmentedRpcMarket
  */
-export const augment = <MS extends MetadataStorage<any, any>>(
+export const rpcMarket = <MS extends MetadataStorage<any, any>>(
   context: RpcContext<MS>,
   id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
@@ -125,7 +125,7 @@ export const fromEntry = <MS extends MetadataStorage>(
     market,
   ]: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>],
 ): RpcMarket<MS> => {
-  return augment(context, marketId, market.unwrap())
+  return rpcMarket(context, marketId, market.unwrap())
 }
 
 /**

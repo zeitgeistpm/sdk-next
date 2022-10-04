@@ -37,7 +37,7 @@ export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage<any,
    * Create a market. Only available when connecting to rpc.
    */
   create: {
-    (params: CreateMarketParams<MS>): Promise<CreateMarketResult<MS, CreateMarketParams<MS>>>
+    <P extends CreateMarketParams<MS>>(params: P): Promise<CreateMarketResult<MS, P>>
   }
   get: PFunctor<
     MarketsShared<C, MS>['get'],

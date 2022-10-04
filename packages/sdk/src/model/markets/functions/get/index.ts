@@ -7,7 +7,7 @@ import {
   RpcContext,
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
-import { augment } from '../../market'
+import { rpcMarket } from '../../market'
 import { IndexedMarket, Market } from '../../types'
 import { MarketGetQuery } from './types'
 
@@ -56,7 +56,7 @@ const getFromRpc = async <MS extends MetadataStorage>(
 ): Promise<Market<RpcContext<MS>, MS> | null> => {
   const market = await context.api.query.marketCommons.markets(query.marketId)
   if (!market.isSome) return null
-  return augment<MS>(context, query.marketId, market.unwrap())
+  return rpcMarket<MS>(context, query.marketId, market.unwrap())
 }
 
 /**
@@ -75,7 +75,7 @@ export const get$ = <MS extends MetadataStorage>(
       if (!market.isSome) {
         return subscription.unsubscribe()
       }
-      subscription.next(augment<MS>(context, query.marketId, market.unwrap()))
+      subscription.next(rpcMarket<MS>(context, query.marketId, market.unwrap()))
     })
 
     return async () => {

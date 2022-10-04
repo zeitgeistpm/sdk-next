@@ -9,7 +9,8 @@ import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { CID } from 'ipfs-http-client'
 import { MetadataStorage } from '../../../../meta'
-import { augment } from '../../../../model/markets'
+import { rpcMarket } from '../../../../model/markets'
+import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
 import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 
@@ -96,13 +97,20 @@ const extract =
           params.signer.address,
         ).unrightOr(throws)
 
+        let pool: RpcPool | undefined
+
         const createdPool = isWithPool(params)
-          ? extractPoolCreationEventForMarket(context.api, result.events, marketId).unrightOr(throws)
+          ? extractPoolCreationEventForMarket(context.api, result.events, marketId).unwrap()
           : undefined
 
+        if (createdPool) {
+          const [poolId, poolPrimitive] = createdPool
+          pool = rpcPool(poolId, poolPrimitive)
+        }
+
         return {
-          market: augment<MS>(context, marketId, market),
-          pool: createdPool,
+          market: rpcMarket<MS>(context, marketId, market),
+          pool,
         } as CreateMarketData<MS, P>
       }),
     )

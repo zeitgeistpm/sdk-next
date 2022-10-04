@@ -10,6 +10,7 @@ import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { Storage } from '@zeitgeistpm/web3.storage'
 import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { RpcMarket } from '../../market'
+import { RpcPool } from '../../../swaps/pool'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -157,7 +158,7 @@ export type CreateMarketData<MS extends MetadataStorage<any, any>, P = CreateMar
       /**
        * The pool created for the market by the extrinsic.
        */
-      pool: [number, ZeitgeistPrimitivesPool]
+      pool: RpcPool
     }
   : {
       /**
