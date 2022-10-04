@@ -5,7 +5,7 @@ import { MetadataStorage, SaturatedMetadataStorage } from 'meta/types'
 /**
  * Union type that can be either rpc, indexer or full context.
  */
-export type Context<MS extends MetadataStorage = MetadataStorage> =
+export type Context<MS extends MetadataStorage<any, any>> =
   | FullContext<MS>
   | RpcContext<MS>
   | IndexerContext
@@ -13,16 +13,15 @@ export type Context<MS extends MetadataStorage = MetadataStorage> =
 /**
  * Zeitgeist SDK context with both rpc and indexer features enabled.
  */
-export type FullContext<MS extends MetadataStorage = MetadataStorage> = RpcContext<MS> &
-  IndexerContext
+export type FullContext<MS extends MetadataStorage<any, any>> = RpcContext<MS> & IndexerContext
 
 /**
  * Zeitgeist SDK context with rpc and storage features enabled.
  */
-export type RpcContext<MS extends MetadataStorage = MetadataStorage> = {
+export type RpcContext<MS extends MetadataStorage<any, any>> = {
   api: ApiPromise
   provider: WsProvider
-  storage: MS & SaturatedMetadataStorage<MS>
+  storage: MS
 }
 
 /**

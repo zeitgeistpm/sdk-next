@@ -9,7 +9,7 @@ import { MarketMetadata } from './market'
  * @generic M = MarketMetadata
  * @generic C = Comment
  */
-export interface MetadataStorage<M = MarketMetadata, C = CommentMetadata> {
+export type MetadataStorage<M = MarketMetadata, C = CommentMetadata> = {
   /**
    * Storage for Market metadata.
    */
@@ -42,7 +42,7 @@ export type CommentTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS, 'comme
  *
  * @generic MS extends MetadataStorage
  */
-export interface SaturatedMetadataStorage<MS extends MetadataStorage> {
+export type SaturatedMetadataStorage<MS extends MetadataStorage<any, any>> = MS & {
   as<K extends keyof MS, T = MS[K] extends Storage<infer T> ? T : never>(key: K): Storage<T, CID>
 }
 

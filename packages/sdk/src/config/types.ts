@@ -5,7 +5,10 @@ export * from './known'
 /**
  * Union type of possible configurations.
  */
-export type Config<MS extends MetadataStorage> = FullConfig<MS> | RpcConfig<MS> | IndexerConfig
+export type Config<MS extends MetadataStorage<any, any>> =
+  | FullConfig<MS>
+  | RpcConfig<MS>
+  | IndexerConfig
 
 export type BaseConfig = {
   /**
@@ -18,9 +21,9 @@ export type BaseConfig = {
   connectionRetries?: number
 }
 
-export type FullConfig<MS extends MetadataStorage> = RpcConfig<MS> & IndexerConfig
+export type FullConfig<MS extends MetadataStorage<any, any>> = RpcConfig<MS> & IndexerConfig
 
-export type RpcConfig<MS extends MetadataStorage> = BaseConfig & {
+export type RpcConfig<MS extends MetadataStorage<any, any>> = BaseConfig & {
   /**
    * Rpc provider(s), uri or list of uris.
    */

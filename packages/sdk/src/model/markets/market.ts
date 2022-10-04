@@ -79,7 +79,7 @@ export const augment = <MS extends MetadataStorage>(
   augmented.fetchMetadata = async () => {
     const hex = augmented.metadata.toHex()
     const cid = new CID('f0155' + hex.slice(2)) as any
-    return context.storage.as('markets').get(cid)
+    return context.storage.markets.get(cid) as any
   }
 
   augmented.expand = Te.from(async () => {

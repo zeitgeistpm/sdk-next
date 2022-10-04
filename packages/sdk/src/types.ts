@@ -15,7 +15,7 @@ export * from './context/types'
 /**
  * Top level Zeitgeist SDK type.
  */
-export type Sdk<C extends Context<MS>, MS extends MetadataStorage = MetadataStorage> = C & {
+export type Sdk<C extends Context<MS>, MS extends MetadataStorage<any, any>> = C & {
   /**
    * Enriched zeitgeist models with features for qyerying data on chain and indexer,
    * and for creating transaction flows with for example richer validation to ensure that

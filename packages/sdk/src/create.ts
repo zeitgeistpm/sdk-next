@@ -27,7 +27,7 @@ import {
  * @param config IndexerConfig - Config for the indexer
  * @returns Promise<Sdk<IndexerContext>>
  */
-export async function create<MS extends MetadataStorage>(
+export async function create<MS extends MetadataStorage<any, any>>(
   config: IndexerConfig,
 ): Promise<Sdk<IndexerContext, MS>>
 /**
@@ -38,7 +38,7 @@ export async function create<MS extends MetadataStorage>(
  * @param config FullConfig - Rpc and indexer config
  * @returns Promise<Sdk<FullContext>>
  */
-export async function create<MS extends MetadataStorage>(
+export async function create<MS extends MetadataStorage<any, any>>(
   config: FullConfig<MS>,
 ): Promise<Sdk<FullContext<MS>, MS>>
 /**
@@ -49,10 +49,10 @@ export async function create<MS extends MetadataStorage>(
  * @param config RpcConfig - Config for the rpc node
  * @returns Promise<Sdk<RpcContext>>
  */
-export async function create<MS extends MetadataStorage>(
+export async function create<MS extends MetadataStorage<any, any>>(
   config: RpcConfig<MS>,
 ): Promise<Sdk<RpcContext<MS>, MS>>
-export async function create<MS extends MetadataStorage>(config: Config<MS>) {
+export async function create<MS extends MetadataStorage<any, any>>(config: Config<MS>) {
   assert(
     isFullConfig<MS>(config) || isRpcConfig<MS>(config) || isIndexerConfig<MS>(config),
     () =>
