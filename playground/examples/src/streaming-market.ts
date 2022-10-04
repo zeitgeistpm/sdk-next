@@ -2,7 +2,7 @@ import { batterystation, create, isRpcData } from '@zeitgeistpm/sdk'
 import { from } from 'rxjs'
 import { switchMap, withLatestFrom } from 'rxjs/operators'
 
-export const main = async (marketId: number) => {
+async function main(marketId: number) {
   const sdk = await create(batterystation())
   /**
    * Fetch market and saturate it with metadata if the market is fetched from rpc.
@@ -48,3 +48,5 @@ export const main = async (marketId: number) => {
     })
   })
 }
+
+main(0)
