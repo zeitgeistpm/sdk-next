@@ -32,7 +32,7 @@ export type IndexedMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type RpcMarket<MS extends MetadataStorage> = ZeitgeistPrimitivesMarket & {
+export type RpcMarket<MS extends MetadataStorage<any, any>> = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */

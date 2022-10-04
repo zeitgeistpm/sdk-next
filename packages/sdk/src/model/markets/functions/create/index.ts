@@ -9,6 +9,7 @@ import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { CID } from 'ipfs-http-client'
 import { MetadataStorage } from 'meta'
+import { augment } from 'model/types'
 import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 
@@ -89,20 +90,18 @@ const extract =
   () =>
     either(
       tryCatch<Error, CreateMarketData<MS, P>>(() => {
-        const createdMarket = extractMarketCreationEventForAddress(
+        const [marketId, market] = extractMarketCreationEventForAddress(
           context.api,
           result.events,
           params.signer.address,
         ).unrightOr(throws)
 
         const createdPool = isWithPool(params)
-          ? extractPoolCreationEventForMarket(context.api, result.events, createdMarket[0]).unrightOr(
-              throws,
-            )
+          ? extractPoolCreationEventForMarket(context.api, result.events, marketId).unrightOr(throws)
           : undefined
 
         return {
-          market: createdMarket,
+          market: augment<MS>(context, marketId, market),
           pool: createdPool,
         } as CreateMarketData<MS, P>
       }),

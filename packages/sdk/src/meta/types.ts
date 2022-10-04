@@ -55,6 +55,14 @@ export type MarketTypeOf<MS extends MetadataStorage<any, any>> = StorageTypeOf<M
  */
 export type CommentTypeOf<MS extends MetadataStorage<any, any>> = StorageTypeOf<MS['comments']>
 
+export const createStorage = <M extends object = MarketMetadata, C extends object = CommentMetadata>(
+  storage: Storage<any>,
+): MetadataStorage<M, C> =>
+  saturate<MetadataStorage<M, C>>({
+    markets: storage,
+    comments: storage,
+  } as MetadataStorage<M, C>)
+
 /**
  * Create a sturatable metadata storage.
  *
