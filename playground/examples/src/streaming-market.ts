@@ -5,8 +5,8 @@ import { switchMap, withLatestFrom } from 'rxjs/operators'
 export const main = async (marketId: number) => {
   const sdk = await create(batterystation())
   /**
-   * Fetch market and expand if the market is fetched from rpc.
-   * Expand will fetch ipfs data and conform the market to same type as returned from indexer.
+   * Fetch market and saturate it with metadata if the market is fetched from rpc.
+   * Saturate will fetch ipfs data and conform the market to same type as returned from indexer.
    */
   const market$ = sdk.model.markets.get
     .$({ marketId })
