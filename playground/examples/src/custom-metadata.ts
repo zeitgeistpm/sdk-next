@@ -5,9 +5,9 @@ import {
 } from '@zeitgeistpm/sdk/dist/model/types'
 import { IPFS } from '@zeitgeistpm/web3.storage'
 
-type CustomMarket = { description: string }
+type CustomMarketMetadata = { description: string }
 
-const storage = createStorage<CustomMarket>(
+const storage = createStorage<CustomMarketMetadata>(
   IPFS.storage({
     node: { url: 'http://ipfs.zeitgeist.pm:5001', pin: false },
   }),
@@ -23,7 +23,7 @@ async function main() {
     metadata: {
       description: 'som description',
     },
-  } as CreateMarketWithPoolParams<typeof storage>
+  } as CreateMarketWithPoolParams<typeof sdk.storage>
 
   const response = await sdk.model.markets.create(params)
 
