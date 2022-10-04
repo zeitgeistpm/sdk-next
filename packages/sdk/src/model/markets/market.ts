@@ -44,7 +44,7 @@ export type RpcMarket<MS extends MetadataStorage<any, any>> = {
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
-  expand: () => Promise<EitherInterface<Error, IndexedBase & MarketTypeOf<MS>>>
+  saturate: () => Promise<EitherInterface<Error, IndexedBase & MarketTypeOf<MS>>>
 } & ZeitgeistPrimitivesMarket
 
 /**
@@ -65,21 +65,21 @@ export const rpcMarket = <MS extends MetadataStorage<any, any>>(
   id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
 ): RpcMarket<MS> => {
-  let augmented = market as RpcMarket<MS>
+  let rpcMarket = market as RpcMarket<MS>
 
-  augmented.marketId = isNumber(id) ? id : id.toNumber()
+  rpcMarket.marketId = isNumber(id) ? id : id.toNumber()
 
-  augmented.fetchMetadata = async () => {
-    const hex = augmented.metadata.toHex()
+  rpcMarket.fetchMetadata = async () => {
+    const hex = rpcMarket.metadata.toHex()
     const cid = new CID('f0155' + hex.slice(2)) as any
     return context.storage.of('markets').get(cid)
   }
 
-  augmented.expand = Te.from(async () => {
+  rpcMarket.saturate = Te.from(async () => {
     const [metadata, poolId, end] = await Promise.all([
-      augmented.fetchMetadata(),
+      rpcMarket.fetchMetadata(),
       context.api.query.marketCommons.marketPool(id),
-      projectEndTimestamp(context.api, augmented),
+      projectEndTimestamp(context.api, rpcMarket),
     ])
 
     const base: IndexedBase = {
@@ -106,7 +106,7 @@ export const rpcMarket = <MS extends MetadataStorage<any, any>>(
     }
   })
 
-  return augmented
+  return rpcMarket
 }
 
 /**

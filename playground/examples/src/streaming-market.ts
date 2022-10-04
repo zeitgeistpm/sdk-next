@@ -12,7 +12,7 @@ export const main = async (marketId: number) => {
     .$({ marketId })
     .pipe(
       switchMap(market =>
-        from(!isRpcData(market) ? market : market.expand().then(market => market.unwrap())),
+        from(!isRpcData(market) ? market : market.saturate().then(market => market.unwrap())),
       ),
     )
 
