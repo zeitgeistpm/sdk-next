@@ -20,17 +20,6 @@ import {
 } from './types'
 
 /**
- * Create an instance of the zeitgeist sdk with only indexer features.
- *
- * @mode indexer
- * @note create with different config to enable indexer or rpc features.
- * @param config IndexerConfig - Config for the indexer
- * @returns Promise<Sdk<IndexerContext>>
- */
-export async function create<MS extends MetadataStorage<any, any>>(
-  config: IndexerConfig,
-): Promise<Sdk<IndexerContext, MS>>
-/**
  * Create an instance of the zeitgeist sdk with full features of both indexer and chain rpc.
  *
  * @mode full
@@ -52,6 +41,17 @@ export async function create<MS extends MetadataStorage<any, any>>(
 export async function create<MS extends MetadataStorage<any, any>>(
   config: RpcConfig<MS>,
 ): Promise<Sdk<RpcContext<MS>, MS>>
+/**
+ * Create an instance of the zeitgeist sdk with only indexer features.
+ *
+ * @mode indexer
+ * @note create with different config to enable indexer or rpc features.
+ * @param config IndexerConfig - Config for the indexer
+ * @returns Promise<Sdk<IndexerContext>>
+ */
+export async function create<MS extends MetadataStorage<any, any>>(
+  config: IndexerConfig,
+): Promise<Sdk<IndexerContext, MS>>
 export async function create<MS extends MetadataStorage<any, any>>(config: Config<MS>) {
   assert(
     isFullConfig<MS>(config) || isRpcConfig<MS>(config) || isIndexerConfig<MS>(config),
@@ -60,16 +60,6 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
         `Initialization error. Config needs to specify at least a valid indexer option or api rpc option.`,
       ),
   )
-
-  if (isKnownPreset<Config<MS>, MS>(config)) {
-    debug(`Using known preset ${config.preset}`, config)
-  } else {
-    debug(
-      `Using unknown rpc and/or indexer, make sure the indexer and rpc is working on the same chain.`,
-      config,
-      'warn',
-    )
-  }
 
   if (isFullConfig<MS>(config)) {
     const [rpc, indexer] = await Promise.all([createRpcContext(config), createIndexerContext(config)])
