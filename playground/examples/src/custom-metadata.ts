@@ -24,9 +24,9 @@ async function main() {
   const response = await sdk.model.markets.create(params)
 
   const { market, pool } = response.extract().unwrap()
-  const metadata = (await market.fetchMetadata()).unwrap()
+  const saturatedMarket = (await market.saturate()).unwrap()
 
-  metadata.description === 'some description'
+  saturatedMarket.description === 'some description'
 }
 
 main()
