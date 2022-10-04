@@ -6,7 +6,7 @@ import polly from 'polly-js'
 import { isKnownPreset } from './config/known'
 import type { FullContext, IndexerContext, RpcContext } from './context'
 import { debug } from './debug'
-import { CommentTypeOf, MarketTypeOf, MetadataStorage, saturate } from './meta'
+import { MetadataStorage, saturate } from './meta'
 import * as Model from './model'
 import {
   Config,
@@ -27,7 +27,7 @@ import {
  * @param config IndexerConfig - Config for the indexer
  * @returns Promise<Sdk<IndexerContext>>
  */
-export async function create<MS extends MetadataStorage, M = MarketTypeOf<MS>, C = CommentTypeOf<MS>>(
+export async function create<MS extends MetadataStorage>(
   config: IndexerConfig,
 ): Promise<Sdk<IndexerContext, MS>>
 /**
@@ -38,7 +38,7 @@ export async function create<MS extends MetadataStorage, M = MarketTypeOf<MS>, C
  * @param config FullConfig - Rpc and indexer config
  * @returns Promise<Sdk<FullContext>>
  */
-export async function create<MS extends MetadataStorage, M = MarketTypeOf<MS>, C = CommentTypeOf<MS>>(
+export async function create<MS extends MetadataStorage>(
   config: FullConfig<MS>,
 ): Promise<Sdk<FullContext<MS>, MS>>
 /**
@@ -49,12 +49,10 @@ export async function create<MS extends MetadataStorage, M = MarketTypeOf<MS>, C
  * @param config RpcConfig - Config for the rpc node
  * @returns Promise<Sdk<RpcContext>>
  */
-export async function create<MS extends MetadataStorage, M = MarketTypeOf<MS>, C = CommentTypeOf<MS>>(
+export async function create<MS extends MetadataStorage>(
   config: RpcConfig<MS>,
 ): Promise<Sdk<RpcContext<MS>, MS>>
-export async function create<MS extends MetadataStorage, M = MarketTypeOf<MS>, C = CommentTypeOf<MS>>(
-  config: Config<MS>,
-) {
+export async function create<MS extends MetadataStorage>(config: Config<MS>) {
   assert(
     isFullConfig<MS>(config) || isRpcConfig<MS>(config) || isIndexerConfig<MS>(config),
     () =>

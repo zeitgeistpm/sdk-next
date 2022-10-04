@@ -1,11 +1,13 @@
 import { Comment, create, MarketMetadata, MetadataStorage } from '@zeitgeistpm/sdk'
 import { IPFS, Storage } from '@zeitgeistpm/web3.storage'
 
+type CustomMarket = {}
+
 /**
  * Default IPFS metadata storage for the zeitgeist ecosystem.
  * @typeof IPFS.storage<MarketMetadata>
  */
-export function CustomStorageProvider<MS extends MetadataStorage>(): MS {
+export function CustomStorageProvider<MS extends MetadataStorage<CustomMarket>>(): MS {
   const storage = IPFS.storage<any>({
     node: { url: 'http://ipfs.zeitgeist.pm:5001' },
     cluster: {
