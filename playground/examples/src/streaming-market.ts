@@ -31,7 +31,8 @@ export const main = async (marketId: number) => {
   )
 
   /**
-   * Subscribe to pool prices and log corespondingly to market and asset token.
+   * Subscribe to pool prices and latest market storage.
+   * Log prices with ticker metadata from the corresponding asset|category index.
    */
   poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
     market.categories?.map((category, index) => {
