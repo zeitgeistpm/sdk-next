@@ -60,7 +60,7 @@ export const create = async <
 
   const response = await signAndSend(context.api, tx, params.signer)
 
-  const result = response.unrightOr(error => {
+  const submittableResult = response.unrightOr(error => {
     if (cid) {
       deleteMetadata(context, cid)
     }
@@ -68,21 +68,22 @@ export const create = async <
   })
 
   return {
-    raw: result,
-    extract: extract(context, result, params),
+    raw: submittableResult,
+    extract: extraction(context, submittableResult, params),
   }
 }
 
 /**
  * Lazily extract metadata from the market creation block.
  *
- * @generic P extends CreateMarketParams
- * @param context RpcContext
+ * @generic MS extends MetadataStorage
+ * @generic P extends CreateMarketParams<MS
+ * @param context RpcContext<MS>
  * @param result ISubmittableResult
  * @param params P
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
-const extract =
+const extraction =
   <MS extends MetadataStorage, P extends CreateMarketParams<MS>>(
     context: RpcContext<MS>,
     result: ISubmittableResult,
@@ -95,7 +96,7 @@ const extract =
           context.api,
           result.events,
           params.signer.address,
-        ).unrightOr(throws)
+        ).unwrap()
 
         let pool: RpcPool | undefined
 

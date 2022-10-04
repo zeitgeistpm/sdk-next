@@ -1,8 +1,4 @@
-import { create, createStorage } from '@zeitgeistpm/sdk'
-import {
-  CreateMarketWithPoolParams,
-  CreateStandaloneMarketParams,
-} from '@zeitgeistpm/sdk/dist/model/types'
+import { create, createStorage, CreateMarketWithPoolParams } from '@zeitgeistpm/sdk'
 import { IPFS } from '@zeitgeistpm/web3.storage'
 
 type CustomMarketMetadata = { description: string }

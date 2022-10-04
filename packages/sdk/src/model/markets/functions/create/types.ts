@@ -135,7 +135,7 @@ export type CreateMarketResult<MS extends MetadataStorage<any, any>, P = CreateM
    *
    * @example ```ts
    * const result = await sdk.model.markets.create(...params)
-   * const { market, pool } = result.extract().unrightOr(throws)
+   * const { market, pool } = result.extract().unwrap()
    * ```
    *
    * @returns EitherInterface<Error, CreateMarketData<P>>

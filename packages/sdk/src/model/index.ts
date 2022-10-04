@@ -4,6 +4,8 @@ import * as Market from './markets'
 import * as Swaps from './swaps'
 import { Model } from './types'
 
+export * from './types'
+
 /**
  * Create top level enriched zeitgeist models interface.
  *

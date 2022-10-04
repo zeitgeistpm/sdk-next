@@ -11,6 +11,7 @@ import type { Model } from './model/types'
 
 export * from './config/types'
 export * from './context/types'
+export * from './model/types'
 
 /**
  * Top level Zeitgeist SDK type.
