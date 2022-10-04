@@ -33,7 +33,7 @@ async function main() {
   })
 
   sdk.storage.markets.put({
-    marketText: '',
+    marketText: 1,
   })
 
   const r = await (await (await sdk.model.markets.get({ marketId: 0 })).expand()).unright().unwrap()

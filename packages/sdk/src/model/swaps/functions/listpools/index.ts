@@ -19,7 +19,7 @@ import { MetadataStorage } from 'meta'
  * @param query ListQuery<C>
  * @returns Promise<PoolList<C>>
  */
-export const listPools = async <C extends Context<MS>, MS extends MetadataStorage>(
+export const listPools = async <C extends Context<MS>, MS extends MetadataStorage<any, any>>(
   context: C,
   query: PoolsListQuery<C, MS>,
 ): Promise<PoolList<C, MS>> => {
@@ -35,7 +35,7 @@ export const listPools = async <C extends Context<MS>, MS extends MetadataStorag
  * Concrete listing function for indexer context
  * @private
  */
-const listFromIndexer = async <MS extends MetadataStorage>(
+const listFromIndexer = async <MS extends MetadataStorage<any, any>>(
   context: IndexerContext,
   query: PoolsListQuery<IndexerContext, MS>,
 ): Promise<PoolList<IndexerContext, MS>> => {
@@ -46,7 +46,7 @@ const listFromIndexer = async <MS extends MetadataStorage>(
  * Concrete listing function for rpc context
  * @private
  */
-const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
+const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage<any, any>>(
   { api }: RpcContext<MS>,
   query?: PoolsListQuery<RpcContext<MS>, MS>,
 ): Promise<PoolList<C, MS>> => {

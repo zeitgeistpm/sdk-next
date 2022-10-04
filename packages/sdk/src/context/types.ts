@@ -37,8 +37,9 @@ export type IndexerContext = {
  * @param ctx unknown
  * @returns config is FullContext
  */
-export const isFullContext = <MS extends MetadataStorage>(ctx?: unknown): ctx is FullContext<MS> =>
-  isRpcContext(ctx) && isIndexerContext(ctx)
+export const isFullContext = <MS extends MetadataStorage<any, any>>(
+  ctx?: unknown,
+): ctx is FullContext<MS> => isRpcContext(ctx) && isIndexerContext(ctx)
 
 /**
  * Typeguard for rpc context
@@ -46,8 +47,9 @@ export const isFullContext = <MS extends MetadataStorage>(ctx?: unknown): ctx is
  * @param ctx unknown
  * @returns config is RpcContext
  */
-export const isRpcContext = <MS extends MetadataStorage>(ctx?: unknown): ctx is RpcContext<MS> =>
-  Boolean(ctx && typeof ctx === 'object' && ctx !== null && 'api' in ctx)
+export const isRpcContext = <MS extends MetadataStorage<any, any>>(
+  ctx?: unknown,
+): ctx is RpcContext<MS> => Boolean(ctx && typeof ctx === 'object' && ctx !== null && 'api' in ctx)
 
 /**
  * Typeguard for indexer context

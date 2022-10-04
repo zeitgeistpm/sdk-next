@@ -29,7 +29,7 @@ import type {
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-export const poolPrices = async <C extends Context<MS>, MS extends MetadataStorage>(
+export const poolPrices = async <C extends Context<MS>, MS extends MetadataStorage<any, any>>(
   context: C,
   query: PoolPricesQuery,
 ): Promise<PoolPrices> => {
@@ -48,7 +48,7 @@ export const poolPrices = async <C extends Context<MS>, MS extends MetadataStora
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-const rpc = async <MS extends MetadataStorage>(
+const rpc = async <MS extends MetadataStorage<any, any>>(
   ctx: RpcContext<MS>,
   query: PoolPricesQuery,
 ): Promise<PoolPrices> => {
@@ -149,7 +149,7 @@ const indexer = async (context: IndexerContext, query: PoolPricesQuery): Promise
  * @param query PoolPricesStreamQuery
  * @returns Observable<PoolAssetPricesAtBlock>
  */
-export const rpcPoolPrices$ = <MS extends MetadataStorage>(
+export const rpcPoolPrices$ = <MS extends MetadataStorage<any, any>>(
   ctx: RpcContext<MS>,
   query: PoolPricesStreamQuery,
 ): Observable<PoolAssetPricesAtBlock> => {

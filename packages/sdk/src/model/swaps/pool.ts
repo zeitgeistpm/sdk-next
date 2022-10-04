@@ -12,7 +12,7 @@ import { MetadataStorage } from 'meta'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type Pool<C extends Context<MS>, MS extends MetadataStorage> = Data<
+export type Pool<C extends Context<MS>, MS extends MetadataStorage<any, any>> = Data<
   C,
   RpcPool,
   IndexedPool,

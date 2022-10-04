@@ -16,7 +16,7 @@ export * from './types'
  * @param context C
  * @returns Markets<C>
  */
-export const markets = <C extends Context<MS>, MS extends MetadataStorage>(
+export const markets = <C extends Context<MS>, MS extends MetadataStorage<any, any>>(
   ctx: C,
 ): Markets<C, MS> => {
   let base: MarketsShared<C, MS> = {

@@ -23,7 +23,9 @@ export * from './types'
  * @param ctx C
  * @returns Swaps<C>
  */
-export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(ctx: C): Swaps<C, MS> => {
+export const swaps = <C extends Context<MS>, MS extends MetadataStorage<any, any>>(
+  ctx: C,
+): Swaps<C, MS> => {
   let base: SwapsShared<C, MS> = {
     listPools: (query: PoolsListQuery<C, MS>) => listPools(ctx, query),
     getPool: (query: PoolGetQuery) => getPool(ctx, query),

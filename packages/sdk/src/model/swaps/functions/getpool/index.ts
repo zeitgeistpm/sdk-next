@@ -19,7 +19,7 @@ import { MetadataStorage } from 'meta'
  * @param query PoolGetQuery
  * @returns Promise<Pool<C>>
  */
-export const getPool = async <C extends Context<MS>, MS extends MetadataStorage>(
+export const getPool = async <C extends Context<MS>, MS extends MetadataStorage<any, any>>(
   context: C,
   query: PoolGetQuery,
 ): Promise<Pool<C, MS>> => {

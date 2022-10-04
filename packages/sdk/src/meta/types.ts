@@ -41,16 +41,13 @@ export interface MetadataStorage<
  * @generic MS extends MetadataStorage,
  * @generic K extends keyof MSS>
  */
-export type StorageTypeOf<
-  S extends Storage<T>,
-  T extends object = S extends Storage<infer T> ? T : never,
-> = T
+export type StorageTypeOf<S extends Storage<any>> = S extends Storage<infer T> ? T : never
 
 /**
  * Unpack the inner type of market storage.
  * @generic MS extends MetadataStorage
  */
-export type MarketTypeOf<MS extends MetadataStorage<any>> = StorageTypeOf<MS['markets']>
+export type MarketTypeOf<MS extends MetadataStorage<any, any>> = StorageTypeOf<MS['markets']>
 
 /**
  * Unpack the inner type of comment storage.

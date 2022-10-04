@@ -12,7 +12,7 @@ export * from './swaps/types'
  * require a rpc connection while querying markets etc have more fine graned query filters and ordering when connected
  * to the indexer.
  */
-export type Model<C extends Context<MS>, MS extends MetadataStorage> = {
+export type Model<C extends Context<MS>, MS extends MetadataStorage<any, any>> = {
   /**
    * Model for interacting with zeitgeist markets.
    * Will also handle metadata storage if configured to do so.

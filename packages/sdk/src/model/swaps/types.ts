@@ -44,7 +44,10 @@ export type SwapsShared<C extends Context<MS>, MS extends MetadataStorage> = {
   poolPrices: (query: PoolPricesQuery) => Promise<PoolPrices>
 }
 
-export type SwapsRpc<C extends Context<MS>, MS extends MetadataStorage> = C extends RpcContext<MS>
+export type SwapsRpc<
+  C extends Context<MS>,
+  MS extends MetadataStorage<any, any>,
+> = C extends RpcContext<MS>
   ? {
       getPool: PFunctor<
         SwapsShared<C, MS>['getPool'],
