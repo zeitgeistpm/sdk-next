@@ -1,6 +1,6 @@
 import type { ApiPromise, WsProvider } from '@polkadot/api'
 import type { ZeitgeistIndexer } from '@zeitgeistpm/indexer'
-import { MetadataStorage, SaturatedMetadataStorage } from 'meta/types'
+import { CommentTypeOf, MarketTypeOf, MetadataStorage, SaturatedMetadataStorage } from 'meta/types'
 
 /**
  * Union type that can be either rpc, indexer or full context.

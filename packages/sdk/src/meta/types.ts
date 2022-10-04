@@ -9,7 +9,10 @@ import { MarketMetadata } from './market'
  * @generic M = MarketMetadata
  * @generic C = Comment
  */
-export type MetadataStorage<M = MarketMetadata, C = CommentMetadata> = {
+export interface MetadataStorage<
+  M extends object = MarketMetadata,
+  C extends object = CommentMetadata,
+> {
   /**
    * Storage for Market metadata.
    */
@@ -19,6 +22,10 @@ export type MetadataStorage<M = MarketMetadata, C = CommentMetadata> = {
    * @notes not in use, just testing type narrowing.
    */
   readonly comments: Storage<C, CID>
+
+  of<K extends keyof this, T extends object = this[K] extends Storage<infer T> ? T : never>(
+    key: K,
+  ): Storage<T, CID>
 }
 
 /**
@@ -43,7 +50,9 @@ export type CommentTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS, 'comme
  * @generic MS extends MetadataStorage
  */
 export type SaturatedMetadataStorage<MS extends MetadataStorage<any, any>> = MS & {
-  as<K extends keyof MS, T = MS[K] extends Storage<infer T> ? T : never>(key: K): Storage<T, CID>
+  as<K extends keyof MS, T extends object = MS[K] extends Storage<infer T> ? T : never>(
+    key: K,
+  ): Storage<T, CID>
 }
 
 /**
@@ -53,9 +62,7 @@ export type SaturatedMetadataStorage<MS extends MetadataStorage<any, any>> = MS 
  * @param storage M
  * @returns M & SaturatedMetadataStorage<MS>
  */
-export const saturate = <MS extends MetadataStorage>(
-  storage: MS,
-): MS & SaturatedMetadataStorage<MS> => ({
+export const saturate = <MS extends MetadataStorage<any, any>>(storage: MS): MS => ({
   ...storage,
-  as: key => storage[key] as any,
+  of: key => storage[key] as any,
 })

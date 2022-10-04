@@ -31,7 +31,7 @@ export const create = async <
 ): Promise<CreateMarketResult<MS, P>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
-  const cid = (await context.storage.markets.put(params.metadata as any)).unright().unwrap()
+  const cid = (await context.storage.of('markets').put(params.metadata)).unright().unwrap()
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(

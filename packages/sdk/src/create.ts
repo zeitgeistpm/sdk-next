@@ -116,7 +116,7 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
  * @param config RpcConfig
  * @returns Promise<RpcContext>
  */
-export const createRpcContext = async <MS extends MetadataStorage>(
+export const createRpcContext = async <MS extends MetadataStorage<any, any>>(
   config: RpcConfig<MS>,
 ): Promise<RpcContext<MS>> => {
   const { ApiPromise, WsProvider } = await import('@polkadot/api')
@@ -148,7 +148,7 @@ export const createRpcContext = async <MS extends MetadataStorage>(
   return {
     api,
     provider,
-    storage: saturate(config.storage),
+    storage: saturate<MS>(config.storage),
   }
 }
 

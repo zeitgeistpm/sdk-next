@@ -12,7 +12,9 @@ import { Storage } from '../..'
  *
  * @generic T - type of metadata
  */
-export const storage = <T>(codec: Codec<string, T> = JsonCodec()): Storage<T, string> => {
+export const storage = <T extends object>(
+  codec: Codec<string, T> = JsonCodec(),
+): Storage<T, string> => {
   return {
     put: async data => {
       try {
@@ -45,7 +47,7 @@ export const storage = <T>(codec: Codec<string, T> = JsonCodec()): Storage<T, st
       )
     },
 
-    as<T>() {
+    as<T extends object>() {
       return this as unknown as Storage<T>
     },
   }

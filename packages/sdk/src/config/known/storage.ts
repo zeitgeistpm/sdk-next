@@ -7,7 +7,7 @@ import { MetadataStorage } from 'meta/types'
  * @returns MetadataStorage
  */
 export const ZeitgeistIpfs = <MS extends MetadataStorage>(): MS => {
-  const memoizedstorage = memoize(<T>() =>
+  const memoizedstorage = memoize(<T extends object>() =>
     IPFS.storage<T>({
       node: { url: 'http://ipfs.zeitgeist.pm:5001' },
       cluster: {

@@ -32,14 +32,16 @@ async function main() {
     storage: CustomStorageProvider(),
   })
 
-  sdk.storage.markets.put({})
+  sdk.storage.markets.put({
+    marketText: '',
+  })
 
   const r = await (await (await sdk.model.markets.get({ marketId: 0 })).expand()).unright().unwrap()
   r.marketText
 
   sdk.model.markets.create({
     metadata: {
-      marketText: 1,
+      marketText: '',
     },
   })
 }

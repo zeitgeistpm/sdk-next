@@ -8,7 +8,7 @@ export * from './providers/ipfs/types'
  * A generic metadata type for on chain objects that
  * has metadata stored in some external storage like IPFS.
  */
-export type Storage<T, ID = CID> = {
+export type Storage<T extends object, ID = CID> = {
   /**
    * Get item from storage
    *
@@ -30,5 +30,5 @@ export type Storage<T, ID = CID> = {
    */
   del: Task<EitherInterface<Error, void>, [ID]>
 
-  as<T>(): Storage<T>
+  as<T extends object>(): Storage<T>
 }
