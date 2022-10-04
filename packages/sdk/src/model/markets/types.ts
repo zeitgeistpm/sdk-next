@@ -15,10 +15,13 @@ export * from './market'
  * Zeitgeist Markets model.
  * Query and create markets.
  */
-export type Markets<C extends Context<MS>, MS extends MetadataStorage> = MarketsShared<C, MS> &
+export type Markets<C extends Context<MS>, MS extends MetadataStorage<any, any>> = MarketsShared<
+  C,
+  MS
+> &
   (C extends RpcContext<MS> ? MarketsRpc<C, MS> : never)
 
-export type MarketsShared<C extends Context<MS>, MS extends MetadataStorage> = {
+export type MarketsShared<C extends Context<MS>, MS extends MetadataStorage<any, any>> = {
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.
    */
@@ -29,7 +32,7 @@ export type MarketsShared<C extends Context<MS>, MS extends MetadataStorage> = {
   get: (query: MarketGetQuery) => Promise<Market<C, MS>>
 }
 
-export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
+export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage<any, any>> = {
   /**
    * Create a market. Only available when connecting to rpc.
    */

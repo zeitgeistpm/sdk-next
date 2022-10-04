@@ -43,7 +43,7 @@ export interface MetadataStorage<
  */
 export type StorageTypeOf<
   MS extends MetadataStorage<any, any>,
-  K extends keyof MetadataStorage<any, any>,
+  K extends keyof MS,
 > = MS[K] extends Storage<infer T> ? T : never
 
 /**
