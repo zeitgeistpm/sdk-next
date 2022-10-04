@@ -23,7 +23,7 @@ import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } 
  */
 export const create = async <
   C extends RpcContext<MS> | FullContext<MS>,
-  MS extends MetadataStorage,
+  MS extends MetadataStorage<any, any>,
   P extends CreateMarketParams<MS>,
 >(
   context: C,

@@ -41,23 +41,22 @@ export interface MetadataStorage<
  * @generic MS extends MetadataStorage,
  * @generic K extends keyof MSS>
  */
-export type StorageTypeOf<MS extends MetadataStorage, K extends keyof MS> = MS[K] extends Storage<
-  infer T
->
-  ? T
-  : never
+export type StorageTypeOf<
+  MS extends MetadataStorage<any, any>,
+  K extends keyof MetadataStorage<any, any>,
+> = MS[K] extends Storage<infer T> ? T : never
 
 /**
  * Unpack the inner type of market storage.
  * @generic MS extends MetadataStorage
  */
-export type MarketTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS, 'markets'>
+export type MarketTypeOf<MS extends MetadataStorage<any, any>> = StorageTypeOf<MS, 'markets'>
 
 /**
  * Unpack the inner type of comment storage.
  * @generic MS extends MetadataStorage
  */
-export type CommentTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS, 'comments'>
+export type CommentTypeOf<MS extends MetadataStorage<any, any>> = StorageTypeOf<MS, 'comments'>
 
 /**
  * A saturatable metadata storage.

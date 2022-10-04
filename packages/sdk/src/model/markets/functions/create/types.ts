@@ -8,12 +8,12 @@ import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { Storage } from '@zeitgeistpm/web3.storage'
-import { MetadataStorage, StorageTypeOf } from 'meta'
+import { MetadataStorage, MarketTypeOf } from 'meta'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
  */
-export type CreateMarketParams<MS extends MetadataStorage> =
+export type CreateMarketParams<MS extends MetadataStorage<any, any>> =
   | CreateStandaloneMarketParams<MS>
   | CreateMarketWithPoolParams<MS>
 
@@ -21,7 +21,7 @@ export type CreateMarketParams<MS extends MetadataStorage> =
  * Base parameters for creating a market.
  */
 export type CreateMarketBaseParams<
-  MS extends MetadataStorage,
+  MS extends MetadataStorage<any, any>,
   Md = MS['markets'] extends Storage<infer T> ? T : never,
 > = {
   /**
@@ -31,7 +31,7 @@ export type CreateMarketBaseParams<
   /**
    * Metadata to store in external storage alongside the market.
    */
-  metadata: Md //StorageTypeOf<MS, 'markets'>
+  metadata: Md
   /**
    * Type of market, categorical or scalar
    */
@@ -75,39 +75,41 @@ export type CreateMarketBaseParams<
 /**
  * Parameters for creating a market without a pool
  */
-export type CreateStandaloneMarketParams<MS extends MetadataStorage> = CreateMarketBaseParams<MS> & {
-  /**
-   * Market scoring rule.
-   *
-   * @default Cpmm
-   * @note Cpmm is the only one available atm. Rikkido will become available in a future update.
-   */
-  scoringRule?: ZeitgeistPrimitivesPoolScoringRule['type']
-  /**
-   * Market creation type, permissionless or advised.
-   */
-  creationType: ZeitgeistPrimitivesMarketMarketCreation['type']
-}
+export type CreateStandaloneMarketParams<MS extends MetadataStorage<any, any>> =
+  CreateMarketBaseParams<MS> & {
+    /**
+     * Market scoring rule.
+     *
+     * @default Cpmm
+     * @note Cpmm is the only one available atm. Rikkido will become available in a future update.
+     */
+    scoringRule?: ZeitgeistPrimitivesPoolScoringRule['type']
+    /**
+     * Market creation type, permissionless or advised.
+     */
+    creationType: ZeitgeistPrimitivesMarketMarketCreation['type']
+  }
 
 /**
  * Parameters for creating a market with a pool.
  */
-export type CreateMarketWithPoolParams<MS extends MetadataStorage> = CreateMarketBaseParams<MS> & {
-  pool: {
-    /**
-     * The fee to swap in and out of the pool.
-     */
-    swapFee: string
-    /**
-     * The ammount to deploy in ZTG
-     */
-    amount: string
-    /**
-     * Weighting of the assets.
-     */
-    weights: string[]
+export type CreateMarketWithPoolParams<MS extends MetadataStorage<any, any>> =
+  CreateMarketBaseParams<MS> & {
+    pool: {
+      /**
+       * The fee to swap in and out of the pool.
+       */
+      swapFee: string
+      /**
+       * The ammount to deploy in ZTG
+       */
+      amount: string
+      /**
+       * Weighting of the assets.
+       */
+      weights: string[]
+    }
   }
-}
 
 /**
  * Check if params is with pool

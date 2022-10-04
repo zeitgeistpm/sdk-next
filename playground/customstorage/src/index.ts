@@ -41,7 +41,7 @@ async function main() {
 
   sdk.model.markets.create({
     metadata: {
-      marketText: '',
+      marketText: 1,
     },
   })
 }

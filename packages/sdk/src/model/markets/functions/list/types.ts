@@ -3,7 +3,7 @@ import type { Unpartial } from '@zeitgeistpm/utility/dist/object'
 import { MetadataStorage } from 'meta'
 import { Context, IndexerContext } from '../../../../context'
 import { PaginationQuery } from '../../../../types/query'
-import { IndexedMarket, AugmentedRpcMarket } from '../../types'
+import { IndexedMarket, RpcMarket } from '../../types'
 
 /**
  * List of Markets.
@@ -34,7 +34,7 @@ export type FullMarketList = { items: IndexedMarket[] }
 /**
  * Concrete MarketList for rpc context
  */
-export type AugmentedRpcMarketList<MS extends MetadataStorage> = { items: AugmentedRpcMarket<MS>[] }
+export type AugmentedRpcMarketList<MS extends MetadataStorage> = { items: RpcMarket<MS>[] }
 
 /**
  * Concrete markets Query for rpc context

@@ -1,17 +1,15 @@
 import { ApiPromise } from '@polkadot/api'
 import { Option, StorageKey, u128 } from '@polkadot/types'
 import { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
-import { isCodec, isNumber } from '@polkadot/util'
+import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
-import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
+import { MarketTypeOf, MetadataStorage } from 'meta'
 import { Context, RpcContext } from '../../context'
-import { Data } from '../../primitives'
 import { MarketMetadata } from '../../meta/market'
-import { MarketTypeOf, MetadataStorage, StorageTypeOf } from 'meta'
-import { Storage } from '@zeitgeistpm/web3.storage'
+import { Data } from '../../primitives'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -21,7 +19,7 @@ export * from './functions/list/types'
  */
 export type Market<C extends Context<MS>, MS extends MetadataStorage = MetadataStorage> = Data<
   C,
-  AugmentedRpcMarket<MS>,
+  RpcMarket<MS>,
   IndexedMarket,
   MS
 >
@@ -34,7 +32,7 @@ export type IndexedMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type AugmentedRpcMarket<MS extends MetadataStorage> = ZeitgeistPrimitivesMarket & {
+export type RpcMarket<MS extends MetadataStorage> = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -66,8 +64,8 @@ export const augment = <MS extends MetadataStorage<any, any>>(
   context: RpcContext<MS>,
   id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
-): AugmentedRpcMarket<MS> => {
-  let augmented = market as AugmentedRpcMarket<MS>
+): RpcMarket<MS> => {
+  let augmented = market as RpcMarket<MS>
 
   augmented.marketId = isNumber(id) ? id : id.toNumber()
 
@@ -126,7 +124,7 @@ export const fromEntry = <MS extends MetadataStorage>(
     },
     market,
   ]: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>],
-): AugmentedRpcMarket<MS> => {
+): RpcMarket<MS> => {
   return augment(context, marketId, market.unwrap())
 }
 
@@ -142,7 +140,7 @@ export const fromEntry = <MS extends MetadataStorage>(
  */
 export const projectEndTimestamp = async <MS extends MetadataStorage>(
   api: ApiPromise,
-  market: AugmentedRpcMarket<MS>,
+  market: RpcMarket<MS>,
 ): Promise<number> => {
   if (market.period.isTimestamp) {
     return Number(market.period.asTimestamp[1].toHuman())
