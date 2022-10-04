@@ -38,8 +38,8 @@ async function main(marketId: number) {
     market.categories?.map((category, index) => {
       const [block, price] = prices[index]
       console.log(
-        `Market ${market.marketId} token(${category?.ticker}) at block ${block} 
-       at price ${price.toNumber() / 10 ** 10} ZTG`,
+        `Market ${market.marketId} token(${category?.ticker}) 
+         at block ${block}, price ${price.toNumber() / 10 ** 10} ZTG`,
       )
       if (market.status === 'Closed') {
         console.log('Market has closed.')
