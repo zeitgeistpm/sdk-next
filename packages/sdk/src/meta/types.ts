@@ -22,7 +22,14 @@ export interface MetadataStorage<
    * @notes not in use, just testing type narrowing.
    */
   readonly comments: Storage<C, CID>
-
+  /**
+   * Use storage narrowed to a sub storage type.
+   *
+   * @note for internal usage.
+   *
+   * @generic K extends keyof this
+   * @param key K
+   */
   of<K extends keyof this, T extends object = this[K] extends Storage<infer T> ? T : never>(
     key: K,
   ): Storage<T, CID>
@@ -40,7 +47,16 @@ export type StorageTypeOf<MS extends MetadataStorage, K extends keyof MS> = MS[K
   ? T
   : never
 
+/**
+ * Unpack the inner type of market storage.
+ * @generic MS extends MetadataStorage
+ */
 export type MarketTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS, 'markets'>
+
+/**
+ * Unpack the inner type of comment storage.
+ * @generic MS extends MetadataStorage
+ */
 export type CommentTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS, 'comments'>
 
 /**
