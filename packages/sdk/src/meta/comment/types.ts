@@ -1,3 +1,3 @@
-export type Comment = {
+export type CommentMetadata = {
   text: string
 }

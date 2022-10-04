@@ -1,5 +1,4 @@
 import { MetadataStorage } from 'meta'
-import { MarketMetadata } from 'meta/market'
 import { FullConfig, IndexerConfig, RpcConfig } from '../types'
 import { ZeitgeistIpfs } from './storage'
 import { KnownPreset, KnownPresets } from './types'

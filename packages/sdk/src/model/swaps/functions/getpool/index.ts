@@ -1,4 +1,3 @@
-import { MarketMetadata } from 'meta/market'
 import { EMPTY, Observable } from 'rxjs'
 import {
   Context,

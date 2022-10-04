@@ -1,6 +1,6 @@
 import { Storage } from '@zeitgeistpm/web3.storage'
 import { CID } from 'ipfs-http-client'
-import { Comment } from './comment'
+import { CommentMetadata } from './comment'
 import { MarketMetadata } from './market'
 
 /**
@@ -9,7 +9,7 @@ import { MarketMetadata } from './market'
  * @generic M = MarketMetadata
  * @generic C = Comment
  */
-export interface MetadataStorage<M = MarketMetadata, C = Comment> {
+export interface MetadataStorage<M = MarketMetadata, C = CommentMetadata> {
   /**
    * Storage for Market metadata.
    */
@@ -32,6 +32,9 @@ export type StorageTypeOf<MS extends MetadataStorage, K extends keyof MS> = MS[K
 >
   ? T
   : never
+
+export type MarketTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS, 'markets'>
+export type CommentTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS, 'comments'>
 
 /**
  * A saturatable metadata storage.

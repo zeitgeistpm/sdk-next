@@ -1,7 +1,7 @@
-import { MarketMetadata, MetadataStorage } from 'meta'
+import { MetadataStorage } from 'meta'
 import ms from 'ms'
 import { Observable } from 'rxjs'
-import { Context, RpcContext } from '../../context'
+import { RpcContext } from '../../context'
 import { BlockNumber, isBlockNumber } from '../../primitives/blocknumber'
 import { Duration, isDuration } from './duration'
 

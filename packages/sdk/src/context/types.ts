@@ -1,8 +1,5 @@
-import type { CID } from 'ipfs-http-client'
 import type { ApiPromise, WsProvider } from '@polkadot/api'
 import type { ZeitgeistIndexer } from '@zeitgeistpm/indexer'
-import type { Storage } from '@zeitgeistpm/web3.storage'
-import type { MarketMetadata } from '../meta/market'
 import { MetadataStorage, SaturatedMetadataStorage } from 'meta/types'
 
 /**

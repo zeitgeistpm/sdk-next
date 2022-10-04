@@ -4599,6 +4599,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.memoize@npm:^4.1.7":
+  version: 4.1.7
+  resolution: "@types/lodash.memoize@npm:4.1.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 85f128b6606ab0545c11194208cf844536f981859221dff0032b1043dd4e02ee5aa1b96020d1e02a24db31be7493f2e9ff45836d2e3c35cf973fc6488f129eed
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.14.186
+  resolution: "@types/lodash@npm:4.14.186"
+  checksum: ee0c1368a8100bb6efb88335107473a41928fc307ff1ef4ff1278868ccddba9c04c68c36d1ffe3a0392ef4a956e1955f7de3203ec09df4f1655dd1b88485c549
+  languageName: node
+  linkType: hard
+
 "@types/long@npm:^4.0.1":
   version: 4.0.2
   resolution: "@types/long@npm:4.0.2"
@@ -4610,6 +4626,13 @@ __metadata:
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
   checksum: c41d136f67231c3131cf1d4ca0b06687f4a322918a3a5adddc87ce90ed9dbd175a3610adee36b106ae68c0b92c637c35e02b58c8a56c424f71d30993ea220b92
+  languageName: node
+  linkType: hard
+
+"@types/ms@npm:^0.7.31":
+  version: 0.7.31
+  resolution: "@types/ms@npm:0.7.31"
+  checksum: daadd354aedde024cce6f5aa873fefe7b71b22cd0e28632a69e8b677aeb48ae8caa1c60e5919bb781df040d116b01cb4316335167a3fc0ef6a63fa3614c0f6da
   languageName: node
   linkType: hard
 
@@ -4965,6 +4988,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/sdk@workspace:packages/sdk"
   dependencies:
+    "@types/lodash.memoize": ^4.1.7
+    "@types/ms": ^0.7.31
     "@zeitgeistpm/augment-api": "workspace:*"
     "@zeitgeistpm/indexer": "*"
     "@zeitgeistpm/rpc": "*"
@@ -4973,6 +4998,8 @@ __metadata:
     bignumber.js: ^9.1.0
     cids: ^1.1.9
     ipfs-core: ^0.15.4
+    lodash.memoize: ^4.1.2
+    ms: ^2.1.3
     polly-js: ^1.8.3
     rxjs: 7.5.6
     superstruct: ^0.16.0
@@ -12242,6 +12269,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.memoize@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "lodash.memoize@npm:4.1.2"
+  checksum: 9ff3942feeccffa4f1fafa88d32f0d24fdc62fd15ded5a74a5f950ff5f0c6f61916157246744c620173dddf38d37095a92327d5fd3861e2063e736a5c207d089
+  languageName: node
+  linkType: hard
+
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
@@ -12840,7 +12874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ms@npm:^2.0.0, ms@npm:^2.1.1":
+"ms@npm:^2.0.0, ms@npm:^2.1.1, ms@npm:^2.1.3":
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: aa92de608021b242401676e35cfa5aa42dd70cbdc082b916da7fb925c542173e36bce97ea3e804923fe92c0ad991434e4a38327e15a1b5b5f945d66df615ae6d

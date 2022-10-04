@@ -3,7 +3,6 @@
  */
 
 import { MetadataStorage } from 'meta'
-import { MarketMetadata } from 'meta/market'
 import { Config } from '../types'
 
 export type KnownPreset<C extends Config<MS>, MS extends MetadataStorage> = C & {
