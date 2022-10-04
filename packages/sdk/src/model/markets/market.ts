@@ -19,11 +19,11 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<C extends Context<M>, M extends MetadataStorage = MetadataStorage> = Data<
+export type Market<C extends Context<MS>, MS extends MetadataStorage = MetadataStorage> = Data<
   C,
-  AugmentedRpcMarket<M>,
+  AugmentedRpcMarket<MS>,
   IndexedMarket,
-  M
+  MS
 >
 
 /**
@@ -35,8 +35,8 @@ export type IndexedMarket = FullMarketFragment
  * Concrete Market type for a rpc market.
  */
 export type AugmentedRpcMarket<
-  M extends MetadataStorage,
-  Md = M['markets'] extends Storage<infer T> ? T : never,
+  MS extends MetadataStorage,
+  Md = MS['markets'] extends Storage<infer T> ? T : never,
 > = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
@@ -67,12 +67,12 @@ export type IndexedBase = Omit<IndexedMarket, keyof MarketMetadata>
  * @param market ZeitgeistPrimitivesMarket
  * @returns AugmentedAugmentedRpcMarket
  */
-export const augment = <M extends MetadataStorage>(
-  context: RpcContext<M>,
+export const augment = <MS extends MetadataStorage>(
+  context: RpcContext<MS>,
   id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
-): AugmentedRpcMarket<M> => {
-  let augmented = market as AugmentedRpcMarket<M>
+): AugmentedRpcMarket<MS> => {
+  let augmented = market as AugmentedRpcMarket<MS>
 
   augmented.marketId = isNumber(id) ? id : id.toNumber()
 
@@ -118,15 +118,15 @@ export const augment = <M extends MetadataStorage>(
  * @param entry [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>]
  * @returns AugmentedAugmentedRpcMarketRpcMarket
  */
-export const fromEntry = <M extends MetadataStorage>(
-  context: RpcContext<M>,
+export const fromEntry = <MS extends MetadataStorage>(
+  context: RpcContext<MS>,
   [
     {
       args: [marketId],
     },
     market,
   ]: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>],
-): AugmentedRpcMarket<M> => {
+): AugmentedRpcMarket<MS> => {
   return augment(context, marketId, market.unwrap())
 }
 
@@ -140,9 +140,9 @@ export const fromEntry = <M extends MetadataStorage>(
  * @param market AugmentedRpcMarket
  * @returns Promise<number>
  */
-export const projectEndTimestamp = async <M extends MetadataStorage>(
+export const projectEndTimestamp = async <MS extends MetadataStorage>(
   api: ApiPromise,
-  market: AugmentedRpcMarket<M>,
+  market: AugmentedRpcMarket<MS>,
 ): Promise<number> => {
   if (market.period.isTimestamp) {
     return Number(market.period.asTimestamp[1].toHuman())

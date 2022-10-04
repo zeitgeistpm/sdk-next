@@ -24,13 +24,13 @@ import { Storage } from '@zeitgeistpm/web3.storage'
  * @returns void
  */
 export const create = async <
-  C extends RpcContext<M> | FullContext<M>,
-  M extends MetadataStorage,
-  P extends CreateMarketParams<M>,
+  C extends RpcContext<MS> | FullContext<MS>,
+  MS extends MetadataStorage,
+  P extends CreateMarketParams<MS>,
 >(
   context: C,
   params: P,
-): Promise<CreateMarketResult<M, P>> => {
+): Promise<CreateMarketResult<MS, P>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
   const cid = (await context.storage.as('markets').put(params.metadata)).unright().unwrap()
@@ -83,14 +83,14 @@ export const create = async <
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
 const extract =
-  <M extends MetadataStorage, P extends CreateMarketParams<M>>(
-    context: RpcContext<M>,
+  <MS extends MetadataStorage, P extends CreateMarketParams<MS>>(
+    context: RpcContext<MS>,
     result: ISubmittableResult,
     params: P,
   ) =>
   () =>
     either(
-      tryCatch<Error, CreateMarketData<M, P>>(() => {
+      tryCatch<Error, CreateMarketData<MS, P>>(() => {
         const createdMarket = extractMarketCreationEventForAddress(
           context.api,
           result.events,
@@ -106,7 +106,7 @@ const extract =
         return {
           market: createdMarket,
           pool: createdPool,
-        } as CreateMarketData<M, P>
+        } as CreateMarketData<MS, P>
       }),
     )
 
@@ -119,7 +119,7 @@ const extract =
  * @param cid CID
  */
 const deleteMetadata = Te.from(
-  async <M extends MetadataStorage>(context: RpcContext<M> | FullContext<M>, cid: CID) => {
+  async <MS extends MetadataStorage>(context: RpcContext<MS> | FullContext<MS>, cid: CID) => {
     if (!context.storage) return
     await context.storage.markets.del(cid)
   },

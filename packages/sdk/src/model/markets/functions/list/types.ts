@@ -11,9 +11,9 @@ import { IndexedMarket, AugmentedRpcMarket } from '../../types'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type MarketList<C extends Context<M>, M extends MetadataStorage> = C extends IndexerContext
+export type MarketList<C extends Context<MS>, MS extends MetadataStorage> = C extends IndexerContext
   ? FullMarketList
-  : AugmentedRpcMarketList<M>
+  : AugmentedRpcMarketList<MS>
 
 /**
  * Markets list Query type
@@ -22,8 +22,8 @@ export type MarketList<C extends Context<M>, M extends MetadataStorage> = C exte
  * @generic C Context - the context to query in.
  */
 export type MarketsListQuery<
-  C extends Context<M>,
-  M extends MetadataStorage,
+  C extends Context<MS>,
+  MS extends MetadataStorage,
 > = C extends IndexerContext ? MarketsIndexerQuery : MarketsRpcQuery
 
 /**
@@ -34,7 +34,7 @@ export type FullMarketList = { items: IndexedMarket[] }
 /**
  * Concrete MarketList for rpc context
  */
-export type AugmentedRpcMarketList<M extends MetadataStorage> = { items: AugmentedRpcMarket<M>[] }
+export type AugmentedRpcMarketList<MS extends MetadataStorage> = { items: AugmentedRpcMarket<MS>[] }
 
 /**
  * Concrete markets Query for rpc context

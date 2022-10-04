@@ -8,7 +8,7 @@ import { MarketMetadata } from '../../meta/market'
  * Default IPFS metadata storage for the zeitgeist ecosystem.
  * @typeof IPFS.storage<MarketMetadata>
  */
-export const ZeitgeistIpfs = <M extends MetadataStorage<MarketMetadata, Comment>>(): M => {
+export const ZeitgeistIpfs = <MS extends MetadataStorage<MarketMetadata, Comment>>(): MS => {
   const memoizedstorage = memoize(<T>() =>
     IPFS.storage<T>({
       node: { url: 'http://ipfs.zeitgeist.pm:5001' },
@@ -25,7 +25,7 @@ export const ZeitgeistIpfs = <M extends MetadataStorage<MarketMetadata, Comment>
   const storage = {
     markets: memoizedstorage<MarketMetadata>(),
     comments: memoizedstorage<Comment>(),
-  } as M
+  } as MS
 
   return storage
 }

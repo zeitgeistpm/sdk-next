@@ -24,10 +24,10 @@ export interface MetadataStorage<M = MarketMetadata, C = Comment> {
 /**
  * Type helper to extract the storage type at a given key in a MetadataStorage
  *
- * @generic M extends MetadataStorage,
- * @generic K extends keyof M>
+ * @generic MS extends MetadataStorage,
+ * @generic K extends keyof MSS>
  */
-export type StorageTypeOf<M extends MetadataStorage, K extends keyof M> = M[K] extends Storage<
+export type StorageTypeOf<MS extends MetadataStorage, K extends keyof MS> = MS[K] extends Storage<
   infer T
 >
   ? T
@@ -37,20 +37,22 @@ export type StorageTypeOf<M extends MetadataStorage, K extends keyof M> = M[K] e
  * A saturatable metadata storage.
  * @note For internal usage only to keep strict typing when putting into metadata storage.
  *
- * @generic M extends MetadataStorage
+ * @generic MS extends MetadataStorage
  */
-export interface SaturatedMetadataStorage<M extends MetadataStorage> {
-  as<K extends keyof M, T = M[K] extends Storage<infer T> ? T : never>(key: K): Storage<T, CID>
+export interface SaturatedMetadataStorage<MS extends MetadataStorage> {
+  as<K extends keyof MS, T = MS[K] extends Storage<infer T> ? T : never>(key: K): Storage<T, CID>
 }
 
 /**
  * Create a sturatable metadata storage.
  *
- * @generic M extends MetadataStorage
+ * @generic MS extends MetadataStorage
  * @param storage M
- * @returns M & SaturatedMetadataStorage<M>
+ * @returns M & SaturatedMetadataStorage<MS>
  */
-export const saturate = <M extends MetadataStorage>(storage: M): M & SaturatedMetadataStorage<M> => ({
+export const saturate = <MS extends MetadataStorage>(
+  storage: MS,
+): MS & SaturatedMetadataStorage<MS> => ({
   ...storage,
   as: key => storage[key] as any,
 })

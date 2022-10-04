@@ -11,12 +11,12 @@ export * from './types'
  * Connect to the mainnet rpc and indexer
  * @returns KnownPreset<FullConfig>
  */
-export const mainnet = <M extends MetadataStorage>(): KnownPreset<FullConfig<M>, M> => {
+export const mainnet = <MS extends MetadataStorage>(): KnownPreset<FullConfig<MS>, MS> => {
   return {
     preset: KnownPresets.mainnet,
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
     indexer: indexers.zeitgeist.uri,
-    storage: ZeitgeistIpfs<M>(),
+    storage: ZeitgeistIpfs<MS>(),
   }
 }
 
@@ -24,11 +24,11 @@ export const mainnet = <M extends MetadataStorage>(): KnownPreset<FullConfig<M>,
  * Connect to the mainnet rpc only
  * @returns KnownPreset<RpcConfig>
  */
-export const mainnetRpc = <M extends MetadataStorage>(): KnownPreset<RpcConfig<M>, M> => {
+export const mainnetRpc = <MS extends MetadataStorage>(): KnownPreset<RpcConfig<MS>, MS> => {
   return {
     preset: KnownPresets.mainnetRpc,
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
-    storage: ZeitgeistIpfs<M>(),
+    storage: ZeitgeistIpfs<MS>(),
   }
 }
 
@@ -36,7 +36,7 @@ export const mainnetRpc = <M extends MetadataStorage>(): KnownPreset<RpcConfig<M
  * Connect to the mainnet indexer only.
  * @returns KnownPreset<IndexerConfig>
  */
-export const mainnetIndexer = <M extends MetadataStorage>(): KnownPreset<IndexerConfig, M> => {
+export const mainnetIndexer = <MS extends MetadataStorage>(): KnownPreset<IndexerConfig, MS> => {
   return {
     preset: KnownPresets.mainnetIndexer,
     indexer: indexers.zeitgeist.uri,
@@ -47,12 +47,12 @@ export const mainnetIndexer = <M extends MetadataStorage>(): KnownPreset<Indexer
  * Connect to the batterystation testnet rpc and indexer.
  * @returns KnownPreset<FullConfig>
  */
-export const batterystation = <M extends MetadataStorage>(): KnownPreset<FullConfig<M>, M> => {
+export const batterystation = <MS extends MetadataStorage>(): KnownPreset<FullConfig<MS>, MS> => {
   return {
     preset: KnownPresets.bsr,
     provider: [rpcs.bsr.uri],
     indexer: indexers.bsr.uri,
-    storage: ZeitgeistIpfs<M>(),
+    storage: ZeitgeistIpfs<MS>(),
   }
 }
 
@@ -60,11 +60,11 @@ export const batterystation = <M extends MetadataStorage>(): KnownPreset<FullCon
  * Connect to the batterystation rpc only
  * @returns KnownPreset<RpcConfig>
  */
-export const batterystationRpc = <M extends MetadataStorage>(): KnownPreset<RpcConfig<M>, M> => {
+export const batterystationRpc = <MS extends MetadataStorage>(): KnownPreset<RpcConfig<MS>, MS> => {
   return {
     preset: KnownPresets.bsrRpc,
     provider: [rpcs.bsr.uri],
-    storage: ZeitgeistIpfs<M>(),
+    storage: ZeitgeistIpfs<MS>(),
   }
 }
 
@@ -72,7 +72,10 @@ export const batterystationRpc = <M extends MetadataStorage>(): KnownPreset<RpcC
  * Connect to the batterystation indexer only
  * @returns KnownPreset<IndexerConfig>
  */
-export const batterystationIndexer = <M extends MetadataStorage>(): KnownPreset<IndexerConfig, M> => {
+export const batterystationIndexer = <MS extends MetadataStorage>(): KnownPreset<
+  IndexerConfig,
+  MS
+> => {
   return {
     preset: KnownPresets.bsrIndexer,
     indexer: indexers.bsr.uri,

@@ -29,7 +29,7 @@ export type ChainTime = {
  * @param ctx RpcContext
  * @returns Promise<ChainTime>
  */
-export const now = async <M extends MetadataStorage>(ctx: RpcContext<M>): Promise<ChainTime> => {
+export const now = async <MS extends MetadataStorage>(ctx: RpcContext<MS>): Promise<ChainTime> => {
   const [now, head] = await Promise.all([
     ctx.api.query.timestamp.now().then(now => now.toNumber()),
     ctx.api.rpc.chain.getHeader(),
@@ -51,7 +51,7 @@ export const now = async <M extends MetadataStorage>(ctx: RpcContext<M>): Promis
  * @param ctx RpcContext
  * @returns Observable<ChainTime>
  */
-export const now$ = <M extends MetadataStorage>(ctx: RpcContext<M>): Observable<ChainTime> =>
+export const now$ = <MS extends MetadataStorage>(ctx: RpcContext<MS>): Observable<ChainTime> =>
   new Observable(sub => {
     now(ctx).then(time => sub.next(time))
 

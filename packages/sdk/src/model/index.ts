@@ -11,7 +11,9 @@ import { Model } from './types'
  * @param context C
  * @returns Model<C>
  */
-export const model = <C extends Context<M>, M extends MetadataStorage>(context: C): Model<C, M> => {
+export const model = <C extends Context<MS>, MS extends MetadataStorage>(
+  context: C,
+): Model<C, MS> => {
   return {
     markets: Market.markets(context),
     swaps: Swaps.swaps(context),

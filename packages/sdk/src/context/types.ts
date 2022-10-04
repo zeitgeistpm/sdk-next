@@ -8,23 +8,24 @@ import { MetadataStorage, SaturatedMetadataStorage } from 'meta/types'
 /**
  * Union type that can be either rpc, indexer or full context.
  */
-export type Context<M extends MetadataStorage = MetadataStorage> =
-  | FullContext<M>
-  | RpcContext<M>
+export type Context<MS extends MetadataStorage = MetadataStorage> =
+  | FullContext<MS>
+  | RpcContext<MS>
   | IndexerContext
 
 /**
  * Zeitgeist SDK context with both rpc and indexer features enabled.
  */
-export type FullContext<M extends MetadataStorage = MetadataStorage> = RpcContext<M> & IndexerContext
+export type FullContext<MS extends MetadataStorage = MetadataStorage> = RpcContext<MS> &
+  IndexerContext
 
 /**
  * Zeitgeist SDK context with rpc and storage features enabled.
  */
-export type RpcContext<M extends MetadataStorage = MetadataStorage> = {
+export type RpcContext<MS extends MetadataStorage = MetadataStorage> = {
   api: ApiPromise
   provider: WsProvider
-  storage: M & SaturatedMetadataStorage<M>
+  storage: MS & SaturatedMetadataStorage<MS>
 }
 
 /**
@@ -40,7 +41,7 @@ export type IndexerContext = {
  * @param ctx unknown
  * @returns config is FullContext
  */
-export const isFullContext = <M extends MetadataStorage>(ctx?: unknown): ctx is FullContext<M> =>
+export const isFullContext = <MS extends MetadataStorage>(ctx?: unknown): ctx is FullContext<MS> =>
   isRpcContext(ctx) && isIndexerContext(ctx)
 
 /**
@@ -49,7 +50,7 @@ export const isFullContext = <M extends MetadataStorage>(ctx?: unknown): ctx is 
  * @param ctx unknown
  * @returns config is RpcContext
  */
-export const isRpcContext = <M extends MetadataStorage>(ctx?: unknown): ctx is RpcContext<M> =>
+export const isRpcContext = <MS extends MetadataStorage>(ctx?: unknown): ctx is RpcContext<MS> =>
   Boolean(ctx && typeof ctx === 'object' && ctx !== null && 'api' in ctx)
 
 /**

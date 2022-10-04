@@ -9,9 +9,9 @@ import { IndexedPool, Pool, RpcPool } from '../../pool'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type PoolList<C extends Context<M>, M extends MetadataStorage> = C extends IndexerContext
-  ? IndexedPoolList<M>
-  : RpcPoolList<M>
+export type PoolList<C extends Context<MS>, MS extends MetadataStorage> = C extends IndexerContext
+  ? IndexedPoolList<MS>
+  : RpcPoolList<MS>
 
 /**
  * Pools list Query type
@@ -19,19 +19,20 @@ export type PoolList<C extends Context<M>, M extends MetadataStorage> = C extend
  *
  * @generic C Context - the context to query in.
  */
-export type PoolsListQuery<C extends Context<M>, M extends MetadataStorage> = C extends IndexerContext
-  ? PoolsIndexerQuery
-  : PoolsRpcQuery
+export type PoolsListQuery<
+  C extends Context<MS>,
+  MS extends MetadataStorage,
+> = C extends IndexerContext ? PoolsIndexerQuery : PoolsRpcQuery
 
 /**
  * Concrete PoolList for indexed context
  */
-export type IndexedPoolList<M extends MetadataStorage> = Pool<IndexerContext, M>[]
+export type IndexedPoolList<MS extends MetadataStorage> = Pool<IndexerContext, MS>[]
 
 /**
  * Concrete PoolList for rpc context
  */
-export type RpcPoolList<M extends MetadataStorage> = Pool<RpcContext<M>, M>[]
+export type RpcPoolList<MS extends MetadataStorage> = Pool<RpcContext<MS>, MS>[]
 
 /**
  * Concrete pool Query for rpc context

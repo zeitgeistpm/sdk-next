@@ -27,9 +27,9 @@ import {
  * @param config IndexerConfig - Config for the indexer
  * @returns Promise<Sdk<IndexerContext>>
  */
-export async function create<M extends MetadataStorage>(
+export async function create<MS extends MetadataStorage>(
   config: IndexerConfig,
-): Promise<Sdk<IndexerContext, M>>
+): Promise<Sdk<IndexerContext, MS>>
 /**
  * Create an instance of the zeitgeist sdk with full features of both indexer and chain rpc.
  *
@@ -38,9 +38,9 @@ export async function create<M extends MetadataStorage>(
  * @param config FullConfig - Rpc and indexer config
  * @returns Promise<Sdk<FullContext>>
  */
-export async function create<M extends MetadataStorage>(
-  config: FullConfig<M>,
-): Promise<Sdk<FullContext<M>, M>>
+export async function create<MS extends MetadataStorage>(
+  config: FullConfig<MS>,
+): Promise<Sdk<FullContext<MS>, MS>>
 /**
  * Create an instance of the zeitgeist sdk with only rpc features.
  *
@@ -49,21 +49,21 @@ export async function create<M extends MetadataStorage>(
  * @param config RpcConfig - Config for the rpc node
  * @returns Promise<Sdk<RpcContext>>
  */
-export async function create<M extends MetadataStorage>(
-  config: RpcConfig<M>,
-): Promise<Sdk<RpcContext<M>, M>>
-export async function create<M extends MetadataStorage>(
-  config: Config<M>,
-): Promise<Sdk<FullContext<M>, M> | Sdk<RpcContext<M>, M> | Sdk<IndexerContext, M>> {
+export async function create<MS extends MetadataStorage>(
+  config: RpcConfig<MS>,
+): Promise<Sdk<RpcContext<MS>, MS>>
+export async function create<MS extends MetadataStorage>(
+  config: Config<MS>,
+): Promise<Sdk<FullContext<MS>, MS> | Sdk<RpcContext<MS>, MS> | Sdk<IndexerContext, MS>> {
   assert(
-    isFullConfig<M>(config) || isRpcConfig<M>(config) || isIndexerConfig<M>(config),
+    isFullConfig<MS>(config) || isRpcConfig<MS>(config) || isIndexerConfig<MS>(config),
     () =>
       new Error(
         `Initialization error. Config needs to specify at least a valid indexer option or api rpc option.`,
       ),
   )
 
-  if (isKnownPreset<Config<M>, M>(config)) {
+  if (isKnownPreset<Config<MS>, MS>(config)) {
     debug(`Using known preset ${config.preset}`, config)
   } else {
     debug(
@@ -73,28 +73,28 @@ export async function create<M extends MetadataStorage>(
     )
   }
 
-  if (isFullConfig<M>(config)) {
+  if (isFullConfig<MS>(config)) {
     const [rpc, indexer] = await Promise.all([createRpcContext(config), createIndexerContext(config)])
 
-    const context: FullContext<M> = {
+    const context: FullContext<MS> = {
       ...rpc,
       ...indexer,
     }
 
-    const model = Model.model<FullContext<M>, M>(context)
+    const model = Model.model<FullContext<MS>, MS>(context)
 
     return {
       ...context,
       model,
     }
-  } else if (isIndexerConfig<M>(config)) {
+  } else if (isIndexerConfig<MS>(config)) {
     debug(
       `Using only indexer, no rpc methods or transactions on chain are available to the sdk.`,
       config,
       'warn',
     )
     const context: IndexerContext = await createIndexerContext(config)
-    const model = Model.model<IndexerContext, M>(context)
+    const model = Model.model<IndexerContext, MS>(context)
 
     return {
       ...context,
@@ -102,8 +102,8 @@ export async function create<M extends MetadataStorage>(
     }
   } else {
     debug(`Using only rpc, querying data might be more limited and/or slower.`, config, 'warn')
-    const context: RpcContext<M> = await createRpcContext(config)
-    const model = Model.model<RpcContext<M>, M>(context)
+    const context: RpcContext<MS> = await createRpcContext(config)
+    const model = Model.model<RpcContext<MS>, MS>(context)
 
     return {
       ...context,
@@ -118,9 +118,9 @@ export async function create<M extends MetadataStorage>(
  * @param config RpcConfig
  * @returns Promise<RpcContext>
  */
-export const createRpcContext = async <M extends MetadataStorage>(
-  config: RpcConfig<M>,
-): Promise<RpcContext<M>> => {
+export const createRpcContext = async <MS extends MetadataStorage>(
+  config: RpcConfig<MS>,
+): Promise<RpcContext<MS>> => {
   const { ApiPromise, WsProvider } = await import('@polkadot/api')
 
   debug(`connecting to rpc: ${config.provider}`, config)

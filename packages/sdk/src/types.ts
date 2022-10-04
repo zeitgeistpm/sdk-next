@@ -15,13 +15,13 @@ export * from './context/types'
 /**
  * Top level Zeitgeist SDK type.
  */
-export type Sdk<C extends Context<M>, M extends MetadataStorage = MetadataStorage> = C & {
+export type Sdk<C extends Context<MS>, MS extends MetadataStorage = MetadataStorage> = C & {
   /**
    * Enriched zeitgeist models with features for qyerying data on chain and indexer,
    * and for creating transaction flows with for example richer validation to ensure that
    * the markets you have the official standard of metadata so that they show up in the official frontend.
    */
-  model: Model<C, M>
+  model: Model<C, MS>
 }
 
 /**
@@ -29,22 +29,23 @@ export type Sdk<C extends Context<M>, M extends MetadataStorage = MetadataStorag
  * @param sdk
  * @returns sdk is Sdk<FullContext>
  */
-export const isFullSdk = <M extends MetadataStorage>(sdk: unknown): sdk is Sdk<FullContext<M>, M> =>
-  isIndexedSdk(sdk) && isRpcSdk(sdk)
+export const isFullSdk = <MS extends MetadataStorage>(
+  sdk: unknown,
+): sdk is Sdk<FullContext<MS>, MS> => isIndexedSdk(sdk) && isRpcSdk(sdk)
 
 /**
  * Typeguard for indexer sdk
  * @param sdk
  * @returns sdk is Sdk<IndexerContext>
  */
-export const isIndexedSdk = <M extends MetadataStorage>(
+export const isIndexedSdk = <MS extends MetadataStorage>(
   sdk: unknown,
-): sdk is Sdk<IndexerContext, M> => typeof sdk === 'object' && sdk !== null && isIndexerContext(sdk)
+): sdk is Sdk<IndexerContext, MS> => typeof sdk === 'object' && sdk !== null && isIndexerContext(sdk)
 
 /**
  * Typeguard for rpc sdk
  * @param sdk
  * @returns sdk is Sdk<RpcContext>
  */
-export const isRpcSdk = <M extends MetadataStorage>(sdk: unknown): sdk is Sdk<RpcContext<M>, M> =>
+export const isRpcSdk = <MS extends MetadataStorage>(sdk: unknown): sdk is Sdk<RpcContext<MS>, MS> =>
   typeof sdk === 'object' && sdk !== null && isRpcContext(sdk)

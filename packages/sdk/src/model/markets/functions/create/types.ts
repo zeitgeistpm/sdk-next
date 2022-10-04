@@ -13,16 +13,16 @@ import { MetadataStorage, StorageTypeOf } from 'meta'
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
  */
-export type CreateMarketParams<M extends MetadataStorage> =
-  | CreateStandaloneMarketParams<M>
-  | CreateMarketWithPoolParams<M>
+export type CreateMarketParams<MS extends MetadataStorage> =
+  | CreateStandaloneMarketParams<MS>
+  | CreateMarketWithPoolParams<MS>
 
 /**
  * Base parameters for creating a market.
  */
 export type CreateMarketBaseParams<
-  M extends MetadataStorage,
-  Md = M['markets'] extends Storage<infer T> ? T : never,
+  MS extends MetadataStorage,
+  Md = MS['markets'] extends Storage<infer T> ? T : never,
 > = {
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
@@ -31,7 +31,7 @@ export type CreateMarketBaseParams<
   /**
    * Metadata to store in external storage alongside the market.
    */
-  metadata: Md //StorageTypeOf<M, 'markets'>
+  metadata: Md //StorageTypeOf<MS, 'markets'>
   /**
    * Type of market, categorical or scalar
    */
@@ -75,7 +75,7 @@ export type CreateMarketBaseParams<
 /**
  * Parameters for creating a market without a pool
  */
-export type CreateStandaloneMarketParams<M extends MetadataStorage> = CreateMarketBaseParams<M> & {
+export type CreateStandaloneMarketParams<MS extends MetadataStorage> = CreateMarketBaseParams<MS> & {
   /**
    * Market scoring rule.
    *
@@ -92,7 +92,7 @@ export type CreateStandaloneMarketParams<M extends MetadataStorage> = CreateMark
 /**
  * Parameters for creating a market with a pool.
  */
-export type CreateMarketWithPoolParams<M extends MetadataStorage> = CreateMarketBaseParams<M> & {
+export type CreateMarketWithPoolParams<MS extends MetadataStorage> = CreateMarketBaseParams<MS> & {
   pool: {
     /**
      * The fee to swap in and out of the pool.
@@ -115,9 +115,9 @@ export type CreateMarketWithPoolParams<M extends MetadataStorage> = CreateMarket
  * @param params CreateMarketParams
  * @returns params is CreateMarketWithPoolParams
  */
-export const isWithPool = <M extends MetadataStorage>(
-  params: CreateMarketParams<M>,
-): params is CreateMarketWithPoolParams<M> => {
+export const isWithPool = <MS extends MetadataStorage>(
+  params: CreateMarketParams<MS>,
+): params is CreateMarketWithPoolParams<MS> => {
   return 'pool' in params
 }
 
@@ -127,7 +127,7 @@ export const isWithPool = <M extends MetadataStorage>(
  *
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
-export type CreateMarketResult<M extends MetadataStorage, P = CreateMarketParams<M>> = {
+export type CreateMarketResult<MS extends MetadataStorage, P = CreateMarketParams<MS>> = {
   raw: ISubmittableResult
   /**
    * Lazy function to extract created Market and Pool.
@@ -139,7 +139,7 @@ export type CreateMarketResult<M extends MetadataStorage, P = CreateMarketParams
    *
    * @returns EitherInterface<Error, CreateMarketData<P>>
    */
-  extract: () => EitherInterface<Error, CreateMarketData<M, P>>
+  extract: () => EitherInterface<Error, CreateMarketData<MS, P>>
 }
 
 /**
@@ -147,12 +147,12 @@ export type CreateMarketResult<M extends MetadataStorage, P = CreateMarketParams
  *
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
-export type CreateMarketData<M extends MetadataStorage, P = CreateMarketParams<M>> = {
+export type CreateMarketData<MS extends MetadataStorage, P = CreateMarketParams<MS>> = {
   /**
    * The market created by the extrinsic.
    */
   market: [number, ZeitgeistPrimitivesMarket]
-} & (P extends CreateMarketWithPoolParams<M>
+} & (P extends CreateMarketWithPoolParams<MS>
   ? {
       /**
        * The pool created for the market by the extrinsic.

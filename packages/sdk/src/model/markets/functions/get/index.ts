@@ -21,16 +21,16 @@ import { MarketGetQuery } from './types'
  * @param query MarketQuery
  * @returns Promise<Market<C>>
  */
-export const get = async <C extends Context<M>, M extends MetadataStorage>(
+export const get = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
-): Promise<Market<C, M>> => {
+): Promise<Market<C, MS>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await getFromIndexer(context, query)
       : await getFromRpc(context, query)
 
-  return data as Market<C, M>
+  return data as Market<C, MS>
 }
 
 /**
@@ -51,32 +51,32 @@ const getFromIndexer = async (
  * Concrete get function for rpc context
  * @private
  */
-const getFromRpc = async <M extends MetadataStorage>(
-  context: RpcContext<M>,
+const getFromRpc = async <MS extends MetadataStorage>(
+  context: RpcContext<MS>,
   query: MarketGetQuery,
-): Promise<Market<RpcContext<M>, M> | null> => {
+): Promise<Market<RpcContext<MS>, MS> | null> => {
   const market = await context.api.query.marketCommons.markets(query.marketId)
   if (!market.isSome) return null
-  return augment<M>(context, query.marketId, market.unwrap())
+  return augment<MS>(context, query.marketId, market.unwrap())
 }
 
 /**
  * Fetch market and stream changes from rpc.
  *
- * @param context RpcContext<M>
+ * @param context RpcContext<MS>
  * @param query MarketGetQuery
- * @returns Observable<Market<RpcContext, M>>
+ * @returns Observable<Market<RpcContext, MS>>
  */
-export const get$ = <M extends MetadataStorage>(
-  context: RpcContext<M>,
+export const get$ = <MS extends MetadataStorage>(
+  context: RpcContext<MS>,
   query: MarketGetQuery,
-): Observable<Market<RpcContext<M>, M>> => {
+): Observable<Market<RpcContext<MS>, MS>> => {
   return new Observable(subscription => {
     const unsub = context.api.query.marketCommons.markets(query.marketId, market => {
       if (!market.isSome) {
         return subscription.unsubscribe()
       }
-      subscription.next(augment<M>(context, query.marketId, market.unwrap()))
+      subscription.next(augment<MS>(context, query.marketId, market.unwrap()))
     })
 
     return async () => {

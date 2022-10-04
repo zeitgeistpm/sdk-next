@@ -6,13 +6,13 @@ import { MetadataStorage } from 'meta'
 import { MarketMetadata } from 'meta/market'
 import { Config } from '../types'
 
-export type KnownPreset<C extends Config<M>, M extends MetadataStorage> = C & {
+export type KnownPreset<C extends Config<MS>, MS extends MetadataStorage> = C & {
   preset: KnownPresets
 }
 
-export const isKnownPreset = <C extends Config<M>, M extends MetadataStorage>(
-  config: Config<M>,
-): config is KnownPreset<C, M> => Boolean('preset' in config)
+export const isKnownPreset = <C extends Config<MS>, MS extends MetadataStorage>(
+  config: Config<MS>,
+): config is KnownPreset<C, MS> => Boolean('preset' in config)
 
 export enum KnownPresets {
   mainnet = 'Mainnet',

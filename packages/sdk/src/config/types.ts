@@ -5,7 +5,7 @@ export * from './known'
 /**
  * Union type of possible configurations.
  */
-export type Config<M extends MetadataStorage> = FullConfig<M> | RpcConfig<M> | IndexerConfig
+export type Config<MS extends MetadataStorage> = FullConfig<MS> | RpcConfig<MS> | IndexerConfig
 
 export type BaseConfig = {
   /**
@@ -18,9 +18,9 @@ export type BaseConfig = {
   connectionRetries?: number
 }
 
-export type FullConfig<M extends MetadataStorage> = RpcConfig<M> & IndexerConfig
+export type FullConfig<MS extends MetadataStorage> = RpcConfig<MS> & IndexerConfig
 
-export type RpcConfig<M extends MetadataStorage> = BaseConfig & {
+export type RpcConfig<MS extends MetadataStorage> = BaseConfig & {
   /**
    * Rpc provider(s), uri or list of uris.
    */
@@ -28,7 +28,7 @@ export type RpcConfig<M extends MetadataStorage> = BaseConfig & {
   /**
    * Storage provider for metadata
    */
-  storage: M
+  storage: MS
 }
 
 export type IndexerConfig = BaseConfig & {
@@ -38,13 +38,15 @@ export type IndexerConfig = BaseConfig & {
   indexer: string
 }
 
-export const isFullConfig = <M extends MetadataStorage>(config: Config<M>): config is FullConfig<M> =>
-  isRpcConfig(config) && isIndexerConfig(config)
+export const isFullConfig = <MS extends MetadataStorage>(
+  config: Config<MS>,
+): config is FullConfig<MS> => isRpcConfig(config) && isIndexerConfig(config)
 
-export const isRpcConfig = <M extends MetadataStorage>(config?: Config<M>): config is RpcConfig<M> =>
-  Boolean(config && 'provider' in config)
+export const isRpcConfig = <MS extends MetadataStorage>(
+  config?: Config<MS>,
+): config is RpcConfig<MS> => Boolean(config && 'provider' in config)
 
-export const isIndexerConfig = <M extends MetadataStorage>(
-  config?: Config<M>,
+export const isIndexerConfig = <MS extends MetadataStorage>(
+  config?: Config<MS>,
 ): config is IndexerConfig =>
   Boolean(config && 'indexer' in config && typeof config.indexer === 'string')

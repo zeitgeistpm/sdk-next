@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react'
 import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp'
-import { create, MetadataStorage, RpcConfig, RpcContext, Sdk } from '@zeitgeistpm/sdk'
+import { batterystation, create, MetadataStorage, RpcConfig, RpcContext, Sdk } from '@zeitgeistpm/sdk'
 import { IPFS, Storage } from '@zeitgeistpm/web3.storage'
 import { useEffect, useState } from 'react'
 
@@ -17,7 +17,7 @@ type CustomComment = {
  * @typeof IPFS.storage<MarketMetadata>
  */
 export function CustomStorageProvider<
-  M extends MetadataStorage<CustomMarketMetadata, CustomComment>,
+  MS extends MetadataStorage<CustomMarketMetadata, CustomComment>,
 >(): M {
   const storage = IPFS.storage<any>({
     node: { url: 'http://ipfs.zeitgeist.pm:5001' },
@@ -49,12 +49,19 @@ const CustomStorage: React.FC = () => {
 
   useEffect(() => {
     if (!sdk) {
-      create({
-        provider: 'ws://127.0.0.1:9944',
-        storage: CustomStorageProvider(),
-      }).then(sdk => {
-        sdk
-      })
+      ;(async () => {
+        const csdk = await create({
+          provider: 'ws://127.0.0.1:9944',
+          storage: CustomStorageProvider(),
+        })
+
+        const conf: RpcConfig<MetadataStorage<CustomMarketMetadata, CustomComment>> = {
+          provider: 'ws://127.0.0.1:9944',
+          storage: CustomStorageProvider(),
+        }
+
+        const bsdk = await create(conf)
+      })()
     }
   }, [sdk])
 

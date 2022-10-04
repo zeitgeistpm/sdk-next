@@ -18,23 +18,23 @@ export * from './pool'
 /**
  * Zeitgeist Swaps model..
  */
-export type Swaps<C extends Context<M>, M extends MetadataStorage> = SwapsShared<C, M> &
-  SwapsRpc<C, M>
+export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = SwapsShared<C, MS> &
+  SwapsRpc<C, MS>
 
-export type SwapsShared<C extends Context<M>, M extends MetadataStorage> = {
+export type SwapsShared<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * List liquidity pools.
    * @param query PoolsListQuery<C>
    * @returns Promise<PoolList<C>>
    */
-  listPools: (query: PoolsListQuery<C, M>) => Promise<PoolList<C, M>>
+  listPools: (query: PoolsListQuery<C, MS>) => Promise<PoolList<C, MS>>
 
   /**
    * Get a pool by either market id or pool id.
    * @param query PoolGetQuery
    * @returns Promise<Pool<C>>
    */
-  getPool: (query: PoolGetQuery) => Promise<Pool<C, M>>
+  getPool: (query: PoolGetQuery) => Promise<Pool<C, MS>>
   /**
    * Fetch poolprices for a cetain timespan. Will prefer indexer but use rpc if indexer isnt available.
    *
@@ -44,21 +44,21 @@ export type SwapsShared<C extends Context<M>, M extends MetadataStorage> = {
   poolPrices: (query: PoolPricesQuery) => Promise<PoolPrices>
 }
 
-export type SwapsRpc<C extends Context<M>, M extends MetadataStorage> = C extends RpcContext<M>
+export type SwapsRpc<C extends Context<MS>, MS extends MetadataStorage> = C extends RpcContext<MS>
   ? {
       getPool: PFunctor<
-        SwapsShared<C, M>['getPool'],
+        SwapsShared<C, MS>['getPool'],
         {
           /**
            * Stream changes to a pool object.
            * @param query PoolGetQuery
            * @returns Observable<Pool<RpcContext>>
            */
-          $: (query: PoolGetQuery) => Observable<Pool<C, M>>
+          $: (query: PoolGetQuery) => Observable<Pool<C, MS>>
         }
       >
       poolPrices: PFunctor<
-        SwapsShared<C, M>['poolPrices'],
+        SwapsShared<C, MS>['poolPrices'],
         {
           /**
            * Will stream prices for a given pool tailed after a block or date.

@@ -19,26 +19,26 @@ import { MarketList, MarketsListQuery, AugmentedRpcMarketList } from '../../type
  * @param query ListQuery<C>
  * @returns Promise<MarketList<C>>
  */
-export const list = async <C extends Context<M>, M extends MetadataStorage>(
+export const list = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
-  query?: MarketsListQuery<C, M>,
-): Promise<MarketList<C, M>> => {
+  query?: MarketsListQuery<C, MS>,
+): Promise<MarketList<C, MS>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await indexer(context, query)
       : await rpc(context, query)
 
-  return data as MarketList<C, M>
+  return data as MarketList<C, MS>
 }
 
 /**
  * Concrete listing function for indexer context
  * @private
  */
-const indexer = async <M extends MetadataStorage>(
+const indexer = async <MS extends MetadataStorage>(
   context: IndexerContext,
-  query?: MarketsListQuery<IndexerContext, M>,
-): Promise<MarketList<IndexerContext, M>> => {
+  query?: MarketsListQuery<IndexerContext, MS>,
+): Promise<MarketList<IndexerContext, MS>> => {
   return {
     items: (await context.indexer.markets(query)).markets,
   }
@@ -48,10 +48,10 @@ const indexer = async <M extends MetadataStorage>(
  * Concrete listing function for rpc context
  * @private
  */
-const rpc = async <C extends RpcContext<M>, M extends MetadataStorage>(
+const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
-  query?: MarketsListQuery<C, M>,
-): Promise<MarketList<C, M>> => {
+  query?: MarketsListQuery<C, MS>,
+): Promise<MarketList<C, MS>> => {
   const entries = isPaginated(query)
     ? await context.api.query.marketCommons.markets.entriesPaged({
         args: [],
@@ -60,9 +60,9 @@ const rpc = async <C extends RpcContext<M>, M extends MetadataStorage>(
       })
     : await context.api.query.marketCommons.markets.entries()
 
-  const list: AugmentedRpcMarketList<M> = {
+  const list: AugmentedRpcMarketList<MS> = {
     items: entries.map(m => fromEntry(context, m)),
   }
 
-  return list as MarketList<C, M>
+  return list as MarketList<C, MS>
 }
