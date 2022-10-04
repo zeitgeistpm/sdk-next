@@ -1,4 +1,4 @@
-import { MetadataStorage } from 'meta'
+import { MetadataStorage } from '../meta'
 import { Context } from '../context'
 import * as Market from './markets'
 import * as Swaps from './swaps'

@@ -1,4 +1,3 @@
-import { MetadataStorage } from 'meta'
 import { Observable } from 'rxjs'
 import {
   Context,
@@ -7,6 +6,7 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
+import { MetadataStorage } from '../../../../meta'
 import { augment } from '../../market'
 import { IndexedMarket, Market } from '../../types'
 import { MarketGetQuery } from './types'

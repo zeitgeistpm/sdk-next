@@ -1,4 +1,4 @@
-import { MetadataStorage } from 'meta'
+import { MetadataStorage } from '../../meta'
 import { FullConfig, IndexerConfig, RpcConfig } from '../types'
 import { ZeitgeistIpfs } from './storage'
 import { KnownPreset, KnownPresets } from './types'

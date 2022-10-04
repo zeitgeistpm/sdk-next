@@ -1,5 +1,5 @@
 import { assign } from '@zeitgeistpm/utility/dist/observable/operators'
-import { MetadataStorage } from 'meta'
+import { MetadataStorage } from './meta'
 import { from, merge, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'

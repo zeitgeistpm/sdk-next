@@ -8,8 +8,8 @@ import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/uti
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { CID } from 'ipfs-http-client'
-import { MetadataStorage } from 'meta'
-import { augment } from 'model/types'
+import { MetadataStorage } from '../../../../meta'
+import { augment } from '../../../../model/markets'
 import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 

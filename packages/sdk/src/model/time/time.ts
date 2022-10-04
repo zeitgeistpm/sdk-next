@@ -1,7 +1,7 @@
-import { MetadataStorage } from 'meta'
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import { RpcContext } from '../../context'
+import { MetadataStorage } from '../../meta'
 import { BlockNumber, isBlockNumber } from '../../primitives/blocknumber'
 import { Duration, isDuration } from './duration'
 

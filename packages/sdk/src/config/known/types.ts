@@ -2,7 +2,7 @@
  * Known preset types
  */
 
-import { MetadataStorage } from 'meta'
+import { MetadataStorage } from '../../meta'
 import { Config } from '../types'
 
 export type KnownPreset<C extends Config<MS>, MS extends MetadataStorage> = C & {

@@ -8,8 +8,8 @@ import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { Storage } from '@zeitgeistpm/web3.storage'
-import { MarketTypeOf, MetadataStorage } from 'meta'
-import { RpcMarket } from 'model/types'
+import { MarketTypeOf, MetadataStorage } from '../../../../meta'
+import { RpcMarket } from '../../market'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.

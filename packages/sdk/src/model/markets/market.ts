@@ -6,7 +6,7 @@ import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { MarketTypeOf, MetadataStorage } from 'meta'
+import { MarketTypeOf, MetadataStorage } from '../../meta'
 import { Context, RpcContext } from '../../context'
 import { MarketMetadata } from '../../meta/market'
 import { Data } from '../../primitives'
@@ -32,7 +32,7 @@ export type IndexedMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type RpcMarket<MS extends MetadataStorage<any, any>> = ZeitgeistPrimitivesMarket & {
+export type RpcMarket<MS extends MetadataStorage<any, any>> = {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -45,7 +45,7 @@ export type RpcMarket<MS extends MetadataStorage<any, any>> = ZeitgeistPrimitive
    * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
   expand: () => Promise<EitherInterface<Error, IndexedBase & MarketTypeOf<MS>>>
-}
+} & ZeitgeistPrimitivesMarket
 
 /**
  * The base type of indexed data that also can be deduced from the rpc data.

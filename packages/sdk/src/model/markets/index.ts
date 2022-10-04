@@ -1,5 +1,5 @@
 import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { MetadataStorage } from 'meta'
+import { MetadataStorage } from '../../meta'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { create } from './functions/create'
 import { get, get$ } from './functions/get'

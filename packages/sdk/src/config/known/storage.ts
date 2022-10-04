@@ -1,6 +1,6 @@
 import { IPFS } from '@zeitgeistpm/web3.storage'
 import memoize from 'lodash.memoize'
-import { MetadataStorage } from 'meta/types'
+import { MetadataStorage } from '.../../meta/types'
 
 /**
  * Default IPFS metadata storage for the zeitgeist ecosystem.

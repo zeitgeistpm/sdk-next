@@ -1,4 +1,4 @@
-import { MetadataStorage } from 'meta/types'
+import { MetadataStorage } from '../meta/types'
 
 export * from './known'
 

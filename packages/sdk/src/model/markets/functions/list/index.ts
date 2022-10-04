@@ -1,4 +1,3 @@
-import { MetadataStorage } from 'meta'
 import {
   Context,
   IndexerContext,
@@ -6,9 +5,10 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
+import { MetadataStorage } from '../../../../meta'
 import { isPaginated } from '../../../../types/query'
 import { fromEntry } from '../../market'
-import { MarketList, MarketsListQuery, AugmentedRpcMarketList } from '../../types'
+import { AugmentedRpcMarketList, MarketList, MarketsListQuery } from '../../types'
 
 /**
  * Query for a list of markets.

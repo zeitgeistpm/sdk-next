@@ -8,7 +8,7 @@ import {
 } from '../../../../context'
 import { PoolGetQuery, isMarketIdQuery } from '../../types'
 import { Pool, IndexedPool, RpcPool } from '../../pool'
-import { MetadataStorage } from 'meta'
+import { MetadataStorage } from '../../../../meta'
 
 /**
  * Fetch a pool by its market id or pool id.

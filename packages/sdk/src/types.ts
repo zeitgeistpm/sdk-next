@@ -1,4 +1,4 @@
-import { MetadataStorage } from 'meta'
+import { MetadataStorage } from './meta'
 import {
   Context,
   FullContext,

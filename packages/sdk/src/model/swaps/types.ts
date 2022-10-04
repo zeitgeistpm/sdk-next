@@ -1,5 +1,5 @@
 import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { MetadataStorage } from 'meta'
+import { MetadataStorage } from '../../meta'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { PoolGetQuery } from './functions/getpool/types'

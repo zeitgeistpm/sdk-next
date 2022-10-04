@@ -8,7 +8,7 @@ import {
 import { isPaginated } from '../../../../types/query'
 import { PoolList, PoolsListQuery, RpcPoolList } from '../../types'
 import { RpcPool } from '../../pool'
-import { MetadataStorage } from 'meta'
+import { MetadataStorage } from '../../../../meta'
 
 /**
  * Query for a list of pools.

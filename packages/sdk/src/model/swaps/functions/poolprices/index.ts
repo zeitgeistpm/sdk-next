@@ -1,7 +1,6 @@
 import { HistoricalAssetOrderByInput } from '@zeitgeistpm/indexer'
 import { project, range, zip } from '@zeitgeistpm/utility/dist/array'
 import { BigNumber } from 'bignumber.js'
-import { MetadataStorage } from 'meta'
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import {
@@ -11,6 +10,7 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
+import { MetadataStorage } from '../../../../meta'
 import { getIndexOf, IOAssetId } from '../../../../primitives/assetid'
 import { asBlock, asBlocks, BlockNumber, isBlocks, now } from '../../../time'
 import type {
