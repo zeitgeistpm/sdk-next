@@ -18,7 +18,7 @@ export const main = async (marketId: number) => {
 
   /**
    * Fetch pool prices stream for market.
-   * Will produce prices for every hour of the last 24 hours.
+   * Will produce prices for every hour of the last 24 hours, then tail at every block.
    */
   const poolPrices$ = sdk.model.swaps.getPool.$({ marketId }).pipe(
     switchMap(pool =>
