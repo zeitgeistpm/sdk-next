@@ -1,6 +1,28 @@
+declare module '@zeitgeistpm/sdk' {
+  export interface MetadataStorage<M = MarketMetadata, C = Comment> {
+    /**
+     * Storage for Market metadata.
+     */
+    readonly markets: Storage<M>
+    /**
+     * Storage for Market comments.
+     * @notes not in use, just testing type narrowing.
+     */
+    readonly comments: Storage<C>
+  }
+}
+
 import { Button } from '@chakra-ui/react'
 import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp'
-import { batterystation, create, MetadataStorage, RpcConfig, RpcContext, Sdk } from '@zeitgeistpm/sdk'
+import {
+  batterystation,
+  create,
+  MarketMetadata,
+  MetadataStorage,
+  RpcConfig,
+  RpcContext,
+  Sdk,
+} from '@zeitgeistpm/sdk'
 import { IPFS, Storage } from '@zeitgeistpm/web3.storage'
 import { useEffect, useState } from 'react'
 
@@ -18,7 +40,7 @@ type CustomComment = {
  */
 export function CustomStorageProvider<
   MS extends MetadataStorage<CustomMarketMetadata, CustomComment>,
->(): M {
+>(): MS {
   const storage = IPFS.storage<any>({
     node: { url: 'http://ipfs.zeitgeist.pm:5001' },
     cluster: {
@@ -33,7 +55,7 @@ export function CustomStorageProvider<
   return {
     markets: storage,
     comments: storage,
-  } as M
+  } as MS
 }
 
 const CustomStorage: React.FC = () => {
@@ -55,12 +77,7 @@ const CustomStorage: React.FC = () => {
           storage: CustomStorageProvider(),
         })
 
-        const conf: RpcConfig<MetadataStorage<CustomMarketMetadata, CustomComment>> = {
-          provider: 'ws://127.0.0.1:9944',
-          storage: CustomStorageProvider(),
-        }
-
-        const bsdk = await create(conf)
+        csdk.storage
       })()
     }
   }, [sdk])

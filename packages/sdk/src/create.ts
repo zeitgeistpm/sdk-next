@@ -52,9 +52,7 @@ export async function create<MS extends MetadataStorage>(
 export async function create<MS extends MetadataStorage>(
   config: RpcConfig<MS>,
 ): Promise<Sdk<RpcContext<MS>, MS>>
-export async function create<MS extends MetadataStorage>(
-  config: Config<MS>,
-): Promise<Sdk<FullContext<MS>, MS> | Sdk<RpcContext<MS>, MS> | Sdk<IndexerContext, MS>> {
+export async function create<MS extends MetadataStorage>(config: Config<MS>) {
   assert(
     isFullConfig<MS>(config) || isRpcConfig<MS>(config) || isIndexerConfig<MS>(config),
     () =>

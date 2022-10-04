@@ -1,0 +1,21 @@
+{
+  "name": "customstorage",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "_build": "tsc && vite build",
+    "_preview": "vite preview"
+  },
+  "dependencies": {
+    "@zeitgeistpm/sdk": "*",
+    "@zeitgeistpm/web3.storage": "*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^2.0.1",
+    "typescript": "^4.8.4",
+    "vite": "^3.0.7",
+    "vite-tsconfig-paths": "^3.5.1"
+  }
+}
