@@ -69,7 +69,7 @@ export const create = async <
 
   return {
     raw: submittableResult,
-    extract: extraction(context, submittableResult, params),
+    saturate: extraction(context, submittableResult, params),
   }
 }
 

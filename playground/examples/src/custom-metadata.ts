@@ -23,7 +23,7 @@ async function main() {
 
   const response = await sdk.model.markets.create(params)
 
-  const { market, pool } = response.extract().unwrap()
+  const { market, pool } = response.saturate().unwrap()
   const saturatedMarket = (await market.saturate()).unwrap()
 
   saturatedMarket.description === 'some description'

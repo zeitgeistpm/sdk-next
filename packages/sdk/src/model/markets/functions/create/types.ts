@@ -131,16 +131,16 @@ export const isWithPool = <MS extends MetadataStorage<any, any>>(
 export type CreateMarketResult<MS extends MetadataStorage<any, any>, P = CreateMarketParams<MS>> = {
   raw: ISubmittableResult
   /**
-   * Lazy function to extract created Market and Pool.
+   * Lazy function to saturate response with created Market and Pool.
    *
    * @example ```ts
    * const result = await sdk.model.markets.create(...params)
-   * const { market, pool } = result.extract().unwrap()
+   * const { market, pool } = result.saturate().unwrap()
    * ```
    *
    * @returns EitherInterface<Error, CreateMarketData<P>>
    */
-  extract: () => EitherInterface<Error, CreateMarketData<MS, P>>
+  saturate: () => EitherInterface<Error, CreateMarketData<MS, P>>
 }
 
 /**
