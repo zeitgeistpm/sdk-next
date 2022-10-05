@@ -4,10 +4,9 @@ import { FullContext, IndexerContext, RpcContext } from '../context'
 import { MetadataStorage } from '../meta'
 
 export declare type Data<
-  C extends RpcContext<MS> | IndexerContext | FullContext<MS>,
+  C extends RpcContext | IndexerContext | FullContext,
   R extends Codec,
   I extends IndexedData,
-  MS extends MetadataStorage,
 > = C extends IndexerContext ? I : R
 
 export type IndexedData = {

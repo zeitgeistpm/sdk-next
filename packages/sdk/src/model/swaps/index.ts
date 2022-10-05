@@ -23,28 +23,26 @@ export * from './types'
  * @param ctx C
  * @returns Swaps<C>
  */
-export const swaps = <C extends Context<MS>, MS extends MetadataStorage<any, any>>(
-  ctx: C,
-): Swaps<C, MS> => {
-  let base: SwapsShared<C, MS> = {
-    listPools: (query: PoolsListQuery<C, MS>) => listPools(ctx, query),
+export const swaps = <C extends Context>(ctx: C): Swaps<C> => {
+  let base: SwapsShared<C> = {
+    listPools: (query: PoolsListQuery<C>) => listPools(ctx, query),
     getPool: (query: PoolGetQuery) => getPool(ctx, query),
     poolPrices: (query: PoolPricesQuery) => poolPrices(ctx, query),
   }
 
-  const rpc: SwapsRpc<RpcContext<MS>, MS> | null = isRpcContext(ctx)
+  const rpc = isRpcContext(ctx)
     ? {
-        getPool: pfunctor((query: PoolGetQuery) => getPool<RpcContext<MS>, MS>(ctx, query), {
+        getPool: pfunctor((query: PoolGetQuery) => getPool<typeof ctx>(ctx, query), {
           $: (query: PoolGetQuery) => getPool$(ctx, query),
         }),
-        poolPrices: pfunctor((query: PoolPricesQuery) => poolPrices<RpcContext<MS>, MS>(ctx, query), {
+        poolPrices: pfunctor((query: PoolPricesQuery) => poolPrices<typeof ctx>(ctx, query), {
           $: (query: PoolPricesStreamQuery) => rpcPoolPrices$(ctx, query),
         }),
       }
-    : null
+    : {}
 
   return {
     ...base,
     ...rpc,
-  } as Swaps<C, MS>
+  } as Swaps<C>
 }

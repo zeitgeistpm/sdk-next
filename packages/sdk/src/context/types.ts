@@ -1,11 +1,12 @@
 import type { ApiPromise, WsProvider } from '@polkadot/api'
 import type { ZeitgeistIndexer } from '@zeitgeistpm/indexer'
-import { MetadataStorage } from '../meta/types'
+import { Storage } from '@zeitgeistpm/web3.storage'
+import { MetadataStorage, StorageTypeOf } from '../meta/types'
 
 /**
  * Union type that can be either rpc, indexer or full context.
  */
-export type Context<MS extends MetadataStorage<any, any>> =
+export type Context<MS extends MetadataStorage = MetadataStorage> =
   | FullContext<MS>
   | RpcContext<MS>
   | IndexerContext
@@ -13,22 +14,23 @@ export type Context<MS extends MetadataStorage<any, any>> =
 /**
  * Zeitgeist SDK context with both rpc and indexer features enabled.
  */
-export type FullContext<MS extends MetadataStorage<any, any>> = RpcContext<MS> & IndexerContext
+export type FullContext<MS extends MetadataStorage = MetadataStorage> = RpcContext<MS> &
+  IndexerContext
 
 /**
  * Zeitgeist SDK context with rpc and storage features enabled.
  */
-export type RpcContext<MS extends MetadataStorage<any, any>> = {
-  api: ApiPromise
-  provider: WsProvider
-  storage: MS
+export type RpcContext<MS extends MetadataStorage = MetadataStorage> = {
+  readonly api: ApiPromise
+  readonly provider: WsProvider
+  readonly storage: MS
 }
 
 /**
  * Zeitgeist SDK context with indexer features enabled.
  */
 export type IndexerContext = {
-  indexer: ZeitgeistIndexer
+  readonly indexer: ZeitgeistIndexer
 }
 
 /**
@@ -37,9 +39,8 @@ export type IndexerContext = {
  * @param ctx unknown
  * @returns config is FullContext
  */
-export const isFullContext = <MS extends MetadataStorage<any, any>>(
-  ctx?: unknown,
-): ctx is FullContext<MS> => isRpcContext(ctx) && isIndexerContext(ctx)
+export const isFullContext = <MS extends MetadataStorage>(ctx?: unknown): ctx is FullContext<MS> =>
+  isRpcContext(ctx) && isIndexerContext(ctx)
 
 /**
  * Typeguard for rpc context
@@ -47,9 +48,8 @@ export const isFullContext = <MS extends MetadataStorage<any, any>>(
  * @param ctx unknown
  * @returns config is RpcContext
  */
-export const isRpcContext = <MS extends MetadataStorage<any, any>>(
-  ctx?: unknown,
-): ctx is RpcContext<MS> => Boolean(ctx && typeof ctx === 'object' && ctx !== null && 'api' in ctx)
+export const isRpcContext = <MS extends MetadataStorage>(ctx?: unknown): ctx is RpcContext<MS> =>
+  Boolean(ctx && typeof ctx === 'object' && ctx !== null && 'api' in ctx)
 
 /**
  * Typeguard for indexer context

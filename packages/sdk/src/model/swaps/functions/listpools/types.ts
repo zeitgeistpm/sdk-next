@@ -1,7 +1,6 @@
 import type { PoolOrderByInput, PoolWhereInput } from '@zeitgeistpm/indexer/dist'
 import { Context, IndexerContext, RpcContext } from '../../../../context'
-import { MetadataStorage } from '../../../../meta'
-import { Pool } from '../../pool'
+import { Pool, RpcPool } from '../../pool'
 
 /**
  * List of Pools.
@@ -9,9 +8,7 @@ import { Pool } from '../../pool'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type PoolList<C extends Context<MS>, MS extends MetadataStorage> = C extends IndexerContext
-  ? IndexedPoolList<MS>
-  : RpcPoolList<MS>
+export type PoolList<C extends Context> = Pool<C>[]
 
 /**
  * Pools list Query type
@@ -19,20 +16,19 @@ export type PoolList<C extends Context<MS>, MS extends MetadataStorage> = C exte
  *
  * @generic C Context - the context to query in.
  */
-export type PoolsListQuery<
-  C extends Context<MS>,
-  MS extends MetadataStorage,
-> = C extends IndexerContext ? PoolsIndexerQuery : PoolsRpcQuery
+export type PoolsListQuery<C extends Context> = C extends IndexerContext
+  ? PoolsIndexerQuery
+  : PoolsRpcQuery
 
 /**
  * Concrete PoolList for indexed context
  */
-export type IndexedPoolList<MS extends MetadataStorage> = Pool<IndexerContext, MS>[]
+export type IndexedPoolList<C extends IndexerContext> = PoolList<C>[]
 
 /**
  * Concrete PoolList for rpc context
  */
-export type RpcPoolList<MS extends MetadataStorage> = Pool<RpcContext<MS>, MS>[]
+export type RpcPoolList<C extends RpcContext> = RpcPool[]
 
 /**
  * Concrete pool Query for rpc context

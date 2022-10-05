@@ -16,25 +16,23 @@ export * from './types'
  * @param context C
  * @returns Markets<C>
  */
-export const markets = <C extends Context<MS>, MS extends MetadataStorage<any, any>>(
-  ctx: C,
-): Markets<C, MS> => {
-  let base: MarketsShared<C, MS> = {
-    list: (query?: MarketsListQuery<C, MS>) => list(ctx, query),
+export const markets = <C extends Context>(ctx: C): Markets<C> => {
+  let base: MarketsShared<C> = {
+    list: (query?: MarketsListQuery<C>) => list(ctx, query),
     get: (query: MarketGetQuery) => get(ctx, query),
   }
 
-  const rpc: MarketsRpc<RpcContext<MS>, MS> | null = isRpcContext(ctx)
-    ? {
-        create: (params: CreateMarketParams<MS>) => create(ctx, params),
-        get: pfunctor((query: MarketGetQuery) => get<RpcContext<MS>, MS>(ctx, query), {
-          $: (query: MarketGetQuery) => get$<MS>(ctx, query),
+  const rpc = isRpcContext(ctx)
+    ? ({
+        create: (params: CreateMarketParams<typeof ctx>) => create(ctx, params),
+        get: pfunctor((query: MarketGetQuery) => get<typeof ctx>(ctx, query), {
+          $: (query: MarketGetQuery) => get$<typeof ctx>(ctx, query),
         }),
-      }
-    : null
+      } as MarketsRpc<typeof ctx>)
+    : {}
 
   return {
     ...base,
     ...rpc,
-  } as Markets<C, MS>
+  } as Markets<C>
 }

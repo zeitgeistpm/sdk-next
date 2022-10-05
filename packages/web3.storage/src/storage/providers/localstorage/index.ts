@@ -46,9 +46,5 @@ export const storage = <T extends object>(
         }),
       )
     },
-
-    as<T extends object>() {
-      return this as unknown as Storage<T>
-    },
   }
 }

@@ -5,13 +5,12 @@ import type { ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesPool } from '@polkad
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { signAndSend } from '@zeitgeistpm/rpc'
 import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
-import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { CID } from 'ipfs-http-client'
-import { MetadataStorage } from '../../../../meta'
+import { FullContext, RpcContext } from '../../../../context'
+import { MetadataStorage, TaggedID } from '../../../../meta'
 import { rpcMarket } from '../../../../model/markets'
 import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
-import { FullContext, RpcContext } from '../../../../context'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
 
 /**
@@ -23,23 +22,20 @@ import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } 
  * @param params P
  * @returns void
  */
-export const create = async <
-  C extends RpcContext<MS> | FullContext<MS>,
-  MS extends MetadataStorage<any, any>,
-  P extends CreateMarketParams<MS>,
->(
+export const create = async <C extends RpcContext | FullContext, P extends CreateMarketParams<C>>(
   context: C,
   params: P,
-): Promise<CreateMarketResult<MS, P>> => {
+): Promise<CreateMarketResult<C, P>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
-  const cid = (await context.storage.of('markets').put(params.metadata)).unright().unwrap()
+  const storage = context.storage.of('markets')
+  const cid = (await storage.put(params.metadata)).unright().unwrap()
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
       params.oracle,
       params.period,
-      { Sha3_384: cid.multihash.bytes },
+      { Sha3_384: cid.cid.multihash.bytes },
       params.marketType,
       params.disputeMechanism,
       params.pool.swapFee,
@@ -50,7 +46,7 @@ export const create = async <
     tx = context.api.tx.predictionMarkets.createMarket(
       params.oracle,
       params.period,
-      { Sha3_384: cid.multihash.bytes },
+      { Sha3_384: cid.cid.multihash.bytes },
       params.creationType,
       params.marketType,
       params.disputeMechanism,
@@ -84,14 +80,14 @@ export const create = async <
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
 const extraction =
-  <MS extends MetadataStorage, P extends CreateMarketParams<MS>>(
-    context: RpcContext<MS>,
+  <C extends RpcContext | FullContext, P extends CreateMarketParams<C>>(
+    context: C,
     result: ISubmittableResult,
     params: P,
   ) =>
   () =>
     either(
-      tryCatch<Error, CreateMarketData<MS, P>>(() => {
+      tryCatch<Error, CreateMarketData<C, P>>(() => {
         const [marketId, market] = extractMarketCreationEventForAddress(
           context.api,
           result.events,
@@ -110,9 +106,9 @@ const extraction =
         }
 
         return {
-          market: rpcMarket<MS>(context, marketId, market),
+          market: rpcMarket<C>(context, marketId, market),
           pool,
-        } as CreateMarketData<MS, P>
+        } as CreateMarketData<C, P>
       }),
     )
 
@@ -125,9 +121,9 @@ const extraction =
  * @param cid CID
  */
 const deleteMetadata = Te.from(
-  async <MS extends MetadataStorage>(context: RpcContext<MS> | FullContext<MS>, cid: CID) => {
+  async (context: RpcContext | FullContext, cid: TaggedID<'markets'>) => {
     if (!context.storage) return
-    await context.storage.markets.del(cid)
+    await context.storage.of('markets').del(cid)
   },
 )
 

@@ -19,37 +19,37 @@ import { MetadataStorage } from '../../../../meta'
  * @param query ListQuery<C>
  * @returns Promise<PoolList<C>>
  */
-export const listPools = async <C extends Context<MS>, MS extends MetadataStorage<any, any>>(
+export const listPools = async <C extends Context>(
   context: C,
-  query: PoolsListQuery<C, MS>,
-): Promise<PoolList<C, MS>> => {
+  query: PoolsListQuery<C>,
+): Promise<PoolList<C>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await listFromIndexer(context, query)
       : await listFromRpc(context, query)
 
-  return data as PoolList<C, MS>
+  return data as PoolList<C>
 }
 
 /**
  * Concrete listing function for indexer context
  * @private
  */
-const listFromIndexer = async <MS extends MetadataStorage<any, any>>(
-  context: IndexerContext,
-  query: PoolsListQuery<IndexerContext, MS>,
-): Promise<PoolList<IndexerContext, MS>> => {
-  return (await context.indexer.pools(query)).pools
+const listFromIndexer = async <C extends IndexerContext>(
+  context: C,
+  query: PoolsListQuery<C>,
+): Promise<PoolList<C>> => {
+  return (await context.indexer.pools(query)).pools as PoolList<C>
 }
 
 /**
  * Concrete listing function for rpc context
  * @private
  */
-const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage<any, any>>(
-  { api }: RpcContext<MS>,
-  query?: PoolsListQuery<RpcContext<MS>, MS>,
-): Promise<PoolList<C, MS>> => {
+const listFromRpc = async <C extends RpcContext>(
+  { api }: C,
+  query?: PoolsListQuery<C>,
+): Promise<PoolList<C>> => {
   const entries = isPaginated(query)
     ? await api.query.swaps.pools.entriesPaged({
         args: [],
@@ -58,7 +58,7 @@ const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage<
       })
     : await api.query.swaps.pools.entries()
 
-  const list: RpcPoolList<MS> = entries.map(
+  const list: RpcPoolList<C> = entries.map(
     ([
       {
         args: [poolId],
@@ -71,5 +71,5 @@ const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage<
     },
   )
 
-  return list as PoolList<C, MS>
+  return list as PoolList<C>
 }

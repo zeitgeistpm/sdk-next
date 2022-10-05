@@ -19,39 +19,37 @@ import { AugmentedRpcMarketList, MarketList, MarketsListQuery } from '../../type
  * @param query ListQuery<C>
  * @returns Promise<MarketList<C>>
  */
-export const list = async <C extends Context<MS>, MS extends MetadataStorage>(
+export const list = async <C extends Context>(
   context: C,
-  query?: MarketsListQuery<C, MS>,
-): Promise<MarketList<C, MS>> => {
+  query?: MarketsListQuery<C>,
+): Promise<MarketList<C>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await indexer(context, query)
       : await rpc(context, query)
 
-  return data as MarketList<C, MS>
+  return data as MarketList<C>
 }
 
 /**
  * Concrete listing function for indexer context
  * @private
  */
-const indexer = async <MS extends MetadataStorage>(
+const indexer = async <C extends IndexerContext>(
   context: IndexerContext,
-  query?: MarketsListQuery<IndexerContext, MS>,
-): Promise<MarketList<IndexerContext, MS>> => {
-  return {
-    items: (await context.indexer.markets(query)).markets,
-  }
+  query?: MarketsListQuery<C>,
+): Promise<MarketList<C>> => {
+  return (await context.indexer.markets(query)).markets as MarketList<C>
 }
 
 /**
  * Concrete listing function for rpc context
  * @private
  */
-const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
+const rpc = async <C extends RpcContext>(
   context: C,
-  query?: MarketsListQuery<C, MS>,
-): Promise<MarketList<C, MS>> => {
+  query?: MarketsListQuery<C>,
+): Promise<MarketList<C>> => {
   const entries = isPaginated(query)
     ? await context.api.query.marketCommons.markets.entriesPaged({
         args: [],
@@ -60,9 +58,7 @@ const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
       })
     : await context.api.query.marketCommons.markets.entries()
 
-  const list: AugmentedRpcMarketList<MS> = {
-    items: entries.map(m => fromEntry(context, m)),
-  }
+  const list = entries.map(m => fromEntry(context, m))
 
-  return list as MarketList<C, MS>
+  return list as MarketList<C>
 }

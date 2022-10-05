@@ -1,9 +1,9 @@
-import { batterystation, create, isRpcData } from '@zeitgeistpm/sdk'
+import { batterystation, batterystationRpc, create, isRpcData } from '@zeitgeistpm/sdk'
 import { from } from 'rxjs'
 import { switchMap, withLatestFrom } from 'rxjs/operators'
 
 async function main(marketId: number) {
-  const sdk = await create(batterystation())
+  const sdk = await create(batterystationRpc())
   /**
    * Fetch market and saturate it with metadata if the market is fetched from rpc.
    * Saturate will fetch ipfs data and conform the market to same type as returned from indexer.

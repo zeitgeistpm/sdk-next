@@ -3,7 +3,7 @@ import { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import { Data } from '../../primitives/data'
-import { Context } from '../../context'
+import { Context, IndexerContext, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { isNumber } from '@polkadot/util'
 
@@ -13,11 +13,10 @@ import { isNumber } from '@polkadot/util'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type Pool<C extends Context<MS>, MS extends MetadataStorage<any, any>> = Data<
+export type Pool<C extends Context> = Data<
   C,
-  RpcPool,
-  IndexedPool,
-  MS
+  C extends RpcContext ? RpcPool : never,
+  C extends IndexerContext ? IndexedPool : never
 >
 
 /**

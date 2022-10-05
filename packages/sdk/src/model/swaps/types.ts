@@ -18,23 +18,22 @@ export * from './pool'
 /**
  * Zeitgeist Swaps model..
  */
-export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = SwapsShared<C, MS> &
-  SwapsRpc<C, MS>
+export type Swaps<C extends Context> = SwapsShared<C> & (C extends RpcContext<any> ? SwapsRpc<C> : {})
 
-export type SwapsShared<C extends Context<MS>, MS extends MetadataStorage> = {
+export type SwapsShared<C extends Context> = {
   /**
    * List liquidity pools.
    * @param query PoolsListQuery<C>
    * @returns Promise<PoolList<C>>
    */
-  listPools: (query: PoolsListQuery<C, MS>) => Promise<PoolList<C, MS>>
+  listPools: (query: PoolsListQuery<C>) => Promise<PoolList<C>>
 
   /**
    * Get a pool by either market id or pool id.
    * @param query PoolGetQuery
    * @returns Promise<Pool<C>>
    */
-  getPool: (query: PoolGetQuery) => Promise<Pool<C, MS>>
+  getPool: (query: PoolGetQuery) => Promise<Pool<C>>
   /**
    * Fetch poolprices for a cetain timespan. Will prefer indexer but use rpc if indexer isnt available.
    *
@@ -44,35 +43,30 @@ export type SwapsShared<C extends Context<MS>, MS extends MetadataStorage> = {
   poolPrices: (query: PoolPricesQuery) => Promise<PoolPrices>
 }
 
-export type SwapsRpc<
-  C extends Context<MS>,
-  MS extends MetadataStorage<any, any>,
-> = C extends RpcContext<MS>
-  ? {
-      getPool: PFunctor<
-        SwapsShared<C, MS>['getPool'],
-        {
-          /**
-           * Stream changes to a pool object.
-           * @param query PoolGetQuery
-           * @returns Observable<Pool<RpcContext>>
-           */
-          $: (query: PoolGetQuery) => Observable<Pool<C, MS>>
-        }
-      >
-      poolPrices: PFunctor<
-        SwapsShared<C, MS>['poolPrices'],
-        {
-          /**
-           * Will stream prices for a given pool tailed after a block or date.
-           * Will emit the price at each block in the stream as dictated by the resolution passed.
-           * When it reaches the end it starts to listen for new blocks and emits an item for every block.
-           *
-           * @param query PoolPricesStreamQuery
-           * @returns Observable<PoolAssetPricesAtBlock>
-           */
-          $: (query: PoolPricesStreamQuery) => Observable<PoolAssetPricesAtBlock>
-        }
-      >
+export type SwapsRpc<C extends RpcContext> = {
+  getPool: PFunctor<
+    SwapsShared<C>['getPool'],
+    {
+      /**
+       * Stream changes to a pool object.
+       * @param query PoolGetQuery
+       * @returns Observable<Pool<RpcContext>>
+       */
+      $: (query: PoolGetQuery) => Observable<Pool<C>>
     }
-  : {}
+  >
+  poolPrices: PFunctor<
+    SwapsShared<C>['poolPrices'],
+    {
+      /**
+       * Will stream prices for a given pool tailed after a block or date.
+       * Will emit the price at each block in the stream as dictated by the resolution passed.
+       * When it reaches the end it starts to listen for new blocks and emits an item for every block.
+       *
+       * @param query PoolPricesStreamQuery
+       * @returns Observable<PoolAssetPricesAtBlock>
+       */
+      $: (query: PoolPricesStreamQuery) => Observable<PoolAssetPricesAtBlock>
+    }
+  >
+}

@@ -16,7 +16,7 @@ import { IPFSConfiguration } from './types'
  *
  * @generic T - type of metadata
  */
-export const storage = <T extends object>(
+export const storage = <T extends object, ID>(
   config: IPFSConfiguration,
   codec: Codec<string, T> = JsonCodec(),
 ): Storage<T, CID> => {
@@ -62,9 +62,6 @@ export const storage = <T extends object>(
       } catch (error) {
         return either(left(error as Error))
       }
-    },
-    as<T extends object>() {
-      return this as unknown as Storage<T>
     },
   }
 }

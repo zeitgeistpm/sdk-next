@@ -18,10 +18,10 @@ export type Model<C extends Context<MS>, MS extends MetadataStorage<any, any>> =
    * Will also handle metadata storage if configured to do so.
    * If you connect to the zeitgeist main or testnet, this should be configured automatically over IPFS.
    */
-  markets: Markets<C, MS>
+  markets: Markets<C>
   /**
    * Model for interacting with zeitgeist swaps module.
    * Has functionality ti List liqudity pools, join pools with liquidity and swap assets in and out.
    */
-  swaps: Swaps<C, MS>
+  swaps: Swaps<C>
 }

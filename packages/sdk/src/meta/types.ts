@@ -10,18 +10,18 @@ import { MarketMetadata } from './market'
  * @generic C = Comment
  */
 export interface MetadataStorage<
-  M extends object = MarketMetadata,
-  C extends object = CommentMetadata,
+  M extends TaggedMetadata<'markets'> = MarketMetadata,
+  C extends TaggedMetadata<'comments'> = CommentMetadata,
 > {
   /**
    * Storage for Market metadata.
    */
-  readonly markets: Storage<M, CID>
+  readonly markets: Storage<M, TaggedID<'markets'>>
   /**
    * Storage for Market comments.
    * @notes not in use, just testing type narrowing.
    */
-  readonly comments: Storage<C, CID>
+  readonly comments: Storage<C, TaggedID<'comments'>>
   /**
    * Use storage narrowed to a sub storage type.
    *
@@ -30,10 +30,13 @@ export interface MetadataStorage<
    * @generic K extends keyof this
    * @param key K
    */
-  of<K extends keyof this, T extends object = this[K] extends Storage<infer T> ? T : never>(
+  of<K extends keyof this>(
     key: K,
-  ): Storage<T, CID>
+  ): this[K] extends Storage<infer T, infer ID> ? Storage<T, ID> : never
 }
+
+export type TaggedID<T extends keyof MetadataStorage> = { __meta: T; cid: CID }
+export type TaggedMetadata<T extends keyof MetadataStorage> = { __meta: T }
 
 /**
  * Type helper to extract the storage type at a given key in a MetadataStorage
@@ -41,26 +44,31 @@ export interface MetadataStorage<
  * @generic MS extends MetadataStorage,
  * @generic K extends keyof MSS>
  */
-export type StorageTypeOf<S extends Storage<any>> = S extends Storage<infer T> ? T : never
+export type StorageTypeOf<S> = S extends Storage<infer T, infer ID> ? T : never
 
 /**
  * Unpack the inner type of market storage.
  * @generic MS extends MetadataStorage
  */
-export type MarketTypeOf<MS extends MetadataStorage<any, any>> = StorageTypeOf<MS['markets']>
+export type MarketTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS['markets']>
+
+export type StorageIdTypeOf<S> = S extends Storage<infer T, infer ID> ? ID : never
 
 /**
  * Unpack the inner type of comment storage.
  * @generic MS extends MetadataStorage
  */
-export type CommentTypeOf<MS extends MetadataStorage<any, any>> = StorageTypeOf<MS['comments']>
+export type CommentTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS['comments']>
 
-export const createStorage = <M extends object = MarketMetadata, C extends object = CommentMetadata>(
-  storage: Storage<any>,
+export const createStorage = <
+  M extends TaggedMetadata<'markets'> = MarketMetadata,
+  C extends TaggedMetadata<'comments'> = CommentMetadata,
+>(
+  storage: Storage<any, any>,
 ): MetadataStorage<M, C> =>
   saturate<MetadataStorage<M, C>>({
-    markets: storage,
-    comments: storage,
+    markets: storage as Storage<M, TaggedID<'markets'>>,
+    comments: storage as Storage<C, TaggedID<'comments'>>,
   } as MetadataStorage<M, C>)
 
 /**

@@ -1,5 +1,4 @@
 import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
-import { MetadataStorage } from '../../meta'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { Market } from '../types'
@@ -15,37 +14,34 @@ export * from './market'
  * Zeitgeist Markets model.
  * Query and create markets.
  */
-export type Markets<C extends Context<MS>, MS extends MetadataStorage<any, any>> = MarketsShared<
-  C,
-  MS
-> &
-  (C extends RpcContext<MS> ? MarketsRpc<C, MS> : never)
+export type Markets<C extends Context<any>> = MarketsShared<C> &
+  (C extends RpcContext<any> ? MarketsRpc<C> : {})
 
-export type MarketsShared<C extends Context<MS>, MS extends MetadataStorage<any, any>> = {
+export type MarketsShared<C extends Context<any>> = {
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.
    */
-  list: (query?: MarketsListQuery<C, MS>) => Promise<MarketList<C, MS>>
+  list: (query?: MarketsListQuery<C>) => Promise<MarketList<C>>
   /**
    * Get a market by its id.
    */
-  get: (query: MarketGetQuery) => Promise<Market<C, MS>>
+  get: (query: MarketGetQuery) => Promise<Market<C>>
 }
 
-export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage<any, any>> = {
+export type MarketsRpc<C extends RpcContext<any>> = {
   /**
    * Create a market. Only available when connecting to rpc.
    */
   create: {
-    <P extends CreateMarketParams<MS>>(params: P): Promise<CreateMarketResult<MS, P>>
+    <P extends CreateMarketParams<C>>(params: P): Promise<CreateMarketResult<C, P>>
   }
   get: PFunctor<
-    MarketsShared<C, MS>['get'],
+    MarketsShared<C>['get'],
     {
       /**
        * Stream pool prices from the node
        */
-      $: (query: MarketGetQuery) => Observable<Market<RpcContext<MS>, MS>>
+      $: (query: MarketGetQuery) => Observable<Market<C>>
     }
   >
 }

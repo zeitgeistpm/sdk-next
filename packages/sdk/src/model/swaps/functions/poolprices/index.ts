@@ -29,7 +29,7 @@ import type {
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-export const poolPrices = async <C extends Context<MS>, MS extends MetadataStorage<any, any>>(
+export const poolPrices = async <C extends Context>(
   context: C,
   query: PoolPricesQuery,
 ): Promise<PoolPrices> => {

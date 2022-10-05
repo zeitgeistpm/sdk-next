@@ -23,6 +23,7 @@ const IOScalarRangeType = union([literal('date'), literal('number')])
  * IO validation of Market metadata object using superstruct
  */
 export const IOMarketMetadata = object({
+  __meta: literal('markets'),
   slug: string(),
   description: string(),
   question: string(),
