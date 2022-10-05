@@ -1,101 +1,27 @@
-declare module '@zeitgeistpm/sdk' {
-  export interface MetadataStorage<M = MarketMetadata, C = Comment> {
-    /**
-     * Storage for Market metadata.
-     */
-    readonly markets: Storage<M>
-    /**
-     * Storage for Market comments.
-     * @notes not in use, just testing type narrowing.
-     */
-    readonly comments: Storage<C>
-  }
-}
-
 import { Button } from '@chakra-ui/react'
 import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp'
-import {
-  batterystation,
-  create,
-  MarketMetadata,
-  MetadataStorage,
-  RpcConfig,
-  RpcContext,
-  Sdk,
-} from '@zeitgeistpm/sdk'
-import { IPFS, Storage } from '@zeitgeistpm/web3.storage'
-import { useEffect, useState } from 'react'
+import { create, createStorage } from '@zeitgeistpm/sdk'
+import { IPFS } from '@zeitgeistpm/web3.storage'
+import React, { useEffect } from 'react'
 
-type CustomMarketMetadata = {
-  foo: `foo ${string}`
-}
+type CustomMarketMetadata = { __meta: 'markets'; description: string }
 
-type CustomComment = {
-  comment: 'text'
-}
-
-/**
- * Default IPFS metadata storage for the zeitgeist ecosystem.
- * @typeof IPFS.storage<MarketMetadata>
- */
-export function CustomStorageProvider<
-  MS extends MetadataStorage<CustomMarketMetadata, CustomComment>,
->(): MS {
-  const storage = IPFS.storage<any>({
-    node: { url: 'http://ipfs.zeitgeist.pm:5001' },
-    cluster: {
-      url: 'https://ipfs-cluster.zeitgeist.pm',
-      auth: {
-        username: 'zeitgeist',
-        password: '5ZpmQl*rWn%Z',
-      },
-    },
-  })
-
-  return {
-    markets: storage,
-    comments: storage,
-  } as MS
-}
+const storage = createStorage<CustomMarketMetadata>(
+  IPFS.storage({
+    node: { url: 'http://ipfs.zeitgeist.pm:5001', pin: false },
+  }),
+)
 
 const CustomStorage: React.FC = () => {
-  web3Enable('sdkv2-test-app')
-
-  const [sdk, setSdk] =
-    useState<
-      Sdk<
-        RpcContext<MetadataStorage<CustomMarketMetadata, CustomComment>>,
-        MetadataStorage<CustomMarketMetadata, CustomComment>
-      >
-    >()
-
   useEffect(() => {
-    if (!sdk) {
-      ;(async () => {
-        const csdk = await create({
-          provider: 'ws://127.0.0.1:9944',
-          storage: CustomStorageProvider(),
-        })
-
-        csdk.storage
-      })()
-    }
-  }, [sdk])
-
-  useEffect(() => {
-    if (sdk) {
-      sdk.model.markets.get({ marketId: 1 }).then(market => {
-        console.log(market)
-        market.expand().then(m => {
-          const market = m.unright().unwrap()
-          console.log(market.foo)
-        })
-      })
-    }
-  }, [sdk])
+    web3Enable('sdkv2-test-app')
+  }, [])
 
   const onClick = async () => {
-    if (!sdk) return
+    const sdk = await create({
+      provider: 'ws://127.0.0.1:9944',
+      storage: storage,
+    })
 
     const address = 'dE2cVL9QAgh3MZEK3ZhPG5S2YSqZET8V1Qa36epaU4pQG4pd8'
     const { signer } = await web3FromAddress(address)
@@ -118,17 +44,22 @@ const CustomStorage: React.FC = () => {
       },
     }
 
-    const a = await sdk.model.markets.create({
+    const response = await sdk.model.markets.create({
       ...params,
       metadata: {
-        foo: 'foo something or other',
+        __meta: 'markets',
+        description: 'foo bar description',
       },
     })
 
-    const { market } = a.extract().unright().unwrap()
+    const { market } = response.saturate().unright().unwrap()
+    const saturated = (await market.saturate()).unwrap()
 
-    console.log('created market', market[0])
-    console.log(market[1].toHuman())
+    console.log('created market', saturated)
+
+    const b = await sdk.storage.markets.get({ cid: market.metadata as any, __meta: 'markets' })
+
+    console.log(b.unwrap())
   }
 
   return (

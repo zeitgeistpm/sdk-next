@@ -1,5 +1,6 @@
 import { Storage } from '@zeitgeistpm/web3.storage'
 import { CID } from 'ipfs-http-client'
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { CommentMetadata } from './comment'
 import { MarketMetadata } from './market'
 
@@ -52,8 +53,6 @@ export type StorageTypeOf<S> = S extends Storage<infer T, infer ID> ? T : never
  */
 export type MarketTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS['markets']>
 
-export type StorageIdTypeOf<S> = S extends Storage<infer T, infer ID> ? ID : never
-
 /**
  * Unpack the inner type of comment storage.
  * @generic MS extends MetadataStorage
@@ -67,9 +66,26 @@ export const createStorage = <
   storage: Storage<any, any>,
 ): MetadataStorage<M, C> =>
   saturate<MetadataStorage<M, C>>({
-    markets: storage as Storage<M, TaggedID<'markets'>>,
-    comments: storage as Storage<C, TaggedID<'comments'>>,
+    markets: tagged('markets', storage),
+    comments: tagged('comments', storage),
   } as MetadataStorage<M, C>)
+
+export const tagged = <T extends TaggedMetadata<any>>(
+  key: keyof MetadataStorage,
+  storage: Storage<T, CID>,
+) => {
+  return {
+    get: ({ cid }: TaggedID<any>) => storage.get(cid),
+    del: ({ cid }: TaggedID<any>) => storage.del(cid),
+    put: Te.from<TaggedID<any>, [any]>(async data => {
+      const cid = await storage.put(data)
+      return {
+        __meta: key,
+        cid: cid.unwrap(),
+      }
+    }),
+  } as Storage<any, TaggedID<any>>
+}
 
 /**
  * Create a sturatable metadata storage.
