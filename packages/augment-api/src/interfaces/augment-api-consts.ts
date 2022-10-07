@@ -6,8 +6,8 @@
 import '@polkadot/api-base/types/consts';
 
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
-import type { Bytes, Option, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
-import type { Perbill, Percent, Permill } from '@polkadot/types/interfaces/runtime';
+import type { Option, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { Percent, Permill } from '@polkadot/types/interfaces/runtime';
 import type { FrameSupportPalletId, FrameSupportWeightsRuntimeDbWeight, FrameSupportWeightsWeightToFeeCoefficient, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
@@ -55,23 +55,6 @@ declare module '@polkadot/api-base/types/consts' {
        * Slashed funds are send to the treasury
        **/
       treasuryPalletId: FrameSupportPalletId & AugmentedConst<ApiType>;
-    };
-    crowdloan: {
-      /**
-       * Percentage to be payed at initialization
-       **/
-      initializationPayment: Perbill & AugmentedConst<ApiType>;
-      maxInitContributors: u32 & AugmentedConst<ApiType>;
-      /**
-       * A fraction representing the percentage of proofs
-       * that need to be presented to change a reward address through the relay keys
-       **/
-      rewardAddressRelayVoteThreshold: Perbill & AugmentedConst<ApiType>;
-      /**
-       * Network Identifier to be appended into the signatures for reward address change/association
-       * Prevents replay attacks from one network to the other
-       **/
-      signatureNetworkIdentifier: Bytes & AugmentedConst<ApiType>;
     };
     democracy: {
       /**
@@ -131,6 +114,12 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       votingPeriod: u64 & AugmentedConst<ApiType>;
     };
+    grandpa: {
+      /**
+       * Max Authorities in use
+       **/
+      maxAuthorities: u32 & AugmentedConst<ApiType>;
+    };
     identity: {
       /**
        * The amount held on deposit for a registered identity
@@ -185,86 +174,16 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maxSignatories: u16 & AugmentedConst<ApiType>;
     };
-    parachainStaking: {
-      /**
-       * Number of rounds candidate requests to decrease self-bond must wait to be executable
-       **/
-      candidateBondLessDelay: u32 & AugmentedConst<ApiType>;
-      /**
-       * Default number of blocks per round at genesis
-       **/
-      defaultBlocksPerRound: u32 & AugmentedConst<ApiType>;
-      /**
-       * Default commission due to collators, is `CollatorCommission` storage value in genesis
-       **/
-      defaultCollatorCommission: Perbill & AugmentedConst<ApiType>;
-      /**
-       * Default percent of inflation set aside for parachain bond account
-       **/
-      defaultParachainBondReservePercent: Percent & AugmentedConst<ApiType>;
-      /**
-       * Number of rounds that delegation less requests must wait before executable
-       **/
-      delegationBondLessDelay: u32 & AugmentedConst<ApiType>;
-      /**
-       * Number of rounds that candidates remain bonded before exit request is executable
-       **/
-      leaveCandidatesDelay: u32 & AugmentedConst<ApiType>;
-      /**
-       * Number of rounds that delegators remain bonded before exit request is executable
-       **/
-      leaveDelegatorsDelay: u32 & AugmentedConst<ApiType>;
-      /**
-       * Maximum bottom delegations (not counted) per candidate
-       **/
-      maxBottomDelegationsPerCandidate: u32 & AugmentedConst<ApiType>;
-      /**
-       * Maximum delegations per delegator
-       **/
-      maxDelegationsPerDelegator: u32 & AugmentedConst<ApiType>;
-      /**
-       * Maximum top delegations counted per candidate
-       **/
-      maxTopDelegationsPerCandidate: u32 & AugmentedConst<ApiType>;
-      /**
-       * Minimum number of blocks per round
-       **/
-      minBlocksPerRound: u32 & AugmentedConst<ApiType>;
-      /**
-       * Minimum stake required for any account to be a collator candidate
-       **/
-      minCandidateStk: u128 & AugmentedConst<ApiType>;
-      /**
-       * Minimum stake required for any candidate to be in `SelectedCandidates` for the round
-       **/
-      minCollatorStk: u128 & AugmentedConst<ApiType>;
-      /**
-       * Minimum stake for any registered on-chain account to delegate
-       **/
-      minDelegation: u128 & AugmentedConst<ApiType>;
-      /**
-       * Minimum stake for any registered on-chain account to be a delegator
-       **/
-      minDelegatorStk: u128 & AugmentedConst<ApiType>;
-      /**
-       * Minimum number of selected candidates every round
-       **/
-      minSelectedCandidates: u32 & AugmentedConst<ApiType>;
-      /**
-       * Number of rounds that delegations remain bonded before revocation request is executable
-       **/
-      revokeDelegationDelay: u32 & AugmentedConst<ApiType>;
-      /**
-       * Number of rounds after which block authors are rewarded
-       **/
-      rewardPaymentDelay: u32 & AugmentedConst<ApiType>;
-    };
     predictionMarkets: {
       /**
        * The base amount of currency that must be bonded for a market approved by the
        * advisory committee.
        **/
       advisoryBond: u128 & AugmentedConst<ApiType>;
+      /**
+       * The percentage of the advisory bond that gets slashed when a market is rejected.
+       **/
+      advisoryBondSlashPercentage: Percent & AugmentedConst<ApiType>;
       /**
        * The base amount of currency that must be bonded in order to create a dispute.
        **/
@@ -283,9 +202,24 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maxCategories: u16 & AugmentedConst<ApiType>;
       /**
+       * The maximum number of blocks allowed to be specified as dispute_duration
+       * in create_market.
+       **/
+      maxDisputeDuration: u64 & AugmentedConst<ApiType>;
+      /**
        * The maximum number of disputes allowed on any single market.
        **/
       maxDisputes: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of blocks allowed to be specified as grace_period
+       * in create_market.
+       **/
+      maxGracePeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of blocks allowed to be specified as oracle_duration
+       * in create_market.
+       **/
+      maxOracleDuration: u64 & AugmentedConst<ApiType>;
       /**
        * The shortest period of collecting subsidy for a Rikiddo market.
        **/
@@ -294,6 +228,16 @@ declare module '@polkadot/api-base/types/consts' {
        * The minimum number of categories available for categorical markets.
        **/
       minCategories: u16 & AugmentedConst<ApiType>;
+      /**
+       * The minimum number of blocks allowed to be specified as dispute_duration
+       * in create_market.
+       **/
+      minDisputeDuration: u64 & AugmentedConst<ApiType>;
+      /**
+       * The minimum number of blocks allowed to be specified as oracle_duration
+       * in create_market.
+       **/
+      minOracleDuration: u64 & AugmentedConst<ApiType>;
       /**
        * The shortest period of collecting subsidy for a Rikiddo market.
        **/
@@ -310,7 +254,7 @@ declare module '@polkadot/api-base/types/consts' {
       /**
        * The number of blocks the reporting period remains open.
        **/
-      reportingPeriod: u32 & AugmentedConst<ApiType>;
+      reportingPeriod: u64 & AugmentedConst<ApiType>;
       /**
        * The base amount of currency that must be bonded for a permissionless market,
        * guaranteeing that it will resolve as anything but `Invalid`.

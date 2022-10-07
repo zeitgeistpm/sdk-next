@@ -7,10 +7,10 @@ import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
 import { MarketTypeOf, MetadataStorage } from '../../meta'
-import { Context, RpcContext } from '../../context'
+import { Context, IndexerContext, RpcContext } from '../../context'
 import { MarketMetadata } from '../../meta/market'
 import { Data } from '../../primitives'
-import { IndexerConfig } from 'types'
+import { IndexerConfig } from '../../types'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -21,7 +21,7 @@ export * from './functions/list/types'
 export type Market<C extends Context> = Data<
   C,
   C extends RpcContext ? RpcMarket<C> : never,
-  C extends IndexerConfig ? IndexedMarket : never
+  C extends IndexerContext ? IndexedMarket : never
 >
 
 /**
@@ -72,7 +72,7 @@ export const rpcMarket = <C extends RpcContext>(
   rpcMarket.fetchMetadata = async () => {
     const hex = rpcMarket.metadata.toHex()
     const cid = new CID('f0155' + hex.slice(2)) as any
-    return context.storage.of('markets').get(cid)
+    return context.storage.of('markets').get({ __meta: 'markets', cid: cid })
   }
 
   rpcMarket.saturate = Te.from(async () => {

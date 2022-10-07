@@ -48,10 +48,7 @@ export const poolPrices = async <C extends Context>(
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-const rpc = async <MS extends MetadataStorage<any, any>>(
-  ctx: RpcContext<MS>,
-  query: PoolPricesQuery,
-): Promise<PoolPrices> => {
+const rpc = async <C extends RpcContext>(ctx: C, query: PoolPricesQuery): Promise<PoolPrices> => {
   const [time, pool, { start, end }] = await Promise.all([
     now(ctx),
     ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()),
@@ -149,8 +146,8 @@ const indexer = async (context: IndexerContext, query: PoolPricesQuery): Promise
  * @param query PoolPricesStreamQuery
  * @returns Observable<PoolAssetPricesAtBlock>
  */
-export const rpcPoolPrices$ = <MS extends MetadataStorage<any, any>>(
-  ctx: RpcContext<MS>,
+export const rpcPoolPrices$ = <C extends RpcContext>(
+  ctx: C,
   query: PoolPricesStreamQuery,
 ): Observable<PoolAssetPricesAtBlock> => {
   return new Observable(sub => {

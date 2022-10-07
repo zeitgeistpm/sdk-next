@@ -77,20 +77,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       DepositFailed: AugmentedError<ApiType>;
     };
-    authorInherent: {
-      /**
-       * Author already set in block.
-       **/
-      AuthorAlreadySet: AugmentedError<ApiType>;
-      /**
-       * The author in the inherent is not an eligible author.
-       **/
-      CannotBeAuthor: AugmentedError<ApiType>;
-      /**
-       * No AccountId was found to be associated with this author
-       **/
-      NoAccountId: AugmentedError<ApiType>;
-    };
     authorized: {
       /**
        * The market unexpectedly has the incorrect dispute mechanism.
@@ -108,24 +94,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The report does not match the market's type.
        **/
       OutcomeMismatch: AugmentedError<ApiType>;
-    };
-    authorMapping: {
-      /**
-       * The NimbusId in question is already associated and cannot be overwritten
-       **/
-      AlreadyAssociated: AugmentedError<ApiType>;
-      /**
-       * The association can't be cleared because it is not found.
-       **/
-      AssociationNotFound: AugmentedError<ApiType>;
-      /**
-       * This account cannot set an author because it cannon afford the security deposit
-       **/
-      CannotAffordSecurityDeposit: AugmentedError<ApiType>;
-      /**
-       * The association can't be cleared because it belongs to another account.
-       **/
-      NotYourAssociation: AugmentedError<ApiType>;
     };
     balances: {
       /**
@@ -234,75 +202,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Forbids voting of unknown accounts
        **/
       OnlyJurorsCanVote: AugmentedError<ApiType>;
-    };
-    crowdloan: {
-      /**
-       * User trying to associate a native identity with a relay chain identity for posterior
-       * reward claiming provided an already associated relay chain identity
-       **/
-      AlreadyAssociated: AugmentedError<ApiType>;
-      /**
-       * Trying to introduce a batch that goes beyond the limits of the funds
-       **/
-      BatchBeyondFundPot: AugmentedError<ApiType>;
-      /**
-       * First claim already done
-       **/
-      FirstClaimAlreadyDone: AugmentedError<ApiType>;
-      /**
-       * User submitted an unsifficient number of proofs to change the reward address
-       **/
-      InsufficientNumberOfValidProofs: AugmentedError<ApiType>;
-      /**
-       * User trying to associate a native identity with a relay chain identity for posterior
-       * reward claiming provided a wrong signature
-       **/
-      InvalidClaimSignature: AugmentedError<ApiType>;
-      /**
-       * User trying to claim the first free reward provided the wrong signature
-       **/
-      InvalidFreeClaimSignature: AugmentedError<ApiType>;
-      /**
-       * User trying to claim an award did not have an claim associated with it. This may mean
-       * they did not contribute to the crowdloan, or they have not yet associated a native id
-       * with their contribution
-       **/
-      NoAssociatedClaim: AugmentedError<ApiType>;
-      /**
-       * User provided a signature from a non-contributor relay account
-       **/
-      NonContributedAddressProvided: AugmentedError<ApiType>;
-      /**
-       * The contribution is not high enough to be eligible for rewards
-       **/
-      RewardNotHighEnough: AugmentedError<ApiType>;
-      /**
-       * User trying to claim rewards has already claimed all rewards associated with its
-       * identity and contribution
-       **/
-      RewardsAlreadyClaimed: AugmentedError<ApiType>;
-      /**
-       * Rewards should match funds of the pallet
-       **/
-      RewardsDoNotMatchFund: AugmentedError<ApiType>;
-      /**
-       * Reward vec has already been initialized
-       **/
-      RewardVecAlreadyInitialized: AugmentedError<ApiType>;
-      /**
-       * Reward vec has not yet been fully initialized
-       **/
-      RewardVecNotFullyInitializedYet: AugmentedError<ApiType>;
-      /**
-       * Initialize_reward_vec received too many contributors
-       **/
-      TooManyContributors: AugmentedError<ApiType>;
-      /**
-       * Provided vesting period is not valid
-       **/
-      VestingPeriodNonValid: AugmentedError<ApiType>;
-    };
-    cumulusXcm: {
     };
     democracy: {
       /**
@@ -419,15 +318,37 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       WrongUpperBound: AugmentedError<ApiType>;
     };
-    dmpQueue: {
+    grandpa: {
       /**
-       * The amount of weight given is possibly not enough for executing the message.
+       * Attempt to signal GRANDPA change with one already pending.
        **/
-      OverLimit: AugmentedError<ApiType>;
+      ChangePending: AugmentedError<ApiType>;
       /**
-       * The message index given is unknown.
+       * A given equivocation report is valid but already previously reported.
        **/
-      Unknown: AugmentedError<ApiType>;
+      DuplicateOffenceReport: AugmentedError<ApiType>;
+      /**
+       * An equivocation proof provided as part of an equivocation report is invalid.
+       **/
+      InvalidEquivocationProof: AugmentedError<ApiType>;
+      /**
+       * A key ownership proof provided as part of an equivocation report is invalid.
+       **/
+      InvalidKeyOwnershipProof: AugmentedError<ApiType>;
+      /**
+       * Attempt to signal GRANDPA pause when the authority set isn't live
+       * (either paused or already pending pause).
+       **/
+      PauseFailed: AugmentedError<ApiType>;
+      /**
+       * Attempt to signal GRANDPA resume when the authority set isn't paused
+       * (either live or already pending resume).
+       **/
+      ResumeFailed: AugmentedError<ApiType>;
+      /**
+       * Cannot signal forced change so soon after last.
+       **/
+      TooSoon: AugmentedError<ApiType>;
     };
     identity: {
       /**
@@ -582,147 +503,24 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       WrongTimepoint: AugmentedError<ApiType>;
     };
-    parachainStaking: {
-      AlreadyActive: AugmentedError<ApiType>;
-      AlreadyDelegatedCandidate: AugmentedError<ApiType>;
-      AlreadyOffline: AugmentedError<ApiType>;
-      CandidateAlreadyLeaving: AugmentedError<ApiType>;
-      CandidateBondBelowMin: AugmentedError<ApiType>;
-      CandidateCannotLeaveYet: AugmentedError<ApiType>;
-      CandidateDNE: AugmentedError<ApiType>;
-      CandidateExists: AugmentedError<ApiType>;
-      CandidateNotLeaving: AugmentedError<ApiType>;
-      CannotDelegateIfLeaving: AugmentedError<ApiType>;
-      CannotDelegateLessThanLowestBottomWhenBottomIsFull: AugmentedError<ApiType>;
-      CannotGoOnlineIfLeaving: AugmentedError<ApiType>;
-      CannotSetBelowMin: AugmentedError<ApiType>;
-      DelegationBelowMin: AugmentedError<ApiType>;
-      DelegationDNE: AugmentedError<ApiType>;
-      DelegatorAlreadyLeaving: AugmentedError<ApiType>;
-      DelegatorBondBelowMin: AugmentedError<ApiType>;
-      DelegatorCannotLeaveYet: AugmentedError<ApiType>;
-      DelegatorDNE: AugmentedError<ApiType>;
-      DelegatorDNEInDelegatorSet: AugmentedError<ApiType>;
-      DelegatorDNEinTopNorBottom: AugmentedError<ApiType>;
-      DelegatorExists: AugmentedError<ApiType>;
-      DelegatorNotLeaving: AugmentedError<ApiType>;
-      ExceedMaxDelegationsPerDelegator: AugmentedError<ApiType>;
-      InsufficientBalance: AugmentedError<ApiType>;
-      InvalidSchedule: AugmentedError<ApiType>;
-      NoWritingSameValue: AugmentedError<ApiType>;
-      PendingCandidateRequestAlreadyExists: AugmentedError<ApiType>;
-      PendingCandidateRequestNotDueYet: AugmentedError<ApiType>;
-      PendingCandidateRequestsDNE: AugmentedError<ApiType>;
-      PendingDelegationRequestAlreadyExists: AugmentedError<ApiType>;
-      PendingDelegationRequestDNE: AugmentedError<ApiType>;
-      PendingDelegationRequestNotDueYet: AugmentedError<ApiType>;
-      RoundLengthMustBeAtLeastTotalSelectedCollators: AugmentedError<ApiType>;
-      TooLowCandidateCountToLeaveCandidates: AugmentedError<ApiType>;
-      TooLowCandidateCountWeightHintCancelLeaveCandidates: AugmentedError<ApiType>;
-      TooLowCandidateCountWeightHintJoinCandidates: AugmentedError<ApiType>;
-      TooLowCandidateDelegationCountToDelegate: AugmentedError<ApiType>;
-      TooLowCandidateDelegationCountToLeaveCandidates: AugmentedError<ApiType>;
-      TooLowDelegationCountToDelegate: AugmentedError<ApiType>;
-      TooLowDelegationCountToLeaveDelegators: AugmentedError<ApiType>;
-    };
-    parachainSystem: {
-      /**
-       * The inherent which supplies the host configuration did not run this block
-       **/
-      HostConfigurationNotAvailable: AugmentedError<ApiType>;
-      /**
-       * No code upgrade has been authorized.
-       **/
-      NothingAuthorized: AugmentedError<ApiType>;
-      /**
-       * No validation function upgrade is currently scheduled.
-       **/
-      NotScheduled: AugmentedError<ApiType>;
-      /**
-       * Attempt to upgrade validation function while existing upgrade pending
-       **/
-      OverlappingUpgrades: AugmentedError<ApiType>;
-      /**
-       * Polkadot currently prohibits this parachain from upgrading its validation function
-       **/
-      ProhibitedByPolkadot: AugmentedError<ApiType>;
-      /**
-       * The supplied validation function has compiled into a blob larger than Polkadot is
-       * willing to run
-       **/
-      TooBig: AugmentedError<ApiType>;
-      /**
-       * The given code upgrade has not been authorized.
-       **/
-      Unauthorized: AugmentedError<ApiType>;
-      /**
-       * The inherent which supplies the validation data did not run this block
-       **/
-      ValidationDataNotAvailable: AugmentedError<ApiType>;
-    };
-    polkadotXcm: {
-      /**
-       * The location is invalid since it already has a subscription from us.
-       **/
-      AlreadySubscribed: AugmentedError<ApiType>;
-      /**
-       * The given location could not be used (e.g. because it cannot be expressed in the
-       * desired version of XCM).
-       **/
-      BadLocation: AugmentedError<ApiType>;
-      /**
-       * The version of the `Versioned` value used is not able to be interpreted.
-       **/
-      BadVersion: AugmentedError<ApiType>;
-      /**
-       * Could not re-anchor the assets to declare the fees for the destination chain.
-       **/
-      CannotReanchor: AugmentedError<ApiType>;
-      /**
-       * The destination `MultiLocation` provided cannot be inverted.
-       **/
-      DestinationNotInvertible: AugmentedError<ApiType>;
-      /**
-       * The assets to be sent are empty.
-       **/
-      Empty: AugmentedError<ApiType>;
-      /**
-       * The message execution fails the filter.
-       **/
-      Filtered: AugmentedError<ApiType>;
-      /**
-       * Origin is invalid for sending.
-       **/
-      InvalidOrigin: AugmentedError<ApiType>;
-      /**
-       * The referenced subscription could not be found.
-       **/
-      NoSubscription: AugmentedError<ApiType>;
-      /**
-       * There was some other issue (i.e. not to do with routing) in sending the message. Perhaps
-       * a lack of space for buffering the message.
-       **/
-      SendFailure: AugmentedError<ApiType>;
-      /**
-       * Too many assets have been attempted for transfer.
-       **/
-      TooManyAssets: AugmentedError<ApiType>;
-      /**
-       * The desired destination was unreachable, generally because there is a no way of routing
-       * to it.
-       **/
-      Unreachable: AugmentedError<ApiType>;
-      /**
-       * The message's weight could not be determined.
-       **/
-      UnweighableMessage: AugmentedError<ApiType>;
-    };
     predictionMarkets: {
       /**
        * Someone is trying to call `dispute` with the same outcome that is currently
        * registered on-chain.
        **/
       CannotDisputeSameOutcome: AugmentedError<ApiType>;
+      /**
+       * Specified dispute_duration is greater than MaxDisputeDuration.
+       **/
+      DisputeDurationGreaterThanMaxDisputeDuration: AugmentedError<ApiType>;
+      /**
+       * Specified dispute_duration is smaller than MinDisputeDuration.
+       **/
+      DisputeDurationSmallerThanMinDisputeDuration: AugmentedError<ApiType>;
+      /**
+       * Specified grace_period is greater than MaxGracePeriod.
+       **/
+      GracePeriodGreaterThanMaxGracePeriod: AugmentedError<ApiType>;
       /**
        * Market account does not have enough funds to pay out.
        **/
@@ -736,7 +534,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InvalidMarketPeriod: AugmentedError<ApiType>;
       /**
-       * Catch-all error for invalid market status
+       * Catch-all error for invalid market status.
        **/
       InvalidMarketStatus: AugmentedError<ApiType>;
       /**
@@ -796,6 +594,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       MaxDisputesReached: AugmentedError<ApiType>;
       /**
+       * Can not report before market.deadlines.grace_period is ended.
+       **/
+      NotAllowedToReportYet: AugmentedError<ApiType>;
+      /**
        * Sender does not have enough balance to buy shares.
        **/
       NotEnoughBalance: AugmentedError<ApiType>;
@@ -807,6 +609,14 @@ declare module '@polkadot/api-base/types/errors' {
        * The user has no winning balance.
        **/
       NoWinningBalance: AugmentedError<ApiType>;
+      /**
+       * Specified oracle_duration is greater than MaxOracleDuration.
+       **/
+      OracleDurationGreaterThanMaxOracleDuration: AugmentedError<ApiType>;
+      /**
+       * Specified oracle_duration is smaller than MinOracleDuration.
+       **/
+      OracleDurationSmallerThanMinOracleDuration: AugmentedError<ApiType>;
       /**
        * Submitted outcome does not match market type.
        **/
@@ -823,6 +633,14 @@ declare module '@polkadot/api-base/types/errors' {
        * Too many categories for a categorical market.
        **/
       TooManyCategories: AugmentedError<ApiType>;
+      /**
+       * The post dispatch should never be None.
+       **/
+      UnexpectedNoneInPostInfo: AugmentedError<ApiType>;
+      /**
+       * The weights length has to be equal to the assets length.
+       **/
+      WeightsLenMustEqualAssetsLen: AugmentedError<ApiType>;
       /**
        * An amount was illegally specified as zero.
        **/
@@ -977,7 +795,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InsufficientBalance: AugmentedError<ApiType>;
       /**
-       * Liquidity provided to new Balancer pool is less than `MinLiquidity`.
+       * Liquidity provided to new CPMM pool is less than `MinLiquidity`.
        **/
       InsufficientLiquidity: AugmentedError<ApiType>;
       /**
@@ -1268,28 +1086,6 @@ declare module '@polkadot/api-base/types/errors' {
        * An index was out of bounds of the vesting schedules.
        **/
       ScheduleIndexOutOfBounds: AugmentedError<ApiType>;
-    };
-    xcmpQueue: {
-      /**
-       * Bad overweight index.
-       **/
-      BadOverweightIndex: AugmentedError<ApiType>;
-      /**
-       * Bad XCM data.
-       **/
-      BadXcm: AugmentedError<ApiType>;
-      /**
-       * Bad XCM origin.
-       **/
-      BadXcmOrigin: AugmentedError<ApiType>;
-      /**
-       * Failed to send XCM message.
-       **/
-      FailedToSend: AugmentedError<ApiType>;
-      /**
-       * Provided weight is possibly not enough to execute the message.
-       **/
-      WeightOverLimit: AugmentedError<ApiType>;
     };
   } // AugmentedErrors
 } // declare module

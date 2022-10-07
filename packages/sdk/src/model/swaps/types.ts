@@ -1,16 +1,16 @@
 import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
 import { MetadataStorage } from '../../meta'
 import { Observable } from 'rxjs'
-import { Context, RpcContext } from '../../context'
+import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
 import { PoolGetQuery } from './functions/getpool/types'
-import { PoolList, PoolsListQuery } from './functions/listpools/types'
+import { PoolList, PoolsListQuery, RpcPoolList } from './functions/listpools/types'
 import {
   PoolAssetPricesAtBlock,
   PoolPrices,
   PoolPricesQuery,
   PoolPricesStreamQuery,
 } from './functions/poolprices/types'
-import { Pool } from './pool'
+import { Pool, RpcPool } from './pool'
 
 export * from './functions/types'
 export * from './pool'
@@ -18,9 +18,15 @@ export * from './pool'
 /**
  * Zeitgeist Swaps model..
  */
-export type Swaps<C extends Context> = SwapsShared<C> & (C extends RpcContext<any> ? SwapsRpc<C> : {})
+export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = C extends
+  | IndexerContext
+  | FullContext<MS>
+  ? SwapsIndexed<C, MS>
+  : C extends RpcContext<MS>
+  ? SwapsRpc<C, MS>
+  : never
 
-export type SwapsShared<C extends Context> = {
+export type SwapsIndexed<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * List liquidity pools.
    * @param query PoolsListQuery<C>
@@ -43,20 +49,26 @@ export type SwapsShared<C extends Context> = {
   poolPrices: (query: PoolPricesQuery) => Promise<PoolPrices>
 }
 
-export type SwapsRpc<C extends RpcContext> = {
+export type SwapsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
+  /**
+   * List liquidity pools.
+   * @param query PoolsListQuery<C>
+   * @returns Promise<PoolList<C>>
+   */
+  listPools: (query: PoolsListQuery<C>) => Promise<RpcPoolList<C>>
   getPool: PFunctor<
-    SwapsShared<C>['getPool'],
+    (query: PoolGetQuery) => Promise<RpcPool>,
     {
       /**
        * Stream changes to a pool object.
        * @param query PoolGetQuery
        * @returns Observable<Pool<RpcContext>>
        */
-      $: (query: PoolGetQuery) => Observable<Pool<C>>
+      $: (query: PoolGetQuery) => Observable<RpcPool>
     }
   >
   poolPrices: PFunctor<
-    SwapsShared<C>['poolPrices'],
+    SwapsIndexed<C, MS>['poolPrices'],
     {
       /**
        * Will stream prices for a given pool tailed after a block or date.

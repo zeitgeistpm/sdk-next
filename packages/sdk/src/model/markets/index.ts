@@ -5,7 +5,7 @@ import { create } from './functions/create'
 import { get, get$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
 import { list } from './functions/list'
-import { CreateMarketParams, Markets, MarketsListQuery, MarketsRpc, MarketsShared } from './types'
+import { CreateMarketParams, Markets, MarketsIndexed, MarketsListQuery, MarketsRpc } from './types'
 
 export * from './types'
 
@@ -16,23 +16,25 @@ export * from './types'
  * @param context C
  * @returns Markets<C>
  */
-export const markets = <C extends Context>(ctx: C): Markets<C> => {
-  let base: MarketsShared<C> = {
+export const markets = <C extends Context<MS>, MS extends MetadataStorage>(
+  ctx: C,
+): Markets<C, MS> => {
+  let base: MarketsIndexed<C, MS> = {
     list: (query?: MarketsListQuery<C>) => list(ctx, query),
     get: (query: MarketGetQuery) => get(ctx, query),
   }
 
   const rpc = isRpcContext(ctx)
-    ? ({
+    ? {
         create: (params: CreateMarketParams<typeof ctx>) => create(ctx, params),
         get: pfunctor((query: MarketGetQuery) => get<typeof ctx>(ctx, query), {
           $: (query: MarketGetQuery) => get$<typeof ctx>(ctx, query),
         }),
-      } as MarketsRpc<typeof ctx>)
+      }
     : {}
 
   return {
     ...base,
     ...rpc,
-  } as Markets<C>
+  } as Markets<C, MS>
 }

@@ -1,7 +1,8 @@
 import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { MetadataStorage } from '../../meta'
 import { Observable } from 'rxjs'
-import { Context, RpcContext } from '../../context'
-import { Market } from '../types'
+import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
+import { Market, RpcMarket } from '../types'
 import { CreateMarketParams, CreateMarketResult } from './functions/create/types'
 import { MarketGetQuery } from './functions/get/types'
 import { MarketList, MarketsListQuery } from './functions/list/types'
@@ -14,10 +15,19 @@ export * from './market'
  * Zeitgeist Markets model.
  * Query and create markets.
  */
-export type Markets<C extends Context<any>> = MarketsShared<C> &
-  (C extends RpcContext<any> ? MarketsRpc<C> : {})
+export type Markets<C extends Context<MS>, MS extends MetadataStorage> = C extends IndexerContext
+  ? MarketsIndexed<C, MS>
+  : C extends RpcContext<MS>
+  ? MarketsRpc<C, MS>
+  : never
 
-export type MarketsShared<C extends Context<any>> = {
+// C extends IndexerContext | FullContext
+//   ? MarketsIndexed<C>
+//   : C extends RpcContext
+//   ? MarketsRpc<C>
+//   : never
+
+export type MarketsIndexed<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.
    */
@@ -28,20 +38,30 @@ export type MarketsShared<C extends Context<any>> = {
   get: (query: MarketGetQuery) => Promise<Market<C>>
 }
 
-export type MarketsRpc<C extends RpcContext<any>> = {
+export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
   /**
    * Create a market. Only available when connecting to rpc.
    */
   create: {
     <P extends CreateMarketParams<C>>(params: P): Promise<CreateMarketResult<C, P>>
   }
+  /**
+   * List markets. Stronger quering is enabled when connecting to indexer.
+   */
+  list: (query?: MarketsListQuery<C>) => Promise<MarketList<C>>
+  /**
+   * Get a market by its id.
+   */
   get: PFunctor<
-    MarketsShared<C>['get'],
+    /**
+     * Get a rpc market by its id.
+     */
+    (query: MarketGetQuery) => Promise<RpcMarket<C>>,
     {
       /**
        * Stream pool prices from the node
        */
-      $: (query: MarketGetQuery) => Observable<Market<C>>
+      $: (query: MarketGetQuery) => Observable<RpcMarket<C>>
     }
   >
 }

@@ -1,10 +1,10 @@
 import { assign } from '@zeitgeistpm/utility/dist/observable/operators'
-import { MetadataStorage } from './meta'
 import { from, merge, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'
+import { MetadataStorage } from './meta'
 import * as Model from './model'
-import { FullConfig, FullContext, Sdk, Context } from './types'
+import { Context, FullConfig, Sdk, FullContext, IndexerContext } from './types'
 
 /**
  * Initialize the indexer and rpc concurrently and emit partially applied intances of the Sdk.
@@ -12,14 +12,14 @@ import { FullConfig, FullContext, Sdk, Context } from './types'
  * @param config FullConfig
  * @returns Observable<Partial<Sdk<FullContext>>>
  */
-export const builder = <MS extends MetadataStorage>(config: FullConfig<MS>) => {
+export const builder = <MS extends MetadataStorage = MetadataStorage>(config: FullConfig<MS>) => {
   const context$ = merge(from(createIndexerContext(config)), from(createRpcContext(config)))
 
-  const sdk$: Observable<Partial<Sdk<Context<MS>, MS>>> = context$.pipe(
+  const sdk$: Observable<Sdk<Context<MS>, MS>> = context$.pipe(
     assign(),
     map(context => ({
       ...context,
-      model: Model.model<Context<MS>, MS>(context),
+      model: Model.model<Context<MS>, MS>(context as Context<MS>),
     })),
   )
 

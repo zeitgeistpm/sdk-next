@@ -81,18 +81,18 @@ const getFromRpc = async <C extends RpcContext>(
 export const getPool$ = <C extends RpcContext>(
   context: C,
   query: PoolGetQuery,
-): Observable<RpcPool> | typeof EMPTY => {
+): Observable<Pool<C>> | typeof EMPTY => {
   return new Observable(subscription => {
     getFromRpc(context, query).then(pool => {
       if (!pool) return subscription.complete()
-      subscription.next(pool)
+      subscription.next(pool as Pool<C>)
 
       const poolId = context.api.createType('u128', pool.poolId)
       const unsub = context.api.query.swaps.pools(pool.poolId, pool => {
         if (pool.isNone) return subscription.complete()
         let rpcPool = pool.unwrap() as RpcPool
         rpcPool.poolId = poolId.toNumber()
-        subscription.next(rpcPool)
+        subscription.next(rpcPool as Pool<C>)
       })
 
       return () => {

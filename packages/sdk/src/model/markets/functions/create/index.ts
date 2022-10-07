@@ -35,6 +35,7 @@ export const create = async <C extends RpcContext | FullContext, P extends Creat
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
       params.oracle,
       params.period,
+      params.deadlines,
       { Sha3_384: cid.cid.multihash.bytes },
       params.marketType,
       params.disputeMechanism,
@@ -46,6 +47,7 @@ export const create = async <C extends RpcContext | FullContext, P extends Creat
     tx = context.api.tx.predictionMarkets.createMarket(
       params.oracle,
       params.period,
+      params.deadlines,
       { Sha3_384: cid.cid.multihash.bytes },
       params.creationType,
       params.marketType,

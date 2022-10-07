@@ -1,6 +1,6 @@
 import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
 import { MetadataStorage } from '../../meta'
-import { Context, isRpcContext, RpcContext } from '../../context'
+import { Context, isRpcContext } from '../../context'
 import { getPool, getPool$ } from './functions/getpool'
 import { listPools } from './functions/listpools'
 import { poolPrices, rpcPoolPrices$ } from './functions/poolprices'
@@ -10,8 +10,7 @@ import {
   PoolPricesStreamQuery,
   PoolsListQuery,
   Swaps,
-  SwapsRpc,
-  SwapsShared,
+  SwapsIndexed,
 } from './types'
 
 export * from './types'
@@ -23,8 +22,8 @@ export * from './types'
  * @param ctx C
  * @returns Swaps<C>
  */
-export const swaps = <C extends Context>(ctx: C): Swaps<C> => {
-  let base: SwapsShared<C> = {
+export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(ctx: C): Swaps<C, MS> => {
+  let base: SwapsIndexed<C, MS> = {
     listPools: (query: PoolsListQuery<C>) => listPools(ctx, query),
     getPool: (query: PoolGetQuery) => getPool(ctx, query),
     poolPrices: (query: PoolPricesQuery) => poolPrices(ctx, query),
@@ -44,5 +43,5 @@ export const swaps = <C extends Context>(ctx: C): Swaps<C> => {
   return {
     ...base,
     ...rpc,
-  } as Swaps<C>
+  } as Swaps<C, MS>
 }

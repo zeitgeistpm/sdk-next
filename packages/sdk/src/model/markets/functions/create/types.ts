@@ -1,29 +1,26 @@
 import type {
-  ZeitgeistPrimitivesMarket,
   ZeitgeistPrimitivesMarketMarketCreation,
-  ZeitgeistPrimitivesPool,
   ZeitgeistPrimitivesPoolScoringRule,
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
-import { Storage } from '@zeitgeistpm/web3.storage'
-import { MarketTypeOf, MetadataStorage } from '../../../../meta'
-import { RpcMarket } from '../../market'
+import { RpcContext } from '../../../../context'
+import { MarketTypeOf } from '../../../../meta'
 import { RpcPool } from '../../../swaps/pool'
-import { RpcContext } from 'context'
+import { RpcMarket } from '../../market'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
  */
-export type CreateMarketParams<C extends RpcContext<any>> =
+export type CreateMarketParams<C extends RpcContext> =
   | CreateStandaloneMarketParams<C>
   | CreateMarketWithPoolParams<C>
 
 /**
  * Base parameters for creating a market.
  */
-export type CreateMarketBaseParams<C extends RpcContext<any>> = {
+export type CreateMarketBaseParams<C extends RpcContext> = {
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
@@ -56,6 +53,12 @@ export type CreateMarketBaseParams<C extends RpcContext<any>> = {
     | {
         Timestamp: [number, number]
       }
+
+  deadlines: {
+    gracePeriod: number
+    oracleDuration: number
+    disputeDuration: number
+  }
   /**
    * Market dispute mechanism.
    * @note Authorized is the only one available atm.

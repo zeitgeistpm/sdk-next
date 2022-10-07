@@ -1,15 +1,14 @@
 import type { ApiPromise, WsProvider } from '@polkadot/api'
 import type { ZeitgeistIndexer } from '@zeitgeistpm/indexer'
-import { Storage } from '@zeitgeistpm/web3.storage'
-import { MetadataStorage, StorageTypeOf } from '../meta/types'
+import { MetadataStorage } from '../meta/types'
 
 /**
  * Union type that can be either rpc, indexer or full context.
  */
 export type Context<MS extends MetadataStorage = MetadataStorage> =
-  | FullContext<MS>
-  | RpcContext<MS>
   | IndexerContext
+  | RpcContext<MS>
+  | FullContext<MS>
 
 /**
  * Zeitgeist SDK context with both rpc and indexer features enabled.
