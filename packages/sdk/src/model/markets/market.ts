@@ -40,11 +40,11 @@ export type RpcMarket<C extends RpcContext<MS>, MS extends MetadataStorage> = {
   /**
    * Fetch metadata from external storage(default IPFS).
    */
-  fetchMetadata: () => Promise<EitherInterface<Error, MarketTypeOf<C['storage']>>>
+  fetchMetadata: () => Promise<EitherInterface<Error, MarketTypeOf<C, MS>>>
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
-  saturate: () => Promise<EitherInterface<Error, IndexedBase & MarketTypeOf<C['storage']>>>
+  saturate: () => Promise<EitherInterface<Error, IndexedBase & MarketTypeOf<C, MS>>>
 } & ZeitgeistPrimitivesMarket
 
 /**

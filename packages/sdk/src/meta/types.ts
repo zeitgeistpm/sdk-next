@@ -3,6 +3,7 @@ import { CID } from 'ipfs-http-client'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { CommentMetadata } from './comment'
 import { MarketMetadata } from './market'
+import { RpcContext } from '../context'
 
 /**
  * Generic metadata storage type.
@@ -31,7 +32,9 @@ export interface MetadataStorage<
    * @generic K extends keyof this
    * @param key K
    */
-  of<T extends object, ID extends TaggedID<any>, K extends keyof this>(key: K): Storage<T, ID>
+  of<C extends RpcContext<any>, K extends keyof C['storage']>(
+    key: K,
+  ): Storage<StorageTypeOf<C['storage'][typeof key]>, StorageIdTypeOf<C['storage'][K]>>
 }
 
 export type TaggedID<T extends keyof MetadataStorage> = { __meta: T; cid: CID }
@@ -43,21 +46,23 @@ export type TaggedMetadata<T extends keyof MetadataStorage> = { __meta: T }
  * @generic MS extends MetadataStorage,
  * @generic K extends keyof MSS>
  */
-export type StorageTypeOf<S> = S extends Storage<infer T, infer ID> ? T : never
-export type StorageIdTypeOf<S> = S extends Storage<infer T, infer ID> ? ID : never
+export type StorageTypeOf<S extends Storage<any, any>> = S extends Storage<infer T, infer ID>
+  ? T
+  : never
+export type StorageIdTypeOf<S extends Storage<any, any>> = S extends Storage<infer T, infer ID>
+  ? ID
+  : never
 
 /**
  * Unpack the inner type of market storage.
  * @generic MS extends MetadataStorage
  */
-export type MarketTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS['markets']>
-export type MarketIdTypeOf<MS extends MetadataStorage> = StorageIdTypeOf<MS['markets']>
-
-/**
- * Unpack the inner type of comment storage.
- * @generic MS extends MetadataStorage
- */
-export type CommentTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS['comments']>
+export type MarketTypeOf<C extends RpcContext<MS>, MS extends MetadataStorage> = StorageTypeOf<
+  C['storage']['markets']
+>
+export type MarketIdTypeOf<C extends RpcContext<MS>, MS extends MetadataStorage> = StorageIdTypeOf<
+  C['storage']['markets']
+>
 
 export const createStorage = <
   M extends TaggedMetadata<'markets'> = MarketMetadata,

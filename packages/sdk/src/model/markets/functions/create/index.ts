@@ -6,9 +6,8 @@ import type { ISubmittableResult } from '@polkadot/types/types'
 import { signAndSend } from '@zeitgeistpm/rpc'
 import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import type { CID } from 'ipfs-http-client'
 import { FullContext, RpcContext } from '../../../../context'
-import { MarketTypeOf, MetadataStorage, TaggedID } from '../../../../meta'
+import { MetadataStorage, TaggedID } from '../../../../meta'
 import { rpcMarket } from '../../../../model/markets'
 import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
@@ -32,7 +31,7 @@ export const create = async <
 ): Promise<CreateMarketResult<C, MS, P>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
-  const storage = context.storage.of('markets')
+  const storage = context.storage.of<C, 'markets'>('markets')
   const cid = (await storage.put(params.metadata)).unright().unwrap()
 
   if (isWithPool(params)) {
@@ -129,7 +128,7 @@ const extraction =
 const deleteMetadata = Te.from(
   async (context: RpcContext | FullContext, cid: TaggedID<'markets'>) => {
     if (!context.storage) return
-    await context.storage.of('markets').del(cid)
+    await context.storage.of<RpcContext, 'markets'>('markets').del(cid)
   },
 )
 
