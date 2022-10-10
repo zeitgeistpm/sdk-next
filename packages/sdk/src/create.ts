@@ -61,6 +61,11 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
   )
 
   if (isFullConfig(config)) {
+    debug(
+      `Using rpc and indexer enabled sdk, indexed data will be prefered when indexer loads.`,
+      config,
+      'debug',
+    )
     return sdk(await createFullContext(config))
   } else if (isIndexerConfig(config)) {
     debug(
