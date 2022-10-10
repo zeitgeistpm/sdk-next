@@ -32,13 +32,20 @@ export interface MetadataStorage<
    * @generic K extends keyof this
    * @param key K
    */
-  of<C extends RpcContext<any>, K extends keyof C['storage']>(
-    key: K,
-  ): Storage<StorageTypeOf<C['storage'][typeof key]>, StorageIdTypeOf<C['storage'][K]>>
+  of<K extends keyof this>(key: K): Storage<StorageTypeOf<this[K]>, StorageIdTypeOf<this[K]>>
 }
 
-export type TaggedID<T extends keyof MetadataStorage> = { __meta: T; cid: CID }
+/**
+ * Create a tagged metadata storage object type.
+ * @generic T extends keyof MetadataStorage
+ */
 export type TaggedMetadata<T extends keyof MetadataStorage> = { __meta: T }
+
+/**
+ * Create a tagged metadata storage object id.
+ * @generic T extends keyof MetadataStorage
+ */
+export type TaggedID<T extends keyof MetadataStorage> = { __meta: T; cid: CID }
 
 /**
  * Type helper to extract the storage type at a given key in a MetadataStorage
@@ -46,24 +53,36 @@ export type TaggedMetadata<T extends keyof MetadataStorage> = { __meta: T }
  * @generic MS extends MetadataStorage,
  * @generic K extends keyof MSS>
  */
-export type StorageTypeOf<S extends Storage<any, any>> = S extends Storage<infer T, infer ID>
-  ? T
-  : never
-export type StorageIdTypeOf<S extends Storage<any, any>> = S extends Storage<infer T, infer ID>
-  ? ID
-  : never
+export type StorageTypeOf<S> = S extends Storage<infer T, infer ID> ? T : never
+
+/**
+ * Type helper to extract the storage id at a given key in a MetadataStorage
+ *
+ * @generic MS extends MetadataStorage,
+ * @generic K extends keyof MSS>
+ */
+export type StorageIdTypeOf<S> = S extends Storage<infer T, infer ID> ? ID : never
 
 /**
  * Unpack the inner type of market storage.
  * @generic MS extends MetadataStorage
  */
-export type MarketTypeOf<C extends RpcContext<MS>, MS extends MetadataStorage> = StorageTypeOf<
-  C['storage']['markets']
->
-export type MarketIdTypeOf<C extends RpcContext<MS>, MS extends MetadataStorage> = StorageIdTypeOf<
-  C['storage']['markets']
->
+export type MarketTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS['markets']>
 
+/**
+ * Unpack the inner type of market id.
+ * @generic MS extends MetadataStorage
+ */
+export type MarketIdTypeOf<MS extends MetadataStorage> = StorageIdTypeOf<MS['markets']>
+
+/**
+ * Utility for creating typed and tagged metadata storage.
+ *
+ * @generic M extends TaggedMetadata<'markets'> = MarketMetadata - market metadata
+ * @generic C extends TaggedMetadata<'comments'> = CommentMetadata - comment metadata
+ * @param storage Storage<any, any>
+ * @returns
+ */
 export const createStorage = <
   M extends TaggedMetadata<'markets'> = MarketMetadata,
   C extends TaggedMetadata<'comments'> = CommentMetadata,
@@ -74,23 +93,6 @@ export const createStorage = <
     markets: tagged('markets', storage),
     comments: tagged('comments', storage),
   } as MetadataStorage<M, C>)
-
-export const tagged = <T extends TaggedMetadata<any>>(
-  key: keyof MetadataStorage,
-  storage: Storage<T, CID>,
-) => {
-  return {
-    get: ({ cid }: TaggedID<any>) => storage.get(cid),
-    del: ({ cid }: TaggedID<any>) => storage.del(cid),
-    put: Te.from<TaggedID<any>, [any]>(async data => {
-      const cid = await storage.put(data)
-      return {
-        __meta: key,
-        cid: cid.unwrap(),
-      }
-    }),
-  } as Storage<any, TaggedID<any>>
-}
 
 /**
  * Create a sturatable metadata storage.
@@ -103,3 +105,26 @@ export const saturate = <MS extends MetadataStorage<any, any>>(storage: MS): MS 
   ...storage,
   of: key => storage[key] as any,
 })
+
+/**
+ * Utility to create a tagged metadata storage.
+ *
+ * @param key keyof MetadataStorage
+ * @param storage Storage<T, CID>
+ * @returns Storage<any, TaggedID<any>>
+ */
+export const tagged = <T extends TaggedMetadata<any>>(
+  key: keyof MetadataStorage,
+  storage: Storage<T, CID>,
+) =>
+  ({
+    get: ({ cid }: TaggedID<any>) => storage.get(cid),
+    del: ({ cid }: TaggedID<any>) => storage.del(cid),
+    put: Te.from<TaggedID<any>, [any]>(async data => {
+      const cid = await storage.put(data)
+      return {
+        __meta: key,
+        cid: cid.unwrap(),
+      }
+    }),
+  } as Storage<any, TaggedID<any>>)

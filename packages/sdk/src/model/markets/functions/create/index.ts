@@ -27,7 +27,7 @@ export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS exte
 ): Promise<CreateMarketResult<C, MS>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
-  const storage = context.storage.of<C, 'markets'>('markets')
+  const storage = context.storage.of('markets')
   const cid = (await storage.put(params.metadata)).unright().unwrap()
 
   if (isWithPool(params)) {
@@ -124,7 +124,7 @@ const extraction =
 const deleteMetadata = Te.from(
   async (context: RpcContext | FullContext, cid: TaggedID<'markets'>) => {
     if (!context.storage) return
-    await context.storage.of<RpcContext, 'markets'>('markets').del(cid)
+    await context.storage.of('markets').del(cid)
   },
 )
 

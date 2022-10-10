@@ -5,10 +5,9 @@ import type {
 import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
-import { Storage } from '@zeitgeistpm/web3.storage'
 import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage, StorageTypeOf } from '../../../../meta'
-import { Pool, RpcPool } from '../../../swaps/pool'
+import { Pool } from '../../../swaps/pool'
 import { RpcMarket } from '../../market'
 
 /**
@@ -29,7 +28,7 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
   /**
    * Metadata to store in external storage alongside the market.
    */
-  metadata: StorageTypeOf<MS['markets']>
+  metadata: MarketTypeOf<MS>
   /**
    * Type of market, categorical or scalar
    */
@@ -81,7 +80,7 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
  */
 export type CreateStandaloneMarketParams<
   C extends RpcContext<MS>,
-  MS extends MetadataStorage,
+  MS extends MetadataStorage = C['storage'],
 > = CreateMarketBaseParams<C, MS> & {
   /**
    * Market scoring rule.

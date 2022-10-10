@@ -4,9 +4,9 @@ import { from, scan, of } from 'rxjs'
 import { filter, switchMap } from 'rxjs/operators'
 
 async function main() {
-  const sdk = builder(batterystation())
+  const sdk$ = builder(batterystation())
 
-  const market$ = sdk.pipe(
+  const market$ = sdk$.pipe(
     switchMap(sdk => from(sdk.model.markets.get({ marketId: 0 }))),
     filter(isNotNull),
     switchMap(market =>

@@ -6,7 +6,7 @@ import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { MarketTypeOf, MetadataStorage } from '../../meta'
+import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../meta'
 import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
 import { MarketMetadata } from '../../meta/market'
 import { Data } from '../../primitives'
@@ -40,11 +40,11 @@ export type RpcMarket<C extends RpcContext<MS>, MS extends MetadataStorage> = {
   /**
    * Fetch metadata from external storage(default IPFS).
    */
-  fetchMetadata: () => Promise<EitherInterface<Error, MarketTypeOf<C, MS>>>
+  fetchMetadata: () => Promise<EitherInterface<Error, MarketTypeOf<MS>>>
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
-  saturate: () => Promise<EitherInterface<Error, IndexedBase & MarketTypeOf<C, MS>>>
+  saturate: () => Promise<EitherInterface<Error, IndexedBase & MarketTypeOf<MS>>>
 } & ZeitgeistPrimitivesMarket
 
 /**
@@ -71,8 +71,9 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
   rpcMarket.fetchMetadata = async () => {
     const hex = rpcMarket.metadata.toHex()
-    const cid = new CID('f0155' + hex.slice(2)) as any
-    return context.storage.of('markets').get({ __meta: 'markets', cid: cid }) as any
+    const cid = new CID('f0155' + hex.slice(2))
+    const id = { __meta: 'markets', cid: cid } as StorageIdTypeOf<MS['markets']>
+    return context.storage.of('markets').get(id) as any
   }
 
   rpcMarket.saturate = Te.from(async () => {
