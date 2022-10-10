@@ -1,4 +1,5 @@
 import { builder, isRpcData, isRpcSdk, mainnet } from '@zeitgeistpm/sdk'
+import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 import { from, of } from 'rxjs'
 import { filter, switchMap } from 'rxjs/operators'
 
@@ -20,7 +21,7 @@ async function main(marketId: number) {
         isRpcSdk(sdk) ? sdk.model.markets.get.$({ marketId }) : sdk.model.markets.get({ marketId }),
       ),
     ),
-    filter(<T>(value: T | null): value is T => value !== null),
+    filter(isNotNull),
     switchMap(market => from(isRpcData(market) ? market.saturateAndUnwrap() : of(market))),
   )
 
