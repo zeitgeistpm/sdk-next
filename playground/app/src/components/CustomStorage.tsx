@@ -112,7 +112,7 @@ const CustomStorage: React.FC = () => {
         swapFee: `${1000}`,
         weights: [`${baseWeight}`, `${baseWeight}`],
       },
-    } as CreateMarketWithPoolParams<typeof sdk>
+    } as CreateMarketWithPoolParams<typeof sdk.context>
 
     const response = await sdk.model.markets.create({
       ...params,
@@ -122,8 +122,8 @@ const CustomStorage: React.FC = () => {
       },
     })
 
-    const { market } = response.saturate().unright().unwrap()
-    const saturated = (await market.saturate()).unwrap()
+    const { market } = response.saturateAndUnwrap()
+    const saturated = await market.saturateAndUnwrap()
 
     console.log('created market', saturated)
   }

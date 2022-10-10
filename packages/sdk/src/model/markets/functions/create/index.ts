@@ -67,6 +67,7 @@ export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS exte
   return {
     raw: submittableResult,
     saturate: extraction(context, submittableResult, params),
+    saturateAndUnwrap: () => extraction(context, submittableResult, params)().unwrap(),
   }
 }
 

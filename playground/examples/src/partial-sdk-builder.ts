@@ -21,9 +21,7 @@ async function main(marketId: number) {
       ),
     ),
     filter(<T>(value: T | null): value is T => value !== null),
-    switchMap(market =>
-      from(isRpcData(market) ? market.saturate().then(m => m.unwrap()) : of(market)),
-    ),
+    switchMap(market => from(isRpcData(market) ? market.saturateAndUnwrap() : of(market))),
   )
 
   /**

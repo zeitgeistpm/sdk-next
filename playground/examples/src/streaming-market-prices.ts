@@ -10,11 +10,7 @@ async function main(marketId: number) {
    */
   const market$ = sdk.model.markets.get
     .$({ marketId })
-    .pipe(
-      switchMap(market =>
-        from(!isRpcData(market) ? market : market.saturate().then(market => market.unwrap())),
-      ),
-    )
+    .pipe(switchMap(market => from(!isRpcData(market) ? market : market.saturateAndUnwrap())))
 
   /**
    * Fetch pool prices stream for market.

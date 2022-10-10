@@ -44,6 +44,11 @@ export type RpcMarket<C extends RpcContext<MS>, MS extends MetadataStorage> = {
    * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
   saturate: () => Promise<EitherInterface<Error, IndexedBase & MarketTypeOf<MS>>>
+  /**
+   * Same as saturate, but will try to unwrap in the same go.
+   * @throws Error - if unwrap fails
+   */
+  saturateAndUnwrap: () => Promise<IndexedBase & MarketTypeOf<MS>>
 } & ZeitgeistPrimitivesMarket
 
 /**
@@ -105,6 +110,8 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       ...metadata.unright().unwrap(),
     }
   })
+
+  rpcMarket.saturateAndUnwrap = () => rpcMarket.saturate().then(market => market.unwrap())
 
   return rpcMarket
 }
