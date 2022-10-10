@@ -1,13 +1,4 @@
-import {} from '@polkadot/util'
-import {
-  batterystation,
-  batterystationRpc,
-  builder,
-  isRpcData,
-  isRpcSdk,
-  mainnet,
-  mainnetRpc,
-} from '@zeitgeistpm/sdk'
+import { builder, isRpcData, isRpcSdk, mainnet } from '@zeitgeistpm/sdk'
 import { from, of } from 'rxjs'
 import { filter, switchMap } from 'rxjs/operators'
 
@@ -24,12 +15,11 @@ async function main(marketId: number) {
    * If the market is from rpc we saturate it with metadata.
    */
   const market$ = sdk$.pipe(
-    switchMap(sdk => {
-      console.log(isRpcSdk(sdk) ? 'observing' : 'static')
-      return from(
+    switchMap(sdk =>
+      from(
         isRpcSdk(sdk) ? sdk.model.markets.get.$({ marketId }) : sdk.model.markets.get({ marketId }),
-      )
-    }),
+      ),
+    ),
     filter(<T>(value: T | null): value is T => value !== null),
     switchMap(market =>
       from(isRpcData(market) ? market.saturate().then(m => m.unwrap()) : of(market)),
