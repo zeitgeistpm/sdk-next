@@ -6,7 +6,7 @@ import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { RpcContext } from '../../../../context'
-import { MarketTypeOf, MetadataStorage, StorageTypeOf } from '../../../../meta'
+import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { Pool } from '../../../swaps/pool'
 import { RpcMarket } from '../../market'
 

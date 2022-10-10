@@ -16,6 +16,7 @@ import {
   isIndexerConfig,
   isRpcConfig,
   RpcConfig,
+  sdk,
   Sdk,
 } from './types'
 
@@ -63,19 +64,10 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
 
   if (isFullConfig<MS>(config)) {
     const [rpc, indexer] = await Promise.all([createRpcContext(config), createIndexerContext(config)])
-
-    const context: FullContext<MS> = {
+    return sdk<FullContext<MS>, MS>({
       ...rpc,
       ...indexer,
-    }
-
-    const model = Model.model<FullContext<MS>, MS>(context)
-
-    return {
-      ...context,
-      context,
-      model,
-    }
+    })
   } else if (isIndexerConfig<MS>(config)) {
     debug(
       `Using only indexer, no rpc methods or transactions on chain are available to the sdk.`,
@@ -83,23 +75,11 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
       'warn',
     )
     const context: IndexerContext = await createIndexerContext(config)
-    const model = Model.model<IndexerContext, MS>(context)
-
-    return {
-      ...context,
-      context,
-      model,
-    }
+    return sdk(context)
   } else {
     debug(`Using only rpc, querying data might be more limited and/or slower.`, config, 'warn')
     const context: RpcContext<MS> = await createRpcContext(config)
-    const model = Model.model<RpcContext<MS>, MS>(context)
-
-    return {
-      ...context,
-      context,
-      model,
-    }
+    return sdk(context)
   }
 }
 

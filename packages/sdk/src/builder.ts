@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'
 import { MetadataStorage } from './meta'
 import * as Model from './model'
-import { Context, FullConfig, Sdk, FullContext, IndexerContext } from './types'
+import { Context, FullConfig, Sdk, FullContext, IndexerContext, sdk } from './types'
 
 /**
  * Initialize the indexer and rpc concurrently and emit partially applied intances of the Sdk.
@@ -17,11 +17,7 @@ export const builder = <MS extends MetadataStorage = MetadataStorage>(config: Fu
 
   const sdk$: Observable<Sdk<Context<MS>, MS>> = context$.pipe(
     assign(),
-    map(context => ({
-      ...context,
-      context,
-      model: Model.model<Context<MS>, MS>(context as Context<MS>),
-    })),
+    map(context => sdk(context)),
   )
 
   return sdk$
