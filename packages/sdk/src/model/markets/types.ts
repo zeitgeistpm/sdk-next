@@ -1,4 +1,5 @@
-import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
+import { $, _ } from '@zeitgeistpm/utility/dist/hkts'
 import { MetadataStorage } from '../../meta'
 import { Observable } from 'rxjs'
 import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
@@ -23,12 +24,6 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = C exten
   ? MarketsRpc<C, MS>
   : never
 
-// C extends IndexerContext | FullContext
-//   ? MarketsIndexed<C>
-//   : C extends RpcContext
-//   ? MarketsRpc<C>
-//   : never
-
 export type MarketsIndexed<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.
@@ -42,19 +37,13 @@ export type MarketsIndexed<C extends Context<MS>, MS extends MetadataStorage> = 
 
 export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
   /**
-   * Create a market. Only available when connecting to rpc.
-   */
-  create: {
-    (params: CreateMarketParams<C, MS>): Promise<CreateMarketResult<C, MS>>
-  }
-  /**
    * List markets. Stronger quering is enabled when connecting to indexer.
    */
   list: (query?: MarketsListQuery<C>) => Promise<MarketList<C, MS>>
   /**
    * Get a market by its id.
    */
-  get: PFunctor<
+  get: PFunc<
     /**
      * Get a rpc market by its id.
      */
@@ -66,4 +55,10 @@ export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
       $: (query: MarketGetQuery) => Observable<Market<C, MS>>
     }
   >
+  /**
+   * Create a market. Only available when connecting to rpc.
+   */
+  create: {
+    (params: CreateMarketParams<C, MS>): Promise<CreateMarketResult<C, MS>>
+  }
 }

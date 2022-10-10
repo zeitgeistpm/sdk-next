@@ -4,7 +4,7 @@
  * @generic F extends (...args: any[]) => any - function to augment
  * @generic P - properties to augments function with.
  */
-export type PFunctor<F, P> = F extends (...args: any[]) => any ? F & P : never
+export type PFunc<F, P> = F extends (...args: any[]) => any ? F & P : never
 
 /**
  * Augment a function with properties.
@@ -15,5 +15,5 @@ export type PFunctor<F, P> = F extends (...args: any[]) => any ? F & P : never
  * @param props P
  * @returns Functor<F, P>
  */
-export const pfunctor = <F extends (...args: any[]) => any, P>(f: F, props: P): PFunctor<F, P> =>
-  Object.assign(f, props) as PFunctor<F, P>
+export const pfunc = <F extends (...args: any[]) => any, P>(f: F, props: P): PFunc<F, P> =>
+  Object.assign(f, props) as PFunc<F, P>

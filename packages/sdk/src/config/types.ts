@@ -39,6 +39,33 @@ export type IndexerConfig = BaseConfig & {
 }
 
 /**
+ * Force a config to indexer config.
+ *
+ * @param config FullConfig<MS>
+ * @returns IndexerConfig
+ */
+export const asIndexerConfig = <MS extends MetadataStorage>(
+  config: FullConfig<MS>,
+): IndexerConfig => ({
+  indexer: config.indexer,
+  connectionRetries: config.connectionRetries,
+  debug: config.debug,
+})
+
+/**
+ * Force a config to rpc config.
+ *
+ * @param config FullConfig<MS>
+ * @returns RpcConfig<MS>
+ */
+export const asRpcConfig = <MS extends MetadataStorage>(config: FullConfig<MS>): RpcConfig<MS> => ({
+  provider: config.provider,
+  storage: config.storage,
+  connectionRetries: config.connectionRetries,
+  debug: config.debug,
+})
+
+/**
  * Typeguard for full configs.
  *
  * @param config Config<MS>

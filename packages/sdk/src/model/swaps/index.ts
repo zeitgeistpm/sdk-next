@@ -1,4 +1,4 @@
-import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { MetadataStorage } from '../../meta'
 import { Context, isRpcContext } from '../../context'
 import { getPool, getPool$ } from './functions/getpool'
@@ -31,10 +31,10 @@ export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(ctx: C)
 
   const rpc = isRpcContext(ctx)
     ? {
-        getPool: pfunctor((query: PoolGetQuery) => getPool<typeof ctx>(ctx, query), {
+        getPool: pfunc((query: PoolGetQuery) => getPool<typeof ctx>(ctx, query), {
           $: (query: PoolGetQuery) => getPool$(ctx, query),
         }),
-        poolPrices: pfunctor((query: PoolPricesQuery) => poolPrices<typeof ctx>(ctx, query), {
+        poolPrices: pfunc((query: PoolPricesQuery) => poolPrices<typeof ctx>(ctx, query), {
           $: (query: PoolPricesStreamQuery) => rpcPoolPrices$(ctx, query),
         }),
       }

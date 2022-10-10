@@ -1,4 +1,4 @@
-import { pfunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { MetadataStorage } from '../../meta'
 import { Context, isRpcContext, RpcContext } from '../../context'
 import { create } from './functions/create'
@@ -27,7 +27,7 @@ export const markets = <C extends Context<MS>, MS extends MetadataStorage>(
   const rpc = isRpcContext<MS>(ctx)
     ? {
         create: (params: CreateMarketParams<typeof ctx, MS>) => create(ctx, params),
-        get: pfunctor((query: MarketGetQuery) => get<typeof ctx, MS>(ctx, query), {
+        get: pfunc((query: MarketGetQuery) => get<typeof ctx, MS>(ctx, query), {
           $: (query: MarketGetQuery) => get$<typeof ctx, MS>(ctx, query),
         }),
       }

@@ -1,4 +1,4 @@
-import { PFunctor } from '@zeitgeistpm/utility/dist/pfunctor'
+import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { MetadataStorage } from '../../meta'
 import { Observable } from 'rxjs'
 import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
@@ -56,7 +56,7 @@ export type SwapsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
    * @returns Promise<PoolList<C>>
    */
   listPools: (query: PoolsListQuery<C>) => Promise<RpcPoolList<C>>
-  getPool: PFunctor<
+  getPool: PFunc<
     (query: PoolGetQuery) => Promise<RpcPool>,
     {
       /**
@@ -67,8 +67,8 @@ export type SwapsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
       $: (query: PoolGetQuery) => Observable<RpcPool>
     }
   >
-  poolPrices: PFunctor<
-    SwapsIndexed<C, MS>['poolPrices'],
+  poolPrices: PFunc<
+    (query: PoolPricesQuery) => Promise<PoolPrices>,
     {
       /**
        * Will stream prices for a given pool tailed after a block or date.
