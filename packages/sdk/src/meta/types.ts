@@ -1,9 +1,8 @@
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { Storage } from '@zeitgeistpm/web3.storage'
 import { CID } from 'ipfs-http-client'
-import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { CommentMetadata } from './comment'
 import { MarketMetadata } from './market'
-import { RpcContext } from '../context'
 
 /**
  * Generic metadata storage type.
