@@ -3,11 +3,9 @@ import * as Indexer from '@zeitgeistpm/indexer'
 import { options } from '@zeitgeistpm/rpc/dist'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import polly from 'polly-js'
-import { isKnownPreset } from './config/known'
 import type { FullContext, IndexerContext, RpcContext } from './context'
 import { debug } from './debug'
 import { MetadataStorage, saturate } from './meta'
-import * as Model from './model'
 import {
   Config,
   FullConfig,
@@ -55,31 +53,41 @@ export async function create<MS extends MetadataStorage<any, any>>(
 ): Promise<Sdk<IndexerContext, MS>>
 export async function create<MS extends MetadataStorage<any, any>>(config: Config<MS>) {
   assert(
-    isFullConfig<MS>(config) || isRpcConfig<MS>(config) || isIndexerConfig<MS>(config),
+    isFullConfig(config) || isRpcConfig(config) || isIndexerConfig(config),
     () =>
       new Error(
         `Initialization error. Config needs to specify at least a valid indexer option or api rpc option.`,
       ),
   )
 
-  if (isFullConfig<MS>(config)) {
-    const [rpc, indexer] = await Promise.all([createRpcContext(config), createIndexerContext(config)])
-    return sdk<FullContext<MS>, MS>({
-      ...rpc,
-      ...indexer,
-    })
-  } else if (isIndexerConfig<MS>(config)) {
+  if (isFullConfig(config)) {
+    return sdk(await createFullContext(config))
+  } else if (isIndexerConfig(config)) {
     debug(
       `Using only indexer, no rpc methods or transactions on chain are available to the sdk.`,
       config,
       'warn',
     )
-    const context: IndexerContext = await createIndexerContext(config)
-    return sdk(context)
+    return sdk(await createIndexerContext(config))
   } else {
     debug(`Using only rpc, querying data might be more limited and/or slower.`, config, 'warn')
-    const context: RpcContext<MS> = await createRpcContext(config)
-    return sdk(context)
+    return sdk(await createRpcContext(config))
+  }
+}
+
+/**
+ * Create a full context with both rpc and indexer capabilities.
+ *
+ * @param config RpcConfig
+ * @returns Promise<FullContext>
+ */
+export const createFullContext = async <MS extends MetadataStorage<any, any>>(
+  config: FullConfig<MS>,
+): Promise<FullContext<MS>> => {
+  const [rpc, indexer] = await Promise.all([createRpcContext(config), createIndexerContext(config)])
+  return {
+    ...rpc,
+    ...indexer,
   }
 }
 
@@ -137,7 +145,7 @@ export const createIndexerContext = async (config: IndexerConfig): Promise<Index
   const indexer = Indexer.create({ uri: config.indexer })
 
   const pinged = await polly()
-    .logger(err => {
+    .logger(_ => {
       debug(`indexer connection failed, retrying..`, config, 'warn')
     })
     .waitAndRetry(config.connectionRetries ?? 8)

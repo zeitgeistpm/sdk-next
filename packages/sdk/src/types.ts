@@ -90,8 +90,8 @@ export const isIndexedSdk = <MS extends MetadataStorage>(
 export const isRpcSdk = <MS extends MetadataStorage>(sdk: unknown): sdk is Sdk<RpcContext<MS>, MS> =>
   Boolean(!isNull(sdk) && isRpcContext<MS>(sdk))
 
-const s = {} as Sdk<Context>
+// const s = {} as Sdk<Context>
 
-if (isRpcSdk(s)) {
-  s
-}
+// if (isRpcSdk(s)) {
+//   s
+// }
