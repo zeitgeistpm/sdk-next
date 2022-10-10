@@ -1,4 +1,4 @@
-import { batterystation, batterystationRpc, create, isRpcData } from '@zeitgeistpm/sdk'
+import { batterystationRpc, create, isRpcData } from '@zeitgeistpm/sdk'
 import { from } from 'rxjs'
 import { switchMap, withLatestFrom } from 'rxjs/operators'
 

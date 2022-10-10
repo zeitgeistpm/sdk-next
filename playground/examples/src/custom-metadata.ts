@@ -23,7 +23,7 @@ async function main() {
       foo: 'bar',
       descriptions: 'some description',
     },
-  } as CreateStandaloneMarketParams<typeof sdk>
+  } as CreateStandaloneMarketParams<typeof sdk.context>
 
   const response = await sdk.model.markets.create(params)
 

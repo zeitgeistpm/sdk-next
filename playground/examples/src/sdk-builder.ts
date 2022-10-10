@@ -1,6 +1,6 @@
 import {} from '@polkadot/util'
 import { batterystation, builder, isRpcData } from '@zeitgeistpm/sdk'
-import { from, scan, of } from 'rxjs'
+import { from, of } from 'rxjs'
 import { filter, switchMap } from 'rxjs/operators'
 
 async function main() {
