@@ -21,14 +21,10 @@ import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } 
  * @param params P
  * @returns void
  */
-export const create = async <
-  C extends RpcContext<MS> | FullContext<MS>,
-  MS extends MetadataStorage,
-  P extends CreateMarketParams<C>,
->(
+export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS extends MetadataStorage>(
   context: C,
-  params: P,
-): Promise<CreateMarketResult<C, MS, P>> => {
+  params: CreateMarketParams<C, MS>,
+): Promise<CreateMarketResult<C, MS>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
   const storage = context.storage.of<C, 'markets'>('markets')
@@ -88,11 +84,11 @@ const extraction =
   <C extends RpcContext<MS> | FullContext<MS>, MS extends MetadataStorage>(
     context: C,
     result: ISubmittableResult,
-    params: CreateMarketParams<C>,
+    params: CreateMarketParams<C, MS>,
   ) =>
   () =>
     either(
-      tryCatch<Error, CreateMarketData<C, MS, CreateMarketParams<C>>>(() => {
+      tryCatch<Error, CreateMarketData<C, MS, CreateMarketParams<C, MS>>>(() => {
         const [marketId, market] = extractMarketCreationEventForAddress(
           context.api,
           result.events,
@@ -113,7 +109,7 @@ const extraction =
         return {
           market: rpcMarket<C, MS>(context, marketId, market),
           pool,
-        } as CreateMarketData<C, MS, CreateMarketParams<C>>
+        } as CreateMarketData<C, MS, CreateMarketParams<C, MS>>
       }),
     )
 

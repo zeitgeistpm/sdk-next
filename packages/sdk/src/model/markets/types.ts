@@ -45,7 +45,7 @@ export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
    * Create a market. Only available when connecting to rpc.
    */
   create: {
-    (params: CreateMarketParams<C>): Promise<CreateMarketResult<C>>
+    (params: CreateMarketParams<C, MS>): Promise<CreateMarketResult<C, MS>>
   }
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.

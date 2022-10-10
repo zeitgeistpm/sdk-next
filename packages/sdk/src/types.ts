@@ -32,24 +32,27 @@ export type Sdk<C extends Context<MS>, MS extends MetadataStorage = MetadataStor
  * @param sdk
  * @returns sdk is Sdk<FullContext>
  */
-export const isFullSdk = <MS extends MetadataStorage>(sdk: any): sdk is Sdk<FullContext<MS>, MS> =>
-  isIndexedSdk(sdk) && isRpcSdk(sdk)
+export const isFullSdk = <MS extends MetadataStorage>(
+  sdk: Context<MS>,
+): sdk is Sdk<FullContext<MS>, MS> => isIndexedSdk(sdk) && isRpcSdk(sdk)
 
 /**
  * Typeguard for indexer sdk
  * @param sdk
  * @returns sdk is Sdk<IndexerContext>
  */
-export const isIndexedSdk = <MS extends MetadataStorage>(sdk: any): sdk is Sdk<IndexerContext, MS> =>
-  !isNull(sdk) && isIndexerContext(sdk)
+export const isIndexedSdk = <MS extends MetadataStorage>(
+  sdk: Context<MS>,
+): sdk is Sdk<IndexerContext, MS> => !isNull(sdk) && isIndexerContext(sdk)
 
 /**
  * Typeguard for rpc sdk
  * @param sdk
  * @returns sdk is Sdk<RpcContext>
  */
-export const isRpcSdk = <MS extends MetadataStorage>(sdk: unknown): sdk is Sdk<RpcContext<MS>, MS> =>
-  Boolean(!isNull(sdk) && isRpcContext<MS>(sdk))
+export const isRpcSdk = <MS extends MetadataStorage>(
+  sdk: Context<MS>,
+): sdk is Sdk<RpcContext<MS>, MS> => Boolean(!isNull(sdk) && isRpcContext<MS>(sdk))
 
 const c = {} as Sdk<Context<MetadataStorage>, MetadataStorage>
 
