@@ -56,5 +56,5 @@ export const isRpcContext = <MS extends MetadataStorage>(ctx?: unknown): ctx is 
  * @param ctx unknown
  * @returns config is IndexerContext
  */
-export const isIndexerContext = (ctx?: unknown): ctx is IndexerContext =>
+export const isIndexerContext = <MS extends MetadataStorage>(ctx?: unknown): ctx is IndexerContext =>
   Boolean(ctx && typeof ctx === 'object' && ctx !== null && 'indexer' in ctx)

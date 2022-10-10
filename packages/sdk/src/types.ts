@@ -18,6 +18,7 @@ export * from './model/types'
  * Top level Zeitgeist SDK type.
  */
 export type Sdk<C extends Context<MS>, MS extends MetadataStorage = MetadataStorage> = C & {
+  readonly context: C
   /**
    * Enriched zeitgeist models with features for qyerying data on chain and indexer,
    * and for creating transaction flows with for example richer validation to ensure that
@@ -53,5 +54,6 @@ export const isRpcSdk = <MS extends MetadataStorage>(sdk: unknown): sdk is Sdk<R
 const c = {} as Sdk<Context<MetadataStorage>, MetadataStorage>
 
 if (isRpcSdk(c)) {
-  c
+  c.model.swaps
+  c.model.markets
 }

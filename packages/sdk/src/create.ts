@@ -73,6 +73,7 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
 
     return {
       ...context,
+      context,
       model,
     }
   } else if (isIndexerConfig<MS>(config)) {
@@ -86,6 +87,7 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
 
     return {
       ...context,
+      context,
       model,
     }
   } else {
@@ -95,6 +97,7 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
 
     return {
       ...context,
+      context,
       model,
     }
   }

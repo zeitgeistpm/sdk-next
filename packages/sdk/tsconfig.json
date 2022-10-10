@@ -7,6 +7,7 @@
       "baseUrl": "./src",
       "declarationDir": "./dist",
       "outDir": "./dist",
+      "noStrictGenericChecks": false
     },
     "watchOptions": {
       // Use native file system events for files and directories

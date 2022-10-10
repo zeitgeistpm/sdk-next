@@ -8,7 +8,7 @@ import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/uti
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { CID } from 'ipfs-http-client'
 import { FullContext, RpcContext } from '../../../../context'
-import { MetadataStorage, TaggedID } from '../../../../meta'
+import { MarketTypeOf, MetadataStorage, TaggedID } from '../../../../meta'
 import { rpcMarket } from '../../../../model/markets'
 import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
 import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
@@ -22,10 +22,14 @@ import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } 
  * @param params P
  * @returns void
  */
-export const create = async <C extends RpcContext | FullContext, P extends CreateMarketParams<C>>(
+export const create = async <
+  C extends RpcContext<MS> | FullContext<MS>,
+  MS extends MetadataStorage,
+  P extends CreateMarketParams<C>,
+>(
   context: C,
   params: P,
-): Promise<CreateMarketResult<C, P>> => {
+): Promise<CreateMarketResult<C, MS, P>> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
   const storage = context.storage.of('markets')
@@ -82,14 +86,14 @@ export const create = async <C extends RpcContext | FullContext, P extends Creat
  * @returns () => EitherInterface<Error, CreateMarketData<P>>
  */
 const extraction =
-  <C extends RpcContext | FullContext, P extends CreateMarketParams<C>>(
+  <C extends RpcContext<MS> | FullContext<MS>, MS extends MetadataStorage>(
     context: C,
     result: ISubmittableResult,
-    params: P,
+    params: CreateMarketParams<C>,
   ) =>
   () =>
     either(
-      tryCatch<Error, CreateMarketData<C, P>>(() => {
+      tryCatch<Error, CreateMarketData<C, MS, CreateMarketParams<C>>>(() => {
         const [marketId, market] = extractMarketCreationEventForAddress(
           context.api,
           result.events,
@@ -108,9 +112,9 @@ const extraction =
         }
 
         return {
-          market: rpcMarket<C>(context, marketId, market),
+          market: rpcMarket<C, MS>(context, marketId, market),
           pool,
-        } as CreateMarketData<C, P>
+        } as CreateMarketData<C, MS, CreateMarketParams<C>>
       }),
     )
 

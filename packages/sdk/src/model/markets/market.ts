@@ -7,7 +7,7 @@ import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
 import { MarketTypeOf, MetadataStorage } from '../../meta'
-import { Context, IndexerContext, RpcContext } from '../../context'
+import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
 import { MarketMetadata } from '../../meta/market'
 import { Data } from '../../primitives'
 import { IndexerConfig } from '../../types'
@@ -18,10 +18,10 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<C extends Context> = Data<
+export type Market<C extends Context<MS>, MS extends MetadataStorage> = Data<
   C,
-  C extends RpcContext ? RpcMarket<C> : never,
-  C extends IndexerContext ? IndexedMarket : never
+  C extends RpcContext<MS> ? RpcMarket<C, MS> : never,
+  C extends IndexerContext | FullContext<MS> ? IndexedMarket : never
 >
 
 /**
@@ -32,7 +32,7 @@ export type IndexedMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type RpcMarket<C extends RpcContext> = {
+export type RpcMarket<C extends RpcContext<MS>, MS extends MetadataStorage> = {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -60,26 +60,26 @@ export type IndexedBase = Omit<IndexedMarket, keyof MarketMetadata>
  * @param market ZeitgeistPrimitivesMarket
  * @returns AugmentedAugmentedRpcMarket
  */
-export const rpcMarket = <C extends RpcContext>(
+export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   id: u128 | number,
   market: ZeitgeistPrimitivesMarket,
-): Market<C> => {
-  let rpcMarket = market as Market<C>
+): Market<C, MS> => {
+  let rpcMarket = market as Market<C, MS>
 
   rpcMarket.marketId = isNumber(id) ? id : id.toNumber()
 
   rpcMarket.fetchMetadata = async () => {
     const hex = rpcMarket.metadata.toHex()
     const cid = new CID('f0155' + hex.slice(2)) as any
-    return context.storage.of('markets').get({ __meta: 'markets', cid: cid })
+    return context.storage.of('markets').get({ __meta: 'markets', cid: cid }) as any
   }
 
   rpcMarket.saturate = Te.from(async () => {
     const [metadata, poolId, end] = await Promise.all([
       rpcMarket.fetchMetadata(),
       context.api.query.marketCommons.marketPool(id),
-      projectEndTimestamp(context.api, rpcMarket),
+      projectEndTimestamp<C, MS>(context.api, rpcMarket),
     ])
 
     const base: IndexedBase = {
@@ -116,7 +116,7 @@ export const rpcMarket = <C extends RpcContext>(
  * @param entry [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>]
  * @returns AugmentedAugmentedRpcMarketRpcMarket
  */
-export const fromEntry = <C extends RpcContext>(
+export const fromEntry = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   [
     {
@@ -124,7 +124,7 @@ export const fromEntry = <C extends RpcContext>(
     },
     market,
   ]: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>],
-): RpcMarket<C> => {
+): RpcMarket<C, MS> => {
   return rpcMarket(context, marketId, market.unwrap())
 }
 
@@ -138,9 +138,9 @@ export const fromEntry = <C extends RpcContext>(
  * @param market AugmentedRpcMarket
  * @returns Promise<number>
  */
-export const projectEndTimestamp = async <C extends RpcContext>(
+export const projectEndTimestamp = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   api: ApiPromise,
-  market: RpcMarket<C>,
+  market: RpcMarket<C, MS>,
 ): Promise<number> => {
   if (market.period.isTimestamp) {
     return Number(market.period.asTimestamp[1].toHuman())

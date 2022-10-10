@@ -6,21 +6,25 @@ import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { RpcContext } from '../../../../context'
-import { MarketTypeOf } from '../../../../meta'
-import { RpcPool } from '../../../swaps/pool'
+import { MarketTypeOf, MetadataStorage } from '../../../../meta'
+import { Pool, RpcPool } from '../../../swaps/pool'
 import { RpcMarket } from '../../market'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
  */
-export type CreateMarketParams<C extends RpcContext> =
-  | CreateStandaloneMarketParams<C>
-  | CreateMarketWithPoolParams<C>
+export type CreateMarketParams<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+> = CreateStandaloneMarketParams<C, MS> | CreateMarketWithPoolParams<C, MS>
 
 /**
  * Base parameters for creating a market.
  */
-export type CreateMarketBaseParams<C extends RpcContext> = {
+export type CreateMarketBaseParams<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+> = {
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
@@ -78,7 +82,10 @@ export type CreateMarketBaseParams<C extends RpcContext> = {
 /**
  * Parameters for creating a market without a pool
  */
-export type CreateStandaloneMarketParams<C extends RpcContext> = CreateMarketBaseParams<C> & {
+export type CreateStandaloneMarketParams<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+> = CreateMarketBaseParams<C, MS> & {
   /**
    * Market scoring rule.
    *
@@ -95,7 +102,10 @@ export type CreateStandaloneMarketParams<C extends RpcContext> = CreateMarketBas
 /**
  * Parameters for creating a market with a pool.
  */
-export type CreateMarketWithPoolParams<C extends RpcContext> = CreateMarketBaseParams<C> & {
+export type CreateMarketWithPoolParams<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage = C['storage'],
+> = CreateMarketBaseParams<C, MS> & {
   pool: {
     /**
      * The fee to swap in and out of the pool.
@@ -130,7 +140,11 @@ export const isWithPool = <C extends RpcContext>(
  *
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
-export type CreateMarketResult<C extends RpcContext, P = CreateMarketParams<C>> = {
+export type CreateMarketResult<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage,
+  P extends CreateMarketParams<C>,
+> = {
   raw: ISubmittableResult
   /**
    * Lazy function to saturate response with created Market and Pool.
@@ -142,7 +156,7 @@ export type CreateMarketResult<C extends RpcContext, P = CreateMarketParams<C>> 
    *
    * @returns EitherInterface<Error, CreateMarketData<P>>
    */
-  saturate: () => EitherInterface<Error, CreateMarketData<C, P>>
+  saturate: () => EitherInterface<Error, CreateMarketData<C, MS, P>>
 }
 
 /**
@@ -150,22 +164,14 @@ export type CreateMarketResult<C extends RpcContext, P = CreateMarketParams<C>> 
  *
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
-export type CreateMarketData<C extends RpcContext, P = CreateMarketParams<C>> = {
+export type CreateMarketData<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage,
+  P extends CreateMarketParams<C>,
+> = {
   /**
    * The market created by the extrinsic.
    */
-  market: RpcMarket<C>
-} & (P extends CreateMarketWithPoolParams<C>
-  ? {
-      /**
-       * The pool created for the market by the extrinsic.
-       */
-      pool: RpcPool
-    }
-  : {
-      /**
-       * Pool is not created without pool parameters passed to the create function
-       * @deprecated
-       */
-      pool: undefined
-    })
+  market: RpcMarket<C, MS>
+  pool: P extends CreateMarketWithPoolParams<C> ? Pool<C> : undefined
+}

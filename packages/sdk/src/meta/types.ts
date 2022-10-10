@@ -31,9 +31,7 @@ export interface MetadataStorage<
    * @generic K extends keyof this
    * @param key K
    */
-  of<K extends keyof this>(
-    key: K,
-  ): this[K] extends Storage<infer T, infer ID> ? Storage<T, ID> : never
+  of<T extends object, ID extends TaggedID<any>, K extends keyof this>(key: K): Storage<T, ID>
 }
 
 export type TaggedID<T extends keyof MetadataStorage> = { __meta: T; cid: CID }
@@ -46,12 +44,14 @@ export type TaggedMetadata<T extends keyof MetadataStorage> = { __meta: T }
  * @generic K extends keyof MSS>
  */
 export type StorageTypeOf<S> = S extends Storage<infer T, infer ID> ? T : never
+export type StorageIdTypeOf<S> = S extends Storage<infer T, infer ID> ? ID : never
 
 /**
  * Unpack the inner type of market storage.
  * @generic MS extends MetadataStorage
  */
 export type MarketTypeOf<MS extends MetadataStorage> = StorageTypeOf<MS['markets']>
+export type MarketIdTypeOf<MS extends MetadataStorage> = StorageIdTypeOf<MS['markets']>
 
 /**
  * Unpack the inner type of comment storage.

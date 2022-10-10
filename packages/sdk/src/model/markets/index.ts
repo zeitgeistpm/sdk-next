@@ -20,15 +20,15 @@ export const markets = <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
 ): Markets<C, MS> => {
   let base: MarketsIndexed<C, MS> = {
-    list: (query?: MarketsListQuery<C>) => list(ctx, query),
-    get: (query: MarketGetQuery) => get(ctx, query),
+    list: (query?: MarketsListQuery<C>) => list<typeof ctx, MS>(ctx, query),
+    get: (query: MarketGetQuery) => get<typeof ctx, MS>(ctx, query),
   }
 
-  const rpc = isRpcContext(ctx)
+  const rpc = isRpcContext<MS>(ctx)
     ? {
         create: (params: CreateMarketParams<typeof ctx>) => create(ctx, params),
-        get: pfunctor((query: MarketGetQuery) => get<typeof ctx>(ctx, query), {
-          $: (query: MarketGetQuery) => get$<typeof ctx>(ctx, query),
+        get: pfunctor((query: MarketGetQuery) => get<typeof ctx, MS>(ctx, query), {
+          $: (query: MarketGetQuery) => get$<typeof ctx, MS>(ctx, query),
         }),
       }
     : {}

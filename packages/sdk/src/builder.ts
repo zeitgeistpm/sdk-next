@@ -19,6 +19,7 @@ export const builder = <MS extends MetadataStorage = MetadataStorage>(config: Fu
     assign(),
     map(context => ({
       ...context,
+      context,
       model: Model.model<Context<MS>, MS>(context as Context<MS>),
     })),
   )

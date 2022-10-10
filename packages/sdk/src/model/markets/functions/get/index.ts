@@ -4,6 +4,7 @@ import {
   IndexerContext,
   isFullContext,
   isIndexerContext,
+  isRpcContext,
   RpcContext,
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
@@ -20,43 +21,45 @@ import { MarketGetQuery } from './types'
  * @param query MarketQuery
  * @returns Promise<Market<C>>
  */
-export const get = async <C extends Context>(
+export const get = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
-): Promise<Market<C>> => {
+): Promise<Market<C, MS> | null> => {
   const data =
-    isFullContext(context) || isIndexerContext(context)
-      ? await getFromIndexer(context, query)
-      : await getFromRpc(context, query)
+    isFullContext<MS>(context) || isIndexerContext<MS>(context)
+      ? await getFromIndexer<typeof context, MS>(context, query)
+      : isRpcContext<MS>(context)
+      ? await getFromRpc<typeof context, MS>(context, query)
+      : null
 
-  return data as Market<C>
+  return data
 }
 
 /**
  * Concrete get function for indexer context
  * @private
  */
-const getFromIndexer = async (
-  context: IndexerContext,
+const getFromIndexer = async <C extends IndexerContext, MS extends MetadataStorage>(
+  context: C,
   query: MarketGetQuery,
-): Promise<IndexedMarket> => {
+): Promise<Market<C, MS> | null> => {
   const {
     markets: [market],
   } = await context.indexer.markets({ where: { marketId_eq: query.marketId } })
-  return market
+  return market as Market<C, MS>
 }
 
 /**
  * Concrete get function for rpc context
  * @private
  */
-const getFromRpc = async <C extends RpcContext>(
+const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
-): Promise<Market<C> | null> => {
+): Promise<Market<C, MS> | null> => {
   const market = await context.api.query.marketCommons.markets(query.marketId)
   if (!market.isSome) return null
-  return rpcMarket<C>(context, query.marketId, market.unwrap())
+  return rpcMarket<C, MS>(context, query.marketId, market.unwrap())
 }
 
 /**
@@ -66,16 +69,16 @@ const getFromRpc = async <C extends RpcContext>(
  * @param query MarketGetQuery
  * @returns Observable<Market<RpcContext, MS>>
  */
-export const get$ = <C extends RpcContext>(
+export const get$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
-): Observable<Market<C>> => {
+): Observable<Market<C, MS>> => {
   return new Observable(subscription => {
     const unsub = context.api.query.marketCommons.markets(query.marketId, market => {
       if (!market.isSome) {
         return subscription.unsubscribe()
       }
-      subscription.next(rpcMarket<C>(context, query.marketId, market.unwrap()))
+      subscription.next(rpcMarket<C, MS>(context, query.marketId, market.unwrap()))
     })
 
     return async () => {
