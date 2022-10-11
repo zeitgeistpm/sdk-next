@@ -10,7 +10,6 @@ async function main(marketId: number) {
    * Fetch market and saturate it with metadata if the market is fetched from rpc.
    * Saturate will fetch ipfs data and conform the market to same type as returned from indexer.
    */
-  sdk.model.markets.get({ marketId }).then(market => {})
   const market$ = sdk.model.markets.get
     .$({ marketId })
     .pipe(switchMap(market => market.saturateAndUnwrap()))

@@ -25,6 +25,9 @@ export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = {
    * @returns Promise<PoolList<C>>
    */
   listPools: (query: PoolsListQuery<C, MS>) => Promise<PoolList<C, MS>>
+  /**
+   * Get a pool by pool or market id.
+   */
   getPool: PFunc<
     (query: PoolGetQuery) => Promise<Pool<C, MS> | null>,
     C extends RpcContext<MS>
