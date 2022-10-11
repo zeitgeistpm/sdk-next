@@ -1,11 +1,11 @@
 import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
+import { Context, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
-import { Context, isRpcContext, RpcContext } from '../../context'
 import { create, transaction } from './functions/create'
-import { get, get$ } from './functions/get'
+import { get, observe$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
 import { list } from './functions/list'
-import { CreateMarketParams, Markets, MarketsIndexed, MarketsListQuery, MarketsRpc } from './types'
+import { CreateMarketParams, Markets, MarketsListQuery } from './types'
 
 export * from './types'
 
@@ -19,23 +19,23 @@ export * from './types'
 export const markets = <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
 ): Markets<C, MS> => {
-  const indexed: MarketsIndexed<C, MS> = {
+  const markets: Markets<C, MS> = {
     list: (query?: MarketsListQuery<C>) => list<typeof ctx, MS>(ctx, query),
-    get: (query: MarketGetQuery) => get<typeof ctx, MS>(ctx, query),
+    get: pfunc(
+      (query: MarketGetQuery) => get<typeof ctx, MS>(ctx, query),
+      (isRpcContext<MS>(ctx)
+        ? {
+            $: (query: MarketGetQuery) => observe$<typeof ctx, MS>(ctx, query),
+          }
+        : {}) as Markets<typeof ctx, MS>['get'],
+    ),
+    create: (isRpcContext<MS>(ctx)
+      ? pfunc((params: CreateMarketParams<typeof ctx, MS>) => create<typeof ctx, MS>(ctx, params), {
+          tx: (params: CreateMarketParams<typeof ctx, MS>) =>
+            transaction<typeof ctx, MS>(ctx, params),
+        })
+      : undefined) as Markets<typeof ctx, MS>['create'],
   }
 
-  if (isRpcContext<MS>(ctx)) {
-    const rpc: MarketsRpc<typeof ctx, MS> = {
-      ...indexed,
-      create: pfunc((params: CreateMarketParams<typeof ctx, MS>) => create(ctx, params), {
-        tx: (params: CreateMarketParams<typeof ctx, MS>) => transaction(ctx, params),
-      }),
-      get: pfunc((query: MarketGetQuery) => get<typeof ctx, MS>(ctx, query), {
-        $: (query: MarketGetQuery) => get$<typeof ctx, MS>(ctx, query),
-      }),
-    }
-    return rpc as Markets<C, MS>
-  }
-
-  return indexed as Markets<C, MS>
+  return markets
 }

@@ -7,15 +7,15 @@ import { signAndSend } from '@zeitgeistpm/rpc'
 import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
-import { MetadataStorage, TaggedID } from '../../../../meta'
+import { MetadataStorage } from '../../../../meta'
 import { rpcMarket } from '../../../../model/markets'
 import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
 import {
   CreateMarketData,
   CreateMarketParams,
   CreateMarketResult,
-  isWithPool,
   CreateMarketTransaction,
+  isWithPool,
 } from './types'
 
 /**
@@ -40,10 +40,12 @@ export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS exte
     throw error
   })
 
+  const saturate = extraction(context, submittableResult, params)
+
   return {
     raw: submittableResult,
-    saturate: extraction(context, submittableResult, params),
-    saturateAndUnwrap: () => extraction(context, submittableResult, params)().unwrap(),
+    saturate,
+    saturateAndUnwrap: () => saturate().unwrap(),
   }
 }
 
@@ -67,6 +69,11 @@ export const transaction = async <
 
   const storage = context.storage.of('markets')
   const cid = (await storage.put(params.metadata)).unright().unwrap()
+
+  const rollbackMetadata = Te.from(async () => {
+    if (!context.storage) return
+    await context.storage.of('markets').del(cid)
+  })
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
@@ -93,7 +100,10 @@ export const transaction = async <
     )
   }
 
-  return { tx, rollbackMetadata: () => deleteMetadata(context, cid) }
+  return {
+    tx,
+    rollbackMetadata,
+  }
 }
 
 /**
@@ -138,21 +148,6 @@ const extraction =
         } as CreateMarketData<C, MS, CreateMarketParams<C, MS>>
       }),
     )
-
-/**
- * Delete the metadata from storage. Used when market create transaction fails.
- *
- * @private
- *
- * @param context RpcContext | FullContext
- * @param cid CID
- */
-const deleteMetadata = Te.from(
-  async (context: RpcContext | FullContext, cid: TaggedID<'markets'>) => {
-    if (!context.storage) return
-    await context.storage.of('markets').del(cid)
-  },
-)
 
 /**
  * Get the market creation event from the finalized block events.

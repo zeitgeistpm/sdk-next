@@ -1,17 +1,19 @@
-import { batterystationRpc, create, isRpcData, PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk'
+import { batterystation, create, PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk'
 import { isNotNull } from '@zeitgeistpm/utility/dist/null'
-import { Observable, from } from 'rxjs'
-import { switchMap, withLatestFrom, filter } from 'rxjs/operators'
+import { Observable } from 'rxjs'
+import { filter, switchMap, withLatestFrom } from 'rxjs/operators'
 
 async function main(marketId: number) {
-  const sdk = await create(batterystationRpc())
+  const sdk = await create(batterystation())
+
   /**
    * Fetch market and saturate it with metadata if the market is fetched from rpc.
    * Saturate will fetch ipfs data and conform the market to same type as returned from indexer.
    */
+  sdk.model.markets.get({ marketId }).then(market => {})
   const market$ = sdk.model.markets.get
     .$({ marketId })
-    .pipe(switchMap(market => from(isRpcData(market) ? market.saturateAndUnwrap() : market)))
+    .pipe(switchMap(market => market.saturateAndUnwrap()))
 
   /**
    * Fetch pool prices stream for market.
@@ -35,6 +37,7 @@ async function main(marketId: number) {
    * Log prices with ticker metadata from the corresponding asset|category index.
    */
   poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
+    market.poolId
     market.categories?.map((category, index) => {
       const [block, price] = prices[index]
       console.log(

@@ -8,7 +8,7 @@ import {
   RpcContext,
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
-import { rpcMarket } from '../../market'
+import { RpcMarket, rpcMarket } from '../../market'
 import { IndexedMarket, Market } from '../../types'
 import { MarketGetQuery } from './types'
 
@@ -25,12 +25,11 @@ export const get = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
 ): Promise<Market<C, MS> | null> => {
-  const data =
-    isFullContext<MS>(context) || isIndexerContext<MS>(context)
-      ? await getFromIndexer<typeof context, MS>(context, query)
-      : isRpcContext<MS>(context)
-      ? await getFromRpc<typeof context, MS>(context, query)
-      : null
+  const data = isIndexerContext<MS>(context)
+    ? await getFromIndexer<typeof context, MS>(context, query)
+    : isRpcContext<MS>(context)
+    ? await getFromRpc<typeof context, MS>(context, query)
+    : null
 
   return data
 }
@@ -69,10 +68,10 @@ const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
  * @param query MarketGetQuery
  * @returns Observable<Market<RpcContext, MS>>
  */
-export const get$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+export const observe$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
-): Observable<Market<C, MS>> => {
+): Observable<RpcMarket<C, MS>> => {
   return new Observable(subscription => {
     const unsub = context.api.query.marketCommons.markets(query.marketId, market => {
       if (!market.isSome) {

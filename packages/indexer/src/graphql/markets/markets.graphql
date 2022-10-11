@@ -9,6 +9,17 @@ query markets(
   }
 }
 
+# subscription observeMarksts(
+#   $where: MarketWhereInput
+#   $order: [MarketOrderByInput!]
+#   $limit: Int
+#   $offset: Int
+# ) {
+#   markets(where: $where, limit: $limit, offset: $offset, orderBy: $order) {
+#     ...FullMarket
+#   }
+# }
+
 fragment FullMarket on Market {
   id
   marketId
