@@ -174,6 +174,12 @@ export type CreateMarketData<
   pool: P extends CreateMarketWithPoolParams<C, MS> ? Pool<C, MS> : undefined
 }
 
+/**
+ * A transaction object encapsulating the raw transaction and a rollback function
+ * to remove metadata from storage if submission fails.
+ *
+ * @note its the consumers responsibility to call rollback if transaction fails.
+ */
 export type CreateMarketTransaction = {
   tx: SubmittableExtrinsic<'promise', ISubmittableResult>
   rollbackMetadata: () => Promise<EitherInterface<Error, void>>

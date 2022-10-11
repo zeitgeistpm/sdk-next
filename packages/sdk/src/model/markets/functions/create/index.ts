@@ -21,10 +21,10 @@ import {
 /**
  * Create a market on chain.
  *
- * @generic C extends RpcContext | FullContext
- * @generic P extends CreateMarketParams
- * @param context RpcContext | FullContext
- * @param params P
+ * @generic C extends RpcContext<MS> | FullContext<MS>
+ * @generic MS extends MetadataStorage
+ * @param context C
+ * @param params CreateMarketParams<C, MS>
  * @returns void
  */
 export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS extends MetadataStorage>(
@@ -47,6 +47,15 @@ export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS exte
   }
 }
 
+/**
+ * Create lazy transaction for creating a market.
+ *
+ * @generic C extends RpcContext<MS> | FullContext<MS>
+ * @generic MS extends MetadataStorage
+ * @param context C
+ * @param params CreateMarketParams<C, MS>
+ * @returns CreateMarketTransaction
+ */
 export const transaction = async <
   C extends RpcContext<MS> | FullContext<MS>,
   MS extends MetadataStorage,

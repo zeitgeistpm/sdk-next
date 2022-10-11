@@ -60,6 +60,9 @@ export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
   create: PFunc<
     (params: CreateMarketParams<C, MS>) => Promise<CreateMarketResult<C, MS>>,
     {
+      /**
+       * Create a transaction that can be signed and sent manually.
+       */
       tx: (params: CreateMarketParams<C, MS>) => Promise<CreateMarketTransaction>
     }
   >
