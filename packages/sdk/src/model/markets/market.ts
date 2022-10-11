@@ -69,11 +69,11 @@ export type RpcMarket<
  * Interface on market with methods for deploying swap pools.
  */
 export type MarketTransactionInterface = {
-  deploySwapPool: Te.TaskEither<Error, RpcPool, [Omit<PoolDeploymentParams, 'marketId'>]>
+  deploySwapPool: Te.TaskEither<Error, RpcPool, [Exclude<PoolDeploymentParams, 'marketId'>]>
   deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
     Error,
     RpcPool,
-    [Omit<PoolDeploymentParams, 'marketId'>]
+    [Exclude<PoolDeploymentParams, 'marketId'>]
   >
 }
 
