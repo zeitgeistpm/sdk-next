@@ -7,6 +7,7 @@ import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { MetadataStorage } from '../../meta'
 import { Context, IndexerContext, RpcContext } from '../../context'
 import { Data } from '../../primitives/data'
+import { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 
 /**
  * Union Pool type of indexed and rpc types.
@@ -37,6 +38,17 @@ export type RpcPool = ZeitgeistPrimitivesPool & {
    * Get the account id for the pool.
    */
   accountId: Te.TaskEither<Error, number, []>
+}
+
+/**
+ * Params needed to create a pool.
+ */
+export type PoolDeploymentParams = {
+  marketId: number | u128
+  signer: KeyringPairOrExtSigner
+  swapFee: string | number | u128
+  amount: string | number | u128
+  weights: Array<string | number | u128>
 }
 
 /**

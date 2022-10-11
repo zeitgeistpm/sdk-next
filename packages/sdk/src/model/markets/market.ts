@@ -9,7 +9,7 @@ import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import { KeyringPairOrExtSigner, signAndSend } from '@zeitgeistpm/rpc'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { RpcPool, rpcPool } from '../types'
+import { RpcPool, rpcPool, PoolDeploymentParams } from '../types'
 import { Context, FullContext, IndexerContext, isRpcContext, RpcContext } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
@@ -69,15 +69,11 @@ export type RpcMarket<
  * Interface on market with methods for deploying swap pools.
  */
 export type MarketTransactionInterface = {
-  deploySwapPool: Te.TaskEither<
-    Error,
-    RpcPool,
-    [signer: KeyringPairOrExtSigner, swapFee: string, amount: string, weights: string[]]
-  >
+  deploySwapPool: Te.TaskEither<Error, RpcPool, [Omit<PoolDeploymentParams, 'marketId'>]>
   deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
     Error,
     RpcPool,
-    [signer: KeyringPairOrExtSigner, swapFee: string, amount: string, weights: string[]]
+    [Omit<PoolDeploymentParams, 'marketId'>]
   >
 }
 
@@ -149,9 +145,14 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
   market.saturateAndUnwrap = () => market.saturate().then(_ => _.unwrap())
 
-  market.deploySwapPool = Te.from(async (signer, swapFee, amount, weights) => {
-    const tx = context.api.tx.predictionMarkets.deploySwapPoolForMarket(id, swapFee, amount, weights)
-    const response = await signAndSend(context.api, tx, signer)
+  market.deploySwapPool = Te.from(async params => {
+    const tx = context.api.tx.predictionMarkets.deploySwapPoolForMarket(
+      id,
+      params.swapFee,
+      params.amount,
+      params.weights,
+    )
+    const response = await signAndSend(context.api, tx, params.signer)
     const extrinsic = response.unwrap()
     const poolCreationEvent = extractPoolCreationEventForMarket(
       context.api,
@@ -162,14 +163,14 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
     return rpcPool(context, poolId, primitive)
   })
 
-  market.deploySwapPoolAndAdditionalLiquidity = Te.from(async (signer, swapFee, amount, weights) => {
+  market.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
     const tx = context.api.tx.predictionMarkets.deploySwapPoolAndAdditionalLiquidity(
       id,
-      swapFee,
-      amount,
-      weights,
+      params.swapFee,
+      params.amount,
+      params.weights,
     )
-    const response = await signAndSend(context.api, tx, signer)
+    const response = await signAndSend(context.api, tx, params.signer)
     const extrinsic = response.unwrap()
     const poolCreationEvent = extractPoolCreationEventForMarket(
       context.api,
@@ -189,14 +190,14 @@ export const attachTransactionInterface = <C extends Context<MS>, MS extends Met
 ): IndexedMarket<C, MS> => {
   const market = indexedMarket as IndexedMarket<C, MS>
   if (isRpcContext<MS>(context)) {
-    market.deploySwapPool = Te.from(async (signer, swapFee, amount, weights) => {
+    market.deploySwapPool = Te.from(async params => {
       const tx = context.api.tx.predictionMarkets.deploySwapPoolForMarket(
         market.marketId,
-        swapFee,
-        amount,
-        weights,
+        params.swapFee,
+        params.amount,
+        params.weights,
       )
-      const response = await signAndSend(context.api, tx, signer)
+      const response = await signAndSend(context.api, tx, params.signer)
       const extrinsic = response.unwrap()
       const poolCreationEvent = extractPoolCreationEventForMarket(
         context.api,
@@ -207,25 +208,23 @@ export const attachTransactionInterface = <C extends Context<MS>, MS extends Met
       return rpcPool(context, poolId, primitive)
     })
 
-    market.deploySwapPoolAndAdditionalLiquidity = Te.from(
-      async (signer, swapFee, amount, weights) => {
-        const tx = context.api.tx.predictionMarkets.deploySwapPoolAndAdditionalLiquidity(
-          market.marketId,
-          swapFee,
-          amount,
-          weights,
-        )
-        const response = await signAndSend(context.api, tx, signer)
-        const extrinsic = response.unwrap()
-        const poolCreationEvent = extractPoolCreationEventForMarket(
-          context.api,
-          extrinsic.events,
-          market.marketId,
-        )
-        const [poolId, primitive] = poolCreationEvent.unwrap()
-        return rpcPool(context, poolId, primitive)
-      },
-    )
+    market.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
+      const tx = context.api.tx.predictionMarkets.deploySwapPoolAndAdditionalLiquidity(
+        market.marketId,
+        params.swapFee,
+        params.amount,
+        params.weights,
+      )
+      const response = await signAndSend(context.api, tx, params.signer)
+      const extrinsic = response.unwrap()
+      const poolCreationEvent = extractPoolCreationEventForMarket(
+        context.api,
+        extrinsic.events,
+        market.marketId,
+      )
+      const [poolId, primitive] = poolCreationEvent.unwrap()
+      return rpcPool(context, poolId, primitive)
+    })
   }
   return market
 }
