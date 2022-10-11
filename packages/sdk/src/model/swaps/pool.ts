@@ -38,6 +38,14 @@ export type RpcPool = ZeitgeistPrimitivesPool & {
   accountId: Te.TaskEither<Error, number, []>
 }
 
+/**
+ * Create new RpcPool with associated context, id and on chain primitive.
+ *
+ * @param ctx RpcContext
+ * @param poolId number | u128
+ * @param pool ZeitgeistPrimitivesPool
+ * @returns RpcPool
+ */
 export const rpcPool = (
   ctx: RpcContext,
   poolId: number | u128,

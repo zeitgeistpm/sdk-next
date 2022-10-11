@@ -2,7 +2,7 @@ import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { MetadataStorage } from '../../meta'
 import { Observable } from 'rxjs'
 import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
-import { Market, RpcMarket } from '../types'
+import { CreateMarketTransaction, Market, RpcMarket } from '../types'
 import { CreateMarketParams, CreateMarketResult } from './functions/create/types'
 import { MarketGetQuery } from './functions/get/types'
 import { MarketList, MarketsListQuery } from './functions/list/types'
@@ -46,7 +46,7 @@ export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
     /**
      * Get a rpc market by its id.
      */
-    (query: MarketGetQuery) => Promise<Market<C, MS>>,
+    (query: MarketGetQuery) => Promise<Market<C, MS> | null>,
     {
       /**
        * Stream pool prices from the node
@@ -57,7 +57,10 @@ export type MarketsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
   /**
    * Create a market. Only available when connecting to rpc.
    */
-  create: {
-    (params: CreateMarketParams<C, MS>): Promise<CreateMarketResult<C, MS>>
-  }
+  create: PFunc<
+    (params: CreateMarketParams<C, MS>) => Promise<CreateMarketResult<C, MS>>,
+    {
+      tx: (params: CreateMarketParams<C, MS>) => Promise<CreateMarketTransaction>
+    }
+  >
 }

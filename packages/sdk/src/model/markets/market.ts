@@ -1,9 +1,11 @@
 import { ApiPromise } from '@polkadot/api'
 import { Option, StorageKey, u128 } from '@polkadot/types'
-import { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
+import {
+  ZeitgeistPrimitivesMarket,
+  ZeitgeistPrimitivesMarketMarketDispute,
+} from '@polkadot/types/lookup'
 import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
-import { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
 import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
@@ -31,7 +33,10 @@ export type IndexedMarket = FullMarketFragment
 /**
  * Concrete Market type for a rpc market.
  */
-export type RpcMarket<C extends RpcContext<MS>, MS extends MetadataStorage> = {
+export type RpcMarket<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage,
+> = ZeitgeistPrimitivesMarket & {
   /**
    * Market id/index. Set for conformity and convenince when fetching markets from rpc.
    */
@@ -49,10 +54,14 @@ export type RpcMarket<C extends RpcContext<MS>, MS extends MetadataStorage> = {
    * @throws Error - if unwrap fails
    */
   saturateAndUnwrap: () => Promise<IndexedBase & MarketTypeOf<MS>>
-} & ZeitgeistPrimitivesMarket
+  /**
+   * Fetch disputes for the market.
+   */
+  fetchDisputes: Te.TaskEither<Error, ZeitgeistPrimitivesMarketMarketDispute[], []>
+}
 
 /**
- * The base type of indexed data that also can be deduced from the rpc data.
+ * The base type of indexed data that also can be infered from the rpc data.
  */
 export type IndexedBase = Omit<IndexedMarket, keyof MarketMetadata>
 
@@ -73,12 +82,17 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
   rpcMarket.marketId = isNumber(id) ? id : id.toNumber()
 
-  rpcMarket.fetchMetadata = async () => {
+  rpcMarket.fetchMetadata = () => {
     const hex = rpcMarket.metadata.toHex()
     const cid = new CID('f0155' + hex.slice(2))
     const id = { __meta: 'markets', cid: cid } as StorageIdTypeOf<MS['markets']>
-    return context.storage.of('markets').get(id) as any
+    return context.storage.of('markets').get(id)
   }
+
+  rpcMarket.fetchDisputes = Te.from(async () => {
+    const disputes = await context.api.query.predictionMarkets.disputes(id)
+    return disputes.toArray()
+  })
 
   rpcMarket.saturate = Te.from(async () => {
     const [metadata, poolId, end] = await Promise.all([

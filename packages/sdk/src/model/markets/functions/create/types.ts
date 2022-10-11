@@ -1,3 +1,4 @@
+import { SubmittableExtrinsic } from '@polkadot/api/types'
 import type {
   ZeitgeistPrimitivesMarketMarketCreation,
   ZeitgeistPrimitivesPoolScoringRule,
@@ -171,4 +172,9 @@ export type CreateMarketData<
    */
   market: RpcMarket<C, MS>
   pool: P extends CreateMarketWithPoolParams<C, MS> ? Pool<C> : undefined
+}
+
+export type CreateMarketTransaction = {
+  tx: SubmittableExtrinsic<'promise', ISubmittableResult>
+  rollbackMetadata: () => Promise<EitherInterface<Error, void>>
 }

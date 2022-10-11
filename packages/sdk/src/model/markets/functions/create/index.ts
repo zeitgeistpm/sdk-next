@@ -10,7 +10,13 @@ import { FullContext, RpcContext } from '../../../../context'
 import { MetadataStorage, TaggedID } from '../../../../meta'
 import { rpcMarket } from '../../../../model/markets'
 import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
-import { CreateMarketData, CreateMarketParams, CreateMarketResult, isWithPool } from './types'
+import {
+  CreateMarketData,
+  CreateMarketParams,
+  CreateMarketResult,
+  isWithPool,
+  CreateMarketTransaction,
+} from './types'
 
 /**
  * Create a market on chain.
@@ -25,6 +31,29 @@ export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS exte
   context: C,
   params: CreateMarketParams<C, MS>,
 ): Promise<CreateMarketResult<C, MS>> => {
+  const { tx, rollbackMetadata } = await transaction(context, params)
+
+  const response = await signAndSend(context.api, tx, params.signer)
+
+  const submittableResult = response.unrightOr(error => {
+    rollbackMetadata()
+    throw error
+  })
+
+  return {
+    raw: submittableResult,
+    saturate: extraction(context, submittableResult, params),
+    saturateAndUnwrap: () => extraction(context, submittableResult, params)().unwrap(),
+  }
+}
+
+export const transaction = async <
+  C extends RpcContext<MS> | FullContext<MS>,
+  MS extends MetadataStorage,
+>(
+  context: C,
+  params: CreateMarketParams<C, MS>,
+): Promise<CreateMarketTransaction> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
   const storage = context.storage.of('markets')
@@ -55,20 +84,7 @@ export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS exte
     )
   }
 
-  const response = await signAndSend(context.api, tx, params.signer)
-
-  const submittableResult = response.unrightOr(error => {
-    if (cid) {
-      deleteMetadata(context, cid)
-    }
-    throw error
-  })
-
-  return {
-    raw: submittableResult,
-    saturate: extraction(context, submittableResult, params),
-    saturateAndUnwrap: () => extraction(context, submittableResult, params)().unwrap(),
-  }
+  return { tx, rollbackMetadata: () => deleteMetadata(context, cid) }
 }
 
 /**

@@ -1,7 +1,6 @@
 import { Codec } from '@polkadot/types/types'
 import { isCodec } from '@polkadot/util'
 import { FullContext, IndexerContext, RpcContext } from '../context'
-import { MetadataStorage } from '../meta'
 
 export declare type Data<
   C extends RpcContext | IndexerContext | FullContext,
