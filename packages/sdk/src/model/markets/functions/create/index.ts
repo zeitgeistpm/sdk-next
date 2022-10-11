@@ -27,12 +27,11 @@ import {
  * @param params CreateMarketParams<C, MS>
  * @returns void
  */
-export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS extends MetadataStorage>(
+export const create = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   params: CreateMarketParams<C, MS>,
 ): Promise<CreateMarketResult<C, MS>> => {
   const { tx, rollbackMetadata } = await transaction(context, params)
-
   const response = await signAndSend(context.api, tx, params.signer)
 
   const submittableResult = response.unrightOr(error => {
@@ -58,17 +57,14 @@ export const create = async <C extends RpcContext<MS> | FullContext<MS>, MS exte
  * @param params CreateMarketParams<C, MS>
  * @returns CreateMarketTransaction
  */
-export const transaction = async <
-  C extends RpcContext<MS> | FullContext<MS>,
-  MS extends MetadataStorage,
->(
+export const transaction = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   params: CreateMarketParams<C, MS>,
 ): Promise<CreateMarketTransaction> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
   const storage = context.storage.of('markets')
-  const cid = (await storage.put(params.metadata)).unright().unwrap()
+  const cid = (await storage.put(params.metadata)).unwrap()
 
   const rollbackMetadata = Te.from(async () => {
     if (!context.storage) return
@@ -158,7 +154,7 @@ const extraction =
  * @param events EventRecord[]
  * @param address AddressOrPair
  */
-const extractMarketCreationEventForAddress = (
+export const extractMarketCreationEventForAddress = (
   api: ApiPromise,
   events: EventRecord[],
   address: AddressOrPair,
@@ -185,7 +181,7 @@ const extractMarketCreationEventForAddress = (
  * @param events EventRecord[]
  * @param marketId number
  */
-const extractPoolCreationEventForMarket = (
+export const extractPoolCreationEventForMarket = (
   api: ApiPromise,
   events: EventRecord[],
   marketId: number,

@@ -9,5 +9,5 @@ export * from './types'
  * @returns signer is ExtSigner
  */
 export const isExtSigner = (signer: KeyringPairOrExtSigner): signer is ExtSigner => {
-  return (signer as ExtSigner).signer !== undefined
+  return signer && 'signer' in signer
 }

@@ -9,7 +9,7 @@ import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
 import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { Pool } from '../../../swaps/pool'
-import { RpcMarket } from '../../market'
+import { Market, RpcMarket } from '../../market'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -170,7 +170,7 @@ export type CreateMarketData<
   /**
    * The market created by the extrinsic.
    */
-  market: RpcMarket<C, MS>
+  market: Market<C, MS>
   pool: P extends CreateMarketWithPoolParams<C, MS> ? Pool<C, MS> : undefined
 }
 

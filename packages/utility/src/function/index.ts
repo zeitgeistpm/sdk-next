@@ -19,9 +19,7 @@ export function identity<A>(a: A): A {
  * addTwoSubOne(10) === 11
  * ```
  */
-export function compose<A extends ReadonlyArray<unknown>, B>(
-  ab: (...a: A) => B,
-): (...a: A) => B
+export function compose<A extends ReadonlyArray<unknown>, B>(ab: (...a: A) => B): (...a: A) => B
 export function compose<A extends ReadonlyArray<unknown>, B, C>(
   ab: (...a: A) => B,
   bc: (b: B) => C,
@@ -71,18 +69,7 @@ export function compose<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I
   gh: (g: G) => H,
   hi: (h: H) => I,
 ): (...a: A) => I
-export function compose<
-  A extends ReadonlyArray<unknown>,
-  B,
-  C,
-  D,
-  E,
-  F,
-  G,
-  H,
-  I,
-  J,
->(
+export function compose<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J>(
   ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,

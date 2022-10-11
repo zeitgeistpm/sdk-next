@@ -24,45 +24,32 @@ export const storage = <T extends object, ID>(
   const hashAlg = config.hashAlg ?? `sha3-384`
 
   return {
-    put: async data => {
-      try {
-        const content = codec.decode(data).unrightOr(throws)
+    put: Te.from(async data => {
+      const content = codec.decode(data).unrightOr(throws)
 
-        const { cid } = await node.add({ content }, { hashAlg, pin: config?.node.pin ?? true })
+      const { cid } = await node.add({ content }, { hashAlg, pin: config?.node.pin ?? true })
 
-        if (config.cluster) {
-          await cluster.pin(cid.toString(), config.cluster).catch(_ => {
-            if (config?.node.pin) {
-              node.pin.rm(cid)
-            }
-          })
-        }
+      if (config.cluster) {
+        await cluster.pin(cid.toString(), config.cluster).catch(_ => {
+          if (config?.node.pin) {
+            node.pin.rm(cid)
+          }
+        })
+      }
 
-        return either(right(cid))
-      } catch (error) {
-        return either(left(error as Error))
+      return cid
+    }),
+    get: Te.from(async cid => {
+      const data = either(await read(node, cid))
+      const encoded = data.chain(codec.encode).unrightOr(throws)
+      return encoded
+    }),
+    del: Te.from(async cid => {
+      if (config.cluster) {
+        await cluster.unpin(cid.toString(), config.cluster)
       }
-    },
-    get: async cid => {
-      try {
-        const data = either(await read(node, cid))
-        const encoded = data.chain(codec.encode).unrightOr(throws)
-        return either(right(encoded))
-      } catch (error) {
-        return either(left(error as Error))
-      }
-    },
-    del: async cid => {
-      try {
-        if (config.cluster) {
-          await cluster.unpin(cid.toString(), config.cluster)
-        }
-        await node.pin.rm(cid.toString())
-        return either(right(undefined as void))
-      } catch (error) {
-        return either(left(error as Error))
-      }
-    },
+      await node.pin.rm(cid.toString())
+    }),
   }
 }
 

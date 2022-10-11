@@ -44,21 +44,21 @@ export type RpcPool = ZeitgeistPrimitivesPool & {
  *
  * @param ctx RpcContext
  * @param poolId number | u128
- * @param pool ZeitgeistPrimitivesPool
+ * @param primitive ZeitgeistPrimitivesPool
  * @returns RpcPool
  */
 export const rpcPool = (
   ctx: RpcContext,
   poolId: number | u128,
-  pool: ZeitgeistPrimitivesPool,
+  primitive: ZeitgeistPrimitivesPool,
 ): RpcPool => {
-  let rpcPool = pool as RpcPool
+  let pool = primitive as RpcPool
 
-  rpcPool.poolId = isNumber(poolId) ? poolId : poolId.toNumber()
+  pool.poolId = isNumber(poolId) ? poolId : poolId.toNumber()
 
-  rpcPool.accountId = Te.from(() =>
+  pool.accountId = Te.from(() =>
     ctx.api.rpc.swaps.poolAccountId(poolId).then(accountId => accountId.toNumber()),
   )
 
-  return rpcPool
+  return pool
 }

@@ -8,8 +8,7 @@ import {
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { isPaginated } from '../../../../types/query'
-import { fromEntry } from '../../market'
-import { AugmentedRpcMarketList, MarketList, MarketsListQuery } from '../../types'
+import { MarketList, MarketsListQuery, rpcMarket, attachTransactionInterface } from '../../types'
 
 /**
  * Query for a list of markets.
@@ -25,9 +24,9 @@ export const list = async <C extends Context<MS>, MS extends MetadataStorage>(
   query?: MarketsListQuery<C>,
 ): Promise<MarketList<C, MS>> => {
   if (isFullContext<MS>(context) || isIndexerContext<MS>(context)) {
-    return indexer<typeof context, MS>(context, query)
+    return listFromIndexer<typeof context, MS>(context, query)
   } else if (isRpcContext<MS>(context)) {
-    return rpc<typeof context, MS>(context, query)
+    return listFromRpc<typeof context, MS>(context, query)
   }
   return []
 }
@@ -36,18 +35,20 @@ export const list = async <C extends Context<MS>, MS extends MetadataStorage>(
  * Concrete listing function for indexer context
  * @private
  */
-const indexer = async <C extends IndexerContext, MS extends MetadataStorage>(
+const listFromIndexer = async <C extends IndexerContext, MS extends MetadataStorage>(
   context: C,
   query?: MarketsListQuery<C>,
 ): Promise<MarketList<C, MS>> => {
-  return (await context.indexer.markets(query)).markets as MarketList<C, MS>
+  return (await context.indexer.markets(query)).markets.map(market =>
+    attachTransactionInterface<C, MS>(context, market),
+  ) as MarketList<C, MS>
 }
 
 /**
  * Concrete listing function for rpc context
  * @private
  */
-const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
+const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query?: MarketsListQuery<C>,
 ): Promise<MarketList<C, MS>> => {
@@ -59,7 +60,14 @@ const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
       })
     : await context.api.query.marketCommons.markets.entries()
 
-  const list = entries.map(m => fromEntry<C, MS>(context, m))
+  const list = entries.map(
+    ([
+      {
+        args: [marketId],
+      },
+      market,
+    ]) => rpcMarket<C, MS>(context, marketId, market.unwrap()),
+  )
 
   return list as MarketList<C, MS>
 }

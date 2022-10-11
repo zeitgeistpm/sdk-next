@@ -6,12 +6,15 @@ import {
 } from '@polkadot/types/lookup'
 import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
+import { KeyringPairOrExtSigner, signAndSend } from '@zeitgeistpm/rpc'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
+import { RpcPool, rpcPool } from '../types'
+import { Context, FullContext, IndexerContext, isRpcContext, RpcContext } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
 import { Data } from '../../primitives'
+import { extractPoolCreationEventForMarket } from './functions/create'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -22,13 +25,14 @@ export * from './functions/list/types'
 export type Market<C extends Context<MS>, MS extends MetadataStorage> = Data<
   C,
   C extends RpcContext<MS> ? RpcMarket<C, MS> : never,
-  C extends IndexerContext | FullContext<MS> ? IndexedMarket : never
+  C extends FullContext<MS> | IndexerContext ? IndexedMarket<C, MS> : never
 >
 
 /**
  * Concrete Market type for a indexed market.
  */
-export type IndexedMarket = FullMarketFragment
+export type IndexedMarket<C extends Context<MS>, MS extends MetadataStorage> = FullMarketFragment &
+  (C extends RpcContext<MS> ? MarketTransactionInterface : never)
 
 /**
  * Concrete Market type for a rpc market.
@@ -36,117 +40,194 @@ export type IndexedMarket = FullMarketFragment
 export type RpcMarket<
   C extends RpcContext<MS>,
   MS extends MetadataStorage,
-> = ZeitgeistPrimitivesMarket & {
-  /**
-   * Market id/index. Set for conformity and convenince when fetching markets from rpc.
-   */
-  marketId: number
-  /**
-   * Fetch metadata from external storage(default IPFS).
-   */
-  fetchMetadata: Te.TaskEither<Error, MarketTypeOf<MS>, []>
-  /**
-   * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
-   */
-  saturate: Te.TaskEither<Error, IndexedBase & MarketTypeOf<MS>, []>
-  /**
-   * Same as saturate, but will try to unwrap in the same go.
-   * @throws Error - if unwrap fails
-   */
-  saturateAndUnwrap: () => Promise<IndexedBase & MarketTypeOf<MS>>
-  /**
-   * Fetch disputes for the market.
-   */
-  fetchDisputes: Te.TaskEither<Error, ZeitgeistPrimitivesMarketMarketDispute[], []>
+> = ZeitgeistPrimitivesMarket &
+  MarketTransactionInterface & {
+    /**
+     * Market id/index. Set for conformity and convenince when fetching markets from rpc.
+     */
+    marketId: number
+    /**
+     * Fetch metadata from external storage(default IPFS).
+     */
+    fetchMetadata: Te.TaskEither<Error, MarketTypeOf<MS>, []>
+    /**
+     * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
+     */
+    saturate: Te.TaskEither<Error, IndexedBase & MarketTypeOf<MS>, []>
+    /**
+     * Same as saturate, but will try to unwrap in the same go.
+     * @throws Error - if unwrap fails
+     */
+    saturateAndUnwrap: () => Promise<IndexedBase & MarketTypeOf<MS>>
+    /**
+     * Fetch disputes for the market.
+     */
+    fetchDisputes: Te.TaskEither<Error, ZeitgeistPrimitivesMarketMarketDispute[], []>
+  }
+
+/**
+ * Interface on market with methods for deploying swap pools.
+ */
+export type MarketTransactionInterface = {
+  deploySwapPool: Te.TaskEither<
+    Error,
+    RpcPool,
+    [signer: KeyringPairOrExtSigner, swapFee: string, amount: string, weights: string[]]
+  >
+  deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
+    Error,
+    RpcPool,
+    [signer: KeyringPairOrExtSigner, swapFee: string, amount: string, weights: string[]]
+  >
 }
 
 /**
  * The base type of indexed data that also can be infered from the rpc data.
  */
-export type IndexedBase = Omit<IndexedMarket, keyof MarketMetadata>
+export type IndexedBase = Omit<FullMarketFragment, keyof MarketMetadata>
 
 /**
  * Augment a market primitive with id and data expanding utility functions.
  *
  * @param context RpcContext
  * @param id u128
- * @param market ZeitgeistPrimitivesMarket
+ * @param primitive ZeitgeistPrimitivesMarket
  * @returns AugmentedAugmentedRpcMarket
  */
 export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   id: u128 | number,
-  market: ZeitgeistPrimitivesMarket,
+  primitive: ZeitgeistPrimitivesMarket,
 ): Market<C, MS> => {
-  let rpcMarket = market as Market<C, MS>
+  let market = primitive as Market<C, MS>
 
-  rpcMarket.marketId = isNumber(id) ? id : id.toNumber()
+  market.marketId = isNumber(id) ? id : id.toNumber()
 
-  rpcMarket.fetchMetadata = () => {
-    const hex = rpcMarket.metadata.toHex()
+  market.fetchMetadata = () => {
+    const hex = market.metadata.toHex()
     const cid = new CID('f0155' + hex.slice(2))
     const id = { __meta: 'markets', cid: cid } as StorageIdTypeOf<MS['markets']>
     return context.storage.of('markets').get(id)
   }
 
-  rpcMarket.fetchDisputes = Te.from(async () => {
+  market.fetchDisputes = Te.from(async () => {
     const disputes = await context.api.query.predictionMarkets.disputes(id)
     return disputes.toArray()
   })
 
-  rpcMarket.saturate = Te.from(async () => {
+  market.saturate = Te.from(async () => {
     const [metadata, poolId, end] = await Promise.all([
-      rpcMarket.fetchMetadata(),
+      market.fetchMetadata(),
       context.api.query.marketCommons.marketPool(id),
-      projectEndTimestamp<C, MS>(context.api, rpcMarket),
+      projectEndTimestamp<C, MS>(context.api, market),
     ])
 
     const base: IndexedBase = {
       id: `${isNumber(id) ? id : id.toNumber()}`,
       marketId: isNumber(id) ? id : id.toNumber(),
-      creation: market.creation.type,
-      creator: market.creator.toHuman(),
-      oracle: market.oracle.toHuman(),
+      creation: primitive.creation.type,
+      creator: primitive.creator.toHuman(),
+      oracle: primitive.oracle.toHuman(),
       end: end,
-      creatorFee: market.creatorFee.toNumber(),
+      creatorFee: primitive.creatorFee.toNumber(),
       poolId: poolId.isSome ? poolId.unwrap().toNumber() : undefined,
-      scoringRule: market.scoringRule.type,
-      status: market.status.toHuman() as IndexedMarket['status'],
-      period: market.period.toHuman() as IndexedMarket['period'],
-      marketType: market.marketType.toHuman() as IndexedMarket['marketType'],
-      disputeMechanism: market.disputeMechanism.toHuman() as IndexedMarket['disputeMechanism'],
-      report: market.report.toHuman() as IndexedMarket['report'],
-      resolvedOutcome: market.resolvedOutcome.toHuman() as IndexedMarket['resolvedOutcome'],
+      scoringRule: primitive.scoringRule.type,
+      status: primitive.status.toHuman() as FullMarketFragment['status'],
+      period: primitive.period.toHuman() as FullMarketFragment['period'],
+      marketType: primitive.marketType.toHuman() as FullMarketFragment['marketType'],
+      disputeMechanism:
+        primitive.disputeMechanism.toHuman() as FullMarketFragment['disputeMechanism'],
+      report: primitive.report.toHuman() as FullMarketFragment['report'],
+      resolvedOutcome: primitive.resolvedOutcome.toHuman() as FullMarketFragment['resolvedOutcome'],
     }
 
     return {
       ...base,
-      ...metadata.unright().unwrap(),
+      ...metadata.unwrap(),
     }
   })
 
-  rpcMarket.saturateAndUnwrap = () => rpcMarket.saturate().then(market => market.unwrap())
+  market.saturateAndUnwrap = () => market.saturate().then(_ => _.unwrap())
 
-  return rpcMarket
+  market.deploySwapPool = Te.from(async (signer, swapFee, amount, weights) => {
+    const tx = context.api.tx.predictionMarkets.deploySwapPoolForMarket(id, swapFee, amount, weights)
+    const response = await signAndSend(context.api, tx, signer)
+    const extrinsic = response.unwrap()
+    const poolCreationEvent = extractPoolCreationEventForMarket(
+      context.api,
+      extrinsic.events,
+      isNumber(id) ? id : id.toNumber(),
+    )
+    const [poolId, primitive] = poolCreationEvent.unwrap()
+    return rpcPool(context, poolId, primitive)
+  })
+
+  market.deploySwapPoolAndAdditionalLiquidity = Te.from(async (signer, swapFee, amount, weights) => {
+    const tx = context.api.tx.predictionMarkets.deploySwapPoolAndAdditionalLiquidity(
+      id,
+      swapFee,
+      amount,
+      weights,
+    )
+    const response = await signAndSend(context.api, tx, signer)
+    const extrinsic = response.unwrap()
+    const poolCreationEvent = extractPoolCreationEventForMarket(
+      context.api,
+      extrinsic.events,
+      isNumber(id) ? id : id.toNumber(),
+    )
+    const [poolId, primitive] = poolCreationEvent.unwrap()
+    return rpcPool(context, poolId, primitive)
+  })
+
+  return market
 }
 
-/**
- * Create a AugmentedRpcMarket from a on chain storage entry.
- *
- * @param context RpcContext
- * @param entry [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>]
- * @returns AugmentedAugmentedRpcMarketRpcMarket
- */
-export const fromEntry = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+export const attachTransactionInterface = <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
-  [
-    {
-      args: [marketId],
-    },
-    market,
-  ]: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesMarket>],
-): RpcMarket<C, MS> => {
-  return rpcMarket(context, marketId, market.unwrap())
+  indexedMarket: FullMarketFragment,
+): IndexedMarket<C, MS> => {
+  const market = indexedMarket as IndexedMarket<C, MS>
+  if (isRpcContext<MS>(context)) {
+    market.deploySwapPool = Te.from(async (signer, swapFee, amount, weights) => {
+      const tx = context.api.tx.predictionMarkets.deploySwapPoolForMarket(
+        market.marketId,
+        swapFee,
+        amount,
+        weights,
+      )
+      const response = await signAndSend(context.api, tx, signer)
+      const extrinsic = response.unwrap()
+      const poolCreationEvent = extractPoolCreationEventForMarket(
+        context.api,
+        extrinsic.events,
+        market.marketId,
+      )
+      const [poolId, primitive] = poolCreationEvent.unwrap()
+      return rpcPool(context, poolId, primitive)
+    })
+
+    market.deploySwapPoolAndAdditionalLiquidity = Te.from(
+      async (signer, swapFee, amount, weights) => {
+        const tx = context.api.tx.predictionMarkets.deploySwapPoolAndAdditionalLiquidity(
+          market.marketId,
+          swapFee,
+          amount,
+          weights,
+        )
+        const response = await signAndSend(context.api, tx, signer)
+        const extrinsic = response.unwrap()
+        const poolCreationEvent = extractPoolCreationEventForMarket(
+          context.api,
+          extrinsic.events,
+          market.marketId,
+        )
+        const [poolId, primitive] = poolCreationEvent.unwrap()
+        return rpcPool(context, poolId, primitive)
+      },
+    )
+  }
+  return market
 }
 
 /**

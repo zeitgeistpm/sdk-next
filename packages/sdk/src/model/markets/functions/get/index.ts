@@ -2,14 +2,13 @@ import { Observable } from 'rxjs'
 import {
   Context,
   IndexerContext,
-  isFullContext,
   isIndexerContext,
   isRpcContext,
   RpcContext,
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { RpcMarket, rpcMarket } from '../../market'
-import { IndexedMarket, Market } from '../../types'
+import { attachTransactionInterface, Market } from '../../types'
 import { MarketGetQuery } from './types'
 
 /**
@@ -45,7 +44,10 @@ const getFromIndexer = async <C extends IndexerContext, MS extends MetadataStora
   const {
     markets: [market],
   } = await context.indexer.markets({ where: { marketId_eq: query.marketId } })
-  return market as Market<C, MS>
+  if (market) {
+    return attachTransactionInterface<typeof context, MS>(context, market) as Market<C, MS>
+  }
+  return null
 }
 
 /**
@@ -68,7 +70,7 @@ const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
  * @param query MarketGetQuery
  * @returns Observable<Market<RpcContext, MS>>
  */
-export const observe$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+export const observeMarket$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
 ): Observable<RpcMarket<C, MS>> => {

@@ -26,7 +26,9 @@ export type MarketsListQuery<C extends Context> = C extends IndexerContext
 /**
  * Concrete MarketList for indexed context
  */
-export type FullMarketList = { items: IndexedMarket[] }
+export type FullMarketList<C extends Context<MS>, MS extends MetadataStorage> = {
+  items: IndexedMarket<C, MS>[]
+}
 
 /**
  * Concrete MarketList for rpc context

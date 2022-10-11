@@ -34,8 +34,8 @@ export const poolPrices = async <C extends Context>(
 ): Promise<PoolPrices> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
-      ? await indexer(context, query)
-      : await rpc(context, query)
+      ? await indexerPoolPrices(context, query)
+      : await rpcPoolPrices(context, query)
   return data
 }
 
@@ -47,7 +47,10 @@ export const poolPrices = async <C extends Context>(
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-const rpc = async <C extends RpcContext>(ctx: C, query: PoolPricesQuery): Promise<PoolPrices> => {
+const rpcPoolPrices = async <C extends RpcContext>(
+  ctx: C,
+  query: PoolPricesQuery,
+): Promise<PoolPrices> => {
   const [time, pool, { start, end }] = await Promise.all([
     now(ctx),
     ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()),
@@ -86,7 +89,10 @@ const rpc = async <C extends RpcContext>(ctx: C, query: PoolPricesQuery): Promis
  * @param query PoolPricesQuery
  * @returns Promise<PoolPrices>
  */
-const indexer = async (context: IndexerContext, query: PoolPricesQuery): Promise<PoolPrices> => {
+const indexerPoolPrices = async (
+  context: IndexerContext,
+  query: PoolPricesQuery,
+): Promise<PoolPrices> => {
   const { assets } = await context.indexer.assets({
     where: {
       poolId_eq: query.pool,
@@ -145,7 +151,7 @@ const indexer = async (context: IndexerContext, query: PoolPricesQuery): Promise
  * @param query PoolPricesStreamQuery
  * @returns Observable<PoolAssetPricesAtBlock>
  */
-export const rpcPoolPrices$ = <C extends RpcContext>(
+export const observePoolPrices$ = <C extends RpcContext>(
   ctx: C,
   query: PoolPricesStreamQuery,
 ): Observable<PoolAssetPricesAtBlock> => {
@@ -158,7 +164,7 @@ export const rpcPoolPrices$ = <C extends RpcContext>(
     ]).then(async ([pool, now]) => {
       const assets = pool.assets.toArray().slice(0, -1)
 
-      const head = await rpc(ctx, {
+      const head = await rpcPoolPrices(ctx, {
         pool: query.pool,
         resolution: query.resolution,
         timespan: {

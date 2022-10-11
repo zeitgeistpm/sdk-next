@@ -1,5 +1,5 @@
 import { isFunction } from '@polkadot/util/is/function'
-import { throws } from 'error'
+import { throws } from '../error'
 import * as O from '../option'
 
 /**
@@ -195,7 +195,7 @@ export type EitherInterface<L, R> = Either<L, R> & {
  */
 export const either = <L, R>(_either: Either<L, R>): EitherInterface<L, R> => ({
   ..._either,
-  unwrap: () => O.unwrap(unright(_either)),
+  unwrap: () => unrightOr<L, R>(throws, _either),
   unright: () => unright(_either),
   unleft: () => unleft(_either),
   unrightOr: (or: OrHandler<L, R>) => unrightOr(or, _either),

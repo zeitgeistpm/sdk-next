@@ -1,4 +1,4 @@
-import { builder, isRpcData, isRpcSdk, mainnet } from '@zeitgeistpm/sdk'
+import { builder, isFullSdk, isIndexedSdk, isRpcData, isRpcSdk, mainnet } from '@zeitgeistpm/sdk'
 import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 import { from, of } from 'rxjs'
 import { filter, switchMap } from 'rxjs/operators'
@@ -24,6 +24,13 @@ async function main(marketId: number) {
     filter(isNotNull),
     switchMap(market => from(isRpcData(market) ? market.saturateAndUnwrap() : of(market))),
   )
+
+  sdk$.subscribe(async sdk => {
+    if (isFullSdk(sdk)) {
+      const market = await sdk.model.markets.get({ marketId })
+      market?.deploySwapPool
+    }
+  })
 
   /**
    * Since market is either indexed or saturated with metadata the question,

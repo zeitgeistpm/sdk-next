@@ -56,7 +56,7 @@ const MarketComponent = (props: { market: Market<Context> }) => {
            * If fetching and unwrapping is a success, the local market state will conform to the indexed state
            * and the <IndexedMarketComponent /> will be rendered.
            */
-          setMarket(market.unright().unwrap())
+          setMarket(market.unwrap())
         })
         .catch(() => console.debug(`Missing metadata for market: ${market.marketId}`))
     } else {

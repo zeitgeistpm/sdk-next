@@ -3,7 +3,7 @@ import { Context, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { getPool, getPool$ } from './functions/getpool'
 import { listPools } from './functions/listpools'
-import { poolPrices, rpcPoolPrices$ } from './functions/poolprices'
+import { poolPrices, observePoolPrices$ } from './functions/poolprices'
 import { PoolGetQuery, PoolPricesQuery, PoolPricesStreamQuery, PoolsListQuery, Swaps } from './types'
 
 export * from './types'
@@ -30,7 +30,7 @@ export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(ctx: C)
       (query: PoolPricesQuery) => poolPrices<typeof ctx>(ctx, query),
       (isRpcContext<MS>(ctx)
         ? {
-            $: (query: PoolPricesStreamQuery) => rpcPoolPrices$(ctx, query),
+            $: (query: PoolPricesStreamQuery) => observePoolPrices$(ctx, query),
           }
         : {}) as Swaps<typeof ctx, MS>['poolPrices'],
     ),

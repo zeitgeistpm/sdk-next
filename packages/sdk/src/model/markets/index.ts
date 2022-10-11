@@ -2,7 +2,7 @@ import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { Context, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { create, transaction } from './functions/create'
-import { get, observe$ } from './functions/get'
+import { get, observeMarket$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
 import { list } from './functions/list'
 import { CreateMarketParams, Markets, MarketsListQuery } from './types'
@@ -20,12 +20,12 @@ export const markets = <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
 ): Markets<C, MS> => {
   const markets: Markets<C, MS> = {
-    list: (query?: MarketsListQuery<C>) => list<typeof ctx, MS>(ctx, query),
+    list: (query?: MarketsListQuery<C>) => list(ctx, query),
     get: pfunc(
       (query: MarketGetQuery) => get<typeof ctx, MS>(ctx, query),
       (isRpcContext<MS>(ctx)
         ? {
-            $: (query: MarketGetQuery) => observe$<typeof ctx, MS>(ctx, query),
+            $: (query: MarketGetQuery) => observeMarket$<typeof ctx, MS>(ctx, query),
           }
         : {}) as Markets<typeof ctx, MS>['get'],
     ),

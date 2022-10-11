@@ -9,7 +9,11 @@ import { RetractedError, TransactionError, UnknownDispatchError } from './types'
 export const signAndSend: Te.TaskEither<
   TransactionError,
   ISubmittableResult,
-  [ApiPromise, SubmittableExtrinsic<'promise', ISubmittableResult>, KeyringPairOrExtSigner]
+  [
+    api: ApiPromise,
+    tx: SubmittableExtrinsic<'promise', ISubmittableResult>,
+    signer: KeyringPairOrExtSigner,
+  ]
 > = async (api, transaction, signer) =>
   new Promise(async resolve => {
     let block: number
@@ -23,9 +27,17 @@ export const signAndSend: Te.TaskEither<
 
       if (result.dispatchError) {
         if (result.dispatchError.isModule) {
-          resolve(either(left(api.registry.findMetaError(result.dispatchError.asModule) as TransactionError)))
+          resolve(
+            either(
+              left(api.registry.findMetaError(result.dispatchError.asModule) as TransactionError),
+            ),
+          )
         } else {
-          resolve(either(left(new UnknownDispatchError(result.dispatchError.toString()) as TransactionError)))
+          resolve(
+            either(
+              left(new UnknownDispatchError(result.dispatchError.toString()) as TransactionError),
+            ),
+          )
         }
         unsub()
       }

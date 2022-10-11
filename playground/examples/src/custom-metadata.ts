@@ -1,5 +1,6 @@
 import { create, CreateStandaloneMarketParams, createStorage } from '@zeitgeistpm/sdk'
 import { IPFS } from '@zeitgeistpm/web3.storage'
+import { Keyring } from '@polkadot/keyring'
 
 async function main() {
   /**
@@ -26,17 +27,33 @@ async function main() {
   /**
    * Params for market creating witg strong metadata typing.
    */
-  const params = {
+
+  const keyring = new Keyring()
+  const signer = keyring.addFromAddress('dE3pPiRvdKqPD5bUDBu3Xpi83McE3Zf3UG8CbhWBQfvUywd7U')
+
+  const params: CreateStandaloneMarketParams<typeof sdk.context> = {
+    signer,
+    creationType: 'Permissionless',
+    disputeMechanism: { Authorized: signer.address },
+    marketType: { Scalar: [1, 2] },
+    oracle: signer.address,
+    period: { Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] },
+    deadlines: {
+      disputeDuration: 2000,
+      gracePeriod: 200,
+      oracleDuration: 500,
+    },
     metadata: {
       __meta: 'markets',
       foo: 'bar',
       descriptions: 'some description',
     },
-  } as CreateStandaloneMarketParams<typeof sdk.context>
+  }
 
   /**
    * Create market.
    */
+
   const response = await sdk.model.markets.create(params)
 
   /**
@@ -51,6 +68,10 @@ async function main() {
    */
   saturatedMarket.foo === 'bar'
   saturatedMarket.descriptions === 'some description'
+
+  console.log(saturatedMarket)
 }
 
-main()
+main().catch(error => {
+  console.log(error)
+})
