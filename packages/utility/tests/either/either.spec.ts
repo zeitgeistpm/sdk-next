@@ -3,6 +3,16 @@ import { either, right, left, Either } from '../../src/either'
 import { throws } from '../../src/error'
 
 describe('either', () => {
+  describe('unwrap', () => {
+    it('should throw error if value is left', () => {
+      const error = either(left(new Error('left value')))
+      expect(error.unwrap).toThrow('left value')
+    })
+    it('should return value if value is right', () => {
+      const error = either(right('ok'))
+      expect(error.unwrap()).toBe('ok')
+    })
+  })
   describe('chain', () => {
     it('should chain all effects when they return a Right value', async () => {
       expect(
