@@ -171,7 +171,7 @@ export type CreateMarketData<
    * The market created by the extrinsic.
    */
   market: RpcMarket<C, MS>
-  pool: P extends CreateMarketWithPoolParams<C, MS> ? Pool<C> : undefined
+  pool: P extends CreateMarketWithPoolParams<C, MS> ? Pool<C, MS> : undefined
 }
 
 export type CreateMarketTransaction = {

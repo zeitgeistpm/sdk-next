@@ -1,6 +1,7 @@
-import { batterystationRpc, create, isRpcData } from '@zeitgeistpm/sdk'
-import { from } from 'rxjs'
-import { switchMap, withLatestFrom } from 'rxjs/operators'
+import { batterystationRpc, create, isRpcData, PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk'
+import { isNotNull } from '@zeitgeistpm/utility/dist/null'
+import { Observable, from } from 'rxjs'
+import { switchMap, withLatestFrom, filter } from 'rxjs/operators'
 
 async function main(marketId: number) {
   const sdk = await create(batterystationRpc())
@@ -16,15 +17,18 @@ async function main(marketId: number) {
    * Fetch pool prices stream for market.
    * Will produce prices for every hour of the last 24 hours, then tail at every block.
    */
-  const poolPrices$ = sdk.model.swaps.getPool.$({ marketId }).pipe(
-    switchMap(pool =>
-      sdk.model.swaps.poolPrices.$({
-        pool: pool.poolId,
-        tail: '-24 hour',
-        resolution: '1 hour',
-      }),
-    ),
-  )
+  const poolPrices$: Observable<PoolAssetPricesAtBlock> = sdk.model.swaps.getPool
+    .$({ marketId })
+    .pipe(
+      filter(isNotNull),
+      switchMap(pool =>
+        sdk.model.swaps.poolPrices.$({
+          pool: pool.poolId,
+          tail: '-24 hour',
+          resolution: '1 hour',
+        }),
+      ),
+    )
 
   /**
    * Subscribe to pool prices and latest market storage.

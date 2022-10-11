@@ -19,14 +19,14 @@ export * from './types'
 export const markets = <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
 ): Markets<C, MS> => {
-  let base: MarketsIndexed<C, MS> = {
+  const indexed: MarketsIndexed<C, MS> = {
     list: (query?: MarketsListQuery<C>) => list<typeof ctx, MS>(ctx, query),
     get: (query: MarketGetQuery) => get<typeof ctx, MS>(ctx, query),
   }
 
   if (isRpcContext<MS>(ctx)) {
     const rpc: MarketsRpc<typeof ctx, MS> = {
-      ...base,
+      ...indexed,
       create: pfunc((params: CreateMarketParams<typeof ctx, MS>) => create(ctx, params), {
         tx: (params: CreateMarketParams<typeof ctx, MS>) => transaction(ctx, params),
       }),
@@ -37,5 +37,5 @@ export const markets = <C extends Context<MS>, MS extends MetadataStorage>(
     return rpc as Markets<C, MS>
   }
 
-  return base as Markets<C, MS>
+  return indexed as Markets<C, MS>
 }

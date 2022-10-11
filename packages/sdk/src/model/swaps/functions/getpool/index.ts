@@ -1,3 +1,4 @@
+import { MetadataStorage } from '../../../../meta'
 import { EMPTY, Observable } from 'rxjs'
 import {
   Context,
@@ -18,23 +19,26 @@ import { isMarketIdQuery, PoolGetQuery } from '../../types'
  * @param query PoolGetQuery
  * @returns Promise<Pool<C>>
  */
-export const getPool = async <C extends Context>(
+export const getPool = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
   query: PoolGetQuery,
-): Promise<Pool<C>> => {
+): Promise<Pool<C, MS> | null> => {
   const data =
-    isFullContext(context) || isIndexerContext(context)
+    isFullContext<MS>(context) || isIndexerContext<MS>(context)
       ? await getFromIndexer(context, query)
       : await getFromRpc(context, query)
 
-  return data as Pool<C>
+  return data as Pool<C, MS>
 }
 
 /**
  * Concrete get function for indexer context
  * @private
  */
-const getFromIndexer = async (context: IndexerContext, query: PoolGetQuery): Promise<IndexedPool> => {
+const getFromIndexer = async (
+  context: IndexerContext,
+  query: PoolGetQuery,
+): Promise<IndexedPool | null> => {
   const {
     pools: [pool],
   } = await context.indexer.pools({
@@ -47,7 +51,7 @@ const getFromIndexer = async (context: IndexerContext, query: PoolGetQuery): Pro
  * Concrete get function for rpc context
  * @private
  */
-const getFromRpc = async <C extends RpcContext>(
+const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: PoolGetQuery,
 ): Promise<RpcPool | null> => {
@@ -74,19 +78,19 @@ const getFromRpc = async <C extends RpcContext>(
  * @param query PoolGetQuery
  * @returns Observable<RpcPool> | typeof EMPTY
  */
-export const getPool$ = <C extends RpcContext>(
+export const getPool$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: PoolGetQuery,
-): Observable<Pool<C>> => {
+): Observable<Pool<C, MS>> => {
   return new Observable(subscription => {
     getFromRpc(context, query).then(pool => {
       if (!pool) return subscription.complete()
-      subscription.next(pool as Pool<C>)
+      subscription.next(pool as Pool<C, MS>)
 
       const poolId = context.api.createType('u128', pool.poolId)
       const unsub = context.api.query.swaps.pools(pool.poolId, pool => {
         if (pool.isNone) return subscription.complete()
-        subscription.next(rpcPool(context, poolId.toNumber(), pool.unwrap()) as Pool<C>)
+        subscription.next(rpcPool(context, poolId.toNumber(), pool.unwrap()) as Pool<C, MS>)
       })
 
       return () => {

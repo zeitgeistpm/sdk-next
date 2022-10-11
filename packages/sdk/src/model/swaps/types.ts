@@ -32,14 +32,14 @@ export type SwapsIndexed<C extends Context<MS>, MS extends MetadataStorage> = {
    * @param query PoolsListQuery<C>
    * @returns Promise<PoolList<C>>
    */
-  listPools: (query: PoolsListQuery<C>) => Promise<PoolList<C>>
+  listPools: (query: PoolsListQuery<C, MS>) => Promise<PoolList<C, MS>>
 
   /**
    * Get a pool by either market id or pool id.
    * @param query PoolGetQuery
    * @returns Promise<Pool<C>>
    */
-  getPool: (query: PoolGetQuery) => Promise<Pool<C>>
+  getPool: (query: PoolGetQuery) => Promise<Pool<C, MS> | null>
   /**
    * Fetch poolprices for a cetain timespan. Will prefer indexer but use rpc if indexer isnt available.
    *
@@ -55,16 +55,16 @@ export type SwapsRpc<C extends RpcContext<MS>, MS extends MetadataStorage> = {
    * @param query PoolsListQuery<C>
    * @returns Promise<PoolList<C>>
    */
-  listPools: (query: PoolsListQuery<C>) => Promise<RpcPoolList<C>>
+  listPools: (query: PoolsListQuery<C, MS>) => Promise<PoolList<C, MS>>
   getPool: PFunc<
-    (query: PoolGetQuery) => Promise<RpcPool>,
+    (query: PoolGetQuery) => Promise<Pool<C, MS> | null>,
     {
       /**
        * Stream changes to a pool object.
        * @param query PoolGetQuery
        * @returns Observable<Pool<RpcContext>>
        */
-      $: (query: PoolGetQuery) => Observable<RpcPool>
+      $: (query: PoolGetQuery) => Observable<Pool<C, MS> | null>
     }
   >
   poolPrices: PFunc<

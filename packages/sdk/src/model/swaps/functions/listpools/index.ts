@@ -19,37 +19,37 @@ import { MetadataStorage } from '../../../../meta'
  * @param query ListQuery<C>
  * @returns Promise<PoolList<C>>
  */
-export const listPools = async <C extends Context>(
+export const listPools = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
-  query: PoolsListQuery<C>,
-): Promise<PoolList<C>> => {
+  query: PoolsListQuery<C, MS>,
+): Promise<PoolList<C, MS>> => {
   const data =
     isFullContext(context) || isIndexerContext(context)
       ? await listFromIndexer(context, query)
       : await listFromRpc(context, query)
 
-  return data as PoolList<C>
+  return data as PoolList<C, MS>
 }
 
 /**
  * Concrete listing function for indexer context
  * @private
  */
-const listFromIndexer = async <C extends IndexerContext>(
+const listFromIndexer = async <C extends IndexerContext, MS extends MetadataStorage>(
   context: C,
-  query: PoolsListQuery<C>,
-): Promise<PoolList<C>> => {
-  return (await context.indexer.pools(query)).pools as PoolList<C>
+  query: PoolsListQuery<C, MS>,
+): Promise<PoolList<C, MS>> => {
+  return (await context.indexer.pools(query)).pools as PoolList<C, MS>
 }
 
 /**
  * Concrete listing function for rpc context
  * @private
  */
-const listFromRpc = async <C extends RpcContext>(
+const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   { api }: C,
-  query?: PoolsListQuery<C>,
-): Promise<PoolList<C>> => {
+  query?: PoolsListQuery<C, MS>,
+): Promise<PoolList<C, MS>> => {
   const entries = isPaginated(query)
     ? await api.query.swaps.pools.entriesPaged({
         args: [],
@@ -58,7 +58,7 @@ const listFromRpc = async <C extends RpcContext>(
       })
     : await api.query.swaps.pools.entries()
 
-  const list: RpcPoolList<C> = entries.map(
+  const list: RpcPoolList<C, MS> = entries.map(
     ([
       {
         args: [poolId],
@@ -71,5 +71,5 @@ const listFromRpc = async <C extends RpcContext>(
     },
   )
 
-  return list as PoolList<C>
+  return list as PoolList<C, MS>
 }
