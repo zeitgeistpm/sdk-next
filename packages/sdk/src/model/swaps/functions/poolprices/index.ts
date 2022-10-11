@@ -10,7 +10,6 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
-import { MetadataStorage } from '../../../../meta'
 import { getIndexOf, IOAssetId } from '../../../../primitives/assetid'
 import { asBlock, asBlocks, BlockNumber, isBlocks, now } from '../../../time'
 import type {
@@ -174,7 +173,12 @@ export const rpcPoolPrices$ = <C extends RpcContext>(
         const block = header.number.toNumber()
         const prices: PoolAssetPricesAtBlock = await Promise.all(
           assets.map(async asset => {
-            const [price] = await ctx.api.rpc.swaps.getSpotPrices(query.pool, ztg, asset, [block])
+            const [price] = await ctx.api.rpc.swaps.getSpotPrices(
+              query.pool,
+              query.assetIn ?? { Ztg: null },
+              asset,
+              [block],
+            )
             return [block, new BigNumber(price.toString())] as AssetPriceAtBlock
           }),
         )

@@ -1,6 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import { Duration, Timespan } from '../../../time'
 import { BlockNumber } from '../../../../primitives/blocknumber'
+import { SwapsAsset } from '@zeitgeistpm/augment-api'
 
 export type PoolPricesQuery = {
   /**
@@ -44,6 +45,16 @@ export type PoolPricesStreamQuery = {
    * The pool to fetch prices for
    */
   pool: number
+  /**
+   * The asset in to check prices for. Defaults to ZTG.
+   */
+  assetIn?:
+    | SwapsAsset
+    | { CategoricalOutcome: any }
+    | { ScalarOutcome: any }
+    | { CombinatorialOutcome: any }
+    | { PoolShare: any }
+    | { Ztg: any }
   /**
    * The blocknumber or date to tail prices from.
    */

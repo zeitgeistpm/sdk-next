@@ -39,11 +39,11 @@ export type RpcMarket<C extends RpcContext<MS>, MS extends MetadataStorage> = {
   /**
    * Fetch metadata from external storage(default IPFS).
    */
-  fetchMetadata: () => Promise<EitherInterface<Error, MarketTypeOf<MS>>>
+  fetchMetadata: Te.TaskEither<Error, MarketTypeOf<MS>, []>
   /**
    * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
    */
-  saturate: () => Promise<EitherInterface<Error, IndexedBase & MarketTypeOf<MS>>>
+  saturate: Te.TaskEither<Error, IndexedBase & MarketTypeOf<MS>, []>
   /**
    * Same as saturate, but will try to unwrap in the same go.
    * @throws Error - if unwrap fails

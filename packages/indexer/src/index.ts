@@ -16,6 +16,7 @@ export const create = (config: Config): ZeitgeistIndexer => {
   const client = new GraphQLClient(config.uri)
   const gql = getSdk(client)
   return {
+    client,
     ...gql,
     ...augments(gql),
   }

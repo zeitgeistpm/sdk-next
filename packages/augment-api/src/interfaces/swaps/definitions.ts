@@ -14,6 +14,16 @@ export default {
     },
   },
   rpc: {
+    poolAccountId: {
+      description: 'Get account id for a pool.',
+      params: [
+        {
+          name: 'poolId',
+          type: 'u128',
+        },
+      ],
+      type: 'u128',
+    },
     getSpotPrices: {
       description: 'get spot prices',
       params: [

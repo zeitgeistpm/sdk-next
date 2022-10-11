@@ -104,7 +104,7 @@ const extraction =
 
         if (createdPool) {
           const [poolId, poolPrimitive] = createdPool
-          pool = rpcPool(poolId, poolPrimitive)
+          pool = rpcPool(context, poolId, poolPrimitive)
         }
 
         return {

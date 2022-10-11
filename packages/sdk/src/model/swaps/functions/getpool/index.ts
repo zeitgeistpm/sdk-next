@@ -6,7 +6,7 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
-import { IndexedPool, Pool, RpcPool } from '../../pool'
+import { IndexedPool, Pool, RpcPool, rpcPool } from '../../pool'
 import { isMarketIdQuery, PoolGetQuery } from '../../types'
 
 /**
@@ -61,14 +61,10 @@ const getFromRpc = async <C extends RpcContext>(
     poolId = query.poolId
   }
 
-  const mPool = await context.api.query.swaps.pools(poolId)
+  const marketPool = await context.api.query.swaps.pools(poolId)
 
-  if (mPool.isNone) return null
-
-  let pool = mPool.unwrap() as RpcPool
-  pool.poolId = poolId
-
-  return pool
+  if (marketPool.isNone) return null
+  return rpcPool(context, poolId, marketPool.unwrap())
 }
 
 /**
@@ -81,7 +77,7 @@ const getFromRpc = async <C extends RpcContext>(
 export const getPool$ = <C extends RpcContext>(
   context: C,
   query: PoolGetQuery,
-): Observable<Pool<C>> | typeof EMPTY => {
+): Observable<Pool<C>> => {
   return new Observable(subscription => {
     getFromRpc(context, query).then(pool => {
       if (!pool) return subscription.complete()
@@ -90,9 +86,7 @@ export const getPool$ = <C extends RpcContext>(
       const poolId = context.api.createType('u128', pool.poolId)
       const unsub = context.api.query.swaps.pools(pool.poolId, pool => {
         if (pool.isNone) return subscription.complete()
-        let rpcPool = pool.unwrap() as RpcPool
-        rpcPool.poolId = poolId.toNumber()
-        subscription.next(rpcPool as Pool<C>)
+        subscription.next(rpcPool(context, poolId.toNumber(), pool.unwrap()) as Pool<C>)
       })
 
       return () => {
