@@ -28,8 +28,8 @@ async function main() {
    * Params for market creating witg strong metadata typing.
    */
 
-  const keyring = new Keyring()
-  const signer = keyring.addFromAddress('dE3pPiRvdKqPD5bUDBu3Xpi83McE3Zf3UG8CbhWBQfvUywd7U')
+  const keyring = new Keyring({ ss58Format: 73, type: 'sr25519' })
+  const signer = keyring.addFromUri('//Alice', { name: 'Alice default' })
 
   const params: CreateStandaloneMarketParams<typeof sdk.context> = {
     signer,

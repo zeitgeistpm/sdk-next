@@ -8,7 +8,7 @@ import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/uti
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
-import { rpcMarket } from '../../../../model/markets'
+import { rpcMarket } from '../../market'
 import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
 import {
   CreateMarketData,
