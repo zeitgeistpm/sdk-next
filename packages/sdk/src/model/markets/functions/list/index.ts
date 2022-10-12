@@ -8,7 +8,14 @@ import {
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { isPaginated } from '../../../../types/query'
-import { MarketList, MarketsListQuery, rpcMarket, attachTransactionInterface } from '../../types'
+import {
+  MarketList,
+  MarketsListQuery,
+  rpcMarket,
+  attachMarketMethods,
+  IndexedMarket,
+  Market,
+} from '../../types'
 
 /**
  * Query for a list of markets.
@@ -40,7 +47,7 @@ const listFromIndexer = async <C extends IndexerContext, MS extends MetadataStor
   query?: MarketsListQuery<C>,
 ): Promise<MarketList<C, MS>> => {
   return (await context.indexer.markets(query)).markets.map(market =>
-    attachTransactionInterface<C, MS>(context, market),
+    attachMarketMethods<C, MS>(context, market as Market<C, MS>),
   ) as MarketList<C, MS>
 }
 

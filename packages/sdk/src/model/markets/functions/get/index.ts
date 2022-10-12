@@ -8,7 +8,7 @@ import {
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { RpcMarket, rpcMarket } from '../../market'
-import { attachTransactionInterface, Market } from '../../types'
+import { attachMarketMethods, IndexedMarket, Market } from '../../types'
 import { MarketGetQuery } from './types'
 
 /**
@@ -45,7 +45,7 @@ const getFromIndexer = async <C extends IndexerContext, MS extends MetadataStora
     markets: [market],
   } = await context.indexer.markets({ where: { marketId_eq: query.marketId } })
   if (market) {
-    return attachTransactionInterface<typeof context, MS>(context, market) as Market<C, MS>
+    return attachMarketMethods<typeof context, MS>(context, market as Market<C, MS>) as Market<C, MS>
   }
   return null
 }

@@ -35,7 +35,7 @@ export type PoolAssetPricesAtBlock = Array<AssetPriceAtBlock>
 /**
  * Discrete price for a asset at a certain block.
  */
-export type AssetPriceAtBlock = [BlockNumber, BigNumber]
+export type AssetPriceAtBlock = [block: BlockNumber, price: BigNumber]
 
 /**
  * Streaming query paramaters.

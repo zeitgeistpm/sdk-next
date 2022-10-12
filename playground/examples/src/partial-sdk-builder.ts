@@ -28,7 +28,7 @@ async function main(marketId: number) {
   sdk$.subscribe(async sdk => {
     if (isFullSdk(sdk)) {
       const market = await sdk.model.markets.get({ marketId })
-      market?.deploySwapPool
+      market?.MarketMethods
     }
   })
 

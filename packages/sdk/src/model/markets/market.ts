@@ -13,8 +13,9 @@ import { RpcPool, rpcPool, PoolDeploymentParams } from '../types'
 import { Context, FullContext, IndexerContext, isRpcContext, RpcContext } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
-import { Data } from '../../primitives'
+import { Data, isIndexedData, isRpcData } from '../../primitives'
 import { extractPoolCreationEventForMarket } from './functions/create'
+import { assert } from '@zeitgeistpm/utility/dist/assert'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -32,7 +33,7 @@ export type Market<C extends Context<MS>, MS extends MetadataStorage> = Data<
  * Concrete Market type for a indexed market.
  */
 export type IndexedMarket<C extends Context<MS>, MS extends MetadataStorage> = FullMarketFragment &
-  (C extends RpcContext<MS> ? MarketTransactionInterface : never)
+  (C extends RpcContext<MS> ? MarketMethods : never)
 
 /**
  * Concrete Market type for a rpc market.
@@ -41,7 +42,7 @@ export type RpcMarket<
   C extends RpcContext<MS>,
   MS extends MetadataStorage,
 > = ZeitgeistPrimitivesMarket &
-  MarketTransactionInterface & {
+  MarketMethods & {
     /**
      * Market id/index. Set for conformity and convenince when fetching markets from rpc.
      */
@@ -68,12 +69,12 @@ export type RpcMarket<
 /**
  * Interface on market with methods for deploying swap pools.
  */
-export type MarketTransactionInterface = {
-  deploySwapPool: Te.TaskEither<Error, RpcPool, [Exclude<PoolDeploymentParams, 'marketId'>]>
+export type MarketMethods = {
+  deploySwapPool: Te.TaskEither<Error, RpcPool, [Omit<PoolDeploymentParams, 'marketId'>]>
   deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
     Error,
     RpcPool,
-    [Exclude<PoolDeploymentParams, 'marketId'>]
+    [Omit<PoolDeploymentParams, 'marketId'>]
   >
 }
 
@@ -119,8 +120,8 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
     ])
 
     const base: IndexedBase = {
-      id: `${isNumber(id) ? id : id.toNumber()}`,
-      marketId: isNumber(id) ? id : id.toNumber(),
+      id: `${market.marketId}`,
+      marketId: market.marketId,
       creation: primitive.creation.type,
       creator: primitive.creator.toHuman(),
       oracle: primitive.oracle.toHuman(),
@@ -145,88 +146,80 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
   market.saturateAndUnwrap = () => market.saturate().then(_ => _.unwrap())
 
-  market.deploySwapPool = Te.from(async params => {
-    const tx = context.api.tx.predictionMarkets.deploySwapPoolForMarket(
-      id,
-      params.swapFee,
-      params.amount,
-      params.weights,
-    )
-    const response = await signAndSend(context.api, tx, params.signer)
-    const extrinsic = response.unwrap()
-    const poolCreationEvent = extractPoolCreationEventForMarket(
-      context.api,
-      extrinsic.events,
-      isNumber(id) ? id : id.toNumber(),
-    )
-    const [poolId, primitive] = poolCreationEvent.unwrap()
-    return rpcPool(context, poolId, primitive)
-  })
-
-  market.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
-    const tx = context.api.tx.predictionMarkets.deploySwapPoolAndAdditionalLiquidity(
-      id,
-      params.swapFee,
-      params.amount,
-      params.weights,
-    )
-    const response = await signAndSend(context.api, tx, params.signer)
-    const extrinsic = response.unwrap()
-    const poolCreationEvent = extractPoolCreationEventForMarket(
-      context.api,
-      extrinsic.events,
-      isNumber(id) ? id : id.toNumber(),
-    )
-    const [poolId, primitive] = poolCreationEvent.unwrap()
-    return rpcPool(context, poolId, primitive)
-  })
+  market = attachMarketMethods(context, market)
 
   return market
 }
 
-export const attachTransactionInterface = <C extends Context<MS>, MS extends MetadataStorage>(
+/**
+ * Attach transaction interfaces for deploying pool etc to market.
+ *
+ * @param context Context<MS>
+ * @param market Market<C, MS>
+ * @returns Market<C, MS>
+ */
+export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
-  indexedMarket: FullMarketFragment,
-): IndexedMarket<C, MS> => {
-  const market = indexedMarket as IndexedMarket<C, MS>
+  market: Market<C, MS>,
+): Market<C, MS> => {
   if (isRpcContext<MS>(context)) {
     market.deploySwapPool = Te.from(async params => {
+      assert(!(await hasPool(market)), () => {
+        throw new Error('Cannot deploy pool for market that allready has pool.')
+      })
+
       const tx = context.api.tx.predictionMarkets.deploySwapPoolForMarket(
         market.marketId,
         params.swapFee,
         params.amount,
         params.weights,
       )
+
       const response = await signAndSend(context.api, tx, params.signer)
       const extrinsic = response.unwrap()
-      const poolCreationEvent = extractPoolCreationEventForMarket(
-        context.api,
-        extrinsic.events,
-        market.marketId,
-      )
-      const [poolId, primitive] = poolCreationEvent.unwrap()
-      return rpcPool(context, poolId, primitive)
+
+      const pool = extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId)
+
+      return pool.unwrap()
     })
 
     market.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
+      assert(!(await hasPool(market)), () => {
+        throw new Error('Cannot deploy pool for market that allready has pool.')
+      })
+
       const tx = context.api.tx.predictionMarkets.deploySwapPoolAndAdditionalLiquidity(
         market.marketId,
         params.swapFee,
         params.amount,
         params.weights,
       )
+
       const response = await signAndSend(context.api, tx, params.signer)
       const extrinsic = response.unwrap()
-      const poolCreationEvent = extractPoolCreationEventForMarket(
-        context.api,
-        extrinsic.events,
-        market.marketId,
-      )
-      const [poolId, primitive] = poolCreationEvent.unwrap()
-      return rpcPool(context, poolId, primitive)
+
+      const pool = extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId)
+
+      return pool.unwrap()
     })
   }
   return market
+}
+
+/**
+ * Check if a rpc or indexed market has pool associated.
+ *
+ * @param market Market<C, MS>
+ * @returns Promise<boolean>
+ */
+export const hasPool = async <C extends Context<MS>, MS extends MetadataStorage>(
+  market: Market<C, MS>,
+): Promise<boolean> => {
+  if (isIndexedData(market)) {
+    return isNumber(market.poolId)
+  }
+  const saturated = await market.saturateAndUnwrap()
+  return isNumber(saturated.poolId)
 }
 
 /**

@@ -35,7 +35,7 @@ async function main() {
     signer,
     creationType: 'Permissionless',
     disputeMechanism: { Authorized: signer.address },
-    marketType: { Scalar: [1, 2] },
+    marketType: { Categorical: 2 },
     oracle: signer.address,
     period: { Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] },
     deadlines: {
@@ -63,15 +63,20 @@ async function main() {
   const { market } = response.saturateAndUnwrap()
   const saturatedMarket = await market.saturateAndUnwrap()
 
-  /**
-   * Saturated markets have the metadata provided according to the custom typing.
-   */
-  saturatedMarket.foo === 'bar'
-  saturatedMarket.descriptions === 'some description'
-
   console.log(saturatedMarket)
+
+  console.log(`deploying pool for market ${saturatedMarket.marketId}`)
+
+  const baseWeight = (1 / 2) * 10 * 10 ** 10
+  await market.deploySwapPoolAndAdditionalLiquidity({
+    amount: 300 * 10 ** 10,
+    swapFee: 1000,
+    weights: [baseWeight, baseWeight],
+    signer: signer,
+  })
 }
 
 main().catch(error => {
+  console.log('ERROR')
   console.log(error)
 })

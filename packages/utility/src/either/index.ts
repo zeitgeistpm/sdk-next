@@ -210,10 +210,10 @@ export const either = <L, R>(_either: Either<L, R>): EitherInterface<L, R> => ({
  * @param fn () => R - function to try catch
  * @returns Either<Error, R>
  */
-export const tryCatch = <Error, R>(fn: () => R): Either<Error, R> => {
+export const tryCatch = <Error, R>(fn: () => R): EitherInterface<Error, R> => {
   try {
-    return right(fn())
+    return either(right(fn()))
   } catch (error) {
-    return left(error as Error)
+    return either(left(error as Error))
   }
 }

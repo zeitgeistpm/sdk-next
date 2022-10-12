@@ -1,5 +1,6 @@
 import { MetadataStorage } from '../../../../meta'
-import { EMPTY, Observable } from 'rxjs'
+import { EMPTY, from, Observable, of } from 'rxjs'
+import { map, switchMap } from 'rxjs/operators'
 import {
   Context,
   IndexerContext,
@@ -71,6 +72,19 @@ const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   return rpcPool(context, poolId, marketPool.unwrap())
 }
 
+export const observeMarketPool$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+  context: C,
+  marketId: number,
+) => {
+  return new Observable<number>(subscription => {
+    context.api.query.marketCommons.marketPool(marketId, poolId => {
+      if (poolId.isSome) {
+        subscription.next(poolId.unwrap().toNumber())
+      }
+    })
+  })
+}
+
 /**
  * Fetch pool and stream changes from rpc.
  *
@@ -78,25 +92,28 @@ const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
  * @param query PoolGetQuery
  * @returns Observable<RpcPool> | typeof EMPTY
  */
-export const getPool$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+export const observePool$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: PoolGetQuery,
 ): Observable<Pool<C, MS>> => {
-  return new Observable(subscription => {
-    getFromRpc(context, query).then(pool => {
-      if (!pool) return subscription.complete()
-      subscription.next(pool as Pool<C, MS>)
+  const poolId$ = isMarketIdQuery(query)
+    ? observeMarketPool$(context, query.marketId)
+    : of(query.poolId)
 
-      const poolId = context.api.createType('u128', pool.poolId)
-      const unsub = context.api.query.swaps.pools(pool.poolId, pool => {
-        if (pool.isNone) return subscription.complete()
-        subscription.next(rpcPool(context, poolId.toNumber(), pool.unwrap()) as Pool<C, MS>)
-      })
+  return poolId$.pipe(
+    switchMap(
+      poolId =>
+        new Observable<Pool<C, MS>>(subscription => {
+          const unsub = context.api.query.swaps.pools(poolId, pool => {
+            if (pool.isNone) return subscription.complete()
+            subscription.next(rpcPool(context, poolId, pool.unwrap()) as Pool<C, MS>)
+          })
 
-      return () => {
-        subscription.complete()
-        unsub.then(unsub => unsub())
-      }
-    })
-  })
+          return () => {
+            subscription.complete()
+            unsub.then(unsub => unsub())
+          }
+        }),
+    ),
+  )
 }

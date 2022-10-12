@@ -27,10 +27,7 @@ export const codec = <I, O>(config: {
  * @generic IO - output of first codec, input for the second.
  * @generic O - output of last codec
  */
-export const compose = <I, IO, O>(
-  codeca: Codec<I, IO>,
-  codecb: Codec<IO, O>,
-): Codec<I, O> => ({
+export const compose = <I, IO, O>(codeca: Codec<I, IO>, codecb: Codec<IO, O>): Codec<I, O> => ({
   encode: data => codecb.encode(codeca.encode(data).unrightOr(throws)),
   decode: data => codeca.decode(codecb.decode(data).unrightOr(throws)),
 })

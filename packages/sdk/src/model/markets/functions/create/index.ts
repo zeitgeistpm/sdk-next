@@ -1,15 +1,13 @@
-import type { ApiPromise } from '@polkadot/api'
 import type { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
 import type { EventRecord } from '@polkadot/types/interfaces'
-import type { ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { signAndSend } from '@zeitgeistpm/rpc'
-import { either, EitherInterface, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
+import * as E from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
-import { rpcMarket } from '../../market'
 import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
+import { RpcMarket, rpcMarket } from '../../market'
 import {
   CreateMarketData,
   CreateMarketParams,
@@ -119,31 +117,22 @@ const extraction =
     params: CreateMarketParams<C, MS>,
   ) =>
   () =>
-    either(
-      tryCatch<Error, CreateMarketData<C, MS, CreateMarketParams<C, MS>>>(() => {
-        const [marketId, market] = extractMarketCreationEventForAddress(
-          context.api,
-          result.events,
-          params.signer.address,
-        ).unwrap()
+    E.tryCatch<Error, CreateMarketData<C, MS, CreateMarketParams<C, MS>>>(() => {
+      const market = extractMarketCreationEventForAddress<C, MS>(
+        context,
+        result.events,
+        params.signer.address,
+      ).unwrap()
 
-        let pool: RpcPool | undefined
+      const pool = isWithPool(params)
+        ? extractPoolCreationEventForMarket(context, result.events, market.marketId).unwrap()
+        : undefined
 
-        const createdPool = isWithPool(params)
-          ? extractPoolCreationEventForMarket(context.api, result.events, marketId).unwrap()
-          : undefined
-
-        if (createdPool) {
-          const [poolId, poolPrimitive] = createdPool
-          pool = rpcPool(context, poolId, poolPrimitive)
-        }
-
-        return {
-          market: rpcMarket<C, MS>(context, marketId, market),
-          pool,
-        } as CreateMarketData<C, MS, CreateMarketParams<C, MS>>
-      }),
-    )
+      return {
+        market,
+        pool,
+      } as CreateMarketData<C, MS, CreateMarketParams<C, MS>>
+    })
 
 /**
  * Get the market creation event from the finalized block events.
@@ -154,23 +143,25 @@ const extraction =
  * @param events EventRecord[]
  * @param address AddressOrPair
  */
-export const extractMarketCreationEventForAddress = (
-  api: ApiPromise,
+export const extractMarketCreationEventForAddress = <
+  C extends RpcContext<MS> | FullContext<MS>,
+  MS extends MetadataStorage,
+>(
+  ctx: C,
   events: EventRecord[],
   address: AddressOrPair,
-): EitherInterface<Error, [number, ZeitgeistPrimitivesMarket]> => {
-  for (const { event } of events) {
-    if (api.events.predictionMarkets.MarketCreated.is(event)) {
-      const [id, , market] = event.data
-      if (market.creator.eq(address)) {
-        return either(right([Number(id.toHuman()), market]))
+): E.EitherInterface<Error, RpcMarket<C, MS>> =>
+  E.tryCatch(() => {
+    for (const { event } of events) {
+      if (ctx.api.events.predictionMarkets.MarketCreated.is(event)) {
+        const [id, , primitive] = event.data
+        if (primitive.creator.eq(address)) {
+          return rpcMarket<C, MS>(ctx, id, primitive) as RpcMarket<C, MS>
+        }
       }
     }
-  }
-  return either(
-    left(new Error('No market creation event found on finalized block. Should not happen.')),
-  )
-}
+    throw new Error('No market creation event found on finalized block. Should not happen.')
+  })
 
 /**
  * Get the pool creation event from the finalized block events.
@@ -181,24 +172,24 @@ export const extractMarketCreationEventForAddress = (
  * @param events EventRecord[]
  * @param marketId number
  */
-export const extractPoolCreationEventForMarket = (
-  api: ApiPromise,
+export const extractPoolCreationEventForMarket = <
+  C extends RpcContext<MS> | FullContext<MS>,
+  MS extends MetadataStorage,
+>(
+  ctx: C,
   events: EventRecord[],
   marketId: number,
-): EitherInterface<Error, [number, ZeitgeistPrimitivesPool]> => {
-  for (const { event } of events) {
-    if (api.events.swaps.PoolCreate.is(event)) {
-      const [{ poolId }, pool] = event.data
-      if (pool.marketId.eq(marketId)) {
-        return either(right([Number(poolId.toHuman()), pool]))
+): E.EitherInterface<Error, RpcPool> =>
+  E.tryCatch(() => {
+    for (const { event } of events) {
+      if (ctx.api.events.swaps.PoolCreate.is(event)) {
+        const [{ poolId }, pool] = event.data
+        if (pool.marketId.eq(marketId)) {
+          return rpcPool(ctx, poolId, pool)
+        }
       }
     }
-  }
-  return either(
-    left(
-      new Error(
-        'No pool creation event found on finalized block. Should not happen when creating with pool.',
-      ),
-    ),
-  )
-}
+    throw new Error(
+      'No pool creation event found on finalized block. Should not happen when creating with pool.',
+    )
+  })
