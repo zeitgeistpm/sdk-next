@@ -72,32 +72,19 @@ const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   return rpcPool(context, poolId, marketPool.unwrap())
 }
 
-export const observeMarketPool$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
-  context: C,
-  marketId: number,
-) => {
-  return new Observable<number>(subscription => {
-    context.api.query.marketCommons.marketPool(marketId, poolId => {
-      if (poolId.isSome) {
-        subscription.next(poolId.unwrap().toNumber())
-      }
-    })
-  })
-}
-
 /**
  * Fetch pool and stream changes from rpc.
  *
  * @param context RpcContext
  * @param query PoolGetQuery
- * @returns Observable<RpcPool> | typeof EMPTY
+ * @returns Observable<Pool<C, MS>>
  */
 export const observePool$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: PoolGetQuery,
 ): Observable<Pool<C, MS>> => {
   const poolId$ = isMarketIdQuery(query)
-    ? observeMarketPool$(context, query.marketId)
+    ? observeMarketPoolId$(context, query.marketId)
     : of(query.poolId)
 
   return poolId$.pipe(
@@ -116,4 +103,25 @@ export const observePool$ = <C extends RpcContext<MS>, MS extends MetadataStorag
         }),
     ),
   )
+}
+
+/**
+ * Observe the pool id of a market. Usefull for starting to observe the pool of a market
+ * at any time even before it is created.
+ *
+ * @param context RpcContext<MS>
+ * @param marketId number
+ * @returns Observable<number>
+ */
+export const observeMarketPoolId$ = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+  context: C,
+  marketId: number,
+) => {
+  return new Observable<number>(subscription => {
+    context.api.query.marketCommons.marketPool(marketId, poolId => {
+      if (poolId.isSome) {
+        subscription.next(poolId.unwrap().toNumber())
+      }
+    })
+  })
 }
