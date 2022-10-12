@@ -52,6 +52,15 @@ export type PoolDeploymentParams = {
 }
 
 /**
+ * Params needed to exhange(buy or sell) a full set of assets for a pool.
+ */
+export type ExchangeFullSetParams = {
+  marketId: number | u128
+  amount: number
+  signer: KeyringPairOrExtSigner
+}
+
+/**
  * Create new RpcPool with associated context, id and on chain primitive.
  *
  * @param ctx RpcContext

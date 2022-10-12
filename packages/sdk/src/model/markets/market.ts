@@ -4,9 +4,10 @@ import {
   ZeitgeistPrimitivesMarket,
   ZeitgeistPrimitivesMarketMarketDispute,
 } from '@polkadot/types/lookup'
+import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
-import { signAndSend } from '@zeitgeistpm/rpc'
+import { KeyringPairOrExtSigner, signAndSend } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
@@ -14,7 +15,7 @@ import { Context, FullContext, IndexerContext, isRpcContext, RpcContext } from '
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
 import { Data, isIndexedData } from '../../primitives'
-import { PoolDeploymentParams, RpcPool } from '../types'
+import { PoolDeploymentParams, ExchangeFullSetParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
 
 export * from './functions/create/types'
@@ -67,14 +68,48 @@ export type RpcMarket<
   }
 
 /**
- * Interface on market with methods for deploying swap pools.
+ * Interface on market with methods for deploying swap pools, buying and selling sets of assets..
  */
 export type MarketMethods = {
-  deploySwapPool: Te.TaskEither<Error, RpcPool, [Omit<PoolDeploymentParams, 'marketId'>]>
+  /**
+   * Deploy a swap pool for the market.
+   *
+   * @param params Omit<PoolDeploymentParams, 'marketId'>
+   * @returns Promise<EitherInterface<Error, RpcPool>>
+   */
+  deploySwapPool: Te.TaskEither<Error, RpcPool, [params: Omit<PoolDeploymentParams, 'marketId'>]>
+  /**
+   * Deploy a swap pool for the market and add liquidity.
+   *
+   * @param params Omit<PoolDeploymentParams, 'marketId'>
+   * @returns Promise<EitherInterface<Error, RpcPool>>
+   */
   deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
     Error,
     RpcPool,
-    [Omit<PoolDeploymentParams, 'marketId'>]
+    [params: Omit<PoolDeploymentParams, 'marketId'>]
+  >
+  /**
+   * Buy a full set of market assets.
+   *
+   * @param params Omit<ExchangeFullSetParams, 'marketId'>
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  buyCompleteSet: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [params: Omit<ExchangeFullSetParams, 'marketId'>]
+  >
+  /**
+   * Sell a full set of market assets.
+   *
+   * @param params Omit<ExchangeFullSetParams, 'marketId'>
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  sellCompleteSet: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [params: Omit<ExchangeFullSetParams, 'marketId'>]
   >
 }
 
@@ -201,6 +236,20 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       const pool = extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId)
 
       return pool.unwrap()
+    })
+
+    market.buyCompleteSet = Te.from(async params => {
+      const tx = context.api.tx.predictionMarkets.buyCompleteSet(market.marketId, params.amount)
+      const response = await signAndSend(context.api, tx, params.signer)
+      const extrinsic = response.unwrap()
+      return extrinsic
+    })
+
+    market.sellCompleteSet = Te.from(async params => {
+      const tx = context.api.tx.predictionMarkets.sellCompleteSet(market.marketId, params.amount)
+      const response = await signAndSend(context.api, tx, params.signer)
+      const extrinsic = response.unwrap()
+      return extrinsic
     })
   }
   return market
