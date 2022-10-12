@@ -63,15 +63,21 @@ async function main() {
   const { market } = response.saturateAndUnwrap()
   const saturatedMarket = await market.saturateAndUnwrap()
 
-  console.log(saturatedMarket)
+  /**
+   * We can start observing for pool on market before it is created.
+   */
+  sdk.model.swaps.getPool.$({ marketId: saturatedMarket.marketId }).subscribe(pool => {
+    console.log('emitted pool', pool?.toHuman())
+  })
 
-  console.log(`deploying pool for market ${saturatedMarket.marketId}`)
-
-  const baseWeight = (1 / 2) * 10 * 10 ** 10
+  /**
+   * Deploy the pool.
+   */
+  const weight = (1 / 2) * 10 * 10 ** 10
   await market.deploySwapPoolAndAdditionalLiquidity({
     amount: 300 * 10 ** 10,
     swapFee: 1000,
-    weights: [baseWeight, baseWeight],
+    weights: [weight, weight],
     signer: signer,
   })
 }
