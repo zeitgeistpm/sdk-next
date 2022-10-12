@@ -1,16 +1,16 @@
 import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
-import { MetadataStorage } from '../../meta'
 import { Observable } from 'rxjs'
-import { Context, FullContext, IndexerContext, RpcContext } from '../../context'
+import { Context, RpcContext } from '../../context'
+import { MetadataStorage } from '../../meta'
 import { PoolGetQuery } from './functions/getpool/types'
-import { PoolList, PoolsListQuery, RpcPoolList } from './functions/listpools/types'
+import { PoolList, PoolsListQuery } from './functions/listpools/types'
 import {
   PoolAssetPricesAtBlock,
   PoolPrices,
   PoolPricesQuery,
   PoolPricesStreamQuery,
 } from './functions/poolprices/types'
-import { Pool, RpcPool } from './pool'
+import { Pool } from './pool'
 
 export * from './functions/types'
 export * from './pool'

@@ -1,7 +1,7 @@
-import { BigNumber } from 'bignumber.js'
-import { Duration, Timespan } from '../../../time'
-import { BlockNumber } from '../../../../primitives/blocknumber'
 import { SwapsAsset } from '@zeitgeistpm/augment-api'
+import { BigNumber } from 'bignumber.js'
+import { BlockNumber } from '../../../../primitives/blocknumber'
+import { Duration, Timespan } from '../../../time'
 
 export type PoolPricesQuery = {
   /**

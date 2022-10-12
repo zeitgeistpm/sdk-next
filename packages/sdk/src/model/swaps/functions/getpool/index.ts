@@ -1,6 +1,5 @@
-import { MetadataStorage } from '../../../../meta'
-import { EMPTY, from, Observable, of } from 'rxjs'
-import { map, switchMap } from 'rxjs/operators'
+import { Observable, of } from 'rxjs'
+import { switchMap } from 'rxjs/operators'
 import {
   Context,
   IndexerContext,
@@ -8,6 +7,7 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
+import { MetadataStorage } from '../../../../meta'
 import { IndexedPool, Pool, RpcPool, rpcPool } from '../../pool'
 import { isMarketIdQuery, PoolGetQuery } from '../../types'
 

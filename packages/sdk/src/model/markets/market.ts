@@ -1,21 +1,21 @@
 import { ApiPromise } from '@polkadot/api'
-import { Option, StorageKey, u128 } from '@polkadot/types'
+import { u128 } from '@polkadot/types'
 import {
   ZeitgeistPrimitivesMarket,
   ZeitgeistPrimitivesMarketMarketDispute,
 } from '@polkadot/types/lookup'
 import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
-import { KeyringPairOrExtSigner, signAndSend } from '@zeitgeistpm/rpc'
+import { signAndSend } from '@zeitgeistpm/rpc'
+import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { RpcPool, rpcPool, PoolDeploymentParams } from '../types'
 import { Context, FullContext, IndexerContext, isRpcContext, RpcContext } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
-import { Data, isIndexedData, isRpcData } from '../../primitives'
+import { Data, isIndexedData } from '../../primitives'
+import { PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
-import { assert } from '@zeitgeistpm/utility/dist/assert'
 
 export * from './functions/create/types'
 export * from './functions/list/types'

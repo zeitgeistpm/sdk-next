@@ -1,8 +1,6 @@
+import { Keyring } from '@polkadot/keyring'
 import { create, CreateStandaloneMarketParams, createStorage } from '@zeitgeistpm/sdk'
 import { IPFS } from '@zeitgeistpm/web3.storage'
-import { Keyring } from '@polkadot/keyring'
-import { switchMap, filter, withLatestFrom } from 'rxjs/operators'
-import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 
 async function main() {
   /**
