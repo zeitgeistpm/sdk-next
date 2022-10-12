@@ -61,6 +61,8 @@ async function main() {
   const { market } = response.saturateAndUnwrap()
   const saturatedMarket = await market.saturateAndUnwrap()
 
+  console.log(saturatedMarket)
+
   console.log('created market', saturatedMarket)
   console.log('custom metadata', saturatedMarket.customValue)
 }

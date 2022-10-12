@@ -15,8 +15,9 @@ import { Context, FullContext, IndexerContext, isRpcContext, RpcContext } from '
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
 import { Data, isIndexedData } from '../../primitives'
-import { PoolDeploymentParams, ExchangeFullSetParams, RpcPool } from '../types'
+import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
+import { ReportOutcomeParams } from './outcome'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -26,7 +27,7 @@ export * from './functions/list/types'
  */
 export type Market<C extends Context<MS>, MS extends MetadataStorage> = Data<
   C,
-  C extends RpcContext<MS> ? RpcMarket<C, MS> : never,
+  C extends RpcContext<MS> ? RpcMarket<C, MS> | SaturatedRpcMarket<C, MS> : never,
   C extends FullContext<MS> | IndexerContext ? IndexedMarket<C, MS> : never
 >
 
@@ -55,17 +56,24 @@ export type RpcMarket<
     /**
      * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
      */
-    saturate: Te.TaskEither<Error, IndexedBase & MarketTypeOf<MS>, []>
+    saturate: Te.TaskEither<Error, SaturatedRpcMarket<C, MS>, []>
     /**
      * Same as saturate, but will try to unwrap in the same go.
      * @throws Error - if unwrap fails
      */
-    saturateAndUnwrap: () => Promise<IndexedBase & MarketTypeOf<MS>>
+    saturateAndUnwrap: () => Promise<SaturatedRpcMarket<C, MS>>
     /**
      * Fetch disputes for the market.
      */
     fetchDisputes: Te.TaskEither<Error, ZeitgeistPrimitivesMarketMarketDispute[], []>
   }
+
+export type SaturatedRpcMarket<C extends RpcContext<MS>, MS extends MetadataStorage> = RpcMarket<
+  C,
+  MS
+> &
+  IndexedBase &
+  MarketTypeOf<MS>
 
 /**
  * Interface on market with methods for deploying swap pools, buying and selling sets of assets..
@@ -111,6 +119,75 @@ export type MarketMethods = {
     ISubmittableResult,
     [params: Omit<ExchangeFullSetParams, 'marketId'>]
   >
+  /**
+   * Redeem the shares for a market.
+   *
+   * @param params { signer: KeyringPairOrExtSigner }
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  redeemShares: Te.TaskEither<Error, ISubmittableResult, [signer: KeyringPairOrExtSigner]>
+  /**
+   * Dispute the current market outcome with a proposed new outcome.
+   *
+   * @param params Omit<ReportOutcomeParams, 'marketId'>
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  disputeOutcome: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [params: Omit<ReportOutcomeParams, 'marketId'>]
+  >
+  /**
+   * Report the outcome of a market. Can only be called by the markets oracle address.
+   *
+   * @param params Omit<ReportOutcomeParams, 'marketId'>
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  reportOutcome: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [params: Omit<ReportOutcomeParams, 'marketId'>]
+  >
+  /**
+   * Destroy a market, including its outcome assets, market account and pool account.
+   *
+   * Must be called by `DestroyOrigin`. Bonds (unless already returned) are slashed without
+   * exception. Can currently only be used for destroying CPMM markets.
+   *
+   * @origin DestroyOrigin
+   * @param signer KeyringPairOrExtSigner
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  adminDestroyMarket: Te.TaskEither<Error, ISubmittableResult, [signer: KeyringPairOrExtSigner]>
+  /**
+   * Immediately move an open market to closed.
+   *
+   * @origin CloseOrigin
+   * @param signer KeyringPairOrExtSigner
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  adminMoveMarketToClosed: Te.TaskEither<Error, ISubmittableResult, [signer: KeyringPairOrExtSigner]>
+  /**
+   * Immediately move a reported or disputed market to resolved.
+   *
+   * @origin ResolveOrigin
+   * @param signer KeyringPairOrExtSigner
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  adminMoveMarketToResolved: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [signer: KeyringPairOrExtSigner]
+  >
+  /**
+   * Approves a market that is waiting for approval from the
+   * advisory committee.
+   *
+   * @origin ApproveOrigin
+   * @param signer KeyringPairOrExtSigner
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  approveMarket: Te.TaskEither<Error, ISubmittableResult, [signer: KeyringPairOrExtSigner]>
 }
 
 /**
@@ -173,10 +250,14 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       resolvedOutcome: primitive.resolvedOutcome.toHuman() as FullMarketFragment['resolvedOutcome'],
     }
 
-    return {
+    let saturatedRpcMarket = {
       ...base,
       ...metadata.unwrap(),
-    }
+    } as SaturatedRpcMarket<C, MS>
+
+    attachMarketMethods<C, MS>(context, saturatedRpcMarket as Market<C, MS>)
+
+    return saturatedRpcMarket
   })
 
   market.saturateAndUnwrap = () => market.saturate().then(_ => _.unwrap())
@@ -239,17 +320,93 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
     })
 
     market.buyCompleteSet = Te.from(async params => {
-      const tx = context.api.tx.predictionMarkets.buyCompleteSet(market.marketId, params.amount)
-      const response = await signAndSend(context.api, tx, params.signer)
-      const extrinsic = response.unwrap()
-      return extrinsic
+      return (
+        await signAndSend(
+          context.api,
+          context.api.tx.predictionMarkets.buyCompleteSet(market.marketId, params.amount),
+          params.signer,
+        )
+      ).unwrap()
     })
 
     market.sellCompleteSet = Te.from(async params => {
-      const tx = context.api.tx.predictionMarkets.sellCompleteSet(market.marketId, params.amount)
-      const response = await signAndSend(context.api, tx, params.signer)
-      const extrinsic = response.unwrap()
-      return extrinsic
+      return (
+        await signAndSend(
+          context.api,
+          context.api.tx.predictionMarkets.sellCompleteSet(market.marketId, params.amount),
+          params.signer,
+        )
+      ).unwrap()
+    })
+
+    market.redeemShares = Te.from(async signer => {
+      return (
+        await signAndSend(
+          context.api,
+          context.api.tx.predictionMarkets.redeemShares(market.marketId),
+          signer,
+        )
+      ).unwrap()
+    })
+
+    market.disputeOutcome = Te.from(async params => {
+      return (
+        await signAndSend(
+          context.api,
+          context.api.tx.predictionMarkets.dispute(market.marketId, params.outcome),
+          params.signer,
+        )
+      ).unwrap()
+    })
+
+    market.reportOutcome = Te.from(async params => {
+      return (
+        await signAndSend(
+          context.api,
+          context.api.tx.predictionMarkets.report(market.marketId, params.outcome),
+          params.signer,
+        )
+      ).unwrap()
+    })
+
+    market.adminDestroyMarket = Te.from(async signer => {
+      return (
+        await signAndSend(
+          context.api,
+          context.api.tx.predictionMarkets.adminDestroyMarket(market.marketId),
+          signer,
+        )
+      ).unwrap()
+    })
+
+    market.adminMoveMarketToClosed = Te.from(async signer => {
+      return (
+        await signAndSend(
+          context.api,
+          context.api.tx.predictionMarkets.adminMoveMarketToClosed(market.marketId),
+          signer,
+        )
+      ).unwrap()
+    })
+
+    market.adminMoveMarketToResolved = Te.from(async signer => {
+      return (
+        await signAndSend(
+          context.api,
+          context.api.tx.predictionMarkets.adminMoveMarketToResolved(market.marketId),
+          signer,
+        )
+      ).unwrap()
+    })
+
+    market.approveMarket = Te.from(async signer => {
+      return (
+        await signAndSend(
+          context.api,
+          context.api.tx.predictionMarkets.approveMarket(market.marketId),
+          signer,
+        )
+      ).unwrap()
     })
   }
   return market
