@@ -25,7 +25,7 @@ async function main(marketId: number) {
       switchMap(pool =>
         sdk.model.swaps.poolPrices.$({
           pool: pool.poolId,
-          tail: '-24 hour',
+          from: '-24 hour',
           resolution: '1 hour',
         }),
       ),

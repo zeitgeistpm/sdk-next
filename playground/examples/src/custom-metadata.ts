@@ -1,6 +1,8 @@
 import { create, CreateStandaloneMarketParams, createStorage } from '@zeitgeistpm/sdk'
 import { IPFS } from '@zeitgeistpm/web3.storage'
 import { Keyring } from '@polkadot/keyring'
+import { switchMap, filter, withLatestFrom } from 'rxjs/operators'
+import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 
 async function main() {
   /**
@@ -8,8 +10,7 @@ async function main() {
    */
   type CustomMarketMetadata = {
     __meta: 'markets'
-    foo: 'bar'
-    descriptions: string
+    customValue: string
   }
 
   /**
@@ -45,8 +46,7 @@ async function main() {
     },
     metadata: {
       __meta: 'markets',
-      foo: 'bar',
-      descriptions: 'some description',
+      customValue: 'some description',
     },
   }
 
@@ -63,23 +63,8 @@ async function main() {
   const { market } = response.saturateAndUnwrap()
   const saturatedMarket = await market.saturateAndUnwrap()
 
-  /**
-   * We can start observing for pool on market before it is created.
-   */
-  sdk.model.swaps.getPool.$({ marketId: saturatedMarket.marketId }).subscribe(pool => {
-    console.log('emitted pool', pool?.toHuman())
-  })
-
-  /**
-   * Deploy the pool.
-   */
-  const weight = (1 / 2) * 10 * 10 ** 10
-  await market.deploySwapPoolAndAdditionalLiquidity({
-    amount: 300 * 10 ** 10,
-    swapFee: 1000,
-    weights: [weight, weight],
-    signer: signer,
-  })
+  console.log('created market', saturatedMarket)
+  console.log('custom metadata', saturatedMarket.customValue)
 }
 
 main().catch(error => {

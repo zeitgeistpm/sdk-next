@@ -164,16 +164,18 @@ export const observePoolPrices$ = <C extends RpcContext>(
     ]).then(async ([pool, now]) => {
       const assets = pool.assets.toArray().slice(0, -1)
 
-      const head = await rpcPoolPrices(ctx, {
-        pool: query.pool,
-        resolution: query.resolution,
-        timespan: {
-          start: asBlock(now, query.tail),
-          end: now.block,
-        },
-      })
+      if (query.from) {
+        const head = await rpcPoolPrices(ctx, {
+          pool: query.pool,
+          resolution: query.resolution,
+          timespan: {
+            start: asBlock(now, query.from),
+            end: now.block,
+          },
+        })
 
-      head[0].forEach((_, index) => sub.next(head.map(prices => prices[index])))
+        head[0].forEach((_, index) => sub.next(head.map(prices => prices[index])))
+      }
 
       return ctx.api.rpc.chain.subscribeFinalizedHeads(async header => {
         const block = header.number.toNumber()

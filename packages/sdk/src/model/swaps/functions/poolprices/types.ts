@@ -58,7 +58,7 @@ export type PoolPricesStreamQuery = {
   /**
    * The blocknumber or date to tail prices from.
    */
-  tail: BlockNumber | Date | Duration
+  from?: BlockNumber | Date | Duration
   /**
    * Projected space between blocks.
    * @example ```ts
