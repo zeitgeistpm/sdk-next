@@ -69,22 +69,6 @@ const CustomStorage: React.FC = () => {
     }
   })
 
-  useEffect(() => {
-    if (sdk) {
-      sdk.model.swaps.getPool({ marketId: 0 }).then(pool => {})
-      sdk.model.markets.get({ marketId: 0 }).then(market => {
-        market
-          .saturate()
-          .then(market => {
-            console.log(market.unwrap())
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      })
-    }
-  }, [sdk])
-
   const onClick = async () => {
     if (!sdk) return
 
@@ -122,8 +106,8 @@ const CustomStorage: React.FC = () => {
       },
     })
 
-    const { market } = response.saturateAndUnwrap()
-    const saturated = await market.saturateAndUnwrap()
+    const { market } = response.saturate().unwrap()
+    const saturated = await market.saturate().unwrap()
 
     console.log('created market', saturated)
   }

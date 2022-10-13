@@ -58,11 +58,6 @@ export type RpcMarket<
      */
     saturate: Te.TaskEither<Error, SaturatedRpcMarket<C, MS>, []>
     /**
-     * Same as saturate, but will try to unwrap in the same go.
-     * @throws Error - if unwrap fails
-     */
-    saturateAndUnwrap: () => Promise<SaturatedRpcMarket<C, MS>>
-    /**
      * Fetch disputes for the market.
      */
     fetchDisputes: Te.TaskEither<Error, ZeitgeistPrimitivesMarketMarketDispute[], []>
@@ -260,8 +255,6 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
     return saturatedRpcMarket
   })
 
-  market.saturateAndUnwrap = () => market.saturate().then(_ => _.unwrap())
-
   market = attachMarketMethods(context, market)
 
   return market
@@ -424,7 +417,7 @@ export const hasPool = async <C extends Context<MS>, MS extends MetadataStorage>
   if (isIndexedData(market)) {
     return isNumber(market.poolId)
   }
-  const saturated = await market.saturateAndUnwrap()
+  const saturated = await market.saturate().unwrap()
   return isNumber(saturated.poolId)
 }
 

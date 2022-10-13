@@ -22,13 +22,12 @@ async function main(marketId: number) {
       ),
     ),
     filter(isNotNull),
-    switchMap(market => from(isRpcData(market) ? market.saturateAndUnwrap() : of(market))),
+    switchMap(market => from(isRpcData(market) ? market.saturate().unwrap() : of(market))),
   )
 
   sdk$.subscribe(async sdk => {
     if (isFullSdk(sdk)) {
       const market = await sdk.model.markets.get({ marketId })
-      market?.MarketMethods
     }
   })
 

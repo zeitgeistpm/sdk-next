@@ -41,7 +41,7 @@ export const storage = <T extends object, ID>(
     }),
     get: Te.from(async cid => {
       const data = await read(node, cid)
-      const encoded = data.chain(codec.encode).unrightOr(throws)
+      const encoded = data.bind(codec.encode).unrightOr(throws)
       return encoded
     }),
     del: Te.from(async cid => {

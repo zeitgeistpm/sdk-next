@@ -150,11 +150,6 @@ export type CreateMarketResult<C extends RpcContext<MS>, MS extends MetadataStor
    * @returns EitherInterface<Error, CreateMarketData<P>>
    */
   saturate: () => IEither<Error, CreateMarketData<C, MS, CreateMarketParams<C, MS>>>
-  /**
-   * Same as saturate, but will try to unwrap in the same go.
-   * @throws Error - if unwrap fails
-   */
-  saturateAndUnwrap: () => CreateMarketData<C, MS, CreateMarketParams<C, MS>>
 }
 
 /**

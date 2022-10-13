@@ -42,7 +42,6 @@ export const create = async <C extends RpcContext<MS>, MS extends MetadataStorag
   return {
     raw: submittableResult,
     saturate,
-    saturateAndUnwrap: () => saturate().unwrap(),
   }
 }
 

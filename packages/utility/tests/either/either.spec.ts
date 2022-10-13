@@ -13,14 +13,14 @@ describe('either', () => {
       expect(error.unwrap()).toBe('ok')
     })
   })
-  describe('chain', () => {
+  describe('bind', () => {
     it('should chain all effects when they return a Right value', async () => {
       expect(
         either(right(1))
-          .chain(n => right(n + 1))
-          .chain(n => right(n + 1))
-          .chain(n => right(n + 1))
-          .chain(n => right(n + 1))
+          .bind(n => right(n + 1))
+          .bind(n => right(n + 1))
+          .bind(n => right(n + 1))
+          .bind(n => right(n + 1))
           .unrightOr(NaN),
       ).toBe(5)
     })
@@ -30,17 +30,17 @@ describe('either', () => {
       const spy = vi.spyOn(adder, 'fn')
       expect(
         either(right(1))
-          .chain(adder.fn)
-          .chain(adder.fn)
-          .chain(adder.fn)
-          .chain(n => {
+          .bind(adder.fn)
+          .bind(adder.fn)
+          .bind(adder.fn)
+          .bind(n => {
             expect(n).toBe(4)
             return right(n + 1)
           })
-          .chain((n): Either<string, number> => left('error'))
-          .chain(adder.fn)
-          .chain(adder.fn)
-          .chain(adder.fn)
+          .bind((n): Either<string, number> => left('error'))
+          .bind(adder.fn)
+          .bind(adder.fn)
+          .bind(adder.fn)
           .unleftOr(throws),
       ).toBe('error')
       expect(spy).toBeCalledTimes(3)
