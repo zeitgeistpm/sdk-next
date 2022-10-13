@@ -58,7 +58,7 @@ async function main() {
   const market = await sdk.model.markets
     .create(params)
     .bind(async result => result.saturate())
-    .map(async ({ market }) => market.saturate())
+    .map(({ market }) => market.saturate())
 
   console.log('created market', market)
   console.log('custom metadata', market.customValue)

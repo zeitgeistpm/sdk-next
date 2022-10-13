@@ -36,6 +36,8 @@ export const isRight = <L, R>(either: Either<L, R>): either is Right<R> => 'righ
  */
 export const isLeft = <L, R>(either: Either<L, R>): either is Left<L> => 'left' in either
 
+export const unwrap = <L, R>(either: Either<L, R>) => unrightOr<L, R>(throws, either)
+
 /**
  * Maps the right value if present with the mapping function.
  *
@@ -64,8 +66,10 @@ export const map = <L, R, B>(f: (a: R) => B, either: Either<L, R>): Either<L, B>
  * ```
  * ```
  */
-export const bind = <L, R, B>(f: (a: R) => Either<L, B>, either: Either<L, R>): Either<L, B> =>
-  isLeft(either) ? either : f(either.right)
+export const bind = <L, R, B>(
+  f: (a: R) => Either<L, B>,
+  either: Either<L, R>,
+): Either<L, B> => (isLeft(either) ? either : f(either.right))
 
 /**
  * Unwraps a the right value into an Option<R>
@@ -164,7 +168,7 @@ export type IEither<L, R> = Either<L, R> & {
  */
 export const either = <L, R>(_either: Either<L, R>): IEither<L, R> => ({
   ..._either,
-  unwrap: () => unrightOr<L, R>(throws, _either),
+  unwrap: () => unwrap(_either),
   unright: () => unright(_either),
   unleft: () => unleft(_either),
   unrightOr: (or: OrHandler<L, R>) => unrightOr(or, _either),
