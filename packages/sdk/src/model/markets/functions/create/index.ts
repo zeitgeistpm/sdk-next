@@ -150,7 +150,7 @@ export const extractMarketCreationEventForAddress = <
   ctx: C,
   events: EventRecord[],
   address: AddressOrPair,
-): E.EitherInterface<Error, RpcMarket<C, MS>> =>
+): E.IEither<Error, RpcMarket<C, MS>> =>
   E.tryCatch(() => {
     for (const { event } of events) {
       if (ctx.api.events.predictionMarkets.MarketCreated.is(event)) {
@@ -179,7 +179,7 @@ export const extractPoolCreationEventForMarket = <
   ctx: C,
   events: EventRecord[],
   marketId: number,
-): E.EitherInterface<Error, RpcPool> =>
+): E.IEither<Error, RpcPool> =>
   E.tryCatch(() => {
     for (const { event } of events) {
       if (ctx.api.events.swaps.PoolCreate.is(event)) {

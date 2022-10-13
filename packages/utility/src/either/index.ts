@@ -118,73 +118,42 @@ export const unrightOr = <L, R>(or: OrHandler<L, R>, either: Either<L, R>): R =>
 export const unleftOr = <L, R>(or: OrHandler<R, L>, either: Either<L, R>): L =>
   isLeft(either) ? either.left : isFunction(or) ? or(either.right) : or
 
-export type EitherInterface<L, R> = Either<L, R> & {
+/**
+ * Interface over either to call either methods directly on Either objects that implements it.
+ */
+export type IEither<L, R> = Either<L, R> & {
+  /**
+   * Tries to unwrap the right value. Throws error if value is left.
+   * @throws Error
+   */
   unwrap: () => R
   /**
    * Unwraps a the right value into an Option<R>
-   *
-   * @example ```typescript
-   * either(right(1)).unright().unwrapOr(2) === 1
-   * either(left(NaN)).unright().unwrapOr(2) === 2
-   * ```
    */
-  unright: () => O.OptionInterface<R>
+  unright: () => O.IOption<R>
   /**
    * Unwraps a the left value into an Option<L>
-   *
-   * @example ```typescript
-   * either(right(1)).unleft().unwrapOr(2) === 2
-   * either(left(NaN)).unleft().unwrapOr(2) === NaN
-   * ```
    */
-  unleft: () => O.OptionInterface<L>
+  unleft: () => O.IOption<L>
   /**
    * Tries to unwrap the right value or uses the default value or lazy function
    * to produce the correct result(or throw error).
-   *
-   * @example ```typescript
-   *   either(right(1)).rightOr(2) // -> 1
-   *   either(left(NaN)).rightOr(2) // -> 2
-   * ```
    */
   unrightOr: (or: OrHandler<L, R>) => R
   /**
    * Tries to unwrap the left value or uses the default value or lazy function
    * to produce the correct result.
-   *
-   * @example ```typescript
-   *   either(right(1)).unleftOr(2) // -> 2
-   *   either(left(NaN)).unleftOr(2) // -> NaN
-   * ```
    */
   unleftOr: (or: OrHandler<R, L>) => L
   /**
    * Maps the right value if present with the mapping function.
-   *
-   * @example ```typescript
-   * either(right(1)).map(num => num + 1) === right(2)
-   * ```
    */
-  map: <B>(f: (a: R) => B) => EitherInterface<L, B>
+  map: <B>(f: (a: R) => B) => IEither<L, B>
   /**
    * Chains eithers where it returns out a Left if one of the composed functions returns left
    * or the Right value if all succeedes.
-   *
-   * @example
-   * ```typescript
-   * const validate = (str: string) =>
-   *   str === 'correct' ? right(1) : left(new Error('string has to be "correct"'))
-   *
-   * either(right('correct'))
-   *   .chain(validate)
-   *   .unrightOr(throws) // -> 1
-   *
-   * either(left('error'))
-   *   .chain(validate)
-   *   .unrightOr(throws) // -> throws error
-   * ```
    */
-  chain: <B>(f: (a: R) => Either<L, B>) => EitherInterface<L, B>
+  chain: <B>(f: (a: R) => Either<L, B>) => IEither<L, B>
 }
 
 /**
@@ -193,7 +162,7 @@ export type EitherInterface<L, R> = Either<L, R> & {
  * @param _either Either<L, R>
  * @returns EitherInterface<L, R>
  */
-export const either = <L, R>(_either: Either<L, R>): EitherInterface<L, R> => ({
+export const either = <L, R>(_either: Either<L, R>): IEither<L, R> => ({
   ..._either,
   unwrap: () => unrightOr<L, R>(throws, _either),
   unright: () => unright(_either),
@@ -210,7 +179,7 @@ export const either = <L, R>(_either: Either<L, R>): EitherInterface<L, R> => ({
  * @param fn () => R - function to try catch
  * @returns Either<Error, R>
  */
-export const tryCatch = <Error, R>(fn: () => R): EitherInterface<Error, R> => {
+export const tryCatch = <Error, R>(fn: () => R): IEither<Error, R> => {
   try {
     return either(right(fn()))
   } catch (error) {

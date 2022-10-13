@@ -5,7 +5,7 @@ import type {
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
-import type { EitherInterface } from '@zeitgeistpm/utility/dist/either'
+import type { IEither } from '@zeitgeistpm/utility/dist/either'
 import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { Pool } from '../../../swaps/pool'
@@ -149,7 +149,7 @@ export type CreateMarketResult<C extends RpcContext<MS>, MS extends MetadataStor
    *
    * @returns EitherInterface<Error, CreateMarketData<P>>
    */
-  saturate: () => EitherInterface<Error, CreateMarketData<C, MS, CreateMarketParams<C, MS>>>
+  saturate: () => IEither<Error, CreateMarketData<C, MS, CreateMarketParams<C, MS>>>
   /**
    * Same as saturate, but will try to unwrap in the same go.
    * @throws Error - if unwrap fails
@@ -182,5 +182,5 @@ export type CreateMarketData<
  */
 export type CreateMarketTransaction = {
   tx: SubmittableExtrinsic<'promise', ISubmittableResult>
-  rollbackMetadata: () => Promise<EitherInterface<Error, void>>
+  rollbackMetadata: () => Promise<IEither<Error, void>>
 }

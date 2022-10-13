@@ -40,7 +40,7 @@ export const storage = <T extends object, ID>(
       return cid
     }),
     get: Te.from(async cid => {
-      const data = either(await read(node, cid))
+      const data = await read(node, cid)
       const encoded = data.chain(codec.encode).unrightOr(throws)
       return encoded
     }),

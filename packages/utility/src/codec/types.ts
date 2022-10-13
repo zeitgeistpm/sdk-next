@@ -1,4 +1,4 @@
-import { EitherInterface } from '../either'
+import { IEither } from '../either'
 
 /**
  * A encoder and decoder of metadata objects.
@@ -12,7 +12,7 @@ export type Codec<I, O, E = Error> = {
    * @param data O - output
    * @returns I - input type
    */
-  decode: (data: O) => EitherInterface<E, I>
+  decode: (data: O) => IEither<E, I>
   /**
    * Encode input type to output
    *
@@ -21,5 +21,5 @@ export type Codec<I, O, E = Error> = {
    * @param data I - input
    * @returns O - output type
    */
-  encode: (data: I) => EitherInterface<E, O>
+  encode: (data: I) => IEither<E, O>
 }

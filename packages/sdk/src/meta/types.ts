@@ -119,7 +119,7 @@ export const tagged = <T extends TaggedMetadata<any>>(
   ({
     get: ({ cid }: TaggedID<any>) => storage.get(cid),
     del: ({ cid }: TaggedID<any>) => storage.del(cid),
-    put: Te.from<TaggedID<any>, [any]>(async data => {
+    put: Te.from<TaggedID<any>, Error, [any]>(async data => {
       const cid = await storage.put(data)
       return {
         __meta: key,

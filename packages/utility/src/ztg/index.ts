@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js'
-import { EitherInterface, either, left, right } from '../either'
+import { IEither, either, left, right } from '../either'
 
 /**
  *
@@ -33,8 +33,7 @@ export const isZtg = (value: unknown): value is Ztg =>
  * @param value BigNumber
  * @returns Ztg
  */
-export const wrap = (value: BigNumber): Ztg =>
-  Object.assign(value as any, { __ztg: Ztg })
+export const wrap = (value: BigNumber): Ztg => Object.assign(value as any, { __ztg: Ztg })
 
 /**
  *
@@ -50,5 +49,4 @@ export const mempty = () => wrap(new BigNumber(0))
  * @param ztg number - number as is
  * @returns Ztg
  */
-export const fromNumber = (value: number): Ztg =>
-  wrap(new BigNumber(value).multipliedBy(ZTG))
+export const fromNumber = (value: number): Ztg => wrap(new BigNumber(value).multipliedBy(ZTG))

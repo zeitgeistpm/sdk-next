@@ -1,3 +1,4 @@
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { either, left, right, tryCatch } from '@zeitgeistpm/utility/dist/either'
 import { from } from '@zeitgeistpm/utility/dist/option'
 import { throws } from '@zeitgeistpm/utility/dist/error'
@@ -13,38 +14,28 @@ import { Storage } from '../..'
  * @generic T - type of metadata
  */
 export const storage = <T extends object>(
-  codec: Codec<string, T> = JsonCodec(),
+  codec: Codec<string, T> = JsonCodec<T>(),
 ): Storage<T, string> => {
   return {
-    put: async data => {
-      try {
-        const content = codec.decode(data).unrightOr(throws)
+    put: Te.from(async data => {
+      const content = codec.decode(data).unrightOr(throws)
 
-        const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(content))
+      const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(content))
 
-        const hash = Array.prototype.map
-          .call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2))
-          .join('')
+      const hash = Array.prototype.map
+        .call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2))
+        .join('')
 
-        localStorage.setItem(hash, content)
+      localStorage.setItem(hash, content)
 
-        return either(right(hash))
-      } catch (error) {
-        return either(left(error as Error))
-      }
-    },
+      return hash
+    }),
 
-    get: async hash =>
-      from<string>(localStorage.getItem(hash))
-        .map(codec.encode)
-        .unwrapOr(() => either(left(new Error(`No value found for key ${hash}`)))),
+    get: Te.from(async hash => {
+      const data = from<string>(localStorage.getItem(hash)).map(codec.encode).unwrap()
+      return data.unwrap()
+    }),
 
-    del: async hash => {
-      return either(
-        tryCatch(() => {
-          localStorage.removeItem(hash)
-        }),
-      )
-    },
+    del: Te.from(async hash => localStorage.removeItem(hash)),
   }
 }

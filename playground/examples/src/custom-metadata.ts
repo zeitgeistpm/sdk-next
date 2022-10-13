@@ -58,8 +58,8 @@ async function main() {
    * Fetch created market from events on finalized block and saturate the metadata.
    * @note in this case the metadat is already in scope so saturating is redundant, but shown as an example.
    */
-  const { market } = response.saturateAndUnwrap()
-  const saturatedMarket = await market.saturateAndUnwrap()
+  const { market } = response.saturate().unwrap()
+  const saturatedMarket = await market.saturate().unwrap()
 
   console.log(saturatedMarket)
 
