@@ -1,3 +1,4 @@
+import omit from 'lodash.omit'
 import * as Ae from '../aeither'
 import * as E from '../either'
 
@@ -10,7 +11,7 @@ import * as E from '../either'
  */
 export type TaskEither<L, R, Args extends ReadonlyArray<unknown>> = (
   ...args: Args
-) => Promise<E.IEither<L, R>> & Ae.IAEither<L, R>
+) => Ae.IAEither<L, R>
 
 /**
  * Create a TaskEither from an async function.
@@ -25,6 +26,6 @@ export const from = <R, L = Error, Args extends ReadonlyArray<unknown> = []>(
 ): TaskEither<L, R, Args> => {
   return (...args) => {
     const either: Ae.AEither<L, R> = Ae.from(fn(...args))
-    return Object.assign(either, Ae.aeither(either))
+    return Ae.aeither(either)
   }
 }

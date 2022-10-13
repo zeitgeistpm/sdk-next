@@ -1,5 +1,3 @@
-import { IEither } from '@zeitgeistpm/utility/dist/either'
-import { Task } from '@zeitgeistpm/utility/dist/task'
 import { TaskEither } from '@zeitgeistpm/utility/dist/taskeither'
 import { CID } from 'ipfs-http-client'
 

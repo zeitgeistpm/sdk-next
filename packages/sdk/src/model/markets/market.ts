@@ -11,8 +11,14 @@ import { KeyringPairOrExtSigner, signAndSend } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import CID from 'cids'
-import { Context, FullContext, IndexerContext, isRpcContext, RpcContext } from '../../context'
-import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../meta'
+import {
+  Context,
+  FullContext,
+  IndexerContext,
+  isRpcContext,
+  RpcContext,
+} from '../../context'
+import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
 import { Data, isIndexedData } from '../../primitives'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
@@ -34,8 +40,10 @@ export type Market<C extends Context<MS>, MS extends MetadataStorage> = Data<
 /**
  * Concrete Market type for a indexed market.
  */
-export type IndexedMarket<C extends Context<MS>, MS extends MetadataStorage> = FullMarketFragment &
-  (C extends RpcContext<MS> ? MarketMethods : never)
+export type IndexedMarket<
+  C extends Context<MS>,
+  MS extends MetadataStorage,
+> = FullMarketFragment & (C extends RpcContext<MS> ? MarketMethods : never)
 
 /**
  * Concrete Market type for a rpc market.
@@ -63,12 +71,10 @@ export type RpcMarket<
     fetchDisputes: Te.TaskEither<Error, ZeitgeistPrimitivesMarketMarketDispute[], []>
   }
 
-export type SaturatedRpcMarket<C extends RpcContext<MS>, MS extends MetadataStorage> = RpcMarket<
-  C,
-  MS
-> &
-  IndexedBase &
-  MarketTypeOf<MS>
+export type SaturatedRpcMarket<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage,
+> = RpcMarket<C, MS> & IndexedBase & MarketTypeOf<MS>
 
 /**
  * Interface on market with methods for deploying swap pools, buying and selling sets of assets..
@@ -80,7 +86,11 @@ export type MarketMethods = {
    * @param params Omit<PoolDeploymentParams, 'marketId'>
    * @returns Promise<EitherInterface<Error, RpcPool>>
    */
-  deploySwapPool: Te.TaskEither<Error, RpcPool, [params: Omit<PoolDeploymentParams, 'marketId'>]>
+  deploySwapPool: Te.TaskEither<
+    Error,
+    RpcPool,
+    [params: Omit<PoolDeploymentParams, 'marketId'>]
+  >
   /**
    * Deploy a swap pool for the market and add liquidity.
    *
@@ -153,7 +163,11 @@ export type MarketMethods = {
    * @param signer KeyringPairOrExtSigner
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
-  adminDestroyMarket: Te.TaskEither<Error, ISubmittableResult, [signer: KeyringPairOrExtSigner]>
+  adminDestroyMarket: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [signer: KeyringPairOrExtSigner]
+  >
   /**
    * Immediately move an open market to closed.
    *
@@ -161,7 +175,11 @@ export type MarketMethods = {
    * @param signer KeyringPairOrExtSigner
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
-  adminMoveMarketToClosed: Te.TaskEither<Error, ISubmittableResult, [signer: KeyringPairOrExtSigner]>
+  adminMoveMarketToClosed: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [signer: KeyringPairOrExtSigner]
+  >
   /**
    * Immediately move a reported or disputed market to resolved.
    *
@@ -221,7 +239,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
   market.saturate = Te.from(async () => {
     const [metadata, poolId, end] = await Promise.all([
-      await market.fetchMetadata(),
+      market.fetchMetadata(),
       context.api.query.marketCommons.marketPool(id),
       projectEndTimestamp<C, MS>(context.api, market),
     ])
@@ -242,12 +260,13 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       disputeMechanism:
         primitive.disputeMechanism.toHuman() as FullMarketFragment['disputeMechanism'],
       report: primitive.report.toHuman() as FullMarketFragment['report'],
-      resolvedOutcome: primitive.resolvedOutcome.toHuman() as FullMarketFragment['resolvedOutcome'],
+      resolvedOutcome:
+        primitive.resolvedOutcome.toHuman() as FullMarketFragment['resolvedOutcome'],
     }
 
     let saturatedRpcMarket = {
       ...base,
-      ...metadata.unwrap(),
+      ...(metadata as StorageTypeOf<MS['markets']>),
     } as SaturatedRpcMarket<C, MS>
 
     attachMarketMethods<C, MS>(context, saturatedRpcMarket as Market<C, MS>)
@@ -284,10 +303,13 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         params.weights,
       )
 
-      const response = await signAndSend(context.api, tx, params.signer)
-      const extrinsic = response.unwrap()
+      const extrinsic = await signAndSend(context.api, tx, params.signer)
 
-      const pool = extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId)
+      const pool = extractPoolCreationEventForMarket(
+        context,
+        extrinsic.events,
+        market.marketId,
+      )
 
       return pool.unwrap()
     })
@@ -304,102 +326,87 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         params.weights,
       )
 
-      const response = await signAndSend(context.api, tx, params.signer)
-      const extrinsic = response.unwrap()
+      const extrinsic = await signAndSend(context.api, tx, params.signer)
 
-      const pool = extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId)
+      const pool = extractPoolCreationEventForMarket(
+        context,
+        extrinsic.events,
+        market.marketId,
+      )
 
       return pool.unwrap()
     })
 
     market.buyCompleteSet = Te.from(async params => {
-      return (
-        await signAndSend(
-          context.api,
-          context.api.tx.predictionMarkets.buyCompleteSet(market.marketId, params.amount),
-          params.signer,
-        )
-      ).unwrap()
+      return await signAndSend(
+        context.api,
+        context.api.tx.predictionMarkets.buyCompleteSet(market.marketId, params.amount),
+        params.signer,
+      )
     })
 
     market.sellCompleteSet = Te.from(async params => {
-      return (
-        await signAndSend(
-          context.api,
-          context.api.tx.predictionMarkets.sellCompleteSet(market.marketId, params.amount),
-          params.signer,
-        )
-      ).unwrap()
+      return await signAndSend(
+        context.api,
+        context.api.tx.predictionMarkets.sellCompleteSet(market.marketId, params.amount),
+        params.signer,
+      )
     })
 
     market.redeemShares = Te.from(async signer => {
-      return (
-        await signAndSend(
-          context.api,
-          context.api.tx.predictionMarkets.redeemShares(market.marketId),
-          signer,
-        )
-      ).unwrap()
+      return await signAndSend(
+        context.api,
+        context.api.tx.predictionMarkets.redeemShares(market.marketId),
+        signer,
+      )
     })
 
     market.disputeOutcome = Te.from(async params => {
-      return (
-        await signAndSend(
-          context.api,
-          context.api.tx.predictionMarkets.dispute(market.marketId, params.outcome),
-          params.signer,
-        )
-      ).unwrap()
+      return await signAndSend(
+        context.api,
+        context.api.tx.predictionMarkets.dispute(market.marketId, params.outcome),
+        params.signer,
+      )
     })
 
     market.reportOutcome = Te.from(async params => {
-      return (
-        await signAndSend(
-          context.api,
-          context.api.tx.predictionMarkets.report(market.marketId, params.outcome),
-          params.signer,
-        )
-      ).unwrap()
+      return await signAndSend(
+        context.api,
+        context.api.tx.predictionMarkets.report(market.marketId, params.outcome),
+        params.signer,
+      )
     })
 
     market.adminDestroyMarket = Te.from(async signer => {
-      return (
-        await signAndSend(
-          context.api,
-          context.api.tx.predictionMarkets.adminDestroyMarket(market.marketId),
-          signer,
-        )
-      ).unwrap()
+      return await signAndSend(
+        context.api,
+        context.api.tx.predictionMarkets.adminDestroyMarket(market.marketId),
+        signer,
+      )
     })
 
     market.adminMoveMarketToClosed = Te.from(async signer => {
-      return (
-        await signAndSend(
-          context.api,
-          context.api.tx.predictionMarkets.adminMoveMarketToClosed(market.marketId),
-          signer,
-        )
-      ).unwrap()
+      return await signAndSend(
+        context.api,
+        context.api.tx.predictionMarkets.adminMoveMarketToClosed(market.marketId),
+        signer,
+      )
     })
 
     market.adminMoveMarketToResolved = Te.from(async signer => {
-      return (
-        await signAndSend(
-          context.api,
-          context.api.tx.predictionMarkets.adminMoveMarketToResolved(market.marketId),
-          signer,
-        )
-      ).unwrap()
+      return await signAndSend(
+        context.api,
+        context.api.tx.predictionMarkets.adminMoveMarketToResolved(market.marketId),
+        signer,
+      )
     })
 
     market.approveMarket = Te.from(async signer => {
-      return (
-        await signAndSend(
-          context.api,
-          context.api.tx.predictionMarkets.approveMarket(market.marketId),
-          signer,
-        )
-      ).unwrap()
+      return await signAndSend(
+        context.api,
+        context.api.tx.predictionMarkets.approveMarket(market.marketId),
+        signer,
+      )
     })
   }
   return market
@@ -431,7 +438,10 @@ export const hasPool = async <C extends Context<MS>, MS extends MetadataStorage>
  * @param market AugmentedRpcMarket
  * @returns Promise<number>
  */
-export const projectEndTimestamp = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
+export const projectEndTimestamp = async <
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage,
+>(
   api: ApiPromise,
   market: RpcMarket<C, MS>,
 ): Promise<number> => {

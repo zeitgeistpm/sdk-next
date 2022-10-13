@@ -1,11 +1,12 @@
 import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { Context, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { create, transaction } from './functions/create'
 import { get, observeMarket$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
 import { list } from './functions/list'
-import { CreateMarketParams, Markets, MarketsListQuery } from './types'
+import { CreateMarketParams, Markets, MarketsListQuery, CreateMarketResult } from './types'
 
 export * from './types'
 
@@ -30,10 +31,17 @@ export const markets = <C extends Context<MS>, MS extends MetadataStorage>(
         : {}) as Markets<typeof ctx, MS>['get'],
     ),
     create: (isRpcContext<MS>(ctx)
-      ? pfunc((params: CreateMarketParams<typeof ctx, MS>) => create<typeof ctx, MS>(ctx, params), {
-          tx: (params: CreateMarketParams<typeof ctx, MS>) =>
-            transaction<typeof ctx, MS>(ctx, params),
-        })
+      ? pfunc(
+          Te.from<
+            CreateMarketResult<typeof ctx, MS>,
+            Error,
+            [params: CreateMarketParams<typeof ctx, MS>]
+          >(params => create<typeof ctx, MS>(ctx, params)),
+          {
+            tx: (params: CreateMarketParams<typeof ctx, MS>) =>
+              transaction<typeof ctx, MS>(ctx, params),
+          },
+        )
       : undefined) as Markets<typeof ctx, MS>['create'],
   }
 

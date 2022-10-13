@@ -30,9 +30,9 @@ export const create = async <C extends RpcContext<MS>, MS extends MetadataStorag
   params: CreateMarketParams<C, MS>,
 ): Promise<CreateMarketResult<C, MS>> => {
   const { tx, rollbackMetadata } = await transaction(context, params)
-  const response = await signAndSend(context.api, tx, params.signer)
+  const response = signAndSend(context.api, tx, params.signer)
 
-  const submittableResult = response.unrightOr(error => {
+  const submittableResult = await response.unrightOr(error => {
     rollbackMetadata()
     throw error
   })
@@ -61,7 +61,7 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
   const storage = context.storage.of('markets')
-  const cid = (await storage.put(params.metadata)).unwrap()
+  const cid = await storage.put(params.metadata)
 
   const rollbackMetadata = Te.from(async () => {
     if (!context.storage) return
@@ -124,7 +124,11 @@ const extraction =
       ).unwrap()
 
       const pool = isWithPool(params)
-        ? extractPoolCreationEventForMarket(context, result.events, market.marketId).unwrap()
+        ? extractPoolCreationEventForMarket(
+            context,
+            result.events,
+            market.marketId,
+          ).unwrap()
         : undefined
 
       return {

@@ -6,6 +6,7 @@ import type {
 import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 import type { IEither } from '@zeitgeistpm/utility/dist/either'
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { Pool } from '../../../swaps/pool'
@@ -177,5 +178,5 @@ export type CreateMarketData<
  */
 export type CreateMarketTransaction = {
   tx: SubmittableExtrinsic<'promise', ISubmittableResult>
-  rollbackMetadata: () => Promise<IEither<Error, void>>
+  rollbackMetadata: Te.TaskEither<Error, void, []> //() => Promise<IEither<Error, void>>
 }

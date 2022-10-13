@@ -1,3 +1,4 @@
+import { async } from 'rxjs'
 import * as E from '../either'
 import { throws } from '../error'
 import * as O from '../option'
@@ -44,15 +45,40 @@ export type IAEither<L, R> = {
    */
   unleft: () => Promise<O.IOption<L>>
   /**
+   * Tries to unwrap the right value or uses the default value or lazy function
+   * to produce the correct result(or throw error).
+   */
+  unrightOr: (or: OrHandler<L, R>) => Promise<R>
+  /**
+   * Tries to unwrap the left value or uses the default value or lazy function
+   * to produce the correct result.
+   */
+  unleftOr: (or: OrHandler<R, L>) => Promise<L>
+  /**
    * Maps the right value if present with the mapping function.
    */
-  map: <B>(f: (a: R) => B) => AEither<L, B>
+  map: <B>(f: (a: R) => B) => IAEither<L, B>
   /**
    * Chains eithers where it returns out a Left if one of the composed functions returns left
    * or the Right value if all succeedes.
    */
-  bind: <B>(f: (a: R) => AEither<L, B>) => AEither<L, B>
+  bind: <B>(f: (a: R) => AEither<L, B>) => IAEither<L, B>
+} & Promise<R>
+
+/**
+ * @generic P - the input value, in case of Left it will be R and vice versa.
+ */
+export type OrHandler<P, A> = A | ((value: P) => A)
+
+const map = async <L, R, B>(f: (a: R) => B, either: AEither<L, R>): AEither<L, B> => {
+  const a = (await either).unwrap()
+  return E.either(E.right(f(a)))
 }
+
+export const bind = <L, R, B>(
+  f: (a: R) => AEither<L, B>,
+  either: AEither<L, R>,
+): AEither<L, B> => either.then(value => f(value.unwrap()))
 
 /**
  * Bind methods to a AEither object for utility and "syntactic" sugar over async eithers..
@@ -75,15 +101,54 @@ export const aeither = <L, R>(either: AEither<L, R>): IAEither<L, R> => ({
    */
   unleft: async () => E.unleft<L, R>(await either),
   /**
+   * Tries to unwrap the right value or uses the default value or lazy function
+   * to produce the correct result(or throw error).
+   */
+  unrightOr: async or => E.unrightOr(or, await either),
+  /**
+   * Tries to unwrap the left value or uses the default value or lazy function
+   * to produce the correct result.
+   */
+  unleftOr: async or => E.unleftOr(or, await either),
+  /**
    * Maps the right value if present with the mapping function.
    */
-  map: async <B>(f: (a: R) => B) => E.either(E.map<L, R, B>(f, await either)),
+  map: <B>(f: (a: R) => B) => aeither<L, B>(map<L, R, B>(f, either)),
   /**
    * Chains eithers where it returns out a Left if one of the composed functions returns left
    * or the Right value if all succeedes.
    */
-  bind: async <B>(f: (a: R) => AEither<L, B>) => {
-    const value = await either
-    return E.either(E.isRight(value) ? await f(value.right) : value)
+  bind: <B>(f: (a: R) => AEither<L, B>) => aeither(bind<L, R, B>(f, either)),
+  /**
+   * Implementation of Promise.then
+   */
+  then(onResolve, onReject) {
+    either.then(value => {
+      if (E.isRight(value)) {
+        onResolve?.(value.right)
+      } else {
+        onReject?.(value.left)
+      }
+    })
+    return this as any
   },
+  /**
+   * Implementation of Promise.catch
+   */
+  catch(onReject) {
+    either.then(value => {
+      if (E.isLeft(value)) {
+        onReject?.(value.left)
+      }
+    })
+    return this as any
+  },
+  /**
+   * Implementation of Promise.finnally
+   */
+  finally(onFinally) {
+    onFinally?.()
+    return this as any
+  },
+  [Symbol.toStringTag]: `IAEither<L, R>`,
 })

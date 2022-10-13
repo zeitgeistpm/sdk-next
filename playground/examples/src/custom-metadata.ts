@@ -50,21 +50,18 @@ async function main() {
 
   /**
    * Create market.
-   */
-
-  const response = await sdk.model.markets.create(params)
-
-  /**
+   *
    * Fetch created market from events on finalized block and saturate the metadata.
    * @note in this case the metadat is already in scope so saturating is redundant, but shown as an example.
    */
-  const { market } = response.saturate().unwrap()
-  const saturatedMarket = await market.saturate().unwrap()
 
-  console.log(saturatedMarket)
+  const market = await sdk.model.markets
+    .create(params)
+    .bind(async result => result.saturate())
+    .map(async ({ market }) => market.saturate())
 
-  console.log('created market', saturatedMarket)
-  console.log('custom metadata', saturatedMarket.customValue)
+  console.log('created market', market)
+  console.log('custom metadata', market.customValue)
 }
 
 main().catch(error => {

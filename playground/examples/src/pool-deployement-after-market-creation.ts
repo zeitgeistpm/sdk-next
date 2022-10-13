@@ -73,7 +73,9 @@ async function main() {
   /**
    * Observe prices on pool as soon as pool is deployed
    */
-  const prices$ = pool$.pipe(switchMap(pool => sdk.model.swaps.poolPrices.$({ pool: pool.poolId })))
+  const prices$ = pool$.pipe(
+    switchMap(pool => sdk.model.swaps.poolPrices.$({ pool: pool.poolId })),
+  )
 
   /**
    * Observe and log prices for market associated to the correct metadata category.
@@ -82,7 +84,9 @@ async function main() {
     saturatedMarket.categories?.map((category, index) => {
       const [block, price] = prices[index]
       console.log(
-        `token [${category?.ticker}], price ${price.toNumber() / 10 ** 10}ZTG, at block[${block}]`,
+        `token [${category?.ticker}], price ${
+          price.toNumber() / 10 ** 10
+        }ZTG, at block[${block}]`,
       )
     })
   })
@@ -92,14 +96,12 @@ async function main() {
    */
   const weight = (1 / 2) * 10 * 10 ** 10
 
-  const pool = (
-    await market.deploySwapPoolAndAdditionalLiquidity({
-      amount: 300 * 10 ** 10,
-      swapFee: 1000,
-      weights: [weight, weight],
-      signer: signer,
-    })
-  ).unwrap()
+  const pool = await market.deploySwapPoolAndAdditionalLiquidity({
+    amount: 300 * 10 ** 10,
+    swapFee: 1000,
+    weights: [weight, weight],
+    signer: signer,
+  })
 
   console.log('pool deployed', pool.toHuman())
   console.log('--------------')

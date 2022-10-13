@@ -31,7 +31,9 @@ export interface MetadataStorage<
    * @generic K extends keyof this
    * @param key K
    */
-  of<K extends keyof this>(key: K): Storage<StorageTypeOf<this[K]>, StorageIdTypeOf<this[K]>>
+  of<K extends keyof this>(
+    key: K,
+  ): Storage<StorageTypeOf<this[K]>, StorageIdTypeOf<this[K]>>
 }
 
 /**
@@ -123,7 +125,7 @@ export const tagged = <T extends TaggedMetadata<any>>(
       const cid = await storage.put(data)
       return {
         __meta: key,
-        cid: cid.unwrap(),
+        cid: cid,
       }
     }),
   } as Storage<any, TaggedID<any>>)
