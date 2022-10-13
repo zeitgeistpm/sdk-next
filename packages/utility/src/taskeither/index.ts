@@ -1,6 +1,5 @@
-import { AEither, IAEither, aeither } from '../either/aeither'
-import { either, IEither, left, right, unleft, unright, unrightOr } from '../either'
-import { throws } from '../error'
+import * as Ae from '../aeither'
+import * as E from '../either'
 
 /**
  * A task that returns an EitherInterface type with syntactic sugar for async unwrapping.
@@ -11,7 +10,7 @@ import { throws } from '../error'
  */
 export type TaskEither<L, R, Args extends ReadonlyArray<unknown>> = (
   ...args: Args
-) => Promise<IEither<L, R>> & IAEither<L, R>
+) => Promise<E.IEither<L, R>> & Ae.IAEither<L, R>
 
 /**
  * Create a TaskEither from an async function.
@@ -25,15 +24,7 @@ export const from = <R, L = Error, Args extends ReadonlyArray<unknown> = []>(
   fn: (...args: Args) => Promise<R>,
 ): TaskEither<L, R, Args> => {
   return (...args) => {
-    const inner: AEither<L, R> = new Promise(async (resolve, reject) => {
-      try {
-        const value: R = await fn(...args)
-        resolve(either(right(value)))
-      } catch (error) {
-        reject(either(left(error as L)))
-      }
-    })
-
-    return Object.assign(inner, aeither(inner))
+    const either: Ae.AEither<L, R> = Ae.from(fn(...args))
+    return Object.assign(either, Ae.aeither(either))
   }
 }

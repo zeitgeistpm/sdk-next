@@ -64,7 +64,7 @@ export const map = <L, R, B>(f: (a: R) => B, either: Either<L, R>): Either<L, B>
  * ```
  * ```
  */
-export const chain = <L, R, B>(f: (a: R) => Either<L, B>, either: Either<L, R>): Either<L, B> =>
+export const bind = <L, R, B>(f: (a: R) => Either<L, B>, either: Either<L, R>): Either<L, B> =>
   isLeft(either) ? either : f(either.right)
 
 /**
@@ -153,7 +153,7 @@ export type IEither<L, R> = Either<L, R> & {
    * Chains eithers where it returns out a Left if one of the composed functions returns left
    * or the Right value if all succeedes.
    */
-  chain: <B>(f: (a: R) => Either<L, B>) => IEither<L, B>
+  bind: <B>(f: (a: R) => Either<L, B>) => IEither<L, B>
 }
 
 /**
@@ -170,7 +170,7 @@ export const either = <L, R>(_either: Either<L, R>): IEither<L, R> => ({
   unrightOr: (or: OrHandler<L, R>) => unrightOr(or, _either),
   unleftOr: (or: OrHandler<R, L>) => unleftOr(or, _either),
   map: <B>(f: (a: R) => B) => either(map(f, _either)),
-  chain: <B>(f: (a: R) => Either<L, B>) => either(chain(f, _either)),
+  bind: <B>(f: (a: R) => Either<L, B>) => either(bind(f, _either)),
 })
 
 /**

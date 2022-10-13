@@ -30,7 +30,7 @@ export const isNone = <A>(option: Option<A>): option is None => option.__option 
 export const map = <A, B>(f: (a: A) => B, option: Option<A>): Option<B> =>
   isNone(option) ? option : some(f(option.value))
 
-export const chain = <A, B>(f: (a: A) => Option<B>, option: Option<A>): Option<B> =>
+export const bind = <A, B>(f: (a: A) => Option<B>, option: Option<A>): Option<B> =>
   isNone(option) ? option : f(option.value)
 
 export const from = <A>(value: A | null): IOption<A> =>
@@ -48,7 +48,7 @@ export type IOption<A> = Option<A> & {
   unwrap: () => A
   unwrapOr: (or: OrHandler<A>) => A
   map: <B>(f: (a: A) => B) => IOption<B>
-  chain: <B>(f: (a: A) => Option<B>) => IOption<B>
+  bind: <B>(f: (a: A) => Option<B>) => IOption<B>
 }
 
 export const option = <A>(_option: Option<A>): IOption<A> => ({
@@ -56,5 +56,5 @@ export const option = <A>(_option: Option<A>): IOption<A> => ({
   unwrap: () => unwrap(_option),
   unwrapOr: or => unwrapOr(or, _option),
   map: <B>(f: (a: A) => B) => option(map(f, _option)),
-  chain: <B>(f: (a: A) => Option<B>) => option(chain(f, _option)),
+  bind: <B>(f: (a: A) => Option<B>) => option(bind(f, _option)),
 })
