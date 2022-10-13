@@ -2253,6 +2253,145 @@ export type SquidStatus = {
   height?: Maybe<Scalars['Int']>;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  accountBalanceById?: Maybe<AccountBalance>;
+  accountBalances: Array<AccountBalance>;
+  accountById?: Maybe<Account>;
+  accounts: Array<Account>;
+  assetById?: Maybe<Asset>;
+  assets: Array<Asset>;
+  historicalAccountBalanceById?: Maybe<HistoricalAccountBalance>;
+  historicalAccountBalances: Array<HistoricalAccountBalance>;
+  historicalAssetById?: Maybe<HistoricalAsset>;
+  historicalAssets: Array<HistoricalAsset>;
+  historicalMarketById?: Maybe<HistoricalMarket>;
+  historicalMarkets: Array<HistoricalMarket>;
+  historicalPoolById?: Maybe<HistoricalPool>;
+  historicalPools: Array<HistoricalPool>;
+  marketById?: Maybe<Market>;
+  markets: Array<Market>;
+  poolById?: Maybe<Pool>;
+  pools: Array<Pool>;
+};
+
+
+export type SubscriptionAccountBalanceByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionAccountBalancesArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<AccountBalanceOrderByInput>>;
+  where?: InputMaybe<AccountBalanceWhereInput>;
+};
+
+
+export type SubscriptionAccountByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionAccountsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<AccountOrderByInput>>;
+  where?: InputMaybe<AccountWhereInput>;
+};
+
+
+export type SubscriptionAssetByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionAssetsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<AssetOrderByInput>>;
+  where?: InputMaybe<AssetWhereInput>;
+};
+
+
+export type SubscriptionHistoricalAccountBalanceByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionHistoricalAccountBalancesArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<HistoricalAccountBalanceOrderByInput>>;
+  where?: InputMaybe<HistoricalAccountBalanceWhereInput>;
+};
+
+
+export type SubscriptionHistoricalAssetByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionHistoricalAssetsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<HistoricalAssetOrderByInput>>;
+  where?: InputMaybe<HistoricalAssetWhereInput>;
+};
+
+
+export type SubscriptionHistoricalMarketByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionHistoricalMarketsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<HistoricalMarketOrderByInput>>;
+  where?: InputMaybe<HistoricalMarketWhereInput>;
+};
+
+
+export type SubscriptionHistoricalPoolByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionHistoricalPoolsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<HistoricalPoolOrderByInput>>;
+  where?: InputMaybe<HistoricalPoolWhereInput>;
+};
+
+
+export type SubscriptionMarketByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionMarketsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<MarketOrderByInput>>;
+  where?: InputMaybe<MarketWhereInput>;
+};
+
+
+export type SubscriptionPoolByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionPoolsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<PoolOrderByInput>>;
+  where?: InputMaybe<PoolWhereInput>;
+};
+
 /** Asset weightage details */
 export type Weight = {
   __typename?: 'Weight';

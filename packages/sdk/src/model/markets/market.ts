@@ -221,7 +221,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
   market.saturate = Te.from(async () => {
     const [metadata, poolId, end] = await Promise.all([
-      market.fetchMetadata(),
+      await market.fetchMetadata(),
       context.api.query.marketCommons.marketPool(id),
       projectEndTimestamp<C, MS>(context.api, market),
     ])
@@ -436,7 +436,7 @@ export const projectEndTimestamp = async <C extends RpcContext<MS>, MS extends M
   market: RpcMarket<C, MS>,
 ): Promise<number> => {
   if (market.period.isTimestamp) {
-    return Number(market.period.asTimestamp[1].toHuman())
+    return market.period.asTimestamp.end.toNumber()
   } else {
     const endBlock = Number(market.period.asBlock[1].toHuman())
     const now = +(await api.query.timestamp.now()).toString()
