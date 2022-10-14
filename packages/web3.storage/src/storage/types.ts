@@ -1,4 +1,5 @@
 import { TaskEither } from '@zeitgeistpm/utility/dist/taskeither'
+import { IOption } from '@zeitgeistpm/utility/dist/option'
 import { CID } from 'ipfs-http-client'
 
 export * from './providers/ipfs/types'
@@ -14,7 +15,7 @@ export type Storage<A extends object, ID = CID> = {
    * @generic ID - id type
    * @generic T - type of data
    */
-  get: TaskEither<Error, A, [ID]>
+  get: TaskEither<Error, IOption<A>, [ID]>
   /**
    * Put item to storage
    *

@@ -10,6 +10,7 @@ import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import { KeyringPairOrExtSigner, signAndSend } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import { throws } from '@zeitgeistpm/utility/dist/error'
 import CID from 'cids'
 import {
   Context,
@@ -24,6 +25,7 @@ import { Data, isIndexedData } from '../../primitives'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
 import { ReportOutcomeParams } from './outcome'
+import { isNone } from '@zeitgeistpm/utility/dist/option'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -237,12 +239,14 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
   market.marketId = isNumber(id) ? id : id.toNumber()
 
-  market.fetchMetadata = () => {
+  market.fetchMetadata = Te.from(async () => {
     const hex = market.metadata.toHex()
     const cid = new CID('f0155' + hex.slice(2))
     const id = { __meta: 'markets', cid: cid } as StorageIdTypeOf<MS['markets']>
-    return context.storage.of('markets').get(id)
-  }
+    return (await context.storage.of('markets').get(id)).unwrapOr(() => {
+      throw new Error(`could not fetch metadata for market: ${market.marketId}`)
+    })
+  })
 
   market.fetchDisputes = Te.from(async () => {
     const disputes = await context.api.query.predictionMarkets.disputes(id)

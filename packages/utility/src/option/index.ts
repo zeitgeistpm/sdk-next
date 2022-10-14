@@ -21,9 +21,10 @@ export const none = (): None => ({
   __option: 'none',
 })
 
-export type OrHandler<A> = A | (() => A)
+export type OrHandler<A> = A | ((e?: Error) => A)
 
-export const isSome = <A>(option: Option<A>): option is Some<A> => option.__option === 'some'
+export const isSome = <A>(option: Option<A>): option is Some<A> =>
+  option.__option === 'some'
 
 export const isNone = <A>(option: Option<A>): option is None => option.__option === 'none'
 
@@ -36,7 +37,8 @@ export const bind = <A, B>(f: (a: A) => Option<B>, option: Option<A>): Option<B>
 export const from = <A>(value: A | null): IOption<A> =>
   option(value ? some(value) : (none() as Option<A>))
 
-export const unwrap = <A>(option: Option<A>): A => unwrapOr<A>(throws as OrHandler<A>, option)
+export const unwrap = <A>(option: Option<A>): A | null =>
+  isSome(option) ? option.value : null
 
 export const unwrapOr = <A>(or: OrHandler<A>, option: Option<A>): A => {
   if (isSome(option)) return option.value
@@ -45,7 +47,7 @@ export const unwrapOr = <A>(or: OrHandler<A>, option: Option<A>): A => {
 }
 
 export type IOption<A> = Option<A> & {
-  unwrap: () => A
+  unwrap: () => A | null
   unwrapOr: (or: OrHandler<A>) => A
   map: <B>(f: (a: A) => B) => IOption<B>
   bind: <B>(f: (a: A) => Option<B>) => IOption<B>

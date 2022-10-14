@@ -4,6 +4,7 @@ import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
 import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import * as O from '@zeitgeistpm/utility/dist/option'
 import type { CID } from 'ipfs-http-client'
 import * as IPFSHttpClient from 'ipfs-http-client'
 import { Storage } from '../..'
@@ -43,8 +44,8 @@ export const storage = <T extends object, ID>(
       return cid
     }),
     get: Te.from(async cid => {
-      const data = await read(node, cid)
-      const encoded = codec.encode(data).unrightOr(throws)
+      const json = await read(node, cid)
+      const encoded = json.bind(d => codec.encode(d).unright())
       return encoded
     }),
     del: Te.from(async cid => {
@@ -59,12 +60,18 @@ export const storage = <T extends object, ID>(
 /**
  * Read data from a cid and parse it to a string.
  */
-const read = Te.from(async (node: IPFSHttpClient.IPFSHTTPClient, cid: CID) => {
+const read = Te.from<
+  O.IOption<string>,
+  Error,
+  [node: IPFSHttpClient.IPFSHTTPClient, cid: CID]
+>(async (node, cid) => {
   const content: Uint8Array[] = []
 
   for await (const chunk of node.cat(cid)) {
     content.push(chunk)
   }
 
-  return content.map(u8aToString).reduce((acc, chunk) => acc + chunk)
+  if (content.length === 0) return O.option(O.none())
+
+  return O.option(O.some(content.map(u8aToString).reduce((acc, chunk) => acc + chunk)))
 })

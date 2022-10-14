@@ -20,7 +20,10 @@ export const storage = <T extends object>(
     put: Te.from(async data => {
       const content = codec.decode(data).unrightOr(throws)
 
-      const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(content))
+      const buffer = await crypto.subtle.digest(
+        'SHA-256',
+        new TextEncoder().encode(content),
+      )
 
       const hash = Array.prototype.map
         .call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2))
@@ -32,8 +35,8 @@ export const storage = <T extends object>(
     }),
 
     get: Te.from(async hash => {
-      const data = from<string>(localStorage.getItem(hash)).map(codec.encode).unwrap()
-      return data.unwrap()
+      const data = from<string>(localStorage.getItem(hash)).map(codec.encode)
+      return data.bind(d => d.unright())
     }),
 
     del: Te.from(async hash => localStorage.removeItem(hash)),

@@ -103,6 +103,10 @@ async function main() {
     signer: signer,
   })
 
+  const poolJoinresult = await pool.join({} as any).unright()
+
+  poolJoinresult.unwrap
+
   console.log('pool deployed', pool.toHuman())
   console.log('--------------')
 }
