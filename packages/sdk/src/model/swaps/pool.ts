@@ -1,4 +1,3 @@
-import { AugmentedSubmittables } from '@polkadot/api/types'
 import { u128, Vec } from '@polkadot/types'
 import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { ISubmittableResult } from '@polkadot/types/types'
