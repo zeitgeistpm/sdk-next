@@ -17,7 +17,7 @@ describe('taskeither', () => {
         }
       }
       const task = from(fetcher)
-      expect(either(await task(1, true)).unrightOr(throws)).toEqual({
+      expect(await task(1, true).unrightOr(throws)).toEqual({
         a: 1,
         b: true,
       })
@@ -25,7 +25,7 @@ describe('taskeither', () => {
 
     it('should return Left<Error> when function throws', async () => {
       const task = from(async () => throws(new Error('threwn')))
-      expect(either(await task()).unleftOr(throws)).toEqual(new Error('threwn'))
+      expect(await task().unleftOr(throws)).toEqual(new Error('threwn'))
     })
   })
 })

@@ -25,7 +25,7 @@ export const from = <R, L = Error, Args extends ReadonlyArray<unknown> = []>(
   fn: (...args: Args) => Promise<R>,
 ): TaskEither<L, R, Args> => {
   return (...args) => {
-    const either: Ae.AEither<L, R> = Ae.from(fn(...args))
+    const either: Ae.AEither<L, R> = Ae.from(() => fn(...args))
     return Ae.aeither(either)
   }
 }

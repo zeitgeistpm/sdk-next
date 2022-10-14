@@ -15,13 +15,13 @@ export type AEither<L, R> = Promise<E.IEither<L, R> | E.Either<L, R>>
  * @param promise Promise<R>
  * @returns AEither<L, R>
  */
-export const from = <L, R>(promise: Promise<R>): AEither<L, R> => {
-  return new Promise(async (resolve, reject) => {
+export const from = <L, R>(f: () => Promise<R>): AEither<L, R> => {
+  return new Promise(async resolve => {
     try {
-      const value: R = await promise
+      const value: R = await f()
       resolve(E.either(E.right(value)))
     } catch (error) {
-      reject(E.either(E.left(error as L)))
+      resolve(E.either(E.left(error as L)))
     }
   })
 }
