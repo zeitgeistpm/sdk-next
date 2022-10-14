@@ -26,19 +26,19 @@ export const IOCategoricalIndex = tuple([IOMarketId, number()])
 export const IOScalarIndex = tuple([IOMarketId, IOScalarPosition])
 
 export const IOCategoricalAssetId = type({
-  categoricalOutcome: IOCategoricalIndex,
+  CategoricalOutcome: IOCategoricalIndex,
 })
 
 export const IOScalarAssetId = type({
-  scalarOutcome: IOScalarIndex,
+  ScalarOutcome: IOScalarIndex,
 })
 
 export const IOZtgAssetId = type({
-  ztg: literal(null),
+  Ztg: literal(null),
 })
 
 export const IOPoolShareAssetId = type({
-  poolShare: number(),
+  PoolShare: number(),
 })
 
 export const IOAssetId = union([
@@ -55,7 +55,7 @@ export const IOAssetId = union([
  * @returns number
  */
 export const getScalarIndexOf = (scalarAssetId: ScalarAssetId): number =>
-  scalarAssetId.scalarOutcome[1] === 'Short' ? 0 : 1
+  scalarAssetId.ScalarOutcome[1] === 'Short' ? 0 : 1
 
 /**
  * Get the asset index of an AssetId, will return index only for scalar and categorical assets.
@@ -65,7 +65,7 @@ export const getScalarIndexOf = (scalarAssetId: ScalarAssetId): number =>
  */
 export const getIndexOf = (assetId: AssetId): number | null =>
   IOCategoricalAssetId.is(assetId)
-    ? assetId.categoricalOutcome[1]
+    ? assetId.CategoricalOutcome[1]
     : IOScalarAssetId.is(assetId)
     ? getScalarIndexOf(assetId)
     : null

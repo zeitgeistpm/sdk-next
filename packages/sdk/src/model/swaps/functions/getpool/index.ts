@@ -36,16 +36,18 @@ export const getPool = async <C extends Context<MS>, MS extends MetadataStorage>
  * Concrete get function for indexer context
  * @private
  */
-const getFromIndexer = async (
+const getFromIndexer = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: IndexerContext,
   query: PoolGetQuery,
-): Promise<IndexedPool | null> => {
+): Promise<IndexedPool<C, MS> | null> => {
   const {
     pools: [pool],
   } = await context.indexer.pools({
-    where: isMarketIdQuery(query) ? { marketId_eq: query.marketId } : { poolId_eq: query.poolId },
+    where: isMarketIdQuery(query)
+      ? { marketId_eq: query.marketId }
+      : { poolId_eq: query.poolId },
   })
-  return pool
+  return pool as IndexedPool<C, MS> | null
 }
 
 /**

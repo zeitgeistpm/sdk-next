@@ -201,6 +201,18 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   approveMarket: Te.TaskEither<Error, ISubmittableResult, [signer: KeyringPairOrExtSigner]>
+  /**
+   * Clean up the pool of a resolved market.
+   *
+   * @origin The root origin.
+   * @param params Omit<ReportOutcomeParams, 'marketId'>
+   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
+   */
+  adminCleanUpPool: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [params: Omit<ReportOutcomeParams, 'marketId'>]
+  >
 }
 
 /**
@@ -406,6 +418,14 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         context.api,
         context.api.tx.predictionMarkets.approveMarket(market.marketId),
         signer,
+      )
+    })
+
+    market.adminCleanUpPool = Te.from(async params => {
+      return await signAndSend(
+        context.api,
+        context.api.tx.swaps.adminCleanUpPool(market.marketId, params.outcome),
+        params.signer,
       )
     })
   }
