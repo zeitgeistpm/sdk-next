@@ -2,7 +2,7 @@ import { Keyring } from '@polkadot/keyring'
 import { create, CreateStandaloneMarketParams, createStorage } from '@zeitgeistpm/sdk'
 import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 import { IPFS } from '@zeitgeistpm/web3.storage'
-import { filter, switchMap } from 'rxjs/operators'
+import { filter, take } from 'rxjs/operators'
 
 async function main() {
   /**
@@ -69,26 +69,12 @@ async function main() {
   const pool$ = sdk.model.swaps.getPool
     .$({ marketId: saturatedMarket.marketId })
     .pipe(filter(isNotNull))
+    .pipe(take(1))
 
-  /**
-   * Observe prices on pool as soon as pool is deployed
-   */
-  const prices$ = pool$.pipe(
-    switchMap(pool => sdk.model.swaps.poolPrices.$({ pool: pool.poolId })),
-  )
-
-  /**
-   * Observe and log prices for market associated to the correct metadata category.
-   */
-  prices$.subscribe(prices => {
-    saturatedMarket.categories?.map((category, index) => {
-      const [block, price] = prices[index]
-      console.log(
-        `token [${category?.ticker}], price ${
-          price.toNumber() / 10 ** 10
-        }ZTG, at block[${block}]`,
-      )
-    })
+  pool$.subscribe(pool => {
+    console.log('pool deployed', pool.toHuman())
+    console.log('--------------')
+    process.exit()
   })
 
   /**
@@ -102,13 +88,6 @@ async function main() {
     weights: [weight, weight],
     signer: signer,
   })
-
-  const poolJoinresult = await pool.join({} as any).unright()
-
-  poolJoinresult.unwrap
-
-  console.log('pool deployed', pool.toHuman())
-  console.log('--------------')
 }
 
 main().catch(error => {
