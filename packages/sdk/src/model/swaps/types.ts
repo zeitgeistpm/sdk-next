@@ -3,7 +3,7 @@ import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { PoolGetQuery } from './functions/getpool/types'
-import { PoolList, PoolsListQuery } from './functions/listpools/types'
+import { PoolsListQuery } from './functions/listpools/types'
 import {
   PoolAssetPricesAtBlock,
   PoolPrices,
@@ -11,6 +11,7 @@ import {
   PoolPricesStreamQuery,
 } from './functions/poolprices/types'
 import { Pool } from './pool'
+import { PoolList } from './poolslist'
 
 export * from './functions/types'
 export * from './pool'

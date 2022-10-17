@@ -3,12 +3,15 @@ import {
   IndexerContext,
   isFullContext,
   isIndexerContext,
+  isRpcContext,
   RpcContext,
 } from '../../../../context'
 import { isPaginated } from '../../../../types/query'
-import { PoolList, PoolsListQuery, RpcPoolList } from '../../types'
-import { RpcPool } from '../../pool'
+import { PoolsListQuery } from '../../types'
+import { Pool, rpcPool, RpcPool } from '../../pool'
 import { MetadataStorage } from '../../../../meta'
+import { PoolList } from '../../poolslist'
+import { isNull } from '@polkadot/util'
 
 /**
  * Query for a list of pools.
@@ -23,12 +26,18 @@ export const listPools = async <C extends Context<MS>, MS extends MetadataStorag
   context: C,
   query: PoolsListQuery<C, MS>,
 ): Promise<PoolList<C, MS>> => {
-  const data =
-    isFullContext(context) || isIndexerContext(context)
-      ? await listFromIndexer(context, query)
-      : await listFromRpc(context, query)
+  const pools =
+    isFullContext<MS>(context) || isIndexerContext<MS>(context)
+      ? await listFromIndexer<typeof context, MS>(context, query)
+      : isRpcContext<MS>(context)
+      ? await listFromRpc<typeof context, MS>(context, query)
+      : null
 
-  return data as PoolList<C, MS>
+  if (isNull(pools)) {
+    throw new Error('No pools. Should be unreachable code path')
+  }
+
+  return pools as PoolList<C, MS>
 }
 
 /**
@@ -38,8 +47,8 @@ export const listPools = async <C extends Context<MS>, MS extends MetadataStorag
 const listFromIndexer = async <C extends IndexerContext, MS extends MetadataStorage>(
   context: C,
   query: PoolsListQuery<C, MS>,
-): Promise<PoolList<C, MS>> => {
-  return (await context.indexer.pools(query)).pools as PoolList<C, MS>
+): Promise<Pool<C, MS>[]> => {
+  return (await context.indexer.pools(query)).pools as Pool<C, MS>[]
 }
 
 /**
@@ -47,29 +56,25 @@ const listFromIndexer = async <C extends IndexerContext, MS extends MetadataStor
  * @private
  */
 const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
-  { api }: C,
+  ctx: C,
   query?: PoolsListQuery<C, MS>,
-): Promise<PoolList<C, MS>> => {
+): Promise<Pool<C, MS>[]> => {
   const entries = isPaginated(query)
-    ? await api.query.swaps.pools.entriesPaged({
+    ? await ctx.api.query.swaps.pools.entriesPaged({
         args: [],
         pageSize: query.limit,
         startKey: `${query.offset}`,
       })
-    : await api.query.swaps.pools.entries()
+    : await ctx.api.query.swaps.pools.entries()
 
-  const list: RpcPoolList<C, MS> = entries.map(
+  const list = entries.map(
     ([
       {
         args: [poolId],
       },
       pool,
-    ]) => {
-      const rpcPool = pool.unwrap() as RpcPool
-      rpcPool.poolId = poolId.toNumber()
-      return rpcPool
-    },
+    ]) => rpcPool(ctx, poolId.toNumber(), pool.unwrap()) as Pool<C, MS>,
   )
 
-  return list as PoolList<C, MS>
+  return list
 }

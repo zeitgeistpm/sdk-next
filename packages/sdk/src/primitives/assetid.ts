@@ -1,5 +1,6 @@
+import { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
 import { literal, number, tuple, type, union, Infer } from 'superstruct'
-import { IOMarketId } from './marketid'
+import { IOMarketId, MarketId } from './marketid'
 
 /**
  * AssetId.
@@ -47,6 +48,27 @@ export const IOAssetId = union([
   IOZtgAssetId,
   IOPoolShareAssetId,
 ])
+
+export const from = (asset: ZeitgeistPrimitivesAsset): AssetId => {
+  if (asset.isCategoricalOutcome) {
+    return {
+      CategoricalOutcome: [
+        asset.asCategoricalOutcome[0].toNumber() as MarketId,
+        asset.asCategoricalOutcome[1].toNumber(),
+      ],
+    }
+  } else if (asset.isScalarOutcome) {
+    return {
+      ScalarOutcome: [
+        asset.asScalarOutcome[0].toNumber() as MarketId,
+        asset.asScalarOutcome[1].type,
+      ],
+    }
+  } else if (asset.isPoolShare) {
+    return { PoolShare: asset.asPoolShare.toNumber() }
+  }
+  return { Ztg: null }
+}
 
 /**
  * Get asset index of a scalar asset, short being 0 and long being 1

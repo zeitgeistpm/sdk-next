@@ -188,7 +188,7 @@ export const extractPoolCreationEventForMarket = <
       if (ctx.api.events.swaps.PoolCreate.is(event)) {
         const [{ poolId }, pool] = event.data
         if (pool.marketId.eq(marketId)) {
-          return rpcPool(ctx, poolId, pool)
+          return rpcPool(ctx, poolId.toNumber(), pool)
         }
       }
     }

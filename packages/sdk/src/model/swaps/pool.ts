@@ -1,11 +1,12 @@
 import { u128, Vec } from '@polkadot/types'
 import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { ISubmittableResult } from '@polkadot/types/types'
-import { isNumber } from '@polkadot/util'
+import { isArray, isNumber } from '@polkadot/util'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
 import { KeyringPairOrExtSigner, signAndSend } from '@zeitgeistpm/rpc'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import BigNumber from 'bignumber.js'
 import { Context, IndexerContext, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { AssetId } from '../../primitives'
@@ -30,6 +31,7 @@ export type IndexedPool<C extends Context<MS>, MS extends MetadataStorage> = Unp
   PoolsQuery['pools']
 > &
   (C extends RpcContext<MS> ? PoolMethods : never)
+
 /**
  * Concrete Pool type for rpc Pool.
  */
@@ -38,13 +40,37 @@ export type RpcPool = (ZeitgeistPrimitivesPool & PoolMethods) & {
    * The pool id/index on chain.
    */
   poolId: number
-  /**
-   * Get the account id for the pool.
-   */
-  accountId: Te.TaskEither<Error, number, []>
+}
+
+export type SaturatedPool<
+  C extends Context<MS>,
+  MS extends MetadataStorage,
+> = SaturatedPoolProperties & Pool<C, MS>
+
+export type SaturatedPoolProperties = {
+  liquidity: BigNumber
+  assets: Array<{
+    amountInPool: number
+    assetId: AssetId
+    category:
+      | string
+      | {
+          ticker?: string
+          name?: string
+          img?: string
+          color?: string
+        }
+    percentage: number
+    poolId: number
+    price: number
+  }>
 }
 
 export type PoolMethods = {
+  /**
+   * Get the account id for the pool.
+   */
+  accountId: Te.TaskEither<Error, string, []>
   swapExactAmountIn: Te.TaskEither<
     Error,
     ISubmittableResult,
@@ -198,9 +224,10 @@ export const rpcPool = (
 
   pool.poolId = isNumber(poolId) ? poolId : poolId.toNumber()
 
-  pool.accountId = Te.from(async () =>
-    (await ctx.api.rpc.swaps.poolAccountId(poolId)).toNumber(),
-  )
+  pool.accountId = Te.from(async () => {
+    console.log(poolId)
+    return (await ctx.api.rpc.swaps.poolAccountId(poolId)).toString()
+  })
 
   pool.swapExactAmountIn = Te.from(async params =>
     signAndSend(
@@ -319,14 +346,14 @@ export const rpcPool = (
   return pool
 }
 
-// type AugmentedSubmittableParams<AS extends AugmentedSubmittable<any>> = Parameters<
-//   AS extends AugmentedSubmittable<infer F> ? F : never
-// >
+export const isSaturatedPool = <C extends Context<MS>, MS extends MetadataStorage>(
+  pool: Pool<C, MS> | SaturatedPool<C, MS>,
+): pool is SaturatedPool<C, MS> => {
+  return 'assets' in pool && isArray(pool.assets) && 'liquidity' in pool
+}
 
-// type SwapPool = {
-//   swapExactAmountIn: (
-//     ...params: AugmentedSubmittableParams<
-//       AugmentedSubmittables<'promise'>['swaps']['swapExactAmountIn']
-//     >
-//   ) => Promise<ISubmittableResult>
-// }
+export const isUnSaturatedPool = <C extends Context<MS>, MS extends MetadataStorage>(
+  pool: Pool<C, MS> | SaturatedPool<C, MS>,
+): pool is Pool<C, MS> => {
+  return !isSaturatedPool(pool)
+}

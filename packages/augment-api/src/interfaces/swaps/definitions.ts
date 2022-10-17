@@ -22,7 +22,7 @@ export default {
           type: 'u128',
         },
       ],
-      type: 'u128',
+      type: 'AccountId',
     },
     getSpotPrices: {
       description: 'get spot prices',
@@ -45,6 +45,24 @@ export default {
         },
       ],
       type: 'Vec<u128>',
+    },
+    getSpotPrice: {
+      description: 'get spot price',
+      params: [
+        {
+          name: 'poolId',
+          type: 'u128',
+        },
+        {
+          name: 'assetIn',
+          type: 'SwapsAsset',
+        },
+        {
+          name: 'assetOut',
+          type: 'SwapsAsset',
+        },
+      ],
+      type: 'u128',
     },
   },
 }
