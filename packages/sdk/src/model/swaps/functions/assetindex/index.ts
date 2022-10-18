@@ -1,9 +1,6 @@
-import { BTreeMap, u128 } from '@polkadot/types'
 import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
-import { calcSpotPrice } from '@zeitgeistpm/utility/dist/math'
 import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 import * as O from '@zeitgeistpm/utility/dist/option'
-import BN from 'bn.js'
 import BigNumber from 'bignumber.js'
 import {
   Context,
