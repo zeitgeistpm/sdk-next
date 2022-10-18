@@ -12,7 +12,7 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "workspace:*",
+    "@zeitgeistpm/augment-api": "*",
     "@zeitgeistpm/indexer": "*",
     "@zeitgeistpm/rpc": "*",
     "@zeitgeistpm/utility": "*",

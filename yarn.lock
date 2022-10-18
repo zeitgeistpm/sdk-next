@@ -6664,7 +6664,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zeitgeistpm/augment-api@workspace:*, @zeitgeistpm/augment-api@workspace:packages/augment-api":
+"@zeitgeistpm/augment-api@*, @zeitgeistpm/augment-api@workspace:*, @zeitgeistpm/augment-api@workspace:packages/augment-api":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/augment-api@workspace:packages/augment-api"
   dependencies:
@@ -6707,7 +6707,7 @@ __metadata:
   dependencies:
     "@types/lodash.memoize": ^4.1.7
     "@types/ms": ^0.7.31
-    "@zeitgeistpm/augment-api": "workspace:*"
+    "@zeitgeistpm/augment-api": "*"
     "@zeitgeistpm/indexer": "*"
     "@zeitgeistpm/rpc": "*"
     "@zeitgeistpm/utility": "*"
