@@ -42,30 +42,6 @@ export type RpcPool = (ZeitgeistPrimitivesPool & PoolMethods) & {
   poolId: number
 }
 
-export type SaturatedPool<
-  C extends Context<MS>,
-  MS extends MetadataStorage,
-> = SaturatedPoolProperties & Pool<C, MS>
-
-export type SaturatedPoolProperties = {
-  liquidity: BigNumber
-  assets: Array<{
-    amountInPool: number
-    assetId: AssetId
-    category:
-      | string
-      | {
-          ticker?: string
-          name?: string
-          img?: string
-          color?: string
-        }
-    percentage: number
-    poolId: number
-    price: number
-  }>
-}
-
 export type PoolMethods = {
   /**
    * Get the account id for the pool.
@@ -224,10 +200,9 @@ export const rpcPool = (
 
   pool.poolId = isNumber(poolId) ? poolId : poolId.toNumber()
 
-  pool.accountId = Te.from(async () => {
-    console.log(poolId)
-    return (await ctx.api.rpc.swaps.poolAccountId(poolId)).toString()
-  })
+  pool.accountId = Te.from(async () =>
+    (await ctx.api.rpc.swaps.poolAccountId(poolId)).toString(),
+  )
 
   pool.swapExactAmountIn = Te.from(async params =>
     signAndSend(
@@ -344,16 +319,4 @@ export const rpcPool = (
   )
 
   return pool
-}
-
-export const isSaturatedPool = <C extends Context<MS>, MS extends MetadataStorage>(
-  pool: Pool<C, MS> | SaturatedPool<C, MS>,
-): pool is SaturatedPool<C, MS> => {
-  return 'assets' in pool && isArray(pool.assets) && 'liquidity' in pool
-}
-
-export const isUnSaturatedPool = <C extends Context<MS>, MS extends MetadataStorage>(
-  pool: Pool<C, MS> | SaturatedPool<C, MS>,
-): pool is Pool<C, MS> => {
-  return !isSaturatedPool(pool)
 }

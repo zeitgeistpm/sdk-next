@@ -4,6 +4,7 @@ import { Context, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { PoolGetQuery } from './functions/getpool/types'
 import { PoolsListQuery } from './functions/listpools/types'
+import { AssetIndex } from './functions/assetindex/types'
 import {
   PoolAssetPricesAtBlock,
   PoolPrices,
@@ -58,4 +59,5 @@ export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = {
         }
       : {}
   >
+  assetsIndex: (pools: Pool<C, MS>[]) => Promise<AssetIndex>
 }

@@ -1,10 +1,17 @@
 import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { Context, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
+import { assetsIndex } from './functions/assetindex'
 import { getPool, observePool$ } from './functions/getpool'
 import { listPools } from './functions/listpools'
 import { poolPrices, observePoolPrices$ } from './functions/poolprices'
-import { PoolGetQuery, PoolPricesQuery, PoolPricesStreamQuery, PoolsListQuery, Swaps } from './types'
+import {
+  PoolGetQuery,
+  PoolPricesQuery,
+  PoolPricesStreamQuery,
+  PoolsListQuery,
+  Swaps,
+} from './types'
 
 export * from './types'
 
@@ -15,9 +22,12 @@ export * from './types'
  * @param ctx C
  * @returns Swaps<C>
  */
-export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(ctx: C): Swaps<C, MS> => {
+export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(
+  ctx: C,
+): Swaps<C, MS> => {
   const swaps: Swaps<C, MS> = {
-    listPools: (query: PoolsListQuery<typeof ctx, MS>) => listPools<typeof ctx, MS>(ctx, query),
+    listPools: (query: PoolsListQuery<typeof ctx, MS>) =>
+      listPools<typeof ctx, MS>(ctx, query),
     getPool: pfunc(
       (query: PoolGetQuery) => getPool<typeof ctx, MS>(ctx, query),
       (isRpcContext<MS>(ctx)
@@ -34,6 +44,7 @@ export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(ctx: C)
           }
         : {}) as Swaps<typeof ctx, MS>['poolPrices'],
     ),
+    assetsIndex: pools => assetsIndex<typeof ctx, MS>(ctx, pools),
   }
 
   return swaps

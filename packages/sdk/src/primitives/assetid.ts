@@ -1,5 +1,8 @@
 import { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
+import { isString } from '@polkadot/util'
+import * as O from '@zeitgeistpm/utility/dist/option'
 import { literal, number, tuple, type, union, Infer } from 'superstruct'
+import { option } from 'yargs'
 import { IOMarketId, MarketId } from './marketid'
 
 /**
@@ -49,7 +52,7 @@ export const IOAssetId = union([
   IOPoolShareAssetId,
 ])
 
-export const from = (asset: ZeitgeistPrimitivesAsset): AssetId => {
+export const fromPrimitive = (asset: ZeitgeistPrimitivesAsset): AssetId => {
   if (asset.isCategoricalOutcome) {
     return {
       CategoricalOutcome: [
@@ -70,6 +73,38 @@ export const from = (asset: ZeitgeistPrimitivesAsset): AssetId => {
   return { Ztg: null }
 }
 
+export const fromString = (str: string): O.IOption<AssetId> => {
+  const parsed = O.tryCatch(() => JSON.parse(str))
+  if (O.isNone(parsed)) return parsed
+
+  const obj = parsed.value
+  let assetId: AssetId | null = null
+
+  if (isString(obj) && obj.toLowerCase() === 'ztg') {
+    assetId = {
+      Ztg: null,
+    }
+  }
+
+  if ('categoricalOutcome' in obj) {
+    assetId = {
+      CategoricalOutcome: obj['categoricalOutcome'],
+    } as AssetId
+  }
+  if ('scalarOutcome' in obj) {
+    assetId = {
+      ScalarOutcome: obj['scalarOutcome'],
+    } as AssetId
+  }
+  if ('poolShare' in obj) {
+    assetId = {
+      PoolShare: obj['poolShare'],
+    } as AssetId
+  }
+
+  return O.option(assetId ? O.some(assetId) : O.none())
+}
+
 /**
  * Get asset index of a scalar asset, short being 0 and long being 1
  *
@@ -77,7 +112,7 @@ export const from = (asset: ZeitgeistPrimitivesAsset): AssetId => {
  * @returns number
  */
 export const getScalarIndexOf = (scalarAssetId: ScalarAssetId): number =>
-  scalarAssetId.ScalarOutcome[1] === 'Short' ? 0 : 1
+  scalarAssetId.ScalarOutcome[1] === 'Short' ? 1 : 0
 
 /**
  * Get the asset index of an AssetId, will return index only for scalar and categorical assets.

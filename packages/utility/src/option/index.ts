@@ -60,3 +60,12 @@ export const option = <A>(_option: Option<A>): IOption<A> => ({
   map: <B>(f: (a: A) => B) => option(map(f, _option)),
   bind: <B>(f: (a: A) => Option<B>) => option(bind(f, _option)),
 })
+
+export const tryCatch = <A>(f: () => A): IOption<A> => {
+  try {
+    const value = f()
+    return option(some(value))
+  } catch (error) {
+    return option(none())
+  }
+}
