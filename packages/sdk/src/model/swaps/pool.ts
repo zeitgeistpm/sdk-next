@@ -30,7 +30,7 @@ export type Pool<C extends Context<MS>, MS extends MetadataStorage> = Data<
 export type IndexedPool<C extends Context<MS>, MS extends MetadataStorage> = Unpacked<
   PoolsQuery['pools']
 > &
-  (C extends RpcContext<MS> ? PoolMethods : never)
+  (C extends RpcContext<MS> ? PoolMethods : {})
 
 /**
  * Concrete Pool type for rpc Pool.

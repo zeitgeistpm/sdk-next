@@ -1,18 +1,23 @@
 import { Keyring } from '@polkadot/keyring'
-import { create, mainnetRpc } from '@zeitgeistpm/sdk'
+import { create, mainnetIndexer, mainnetRpc } from '@zeitgeistpm/sdk'
 
 async function main() {
   /**
    * Here we are creating a sdk with a custom storage provider and metadata type.
    */
-  const sdk = await create(mainnetRpc())
+  const sdk = await create(mainnetIndexer())
 
   const keyring = new Keyring({ ss58Format: 73, type: 'sr25519' })
   const signer = keyring.addFromUri('//Alice', { name: 'Alice default' })
 
   const pools = await sdk.model.swaps.listPools({
     limit: 10,
+    where: {
+      poolId_eq: 14,
+    },
   })
+
+  pools.map(p => {})
 
   const assetsIndex = await sdk.model.swaps.assetsIndex(pools)
   const ZTG = '10000000000'

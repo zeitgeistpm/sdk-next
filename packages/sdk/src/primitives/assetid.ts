@@ -74,17 +74,19 @@ export const fromPrimitive = (asset: ZeitgeistPrimitivesAsset): AssetId => {
 }
 
 export const fromString = (str: string): O.IOption<AssetId> => {
+  if (str === 'Ztg') {
+    return O.option(
+      O.some({
+        Ztg: null,
+      } as AssetId),
+    )
+  }
+
   const parsed = O.tryCatch(() => JSON.parse(str))
   if (O.isNone(parsed)) return parsed
 
   const obj = parsed.value
   let assetId: AssetId | null = null
-
-  if (isString(obj) && obj.toLowerCase() === 'ztg') {
-    assetId = {
-      Ztg: null,
-    }
-  }
 
   if ('categoricalOutcome' in obj) {
     assetId = {

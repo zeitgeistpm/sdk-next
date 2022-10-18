@@ -68,15 +68,6 @@ const indexerAssetsIndex = async <C extends IndexerContext, MS extends MetadataS
             }
 
             const assetId = assetIdO.value
-            const assetIndex = AssetId.getIndexOf(assetId)
-
-            if (!assetIndex) return null
-
-            const asset = poolAssets[assetIndex]
-            const category = poolMarket.categories![assetIndex] ?? {
-              name: 'ztg',
-              ticker: 'ZTG',
-            }
 
             const percentage = Math.round(
               new BigNumber(weight.len)
@@ -87,19 +78,31 @@ const indexerAssetsIndex = async <C extends IndexerContext, MS extends MetadataS
 
             if (AssetId.IOZtgAssetId.is(assetId)) {
               return {
-                amount: pool.ztgQty,
+                amount: new BigNumber(pool.ztgQty),
                 assetId,
-                category,
+                category: {
+                  ticker: 'ZTG',
+                  name: 'ztg',
+                },
                 percentage,
                 price: new BigNumber(10 ** 10),
               }
+            }
+
+            const assetIndex = AssetId.getIndexOf(assetId)
+            if (assetIndex === null) return null
+
+            const asset = poolAssets[assetIndex]
+            const category = poolMarket.categories![assetIndex] ?? {
+              name: 'ztg',
+              ticker: 'ZTG',
             }
 
             return {
               amount: new BigNumber(asset.amountInPool),
               category,
               assetId,
-              price: new BigNumber(asset.price ?? 0),
+              price: new BigNumber(asset.price ?? 0).multipliedBy(10 ** 10),
               percentage,
             }
           })
@@ -107,10 +110,12 @@ const indexerAssetsIndex = async <C extends IndexerContext, MS extends MetadataS
 
         const liquidity = assets.reduce((total, asset) => {
           if (!asset.price || !asset.amount) {
-            return new BigNumber(0)
+            return total
           }
           return total.plus(
-            new BigNumber(asset.price).multipliedBy(new BigNumber(asset.amount)),
+            new BigNumber(asset.price.div(10 ** 10)).multipliedBy(
+              new BigNumber(asset.amount),
+            ),
           )
         }, new BigNumber(0))
 
