@@ -1,15 +1,21 @@
 import BigNumber from 'bignumber.js'
-import { CategoryMetadata } from '../../../../meta'
+import { Context } from '../../../../context'
+import { MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'
+import { Market } from '../../../markets'
 
 /**
  * An index by pool id for pool assets(prices, metadata categories, pool amounts etc) + total pool liquidity.
  */
-export type AssetIndex = {
+export type AssetIndex<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * Indexed py pool id.
    */
   [poolId: number]: {
+    /**
+     * The market the pool belongs to.
+     */
+    market: Market<C, MS>
     /**
      * Total pool liquidity in ZTG
      */

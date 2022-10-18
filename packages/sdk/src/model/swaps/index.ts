@@ -26,24 +26,26 @@ export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
 ): Swaps<C, MS> => {
   const swaps: Swaps<C, MS> = {
-    listPools: (query: PoolsListQuery<typeof ctx, MS>) =>
-      listPools<typeof ctx, MS>(ctx, query),
+    listPools: query => listPools<typeof ctx, MS>(ctx, query),
+
     getPool: pfunc(
       (query: PoolGetQuery) => getPool<typeof ctx, MS>(ctx, query),
       (isRpcContext<MS>(ctx)
         ? {
-            $: (query: PoolGetQuery) => observePool$<typeof ctx, MS>(ctx, query),
+            $: query => observePool$<typeof ctx, MS>(ctx, query),
           }
         : {}) as Swaps<typeof ctx, MS>['getPool'],
     ),
+
     poolPrices: pfunc(
       (query: PoolPricesQuery) => poolPrices<typeof ctx>(ctx, query),
       (isRpcContext<MS>(ctx)
         ? {
-            $: (query: PoolPricesStreamQuery) => observePoolPrices$(ctx, query),
+            $: query => observePoolPrices$(ctx, query),
           }
         : {}) as Swaps<typeof ctx, MS>['poolPrices'],
     ),
+
     assetsIndex: pools => assetsIndex<typeof ctx, MS>(ctx, pools),
   }
 

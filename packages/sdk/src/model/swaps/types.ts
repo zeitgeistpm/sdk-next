@@ -34,7 +34,7 @@ export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = {
    * @param pools Pool<C, MS>[]
    * @returns Promise<AssetIndex>
    */
-  assetsIndex: (pools: Pool<C, MS>[]) => Promise<AssetIndex>
+  assetsIndex: (pools: Pool<C, MS>[]) => Promise<AssetIndex<C, MS>>
   /**
    * Get a pool by pool or market id.
    */

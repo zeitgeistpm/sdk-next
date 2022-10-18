@@ -1,4 +1,5 @@
-import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
+import { BTreeMap } from '@polkadot/types'
+import { Codec } from '@polkadot/types/types'
 import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import BigNumber from 'bignumber.js'
@@ -17,10 +18,17 @@ import { AssetIndex } from './types'
 
 export * from './types'
 
+/**
+ * Get an asset index for a list of pools from either rpc or indexer.
+ *
+ * @param context C
+ * @param pools Pool<C, M
+ * @returns Promise<AssetIndex>
+ */
 export const assetsIndex = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
   pools: Pool<C, MS>[],
-): Promise<AssetIndex> => {
+): Promise<AssetIndex<C, MS>> => {
   if (isIndexerContext<MS>(context)) {
     return indexerAssetsIndex<typeof context, MS>(context, pools)
   } else if (isRpcContext<MS>(context)) {
@@ -29,11 +37,22 @@ export const assetsIndex = async <C extends Context<MS>, MS extends MetadataStor
   throw new Error('Unreachable context.')
 }
 
-const indexerAssetsIndex = async <C extends IndexerContext, MS extends MetadataStorage>(
+/**
+ * Get an assets index for a list of pools from the indexer.
+ *
+ * @param ctx IndexerContext
+ * @param pools Pool<C, M
+ * @returns Promise<AssetIndex>
+ */
+export const indexerAssetsIndex = async <
+  C extends IndexerContext,
+  MS extends MetadataStorage,
+>(
   ctx: C,
   pools: Pool<C, MS>[],
-): Promise<AssetIndex> => {
+): Promise<AssetIndex<C, MS>> => {
   const ids = pools.map(p => p.poolId)
+
   const [{ markets: marketsForPools }, { assets: assetsForPools }] = await Promise.all([
     ctx.indexer.markets({
       where: {
@@ -76,13 +95,13 @@ const indexerAssetsIndex = async <C extends IndexerContext, MS extends MetadataS
             if (AssetId.IOZtgAssetId.is(assetId)) {
               return {
                 amount: new BigNumber(pool.ztgQty),
+                price: new BigNumber(10 ** 10),
                 assetId,
                 category: {
                   ticker: 'ZTG',
                   name: 'ztg',
                 },
                 percentage,
-                price: new BigNumber(10 ** 10),
               }
             }
 
@@ -97,9 +116,9 @@ const indexerAssetsIndex = async <C extends IndexerContext, MS extends MetadataS
 
             return {
               amount: new BigNumber(asset.amountInPool),
+              price: new BigNumber(asset.price ?? 0).multipliedBy(10 ** 10),
               category,
               assetId,
-              price: new BigNumber(asset.price ?? 0).multipliedBy(10 ** 10),
               percentage,
             }
           })
@@ -116,33 +135,37 @@ const indexerAssetsIndex = async <C extends IndexerContext, MS extends MetadataS
           )
         }, new BigNumber(0))
 
-        return { poolId: pool.poolId, liquidity, assets }
+        return { poolId: pool.poolId, market: poolMarket, liquidity, assets }
       }),
     )
   ).filter(isNotNull)
 
-  return byPool.reduce<AssetIndex>(
-    (index, { poolId, liquidity, assets }) => ({
+  return byPool.reduce(
+    (index, { poolId, market, liquidity, assets }) => ({
       ...index,
-      [poolId]: { liquidity, assets },
+      [poolId]: { liquidity, market, assets },
     }),
     {},
   )
 }
 
-const rpcAssetsIndex = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
+/**
+ * Get an asset index for a list of pools from node rpc.
+ *
+ * @param ctx RpcContext<MS>
+ * @param pools Pool<C, M
+ * @returns Promise<AssetIndex>
+ */
+export const rpcAssetsIndex = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   ctx: C,
   pools: Pool<C, MS>[],
-): Promise<AssetIndex> => {
+): Promise<AssetIndex<C, MS>> => {
   const byPool = await Promise.all(
     pools.map(async pool => {
-      const weights = pool.weights.unwrap()
-      const ztgAssetIndex = pool.assets.findIndex(i => i.isZtg)
-      const ztgAsset = pool.assets[ztgAssetIndex]
+      const accountId = await pool.accountId().unwrap()
       const outcomeAssets = pool.assets.filter(a => !a.isZtg)
       const swapPrct = new BigNumber(pool.swapFee.unwrap().toNumber()).dividedBy(100000000)
-
-      const accountId = await pool.accountId().unwrap()
+      const weights = pool.weights.unwrap()
 
       const [market, prices] = await Promise.all([
         ctx.api.query.marketCommons
@@ -175,98 +198,51 @@ const rpcAssetsIndex = async <C extends RpcContext<MS>, MS extends MetadataStora
       liquidity = liquidity.minus(liquidity.dividedBy(100).multipliedBy(swapPrct))
 
       const totalWeight = pool.assets.reduce((total, asset) => {
-        const weight = weightOfAsset(pool, asset)
-        return total.plus(weight?.toNumber() ?? 0)
+        const weight = new BigNumber(mapget(weights, asset)?.toNumber() ?? 0)
+        return total.plus(weight)
       }, new BigNumber(0))
 
       const assets = pool.assets.map((asset, index) => {
         return {
           amount: new BigNumber(accounts[index].toNumber()),
+          price: new BigNumber(prices[index].toNumber()),
           assetId: AssetId.fromPrimitive(asset),
           category: market.categories?.[index] || {
             name: 'ztg',
             ticker: 'ZTG',
           },
-          percentage: weightOfAsset(pool, asset).dividedBy(totalWeight).toNumber(),
-          price: new BigNumber(prices[index].toNumber()),
+          percentage: new BigNumber(mapget(weights, asset)?.toNumber() ?? 0)
+            .dividedBy(totalWeight)
+            .toNumber(),
         }
       })
 
-      return { poolId: pool.poolId, liquidity, assets }
+      return { poolId: pool.poolId, market, liquidity, assets }
     }),
   )
 
-  return byPool.reduce<AssetIndex>(
-    (index, { poolId, liquidity, assets }) => ({
+  return byPool.reduce(
+    (index, { poolId, market, liquidity, assets }) => ({
       ...index,
-      [poolId]: { liquidity, assets },
+      [poolId]: { market, liquidity, assets },
     }),
     {},
   )
 }
 
-const weightOfAsset = (
-  pool: ZeitgeistPrimitivesPool,
-  find: ZeitgeistPrimitivesAsset,
-): BigNumber => {
-  for (const [asset, weight] of pool.weights.unwrap().entries()) {
-    if (find.eq(asset)) {
-      return new BigNumber(weight.toNumber())
+/**
+ * Get a value from a BTreeMap for a key.
+ *
+ * @note fix for BTreeMap.get as it seems broken.
+ * @param map BTreeMap<K, V>
+ * @param key K
+ * @returns  V | null
+ */
+const mapget = <K extends Codec, V extends Codec>(map: BTreeMap<K, V>, key: K) => {
+  for (const [_k, value] of map.entries()) {
+    if (key.eq(_k)) {
+      return value
     }
   }
-  return new BigNumber(0)
+  return null
 }
-
-// const indexerSaturate = async <C extends IndexerContext, MS extends MetadataStorage>(
-//   ctx: C,
-//   pools: Pool<C, MS>[],
-// ): Promise<SaturatedPool<C, MS>[]> => {
-//   const poolIds = pools.map(p => p.poolId)
-//   const [{ markets }, { assets }] = await Promise.all([
-//     ctx.indexer.markets({
-//       where: {
-//         poolId_in: poolIds,
-//       },
-//     }),
-//     ctx.indexer.assets({
-//       where: {
-//         poolId_in: poolIds,
-//       },
-//     }),
-//   ])
-
-//   const saturatedPools = pools.map(pool => {
-//     const market = markets.find(m => m.poolId === pool.poolId)
-//     const assetForPool = assets.find(asset => asset.poolId === pool.poolId)
-
-//     if (!market) return null
-//     if (!assetForPool) return null
-
-//     const assetss = pool.weights.map(weight => {
-//       if (!weight) return null
-//       const assetId = AssetId.from(JSON.parse(weight.assetId))
-//       const category = 'ztg'
-//       const percentage = Math.round((Number(weight.len) / Number(pool.totalWeight)) * 100)
-//       const isZtg = assetId.hasOwnProperty('ztg')
-//       if (isZtg) {
-//         return {
-//           amountInPool: pool.ztgQty,
-//           assetId,
-//           category,
-//           percentage,
-//           poolId: pool.poolId,
-//           price: 1,
-//         }
-//       }
-
-//       return {
-//         ...assetForPool,
-//         assetId,
-//         percentage,
-//         category,
-//       }
-//     })
-//   })
-
-//   return saturatedPools as any
-// }

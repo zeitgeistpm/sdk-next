@@ -45,7 +45,7 @@ export type Market<C extends Context<MS>, MS extends MetadataStorage> = Data<
 export type IndexedMarket<
   C extends Context<MS>,
   MS extends MetadataStorage,
-> = FullMarketFragment & (C extends RpcContext<MS> ? MarketMethods : never)
+> = FullMarketFragment & (C extends RpcContext<MS> ? MarketMethods : {})
 
 /**
  * Concrete Market type for a rpc market.
@@ -308,7 +308,9 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
   market: Market<C, MS>,
 ): Market<C, MS> => {
   if (isRpcContext<MS>(context)) {
-    market.deploySwapPool = Te.from(async params => {
+    let marketWithMethods = market as Market<typeof context, MS>
+
+    marketWithMethods.deploySwapPool = Te.from(async params => {
       assert(!(await hasPool(market)), () => {
         throw new Error('Cannot deploy pool for market that allready has pool.')
       })
@@ -331,7 +333,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       return pool.unwrap()
     })
 
-    market.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
+    marketWithMethods.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
       assert(!(await hasPool(market)), () => {
         throw new Error('Cannot deploy pool for market that allready has pool.')
       })
@@ -354,7 +356,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       return pool.unwrap()
     })
 
-    market.buyCompleteSet = Te.from(async params => {
+    marketWithMethods.buyCompleteSet = Te.from(async params => {
       return await signAndSend(
         context.api,
         context.api.tx.predictionMarkets.buyCompleteSet(market.marketId, params.amount),
@@ -362,7 +364,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       )
     })
 
-    market.sellCompleteSet = Te.from(async params => {
+    marketWithMethods.sellCompleteSet = Te.from(async params => {
       return await signAndSend(
         context.api,
         context.api.tx.predictionMarkets.sellCompleteSet(market.marketId, params.amount),
@@ -370,7 +372,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       )
     })
 
-    market.redeemShares = Te.from(async signer => {
+    marketWithMethods.redeemShares = Te.from(async signer => {
       return await signAndSend(
         context.api,
         context.api.tx.predictionMarkets.redeemShares(market.marketId),
@@ -378,7 +380,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       )
     })
 
-    market.disputeOutcome = Te.from(async params => {
+    marketWithMethods.disputeOutcome = Te.from(async params => {
       return await signAndSend(
         context.api,
         context.api.tx.predictionMarkets.dispute(market.marketId, params.outcome),
@@ -386,7 +388,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       )
     })
 
-    market.reportOutcome = Te.from(async params => {
+    marketWithMethods.reportOutcome = Te.from(async params => {
       return await signAndSend(
         context.api,
         context.api.tx.predictionMarkets.report(market.marketId, params.outcome),
@@ -394,7 +396,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       )
     })
 
-    market.adminDestroyMarket = Te.from(async signer => {
+    marketWithMethods.adminDestroyMarket = Te.from(async signer => {
       return await signAndSend(
         context.api,
         context.api.tx.predictionMarkets.adminDestroyMarket(market.marketId),
@@ -402,7 +404,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       )
     })
 
-    market.adminMoveMarketToClosed = Te.from(async signer => {
+    marketWithMethods.adminMoveMarketToClosed = Te.from(async signer => {
       return await signAndSend(
         context.api,
         context.api.tx.predictionMarkets.adminMoveMarketToClosed(market.marketId),
@@ -410,7 +412,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       )
     })
 
-    market.adminMoveMarketToResolved = Te.from(async signer => {
+    marketWithMethods.adminMoveMarketToResolved = Te.from(async signer => {
       return await signAndSend(
         context.api,
         context.api.tx.predictionMarkets.adminMoveMarketToResolved(market.marketId),
@@ -418,7 +420,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       )
     })
 
-    market.approveMarket = Te.from(async signer => {
+    marketWithMethods.approveMarket = Te.from(async signer => {
       return await signAndSend(
         context.api,
         context.api.tx.predictionMarkets.approveMarket(market.marketId),
@@ -426,13 +428,15 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       )
     })
 
-    market.adminCleanUpPool = Te.from(async params => {
+    marketWithMethods.adminCleanUpPool = Te.from(async params => {
       return await signAndSend(
         context.api,
         context.api.tx.swaps.adminCleanUpPool(market.marketId, params.outcome),
         params.signer,
       )
     })
+
+    return marketWithMethods
   }
   return market
 }
