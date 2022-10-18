@@ -28,6 +28,14 @@ export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = {
    */
   listPools: (query: PoolsListQuery<C, MS>) => Promise<PoolList<C, MS>>
   /**
+   * Fetch an index of assets + category and values like asset amounts, price
+   * and liquidity for a set of pools.
+   *
+   * @param pools Pool<C, MS>[]
+   * @returns Promise<AssetIndex>
+   */
+  assetsIndex: (pools: Pool<C, MS>[]) => Promise<AssetIndex>
+  /**
    * Get a pool by pool or market id.
    */
   getPool: PFunc<
@@ -59,5 +67,4 @@ export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = {
         }
       : {}
   >
-  assetsIndex: (pools: Pool<C, MS>[]) => Promise<AssetIndex>
 }
