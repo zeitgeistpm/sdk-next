@@ -5,16 +5,13 @@ async function main() {
   /**
    * Here we are creating a sdk with a custom storage provider and metadata type.
    */
-  const sdk = await create(mainnetIndexer())
+  const sdk = await create(mainnetRpc())
 
   const keyring = new Keyring({ ss58Format: 73, type: 'sr25519' })
   const signer = keyring.addFromUri('//Alice', { name: 'Alice default' })
 
   const pools = await sdk.model.swaps.listPools({
     limit: 10,
-    where: {
-      poolId_eq: 14,
-    },
   })
 
   pools.map(p => {})
