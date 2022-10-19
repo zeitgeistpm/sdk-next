@@ -78,6 +78,7 @@ export const indexerAssetsIndex = async <
           .filter(isNotNull)
           .map(weight => {
             const assetId = AssetId.fromString(weight.assetId).unwrap()!
+            const assetIndex = AssetId.getIndexOf(assetId)!
 
             const percentage = Math.round(
               new BigNumber(weight.len)
@@ -98,8 +99,6 @@ export const indexerAssetsIndex = async <
                 percentage,
               }
             }
-
-            const assetIndex = AssetId.getIndexOf(assetId)!
 
             const asset = poolAssets.find(a => a.assetId === weight.assetId)!
             const category = poolMarket.categories![assetIndex] ?? {
