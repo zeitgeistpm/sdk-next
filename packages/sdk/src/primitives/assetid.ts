@@ -74,7 +74,7 @@ export const fromPrimitive = (asset: ZeitgeistPrimitivesAsset): AssetId => {
 }
 
 export const fromString = (str: string): O.IOption<AssetId> => {
-  if (str === 'Ztg') {
+  if (str.toLowerCase() === 'ztg') {
     return O.option(
       O.some({
         Ztg: null,

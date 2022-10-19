@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import React from 'react'
 import CustomStorage from './components/CustomStorage'
+import Pool from './components/Pool'
 
 const App: React.FC = () => {
   // const [sdk, setSdk] = useState<Partial<Sdk<Context>>>({})
@@ -17,8 +18,8 @@ const App: React.FC = () => {
 
   return (
     <ChakraProvider>
-      <CustomStorage />
-      {/* <MarketList sdk={sdk} /> */}
+      {/* <CustomStorage /> */}
+      <Pool />
     </ChakraProvider>
   )
 }
