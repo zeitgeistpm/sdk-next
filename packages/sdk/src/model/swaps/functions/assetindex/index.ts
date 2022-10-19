@@ -77,13 +77,7 @@ export const indexerAssetsIndex = async <
         const assets = pool.weights
           .filter(isNotNull)
           .map(weight => {
-            const assetIdO = AssetId.fromString(weight.assetId)
-
-            if (O.isNone(assetIdO)) {
-              return null
-            }
-
-            const assetId = assetIdO.value
+            const assetId = AssetId.fromString(weight.assetId).unwrap()!
 
             const percentage = Math.round(
               new BigNumber(weight.len)
@@ -105,10 +99,9 @@ export const indexerAssetsIndex = async <
               }
             }
 
-            const assetIndex = AssetId.getIndexOf(assetId)
-            if (assetIndex === null) return null
+            const assetIndex = AssetId.getIndexOf(assetId)!
 
-            const asset = poolAssets[assetIndex]
+            const asset = poolAssets.find(a => a.assetId === weight.assetId)!
             const category = poolMarket.categories![assetIndex] ?? {
               name: 'ztg',
               ticker: 'ZTG',
