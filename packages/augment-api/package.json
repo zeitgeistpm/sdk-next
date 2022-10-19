@@ -1,6 +1,7 @@
 {
   "name": "@zeitgeistpm/augment-api",
   "version": "1.9.9",
+  "private": "false",
   "description": "Generated types for the Zeitgeist network.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
