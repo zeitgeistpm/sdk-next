@@ -1,7 +1,6 @@
 import { BTreeMap } from '@polkadot/types'
 import { Codec } from '@polkadot/types/types'
 import { isNotNull } from '@zeitgeistpm/utility/dist/null'
-import * as O from '@zeitgeistpm/utility/dist/option'
 import BigNumber from 'bignumber.js'
 import {
   Context,
@@ -12,9 +11,10 @@ import {
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import * as AssetId from '../../../../primitives/assetid'
+import { ZTG } from '../../../../primitives/ztg'
 import { rpcMarket } from '../../../markets'
 import { Pool } from '../../pool'
-import { AssetIndex } from './types'
+import { AssetIndex, AssetIndexAssetEntry } from './types'
 
 export * from './types'
 
@@ -74,7 +74,7 @@ export const indexerAssetsIndex = async <
 
         if (!poolMarket || poolAssets.length === 0) return null
 
-        const assets = pool.weights
+        const assets: AssetIndexAssetEntry[] = pool.weights
           .filter(isNotNull)
           .map(weight => {
             const assetId = AssetId.fromString(weight.assetId).unwrap()!
@@ -90,7 +90,7 @@ export const indexerAssetsIndex = async <
             if (AssetId.IOZtgAssetId.is(assetId)) {
               return {
                 amount: new BigNumber(pool.ztgQty),
-                price: new BigNumber(10 ** 10),
+                price: ZTG,
                 assetId,
                 category: {
                   ticker: 'ZTG',
@@ -108,7 +108,7 @@ export const indexerAssetsIndex = async <
 
             return {
               amount: new BigNumber(asset.amountInPool),
-              price: new BigNumber(asset.price ?? 0).multipliedBy(10 ** 10),
+              price: new BigNumber(asset.price ?? 0).multipliedBy(ZTG),
               category,
               assetId,
               percentage,
@@ -121,9 +121,7 @@ export const indexerAssetsIndex = async <
             return total
           }
           return total.plus(
-            new BigNumber(asset.price.div(10 ** 10)).multipliedBy(
-              new BigNumber(asset.amount),
-            ),
+            new BigNumber(asset.price.div(ZTG)).multipliedBy(new BigNumber(asset.amount)),
           )
         }, new BigNumber(0))
 
@@ -154,12 +152,13 @@ export const rpcAssetsIndex = async <C extends RpcContext<MS>, MS extends Metada
 ): Promise<AssetIndex<C, MS>> => {
   const byPool = await Promise.all(
     pools.map(async pool => {
-      const accountId = await pool.accountId().unwrap()
       const outcomeAssets = pool.assets.filter(a => !a.isZtg)
       const swapPrct = new BigNumber(pool.swapFee.unwrap().toNumber()).dividedBy(100000000)
       const weights = pool.weights.unwrap()
 
-      const [market, prices] = await Promise.all([
+      const accountId = await pool.accountId().unwrap()
+
+      const [market, prices, tokens, ztgBalance] = await Promise.all([
         ctx.api.query.marketCommons
           .markets(pool.marketId)
           .then(m => rpcMarket(ctx, pool.marketId, m.unwrap()).saturate()),
@@ -168,9 +167,6 @@ export const rpcAssetsIndex = async <C extends RpcContext<MS>, MS extends Metada
             ctx.api.rpc.swaps.getSpotPrice(pool.poolId, { Ztg: null }, asset),
           ),
         ),
-      ])
-
-      const [tokens, ztgBalance] = await Promise.all([
         ctx.api.query.tokens.accounts.multi(outcomeAssets.map(asset => [accountId, asset])),
         ctx.api.query.system.account(accountId).then(({ data }) => data.free),
       ])
@@ -181,9 +177,7 @@ export const rpcAssetsIndex = async <C extends RpcContext<MS>, MS extends Metada
         const price = prices[index]
         const amountInPool = accounts[index]
         return total.plus(
-          new BigNumber(price.toNumber())
-            .div(10 ** 10)
-            .multipliedBy(amountInPool.toNumber()),
+          new BigNumber(price.toNumber()).div(ZTG).multipliedBy(amountInPool.toNumber()),
         )
       }, new BigNumber(0))
 
@@ -194,7 +188,7 @@ export const rpcAssetsIndex = async <C extends RpcContext<MS>, MS extends Metada
         return total.plus(weight)
       }, new BigNumber(0))
 
-      const assets = pool.assets.map((asset, index) => {
+      const assets: AssetIndexAssetEntry[] = pool.assets.map((asset, index) => {
         return {
           amount: new BigNumber(accounts[index].toNumber()),
           price: new BigNumber(prices[index].toNumber()),

@@ -1,3 +1,4 @@
+export * from './ztg'
 export * from './assetid'
 export * from './blocknumber'
 export * from './marketid'

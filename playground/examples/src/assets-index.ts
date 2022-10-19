@@ -6,12 +6,12 @@ async function main() {
   /**
    * Fetching asset indexes works with both rpc and indexer mode.
    */
-  const sdk = await create(mainnetIndexer())
+  const sdk = await create(mainnetRpc())
 
   /**
    * Fetch a set of pools.
    */
-  const pools = await sdk.model.swaps.listPools({ where: { poolId_eq: 14 } })
+  const pools = await sdk.model.swaps.listPools({})
 
   /**
    * Fetch asset indexes including prices, amounts and total liquidity for fetched pools.
@@ -22,18 +22,20 @@ async function main() {
    * Loop through pools and print liquidity for pool and price that is contained in
    * the asset index like amounts, category ticker liquidity etc.
    */
-  pools.forEach(pool => {
-    const assets = assetsIndex[pool.poolId]
-    console.log(`id: ${pool.poolId}`)
-    console.log(`total liquidity: ${assets.liquidity.dividedBy(ZTG)}\n`)
-    console.log(`token     price               liquidity`)
-    assets.assets.forEach(asset => {
-      const token = asset.category?.ticker
-      const price = asset.price.dividedBy(ZTG)
-      const liq = asset.price.dividedBy(ZTG).multipliedBy(asset.amount.dividedBy(ZTG))
-      console.log(`${token}       ${price}        ${liq}`)
+  pools
+    .filter(p => p.poolId === 14)
+    .forEach(pool => {
+      const assets = assetsIndex[pool.poolId]
+      console.log(`id: ${pool.poolId}`)
+      console.log(`total liquidity: ${assets.liquidity.dividedBy(ZTG)}\n`)
+      console.log(`token     price               liquidity`)
+      assets.assets.forEach(asset => {
+        const token = asset.category?.ticker
+        const price = asset.price.dividedBy(ZTG)
+        const liq = asset.price.dividedBy(ZTG).multipliedBy(asset.amount.dividedBy(ZTG))
+        console.log(`${token}       ${price}        ${liq}`)
+      })
     })
-  })
 }
 
 main().catch(error => {
