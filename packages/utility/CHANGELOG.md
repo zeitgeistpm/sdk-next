@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.0.1
+
+### Patch Changes
+
+- Clean deps
+
 ## 2.0.0
 
 ### Major Changes

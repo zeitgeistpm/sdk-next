@@ -8134,7 +8134,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zeitgeistpm/augment-api@*, @zeitgeistpm/augment-api@workspace:*, @zeitgeistpm/augment-api@workspace:packages/augment-api":
+"@zeitgeistpm/augment-api@*, @zeitgeistpm/augment-api@workspace:packages/augment-api":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/augment-api@workspace:packages/augment-api"
   dependencies:
@@ -8163,7 +8163,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/rpc@workspace:packages/rpc"
   dependencies:
-    "@zeitgeistpm/augment-api": "workspace:*"
+    "@zeitgeistpm/augment-api": "*"
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/keyring": "*"

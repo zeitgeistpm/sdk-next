@@ -6,6 +6,7 @@
     "playground/*"
   ],
   "scripts": {
+    "pub": "turbo run build test && changeset version && changeset publish",
     "build": "turbo run build",
     "test": "turbo run test",
     "coverage": "turbo run coverage",
