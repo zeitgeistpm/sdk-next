@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.0.6
+
+### Patch Changes
+
+- 272d738: Set correct local dep versions
+
 ## 2.0.5
 
 ### Patch Changes
