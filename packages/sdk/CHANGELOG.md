@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.0.9
+
+### Patch Changes
+
+- Include missing package graphql-tag
+- Updated dependencies
+  - @zeitgeistpm/indexer@2.0.9
+
 ## 2.0.8
 
 ### Patch Changes

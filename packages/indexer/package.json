@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/indexer",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "publishConfig": {
     "access": "public"
   },
@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "graphql": "^16.6.0",
-    "graphql-request": "^5.0.0"
+    "graphql-request": "^5.0.0",
+    "graphql-tag": "^2.12.6"
   },
   "exports": {
     ".": {
