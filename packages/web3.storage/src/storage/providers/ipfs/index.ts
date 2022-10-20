@@ -1,12 +1,10 @@
 import { u8aToString } from '@polkadot/util/u8a'
 import { Codec } from '@zeitgeistpm/utility/dist/codec'
 import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
-import { either, left, right } from '@zeitgeistpm/utility/dist/either'
 import { throws } from '@zeitgeistpm/utility/dist/error'
-import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import * as O from '@zeitgeistpm/utility/dist/option'
-import type { CID } from 'ipfs-http-client'
-import * as IPFSHttpClient from 'ipfs-http-client'
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import * as IPFSHTTPClient from 'ipfs-http-client'
 import { Storage } from '../..'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
@@ -20,8 +18,8 @@ import { IPFSConfiguration } from './types'
 export const storage = <T extends object, ID>(
   config: IPFSConfiguration,
   codec: Codec<string, T> = JsonCodec(),
-): Storage<T, CID> => {
-  const node = IPFSHttpClient.create({ url: config.node.url })
+): Storage<T, IPFSHTTPClient.CID> => {
+  const node = IPFSHTTPClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`
 
   return {
@@ -63,7 +61,7 @@ export const storage = <T extends object, ID>(
 const read = Te.from<
   O.IOption<string>,
   Error,
-  [node: IPFSHttpClient.IPFSHTTPClient, cid: CID]
+  [node: IPFSHTTPClient.IPFSHTTPClient, cid: IPFSHTTPClient.CID]
 >(async (node, cid) => {
   const content: Uint8Array[] = []
 

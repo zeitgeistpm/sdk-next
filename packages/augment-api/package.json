@@ -5,6 +5,7 @@
     "access": "public"
   },
   "description": "Generated types for the Zeitgeist network.",
+  "module": "./dist/index.js",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
