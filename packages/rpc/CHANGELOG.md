@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.0.2
+
+### Patch Changes
+
+- Move changeset to dev deps
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.2
+
 ## 2.0.1
 
 ### Patch Changes

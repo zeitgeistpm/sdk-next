@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.0.2
+
+### Patch Changes
+
+- Move changeset to dev deps
+
 ## 2.0.1
 
 ### Patch Changes
