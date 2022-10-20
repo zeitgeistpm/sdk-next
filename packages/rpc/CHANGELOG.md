@@ -1,5 +1,21 @@
 # @zeitgeistpm/rpc
 
+## 2.0.4
+
+### Patch Changes
+
+- Use commonjs for now
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.4
+
+## 2.0.3
+
+### Patch Changes
+
+- Remove ipfs-core as it uses an uneeded esm module that breaks ui
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.3
+
 ## 2.0.2
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @zeitgeistpm/augment-api
 
+## 2.0.4
+
+### Patch Changes
+
+- Use commonjs for now
+
+## 2.0.3
+
+### Patch Changes
+
+- Remove ipfs-core as it uses an uneeded esm module that breaks ui
+
 ## 2.0.2
 
 ### Patch Changes

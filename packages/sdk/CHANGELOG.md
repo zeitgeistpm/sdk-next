@@ -1,5 +1,29 @@
 # @zeitgeistpm/sdk
 
+## 2.0.4
+
+### Patch Changes
+
+- Use commonjs for now
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.4
+  - @zeitgeistpm/indexer@2.0.4
+  - @zeitgeistpm/rpc@2.0.4
+  - @zeitgeistpm/utility@2.0.4
+  - @zeitgeistpm/web3.storage@2.0.4
+
+## 2.0.3
+
+### Patch Changes
+
+- Remove ipfs-core as it uses an uneeded esm module that breaks ui
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.3
+  - @zeitgeistpm/indexer@2.0.3
+  - @zeitgeistpm/rpc@2.0.3
+  - @zeitgeistpm/utility@2.0.3
+  - @zeitgeistpm/web3.storage@2.0.3
+
 ## 2.0.2
 
 ### Patch Changes
