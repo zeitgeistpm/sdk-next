@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.0.20
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.13
+
 ## 2.0.19
 
 ### Patch Changes
