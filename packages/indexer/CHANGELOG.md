@@ -1,5 +1,17 @@
 # @zeitgeistpm/indexer
 
+## 2.0.18
+
+### Patch Changes
+
+- asd
+
+## 2.0.17
+
+### Patch Changes
+
+- asd
+
 ## 2.0.16
 
 ### Patch Changes
