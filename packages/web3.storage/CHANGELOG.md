@@ -4,6 +4,14 @@
 
 ### Patch Changes
 
+- work
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.7
+
+## 2.0.6
+
+### Patch Changes
+
 - 272d738: Set correct local dep versions
 - Updated dependencies [272d738]
   - @zeitgeistpm/utility@2.0.6

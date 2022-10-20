@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.0.7
+
+### Patch Changes
+
+- work
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.7
+  - @zeitgeistpm/indexer@2.0.7
+  - @zeitgeistpm/rpc@2.0.7
+  - @zeitgeistpm/utility@2.0.7
+  - @zeitgeistpm/web3.storage@2.0.6
+
 ## 2.0.6
 
 ### Patch Changes
