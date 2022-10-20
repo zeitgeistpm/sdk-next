@@ -1,5 +1,4 @@
-import { BigNumber } from 'bignumber.js'
-import { IEither, either, left, right } from '../either'
+import { BigNumber } from 'bignumber.js/bignumber.js'
 
 /**
  *
@@ -49,4 +48,5 @@ export const mempty = () => wrap(new BigNumber(0))
  * @param ztg number - number as is
  * @returns Ztg
  */
-export const fromNumber = (value: number): Ztg => wrap(new BigNumber(value).multipliedBy(ZTG))
+export const fromNumber = (value: number): Ztg =>
+  wrap(new BigNumber(value).multipliedBy(ZTG))

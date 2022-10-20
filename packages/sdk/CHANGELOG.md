@@ -1,5 +1,33 @@
 # @zeitgeistpm/sdk
 
+## 2.0.24
+
+### Patch Changes
+
+- commonjs
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.16
+  - @zeitgeistpm/augment-api@2.0.14
+  - @zeitgeistpm/indexer@2.0.15
+  - @zeitgeistpm/rpc@2.0.14
+  - @zeitgeistpm/web3.storage@2.0.21
+
+## 2.0.23
+
+### Patch Changes
+
+- bignumber import
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.15
+
+## 2.0.22
+
+### Patch Changes
+
+- bignumber import
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.14
+
 ## 2.0.21
 
 ### Patch Changes

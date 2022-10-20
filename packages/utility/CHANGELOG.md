@@ -1,5 +1,23 @@
 # @zeitgeistpm/utility
 
+## 2.0.16
+
+### Patch Changes
+
+- commonjs
+
+## 2.0.15
+
+### Patch Changes
+
+- bignumber import
+
+## 2.0.14
+
+### Patch Changes
+
+- bignumber import
+
 ## 2.0.13
 
 ### Patch Changes
