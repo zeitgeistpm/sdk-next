@@ -1,5 +1,23 @@
 # @zeitgeistpm/augment-api
 
+## 2.0.12
+
+### Patch Changes
+
+- export module field
+
+## 2.0.11
+
+### Patch Changes
+
+- deps
+
+## 2.0.10
+
+### Patch Changes
+
+- esm
+
 ## 2.0.9
 
 ### Patch Changes

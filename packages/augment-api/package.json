@@ -1,14 +1,16 @@
 {
   "name": "@zeitgeistpm/augment-api",
-  "version": "2.0.9",
+  "description": "Generated types for the Zeitgeist network.",
+  "version": "2.0.12",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Generated types for the Zeitgeist network.",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn generate:defs && yarn generate:meta && rimraf ./dist && tsc",
+    "build": "yarn generate:defs && yarn generate:meta && yarn compile",
+    "compile": "rimraf ./dist && tsc",
     "generate:defs": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-defs --package @zeitgeistpm/augment-api/interfaces --input ./src/interfaces --endpoint ./src/metadata/latest.json",
     "generate:meta": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-chain --package @zeitgeistpm/augment-api/interfaces --endpoint ./src/metadata/latest.json --output ./src/interfaces  --strict",
     "fetch:metadata": "node ./scripts/fetchMetadata.js -o './src/metadata/latest.json' -e 'ws://127.0.0.1:9944'"
@@ -19,8 +21,7 @@
     "@polkadot/typegen": "9.2.2"
   },
   "dependencies": {
-    "@polkadot/types": "9.2.2",
-    "axios": "^0.21.1"
+    "@polkadot/types": "9.2.2"
   },
   "gitHead": "f65183993419e36276711f4634c57536ffad93a1"
 }

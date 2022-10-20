@@ -1,6 +1,6 @@
-import type { PoolOrderByInput, PoolWhereInput } from '@zeitgeistpm/indexer/dist'
-import { MetadataStorage } from '../../../../meta'
-import { Context, IndexerContext, RpcContext } from '../../../../context'
+import type { PoolOrderByInput, PoolWhereInput } from '@zeitgeistpm/indexer'
+import { MetadataStorage } from '../../../../meta/types'
+import { Context, IndexerContext, RpcContext } from '../../../../context/types'
 
 /**
  * Pools list Query type

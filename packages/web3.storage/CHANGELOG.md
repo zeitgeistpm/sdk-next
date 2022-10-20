@@ -1,5 +1,65 @@
 # @zeitgeistpm/web3.storage
 
+## 2.0.19
+
+### Patch Changes
+
+- export module field
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.12
+
+## 2.0.18
+
+### Patch Changes
+
+- deps
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.11
+
+## 2.0.17
+
+### Patch Changes
+
+- esm
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.10
+
+## 2.0.16
+
+### Patch Changes
+
+- asd
+
+## 2.0.15
+
+### Patch Changes
+
+- asd
+
+## 2.0.14
+
+### Patch Changes
+
+- asd
+
+## 2.0.13
+
+### Patch Changes
+
+- asdk
+
+## 2.0.12
+
+### Patch Changes
+
+- asd
+
+## 2.0.11
+
+### Patch Changes
+
+- asd
+
 ## 2.0.10
 
 ### Patch Changes

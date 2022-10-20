@@ -7394,17 +7394,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zeitgeistpm/augment-api@^2.0.9, @zeitgeistpm/augment-api@workspace:packages/augment-api":
+"@zeitgeistpm/augment-api@^2.0.12, @zeitgeistpm/augment-api@workspace:packages/augment-api":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/augment-api@workspace:packages/augment-api"
   dependencies:
     "@polkadot/typegen": 9.2.2
     "@polkadot/types": 9.2.2
-    axios: ^0.21.1
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/indexer@^2.0.10, @zeitgeistpm/indexer@workspace:packages/indexer":
+"@zeitgeistpm/indexer@^2.0.13, @zeitgeistpm/indexer@workspace:packages/indexer":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/indexer@workspace:packages/indexer"
   dependencies:
@@ -7419,11 +7418,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/rpc@^2.0.9, @zeitgeistpm/rpc@workspace:packages/rpc":
+"@zeitgeistpm/rpc@^2.0.12, @zeitgeistpm/rpc@workspace:packages/rpc":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/rpc@workspace:packages/rpc"
   dependencies:
-    "@zeitgeistpm/augment-api": ^2.0.9
+    "@zeitgeistpm/augment-api": ^2.0.12
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/keyring": "*"
@@ -7437,11 +7436,11 @@ __metadata:
   dependencies:
     "@types/lodash.memoize": ^4.1.7
     "@types/ms": ^0.7.31
-    "@zeitgeistpm/augment-api": ^2.0.9
-    "@zeitgeistpm/indexer": ^2.0.10
-    "@zeitgeistpm/rpc": ^2.0.9
-    "@zeitgeistpm/utility": ^2.0.9
-    "@zeitgeistpm/web3.storage": ^2.0.9
+    "@zeitgeistpm/augment-api": ^2.0.12
+    "@zeitgeistpm/indexer": ^2.0.13
+    "@zeitgeistpm/rpc": ^2.0.12
+    "@zeitgeistpm/utility": ^2.0.12
+    "@zeitgeistpm/web3.storage": ^2.0.19
     bignumber.js: ^9.1.0
     cids: ^1.1.9
     lodash.memoize: ^4.1.2
@@ -7456,7 +7455,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.0.9, @zeitgeistpm/utility@workspace:packages/utility":
+"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.0.12, @zeitgeistpm/utility@workspace:packages/utility":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/utility@workspace:packages/utility"
   dependencies:
@@ -7470,16 +7469,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/web3.storage@^2.0.9, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
+"@zeitgeistpm/web3.storage@^2.0.19, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/web3.storage@workspace:packages/web3.storage"
   dependencies:
-    "@zeitgeistpm/utility": ^2.0.9
+    "@zeitgeistpm/utility": ^2.0.12
     cids: ^1.1.9
     ipfs-http-client: ^58.0.1
-  peerDependencies:
-    "@polkadot/api": "*"
-    "@polkadot/types": "*"
+    merge-options: ^3.0.4
+    parse-duration: ^1.0.2
+    up: ^1.0.2
   languageName: unknown
   linkType: soft
 
@@ -8004,15 +8003,6 @@ __metadata:
   version: 1.11.0
   resolution: "aws4@npm:1.11.0"
   checksum: 5a00d045fd0385926d20ebebcfba5ec79d4482fe706f63c27b324d489a04c68edb0db99ed991e19eda09cb8c97dc2452059a34d97545cebf591d7a2b5a10999f
-  languageName: node
-  linkType: hard
-
-"axios@npm:^0.21.1":
-  version: 0.21.4
-  resolution: "axios@npm:0.21.4"
-  dependencies:
-    follow-redirects: ^1.14.0
-  checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
   languageName: node
   linkType: hard
 
@@ -11638,16 +11628,6 @@ __metadata:
   dependencies:
     tslib: ^2.0.3
   checksum: d0ed6daaddb82a5996be97736522effe8d9637a8981cd26bc0633d618fe3e61b8ee5eb57f3f67e38ee1dba68eddb3676ab68a5afad56cf978032855697df989f
-  languageName: node
-  linkType: hard
-
-"follow-redirects@npm:^1.14.0":
-  version: 1.15.1
-  resolution: "follow-redirects@npm:1.15.1"
-  peerDependenciesMeta:
-    debug:
-      optional: true
-  checksum: 6aa4e3e3cdfa3b9314801a1cd192ba756a53479d9d8cca65bf4db3a3e8834e62139245cd2f9566147c8dfe2efff1700d3e6aefd103de4004a7b99985e71dd533
   languageName: node
   linkType: hard
 
@@ -16575,7 +16555,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parse-duration@npm:^1.0.0":
+"parse-duration@npm:^1.0.0, parse-duration@npm:^1.0.2":
   version: 1.0.2
   resolution: "parse-duration@npm:1.0.2"
   checksum: d103ca9c3b630cc6169a89039349b735af796b94d9dc810750b16f79285ce5df20669ef0d02b23eda5832dc51aee88316857f3695584e88ba0ae5d77743134ef
@@ -19996,6 +19976,13 @@ __metadata:
   dependencies:
     normalize-path: ^2.1.1
   checksum: 3be30e48579fc6c7390bd59b4ab9e745fede0c164dfb7351cf710bd1dbef8484b1441186205af6bcb13b731c0c88caf9b33459f7bf8c89e79c046e656ae433f0
+  languageName: node
+  linkType: hard
+
+"up@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "up@npm:1.0.2"
+  checksum: ff78c53225a9bf5ab199b17b952170650547f2ee8fcacf3a3178ddf2e4394febaae1739a20303c3fd6ff6dda75f1d1cfbf60aa51d806a9bb7b4204fd48d6d0e9
   languageName: node
   linkType: hard
 

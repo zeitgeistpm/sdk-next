@@ -3,7 +3,7 @@ import * as Indexer from '@zeitgeistpm/indexer'
 import { options } from '@zeitgeistpm/rpc/dist'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import polly from 'polly-js'
-import type { FullContext, IndexerContext, RpcContext } from './context'
+import type { FullContext, IndexerContext, RpcContext } from './context/types'
 import { debug } from './debug'
 import { MetadataStorage, saturate } from './meta'
 import {
@@ -75,7 +75,11 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
     )
     return sdk(await createIndexerContext(config))
   } else {
-    debug(`Using only rpc, querying data might be more limited and/or slower.`, config, 'warn')
+    debug(
+      `Using only rpc, querying data might be more limited and/or slower.`,
+      config,
+      'warn',
+    )
     return sdk(await createRpcContext(config))
   }
 }
@@ -89,7 +93,10 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
 export const createFullContext = async <MS extends MetadataStorage<any, any>>(
   config: FullConfig<MS>,
 ): Promise<FullContext<MS>> => {
-  const [rpc, indexer] = await Promise.all([createRpcContext(config), createIndexerContext(config)])
+  const [rpc, indexer] = await Promise.all([
+    createRpcContext(config),
+    createIndexerContext(config),
+  ])
   return {
     ...rpc,
     ...indexer,
@@ -144,7 +151,9 @@ export const createRpcContext = async <MS extends MetadataStorage<any, any>>(
  * @param config IndexerConfig
  * @returns Promise<IndexerContext>
  */
-export const createIndexerContext = async (config: IndexerConfig): Promise<IndexerContext> => {
+export const createIndexerContext = async (
+  config: IndexerConfig,
+): Promise<IndexerContext> => {
   debug(`connecting to indexer: ${config.indexer}`, config)
 
   const indexer = Indexer.create({ uri: config.indexer })

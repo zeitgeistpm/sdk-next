@@ -1,5 +1,29 @@
 # @zeitgeistpm/rpc
 
+## 2.0.12
+
+### Patch Changes
+
+- export module field
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.12
+
+## 2.0.11
+
+### Patch Changes
+
+- deps
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.11
+
+## 2.0.10
+
+### Patch Changes
+
+- esm
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.10
+
 ## 2.0.9
 
 ### Patch Changes

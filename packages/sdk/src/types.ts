@@ -1,4 +1,4 @@
-import { MetadataStorage } from './meta'
+import { MetadataStorage } from './meta/index.js'
 import {
   Context,
   FullContext,
@@ -6,13 +6,13 @@ import {
   isIndexerContext,
   isRpcContext,
   RpcContext,
-} from './context'
-import { Model, model } from './model'
+} from './context/types.js'
+import { Model, model } from './model/index.js'
 import { isNull } from '@polkadot/util'
 
-export * from './config/types'
-export * from './context/types'
-export * from './model/types'
+export * from './config/types.js'
+export * from './context/types.js'
+export * from './model/types.js'
 
 /**
  * Top level Zeitgeist SDK type.
@@ -78,7 +78,9 @@ export const isFullSdk = <MS extends MetadataStorage>(
  * @param sdk
  * @returns sdk is Sdk<IndexerContext>
  */
-export const isIndexedSdk = <MS extends MetadataStorage>(sdk: any): sdk is Sdk<IndexerContext, MS> =>
+export const isIndexedSdk = <MS extends MetadataStorage>(
+  sdk: any,
+): sdk is Sdk<IndexerContext, MS> =>
   !isNull(sdk) && 'context' in sdk && isIndexerContext(sdk.context)
 
 /**
@@ -86,5 +88,7 @@ export const isIndexedSdk = <MS extends MetadataStorage>(sdk: any): sdk is Sdk<I
  * @param sdk
  * @returns sdk is Sdk<RpcContext>
  */
-export const isRpcSdk = <MS extends MetadataStorage>(sdk: any): sdk is Sdk<RpcContext<MS>, MS> =>
+export const isRpcSdk = <MS extends MetadataStorage>(
+  sdk: any,
+): sdk is Sdk<RpcContext<MS>, MS> =>
   Boolean(!isNull(sdk) && 'context' in sdk && isRpcContext<MS>(sdk.context))

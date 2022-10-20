@@ -2,7 +2,7 @@ import type { WsProvider } from '@polkadot/api'
 import type { ApiOptions } from '@polkadot/api/types'
 import '@zeitgeistpm/augment-api'
 
-import * as definitions from '@zeitgeistpm/augment-api/dist/interfaces/definitions'
+import { definitions } from '@zeitgeistpm/augment-api'
 
 export * from './types'
 export * from './lib'
@@ -26,7 +26,10 @@ export const options = (opts: ZeitgeistApiOptions): ApiOptions => {
       ...Object.values(definitions).reduce((acc, { types }) => ({ ...acc, ...types }), {}),
     },
     rpc: {
-      ...Object.entries(definitions).reduce((acc, [key, { rpc }]) => ({ ...acc, [key]: rpc }), {}),
+      ...Object.entries(definitions).reduce(
+        (acc, [key, { rpc }]) => ({ ...acc, [key]: rpc }),
+        {},
+      ),
     },
     provider: opts.provider,
     noInitWarn: true,

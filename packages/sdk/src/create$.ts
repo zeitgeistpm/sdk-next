@@ -20,8 +20,12 @@ import {
  * @param config FullConfig
  * @returns Observable<Partial<Sdk<FullContext>>>
  */
-export const builder = <MS extends MetadataStorage = MetadataStorage>(config: Config<MS>) => {
-  const config$ = isFullConfig(config) ? of(asIndexerConfig(config), asRpcConfig(config)) : of(config)
+export const create$ = <MS extends MetadataStorage = MetadataStorage>(
+  config: Config<MS>,
+) => {
+  const config$ = isFullConfig(config)
+    ? of(asIndexerConfig(config), asRpcConfig(config))
+    : of(config)
 
   const context$ = config$.pipe(
     switchMap(config => {

@@ -4,7 +4,7 @@ import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import IPFSHTTPClient from 'ipfs-http-client'
+import * as IPFSHTTPClient from 'ipfs-http-client'
 import { Storage } from '../..'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
@@ -15,7 +15,7 @@ import { IPFSConfiguration } from './types'
  *
  * @generic T - type of metadata
  */
-export const storage = <T extends object, ID>(
+export const storage = <T extends object>(
   config: IPFSConfiguration,
   codec: Codec<string, T> = JsonCodec(),
 ): Storage<T, IPFSHTTPClient.CID> => {

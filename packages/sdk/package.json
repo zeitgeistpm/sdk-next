@@ -1,13 +1,15 @@
 {
   "name": "@zeitgeistpm/sdk",
-  "version": "2.0.11",
+  "version": "2.0.20",
   "publishConfig": {
     "access": "public"
   },
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "rimraf ./dist && tsc"
+    "build": "yarn compile",
+    "compile": "rimraf ./dist && tsc"
   },
   "peerDependencies": {
     "@polkadot/api": "*",
@@ -15,11 +17,11 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^2.0.9",
-    "@zeitgeistpm/indexer": "^2.0.10",
-    "@zeitgeistpm/rpc": "^2.0.9",
-    "@zeitgeistpm/utility": "^2.0.9",
-    "@zeitgeistpm/web3.storage": "^2.0.10",
+    "@zeitgeistpm/augment-api": "^2.0.12",
+    "@zeitgeistpm/indexer": "^2.0.13",
+    "@zeitgeistpm/rpc": "^2.0.12",
+    "@zeitgeistpm/utility": "^2.0.12",
+    "@zeitgeistpm/web3.storage": "^2.0.19",
     "bignumber.js": "^9.1.0",
     "cids": "^1.1.9",
     "lodash.memoize": "^4.1.2",

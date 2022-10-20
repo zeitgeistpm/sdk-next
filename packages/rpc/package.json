@@ -1,16 +1,17 @@
 {
   "name": "@zeitgeistpm/rpc",
-  "version": "2.0.9",
+  "version": "2.0.12",
   "publishConfig": {
     "access": "public"
   },
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rimraf ./dist && tsc"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^2.0.9"
+    "@zeitgeistpm/augment-api": "^2.0.12"
   },
   "peerDependencies": {
     "@polkadot/api": "*",

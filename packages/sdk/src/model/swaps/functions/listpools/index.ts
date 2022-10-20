@@ -5,7 +5,7 @@ import {
   isIndexerContext,
   isRpcContext,
   RpcContext,
-} from '../../../../context'
+} from '../../../../context/types'
 import { isPaginated } from '../../../../types/query'
 import { PoolsListQuery } from '../../types'
 import { Pool, rpcPool, RpcPool } from '../../pool'

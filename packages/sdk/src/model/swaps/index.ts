@@ -1,17 +1,11 @@
 import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
-import { Context, isRpcContext } from '../../context'
+import { Context, isRpcContext } from '../../context/types'
 import { MetadataStorage } from '../../meta'
 import { assetsIndex } from './functions/assetindex'
 import { getPool, observePool$ } from './functions/getpool'
 import { listPools } from './functions/listpools'
-import { poolPrices, observePoolPrices$ } from './functions/poolprices'
-import {
-  PoolGetQuery,
-  PoolPricesQuery,
-  PoolPricesStreamQuery,
-  PoolsListQuery,
-  Swaps,
-} from './types'
+import { observePoolPrices$, poolPrices } from './functions/poolprices'
+import { PoolGetQuery, PoolPricesQuery, Swaps } from './types'
 
 export * from './types'
 

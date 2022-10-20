@@ -1,5 +1,89 @@
 # @zeitgeistpm/sdk
 
+## 2.0.20
+
+### Patch Changes
+
+- export module field
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.12
+  - @zeitgeistpm/indexer@2.0.13
+  - @zeitgeistpm/rpc@2.0.12
+  - @zeitgeistpm/utility@2.0.12
+  - @zeitgeistpm/web3.storage@2.0.19
+
+## 2.0.19
+
+### Patch Changes
+
+- deps
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.11
+  - @zeitgeistpm/indexer@2.0.12
+  - @zeitgeistpm/rpc@2.0.11
+  - @zeitgeistpm/utility@2.0.11
+  - @zeitgeistpm/web3.storage@2.0.18
+
+## 2.0.18
+
+### Patch Changes
+
+- esm
+- Updated dependencies
+  - @zeitgeistpm/web3.storage@2.0.17
+  - @zeitgeistpm/augment-api@2.0.10
+  - @zeitgeistpm/indexer@2.0.11
+  - @zeitgeistpm/rpc@2.0.10
+  - @zeitgeistpm/utility@2.0.10
+
+## 2.0.17
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/web3.storage@2.0.16
+
+## 2.0.16
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/web3.storage@2.0.15
+
+## 2.0.15
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/web3.storage@2.0.14
+
+## 2.0.14
+
+### Patch Changes
+
+- asdk
+- Updated dependencies
+  - @zeitgeistpm/web3.storage@2.0.13
+
+## 2.0.13
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/web3.storage@2.0.12
+
+## 2.0.12
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/web3.storage@2.0.11
+
 ## 2.0.11
 
 ### Patch Changes
