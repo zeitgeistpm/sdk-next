@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.0.10
+
+### Patch Changes
+
+- Commonjs
+
 ## 2.0.9
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.0.9
+
+### Patch Changes
+
+- Commonjs
+
 ## 2.0.8
 
 ### Patch Changes

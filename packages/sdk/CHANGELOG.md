@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.0.10
+
+### Patch Changes
+
+- Commonjs
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.9
+  - @zeitgeistpm/indexer@2.0.10
+  - @zeitgeistpm/rpc@2.0.9
+  - @zeitgeistpm/utility@2.0.9
+  - @zeitgeistpm/web3.storage@2.0.9
+
 ## 2.0.9
 
 ### Patch Changes

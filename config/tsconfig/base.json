@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "target": "ES2020",
     "noUnusedLocals": false,
