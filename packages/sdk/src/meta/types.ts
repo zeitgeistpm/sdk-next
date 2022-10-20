@@ -1,6 +1,6 @@
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { Storage } from '@zeitgeistpm/web3.storage'
-import { CID } from 'ipfs-http-client'
+import type { CID } from 'ipfs-http-client'
 import { CommentMetadata } from './comment'
 import { MarketMetadata } from './market'
 

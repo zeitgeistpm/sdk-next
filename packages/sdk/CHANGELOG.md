@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.0.11
+
+### Patch Changes
+
+- ipfs
+- Updated dependencies
+  - @zeitgeistpm/web3.storage@2.0.10
+
 ## 2.0.10
 
 ### Patch Changes

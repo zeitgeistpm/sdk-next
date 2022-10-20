@@ -1,6 +1,6 @@
 import { TaskEither } from '@zeitgeistpm/utility/dist/taskeither'
 import { IOption } from '@zeitgeistpm/utility/dist/option'
-import { CID } from 'ipfs-http-client'
+import type { CID } from 'ipfs-http-client'
 
 export * from './providers/ipfs/types'
 
