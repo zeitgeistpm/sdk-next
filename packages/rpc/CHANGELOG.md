@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.0.15
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.15
+
 ## 2.0.14
 
 ### Patch Changes

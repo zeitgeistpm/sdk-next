@@ -1,5 +1,19 @@
 # @zeitgeistpm/web3.storage
 
+## 2.0.23
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.17
+
+## 2.0.22
+
+### Patch Changes
+
+- import ipfs absolute path
+
 ## 2.0.21
 
 ### Patch Changes
