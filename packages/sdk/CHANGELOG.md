@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.0.8
+
+### Patch Changes
+
+- b212eae: Use esm and export "module" in package jsons
+- Updated dependencies [b212eae]
+  - @zeitgeistpm/augment-api@2.0.8
+  - @zeitgeistpm/indexer@2.0.8
+  - @zeitgeistpm/rpc@2.0.8
+  - @zeitgeistpm/utility@2.0.8
+  - @zeitgeistpm/web3.storage@2.0.8
+
 ## 2.0.7
 
 ### Patch Changes

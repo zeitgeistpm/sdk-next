@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.0.8
+
+### Patch Changes
+
+- b212eae: Use esm and export "module" in package jsons
+- Updated dependencies [b212eae]
+  - @zeitgeistpm/utility@2.0.8
+
 ## 2.0.6
 
 ### Patch Changes
