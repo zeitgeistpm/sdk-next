@@ -10,7 +10,7 @@
     "build": "rimraf ./dist && tsc"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "*"
+    "@zeitgeistpm/augment-api": "^2.0.5"
   },
   "peerDependencies": {
     "@polkadot/api": "*",

@@ -15,11 +15,11 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "*",
-    "@zeitgeistpm/indexer": "*",
-    "@zeitgeistpm/rpc": "*",
-    "@zeitgeistpm/utility": "*",
-    "@zeitgeistpm/web3.storage": "*",
+    "@zeitgeistpm/augment-api": "^2.0.5",
+    "@zeitgeistpm/indexer": "^2.0.5",
+    "@zeitgeistpm/rpc": "^2.0.5",
+    "@zeitgeistpm/utility": "^2.0.5",
+    "@zeitgeistpm/web3.storage": "^2.0.5",
     "bignumber.js": "^9.1.0",
     "cids": "^1.1.9",
     "lodash.memoize": "^4.1.2",

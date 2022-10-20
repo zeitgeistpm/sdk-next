@@ -1,6 +1,4 @@
-import omit from 'lodash.omit'
 import * as Ae from '../aeither'
-import * as E from '../either'
 
 /**
  * A task that returns an EitherInterface type with syntactic sugar for async unwrapping.
