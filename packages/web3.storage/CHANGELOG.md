@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.0.5
+
+### Patch Changes
+
+- Commonjs
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.5
+
 ## 2.0.4
 
 ### Patch Changes
