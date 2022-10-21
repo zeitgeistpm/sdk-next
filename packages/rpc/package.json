@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/rpc",
-  "version": "2.0.21",
+  "version": "2.0.22",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,7 @@
     "build": "rimraf ./dist && tsc"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^2.0.21"
+    "@zeitgeistpm/augment-api": "^2.0.22"
   },
   "peerDependencies": {
     "@polkadot/api": "*",
