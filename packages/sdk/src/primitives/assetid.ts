@@ -1,6 +1,6 @@
 import { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
 import { isString } from '@polkadot/util'
-import * as O from '@zeitgeistpm/utility/dist/esm/option'
+import * as O from '@zeitgeistpm/utility/dist/cjs/option'
 import { literal, number, tuple, type, union, Infer } from 'superstruct'
 import { option } from 'yargs'
 import { IOMarketId, MarketId } from './marketid'

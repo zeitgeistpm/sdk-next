@@ -1,5 +1,5 @@
-import { pfunc } from '@zeitgeistpm/utility/dist/esm/pfunc'
-import * as Te from '@zeitgeistpm/utility/dist/esm/taskeither'
+import { pfunc } from '@zeitgeistpm/utility/dist/cjs/pfunc'
+import * as Te from '@zeitgeistpm/utility/dist/cjs/taskeither'
 import { Context, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { create, transaction } from './functions/create'

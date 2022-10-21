@@ -9,7 +9,7 @@ import {
 import { PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk/dist/model/swaps'
 import { Pool } from '@zeitgeistpm/sdk/dist/model/swaps/pool'
 import { Market } from '@zeitgeistpm/sdk/dist/model/types'
-import { throws } from '@zeitgeistpm/utility/dist/esm/error'
+import { throws } from '@zeitgeistpm/utility/dist/cjs/error'
 import { from, Subscription } from 'rxjs'
 import { map, mergeWith, switchMap, withLatestFrom, scan } from 'rxjs/operators'
 import ms from 'ms'

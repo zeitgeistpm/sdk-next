@@ -6,7 +6,7 @@ import {
   isRpcSdk,
   mainnet,
 } from '@zeitgeistpm/sdk'
-import { isNotNull } from '@zeitgeistpm/utility/dist/esm/null'
+import { isNotNull } from '@zeitgeistpm/utility/dist/cjs/null'
 import { from, of } from 'rxjs'
 import { filter, switchMap } from 'rxjs/operators'
 
