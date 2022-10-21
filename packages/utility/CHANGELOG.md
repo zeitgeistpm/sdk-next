@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.0.21
+
+### Patch Changes
+
+- a3347ea: asd
+
 ## 2.0.20
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.0.19
+
+### Patch Changes
+
+- a3347ea: asd
+- Updated dependencies [a3347ea]
+  - @zeitgeistpm/augment-api@2.0.19
+
 ## 2.0.18
 
 ### Patch Changes

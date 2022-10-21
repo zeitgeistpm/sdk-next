@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.0.20
+
+### Patch Changes
+
+- a3347ea: asd
+
 ## 2.0.19
 
 ### Patch Changes
