@@ -1,0 +1,25 @@
+import typescript from 'rollup-plugin-typescript2'
+import commonjs from '@rollup/plugin-commonjs'
+
+export default {
+  input: './src/index.ts',
+  output: [
+    {
+      dir: './dist/esm/',
+      format: 'esm',
+      sourcemap: true,
+      exports: 'named',
+      preserveModules: true,
+      preserveModulesRoot: 'src',
+    },
+    {
+      dir: './dist/cjs/',
+      format: 'cjs',
+      sourcemap: true,
+      preserveModules: true,
+      preserveModulesRoot: 'src',
+    },
+  ],
+  plugins: [typescript(), commonjs({ exclude: 'node_modules' })],
+  external: ['rollup.config.ts'],
+}

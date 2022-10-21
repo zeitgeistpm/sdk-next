@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.0.20
+
+### Patch Changes
+
+- esm
+
 ## 2.0.19
 
 ### Patch Changes

@@ -11,7 +11,7 @@
     "isolatedModules": true,
     "module": "ESNext",
     "moduleResolution": "node",
-    "target": "ES2020",
+    "target": "ESNext",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,

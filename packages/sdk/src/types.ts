@@ -1,4 +1,4 @@
-import { MetadataStorage } from './meta/index.js'
+import { MetadataStorage } from './meta/index'
 import {
   Context,
   FullContext,
@@ -6,13 +6,13 @@ import {
   isIndexerContext,
   isRpcContext,
   RpcContext,
-} from './context/types.js'
-import { Model, model } from './model/index.js'
+} from './context/types'
+import { Model, model } from './model/index'
 import { isNull } from '@polkadot/util'
 
-export * from './config/types.js'
-export * from './context/types.js'
-export * from './model/types.js'
+export * from './config/types'
+export * from './context/types'
+export * from './model/types'
 
 /**
  * Top level Zeitgeist SDK type.

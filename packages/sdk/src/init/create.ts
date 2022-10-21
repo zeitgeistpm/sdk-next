@@ -3,9 +3,9 @@ import * as Indexer from '@zeitgeistpm/indexer'
 import { options } from '@zeitgeistpm/rpc/dist'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import polly from 'polly-js'
-import type { FullContext, IndexerContext, RpcContext } from './context/types'
+import type { FullContext, IndexerContext, RpcContext } from '../context/types'
 import { debug } from './debug'
-import { MetadataStorage, saturate } from './meta'
+import { MetadataStorage, saturate } from '../meta'
 import {
   Config,
   FullConfig,
@@ -16,7 +16,7 @@ import {
   RpcConfig,
   sdk,
   Sdk,
-} from './types'
+} from '../types'
 
 /**
  * Create an instance of the zeitgeist sdk with full features of both indexer and chain rpc.

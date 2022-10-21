@@ -2,7 +2,7 @@ import { assign } from '@zeitgeistpm/utility/dist/observable/operators'
 import { from, Observable, of } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'
-import { MetadataStorage } from './meta'
+import { MetadataStorage } from '../meta'
 import {
   asIndexerConfig,
   asRpcConfig,
@@ -12,7 +12,7 @@ import {
   isIndexerConfig,
   Sdk,
   sdk,
-} from './types'
+} from '../types'
 
 /**
  * Initialize the indexer and rpc concurrently and emit partially applied intances of the Sdk.

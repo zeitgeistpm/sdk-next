@@ -7,7 +7,7 @@
     "paths": {
       "@zeitgeistpm/augment-api/*": ["src/*"],
     },
-    "outDir": "dist"
+    "outDir": "dist",
   },
   "exclude": [
     "dist",
