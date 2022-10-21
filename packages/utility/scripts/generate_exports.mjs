@@ -1,11 +1,8 @@
 import glob from 'glob'
 import path from 'path'
+import fs from 'fs'
 
 const folders = glob.sync('./src/*')
-
-console.log('generate exports'.toUpperCase())
-console.log(folders)
-console.log('generate exports'.toUpperCase())
 
 const pckexports = folders.reduce((exp, folder) => {
   const modulename = path.basename(folder)
@@ -21,10 +18,16 @@ const pckexports = folders.reduce((exp, folder) => {
 
 console.log(pckexports)
 
-a = {
-  '.': {
-    types: './dist/esm/index.d.ts',
-    require: './dist/cjs/index.js',
-    default: './dist/esm/index.js',
-  },
-}
+const pckjson = JSON.parse(fs.readFileSync('./package.json'))
+
+fs.writeFileSync(
+  './package.json',
+  JSON.stringify(
+    {
+      ...pckjson,
+      exports: pckexports,
+    },
+    undefined,
+    2,
+  ),
+)
