@@ -9,7 +9,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "yarn compile",
-    "compile": "rimraf ./dist && tsc"
+    "compile": "rm -rf ./dist && rollup -c"
   },
   "peerDependencies": {
     "@polkadot/api": "*",
