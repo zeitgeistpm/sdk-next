@@ -4,8 +4,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "yarn compile && yarn generate-exports",
@@ -25,5 +23,94 @@
   },
   "devDependencies": {
     "@types/lodash.omit": "^4.5.7"
+  },
+  "type": "module",
+  "exports": {
+    "./": "./dist/cjs/",
+    "./aeither": {
+      "types": "./dist/esm/aeither/index.d.ts",
+      "require": "./dist/cjs/aeither/index.js",
+      "default": "./dist/cjs/aeither/index.js"
+    },
+    "./array": {
+      "types": "./dist/esm/array/index.d.ts",
+      "require": "./dist/cjs/array/index.js",
+      "default": "./dist/cjs/array/index.js"
+    },
+    "./assert": {
+      "types": "./dist/esm/assert/index.d.ts",
+      "require": "./dist/cjs/assert/index.js",
+      "default": "./dist/cjs/assert/index.js"
+    },
+    "./async": {
+      "types": "./dist/esm/async/index.d.ts",
+      "require": "./dist/cjs/async/index.js",
+      "default": "./dist/cjs/async/index.js"
+    },
+    "./codec": {
+      "types": "./dist/esm/codec/index.d.ts",
+      "require": "./dist/cjs/codec/index.js",
+      "default": "./dist/cjs/codec/index.js"
+    },
+    "./either": {
+      "types": "./dist/esm/either/index.d.ts",
+      "require": "./dist/cjs/either/index.js",
+      "default": "./dist/cjs/either/index.js"
+    },
+    "./error": {
+      "types": "./dist/esm/error/index.d.ts",
+      "require": "./dist/cjs/error/index.js",
+      "default": "./dist/cjs/error/index.js"
+    },
+    "./function": {
+      "types": "./dist/esm/function/index.d.ts",
+      "require": "./dist/cjs/function/index.js",
+      "default": "./dist/cjs/function/index.js"
+    },
+    "./math": {
+      "types": "./dist/esm/math/index.d.ts",
+      "require": "./dist/cjs/math/index.js",
+      "default": "./dist/cjs/math/index.js"
+    },
+    "./null": {
+      "types": "./dist/esm/null/index.d.ts",
+      "require": "./dist/cjs/null/index.js",
+      "default": "./dist/cjs/null/index.js"
+    },
+    "./object": {
+      "types": "./dist/esm/object/index.d.ts",
+      "require": "./dist/cjs/object/index.js",
+      "default": "./dist/cjs/object/index.js"
+    },
+    "./observable": {
+      "types": "./dist/esm/observable/index.d.ts",
+      "require": "./dist/cjs/observable/index.js",
+      "default": "./dist/cjs/observable/index.js"
+    },
+    "./option": {
+      "types": "./dist/esm/option/index.d.ts",
+      "require": "./dist/cjs/option/index.js",
+      "default": "./dist/cjs/option/index.js"
+    },
+    "./pfunc": {
+      "types": "./dist/esm/pfunc/index.d.ts",
+      "require": "./dist/cjs/pfunc/index.js",
+      "default": "./dist/cjs/pfunc/index.js"
+    },
+    "./task": {
+      "types": "./dist/esm/task/index.d.ts",
+      "require": "./dist/cjs/task/index.js",
+      "default": "./dist/cjs/task/index.js"
+    },
+    "./taskeither": {
+      "types": "./dist/esm/taskeither/index.d.ts",
+      "require": "./dist/cjs/taskeither/index.js",
+      "default": "./dist/cjs/taskeither/index.js"
+    },
+    "./ztg": {
+      "types": "./dist/esm/ztg/index.d.ts",
+      "require": "./dist/cjs/ztg/index.js",
+      "default": "./dist/cjs/ztg/index.js"
+    }
   }
 }

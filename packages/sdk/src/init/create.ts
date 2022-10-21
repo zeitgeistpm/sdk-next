@@ -1,7 +1,7 @@
 import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
 import { options } from '@zeitgeistpm/rpc/dist'
-import { assert } from '@zeitgeistpm/utility/assert'
+import { assert } from '@zeitgeistpm/utility/dist/esm/assert'
 import polly from 'polly-js'
 import type { FullContext, IndexerContext, RpcContext } from '../context/types'
 import { debug } from './debug'

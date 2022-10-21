@@ -1,4 +1,4 @@
-import { pfunc } from '@zeitgeistpm/utility/pfunc'
+import { pfunc } from '@zeitgeistpm/utility/dist/esm/pfunc'
 import { Context, isRpcContext } from '../../context/types'
 import { MetadataStorage } from '../../meta'
 import { assetsIndex } from './functions/assetindex'

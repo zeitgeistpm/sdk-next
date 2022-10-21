@@ -1,5 +1,5 @@
-import { PFunc } from '@zeitgeistpm/utility/pfunc'
-import * as Te from '@zeitgeistpm/utility/taskeither'
+import { PFunc } from '@zeitgeistpm/utility/dist/esm/pfunc'
+import * as Te from '@zeitgeistpm/utility/dist/esm/taskeither'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'

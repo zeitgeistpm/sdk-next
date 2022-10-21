@@ -1,8 +1,8 @@
-import { Codec } from '@zeitgeistpm/utility/codec'
-import { JsonCodec } from '@zeitgeistpm/utility/codec/impl/json'
-import { throws } from '@zeitgeistpm/utility/error'
-import { from } from '@zeitgeistpm/utility/option'
-import * as Te from '@zeitgeistpm/utility/taskeither'
+import { Codec } from '@zeitgeistpm/utility/dist/esm/codec'
+import { JsonCodec } from '@zeitgeistpm/utility/dist/esm/codec/impl/json'
+import { throws } from '@zeitgeistpm/utility/dist/esm/error'
+import { from } from '@zeitgeistpm/utility/dist/esm/option'
+import * as Te from '@zeitgeistpm/utility/dist/esm/taskeither'
 import { Storage } from '../..'
 
 /**

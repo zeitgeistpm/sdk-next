@@ -4,19 +4,22 @@ import fs from 'fs'
 
 const folders = glob.sync('./src/*')
 
-const pckexports = folders.reduce((exp, folder) => {
-  const modulename = path.basename(folder)
-  return {
-    ...exp,
-    [`./${modulename}`]: {
-      types: `./dist/esm/${modulename}/index.d.ts`,
-      require: `./dist/cjs/${modulename}/index.js`,
-      default: `./dist/cjs/${modulename}/index.js`,
-    },
-  }
-}, {})
-
-console.log(pckexports)
+const pckexports = folders.reduce(
+  (exp, folder) => {
+    const modulename = path.basename(folder)
+    return {
+      ...exp,
+      [`./${modulename}`]: {
+        types: `./dist/esm/${modulename}/index.d.ts`,
+        require: `./dist/cjs/${modulename}/index.js`,
+        default: `./dist/cjs/${modulename}/index.js`,
+      },
+    }
+  },
+  {
+    './': './dist/cjs/',
+  },
+)
 
 const pckjson = JSON.parse(fs.readFileSync('./package.json'))
 
