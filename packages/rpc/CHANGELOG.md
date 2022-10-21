@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.0.20
+
+### Patch Changes
+
+- Utility esm
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.20
+
 ## 2.0.19
 
 ### Patch Changes

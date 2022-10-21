@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.0.21
+
+### Patch Changes
+
+- Utility esm
+
 ## 2.0.20
 
 ### Patch Changes
