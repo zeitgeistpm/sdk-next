@@ -1,8 +1,15 @@
-import { Context, isIndexedData, isIndexedSdk, isRpcData, isRpcSdk, Sdk } from '@zeitgeistpm/sdk'
+import {
+  Context,
+  isIndexedData,
+  isIndexedSdk,
+  isRpcData,
+  isRpcSdk,
+  Sdk,
+} from '@zeitgeistpm/sdk'
 import { PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk/dist/model/swaps'
 import { Pool } from '@zeitgeistpm/sdk/dist/model/swaps/pool'
 import { Market } from '@zeitgeistpm/sdk/dist/model/types'
-import { throws } from '@zeitgeistpm/utility/dist/error'
+import { throws } from '@zeitgeistpm/utility/error'
 import { from, Subscription } from 'rxjs'
 import { map, mergeWith, switchMap, withLatestFrom, scan } from 'rxjs/operators'
 import ms from 'ms'
@@ -10,10 +17,10 @@ import { useEffect, useState } from 'react'
 import { useToast, Box, Heading, Text, Button } from '@chakra-ui/react'
 import { last } from 'lodash'
 
-export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Context>> }> = ({
-  sdk,
-  marketId,
-}) => {
+export const MarketComponent: React.FC<{
+  marketId: number
+  sdk: Partial<Sdk<Context>>
+}> = ({ sdk, marketId }) => {
   const [market, setMarket] = useState<Market<Context>>()
   const [pool, setPool] = useState<Pool<Context>>()
   const [prices, setPrices] = useState<PoolAssetPricesAtBlock>([])
@@ -65,7 +72,9 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
         .pipe(
           switchMap(market =>
             from(
-              isRpcData(market) ? market.expand().then(market => market.unrightOr(throws)) : market,
+              isRpcData(market)
+                ? market.expand().then(market => market.unrightOr(throws))
+                : market,
             ),
           ),
         )
@@ -80,21 +89,23 @@ export const MarketComponent: React.FC<{ marketId: number; sdk: Partial<Sdk<Cont
         ),
       )
 
-      const sub = poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
-        market.categories?.map((category, index) => {
-          const [block, price] = prices[index]
-          console.log(
-            `Market ${market.marketId} token(${category?.ticker}) at price ${
-              price.toNumber() / 10 ** 10
-            } ZTG at block ${block}`,
-          )
+      const sub = poolPrices$
+        .pipe(withLatestFrom(market$))
+        .subscribe(([prices, market]) => {
+          market.categories?.map((category, index) => {
+            const [block, price] = prices[index]
+            console.log(
+              `Market ${market.marketId} token(${category?.ticker}) at price ${
+                price.toNumber() / 10 ** 10
+              } ZTG at block ${block}`,
+            )
 
-          if (market.status === 'Closed') {
-            console.log('Market has closed.')
-            process.exit()
-          }
+            if (market.status === 'Closed') {
+              console.log('Market has closed.')
+              process.exit()
+            }
+          })
         })
-      })
 
       setSub(sub)
 

@@ -1,5 +1,5 @@
-import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
-import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import { PFunc } from '@zeitgeistpm/utility/pfunc'
+import * as Te from '@zeitgeistpm/utility/taskeither'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
@@ -43,7 +43,11 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
    */
   create: C extends RpcContext<MS>
     ? PFunc<
-        Te.TaskEither<Error, CreateMarketResult<C, MS>, [params: CreateMarketParams<C, MS>]>,
+        Te.TaskEither<
+          Error,
+          CreateMarketResult<C, MS>,
+          [params: CreateMarketParams<C, MS>]
+        >,
         {
           /**
            * Create a transaction that can be signed and sent manually.

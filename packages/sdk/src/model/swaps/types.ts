@@ -1,4 +1,4 @@
-import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
+import { PFunc } from '@zeitgeistpm/utility/pfunc'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'

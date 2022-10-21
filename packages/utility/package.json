@@ -8,8 +8,9 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn compile",
+    "build": "yarn compile && yarn generate-exports",
     "compile": "rimraf ./dist && rollup -c",
+    "generate-exports": "node ./scripts/generate_exports.mjs",
     "test": "vitest run",
     "coverage": "vitest run --coverage"
   },

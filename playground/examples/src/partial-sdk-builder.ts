@@ -1,5 +1,12 @@
-import { builder, isFullSdk, isIndexedSdk, isRpcData, isRpcSdk, mainnet } from '@zeitgeistpm/sdk'
-import { isNotNull } from '@zeitgeistpm/utility/dist/null'
+import {
+  builder,
+  isFullSdk,
+  isIndexedSdk,
+  isRpcData,
+  isRpcSdk,
+  mainnet,
+} from '@zeitgeistpm/sdk'
+import { isNotNull } from '@zeitgeistpm/utility/null'
 import { from, of } from 'rxjs'
 import { filter, switchMap } from 'rxjs/operators'
 
@@ -18,7 +25,9 @@ async function main(marketId: number) {
   const market$ = sdk$.pipe(
     switchMap(sdk =>
       from(
-        isRpcSdk(sdk) ? sdk.model.markets.get.$({ marketId }) : sdk.model.markets.get({ marketId }),
+        isRpcSdk(sdk)
+          ? sdk.model.markets.get.$({ marketId })
+          : sdk.model.markets.get({ marketId }),
       ),
     ),
     filter(isNotNull),
