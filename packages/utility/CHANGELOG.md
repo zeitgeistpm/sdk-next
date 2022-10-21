@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.0.25
+
+### Patch Changes
+
+- asd
+
 ## 2.0.24
 
 ### Patch Changes
