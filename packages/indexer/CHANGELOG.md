@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.0.22
+
+### Patch Changes
+
+- exports import > default
+
 ## 2.0.21
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/utility",
-  "version": "2.0.22",
+  "version": "2.0.23",
   "publishConfig": {
     "access": "public"
   },
@@ -30,87 +30,87 @@
     "./aeither": {
       "types": "./dist/esm/aeither/index.d.ts",
       "require": "./dist/cjs/aeither/index.js",
-      "default": "./dist/cjs/aeither/index.js"
+      "import": "./dist/esm/aeither/index.js"
     },
     "./array": {
       "types": "./dist/esm/array/index.d.ts",
       "require": "./dist/cjs/array/index.js",
-      "default": "./dist/cjs/array/index.js"
+      "import": "./dist/esm/array/index.js"
     },
     "./assert": {
       "types": "./dist/esm/assert/index.d.ts",
       "require": "./dist/cjs/assert/index.js",
-      "default": "./dist/cjs/assert/index.js"
+      "import": "./dist/esm/assert/index.js"
     },
     "./async": {
       "types": "./dist/esm/async/index.d.ts",
       "require": "./dist/cjs/async/index.js",
-      "default": "./dist/cjs/async/index.js"
+      "import": "./dist/esm/async/index.js"
     },
     "./codec": {
       "types": "./dist/esm/codec/index.d.ts",
       "require": "./dist/cjs/codec/index.js",
-      "default": "./dist/cjs/codec/index.js"
+      "import": "./dist/esm/codec/index.js"
     },
     "./either": {
       "types": "./dist/esm/either/index.d.ts",
       "require": "./dist/cjs/either/index.js",
-      "default": "./dist/cjs/either/index.js"
+      "import": "./dist/esm/either/index.js"
     },
     "./error": {
       "types": "./dist/esm/error/index.d.ts",
       "require": "./dist/cjs/error/index.js",
-      "default": "./dist/cjs/error/index.js"
+      "import": "./dist/esm/error/index.js"
     },
     "./function": {
       "types": "./dist/esm/function/index.d.ts",
       "require": "./dist/cjs/function/index.js",
-      "default": "./dist/cjs/function/index.js"
+      "import": "./dist/esm/function/index.js"
     },
     "./math": {
       "types": "./dist/esm/math/index.d.ts",
       "require": "./dist/cjs/math/index.js",
-      "default": "./dist/cjs/math/index.js"
+      "import": "./dist/esm/math/index.js"
     },
     "./null": {
       "types": "./dist/esm/null/index.d.ts",
       "require": "./dist/cjs/null/index.js",
-      "default": "./dist/cjs/null/index.js"
+      "import": "./dist/esm/null/index.js"
     },
     "./object": {
       "types": "./dist/esm/object/index.d.ts",
       "require": "./dist/cjs/object/index.js",
-      "default": "./dist/cjs/object/index.js"
+      "import": "./dist/esm/object/index.js"
     },
     "./observable": {
       "types": "./dist/esm/observable/index.d.ts",
       "require": "./dist/cjs/observable/index.js",
-      "default": "./dist/cjs/observable/index.js"
+      "import": "./dist/esm/observable/index.js"
     },
     "./option": {
       "types": "./dist/esm/option/index.d.ts",
       "require": "./dist/cjs/option/index.js",
-      "default": "./dist/cjs/option/index.js"
+      "import": "./dist/esm/option/index.js"
     },
     "./pfunc": {
       "types": "./dist/esm/pfunc/index.d.ts",
       "require": "./dist/cjs/pfunc/index.js",
-      "default": "./dist/cjs/pfunc/index.js"
+      "import": "./dist/esm/pfunc/index.js"
     },
     "./task": {
       "types": "./dist/esm/task/index.d.ts",
       "require": "./dist/cjs/task/index.js",
-      "default": "./dist/cjs/task/index.js"
+      "import": "./dist/esm/task/index.js"
     },
     "./taskeither": {
       "types": "./dist/esm/taskeither/index.d.ts",
       "require": "./dist/cjs/taskeither/index.js",
-      "default": "./dist/cjs/taskeither/index.js"
+      "import": "./dist/esm/taskeither/index.js"
     },
     "./ztg": {
       "types": "./dist/esm/ztg/index.d.ts",
       "require": "./dist/cjs/ztg/index.js",
-      "default": "./dist/cjs/ztg/index.js"
+      "import": "./dist/esm/ztg/index.js"
     }
   }
 }

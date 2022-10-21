@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.0.21
+
+### Patch Changes
+
+- exports import > default
+
 ## 2.0.20
 
 ### Patch Changes
