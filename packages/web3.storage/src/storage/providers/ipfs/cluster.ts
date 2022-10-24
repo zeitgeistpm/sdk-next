@@ -1,6 +1,6 @@
-import { Base64Codec } from '@zeitgeistpm/utility/dist/cjs/codec'
-import { throws } from '@zeitgeistpm/utility/dist/cjs/error'
-import * as Te from '@zeitgeistpm/utility/dist/cjs/taskeither'
+import { Base64Codec } from '@zeitgeistpm/utility/codec'
+import { throws } from '@zeitgeistpm/utility/error'
+import * as Te from '@zeitgeistpm/utility/taskeither'
 import { IPFSClusterConfiguration } from './types'
 
 /**

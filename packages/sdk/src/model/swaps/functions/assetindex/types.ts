@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js/bignumber.js'
+import BigNumber from 'bignumber.js'
 import { Context } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'

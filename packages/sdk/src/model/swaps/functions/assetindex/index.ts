@@ -1,7 +1,7 @@
 import { BTreeMap } from '@polkadot/types'
 import { Codec } from '@polkadot/types/types'
-import { isNotNull } from '@zeitgeistpm/utility/dist/cjs/null'
-import BigNumber from 'bignumber.js/bignumber.js'
+import { isNotNull } from '@zeitgeistpm/utility/null'
+import BigNumber from 'bignumber.js'
 import {
   Context,
   IndexerContext,

@@ -1,4 +1,4 @@
-import * as Te from '@zeitgeistpm/utility/dist/cjs/taskeither'
+import * as Te from '@zeitgeistpm/utility/taskeither'
 import { Storage } from '@zeitgeistpm/web3.storage'
 import type { CID } from 'ipfs-http-client'
 import { CommentMetadata } from './comment'

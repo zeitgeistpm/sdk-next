@@ -1,5 +1,5 @@
 import { batterystation, create, PoolAssetPricesAtBlock } from '@zeitgeistpm/sdk'
-import { isNotNull } from '@zeitgeistpm/utility/dist/cjs/null'
+import { isNotNull } from '@zeitgeistpm/utility/null'
 import { Observable } from 'rxjs'
 import { filter, switchMap, withLatestFrom } from 'rxjs/operators'
 

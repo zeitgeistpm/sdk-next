@@ -1,5 +1,5 @@
 import type { MarketOrderByInput, MarketWhereInput } from '@zeitgeistpm/indexer'
-import type { Unpartial } from '@zeitgeistpm/utility/dist/cjs/object'
+import type { Unpartial } from '@zeitgeistpm/utility/object'
 import { MetadataStorage } from '../../../../meta'
 import { Context, IndexerContext, RpcContext } from '../../../../context'
 import { PaginationQuery } from '../../../../types/query'

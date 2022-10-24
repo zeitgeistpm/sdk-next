@@ -1,5 +1,5 @@
 import { SwapsAsset } from '@zeitgeistpm/augment-api'
-import { BigNumber } from 'bignumber.js/bignumber.js'
+import { BigNumber } from 'bignumber.js'
 import { BlockNumber } from '../../../../primitives/blocknumber'
 import { Duration, Timespan } from '../../../time'
 
