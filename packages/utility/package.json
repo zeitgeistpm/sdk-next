@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/utility",
-  "version": "2.0.19",
+  "version": "2.0.29",
   "publishConfig": {
     "access": "public"
   },
