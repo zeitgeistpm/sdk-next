@@ -1,5 +1,45 @@
 # @zeitgeistpm/web3.storage
 
+## 2.0.40
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.32
+
+## 2.0.39
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.31
+
+## 2.0.38
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.30
+
+## 2.0.37
+
+### Patch Changes
+
+- bignumber alias as .js in module name seems to interfere
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.30
+
+## 2.0.36
+
+### Patch Changes
+
+- use tsup to build
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.30
+
 ## 2.0.25
 
 ### Patch Changes

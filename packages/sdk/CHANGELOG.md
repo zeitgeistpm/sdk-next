@@ -1,5 +1,65 @@
 # @zeitgeistpm/sdk
 
+## 2.0.40
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.32
+  - @zeitgeistpm/indexer@2.0.33
+  - @zeitgeistpm/rpc@2.0.32
+  - @zeitgeistpm/utility@2.0.32
+  - @zeitgeistpm/web3.storage@2.0.40
+
+## 2.0.39
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.31
+  - @zeitgeistpm/indexer@2.0.32
+  - @zeitgeistpm/rpc@2.0.31
+  - @zeitgeistpm/utility@2.0.31
+  - @zeitgeistpm/web3.storage@2.0.39
+
+## 2.0.38
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.30
+  - @zeitgeistpm/indexer@2.0.31
+  - @zeitgeistpm/rpc@2.0.30
+  - @zeitgeistpm/utility@2.0.30
+  - @zeitgeistpm/web3.storage@2.0.38
+
+## 2.0.39
+
+### Patch Changes
+
+- bignumber alias as .js in module name seems to interfere
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.29
+  - @zeitgeistpm/indexer@2.0.30
+  - @zeitgeistpm/rpc@2.0.29
+  - @zeitgeistpm/utility@2.0.30
+  - @zeitgeistpm/web3.storage@2.0.37
+
+## 2.0.38
+
+### Patch Changes
+
+- use tsup to build
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.28
+  - @zeitgeistpm/indexer@2.0.29
+  - @zeitgeistpm/rpc@2.0.28
+  - @zeitgeistpm/utility@2.0.30
+  - @zeitgeistpm/web3.storage@2.0.36
+
 ## 2.0.27
 
 ### Patch Changes

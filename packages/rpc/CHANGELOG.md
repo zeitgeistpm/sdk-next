@@ -1,5 +1,50 @@
 # @zeitgeistpm/rpc
 
+## 2.0.32
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.32
+  - @zeitgeistpm/utility@2.0.32
+
+## 2.0.31
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.31
+  - @zeitgeistpm/utility@2.0.31
+
+## 2.0.30
+
+### Patch Changes
+
+- asd
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.30
+  - @zeitgeistpm/utility@2.0.30
+
+## 2.0.29
+
+### Patch Changes
+
+- bignumber alias as .js in module name seems to interfere
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.29
+  - @zeitgeistpm/utility@2.0.30
+
+## 2.0.28
+
+### Patch Changes
+
+- use tsup to build
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.28
+  - @zeitgeistpm/utility@2.0.30
+
 ## 2.0.17
 
 ### Patch Changes

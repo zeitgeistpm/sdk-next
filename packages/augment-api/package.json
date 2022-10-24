@@ -1,7 +1,7 @@
 {
   "name": "@zeitgeistpm/augment-api",
   "description": "Generated types for the Zeitgeist network.",
-  "version": "2.0.27",
+  "version": "2.0.32",
   "publishConfig": {
     "access": "public"
   },
@@ -30,10 +30,10 @@
   },
   "peerDependencies": {
     "@polkadot/api": "*",
-    "@polkadot/types": "*",
-    "@polkadot/util": "*",
     "@polkadot/api-base": "*",
-    "@polkadot/rpc-core": "*"
+    "@polkadot/rpc-core": "*",
+    "@polkadot/types": "*",
+    "@polkadot/util": "*"
   },
   "gitHead": "f65183993419e36276711f4634c57536ffad93a1"
 }
