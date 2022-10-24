@@ -1,6 +1,6 @@
 import { u8aToString } from '@polkadot/util/u8a'
 import { Codec } from '@zeitgeistpm/utility/dist/codec'
-import { JsonCodec } from '@zeitgeistpm/utility/dist/codec/impl/json'
+import { JsonCodec } from '@zeitgeistpm/utility/dist/codec'
 import { throws } from '@zeitgeistpm/utility/dist/error'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'

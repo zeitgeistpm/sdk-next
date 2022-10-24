@@ -1,6 +1,6 @@
 import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
-import { options } from '@zeitgeistpm/rpc/dist'
+import { options } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import polly from 'polly-js'
 import type { FullContext, IndexerContext, RpcContext } from './context/types'

@@ -1,6 +1,6 @@
 import { HistoricalAssetOrderByInput } from '@zeitgeistpm/indexer'
 import { project, range, zip } from '@zeitgeistpm/utility/dist/array'
-import { BigNumber } from 'bignumber.js/bignumber.js'
+import { BigNumber } from 'bignumber.js'
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import {

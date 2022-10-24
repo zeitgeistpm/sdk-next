@@ -6,16 +6,97 @@
   },
   "type": "module",
   "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+    "./dist/aeither": {
+      "types": "./dist/aeither/index.d.ts",
+      "require": "./dist/aeither/index.cjs",
+      "import": "./dist/aeither/index.js"
+    },
+    "./dist/array": {
+      "types": "./dist/array/index.d.ts",
+      "require": "./dist/array/index.cjs",
+      "import": "./dist/array/index.js"
+    },
+    "./dist/assert": {
+      "types": "./dist/assert/index.d.ts",
+      "require": "./dist/assert/index.cjs",
+      "import": "./dist/assert/index.js"
+    },
+    "./dist/async": {
+      "types": "./dist/async/index.d.ts",
+      "require": "./dist/async/index.cjs",
+      "import": "./dist/async/index.js"
+    },
+    "./dist/codec": {
+      "types": "./dist/codec/index.d.ts",
+      "require": "./dist/codec/index.cjs",
+      "import": "./dist/codec/index.js"
+    },
+    "./dist/either": {
+      "types": "./dist/either/index.d.ts",
+      "require": "./dist/either/index.cjs",
+      "import": "./dist/either/index.js"
+    },
+    "./dist/error": {
+      "types": "./dist/error/index.d.ts",
+      "require": "./dist/error/index.cjs",
+      "import": "./dist/error/index.js"
+    },
+    "./dist/function": {
+      "types": "./dist/function/index.d.ts",
+      "require": "./dist/function/index.cjs",
+      "import": "./dist/function/index.js"
+    },
+    "./dist/math": {
+      "types": "./dist/math/index.d.ts",
+      "require": "./dist/math/index.cjs",
+      "import": "./dist/math/index.js"
+    },
+    "./dist/null": {
+      "types": "./dist/null/index.d.ts",
+      "require": "./dist/null/index.cjs",
+      "import": "./dist/null/index.js"
+    },
+    "./dist/object": {
+      "types": "./dist/object/index.d.ts",
+      "require": "./dist/object/index.cjs",
+      "import": "./dist/object/index.js"
+    },
+    "./dist/observable": {
+      "types": "./dist/observable/index.d.ts",
+      "require": "./dist/observable/index.cjs",
+      "import": "./dist/observable/index.js"
+    },
+    "./dist/option": {
+      "types": "./dist/option/index.d.ts",
+      "require": "./dist/option/index.cjs",
+      "import": "./dist/option/index.js"
+    },
+    "./dist/pfunc": {
+      "types": "./dist/pfunc/index.d.ts",
+      "require": "./dist/pfunc/index.cjs",
+      "import": "./dist/pfunc/index.js"
+    },
+    "./dist/task": {
+      "types": "./dist/task/index.d.ts",
+      "require": "./dist/task/index.cjs",
+      "import": "./dist/task/index.js"
+    },
+    "./dist/taskeither": {
+      "types": "./dist/taskeither/index.d.ts",
+      "require": "./dist/taskeither/index.cjs",
+      "import": "./dist/taskeither/index.js"
+    },
+    "./dist/ztg": {
+      "types": "./dist/ztg/index.d.ts",
+      "require": "./dist/ztg/index.cjs",
+      "import": "./dist/ztg/index.js"
     }
   },
   "files": [
     "dist/*"
   ],
   "scripts": {
-    "build": "yarn compile",
+    "build": "yarn compile && yarn generate-exports",
     "compile": "rimraf ./dist && tsup",
     "generate-exports": "node ./scripts/generate_exports.mjs",
     "test": "vitest run",

@@ -1,4 +1,4 @@
-import { assign } from '@zeitgeistpm/utility/dist/observable/operators'
+import { assign } from '@zeitgeistpm/utility/dist/observable'
 import { from, Observable, of } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'
