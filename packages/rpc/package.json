@@ -20,7 +20,8 @@
     "build": "rimraf ./dist && tsup"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^2.0.17"
+    "@zeitgeistpm/augment-api": "^2.0.17",
+    "@zeitgeistpm/utility": "^2.0.19"
   },
   "peerDependencies": {
     "@polkadot/api": "*",

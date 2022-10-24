@@ -5,7 +5,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -29,8 +28,12 @@
   "devDependencies": {
     "@polkadot/typegen": "9.2.2"
   },
-  "dependencies": {
-    "@polkadot/types": "9.2.2"
+  "peerDependencies": {
+    "@polkadot/api": "*",
+    "@polkadot/types": "*",
+    "@polkadot/util": "*",
+    "@polkadot/api-base": "*",
+    "@polkadot/rpc-core": "*"
   },
   "gitHead": "f65183993419e36276711f4634c57536ffad93a1"
 }

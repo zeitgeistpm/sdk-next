@@ -5,8 +5,6 @@
     "access": "public"
   },
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
@@ -19,12 +17,14 @@
   "scripts": {
     "build": "yarn compile",
     "compile": "rimraf ./dist && tsup",
+    "generate-exports": "node ./scripts/generate_exports.mjs",
     "test": "vitest run",
     "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@polkadot/api": "*",
-    "@polkadot/types": "*"
+    "@polkadot/types": "*",
+    "@polkadot/util": "*"
   },
   "dependencies": {
     "bignumber.js": "^9.1.0",

@@ -27,5 +27,8 @@
     "merge-options": "^3.0.4",
     "parse-duration": "^1.0.2",
     "up": "^1.0.2"
+  },
+  "peerDependencies": {
+    "@polkadot/util": "*"
   }
 }
