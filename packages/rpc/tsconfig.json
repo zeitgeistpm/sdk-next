@@ -4,5 +4,8 @@
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
     "moduleResolution": "node",
+    // "paths": {
+    //   "@zeitgeistpm/utility/*": [ "../../packages/utility/src/*" ],
+    // }
   }
 }

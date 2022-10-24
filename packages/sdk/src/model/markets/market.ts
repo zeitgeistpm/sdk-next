@@ -25,7 +25,6 @@ import { Data, isIndexedData } from '../../primitives'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
 import { ReportOutcomeParams } from './outcome'
-import { isNone } from '@zeitgeistpm/utility/option'
 
 export * from './functions/create/types'
 export * from './functions/list/types'

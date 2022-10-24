@@ -1,6 +1,8 @@
 import ts from '@rollup/plugin-typescript'
 import commonjs from '@rollup/plugin-commonjs'
-
+/**
+ * @type {import('rollup').RollupOptions}
+ */
 export default [
   {
     input: './src/index.ts',

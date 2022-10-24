@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.0.27
+
+### Patch Changes
+
+- asd
+
 ## 2.0.26
 
 ### Patch Changes

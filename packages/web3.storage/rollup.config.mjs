@@ -28,7 +28,7 @@ export default [
     output: [
       {
         dir: './dist/cjs/',
-        format: 'esm',
+        format: 'cjs',
         sourcemap: true,
         exports: 'named',
         preserveModules: true,
