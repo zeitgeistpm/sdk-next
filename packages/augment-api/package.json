@@ -5,12 +5,21 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "build": "yarn generate:defs && yarn generate:meta && yarn compile",
-    "compile": "rimraf ./dist && tsc",
+    "compile": "rimraf ./dist && tsup",
     "generate:defs": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-defs --package @zeitgeistpm/augment-api/interfaces --input ./src/interfaces --endpoint ./src/metadata/latest.json",
     "generate:meta": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-chain --package @zeitgeistpm/augment-api/interfaces --endpoint ./src/metadata/latest.json --output ./src/interfaces  --strict",
     "fetch:metadata": "node ./scripts/fetchMetadata.js -o './src/metadata/latest.json' -e 'ws://127.0.0.1:9944'"

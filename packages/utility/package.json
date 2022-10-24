@@ -4,11 +4,21 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
-    "build": "rimraf ./dist && tsc",
+    "build": "yarn compile",
+    "compile": "rimraf ./dist && tsup",
     "test": "vitest run",
     "coverage": "vitest run --coverage"
   },
