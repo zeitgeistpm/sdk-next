@@ -8,15 +8,7 @@ export default {
   input: folders,
   output: [
     {
-      dir: './dist/esm/',
-      format: 'esm',
-      sourcemap: true,
-      exports: 'named',
-      preserveModules: true,
-      preserveModulesRoot: 'src',
-    },
-    {
-      dir: './dist/cjs/',
+      dir: './dist/',
       format: 'cjs',
       sourcemap: true,
       preserveModules: true,

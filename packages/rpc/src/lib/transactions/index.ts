@@ -1,6 +1,6 @@
 import type { ApiPromise } from '@polkadot/api'
 import type { SubmittableExtrinsic } from '@polkadot/api/types'
-import type { ISubmittableResult } from '@polkadot/types/types'
+import { ISubmittableResult } from '@polkadot/types/types'
 import * as Te from '@zeitgeistpm/utility/dist/cjs/taskeither'
 import { isExtSigner, KeyringPairOrExtSigner } from '../keyring'
 import { RetractedError, TransactionError, UnknownDispatchError } from './types'

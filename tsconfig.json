@@ -11,19 +11,16 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "paths": {
-      "@zeitgeistpm/sdk": [ "./packages/api/src" ],
-      "@zeitgeistpm/rpc": [ "./packages/api/src" ],
-      "@zeitgeistpm/indexer": [ "./packages/indexer/src" ],
-      "@zeitgeistpm/web3.storage": [ "./packages/web3.storage/src" ],
-      "@zeitgeistpm/augment-api": [ "./packages/augment-api/src" ],
-      "@zeitgeistpm/augment-api/*": [ "./packages/augment-api/src/*" ],
-      "@zeitgeistpm/utility": [ "./packages/utility/src" ],
-    },
+    // "paths": {
+    //   "@zeitgeistpm/sdk": [ "./packages/api/src" ],
+    //   "@zeitgeistpm/rpc": [ "./packages/api/src" ],
+    //   "@zeitgeistpm/indexer": [ "./packages/indexer/src" ],
+    //   "@zeitgeistpm/web3.storage": [ "./packages/web3.storage/src" ],
+    //   "@zeitgeistpm/augment-api": [ "./packages/augment-api/src" ],
+    //   "@zeitgeistpm/augment-api/*": [ "./packages/augment-api/src/*" ],
+    //   "@zeitgeistpm/utility": [ "./packages/utility/src" ],
+    // },
     "skipLibCheck": true,
-    "typeRoots": [
-      "./node_modules/@polkadot/ts",
-      "./node_modules/@types"
-    ]
+    
   }
 }

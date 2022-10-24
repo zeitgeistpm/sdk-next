@@ -17,7 +17,10 @@ const pckexports = folders.reduce(
     }
   },
   {
-    './': './dist/cjs/',
+    // './*': {
+    //   require: './dist/cjs/',
+    //   import: './dist/esm/',
+    // },
   },
 )
 
