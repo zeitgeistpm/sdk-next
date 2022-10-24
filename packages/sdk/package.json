@@ -10,7 +10,7 @@
   "types": "./dist/esm/index.d.ts",
   "scripts": {
     "build": "yarn compile",
-    "compile": "rm -rf ./dist && rollup -c"
+    "compile": "rm -rf ./dist && tsup"
   },
   "peerDependencies": {
     "@polkadot/api": "*",
