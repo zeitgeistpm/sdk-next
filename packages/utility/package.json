@@ -26,6 +26,10 @@
   },
   "type": "module",
   "exports": {
+    "./dist/*": {
+      "require": "./dist/cjs/*",
+      "import": "./dist/esm/*"
+    },
     "./aeither": {
       "types": "./dist/esm/aeither/index.d.ts",
       "require": "./dist/cjs/aeither/index.js",
