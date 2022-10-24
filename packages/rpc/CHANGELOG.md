@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.0.26
+
+### Patch Changes
+
+- default export last
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.26
+
 ## 2.0.25
 
 ### Patch Changes

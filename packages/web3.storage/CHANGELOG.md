@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.0.34
+
+### Patch Changes
+
+- default export last
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.28
+
 ## 2.0.33
 
 ### Patch Changes

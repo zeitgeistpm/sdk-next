@@ -1,9 +1,10 @@
 {
   "name": "@zeitgeistpm/indexer",
-  "version": "2.0.26",
+  "version": "2.0.27",
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
@@ -22,5 +23,13 @@
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
     "graphql-tag": "^2.12.6"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
+    }
   }
 }

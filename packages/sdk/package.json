@@ -1,10 +1,12 @@
 {
   "name": "@zeitgeistpm/sdk",
-  "version": "2.0.35",
+  "version": "2.0.36",
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "scripts": {
     "build": "yarn compile",
@@ -16,11 +18,11 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^2.0.25",
-    "@zeitgeistpm/indexer": "^2.0.26",
-    "@zeitgeistpm/rpc": "^2.0.25",
-    "@zeitgeistpm/utility": "^2.0.27",
-    "@zeitgeistpm/web3.storage": "^2.0.33",
+    "@zeitgeistpm/augment-api": "^2.0.26",
+    "@zeitgeistpm/indexer": "^2.0.27",
+    "@zeitgeistpm/rpc": "^2.0.26",
+    "@zeitgeistpm/utility": "^2.0.28",
+    "@zeitgeistpm/web3.storage": "^2.0.34",
     "bignumber.js": "^9.1.0",
     "cids": "^1.1.9",
     "lodash.memoize": "^4.1.2",
@@ -33,13 +35,12 @@
     "@types/lodash.memoize": "^4.1.7",
     "@types/ms": "^0.7.31"
   },
-  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/esm/index.d.ts",
       "require": "./dist/cjs/index.js",
-      "default": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js"
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
     }
   }
 }

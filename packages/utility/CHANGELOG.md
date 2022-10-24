@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.0.28
+
+### Patch Changes
+
+- default export last
+
 ## 2.0.27
 
 ### Patch Changes
