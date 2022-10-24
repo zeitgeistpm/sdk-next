@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.0.42
+
+### Patch Changes
+
+- remove main field in storage json
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.34
+  - @zeitgeistpm/web3.storage@2.0.42
+
 ## 2.0.41
 
 ### Patch Changes

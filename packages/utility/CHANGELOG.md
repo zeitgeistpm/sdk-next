@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.0.34
+
+### Patch Changes
+
+- remove main field in storage json
+
 ## 2.0.33
 
 ### Patch Changes

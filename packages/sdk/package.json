@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/sdk",
-  "version": "2.0.41",
+  "version": "2.0.42",
   "publishConfig": {
     "access": "public"
   },
@@ -29,8 +29,8 @@
     "@zeitgeistpm/augment-api": "^2.0.33",
     "@zeitgeistpm/indexer": "^2.0.34",
     "@zeitgeistpm/rpc": "^2.0.33",
-    "@zeitgeistpm/utility": "^2.0.33",
-    "@zeitgeistpm/web3.storage": "^2.0.41",
+    "@zeitgeistpm/utility": "^2.0.34",
+    "@zeitgeistpm/web3.storage": "^2.0.42",
     "bignumber.js": "^9.1.0",
     "cids": "^1.1.9",
     "lodash.memoize": "^4.1.2",
