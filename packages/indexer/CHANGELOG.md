@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.0.26
+
+### Patch Changes
+
+- Rollup
+
 ## 2.0.25
 
 ### Patch Changes

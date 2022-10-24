@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.0.27
+
+### Patch Changes
+
+- Rollup
+
 ## 2.0.26
 
 ### Patch Changes
