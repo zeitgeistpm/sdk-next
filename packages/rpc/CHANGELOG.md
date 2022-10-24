@@ -1,5 +1,14 @@
 # @zeitgeistpm/rpc
 
+## 2.0.33
+
+### Patch Changes
+
+- y
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.33
+  - @zeitgeistpm/utility@2.0.33
+
 ## 2.0.32
 
 ### Patch Changes
