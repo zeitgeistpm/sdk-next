@@ -26,14 +26,12 @@
   "author": "Zeitgeist PM <contact@zeitgeist.pm>",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@polkadot/typegen": "9.2.2"
+    "@polkadot/typegen": "^9.6.1"
   },
   "peerDependencies": {
-    "@polkadot/api": "*",
     "@polkadot/api-base": "*",
     "@polkadot/rpc-core": "*",
-    "@polkadot/types": "*",
-    "@polkadot/util": "*"
+    "@polkadot/types": "*"
   },
   "gitHead": "f65183993419e36276711f4634c57536ffad93a1"
 }

@@ -21,7 +21,7 @@
     "compile": "rimraf ./dist && tsup"
   },
   "peerDependencies": {
-    "@polkadot/api": "*",
+    "@polkadot/api": "^9.6.1",
     "@polkadot/types": "*",
     "@polkadot/util": "*"
   },

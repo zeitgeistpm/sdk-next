@@ -11,6 +11,7 @@
     "@chakra-ui/react": "^2.3.4",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@polkadot/api": "^9.6.1",
     "@polkadot/extension-dapp": "^0.44.6",
     "framer-motion": "^7.5.0",
     "lodash": "^4.17.21",

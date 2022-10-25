@@ -1,8 +1,6 @@
-import { create, mainnetIndexer, mainnetRpc } from '@zeitgeistpm/sdk'
+import { create, mainnetRpc } from '@zeitgeistpm/sdk'
 
 const ZTG = '10000000000'
-
-console.log('bump')
 
 async function main() {
   /**
