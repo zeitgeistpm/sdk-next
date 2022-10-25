@@ -7476,8 +7476,8 @@ __metadata:
     "@zeitgeistpm/augment-api": ^2.0.33
     "@zeitgeistpm/indexer": ^2.0.34
     "@zeitgeistpm/rpc": ^2.0.33
-    "@zeitgeistpm/utility": ^2.0.33
-    "@zeitgeistpm/web3.storage": ^2.0.41
+    "@zeitgeistpm/utility": ^2.0.34
+    "@zeitgeistpm/web3.storage": ^2.0.42
     bignumber.js: ^9.1.0
     cids: ^1.1.9
     lodash.memoize: ^4.1.2
@@ -7492,7 +7492,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.0.33, @zeitgeistpm/utility@workspace:packages/utility":
+"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.0.33, @zeitgeistpm/utility@^2.0.34, @zeitgeistpm/utility@workspace:packages/utility":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/utility@workspace:packages/utility"
   dependencies:
@@ -7507,11 +7507,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/web3.storage@^2.0.41, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
+"@zeitgeistpm/web3.storage@^2.0.42, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/web3.storage@workspace:packages/web3.storage"
   dependencies:
-    "@zeitgeistpm/utility": ^2.0.33
+    "@zeitgeistpm/utility": ^2.0.34
     cids: ^1.1.9
     ipfs-http-client: ^58.0.1
     merge-options: ^3.0.4

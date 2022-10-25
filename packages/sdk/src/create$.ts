@@ -1,6 +1,6 @@
 import { assign } from '@zeitgeistpm/utility/dist/observable'
 import { from, Observable, of } from 'rxjs'
-import { map, switchMap } from 'rxjs/operators'
+import { map, switchMap, pairwise } from 'rxjs/operators'
 import { createIndexerContext, createRpcContext } from './create'
 import { MetadataStorage } from './meta'
 import {
@@ -12,6 +12,7 @@ import {
   isIndexerConfig,
   Sdk,
   sdk,
+  teardown,
 } from './types'
 
 /**
@@ -38,7 +39,13 @@ export const create$ = <MS extends MetadataStorage = MetadataStorage>(
 
   const sdk$: Observable<Sdk<Context<MS>, MS>> = context$.pipe(
     assign(),
-    map(context => sdk(context)),
+    switchMap(
+      context =>
+        new Observable<Sdk<Context<MS>, MS>>(subscription => {
+          subscription.add(() => teardown(context))
+          subscription.next(sdk(context))
+        }),
+    ),
   )
 
   return sdk$
