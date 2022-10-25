@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.0.44
+
+### Patch Changes
+
+- Put polkadot pacakges as peer dependencies
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.36
+
 ## 2.0.43
 
 ### Patch Changes

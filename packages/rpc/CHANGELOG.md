@@ -1,5 +1,14 @@
 # @zeitgeistpm/rpc
 
+## 2.0.35
+
+### Patch Changes
+
+- Put polkadot pacakges as peer dependencies
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.35
+  - @zeitgeistpm/utility@2.0.36
+
 ## 2.0.34
 
 ### Patch Changes

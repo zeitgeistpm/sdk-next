@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/web3.storage",
-  "version": "2.0.43",
+  "version": "2.0.44",
   "publishConfig": {
     "access": "public"
   },
@@ -20,7 +20,7 @@
     "compile": "rimraf ./dist && tsup"
   },
   "dependencies": {
-    "@zeitgeistpm/utility": "^2.0.35",
+    "@zeitgeistpm/utility": "^2.0.36",
     "cids": "^1.1.9",
     "ipfs-http-client": "^58.0.1",
     "merge-options": "^3.0.4",

@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.0.36
+
+### Patch Changes
+
+- Put polkadot pacakges as peer dependencies
+
 ## 2.0.35
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.0.44
+
+### Patch Changes
+
+- Put polkadot pacakges as peer dependencies
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.35
+  - @zeitgeistpm/indexer@2.0.36
+  - @zeitgeistpm/rpc@2.0.35
+  - @zeitgeistpm/utility@2.0.36
+  - @zeitgeistpm/web3.storage@2.0.44
+
 ## 2.0.43
 
 ### Patch Changes
