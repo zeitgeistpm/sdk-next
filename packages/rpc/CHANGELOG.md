@@ -1,5 +1,14 @@
 # @zeitgeistpm/rpc
 
+## 2.0.34
+
+### Patch Changes
+
+- Add teardown logic to sdk observable created in Sdk#create$
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.34
+  - @zeitgeistpm/utility@2.0.35
+
 ## 2.0.33
 
 ### Patch Changes

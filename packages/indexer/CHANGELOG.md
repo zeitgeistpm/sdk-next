@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.0.35
+
+### Patch Changes
+
+- Add teardown logic to sdk observable created in Sdk#create$
+
 ## 2.0.34
 
 ### Patch Changes

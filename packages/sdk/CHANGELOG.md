@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.0.43
+
+### Patch Changes
+
+- Add teardown logic to sdk observable created in Sdk#create$
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.34
+  - @zeitgeistpm/indexer@2.0.35
+  - @zeitgeistpm/rpc@2.0.34
+  - @zeitgeistpm/utility@2.0.35
+  - @zeitgeistpm/web3.storage@2.0.43
+
 ## 2.0.42
 
 ### Patch Changes

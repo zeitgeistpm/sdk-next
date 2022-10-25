@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.0.43
+
+### Patch Changes
+
+- Add teardown logic to sdk observable created in Sdk#create$
+- Updated dependencies
+  - @zeitgeistpm/utility@2.0.35
+
 ## 2.0.42
 
 ### Patch Changes
