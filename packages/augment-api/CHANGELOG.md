@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.0.36
+
+### Patch Changes
+
+- Dont import augmented polkadot types by default.
+
 ## 2.0.35
 
 ### Patch Changes

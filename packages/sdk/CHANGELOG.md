@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.0.45
+
+### Patch Changes
+
+- Dont import augmented polkadot types by default.
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.0.36
+  - @zeitgeistpm/rpc@2.0.36
+  - @zeitgeistpm/utility@2.0.37
+
 ## 2.0.44
 
 ### Patch Changes

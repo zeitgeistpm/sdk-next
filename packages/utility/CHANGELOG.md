@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.0.37
+
+### Patch Changes
+
+- Dont import augmented polkadot types by default.
+
 ## 2.0.36
 
 ### Patch Changes
