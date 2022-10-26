@@ -1,10 +1,10 @@
 import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { Context, isRpcContext } from '../../context/types'
 import { MetadataStorage } from '../../meta'
-import { assetsIndex } from './functions/assetindex'
-import { getPool, observePool$ } from './functions/getpool'
-import { listPools } from './functions/listpools'
-import { observePoolPrices$, poolPrices } from './functions/poolprices'
+import { saturatedPoolsIndex } from './functions/saturated-pool-index/index'
+import { getPool, observePool$ } from './functions/get-pool'
+import { listPools } from './functions/list-pools'
+import { observePoolPrices$, poolPrices } from './functions/pool-prices'
 import { PoolGetQuery, PoolPricesQuery, Swaps } from './types'
 
 export * from './types'
@@ -40,7 +40,7 @@ export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(
         : {}) as Swaps<typeof ctx, MS>['poolPrices'],
     ),
 
-    assetsIndex: pools => assetsIndex<typeof ctx, MS>(ctx, pools),
+    saturatedPoolsIndex: pools => saturatedPoolsIndex<typeof ctx, MS>(ctx, pools),
   }
 
   return swaps

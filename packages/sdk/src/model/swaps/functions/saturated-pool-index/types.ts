@@ -2,19 +2,19 @@ import BigNumber from 'bignumber.js'
 import { Context, IndexerContext, RpcContext } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'
-import { IndexedMarket, Market, SaturatedRpcMarket } from '../../../markets'
+import { IndexedMarket, SaturatedRpcMarket } from '../../../markets'
 
 /**
  * An index by pool id for pool assets(prices, metadata categories, pool amounts etc) + total pool liquidity.
  */
-export type AssetIndex<C extends Context<MS>, MS extends MetadataStorage> = {
+export type SaturatedPoolIndex<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * Indexed py pool id.
    */
-  [poolId: number]: AssetIndexEntry<C, MS>
+  [poolId: number]: SaturatedPoolEntry<C, MS>
 }
 
-export type AssetIndexEntry<C extends Context<MS>, MS extends MetadataStorage> = {
+export type SaturatedPoolEntry<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * The market the pool belongs to.
    */
@@ -30,10 +30,10 @@ export type AssetIndexEntry<C extends Context<MS>, MS extends MetadataStorage> =
   /**
    * Pool assets expanded data.
    */
-  assets: AssetIndexAssetEntry[]
+  assets: SaturatedPoolEntryAsset[]
 }
 
-export type AssetIndexAssetEntry = {
+export type SaturatedPoolEntryAsset = {
   /**
    * Asset id of the asset.
    */

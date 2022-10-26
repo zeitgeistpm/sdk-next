@@ -14,7 +14,7 @@ import * as AssetId from '../../../../primitives/assetid'
 import { ZTG } from '../../../../primitives/ztg'
 import { rpcMarket } from '../../../markets'
 import { Pool } from '../../pool'
-import { AssetIndex, AssetIndexAssetEntry } from './types'
+import { SaturatedPoolIndex, SaturatedPoolEntryAsset } from './types'
 
 export * from './types'
 
@@ -25,14 +25,17 @@ export * from './types'
  * @param pools Pool<C, M
  * @returns Promise<AssetIndex>
  */
-export const assetsIndex = async <C extends Context<MS>, MS extends MetadataStorage>(
+export const saturatedPoolsIndex = async <
+  C extends Context<MS>,
+  MS extends MetadataStorage,
+>(
   context: C,
   pools: Pool<C, MS>[],
-): Promise<AssetIndex<C, MS>> => {
+): Promise<SaturatedPoolIndex<C, MS>> => {
   if (isIndexerContext<MS>(context)) {
-    return indexerAssetsIndex<typeof context, MS>(context, pools)
+    return indexer<typeof context, MS>(context, pools)
   } else if (isRpcContext<MS>(context)) {
-    return rpcAssetsIndex<typeof context, MS>(context, pools)
+    return rpc<typeof context, MS>(context, pools)
   }
   throw new Error('Unreachable context.')
 }
@@ -44,13 +47,10 @@ export const assetsIndex = async <C extends Context<MS>, MS extends MetadataStor
  * @param pools Pool<C, M
  * @returns Promise<AssetIndex>
  */
-export const indexerAssetsIndex = async <
-  C extends IndexerContext,
-  MS extends MetadataStorage,
->(
+export const indexer = async <C extends IndexerContext, MS extends MetadataStorage>(
   ctx: C,
   pools: Pool<C, MS>[],
-): Promise<AssetIndex<C, MS>> => {
+): Promise<SaturatedPoolIndex<C, MS>> => {
   const ids = pools.map(p => p.poolId)
 
   const [{ markets: marketsForPools }, { assets: assetsForPools }] = await Promise.all([
@@ -74,7 +74,7 @@ export const indexerAssetsIndex = async <
 
         if (!poolMarket || poolAssets.length === 0) return null
 
-        const assets: AssetIndexAssetEntry[] = pool.weights
+        const assets: SaturatedPoolEntryAsset[] = pool.weights
           .filter(isNotNull)
           .map(weight => {
             const assetId = AssetId.fromString(weight.assetId).unwrap()!
@@ -146,10 +146,10 @@ export const indexerAssetsIndex = async <
  * @param pools Pool<C, M
  * @returns Promise<AssetIndex>
  */
-export const rpcAssetsIndex = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
+export const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   ctx: C,
   pools: Pool<C, MS>[],
-): Promise<AssetIndex<C, MS>> => {
+): Promise<SaturatedPoolIndex<C, MS>> => {
   const byPool = await Promise.all(
     pools.map(async pool => {
       const outcomeAssets = pool.assets.filter(a => !a.isZtg)
@@ -188,7 +188,7 @@ export const rpcAssetsIndex = async <C extends RpcContext<MS>, MS extends Metada
         return total.plus(weight)
       }, new BigNumber(0))
 
-      const assets: AssetIndexAssetEntry[] = pool.assets.map((asset, index) => {
+      const assets: SaturatedPoolEntryAsset[] = pool.assets.map((asset, index) => {
         return {
           amount: new BigNumber(accounts[index].toNumber()),
           price: new BigNumber(prices[index].toNumber()),

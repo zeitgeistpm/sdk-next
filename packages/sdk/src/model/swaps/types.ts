@@ -2,15 +2,15 @@ import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
-import { PoolGetQuery } from './functions/getpool/types'
-import { PoolsListQuery } from './functions/listpools/types'
-import { AssetIndex } from './functions/assetindex/types'
+import { PoolGetQuery } from './functions/get-pool/types'
+import { PoolsListQuery } from './functions/list-pools/types'
+import { SaturatedPoolIndex } from './functions/saturated-pool-index/types'
 import {
   PoolAssetPricesAtBlock,
   PoolPrices,
   PoolPricesQuery,
   PoolPricesStreamQuery,
-} from './functions/poolprices/types'
+} from './functions/pool-prices/types'
 import { Pool } from './pool'
 import { PoolList } from './poolslist'
 
@@ -32,9 +32,9 @@ export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = {
    * and liquidity for a set of pools.
    *
    * @param pools Pool<C, MS>[]
-   * @returns Promise<AssetIndex>
+   * @returns Promise<SaturatedPoolIndex>
    */
-  assetsIndex: (pools: Pool<C, MS>[]) => Promise<AssetIndex<C, MS>>
+  saturatedPoolsIndex: (pools: Pool<C, MS>[]) => Promise<SaturatedPoolIndex<C, MS>>
   /**
    * Get a pool by pool or market id.
    */
