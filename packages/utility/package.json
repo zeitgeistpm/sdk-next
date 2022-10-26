@@ -97,7 +97,7 @@
   ],
   "scripts": {
     "build": "yarn compile && yarn generate-exports",
-    "compile": "rimraf ./dist && tsup",
+    "compile": "rimraf ./dist && rollup -c",
     "generate-exports": "node ./scripts/generate_exports.mjs",
     "test": "vitest run",
     "coverage": "vitest run --coverage"
