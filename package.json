@@ -28,6 +28,7 @@
     "lerna": "^6.0.1",
     "rimraf": "^3.0.2",
     "rollup": "^3.2.3",
+    "rollup-plugin-typescript2": "^0.34.1",
     "ts-node": "^10.9.1",
     "tsup": "^6.3.0",
     "turbo": "^1.4.3",
