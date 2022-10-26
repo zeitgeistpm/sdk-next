@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 2.1.0
+
+### Minor Changes
+
+- Refactor to rollup build and use .mjs files
+
+### Patch Changes
+
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.1.0
+  - @zeitgeistpm/utility@2.1.0
+
 ## 2.0.36
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.1.0
+
+### Minor Changes
+
+- Refactor to rollup build and use .mjs files
+
+### Patch Changes
+
+- Updated dependencies
+  - @zeitgeistpm/utility@2.1.0
+
 ## 2.0.44
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.1.0
+
+### Minor Changes
+
+- Refactor to rollup build and use .mjs files
+
 ## 2.0.36
 
 ### Patch Changes
