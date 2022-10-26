@@ -2,12 +2,18 @@ import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
 import { options } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
+import { assign } from '@zeitgeistpm/utility/dist/observable'
 import polly from 'polly-js'
+import { from, Observable, of } from 'rxjs'
+import { switchMap } from 'rxjs/operators'
 import type { FullContext, IndexerContext, RpcContext } from './context/types'
 import { debug } from './debug'
 import { MetadataStorage, saturate } from './meta'
 import {
+  asIndexerConfig,
+  asRpcConfig,
   Config,
+  Context,
   FullConfig,
   IndexerConfig,
   isFullConfig,
@@ -16,6 +22,7 @@ import {
   RpcConfig,
   sdk,
   Sdk,
+  teardown,
 } from './types'
 
 /**
@@ -82,6 +89,42 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
     )
     return sdk(await createRpcContext(config))
   }
+}
+
+/**
+ * Initialize the indexer and rpc concurrently and emit partially applied intances of the Sdk.
+ *
+ * @param config FullConfig
+ * @returns Observable<Partial<Sdk<FullContext>>>
+ */
+export const create$ = <MS extends MetadataStorage = MetadataStorage>(
+  config: Config<MS>,
+) => {
+  const config$ = isFullConfig(config)
+    ? of(asIndexerConfig(config), asRpcConfig(config))
+    : of(config)
+
+  const context$ = config$.pipe(
+    switchMap(config => {
+      if (isIndexerConfig(config)) {
+        return from(createIndexerContext(config))
+      }
+      return from(createRpcContext(config))
+    }),
+  )
+
+  const sdk$: Observable<Sdk<Context<MS>, MS>> = context$.pipe(
+    assign(),
+    switchMap(
+      context =>
+        new Observable<Sdk<Context<MS>, MS>>(subscription => {
+          subscription.add(() => teardown(context))
+          subscription.next(sdk(context))
+        }),
+    ),
+  )
+
+  return sdk$
 }
 
 /**
