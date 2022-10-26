@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.1.1
+
+### Patch Changes
+
+- d1697f7: Fix create$ to propely combine configs in the stream
+- Updated dependencies [d1697f7]
+  - @zeitgeistpm/augment-api@2.1.1
+  - @zeitgeistpm/indexer@2.1.1
+  - @zeitgeistpm/rpc@2.1.1
+  - @zeitgeistpm/utility@2.1.1
+  - @zeitgeistpm/web3.storage@2.1.1
+
 ## 2.1.0
 
 ### Minor Changes

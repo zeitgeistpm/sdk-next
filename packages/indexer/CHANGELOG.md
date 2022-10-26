@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.1.1
+
+### Patch Changes
+
+- d1697f7: Fix create$ to propely combine configs in the stream
+
 ## 2.1.0
 
 ### Minor Changes
