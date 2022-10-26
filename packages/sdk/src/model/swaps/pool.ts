@@ -17,7 +17,10 @@ import { Data } from '../../primitives/data'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type Pool<C extends Context<MS>, MS extends MetadataStorage> = Data<
+export type Pool<
+  C extends Context<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+> = Data<
   C,
   C extends RpcContext<MS> ? RpcPool : never,
   C extends IndexerContext ? IndexedPool<C, MS> : never
@@ -26,10 +29,10 @@ export type Pool<C extends Context<MS>, MS extends MetadataStorage> = Data<
 /**
  * Concrete Pool type for indexed Pool.
  */
-export type IndexedPool<C extends Context<MS>, MS extends MetadataStorage> = Unpacked<
-  PoolsQuery['pools']
-> &
-  (C extends RpcContext<MS> ? PoolMethods : {})
+export type IndexedPool<
+  C extends Context<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+> = Unpacked<PoolsQuery['pools']> & (C extends RpcContext<MS> ? PoolMethods : {})
 
 /**
  * Concrete Pool type for rpc Pool.

@@ -33,7 +33,10 @@ export * from './functions/list/types'
 /**
  * Union type for Indexed and Rpc Markets.
  */
-export type Market<C extends Context<MS>, MS extends MetadataStorage> = Data<
+export type Market<
+  C extends Context<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+> = Data<
   C,
   C extends RpcContext<MS> ? RpcMarket<C, MS> | SaturatedRpcMarket<C, MS> : never,
   C extends FullContext<MS> | IndexerContext ? IndexedMarket<C, MS> : never
@@ -44,7 +47,7 @@ export type Market<C extends Context<MS>, MS extends MetadataStorage> = Data<
  */
 export type IndexedMarket<
   C extends Context<MS>,
-  MS extends MetadataStorage,
+  MS extends MetadataStorage = MetadataStorage,
 > = FullMarketFragment & (C extends RpcContext<MS> ? MarketMethods : {})
 
 /**
@@ -52,7 +55,7 @@ export type IndexedMarket<
  */
 export type RpcMarket<
   C extends RpcContext<MS>,
-  MS extends MetadataStorage,
+  MS extends MetadataStorage = MetadataStorage,
 > = ZeitgeistPrimitivesMarket &
   MarketMethods & {
     /**
