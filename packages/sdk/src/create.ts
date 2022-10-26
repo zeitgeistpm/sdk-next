@@ -5,7 +5,7 @@ import { assert } from '@zeitgeistpm/utility/dist/assert'
 import { assign } from '@zeitgeistpm/utility/dist/observable'
 import polly from 'polly-js'
 import { from, Observable, of } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
+import { switchMap, map } from 'rxjs/operators'
 import type { FullContext, IndexerContext, RpcContext } from './context/types'
 import { debug } from './debug'
 import { MetadataStorage, saturate } from './meta'
@@ -105,6 +105,7 @@ export const create$ = <MS extends MetadataStorage = MetadataStorage>(
     : of(config)
 
   const context$ = config$.pipe(
+    assign(),
     switchMap(config => {
       if (isIndexerConfig(config)) {
         return from(createIndexerContext(config))
@@ -114,7 +115,6 @@ export const create$ = <MS extends MetadataStorage = MetadataStorage>(
   )
 
   const sdk$: Observable<Sdk<Context<MS>, MS>> = context$.pipe(
-    assign(),
     switchMap(
       context =>
         new Observable<Sdk<Context<MS>, MS>>(subscription => {
