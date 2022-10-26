@@ -5,12 +5,11 @@
     "access": "public"
   },
   "type": "module",
-  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "import": "./dist/index.mjs"
     }
   },
   "files": [

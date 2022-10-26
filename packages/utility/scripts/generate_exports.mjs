@@ -12,7 +12,7 @@ const pckexports = folders.reduce(
       [`./dist/${modulename}`]: {
         types: `./dist/${modulename}/index.d.ts`,
         require: `./dist/${modulename}/index.cjs`,
-        import: `./dist/${modulename}/index.js`,
+        import: `./dist/${modulename}/index.mjs`,
       },
     }
   },
