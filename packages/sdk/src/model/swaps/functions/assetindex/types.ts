@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js'
-import { Context } from '../../../../context'
+import { Context, IndexerContext, RpcContext } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'
-import { Market } from '../../../markets'
+import { IndexedMarket, Market, SaturatedRpcMarket } from '../../../markets'
 
 /**
  * An index by pool id for pool assets(prices, metadata categories, pool amounts etc) + total pool liquidity.
@@ -18,7 +18,11 @@ export type AssetIndexEntry<C extends Context<MS>, MS extends MetadataStorage> =
   /**
    * The market the pool belongs to.
    */
-  market: Market<C, MS>
+  market: C extends IndexerContext
+    ? IndexedMarket<C, MS>
+    : C extends RpcContext<MS>
+    ? SaturatedRpcMarket<C, MS>
+    : never
   /**
    * Total pool liquidity in ZTG
    */
