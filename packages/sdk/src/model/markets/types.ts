@@ -26,6 +26,7 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
    * @returns Promise<MarketList<C, MS>>
    */
   list: (query?: MarketsListQuery<C>) => Promise<MarketList<C, MS>>
+
   /**
    * Get a market by its id.
    */
@@ -49,6 +50,7 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
         }
       : {}
   >
+
   /**
    * Create a market. Only available when connecting to rpc.
    */
@@ -62,6 +64,8 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
         {
           /**
            * Create a transaction that can be signed and sent manually.
+           * @param query CreateMarketParams<C, MS>
+           * @returns Promise<CreateMarketTransaction>
            */
           tx: (params: CreateMarketParams<C, MS>) => Promise<CreateMarketTransaction>
         }
