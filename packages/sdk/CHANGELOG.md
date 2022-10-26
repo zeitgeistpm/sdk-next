@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.1.3
+
+### Patch Changes
+
+- 565ce39: Asset index market is saturated type.
+
 ## 2.1.2
 
 ### Patch Changes
