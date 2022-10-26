@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.1.2
+
+### Patch Changes
+
+- 7653c99: Provide default metadata storage to Market and Pool for convenience.
+
 ## 2.1.1
 
 ### Patch Changes
