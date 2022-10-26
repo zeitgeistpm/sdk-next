@@ -19,6 +19,11 @@ export * from './market'
 export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.
+   *
+   * @note Pagination behaves differently between rcp and indexer environments.
+   *
+   * @param query MarketsListQuery<C>
+   * @returns Promise<MarketList<C, MS>>
    */
   list: (query?: MarketsListQuery<C>) => Promise<MarketList<C, MS>>
   /**
@@ -27,12 +32,18 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
   get: PFunc<
     /**
      * Get a rpc market by its id.
+     *
+     * @param query MarketGetQuery
+     * @returns Promise<Market<C, MS> | null>
      */
     (query: MarketGetQuery) => Promise<Market<C, MS> | null>,
     C extends RpcContext<MS>
       ? {
           /**
-           * Stream pool prices from the node
+           * Stream changes to the market.
+           *
+           * @param query MarketGetQuery
+           * @returns Observable<RpcMarket<C, MS>>
            */
           $: (query: MarketGetQuery) => Observable<RpcMarket<C, MS>>
         }
@@ -43,7 +54,11 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
    */
   create: C extends RpcContext<MS>
     ? PFunc<
-        Te.TaskEither<Error, CreateMarketResult<C, MS>, [params: CreateMarketParams<C, MS>]>,
+        Te.TaskEither<
+          Error,
+          CreateMarketResult<C, MS>,
+          [params: CreateMarketParams<C, MS>]
+        >,
         {
           /**
            * Create a transaction that can be signed and sent manually.
