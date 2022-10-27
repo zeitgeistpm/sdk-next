@@ -50,3 +50,28 @@ export const mempty = () => wrap(new BigNumber(0))
  */
 export const fromNumber = (value: number): Ztg =>
   wrap(new BigNumber(value).multipliedBy(ZTG))
+
+/**
+ * Ztg info with price in usd and 24 hour change
+ */
+export type ZTGPriceInfo = {
+  price: BigNumber
+  change: BigNumber
+}
+
+/**
+ * Fetch latest ztg price info.
+ *
+ * @returns Promise<ZTGInfo>
+ */
+export const fetchZTGInfo = async (): Promise<ZTGPriceInfo> => {
+  const res = await fetch(
+    'https://api.coingecko.com/api/v3/simple/price?ids=zeitgeist&vs_currencies=usd&include_24hr_change=true',
+  )
+  const json = await res.json()
+
+  return {
+    price: new BigNumber(json.zeitgeist.usd),
+    change: new BigNumber(json.zeitgeist.usd_24h_change),
+  }
+}
