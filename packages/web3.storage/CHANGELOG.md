@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.1.2
+
+### Patch Changes
+
+- eb05e05: asd
+- Updated dependencies [eb05e05]
+  - @zeitgeistpm/utility@2.1.4
+
 ## 2.1.1
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.1.5
+
+### Patch Changes
+
+- eb05e05: asd
+- Updated dependencies [eb05e05]
+  - @zeitgeistpm/augment-api@2.1.2
+  - @zeitgeistpm/indexer@2.1.2
+  - @zeitgeistpm/rpc@2.1.3
+  - @zeitgeistpm/utility@2.1.4
+  - @zeitgeistpm/web3.storage@2.1.2
+
 ## 2.1.4
 
 ### Patch Changes

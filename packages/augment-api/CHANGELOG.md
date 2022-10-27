@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.1.2
+
+### Patch Changes
+
+- eb05e05: asd
+
 ## 2.1.1
 
 ### Patch Changes

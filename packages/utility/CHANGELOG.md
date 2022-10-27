@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.1.4
+
+### Patch Changes
+
+- eb05e05: asd
+
 ## 2.1.3
 
 ### Patch Changes

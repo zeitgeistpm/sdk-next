@@ -1,5 +1,14 @@
 # @zeitgeistpm/rpc
 
+## 2.1.3
+
+### Patch Changes
+
+- eb05e05: asd
+- Updated dependencies [eb05e05]
+  - @zeitgeistpm/augment-api@2.1.2
+  - @zeitgeistpm/utility@2.1.4
+
 ## 2.1.2
 
 ### Patch Changes
