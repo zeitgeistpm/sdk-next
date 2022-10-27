@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.1.4
+
+### Patch Changes
+
+- 5f35aca: Market list query pagination must be fully defined or missing
+
 ## 2.1.3
 
 ### Patch Changes
