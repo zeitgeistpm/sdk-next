@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.1.2
+
+### Patch Changes
+
+- 5777b2e: Query pagination must be fully defined or missing.
+- Updated dependencies [5777b2e]
+  - @zeitgeistpm/utility@2.1.3
+
 ## 2.1.1
 
 ### Patch Changes
