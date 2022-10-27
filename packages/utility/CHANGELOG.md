@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.1.2
+
+### Patch Changes
+
+- 26b00bc: Add method to fetch ztg price info from coingecko
+
 ## 2.1.1
 
 ### Patch Changes
