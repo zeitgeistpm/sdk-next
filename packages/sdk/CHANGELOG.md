@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.1.8
+
+### Patch Changes
+
+- df4fb10: Sdk#create$ shares sdk instance between subscribers
+
 ## 2.1.7
 
 ### Patch Changes
