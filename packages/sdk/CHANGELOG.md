@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.1.7
+
+### Patch Changes
+
+- 3adb813: Fix create$ to only connect once pr indexer and rpc
+
 ## 2.1.6
 
 ### Patch Changes
