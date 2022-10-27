@@ -3,7 +3,7 @@
  * @generic T extends object
  */
 export type MappedUndefined<T extends object> = {
-  [K in keyof T]: undefined
+  [K in keyof T]?: undefined
 }
 
 /**
@@ -12,4 +12,4 @@ export type MappedUndefined<T extends object> = {
  *
  * @generic T extends object
  */
-export type Unpartial<T extends object> = T | MappedUndefined<T>
+export type Unpartial<T extends object> = MappedUndefined<T> | T

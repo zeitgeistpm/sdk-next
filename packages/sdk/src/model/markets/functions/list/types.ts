@@ -1,4 +1,5 @@
 import type { MarketOrderByInput, MarketWhereInput } from '@zeitgeistpm/indexer'
+import type { Unpartial } from '@zeitgeistpm/utility/dist/object'
 import { MetadataStorage } from '../../../../meta'
 import { Context, IndexerContext, RpcContext } from '../../../../context'
 import { PaginationQuery } from '../../../../types/query'
@@ -39,12 +40,12 @@ export type AugmentedRpcMarketList<C extends RpcContext<MS>, MS extends Metadata
 /**
  * Concrete markets Query for rpc context
  */
-export type MarketsRpcQuery = Partial<PaginationQuery>
+export type MarketsRpcQuery = Unpartial<PaginationQuery>
 
 /**
  * Concrete markets Query for indexed context
  */
-export type MarketsIndexerQuery = Partial<PaginationQuery> & {
+export type MarketsIndexerQuery = Unpartial<PaginationQuery> & {
   where?: MarketWhereInput
   order?: MarketOrderByInput
 }
