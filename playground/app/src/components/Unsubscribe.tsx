@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs'
 export const Unsubscriber: React.FC = () => {
   const [sdk, setSdk] = useState<Sdk<Context>>()
   const [sub, setSub] = useState<Subscription>()
+  const [sndsub, setsndSub] = useState<Subscription>()
 
   useEffect(() => {
     const sdk$ = create$(mainnet())
@@ -18,18 +19,29 @@ export const Unsubscriber: React.FC = () => {
         setSdk(sdk)
       }),
     )
+    setsndSub(
+      sdk$.subscribe(sdk => {
+        if (isRpcSdk(sdk)) {
+          sdk.context.provider.on('disconnected', () => {
+            console.log('snd disconnected')
+          })
+        }
+        setSdk(sdk)
+      }),
+    )
   }, [])
-
-  useEffect(() => {
-    console.log('sdk', sdk)
-  }, [sdk])
 
   return (
     <div>
       <button
         onClick={() => {
-          console.log(sub)
           sub?.unsubscribe()
+        }}>
+        Unsub
+      </button>
+      <button
+        onClick={() => {
+          sndsub?.unsubscribe()
         }}>
         Unsub
       </button>
