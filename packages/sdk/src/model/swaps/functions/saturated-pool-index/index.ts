@@ -101,10 +101,16 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
             }
 
             const asset = poolAssets.find(a => a.assetId === weight.assetId)!
-            const category = poolMarket.categories![assetIndex] ?? {
-              name: 'ztg',
-              ticker: 'ZTG',
-            }
+
+            const category = !poolMarket.categories
+              ? {
+                  name: `unknown[${assetIndex}]`,
+                  ticker: `UNKN-${assetIndex}`,
+                }
+              : poolMarket.categories?.[assetIndex] ?? {
+                  name: 'ztg',
+                  ticker: 'ZTG',
+                }
 
             return {
               amount: new BigNumber(asset.amountInPool),

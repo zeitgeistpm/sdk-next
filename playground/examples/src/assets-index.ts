@@ -1,4 +1,4 @@
-import { create, mainnetRpc } from '@zeitgeistpm/sdk'
+import { batterystationIndexer, create, mainnetRpc } from '@zeitgeistpm/sdk'
 
 const ZTG = '10000000000'
 
@@ -6,7 +6,7 @@ async function main() {
   /**
    * Fetching asset indexes works with both rpc and indexer mode.
    */
-  const sdk = await create(mainnetRpc())
+  const sdk = await create(batterystationIndexer())
 
   /**
    * Fetch a set of pools.
@@ -16,14 +16,14 @@ async function main() {
   /**
    * Fetch asset indexes including prices, amounts and total liquidity for fetched pools.
    */
-  const assetsIndex = await sdk.model.swaps.assetsIndex(pools)
+  const assetsIndex = await sdk.model.swaps.saturatedPoolsIndex(pools)
 
   /**
    * Loop through pools and print liquidity for pool and price that is contained in
    * the asset index like amounts, category ticker liquidity etc.
    */
   pools
-    .filter(p => p.poolId === 14)
+    //.filter(p => p.poolId === 14)
     .forEach(pool => {
       const assets = assetsIndex[pool.poolId]
       console.log(`id: ${pool.poolId}`)
