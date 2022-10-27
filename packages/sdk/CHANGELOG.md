@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.1.6
+
+### Patch Changes
+
+- 6a0176f: Handle missing categories on market when creating saturated pools index.
+
 ## 2.1.5
 
 ### Patch Changes
