@@ -1,6 +1,7 @@
 import type { PoolOrderByInput, PoolWhereInput } from '@zeitgeistpm/indexer'
 import { MetadataStorage } from '../../../../meta/types'
 import { Context, IndexerContext, RpcContext } from '../../../../context/types'
+import { StorageKey, u128 } from '@polkadot/types'
 
 /**
  * Pools list Query type
@@ -17,8 +18,18 @@ export type PoolsListQuery<
  * Concrete pool Query for rpc context
  */
 type PoolsRpcQuery = {
+  /**
+   * The index to start at.
+   */
   offset?: number
+  /**
+   * How many items to list.
+   */
   limit?: number
+  /**
+   * Supplied storage keys. Will be fetched fresh if not supplied.
+   */
+  keys?: StorageKey<[u128]>[]
 }
 
 /**

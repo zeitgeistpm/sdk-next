@@ -8,10 +8,12 @@ import {
 } from '../../../../context/types'
 import { isPaginated } from '../../../../types/query'
 import { PoolsListQuery } from '../../types'
-import { Pool, rpcPool, RpcPool } from '../../pool'
+import { fromEntries, Pool, rpcPool, RpcPool } from '../../pool'
 import { MetadataStorage } from '../../../../meta'
 import { PoolList } from '../../poolslist'
 import { isNull } from '@polkadot/util'
+import { Option, StorageKey, u128 } from '@polkadot/types'
+import { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 
 /**
  * Query for a list of pools.
@@ -59,22 +61,18 @@ const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>
   ctx: C,
   query?: PoolsListQuery<C, MS>,
 ): Promise<Pool<C, MS>[]> => {
-  const entries = isPaginated(query)
-    ? await ctx.api.query.swaps.pools.entriesPaged({
-        args: [],
-        pageSize: query.limit,
-        startKey: `${query.offset}`,
-      })
-    : await ctx.api.query.swaps.pools.entries()
+  let entries: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][]
 
-  const list = entries.map(
-    ([
-      {
-        args: [poolId],
-      },
-      pool,
-    ]) => rpcPool(ctx, poolId.toNumber(), pool.unwrap()) as Pool<C, MS>,
-  )
+  if (isPaginated(query)) {
+    const keys = query.keys ?? (await ctx.api.query.swaps.pools.keys())
+    entries = await ctx.api.query.swaps.pools.entriesPaged({
+      args: [],
+      pageSize: query.limit,
+      startKey: keys[query.offset].toHex(),
+    })
+  } else {
+    entries = await ctx.api.query.swaps.pools.entries()
+  }
 
-  return list
+  return fromEntries(ctx, entries)
 }

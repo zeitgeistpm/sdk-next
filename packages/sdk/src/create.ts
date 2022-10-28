@@ -2,10 +2,9 @@ import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
 import { options } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
-import { assign } from '@zeitgeistpm/utility/dist/observable'
 import polly from 'polly-js'
 import { from, Observable, of } from 'rxjs'
-import { switchMap, map, mergeMap, share } from 'rxjs/operators'
+import { mergeMap, share, switchMap } from 'rxjs/operators'
 import type { FullContext, IndexerContext, RpcContext } from './context/types'
 import { debug } from './debug'
 import { MetadataStorage, saturate } from './meta'
@@ -92,14 +91,18 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
 }
 
 /**
- * Initialize the indexer and rpc concurrently and emit partially applied intances of the Sdk.
+ * Initialize the indexer and/or rpc concurrently and emit partially applied intances of the Sdk.
+ * Useful when initializing in a UI context where displaying data from the indexer as
+ * fast as possible is a priority.
+ *
+ * @note If config is indexer and rpc, indexer sdk will emit first.
  *
  * @param config FullConfig
- * @returns Observable<Partial<Sdk<FullContext>>>
+ * @returns Observable<Sdk<Context<MS>, MS>>
  */
 export const create$ = <MS extends MetadataStorage = MetadataStorage>(
   config: Config<MS>,
-) => {
+): Observable<Sdk<Context<MS>, MS>> => {
   const config$ = isFullConfig(config)
     ? of(asIndexerConfig(config), asRpcConfig(config))
     : of(config)
@@ -114,12 +117,13 @@ export const create$ = <MS extends MetadataStorage = MetadataStorage>(
   )
 
   const sdk$: Observable<Sdk<Context<MS>, MS>> = context$.pipe(
-    switchMap(context => {
-      return new Observable<Sdk<Context<MS>, MS>>(subscription => {
-        subscription.add(() => teardown(context))
-        subscription.next(sdk(context))
-      })
-    }),
+    switchMap(
+      context =>
+        new Observable<Sdk<Context<MS>, MS>>(subscription => {
+          subscription.add(() => teardown(context))
+          subscription.next(sdk(context))
+        }),
+    ),
   )
 
   return sdk$.pipe(share())
@@ -165,12 +169,12 @@ export const createRpcContext = async <MS extends MetadataStorage<any, any>>(
     .executeForPromise<WsProvider>(
       () =>
         new Promise((resolve, reject) => {
-          const _provider = new WsProvider(config.provider)
-          _provider.on('error', error => {
+          const provider = new WsProvider(config.provider)
+          provider.on('error', error => {
             reject(error)
           })
-          _provider.on('connected', () => {
-            resolve(_provider)
+          provider.on('connected', () => {
+            resolve(provider)
           })
         }),
     )

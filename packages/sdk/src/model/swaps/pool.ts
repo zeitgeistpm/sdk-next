@@ -1,4 +1,4 @@
-import { u128, Vec } from '@polkadot/types'
+import { Option, StorageKey, u128, Vec } from '@polkadot/types'
 import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
@@ -321,4 +321,18 @@ export const rpcPool = (
   )
 
   return pool
+}
+
+export const fromEntries = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+  ctx: C,
+  entries: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][],
+) => {
+  return entries.map(
+    ([
+      {
+        args: [poolId],
+      },
+      pool,
+    ]) => rpcPool(ctx, poolId.toNumber(), pool.unwrap()) as Pool<C, MS>,
+  )
 }
