@@ -125,7 +125,7 @@ export const create$ = <MS extends MetadataStorage = MetadataStorage>(
         }),
     ),
   )
-  //return sdk$.pipe(share())
+
   return sdk$.pipe(shareReplay({ bufferSize: 1, refCount: true }))
 }
 
