@@ -95,6 +95,9 @@ export async function create<MS extends MetadataStorage<any, any>>(config: Confi
  * Useful when initializing in a UI context where displaying data from the indexer as
  * fast as possible is a priority.
  *
+ * Creates a shared observable that replays last emitted sdk instace to late subscribers.
+ * And disconnectes the rpc provider when all subscribers unsubscribe.
+ *
  * @note If config is indexer and rpc, indexer sdk will emit first.
  *
  * @param config FullConfig
