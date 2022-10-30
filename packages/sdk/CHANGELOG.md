@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.1.9
+
+### Patch Changes
+
+- 55ad05b: share last item using create$
+
 ## 2.1.8
 
 ### Patch Changes
