@@ -4,7 +4,7 @@ import { options } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import polly from 'polly-js'
 import { from, Observable, of } from 'rxjs'
-import { mergeMap, share, switchMap } from 'rxjs/operators'
+import { mergeMap, share, shareReplay, switchMap } from 'rxjs/operators'
 import type { FullContext, IndexerContext, RpcContext } from './context/types'
 import { debug } from './debug'
 import { MetadataStorage, saturate } from './meta'
@@ -125,8 +125,8 @@ export const create$ = <MS extends MetadataStorage = MetadataStorage>(
         }),
     ),
   )
-
-  return sdk$.pipe(share())
+  //return sdk$.pipe(share())
+  return sdk$.pipe(shareReplay({ bufferSize: 1, refCount: true }))
 }
 
 /**
