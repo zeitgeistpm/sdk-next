@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.1.10
+
+### Patch Changes
+
+- d58625c: Emit merged partial sdk in create$
+
 ## 2.1.9
 
 ### Patch Changes
