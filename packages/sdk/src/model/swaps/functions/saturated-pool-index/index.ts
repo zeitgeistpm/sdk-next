@@ -1,7 +1,7 @@
 import { BTreeMap } from '@polkadot/types'
 import { Codec } from '@polkadot/types/types'
 import { isNotNull } from '@zeitgeistpm/utility/dist/null'
-import BigNumber from 'bignumber.js'
+import { Decimal } from 'decimal.js'
 import {
   Context,
   IndexerContext,
@@ -81,15 +81,12 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
             const assetIndex = AssetId.getIndexOf(assetId)!
 
             const percentage = Math.round(
-              new BigNumber(weight.len)
-                .dividedBy(pool.totalWeight)
-                .multipliedBy(100)
-                .toNumber(),
+              new Decimal(weight.len).dividedBy(pool.totalWeight).mul(100).toNumber(),
             )
 
             if (AssetId.IOZtgAssetId.is(assetId)) {
               return {
-                amount: new BigNumber(pool.ztgQty),
+                amount: new Decimal(pool.ztgQty),
                 price: ZTG,
                 assetId,
                 category: {
@@ -113,8 +110,8 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
                 }
 
             return {
-              amount: new BigNumber(asset.amountInPool),
-              price: new BigNumber(asset.price ?? 0).multipliedBy(ZTG),
+              amount: new Decimal(asset.amountInPool),
+              price: new Decimal(asset.price ?? 0).mul(ZTG),
               category,
               assetId,
               percentage,
@@ -127,9 +124,9 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
             return total
           }
           return total.plus(
-            new BigNumber(asset.price.div(ZTG)).multipliedBy(new BigNumber(asset.amount)),
+            new Decimal(asset.price.div(ZTG)).mul(new Decimal(asset.amount)),
           )
-        }, new BigNumber(0))
+        }, new Decimal(0))
 
         return { poolId: pool.poolId, market: poolMarket, liquidity, assets }
       }),
@@ -159,7 +156,7 @@ export const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   const byPool = await Promise.all(
     pools.map(async pool => {
       const outcomeAssets = pool.assets.filter(a => !a.isZtg)
-      const swapPrct = new BigNumber(pool.swapFee.unwrap().toNumber()).dividedBy(100000000)
+      const swapPrct = new Decimal(pool.swapFee.unwrap().toNumber()).dividedBy(100000000)
       const weights = pool.weights.unwrap()
 
       const accountId = await pool.accountId().unwrap()
@@ -183,27 +180,27 @@ export const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
         const price = prices[index]
         const amountInPool = accounts[index]
         return total.plus(
-          new BigNumber(price.toNumber()).div(ZTG).multipliedBy(amountInPool.toNumber()),
+          new Decimal(price.toNumber()).div(ZTG).mul(amountInPool.toNumber()),
         )
-      }, new BigNumber(0))
+      }, new Decimal(0))
 
-      liquidity = liquidity.minus(liquidity.dividedBy(100).multipliedBy(swapPrct))
+      liquidity = liquidity.minus(liquidity.dividedBy(100).mul(swapPrct))
 
       const totalWeight = pool.assets.reduce((total, asset) => {
-        const weight = new BigNumber(mapget(weights, asset)?.toNumber() ?? 0)
+        const weight = new Decimal(mapget(weights, asset)?.toNumber() ?? 0)
         return total.plus(weight)
-      }, new BigNumber(0))
+      }, new Decimal(0))
 
       const assets: SaturatedPoolEntryAsset[] = pool.assets.map((asset, index) => {
         return {
-          amount: new BigNumber(accounts[index].toNumber()),
-          price: new BigNumber(prices[index].toNumber()),
+          amount: new Decimal(accounts[index].toNumber()),
+          price: new Decimal(prices[index].toNumber()),
           assetId: AssetId.fromPrimitive(asset),
           category: market.categories?.[index] || {
             name: 'ztg',
             ticker: 'ZTG',
           },
-          percentage: new BigNumber(mapget(weights, asset)?.toNumber() ?? 0)
+          percentage: new Decimal(mapget(weights, asset)?.toNumber() ?? 0)
             .dividedBy(totalWeight)
             .toNumber(),
         }

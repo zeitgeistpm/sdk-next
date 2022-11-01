@@ -1,5 +1,5 @@
 import { SwapsAsset } from '@zeitgeistpm/augment-api'
-import { BigNumber } from 'bignumber.js'
+import { Decimal } from 'decimal.js'
 import { BlockNumber } from '../../../../primitives/blocknumber'
 import { Duration, Timespan } from '../../../time'
 
@@ -35,7 +35,7 @@ export type PoolAssetPricesAtBlock = Array<AssetPriceAtBlock>
 /**
  * Discrete price for a asset at a certain block.
  */
-export type AssetPriceAtBlock = [block: BlockNumber, price: BigNumber]
+export type AssetPriceAtBlock = [block: BlockNumber, price: Decimal]
 
 /**
  * Streaming query paramaters.

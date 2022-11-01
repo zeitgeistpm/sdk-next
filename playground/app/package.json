@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.3.4",
-    "@emotion/react": "^11.10.4",
+    "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.4",
-    "@polkadot/api": "^9.6.1",
+    "@polkadot/api": "^9.6.2",
     "@polkadot/extension-dapp": "^0.44.6",
     "framer-motion": "^7.5.0",
     "lodash": "^4.17.21",
@@ -21,11 +21,11 @@
   },
   "devDependencies": {
     "@types/ms": "^0.7.31",
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^2.0.1",
-    "typescript": "^4.6.4",
-    "vite": "^3.0.7",
+    "typescript": "^4.8.4",
+    "vite": "^3.2.2",
     "vite-tsconfig-paths": "^3.5.1"
   }
 }

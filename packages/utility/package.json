@@ -108,7 +108,7 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "bignumber.js": "^9.1.0",
+    "decimal.js": "^10.4.2",
     "lodash.omit": "^4.5.0",
     "rxjs": "^7.2.0"
   },

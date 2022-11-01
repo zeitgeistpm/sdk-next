@@ -1,3 +1,3 @@
-import BigNumber from 'bignumber.js'
+import { Decimal } from 'decimal.js'
 
-export const ZTG = new BigNumber(10 ** 10)
+export const ZTG = new Decimal(10 ** 10)

@@ -1,9 +1,9 @@
-import { BigNumber } from 'bignumber.js'
+import { Decimal } from 'decimal.js'
 
-export type BN = string | number | BigNumber
+export type BN = string | number | Decimal
 
 export const calcRelativeDiff = (expected: BN, actual: BN) => {
-  return new BigNumber(expected).minus(new BigNumber(actual)).div(expected).abs()
+  return new Decimal(expected).minus(new Decimal(actual)).div(expected).abs()
 }
 
 export const calcSpotPrice = (
@@ -13,11 +13,11 @@ export const calcSpotPrice = (
   tokenWeightOut: BN,
   swapFee: BN,
 ) => {
-  const numer = new BigNumber(tokenBalanceIn).div(new BigNumber(tokenWeightIn))
-  const denom = new BigNumber(tokenBalanceOut).div(new BigNumber(tokenWeightOut))
+  const numer = new Decimal(tokenBalanceIn).div(new Decimal(tokenWeightIn))
+  const denom = new Decimal(tokenBalanceOut).div(new Decimal(tokenWeightOut))
   const ratio = numer.div(denom)
-  const scale = new BigNumber(1).div(new BigNumber(1).minus(new BigNumber(swapFee)))
-  const spotPrice = ratio.multipliedBy(scale)
+  const scale = new Decimal(1).div(new Decimal(1).minus(new Decimal(swapFee)))
+  const spotPrice = ratio.mul(scale)
   return spotPrice
 }
 
@@ -29,16 +29,14 @@ export const calcOutGivenIn = (
   tokenAmountIn: BN, // amount in for the swap
   swapFee: BN,
 ) => {
-  const weightRatio = new BigNumber(tokenWeightIn).div(new BigNumber(tokenWeightOut))
-  const adjustedIn = new BigNumber(tokenAmountIn).times(
-    new BigNumber(1).minus(new BigNumber(swapFee)),
+  const weightRatio = new Decimal(tokenWeightIn).div(new Decimal(tokenWeightOut))
+  const adjustedIn = new Decimal(tokenAmountIn).times(
+    new Decimal(1).minus(new Decimal(swapFee)),
   )
-  const y = new BigNumber(tokenBalanceIn).div(
-    new BigNumber(tokenBalanceIn).plus(adjustedIn),
-  )
+  const y = new Decimal(tokenBalanceIn).div(new Decimal(tokenBalanceIn).plus(adjustedIn))
   const foo = y.pow(weightRatio)
-  const bar = new BigNumber(1).minus(foo)
-  const tokenAmountOut = new BigNumber(tokenBalanceOut).times(bar)
+  const bar = new Decimal(1).minus(foo)
+  const tokenAmountOut = new Decimal(tokenBalanceOut).times(bar)
   return tokenAmountOut
 }
 
@@ -50,13 +48,13 @@ export const calcInGivenOut = (
   tokenAmountOut: BN,
   swapFee: BN,
 ) => {
-  const weightRatio = new BigNumber(tokenWeightOut).div(new BigNumber(tokenWeightIn))
-  const diff = new BigNumber(tokenBalanceOut).minus(tokenAmountOut)
-  const y = new BigNumber(tokenBalanceOut).div(diff)
-  const foo = y.pow(weightRatio).minus(new BigNumber(1))
-  const tokenAmountIn = new BigNumber(tokenBalanceIn)
+  const weightRatio = new Decimal(tokenWeightOut).div(new Decimal(tokenWeightIn))
+  const diff = new Decimal(tokenBalanceOut).minus(tokenAmountOut)
+  const y = new Decimal(tokenBalanceOut).div(diff)
+  const foo = y.pow(weightRatio).minus(new Decimal(1))
+  const tokenAmountIn = new Decimal(tokenBalanceIn)
     .times(foo)
-    .div(new BigNumber(1).minus(new BigNumber(swapFee)))
+    .div(new Decimal(1).minus(new Decimal(swapFee)))
   return tokenAmountIn
 }
 
@@ -68,18 +66,14 @@ export const calcPoolOutGivenSingleIn = (
   tokenAmountIn: BN,
   swapFee: BN,
 ) => {
-  const normalizedWeight = new BigNumber(tokenWeightIn).div(new BigNumber(totalWeight))
-  const zaz = new BigNumber(1)
-    .minus(new BigNumber(normalizedWeight))
-    .multipliedBy(new BigNumber(swapFee))
-  const tokenAmountInAfterFee = new BigNumber(tokenAmountIn).multipliedBy(
-    new BigNumber(1).minus(zaz),
-  )
-  const newTokenBalanceIn = new BigNumber(tokenBalanceIn).plus(tokenAmountInAfterFee)
-  const tokenInRatio = newTokenBalanceIn.div(new BigNumber(tokenBalanceIn))
+  const normalizedWeight = new Decimal(tokenWeightIn).div(new Decimal(totalWeight))
+  const zaz = new Decimal(1).minus(new Decimal(normalizedWeight)).mul(new Decimal(swapFee))
+  const tokenAmountInAfterFee = new Decimal(tokenAmountIn).mul(new Decimal(1).minus(zaz))
+  const newTokenBalanceIn = new Decimal(tokenBalanceIn).plus(tokenAmountInAfterFee)
+  const tokenInRatio = newTokenBalanceIn.div(new Decimal(tokenBalanceIn))
   const poolRatio = tokenInRatio.pow(normalizedWeight)
-  const newPoolSupply = poolRatio.multipliedBy(new BigNumber(poolSupply))
-  const poolAmountOut = newPoolSupply.minus(new BigNumber(poolSupply))
+  const newPoolSupply = poolRatio.mul(new Decimal(poolSupply))
+  const poolAmountOut = newPoolSupply.minus(new Decimal(poolSupply))
   return poolAmountOut
 }
 
@@ -91,15 +85,15 @@ export const calcSingleInGivenPoolOut = (
   poolAmountOut: BN,
   swapFee: BN,
 ) => {
-  const normalizedWeight = new BigNumber(tokenWeightIn).div(new BigNumber(totalWeight))
-  const newPoolSupply = new BigNumber(poolSupply).plus(new BigNumber(poolAmountOut))
-  const poolRatio = newPoolSupply.div(new BigNumber(poolSupply))
-  const boo = new BigNumber(1).div(normalizedWeight)
+  const normalizedWeight = new Decimal(tokenWeightIn).div(new Decimal(totalWeight))
+  const newPoolSupply = new Decimal(poolSupply).plus(new Decimal(poolAmountOut))
+  const poolRatio = newPoolSupply.div(new Decimal(poolSupply))
+  const boo = new Decimal(1).div(normalizedWeight)
   const tokenInRatio = poolRatio.pow(boo)
-  const newTokenBalanceIn = tokenInRatio.multipliedBy(new BigNumber(tokenBalanceIn))
-  const tokenAmountInAfterFee = newTokenBalanceIn.minus(new BigNumber(tokenBalanceIn))
-  const zar = new BigNumber(1).minus(normalizedWeight).multipliedBy(new BigNumber(swapFee))
-  const tokenAmountIn = tokenAmountInAfterFee.div(new BigNumber(1).minus(zar))
+  const newTokenBalanceIn = tokenInRatio.mul(new Decimal(tokenBalanceIn))
+  const tokenAmountInAfterFee = newTokenBalanceIn.minus(new Decimal(tokenBalanceIn))
+  const zar = new Decimal(1).minus(normalizedWeight).mul(new Decimal(swapFee))
+  const tokenAmountIn = tokenAmountInAfterFee.div(new Decimal(1).minus(zar))
   return tokenAmountIn
 }
 
@@ -111,23 +105,21 @@ export const calcSingleOutGivenPoolIn = (
   poolAmountIn: BN,
   swapFee: BN,
 ) => {
-  const normalizedWeight = new BigNumber(tokenWeightOut).div(new BigNumber(totalWeight))
-  const poolAmountAfterExitFee = new BigNumber(poolAmountIn).multipliedBy(
-    new BigNumber(1).minus(0),
-  )
-  const newPoolSupply = new BigNumber(poolSupply).minus(poolAmountAfterExitFee)
-  const poolRatio = newPoolSupply.div(new BigNumber(poolSupply))
+  const normalizedWeight = new Decimal(tokenWeightOut).div(new Decimal(totalWeight))
+  const poolAmountAfterExitFee = new Decimal(poolAmountIn).mul(new Decimal(1).minus(0))
+  const newPoolSupply = new Decimal(poolSupply).minus(poolAmountAfterExitFee)
+  const poolRatio = newPoolSupply.div(new Decimal(poolSupply))
 
-  const tokenOutRAtio = poolRatio.pow(new BigNumber(1).div(normalizedWeight))
-  const newTokenBalanceOut = tokenOutRAtio.multipliedBy(new BigNumber(tokenBalanceOut))
+  const tokenOutRAtio = poolRatio.pow(new Decimal(1).div(normalizedWeight))
+  const newTokenBalanceOut = tokenOutRAtio.mul(new Decimal(tokenBalanceOut))
 
-  const tokenAmountBeforeSwapFee = new BigNumber(tokenBalanceOut).minus(newTokenBalanceOut)
+  const tokenAmountBeforeSwapFee = new Decimal(tokenBalanceOut).minus(newTokenBalanceOut)
 
-  const zaz = new BigNumber(swapFee).multipliedBy(new BigNumber(1).minus(normalizedWeight))
-  const tokenAmountOut = tokenAmountBeforeSwapFee.multipliedBy(new BigNumber(1).minus(zaz))
+  const zaz = new Decimal(swapFee).mul(new Decimal(1).minus(normalizedWeight))
+  const tokenAmountOut = tokenAmountBeforeSwapFee.mul(new Decimal(1).minus(zaz))
   return tokenAmountOut
 }
 
-export const calcPoolTokensByRatio = (ratio: BigNumber, totalShares: BigNumber) => {
-  return new BigNumber(ratio).multipliedBy(totalShares)
+export const calcPoolTokensByRatio = (ratio: Decimal, totalShares: Decimal) => {
+  return new Decimal(ratio).mul(totalShares)
 }

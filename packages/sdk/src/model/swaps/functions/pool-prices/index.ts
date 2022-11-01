@@ -1,6 +1,6 @@
 import { HistoricalAssetOrderByInput } from '@zeitgeistpm/indexer'
 import { project, range, zip } from '@zeitgeistpm/utility/dist/array'
-import { BigNumber } from 'bignumber.js'
+import { Decimal } from 'decimal.js'
 import ms from 'ms'
 import { Observable } from 'rxjs'
 import {
@@ -73,7 +73,7 @@ const rpcPoolPrices = async <C extends RpcContext>(
       const prices = await ctx.api.rpc.swaps.getSpotPrices(query.pool, ztg, asset, blocks)
       return zip(
         blocks,
-        prices.map(price => new BigNumber(price.toString())),
+        prices.map(price => new Decimal(price.toString())),
       ) as PoolAssetPricesAtBlock
     }),
   )
@@ -135,7 +135,7 @@ const indexerPoolPrices = async (
 
     prices[index] = [
       ...(prices[index] || []),
-      [record.blockNumber as BlockNumber, new BigNumber(record.newPrice * 10 ** 10)],
+      [record.blockNumber as BlockNumber, new Decimal(record.newPrice * 10 ** 10)],
     ]
   }
 
@@ -187,7 +187,7 @@ export const observePoolPrices$ = <C extends RpcContext>(
               asset,
               [block],
             )
-            return [block, new BigNumber(price.toString())] as AssetPriceAtBlock
+            return [block, new Decimal(price.toString())] as AssetPriceAtBlock
           }),
         )
         sub.next(prices)

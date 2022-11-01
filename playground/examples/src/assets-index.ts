@@ -32,7 +32,7 @@ async function main() {
       assets.assets.forEach(asset => {
         const token = asset.category?.ticker
         const price = asset.price.dividedBy(ZTG)
-        const liq = asset.price.dividedBy(ZTG).multipliedBy(asset.amount.dividedBy(ZTG))
+        const liq = asset.price.dividedBy(ZTG).mul(asset.amount.dividedBy(ZTG))
         console.log(`${token}       ${price}        ${liq}`)
       })
     })

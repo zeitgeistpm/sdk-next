@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js'
+import { Decimal } from 'decimal.js'
 import { Context, IndexerContext, RpcContext } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'
@@ -26,7 +26,7 @@ export type SaturatedPoolEntry<C extends Context<MS>, MS extends MetadataStorage
   /**
    * Total pool liquidity in ZTG
    */
-  liquidity: BigNumber
+  liquidity: Decimal
   /**
    * Pool assets expanded data.
    */
@@ -41,7 +41,7 @@ export type SaturatedPoolEntryAsset = {
   /**
    * Amount of asset tokens in pool.
    */
-  amount: BigNumber
+  amount: Decimal
   /**
    * The percentage of the asset size relative to pool.
    */
@@ -49,7 +49,7 @@ export type SaturatedPoolEntryAsset = {
   /**
    * The price of asset when fetched.
    */
-  price: BigNumber
+  price: Decimal
   /**
    * Category metadata relative to pool market metadata.
    */

@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js'
+import { Decimal } from 'decimal.js'
 
 /**
  *
@@ -10,12 +10,12 @@ import { BigNumber } from 'bignumber.js'
  * @type Opaque bigint
  */
 const Ztg: unique symbol = Symbol()
-export type Ztg = BigNumber & { __ztg: typeof Ztg }
+export type Ztg = Decimal & { __ztg: typeof Ztg }
 
 /**
  * Decimal point in a native ztg
  */
-export const ZTG = new BigNumber(10 ** 10)
+export const ZTG = new Decimal(10 ** 10)
 
 /**
  * Typeguard for Ztg values.
@@ -24,15 +24,15 @@ export const ZTG = new BigNumber(10 ** 10)
  * @returns value is Ztg
  */
 export const isZtg = (value: unknown): value is Ztg =>
-  BigNumber.isBigNumber(value) && '__ztg' in value && value['__ztg'] === Ztg
+  Decimal.isDecimal(value) && '__ztg' in value && value['__ztg'] === Ztg
 
 /**
  * Wrap a bignumber to Ztg type
  *
- * @param value BigNumber
+ * @param value Decimal
  * @returns Ztg
  */
-export const wrap = (value: BigNumber): Ztg => Object.assign(value as any, { __ztg: Ztg })
+export const wrap = (value: Decimal): Ztg => Object.assign(value as any, { __ztg: Ztg })
 
 /**
  *
@@ -40,7 +40,7 @@ export const wrap = (value: BigNumber): Ztg => Object.assign(value as any, { __z
  *
  * @returns Ztg
  */
-export const mempty = () => wrap(new BigNumber(0))
+export const mempty = () => wrap(new Decimal(0))
 
 /**
  * Convert a integer or float to Ztg at the 10th decimal place
@@ -48,15 +48,14 @@ export const mempty = () => wrap(new BigNumber(0))
  * @param ztg number - number as is
  * @returns Ztg
  */
-export const fromNumber = (value: number): Ztg =>
-  wrap(new BigNumber(value).multipliedBy(ZTG))
+export const fromNumber = (value: number): Ztg => wrap(new Decimal(value).mul(ZTG))
 
 /**
  * Ztg info with price in usd and 24 hour change
  */
 export type ZTGPriceInfo = {
-  price: BigNumber
-  change: BigNumber
+  price: Decimal
+  change: Decimal
 }
 
 /**
@@ -71,7 +70,7 @@ export const fetchZTGInfo = async (): Promise<ZTGPriceInfo> => {
   const json = await res.json()
 
   return {
-    price: new BigNumber(json.zeitgeist.usd),
-    change: new BigNumber(json.zeitgeist.usd_24h_change),
+    price: new Decimal(json.zeitgeist.usd),
+    change: new Decimal(json.zeitgeist.usd_24h_change),
   }
 }
