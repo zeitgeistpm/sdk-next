@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.2.0
+
+### Minor Changes
+
+- 2550453: Use decimal.js instead of bignumber.js
+
+### Patch Changes
+
+- Updated dependencies [2550453]
+  - @zeitgeistpm/utility@2.2.0
+
 ## 2.1.2
 
 ### Patch Changes

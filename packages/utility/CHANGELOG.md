@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.2.0
+
+### Minor Changes
+
+- 2550453: Use decimal.js instead of bignumber.js
+
 ## 2.1.4
 
 ### Patch Changes

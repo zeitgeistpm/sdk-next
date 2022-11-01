@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 2.2.0
+
+### Minor Changes
+
+- 2550453: Use decimal.js instead of bignumber.js
+
+### Patch Changes
+
+- Updated dependencies [2550453]
+  - @zeitgeistpm/augment-api@2.2.0
+  - @zeitgeistpm/utility@2.2.0
+
 ## 2.1.3
 
 ### Patch Changes
