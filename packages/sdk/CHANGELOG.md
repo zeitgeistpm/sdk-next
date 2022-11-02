@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.2.2
+
+### Patch Changes
+
+- b4fef6b: Provide default generic type for PoolList MS = MetadataStorage
+
 ## 2.2.1
 
 ### Patch Changes
