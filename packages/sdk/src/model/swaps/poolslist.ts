@@ -8,4 +8,7 @@ import { Pool } from './pool'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type PoolList<C extends Context<MS>, MS extends MetadataStorage> = Pool<C, MS>[]
+export type PoolList<
+  C extends Context<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+> = Pool<C, MS>[]
