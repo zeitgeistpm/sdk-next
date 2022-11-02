@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.2.1
+
+### Patch Changes
+
+- 0008a1f: Export PoolsList type
+
 ## 2.2.0
 
 ### Minor Changes
