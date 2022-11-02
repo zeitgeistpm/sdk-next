@@ -16,6 +16,7 @@ import { PoolList } from './poolslist'
 
 export * from './functions/types'
 export * from './pool'
+export * from './poolslist'
 
 /**
  * Zeitgeist Swaps model..
