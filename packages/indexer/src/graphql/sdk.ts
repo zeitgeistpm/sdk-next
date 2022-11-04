@@ -2463,6 +2463,13 @@ export type MarketsQueryVariables = Exact<{
 
 export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string, marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null }> };
 
+export type MarketStatusCountQueryVariables = Exact<{
+  status: Scalars['String'];
+}>;
+
+
+export type MarketStatusCountQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string }> };
+
 export type FullMarketFragment = { __typename?: 'Market', id: string, marketId: number, description?: string | null, end: any, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, poolId?: number | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: string | null, timestamp?: string | null }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null };
 
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
@@ -2643,6 +2650,13 @@ export const MarketsDocument = gql`
   }
 }
     ${FullMarketFragmentDoc}`;
+export const MarketStatusCountDocument = gql`
+    query marketStatusCount($status: String!) {
+  markets(where: {status_eq: $status}) {
+    id
+  }
+}
+    `;
 export const PingQueryDocument = gql`
     query pingQuery {
   markets(limit: 1) {
@@ -2679,6 +2693,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     markets(variables?: MarketsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MarketsQuery>(MarketsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'markets', 'query');
+    },
+    marketStatusCount(variables: MarketStatusCountQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketStatusCountQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MarketStatusCountQuery>(MarketStatusCountDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'marketStatusCount', 'query');
     },
     pingQuery(variables?: PingQueryQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<PingQueryQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PingQueryQuery>(PingQueryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'pingQuery', 'query');

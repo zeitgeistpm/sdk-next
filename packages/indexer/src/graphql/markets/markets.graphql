@@ -9,16 +9,13 @@ query markets(
   }
 }
 
-# subscription observeMarksts(
-#   $where: MarketWhereInput
-#   $order: [MarketOrderByInput!]
-#   $limit: Int
-#   $offset: Int
-# ) {
-#   markets(where: $where, limit: $limit, offset: $offset, orderBy: $order) {
-#     ...FullMarket
-#   }
-# }
+query marketStatusCount(
+  $status: String!
+) {
+  markets(where: {status_eq: $status}) {
+    id
+  }
+}
 
 fragment FullMarket on Market {
   id
