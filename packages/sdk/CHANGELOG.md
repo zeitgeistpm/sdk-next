@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.2.3
+
+### Patch Changes
+
+- 8dc57bd: Add marketStatusCount method to indexer.markets.
+- Updated dependencies [8dc57bd]
+  - @zeitgeistpm/indexer@2.2.1
+
 ## 2.2.2
 
 ### Patch Changes

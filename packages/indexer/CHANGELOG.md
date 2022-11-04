@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.2.1
+
+### Patch Changes
+
+- 8dc57bd: Add marketStatusCount method to indexer.markets.
+
 ## 2.2.0
 
 ### Minor Changes
