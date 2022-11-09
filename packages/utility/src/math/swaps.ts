@@ -1,5 +1,8 @@
 import { Decimal } from 'decimal.js'
 
+/**
+ * Acceptable bignumber represantation types.
+ */
 export type BigNumber = string | number | Decimal
 
 /**
