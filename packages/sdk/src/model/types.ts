@@ -2,9 +2,11 @@ import type { Markets } from './markets/types'
 import type { Swaps } from './swaps/types'
 import { Context } from '../context'
 import { MetadataStorage } from '../meta'
+import { Time } from './time/types'
 
 export * from './markets/types'
 export * from './swaps/types'
+export * from './time/types'
 
 /**
  * High level model for interacting with the zeitgeist nodels like markets, assets, liquidity pools etc.
@@ -24,4 +26,8 @@ export type Model<C extends Context<MS>, MS extends MetadataStorage> = {
    * Has functionality ti List liqudity pools, join pools with liquidity and swap assets in and out.
    */
   swaps: Swaps<C, MS>
+  /**
+   * Model for getting chain time data like block duration on chain timestamp etc.
+   */
+  time: Time<C, MS>
 }

@@ -1,7 +1,7 @@
 import { SwapsAsset } from '@zeitgeistpm/augment-api'
+import { Duration, Timespan } from '@zeitgeistpm/utility/dist/time'
 import { Decimal } from 'decimal.js'
 import { BlockNumber } from '../../../../primitives/blocknumber'
-import { Duration, Timespan } from '../../../time'
 
 export type PoolPricesQuery = {
   /**

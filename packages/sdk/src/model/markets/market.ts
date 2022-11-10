@@ -270,7 +270,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       creation: primitive.creation.type,
       creator: primitive.creator.toHuman(),
       oracle: primitive.oracle.toHuman(),
-      end: end,
+      deadlines: primitive.deadlines,
       creatorFee: primitive.creatorFee.toNumber(),
       poolId: poolId.isSome ? poolId.unwrap().toNumber() : undefined,
       scoringRule: primitive.scoringRule.type,

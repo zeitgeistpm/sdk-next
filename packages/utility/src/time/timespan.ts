@@ -1,5 +1,4 @@
 import { isNumber } from '@polkadot/util'
-import { BlockNumber } from '../../primitives/blocknumber'
 import { blockDate, ChainTime, dateBlock } from './time'
 
 /**
@@ -14,11 +13,11 @@ export type BlockTimespan = {
   /**
    * The start block.
    */
-  start: BlockNumber
+  start: number
   /**
    * The end block.
    */
-  end: BlockNumber
+  end: number
 }
 
 /**

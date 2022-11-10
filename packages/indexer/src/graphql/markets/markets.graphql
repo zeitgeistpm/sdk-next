@@ -21,7 +21,6 @@ fragment FullMarket on Market {
   id
   marketId
   description
-  end
   creator
   creatorFee
   creation
@@ -61,4 +60,9 @@ fragment FullMarket on Market {
     name
     color
   }
+  deadlines {
+      disputeDuration
+      gracePeriod
+      oracleDuration
+    }
 }
