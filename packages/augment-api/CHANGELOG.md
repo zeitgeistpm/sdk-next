@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.2.1
+
+### Patch Changes
+
+- 6126566: Add deadlines to market, export src from augment-api
+
 ## 2.2.0
 
 ### Minor Changes

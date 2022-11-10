@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.2.4
+
+### Patch Changes
+
+- 6126566: Add deadlines to market, export src from augment-api
+- Updated dependencies [6126566]
+  - @zeitgeistpm/indexer@2.2.2
+  - @zeitgeistpm/augment-api@2.2.1
+
 ## 2.2.3
 
 ### Patch Changes
