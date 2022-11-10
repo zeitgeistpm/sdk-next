@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.3.0
+
+### Minor Changes
+
+- ea4c1a4: Add time model to sdk and move time utility functions to utility package
+
+### Patch Changes
+
+- Updated dependencies [ea4c1a4]
+  - @zeitgeistpm/indexer@2.3.0
+  - @zeitgeistpm/utility@2.3.0
+
 ## 2.2.4
 
 ### Patch Changes

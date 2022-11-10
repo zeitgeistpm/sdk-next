@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/utility",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "publishConfig": {
     "access": "public"
   },
@@ -85,6 +85,11 @@
       "types": "./dist/taskeither/index.d.ts",
       "require": "./dist/taskeither/index.cjs",
       "import": "./dist/taskeither/index.mjs"
+    },
+    "./dist/time": {
+      "types": "./dist/time/index.d.ts",
+      "require": "./dist/time/index.cjs",
+      "import": "./dist/time/index.mjs"
     },
     "./dist/ztg": {
       "types": "./dist/ztg/index.d.ts",
