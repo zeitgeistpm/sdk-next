@@ -1,4 +1,4 @@
-import { batterystationIndexer, create, mainnetRpc } from '@zeitgeistpm/sdk'
+import { batterystation, batterystationIndexer, create, mainnetRpc } from '@zeitgeistpm/sdk'
 
 const ZTG = '10000000000'
 
@@ -6,7 +6,7 @@ async function main() {
   /**
    * Fetching asset indexes works with both rpc and indexer mode.
    */
-  const sdk = await create(batterystationIndexer())
+  const sdk = await create(batterystation())
 
   /**
    * Fetch a set of pools.
