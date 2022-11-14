@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.3.2
+
+### Patch Changes
+
+- d5fb5ba: Add type narrowing to Data type for MetadataStorage generic.
+
 ## 2.3.1
 
 ### Patch Changes
