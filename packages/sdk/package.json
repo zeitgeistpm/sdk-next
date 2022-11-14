@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/sdk",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "publishConfig": {
     "access": "public"
   },
@@ -21,16 +21,16 @@
     "compile": "rimraf ./dist && rollup -c"
   },
   "peerDependencies": {
-    "@polkadot/api": "^9.6.1",
+    "@polkadot/api": "*",
     "@polkadot/types": "*",
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^2.2.1",
-    "@zeitgeistpm/indexer": "^2.3.0",
-    "@zeitgeistpm/rpc": "^2.2.0",
-    "@zeitgeistpm/utility": "^2.3.0",
-    "@zeitgeistpm/web3.storage": "^2.2.0",
+    "@zeitgeistpm/augment-api": "^2.2.2",
+    "@zeitgeistpm/indexer": "^2.3.1",
+    "@zeitgeistpm/rpc": "^2.2.1",
+    "@zeitgeistpm/utility": "^2.3.1",
+    "@zeitgeistpm/web3.storage": "^2.2.1",
     "cids": "^1.1.9",
     "decimal.js": "^10.4.2",
     "lodash.memoize": "^4.1.2",

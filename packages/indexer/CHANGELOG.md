@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.3.1
+
+### Patch Changes
+
+- 2aa3bed: Peer deps
+
 ## 2.3.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.2.2
+
+### Patch Changes
+
+- 2aa3bed: Peer deps
+
 ## 2.2.1
 
 ### Patch Changes

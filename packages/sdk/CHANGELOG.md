@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.3.1
+
+### Patch Changes
+
+- 2aa3bed: Peer deps
+- Updated dependencies [2aa3bed]
+  - @zeitgeistpm/augment-api@2.2.2
+  - @zeitgeistpm/indexer@2.3.1
+  - @zeitgeistpm/rpc@2.2.1
+  - @zeitgeistpm/utility@2.3.1
+  - @zeitgeistpm/web3.storage@2.2.1
+
 ## 2.3.0
 
 ### Minor Changes
