@@ -1,8 +1,7 @@
 import { HistoricalAssetOrderByInput } from '@zeitgeistpm/indexer'
 import { project, range, zip } from '@zeitgeistpm/utility/dist/array'
+import { asBlock, asBlocks, isBlocks, asMs } from '@zeitgeistpm/utility/dist/time'
 import { Decimal } from 'decimal.js'
-import { now } from '../../../time/functions/now'
-import ms from 'ms'
 import { Observable } from 'rxjs'
 import {
   Context,
@@ -11,7 +10,9 @@ import {
   isIndexerContext,
   RpcContext,
 } from '../../../../context'
+import { BlockNumber } from '../../../../primitives'
 import { getIndexOf, IOAssetId } from '../../../../primitives/assetid'
+import { now } from '../../../time/functions/now'
 import type {
   AssetPriceAtBlock,
   PoolAssetPricesAtBlock,
@@ -19,8 +20,6 @@ import type {
   PoolPricesQuery,
   PoolPricesStreamQuery,
 } from './types'
-import { asBlock, asBlocks, isBlocks } from '@zeitgeistpm/utility/dist/time'
-import { BlockNumber } from '../../../../primitives'
 
 /**
  * Fetch poolprices for a cetain timespan. Will prefer indexer but use rpc if indexer isnt available.
@@ -64,7 +63,7 @@ const rpcPoolPrices = async <C extends RpcContext>(
   let blocks = range(start, end)
 
   if (query.resolution) {
-    const step = ms(query.resolution) / time.period
+    const step = asMs(query.resolution) / time.period
     blocks = project(blocks, step)
   }
 

@@ -1,3 +1,4 @@
+import ms from 'ms'
 import { isString } from '@polkadot/util'
 
 /**
@@ -28,3 +29,11 @@ export type DurationPeriod =
  */
 export const isDuration = (duration: unknown): duration is Duration =>
   Boolean(isString(duration) && duration.match(/[1-9]+ second|minute|hour|day|week|month/))
+
+/**
+ * Get duration in milliseconds.
+ *
+ * @param duration Duration
+ * @returns number
+ */
+export const asMs = (duration: Duration) => ms(duration)
