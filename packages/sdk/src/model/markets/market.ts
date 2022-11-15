@@ -39,7 +39,8 @@ export type Market<
 > = Data<
   C,
   C extends RpcContext<MS> ? RpcMarket<C, MS> | SaturatedRpcMarket<C, MS> : never,
-  C extends FullContext<MS> | IndexerContext ? IndexedMarket<C, MS> : never
+  C extends FullContext<MS> | IndexerContext ? IndexedMarket<C, MS> : never,
+  MS
 >
 
 /**

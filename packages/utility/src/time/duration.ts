@@ -11,7 +11,14 @@ export type Duration = `${'-' | ''}${number} ${DurationPeriod}${'s' | ''}`
 /**
  * Duration period, ca be second, minutes, hours etc
  */
-export type DurationPeriod = 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month'
+export type DurationPeriod =
+  | 'second'
+  | 'minute'
+  | 'hour'
+  | 'day'
+  | 'week'
+  | 'month'
+  | 'year'
 
 /**
  * Typeguard for duration strings.

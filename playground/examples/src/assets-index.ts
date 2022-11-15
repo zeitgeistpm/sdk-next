@@ -26,6 +26,7 @@ async function main() {
     //.filter(p => p.poolId === 14)
     .forEach(pool => {
       const assets = assetsIndex[pool.poolId]
+      assets.market
       console.log(`id: ${pool.poolId}`)
       console.log(`total liquidity: ${assets.liquidity.dividedBy(ZTG)}\n`)
       console.log(`token     price               liquidity`)

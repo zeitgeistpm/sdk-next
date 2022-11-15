@@ -23,7 +23,8 @@ export type Pool<
 > = Data<
   C,
   C extends RpcContext<MS> ? RpcPool : never,
-  C extends IndexerContext ? IndexedPool<C, MS> : never
+  C extends IndexerContext ? IndexedPool<C, MS> : never,
+  MS
 >
 
 /**

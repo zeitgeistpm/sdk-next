@@ -1,15 +1,4 @@
-import {
-  create$,
-  isFullSdk,
-  isIndexedSdk,
-  isRpcData,
-  isRpcSdk,
-  mainnet,
-} from '@zeitgeistpm/sdk'
-import { isNotNull } from '@zeitgeistpm/utility/dist/null'
-import { delay } from '@zeitgeistpm/utility/dist/async'
-import { from, of } from 'rxjs'
-import { filter, switchMap, take } from 'rxjs/operators'
+import { create$, mainnet, ZTG } from '@zeitgeistpm/sdk'
 
 async function main(marketId: number) {
   /**
@@ -18,7 +7,37 @@ async function main(marketId: number) {
    */
   const sdk$ = create$(mainnet())
 
-  sdk$.subscribe(sdk => console.log(Object.keys(sdk?.context)))
+  sdk$.subscribe(async sdk => {
+    /**
+     * Fetch a set of pools.
+     */
+    const pools = await sdk.model.swaps.listPools({})
+
+    /**
+     * Fetch asset indexes including prices, amounts and total liquidity for fetched pools.
+     */
+    const assetsIndex = await sdk.model.swaps.saturatedPoolsIndex(pools)
+
+    /**
+     * Loop through pools and print liquidity for pool and price that is contained in
+     * the asset index like amounts, category ticker liquidity etc.
+     */
+    pools
+      //.filter(p => p.poolId === 14)
+      .forEach(pool => {
+        const assets = assetsIndex[pool.poolId]
+        assets.market.categories
+        console.log(`id: ${pool.poolId}`)
+        console.log(`total liquidity: ${assets.liquidity.dividedBy(ZTG)}\n`)
+        console.log(`token     price               liquidity`)
+        assets.assets.forEach(asset => {
+          const token = asset.category?.ticker
+          const price = asset.price.dividedBy(ZTG)
+          const liq = asset.price.dividedBy(ZTG).mul(asset.amount.dividedBy(ZTG))
+          console.log(`${token}       ${price}        ${liq}`)
+        })
+      })
+  })
   /**
    * We are consuming sdk and fetchin a market by its id.
    * The market can be either fethed from indexer(prefered) or rpc according to the state of the sdk instance.

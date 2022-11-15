@@ -1,11 +1,13 @@
 import { Codec } from '@polkadot/types/types'
 import { isCodec } from '@polkadot/util'
+import { MetadataStorage } from '../meta'
 import { FullContext, IndexerContext, RpcContext } from '../context'
 
 export declare type Data<
-  C extends RpcContext | IndexerContext | FullContext,
+  C extends RpcContext<MS> | IndexerContext | FullContext<MS>,
   R extends Codec,
   I extends IndexedData,
+  MS extends MetadataStorage,
 > = C extends IndexerContext ? I : R
 
 export type IndexedData = {
@@ -13,8 +15,10 @@ export type IndexedData = {
   id: string
 }
 
-export const isRpcData = <R extends Codec, I extends IndexedData>(object?: R | I): object is R =>
-  Boolean(object && isCodec(object))
+export const isRpcData = <R extends Codec, I extends IndexedData>(
+  object?: R | I,
+): object is R => Boolean(object && isCodec(object))
 
-export const isIndexedData = <R extends Codec, I extends IndexedData>(object?: R | I): object is I =>
-  Boolean(object && !isRpcData(object))
+export const isIndexedData = <R extends Codec, I extends IndexedData>(
+  object?: R | I,
+): object is I => Boolean(object && !isRpcData(object))
