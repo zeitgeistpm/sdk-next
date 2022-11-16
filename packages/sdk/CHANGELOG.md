@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.4.0
+
+### Minor Changes
+
+- 6fd4d40: Project end time stamp in all cases where its possible and return NA when not like when the end is set as block and getting timestamp and block from chain isnt possible.
+
 ## 2.3.3
 
 ### Patch Changes
