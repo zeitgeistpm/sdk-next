@@ -7748,7 +7748,7 @@ __metadata:
     "@zeitgeistpm/augment-api": ^2.2.2
     "@zeitgeistpm/indexer": ^2.3.1
     "@zeitgeistpm/rpc": ^2.2.1
-    "@zeitgeistpm/utility": ^2.3.1
+    "@zeitgeistpm/utility": ^2.3.2
     "@zeitgeistpm/web3.storage": ^2.2.1
     cids: ^1.1.9
     decimal.js: ^10.4.2
@@ -7764,7 +7764,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.3.1, @zeitgeistpm/utility@workspace:packages/utility":
+"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.3.1, @zeitgeistpm/utility@^2.3.2, @zeitgeistpm/utility@workspace:packages/utility":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/utility@workspace:packages/utility"
   dependencies:

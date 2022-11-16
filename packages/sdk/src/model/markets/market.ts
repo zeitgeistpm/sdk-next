@@ -469,9 +469,9 @@ export const hasPool = async <C extends Context<MS>, MS extends MetadataStorage>
  * @note If market has period as timestamps will use that directly and if its set to a block end date
  * it will project a approximate end timestamp based on the on chain current block and block time.
  *
- * @param context RpcContext
- * @param market AugmentedRpcMarket
- * @returns Promise<number>
+ * @param context Context<MS>
+ * @param market Market<C, MS>
+ * @returns Promise<number | NA>
  */
 export const projectEndTimestamp = async <
   C extends Context<MS>,
