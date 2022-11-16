@@ -259,10 +259,9 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   })
 
   market.saturate = Te.from(async () => {
-    const [metadata, poolId, end] = await Promise.all([
+    const [metadata, poolId] = await Promise.all([
       market.fetchMetadata(),
       context.api.query.marketCommons.marketPool(id),
-      projectEndTimestamp<C, MS>(context.api, market),
     ])
 
     const base: IndexedBase = {
@@ -476,7 +475,7 @@ export const projectEndTimestamp = async <
   MS extends MetadataStorage,
 >(
   api: ApiPromise,
-  market: RpcMarket<C, MS>,
+  market: Market<C, MS>,
 ): Promise<number> => {
   if (market.period.isTimestamp) {
     return market.period.asTimestamp.end.toNumber()
