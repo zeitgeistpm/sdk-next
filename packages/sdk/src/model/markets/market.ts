@@ -21,11 +21,14 @@ import {
 } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
-import { Data, isIndexedData } from '../../primitives'
+import { Data, isIndexedData, isRpcData } from '../../primitives'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
 import { ReportOutcomeParams } from './outcome'
 import { isNone } from '@zeitgeistpm/utility/dist/option'
+import { now } from '../time/functions/now'
+import { blockDate, ChainTime, dateBlock } from '@zeitgeistpm/utility/dist/time'
+import { NA } from 'primitives/na'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -471,20 +474,29 @@ export const hasPool = async <C extends Context<MS>, MS extends MetadataStorage>
  * @returns Promise<number>
  */
 export const projectEndTimestamp = async <
-  C extends RpcContext<MS>,
+  C extends Context<MS>,
   MS extends MetadataStorage,
 >(
-  api: ApiPromise,
+  ctx: C,
   market: Market<C, MS>,
-): Promise<number> => {
-  if (market.period.isTimestamp) {
-    return market.period.asTimestamp.end.toNumber()
+): Promise<number | NA> => {
+  const chainTime = isRpcContext(ctx) ? await now(ctx) : null
+
+  if (isRpcData(market)) {
+    if (market.period.isTimestamp) {
+      return market.period.asTimestamp.end.toNumber()
+    } else if (chainTime) {
+      const endBlock = Number(market.period.asBlock[1].toHuman())
+      return blockDate(chainTime, endBlock).getTime()
+    }
   } else {
-    const endBlock = Number(market.period.asBlock[1].toHuman())
-    const now = +(await api.query.timestamp.now()).toString()
-    const head = await api.rpc.chain.getHeader()
-    const blockNum = head.number.toNumber()
-    const diffInMs = +api.consts.timestamp.minimumPeriod.toString() * (endBlock - blockNum)
-    return Number(now + diffInMs)
+    if (market.period.timestamp) {
+      return Number(market.period.timestamp[1])
+    } else if (chainTime) {
+      const endBlock = (market.period.block as Array<number>)[1]
+      return blockDate(chainTime, endBlock).getTime()
+    }
   }
+
+  return NA
 }
