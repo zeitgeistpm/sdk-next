@@ -15,3 +15,11 @@ export const NA: NA = Symbol('Not Available')
  * @returns value is NA
  */
 export const isNA = (value: unknown): value is NA => Boolean(value) && value === NA
+
+/**
+ * Typeguard to check if a value is available
+ *
+ * @param value T | NA
+ * @returns value is T
+ */
+export const isAvailable = <T>(value: T | NA): value is T => value !== NA
