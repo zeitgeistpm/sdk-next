@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.4.1
+
+### Patch Changes
+
+- f101815: Fix asMs not imported.
+- Updated dependencies [f101815]
+  - @zeitgeistpm/utility@2.3.2
+
 ## 2.4.0
 
 ### Minor Changes
