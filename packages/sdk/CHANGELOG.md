@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.4.4
+
+### Patch Changes
+
+- 0b50dfd: Fix missing method
+
 ## 2.4.3
 
 ### Patch Changes
