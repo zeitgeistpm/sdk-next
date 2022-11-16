@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.3.3
+
+### Patch Changes
+
+- a2e4810: projectEndTimestamp for market also accepts indexed market
+
 ## 2.3.2
 
 ### Patch Changes
