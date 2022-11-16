@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.4.2
+
+### Patch Changes
+
+- fbabbf9: Fix isNa to handle undefined values.
+
 ## 2.4.1
 
 ### Patch Changes
