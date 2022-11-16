@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.4.3
+
+### Patch Changes
+
+- 0660cc9: add isAvailable typeugard utility.
+- Updated dependencies [0660cc9]
+  - @zeitgeistpm/utility@2.3.3
+
 ## 2.4.2
 
 ### Patch Changes

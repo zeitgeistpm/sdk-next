@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.3.3
+
+### Patch Changes
+
+- 0660cc9: add isAvailable typeugard utility.
+
 ## 2.3.2
 
 ### Patch Changes
