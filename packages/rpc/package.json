@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/rpc",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "publishConfig": {
     "access": "public"
   },
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@zeitgeistpm/augment-api": "^2.2.2",
-    "@zeitgeistpm/utility": "^2.3.5"
+    "@zeitgeistpm/utility": "^2.3.6"
   },
   "peerDependencies": {
     "@polkadot/api": "*",

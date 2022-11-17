@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.2.3
+
+### Patch Changes
+
+- 98fe20f: Fix transaction hook type
+- Updated dependencies [98fe20f]
+  - @zeitgeistpm/utility@2.3.6
+
 ## 2.2.2
 
 ### Patch Changes

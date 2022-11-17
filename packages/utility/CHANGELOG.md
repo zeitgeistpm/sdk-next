@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.3.6
+
+### Patch Changes
+
+- 98fe20f: Fix transaction hook type
+
 ## 2.3.5
 
 ### Patch Changes
