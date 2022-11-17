@@ -1,7 +1,18 @@
 import type RpcError from '@polkadot/rpc-provider/coder/error'
+import { SignedBlock } from '@polkadot/types/interfaces'
 import type { RegistryError } from '@polkadot/types/types'
 
-export type TransactionError = RpcError | RegistryError | RetractedError | UnknownDispatchError
+export type TransactionHooks = {
+  hooks?: {
+    inBlock?: (block: SignedBlock) => void
+  }
+}
+
+export type TransactionError =
+  | RpcError
+  | RegistryError
+  | RetractedError
+  | UnknownDispatchError
 
 export class RetractedError extends Error {
   constructor(message: string) {

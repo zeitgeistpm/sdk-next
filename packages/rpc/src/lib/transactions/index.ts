@@ -4,13 +4,12 @@ import { SignedBlock } from '@polkadot/types/interfaces'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { isExtSigner, KeyringPairOrExtSigner } from '../keyring'
-import { RetractedError, TransactionError, UnknownDispatchError } from './types'
-
-export type TransactionHooks = {
-  hooks?: {
-    inBlock?: (block: SignedBlock) => void
-  }
-}
+import {
+  RetractedError,
+  TransactionError,
+  TransactionHooks,
+  UnknownDispatchError,
+} from './types'
 
 export const signAndSend: Te.TaskEither<
   TransactionError,
