@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.4.6
+
+### Patch Changes
+
+- e5a8740: add asEither method for AEither for more fine error grained handling
+- Updated dependencies [e5a8740]
+  - @zeitgeistpm/utility@2.3.4
+
 ## 2.4.5
 
 ### Patch Changes
