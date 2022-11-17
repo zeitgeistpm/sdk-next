@@ -1,4 +1,3 @@
-import { ApiPromise } from '@polkadot/api'
 import { u128 } from '@polkadot/types'
 import {
   ZeitgeistPrimitivesMarket,
@@ -9,9 +8,11 @@ import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import { KeyringPairOrExtSigner, signAndSend, TransactionError } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
-import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
+import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import { blockDate } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
+import { NA } from 'primitives/na'
 import {
   Context,
   FullContext,
@@ -22,13 +23,10 @@ import {
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
 import { Data, isIndexedData, isRpcData } from '../../primitives'
+import { now } from '../time/functions/now'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
 import { ReportOutcomeParams } from './outcome'
-import { isNone } from '@zeitgeistpm/utility/dist/option'
-import { now } from '../time/functions/now'
-import { blockDate, ChainTime, dateBlock } from '@zeitgeistpm/utility/dist/time'
-import { NA } from 'primitives/na'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
