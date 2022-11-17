@@ -453,7 +453,10 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
  * @param market Market<C, MS>
  * @returns Promise<boolean>
  */
-export const hasPool = async <C extends Context<MS>, MS extends MetadataStorage>(
+export const hasPool = async <
+  C extends Context<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+>(
   market: Market<C, MS>,
 ): Promise<boolean> => {
   if (isIndexedData(market)) {
