@@ -7,7 +7,7 @@ import {
 import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
-import { KeyringPairOrExtSigner, signAndSend } from '@zeitgeistpm/rpc'
+import { KeyringPairOrExtSigner, signAndSend, TransactionError } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
@@ -96,7 +96,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, RpcPool>>
    */
   deploySwapPool: Te.TaskEither<
-    Error,
+    TransactionError,
     RpcPool,
     [params: Omit<PoolDeploymentParams, 'marketId'>]
   >
@@ -107,7 +107,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, RpcPool>>
    */
   deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
-    Error,
+    TransactionError,
     RpcPool,
     [params: Omit<PoolDeploymentParams, 'marketId'>]
   >
@@ -118,7 +118,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   buyCompleteSet: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<ExchangeFullSetParams, 'marketId'>]
   >
@@ -129,7 +129,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   sellCompleteSet: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<ExchangeFullSetParams, 'marketId'>]
   >
@@ -147,7 +147,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   disputeOutcome: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<ReportOutcomeParams, 'marketId'>]
   >
@@ -158,7 +158,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   reportOutcome: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<ReportOutcomeParams, 'marketId'>]
   >
@@ -173,7 +173,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   adminDestroyMarket: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [signer: KeyringPairOrExtSigner]
   >
@@ -185,7 +185,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   adminMoveMarketToClosed: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [signer: KeyringPairOrExtSigner]
   >
@@ -197,7 +197,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   adminMoveMarketToResolved: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [signer: KeyringPairOrExtSigner]
   >
@@ -218,7 +218,7 @@ export type MarketMethods = {
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   adminCleanUpPool: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<ReportOutcomeParams, 'marketId'>]
   >

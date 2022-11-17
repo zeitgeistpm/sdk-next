@@ -3,7 +3,7 @@ import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/typ
 import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
-import { KeyringPairOrExtSigner, signAndSend } from '@zeitgeistpm/rpc'
+import { KeyringPairOrExtSigner, signAndSend, TransactionError } from '@zeitgeistpm/rpc'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { Context, IndexerContext, RpcContext } from '../../context'
@@ -51,44 +51,52 @@ export type PoolMethods = {
    */
   accountId: Te.TaskEither<Error, string, []>
   swapExactAmountIn: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<SwapExactAmountInParams, 'poolId'>]
   >
   swapExactAmountOut: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<SwapExactAmountOutParams, 'poolId'>]
   >
-  join: Te.TaskEither<Error, ISubmittableResult, [params: Omit<PoolJoinParams, 'poolId'>]>
+  join: Te.TaskEither<
+    TransactionError,
+    ISubmittableResult,
+    [params: Omit<PoolJoinParams, 'poolId'>]
+  >
   joinSubsidy: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<PoolJoinParams, 'poolId' | 'maxAssetsIn'>]
   >
   joinWithExactAssetAmount: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<PoolJoinWithExactAmountParams, 'poolId'>]
   >
   joinWithExactPoolAmount: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<PoolJoinWithExactPoolAmount, 'poolId'>]
   >
-  exit: Te.TaskEither<Error, ISubmittableResult, [params: Omit<PoolExitParams, 'poolId'>]>
+  exit: Te.TaskEither<
+    TransactionError,
+    ISubmittableResult,
+    [params: Omit<PoolExitParams, 'poolId'>]
+  >
   exitSubsidy: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<PoolExitSubsidyParams, 'poolId'>]
   >
   exitWithExactAssetAmount: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<PoolExitWithExactAssetAmountParams, 'poolId'>]
   >
   exitWithExactPoolAmount: Te.TaskEither<
-    Error,
+    TransactionError,
     ISubmittableResult,
     [params: Omit<PoolExitWithExactPoolAmountParams, 'poolId'>]
   >

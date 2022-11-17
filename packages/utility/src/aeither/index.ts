@@ -141,6 +141,12 @@ export type IAEither<L, R> = {
    * @returns IAEither<L, B>
    */
   bind: <B>(f: (a: R) => AEither<L, B>) => IAEither<L, B>
+  /**
+   * Return the raw either async.
+   *
+   * @returns Promise<E.IEither<L, R>>
+   */
+  asEither: () => Promise<E.IEither<L, R>>
 } & Promise<R>
 
 /**
@@ -164,6 +170,7 @@ export const aeither = <L, R>(either: AEither<L, R>): IAEither<L, R> => ({
   unleftOr: async or => unleftOr(or, either),
   map: <B>(f: (a: R) => B) => aeither<L, B>(map<L, R, B>(f, either)),
   bind: <B>(f: (a: R) => AEither<L, B>) => aeither(bind<L, R, B>(f, either)),
+  asEither: async () => E.either(await either),
   then(onResolve, onReject) {
     either.then(value => {
       if (E.isRight(value)) {
