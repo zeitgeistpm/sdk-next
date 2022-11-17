@@ -27,8 +27,9 @@ export const signAndSend: Te.TaskEither<
 
     const callback = async (result: ISubmittableResult) => {
       if (result.status.isRetracted) {
-        reject(new RetractedError('Transaction retracted'))
-        unsub()
+        // TODO: find out if finalized callback will still be called. or if seperate error handling is needed.
+        // https://substrate.stackexchange.com/questions/5961/does-callback-get-called-when-extrinsic-is-in-block-finalized-when-the-transacti
+        hooks?.retracted?.()
       }
 
       if (result.dispatchError) {

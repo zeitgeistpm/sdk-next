@@ -5,6 +5,7 @@ import type { RegistryError } from '@polkadot/types/types'
 export type TransactionHooks = {
   hooks?: {
     inBlock?: (block: SignedBlock) => void
+    retracted?: () => void
   }
 }
 
@@ -26,4 +27,12 @@ export class UnknownDispatchError extends Error {
     super(message)
     Object.setPrototypeOf(this, UnknownDispatchError.prototype)
   }
+}
+
+export const transactionErrorToString = (error: TransactionError) => {
+  return 'docs' in error
+    ? error.docs.join('. ')
+    : 'message' in error
+    ? error.message
+    : 'Unable to decode error.'
 }
