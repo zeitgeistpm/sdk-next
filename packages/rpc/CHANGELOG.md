@@ -1,5 +1,11 @@
 # @zeitgeistpm/rpc
 
+## 2.2.4
+
+### Patch Changes
+
+- c006781: added transactionErrorToString method.
+
 ## 2.2.3
 
 ### Patch Changes

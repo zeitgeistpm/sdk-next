@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.4.9
+
+### Patch Changes
+
+- c006781: added transactionErrorToString method.
+- Updated dependencies [c006781]
+  - @zeitgeistpm/rpc@2.2.4
+
 ## 2.4.8
 
 ### Patch Changes
