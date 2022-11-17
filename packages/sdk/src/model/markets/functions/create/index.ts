@@ -30,7 +30,12 @@ export const create = async <C extends RpcContext<MS>, MS extends MetadataStorag
   params: CreateMarketParams<C, MS>,
 ): Promise<CreateMarketResult<C, MS>> => {
   const { tx, rollbackMetadata } = await transaction(context, params)
-  const response = signAndSend(context.api, tx, params.signer)
+  const response = signAndSend({
+    api: context.api,
+    tx,
+    signer: params.signer,
+    hooks: params.hooks,
+  })
 
   const submittableResult = await response.unrightOr(error => {
     rollbackMetadata()

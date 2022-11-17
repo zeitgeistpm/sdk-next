@@ -3,7 +3,12 @@ import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/typ
 import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
-import { KeyringPairOrExtSigner, signAndSend, TransactionError } from '@zeitgeistpm/rpc'
+import {
+  KeyringPairOrExtSigner,
+  signAndSend,
+  TransactionError,
+  TransactionHooks,
+} from '@zeitgeistpm/rpc'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { Context, IndexerContext, RpcContext } from '../../context'
@@ -53,52 +58,52 @@ export type PoolMethods = {
   swapExactAmountIn: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<SwapExactAmountInParams, 'poolId'>]
+    [params: Omit<SwapExactAmountInParams, 'poolId'> & TransactionHooks]
   >
   swapExactAmountOut: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<SwapExactAmountOutParams, 'poolId'>]
+    [params: Omit<SwapExactAmountOutParams, 'poolId'> & TransactionHooks]
   >
   join: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<PoolJoinParams, 'poolId'>]
+    [params: Omit<PoolJoinParams, 'poolId'> & TransactionHooks]
   >
   joinSubsidy: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<PoolJoinParams, 'poolId' | 'maxAssetsIn'>]
+    [params: Omit<PoolJoinParams, 'poolId' | 'maxAssetsIn'> & TransactionHooks]
   >
   joinWithExactAssetAmount: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<PoolJoinWithExactAmountParams, 'poolId'>]
+    [params: Omit<PoolJoinWithExactAmountParams, 'poolId'> & TransactionHooks]
   >
   joinWithExactPoolAmount: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<PoolJoinWithExactPoolAmount, 'poolId'>]
+    [params: Omit<PoolJoinWithExactPoolAmount, 'poolId'> & TransactionHooks]
   >
   exit: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<PoolExitParams, 'poolId'>]
+    [params: Omit<PoolExitParams, 'poolId'> & TransactionHooks]
   >
   exitSubsidy: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<PoolExitSubsidyParams, 'poolId'>]
+    [params: Omit<PoolExitSubsidyParams, 'poolId'> & TransactionHooks]
   >
   exitWithExactAssetAmount: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<PoolExitWithExactAssetAmountParams, 'poolId'>]
+    [params: Omit<PoolExitWithExactAssetAmountParams, 'poolId'> & TransactionHooks]
   >
   exitWithExactPoolAmount: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<PoolExitWithExactPoolAmountParams, 'poolId'>]
+    [params: Omit<PoolExitWithExactPoolAmountParams, 'poolId'> & TransactionHooks]
   >
 }
 
@@ -216,9 +221,9 @@ export const rpcPool = (
   )
 
   pool.swapExactAmountIn = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.swapExactAmountIn(
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.swapExactAmountIn(
         poolId,
         params.assetIn,
         params.assetAmountIn,
@@ -226,14 +231,15 @@ export const rpcPool = (
         params.minAssetAmountOut ?? null,
         params.maxPrice ?? null,
       ),
-      params.signer,
-    ),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   pool.swapExactAmountOut = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.swapExactAmountOut(
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.swapExactAmountOut(
         poolId,
         params.assetIn,
         params.maxAssetAmountIn ?? null,
@@ -241,92 +247,101 @@ export const rpcPool = (
         params.assetAmountOut,
         params.maxPrice ?? null,
       ),
-      params.signer,
-    ),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   pool.join = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.poolJoin(poolId, params.poolAmount, params.maxAssetsIn),
-      params.signer,
-    ),
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.poolJoin(poolId, params.poolAmount, params.maxAssetsIn),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   pool.joinSubsidy = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.poolJoinSubsidy(poolId, params.poolAmount),
-      params.signer,
-    ),
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.poolJoinSubsidy(poolId, params.poolAmount),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   pool.joinWithExactAssetAmount = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.poolJoinWithExactAssetAmount(
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.poolJoinWithExactAssetAmount(
         poolId,
         params.assetIn,
         params.assetAmount,
         params.minPoolAmount,
       ),
-      params.signer,
-    ),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   pool.joinWithExactPoolAmount = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.poolJoinWithExactPoolAmount(
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.poolJoinWithExactPoolAmount(
         poolId,
         params.asset,
         params.poolAmount,
         params.maxAssetAmount,
       ),
-      params.signer,
-    ),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   pool.exit = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.poolExit(poolId, params.poolAmount, params.minAssetsOut),
-      params.signer,
-    ),
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.poolExit(poolId, params.poolAmount, params.minAssetsOut),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   pool.exitSubsidy = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.poolExitSubsidy(poolId, params.amount),
-      params.signer,
-    ),
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.poolExitSubsidy(poolId, params.amount),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   pool.exitWithExactAssetAmount = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.poolExitWithExactAssetAmount(
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.poolExitWithExactAssetAmount(
         poolId,
         params.asset,
         params.assetAmount,
         params.maxPoolAmount,
       ),
-      params.signer,
-    ),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   pool.exitWithExactPoolAmount = Te.from(async params =>
-    signAndSend(
-      ctx.api,
-      ctx.api.tx.swaps.poolExitWithExactPoolAmount(
+    signAndSend({
+      api: ctx.api,
+      tx: ctx.api.tx.swaps.poolExitWithExactPoolAmount(
         poolId,
         params.asset,
         params.poolAmount,
         params.minAssetAmount,
       ),
-      params.signer,
-    ),
+      signer: params.signer,
+      hooks: params.hooks,
+    }),
   )
 
   return pool

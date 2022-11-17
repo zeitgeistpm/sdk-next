@@ -1,21 +1,29 @@
 import type { ApiPromise } from '@polkadot/api'
 import type { SubmittableExtrinsic } from '@polkadot/api/types'
+import { SignedBlock } from '@polkadot/types/interfaces'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { isExtSigner, KeyringPairOrExtSigner } from '../keyring'
 import { RetractedError, TransactionError, UnknownDispatchError } from './types'
 
+export type TransactionHooks = {
+  hooks?: {
+    inBlock?: (block: SignedBlock) => void
+  }
+}
+
 export const signAndSend: Te.TaskEither<
   TransactionError,
   ISubmittableResult,
   [
-    api: ApiPromise,
-    tx: SubmittableExtrinsic<'promise', ISubmittableResult>,
-    signer: KeyringPairOrExtSigner,
+    {
+      api: ApiPromise
+      tx: SubmittableExtrinsic<'promise', ISubmittableResult>
+      signer: KeyringPairOrExtSigner
+    } & TransactionHooks,
   ]
-> = Te.from(async (api, transaction, signer) => {
+> = Te.from(async ({ api, tx, signer, hooks }) => {
   return new Promise(async (resolve, reject) => {
-    let block: number
     let unsub: () => void
 
     const callback = async (result: ISubmittableResult) => {
@@ -40,7 +48,7 @@ export const signAndSend: Te.TaskEither<
 
       if (result.status.isInBlock) {
         const signedBlock = await api.rpc.chain.getBlock(result.status.asInBlock)
-        block = signedBlock.block.header.number.toNumber()
+        hooks?.inBlock?.(signedBlock)
       }
 
       if (result.status.isFinalized) {
@@ -50,8 +58,8 @@ export const signAndSend: Te.TaskEither<
 
     try {
       unsub = isExtSigner(signer)
-        ? await transaction.signAndSend(signer.address, { signer: signer.signer }, callback)
-        : await transaction.signAndSend(signer, callback)
+        ? await tx.signAndSend(signer.address, { signer: signer.signer }, callback)
+        : await tx.signAndSend(signer, callback)
     } catch (error) {
       reject(error)
     }

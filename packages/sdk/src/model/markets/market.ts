@@ -7,6 +7,7 @@ import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import { KeyringPairOrExtSigner, signAndSend, TransactionError } from '@zeitgeistpm/rpc'
+import { TransactionHooks } from '@zeitgeistpm/rpc/src/lib/transactions'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
@@ -96,7 +97,7 @@ export type MarketMethods = {
   deploySwapPool: Te.TaskEither<
     TransactionError,
     RpcPool,
-    [params: Omit<PoolDeploymentParams, 'marketId'>]
+    [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
   >
   /**
    * Deploy a swap pool for the market and add liquidity.
@@ -107,7 +108,7 @@ export type MarketMethods = {
   deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
     TransactionError,
     RpcPool,
-    [params: Omit<PoolDeploymentParams, 'marketId'>]
+    [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
   >
   /**
    * Buy a full set of market assets.
@@ -118,7 +119,7 @@ export type MarketMethods = {
   buyCompleteSet: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<ExchangeFullSetParams, 'marketId'>]
+    [params: Omit<ExchangeFullSetParams, 'marketId'> & TransactionHooks]
   >
   /**
    * Sell a full set of market assets.
@@ -129,15 +130,19 @@ export type MarketMethods = {
   sellCompleteSet: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<ExchangeFullSetParams, 'marketId'>]
+    [params: Omit<ExchangeFullSetParams, 'marketId'> & TransactionHooks]
   >
   /**
    * Redeem the shares for a market.
    *
-   * @param params { signer: KeyringPairOrExtSigner }
+   * @param params { signer: KeyringPairOrExtSigner } & TransactionHooks
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
-  redeemShares: Te.TaskEither<Error, ISubmittableResult, [signer: KeyringPairOrExtSigner]>
+  redeemShares: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [params: { signer: KeyringPairOrExtSigner } & TransactionHooks]
+  >
   /**
    * Dispute the current market outcome with a proposed new outcome.
    *
@@ -147,7 +152,7 @@ export type MarketMethods = {
   disputeOutcome: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<ReportOutcomeParams, 'marketId'>]
+    [params: Omit<ReportOutcomeParams, 'marketId'> & TransactionHooks]
   >
   /**
    * Report the outcome of a market. Can only be called by the markets oracle address.
@@ -158,7 +163,7 @@ export type MarketMethods = {
   reportOutcome: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<ReportOutcomeParams, 'marketId'>]
+    [params: Omit<ReportOutcomeParams, 'marketId'> & TransactionHooks]
   >
   /**
    * Destroy a market, including its outcome assets, market account and pool account.
@@ -167,47 +172,51 @@ export type MarketMethods = {
    * exception. Can currently only be used for destroying CPMM markets.
    *
    * @origin DestroyOrigin
-   * @param signer KeyringPairOrExtSigner
+   * @param params {signer: KeyringPairOrExtSigner}
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   adminDestroyMarket: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [signer: KeyringPairOrExtSigner]
+    [params: { signer: KeyringPairOrExtSigner } & TransactionHooks]
   >
   /**
    * Immediately move an open market to closed.
    *
    * @origin CloseOrigin
-   * @param signer KeyringPairOrExtSigner
+   * @param signer {signer: KeyringPairOrExtSigner}
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   adminMoveMarketToClosed: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [signer: KeyringPairOrExtSigner]
+    [params: { signer: KeyringPairOrExtSigner } & TransactionHooks]
   >
   /**
    * Immediately move a reported or disputed market to resolved.
    *
    * @origin ResolveOrigin
-   * @param signer KeyringPairOrExtSigner
+   * @param signer {signer: KeyringPairOrExtSigner}
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
   adminMoveMarketToResolved: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [signer: KeyringPairOrExtSigner]
+    [params: { signer: KeyringPairOrExtSigner } & TransactionHooks]
   >
   /**
    * Approves a market that is waiting for approval from the
    * advisory committee.
    *
    * @origin ApproveOrigin
-   * @param signer KeyringPairOrExtSigner
+   * @param signer {signer: KeyringPairOrExtSigner}
    * @returns Promise<EitherInterface<Error, ISubmittableResult>>
    */
-  approveMarket: Te.TaskEither<Error, ISubmittableResult, [signer: KeyringPairOrExtSigner]>
+  approveMarket: Te.TaskEither<
+    Error,
+    ISubmittableResult,
+    [params: { signer: KeyringPairOrExtSigner } & TransactionHooks]
+  >
   /**
    * Clean up the pool of a resolved market.
    *
@@ -218,7 +227,7 @@ export type MarketMethods = {
   adminCleanUpPool: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: Omit<ReportOutcomeParams, 'marketId'>]
+    [params: Omit<ReportOutcomeParams, 'marketId'> & TransactionHooks]
   >
 }
 
@@ -326,7 +335,12 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         params.weights,
       )
 
-      const extrinsic = await signAndSend(context.api, tx, params.signer)
+      const extrinsic = await signAndSend({
+        api: context.api,
+        tx,
+        signer: params.signer,
+        hooks: params.hooks,
+      })
 
       const pool = extractPoolCreationEventForMarket(
         context,
@@ -349,7 +363,12 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         params.weights,
       )
 
-      const extrinsic = await signAndSend(context.api, tx, params.signer)
+      const extrinsic = await signAndSend({
+        api: context.api,
+        tx,
+        signer: params.signer,
+        hooks: params.hooks,
+      })
 
       const pool = extractPoolCreationEventForMarket(
         context,
@@ -361,83 +380,95 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
     })
 
     marketWithMethods.buyCompleteSet = Te.from(async params => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.predictionMarkets.buyCompleteSet(market.marketId, params.amount),
-        params.signer,
-      )
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.predictionMarkets.buyCompleteSet(market.marketId, params.amount),
+        signer: params.signer,
+        hooks: params.hooks,
+      })
     })
 
     marketWithMethods.sellCompleteSet = Te.from(async params => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.predictionMarkets.sellCompleteSet(market.marketId, params.amount),
-        params.signer,
-      )
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.predictionMarkets.sellCompleteSet(
+          market.marketId,
+          params.amount,
+        ),
+        signer: params.signer,
+      })
     })
 
-    marketWithMethods.redeemShares = Te.from(async signer => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.predictionMarkets.redeemShares(market.marketId),
-        signer,
-      )
+    marketWithMethods.redeemShares = Te.from(async params => {
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.predictionMarkets.redeemShares(market.marketId),
+        signer: params.signer,
+        hooks: params.hooks,
+      })
     })
 
     marketWithMethods.disputeOutcome = Te.from(async params => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.predictionMarkets.dispute(market.marketId, params.outcome),
-        params.signer,
-      )
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.predictionMarkets.dispute(market.marketId, params.outcome),
+        signer: params.signer,
+        hooks: params.hooks,
+      })
     })
 
     marketWithMethods.reportOutcome = Te.from(async params => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.predictionMarkets.report(market.marketId, params.outcome),
-        params.signer,
-      )
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.predictionMarkets.report(market.marketId, params.outcome),
+        signer: params.signer,
+        hooks: params.hooks,
+      })
     })
 
-    marketWithMethods.adminDestroyMarket = Te.from(async signer => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.predictionMarkets.adminDestroyMarket(market.marketId),
-        signer,
-      )
+    marketWithMethods.adminDestroyMarket = Te.from(async params => {
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.predictionMarkets.adminDestroyMarket(market.marketId),
+        signer: params.signer,
+        hooks: params.hooks,
+      })
     })
 
-    marketWithMethods.adminMoveMarketToClosed = Te.from(async signer => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.predictionMarkets.adminMoveMarketToClosed(market.marketId),
-        signer,
-      )
+    marketWithMethods.adminMoveMarketToClosed = Te.from(async params => {
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.predictionMarkets.adminMoveMarketToClosed(market.marketId),
+        signer: params.signer,
+        hooks: params.hooks,
+      })
     })
 
-    marketWithMethods.adminMoveMarketToResolved = Te.from(async signer => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.predictionMarkets.adminMoveMarketToResolved(market.marketId),
-        signer,
-      )
+    marketWithMethods.adminMoveMarketToResolved = Te.from(async params => {
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.predictionMarkets.adminMoveMarketToResolved(market.marketId),
+        signer: params.signer,
+        hooks: params.hooks,
+      })
     })
 
-    marketWithMethods.approveMarket = Te.from(async signer => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.predictionMarkets.approveMarket(market.marketId),
-        signer,
-      )
+    marketWithMethods.approveMarket = Te.from(async params => {
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.predictionMarkets.approveMarket(market.marketId),
+        signer: params.signer,
+        hooks: params.hooks,
+      })
     })
 
     marketWithMethods.adminCleanUpPool = Te.from(async params => {
-      return await signAndSend(
-        context.api,
-        context.api.tx.swaps.adminCleanUpPool(market.marketId, params.outcome),
-        params.signer,
-      )
+      return await signAndSend({
+        api: context.api,
+        tx: context.api.tx.swaps.adminCleanUpPool(market.marketId, params.outcome),
+        signer: params.signer,
+        hooks: params.hooks,
+      })
     })
 
     return marketWithMethods

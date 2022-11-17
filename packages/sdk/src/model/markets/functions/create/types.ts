@@ -4,7 +4,7 @@ import type {
   ZeitgeistPrimitivesPoolScoringRule,
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
-import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
+import type { KeyringPairOrExtSigner, TransactionHooks } from '@zeitgeistpm/rpc'
 import type { IEither } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { RpcContext } from '../../../../context'
@@ -15,9 +15,11 @@ import { Market, RpcMarket } from '../../market'
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
  */
-export type CreateMarketParams<C extends RpcContext<MS>, MS extends MetadataStorage> =
+export type CreateMarketParams<C extends RpcContext<MS>, MS extends MetadataStorage> = (
   | CreateStandaloneMarketParams<C, MS>
   | CreateMarketWithPoolParams<C, MS>
+) &
+  TransactionHooks
 
 /**
  * Base parameters for creating a market.
