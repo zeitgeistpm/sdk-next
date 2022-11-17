@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.4.5
+
+### Patch Changes
+
+- 93a81ef: Default MS generic for hasPool
+
 ## 2.4.4
 
 ### Patch Changes
