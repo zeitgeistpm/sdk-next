@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.2.2
+
+### Patch Changes
+
+- bfde4af: Add transaction hooks to transaction methods to hook into for example when the transaction is in block.
+- Updated dependencies [bfde4af]
+  - @zeitgeistpm/utility@2.3.5
+
 ## 2.2.1
 
 ### Patch Changes
