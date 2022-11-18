@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.4.11
+
+### Patch Changes
+
+- d244728: Fix hasMarketMethods generic context type to wider type.
+
 ## 2.4.10
 
 ### Patch Changes
