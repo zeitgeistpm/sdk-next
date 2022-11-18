@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.4.12
+
+### Patch Changes
+
+- 03d1351: Add retracted hook to transaction calls.
+- Updated dependencies [03d1351]
+  - @zeitgeistpm/rpc@2.2.5
+
 ## 2.4.11
 
 ### Patch Changes
