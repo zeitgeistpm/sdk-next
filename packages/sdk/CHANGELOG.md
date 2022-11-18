@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.4.10
+
+### Patch Changes
+
+- b508fe2: Add method hasMarketMethods to Market. And fix method params being any to correct strict typing
+
 ## 2.4.9
 
 ### Patch Changes
