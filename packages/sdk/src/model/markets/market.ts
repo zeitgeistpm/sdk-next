@@ -7,7 +7,7 @@ import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import { KeyringPairOrExtSigner, signAndSend, TransactionError } from '@zeitgeistpm/rpc'
-import { TransactionHooks } from '@zeitgeistpm/rpc/src/lib/transactions'
+import { TransactionHooks } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
@@ -230,6 +230,19 @@ export type MarketMethods = {
     [params: Omit<ReportOutcomeParams, 'marketId'> & TransactionHooks]
   >
 }
+
+/**
+ * Typeguard to check if market has associated marketmethods.
+ *
+ * @param market Market<C, MS>
+ * @returns market is Market<C, MS> & MarketMethods
+ */
+export const hasMarketMethods = <
+  C extends Context<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+>(
+  market: Market<C, MS>,
+): market is Market<C, MS> & MarketMethods => 'deploySwapPool' in market
 
 /**
  * The base type of indexed data that also can be infered from the rpc data.

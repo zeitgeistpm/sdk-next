@@ -1,12 +1,28 @@
 /**
  * Type representing values that are not available.
  */
-export type NA = symbol
+export type NA = {
+  __type: typeof sym
+  reason: string
+}
+
+/**
+ * Create a NA value.
+ *
+ * @param reason string
+ * @returns NA
+ */
+export const na = (reason: string): NA => ({
+  __type: sym,
+  reason,
+})
+
+const sym: unique symbol = Symbol()
 
 /**
  * Const symbold representing a not available value.
  */
-export const NA: NA = Symbol('Not Available')
+export const NA: NA = na('Not available.')
 
 /**
  * Typeguard for NA values.
