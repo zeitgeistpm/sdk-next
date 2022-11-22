@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.5.1
+
+### Patch Changes
+
+- 09455b3: Option unwrap should return null | A.
+- Updated dependencies [09455b3]
+  - @zeitgeistpm/utility@2.3.7
+
 ## 2.5.0
 
 ### Minor Changes

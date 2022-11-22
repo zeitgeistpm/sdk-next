@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.3.7
+
+### Patch Changes
+
+- 09455b3: Option unwrap should return null | A.
+
 ## 2.3.6
 
 ### Patch Changes
