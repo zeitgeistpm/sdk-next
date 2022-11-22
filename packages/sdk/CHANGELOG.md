@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.5.0
+
+### Minor Changes
+
+- 2cd4993: Get functions return IOption instead of value | null.
+
 ## 2.4.12
 
 ### Patch Changes
