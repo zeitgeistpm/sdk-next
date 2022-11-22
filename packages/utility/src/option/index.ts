@@ -37,7 +37,7 @@ export const bind = <A, B>(f: (a: A) => Option<B>, option: Option<A>): Option<B>
 export const from = <A>(value: A | null): IOption<A> =>
   option(value ? some(value) : (none() as Option<A>))
 
-export const unwrap = <A>(option: Option<A>): A | null =>
+export const unwrap = <A>(option: Option<A>): null | A =>
   isSome(option) ? option.value : null
 
 export const unwrapOr = <A>(or: OrHandler<A>, option: Option<A>): A => {
@@ -47,7 +47,7 @@ export const unwrapOr = <A>(or: OrHandler<A>, option: Option<A>): A => {
 }
 
 export type IOption<A> = Option<A> & {
-  unwrap: () => A | null
+  unwrap: () => null | A
   unwrapOr: (or: OrHandler<A>) => A
   map: <B>(f: (a: A) => B) => IOption<B>
   bind: <B>(f: (a: A) => Option<B>) => IOption<B>
