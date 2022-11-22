@@ -1,10 +1,12 @@
 import { Observable, of } from 'rxjs'
+import * as O from '@zeitgeistpm/utility/dist/option'
 import { switchMap } from 'rxjs/operators'
 import {
   Context,
   IndexerContext,
   isFullContext,
   isIndexerContext,
+  isRpcContext,
   RpcContext,
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
@@ -23,13 +25,13 @@ import { isMarketIdQuery, PoolGetQuery } from '../../types'
 export const getPool = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
   query: PoolGetQuery,
-): Promise<Pool<C, MS> | null> => {
-  const data =
-    isFullContext<MS>(context) || isIndexerContext<MS>(context)
-      ? await getFromIndexer(context, query)
-      : await getFromRpc(context, query)
-
-  return data as Pool<C, MS>
+): Promise<O.IOption<Pool<C, MS>>> => {
+  if (isIndexerContext<MS>(context)) {
+    return getFromIndexer(context, query)
+  } else if (isRpcContext<MS>(context)) {
+    return getFromRpc<typeof context, MS>(context, query)
+  }
+  throw new Error('unrechable code detected.')
 }
 
 /**
@@ -39,7 +41,7 @@ export const getPool = async <C extends Context<MS>, MS extends MetadataStorage>
 const getFromIndexer = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: IndexerContext,
   query: PoolGetQuery,
-): Promise<IndexedPool<C, MS> | null> => {
+): Promise<O.IOption<Pool<C, MS>>> => {
   const {
     pools: [pool],
   } = await context.indexer.pools({
@@ -47,7 +49,10 @@ const getFromIndexer = async <C extends Context<MS>, MS extends MetadataStorage>
       ? { marketId_eq: query.marketId }
       : { poolId_eq: query.poolId },
   })
-  return pool as IndexedPool<C, MS> | null
+  if (pool) {
+    return O.option(O.some(pool as Pool<C, MS>))
+  }
+  return O.option(O.none())
 }
 
 /**
@@ -57,12 +62,12 @@ const getFromIndexer = async <C extends Context<MS>, MS extends MetadataStorage>
 const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: PoolGetQuery,
-): Promise<RpcPool | null> => {
+): Promise<O.IOption<Pool<C, MS>>> => {
   let poolId: number
 
   if (isMarketIdQuery(query)) {
     const mPoolId = await context.api.query.marketCommons.marketPool(query.marketId)
-    if (mPoolId.isNone) return null
+    if (mPoolId.isNone) O.option(O.none())
     poolId = mPoolId.unwrap().toNumber()
   } else {
     poolId = query.poolId
@@ -70,8 +75,9 @@ const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
   const marketPool = await context.api.query.swaps.pools(poolId)
 
-  if (marketPool.isNone) return null
-  return rpcPool(context, poolId, marketPool.unwrap())
+  if (marketPool.isNone) O.option(O.none())
+
+  return O.option(O.some(rpcPool(context, poolId, marketPool.unwrap()) as Pool<C, MS>))
 }
 
 /**

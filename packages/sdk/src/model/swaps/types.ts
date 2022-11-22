@@ -13,6 +13,7 @@ import {
 } from './functions/pool-prices/types'
 import { Pool } from './pool'
 import { PoolList } from './poolslist'
+import { IOption } from '@zeitgeistpm/utility/dist/option'
 
 export * from './functions/types'
 export * from './pool'
@@ -48,7 +49,7 @@ export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = {
      * @param query PoolGetQuery
      * @returns Promise<Pool<C, MS> | null>
      */
-    (query: PoolGetQuery) => Promise<Pool<C, MS> | null>,
+    (query: PoolGetQuery) => Promise<IOption<Pool<C, MS>>>,
     C extends RpcContext<MS>
       ? {
           /**
@@ -56,7 +57,7 @@ export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = {
            * @param query PoolGetQuery
            * @returns Observable<Pool<RpcContext>>
            */
-          $: (query: PoolGetQuery) => Observable<Pool<C, MS> | null>
+          $: (query: PoolGetQuery) => Observable<Pool<C, MS>>
         }
       : {}
   >

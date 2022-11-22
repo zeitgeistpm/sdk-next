@@ -1,3 +1,4 @@
+import { IOption } from '@zeitgeistpm/utility/dist/option'
 import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { Observable } from 'rxjs'
@@ -37,7 +38,7 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
      * @param query MarketGetQuery
      * @returns Promise<Market<C, MS> | null>
      */
-    (query: MarketGetQuery) => Promise<Market<C, MS> | null>,
+    (query: MarketGetQuery) => IOption<Market<C, MS>>,
     C extends RpcContext<MS>
       ? {
           /**

@@ -1,3 +1,4 @@
+import * as O from '@zeitgeistpm/utility/dist/option'
 import { Observable } from 'rxjs'
 import {
   Context,
@@ -23,14 +24,13 @@ import { MarketGetQuery } from './types'
 export const get = async <C extends Context<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
-): Promise<Market<C, MS> | null> => {
-  const data = isIndexerContext<MS>(context)
-    ? await getFromIndexer<typeof context, MS>(context, query)
-    : isRpcContext<MS>(context)
-    ? await getFromRpc<typeof context, MS>(context, query)
-    : null
-
-  return data
+): Promise<O.IOption<Market<C, MS>>> => {
+  if (isIndexerContext<MS>(context)) {
+    return getFromIndexer(context, query)
+  } else if (isRpcContext<MS>(context)) {
+    return getFromRpc<typeof context, MS>(context, query)
+  }
+  throw new Error('unrechable code detected.')
 }
 
 /**
@@ -40,14 +40,21 @@ export const get = async <C extends Context<MS>, MS extends MetadataStorage>(
 const getFromIndexer = async <C extends IndexerContext, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
-): Promise<Market<C, MS> | null> => {
+): Promise<O.IOption<Market<C, MS>>> => {
   const {
     markets: [market],
   } = await context.indexer.markets({ where: { marketId_eq: query.marketId } })
   if (market) {
-    return attachMarketMethods<typeof context, MS>(context, market as Market<C, MS>) as Market<C, MS>
+    return O.option(
+      O.some(
+        attachMarketMethods<typeof context, MS>(context, market as Market<C, MS>) as Market<
+          C,
+          MS
+        >,
+      ),
+    )
   }
-  return null
+  return O.option(O.none())
 }
 
 /**
@@ -57,10 +64,10 @@ const getFromIndexer = async <C extends IndexerContext, MS extends MetadataStora
 const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
-): Promise<Market<C, MS> | null> => {
+): Promise<O.IOption<Market<C, MS>>> => {
   const market = await context.api.query.marketCommons.markets(query.marketId)
-  if (!market.isSome) return null
-  return rpcMarket<C, MS>(context, query.marketId, market.unwrap())
+  if (!market.isSome) O.option(O.none())
+  return O.option(O.some(rpcMarket<C, MS>(context, query.marketId, market.unwrap())))
 }
 
 /**
