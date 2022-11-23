@@ -33,11 +33,11 @@ export type Sdk<C extends Context<MS>, MS extends MetadataStorage = MetadataStor
   /**
    * Force the sdk to use rpc if available.
    */
-  asRpc: C extends RpcContext<MS> ? () => Sdk<C, MS> : never
+  asRpc: C extends RpcContext<MS> ? () => Sdk<C, MS> | null : never
   /**
    * Force the sdk to use indexer if available.
    */
-  asIndexer: C extends IndexerContext ? () => Sdk<C, MS> : never
+  asIndexer: C extends IndexerContext ? () => Sdk<C, MS> | null : never
 }
 
 /**
@@ -57,19 +57,27 @@ export const sdk = <C extends Context<MS>, MS extends MetadataStorage = Metadata
   } as Sdk<C, MS>
 
   if (isRpcContext(context)) {
-    ;(instance as Sdk<RpcContext<MS>, MS>).asRpc = () =>
-      sdk<RpcContext<MS>, MS>({
-        api: context.api,
-        storage: context.storage,
-        provider: context.provider,
-      })
+    ;(instance as Sdk<RpcContext<MS>, MS>).asRpc = () => {
+      if (isRpcContext(context)) {
+        return sdk<RpcContext<MS>, MS>({
+          api: context.api,
+          storage: context.storage,
+          provider: context.provider,
+        })
+      }
+      return null
+    }
   }
 
   if (isIndexerContext(context)) {
-    ;(instance as Sdk<IndexerContext, MS>).asIndexer = () =>
-      sdk<IndexerContext, MS>({
-        indexer: context.indexer,
-      })
+    ;(instance as Sdk<IndexerContext, MS>).asIndexer = () => {
+      if (isIndexerContext(context)) {
+        return sdk<IndexerContext, MS>({
+          indexer: context.indexer,
+        })
+      }
+      return null
+    }
   }
 
   return instance
