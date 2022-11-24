@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.6.0
+
+### Minor Changes
+
+- f6c109d: Pool is now available on indexed market. `market.poolId` as been removed and function to `getPoolId` for market has been introduced.
+
+### Patch Changes
+
+- Updated dependencies [f6c109d]
+  - @zeitgeistpm/indexer@2.4.0
+  - @zeitgeistpm/utility@2.4.0
+
 ## 2.5.1
 
 ### Patch Changes

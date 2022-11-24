@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.4.0
+
+### Minor Changes
+
+- f6c109d: Pool is now available on indexed market. `market.poolId` as been removed and function to `getPoolId` for market has been introduced.
+
 ## 2.3.1
 
 ### Patch Changes
