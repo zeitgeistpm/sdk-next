@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.6.5
+
+### Patch Changes
+
+- 75f571d: Use lodash-es
+
 ## 2.6.4
 
 ### Patch Changes
