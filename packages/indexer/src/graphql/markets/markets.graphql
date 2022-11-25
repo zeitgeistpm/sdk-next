@@ -32,8 +32,7 @@ fragment FullMarket on Market {
   status
   scoringRule
   resolvedOutcome
-  poolId
-  #scalarType
+  scalarType
   marketType {
     categorical
     scalar
@@ -43,12 +42,12 @@ fragment FullMarket on Market {
     timestamp
   }
   report {
+    at
+    by
     outcome {
       categorical
       scalar
     }
-    at
-    by
   }
   disputeMechanism {
     Authorized: authorized
@@ -61,8 +60,11 @@ fragment FullMarket on Market {
     color
   }
   deadlines {
-      disputeDuration
-      gracePeriod
-      oracleDuration
-    }
+    disputeDuration
+    gracePeriod
+    oracleDuration
+  }
+  pool {
+    ...FullPool
+  }
 }

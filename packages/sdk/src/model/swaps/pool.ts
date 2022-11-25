@@ -10,10 +10,20 @@ import {
   TransactionHooks,
 } from '@zeitgeistpm/rpc'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
+import { mapget } from '@zeitgeistpm/utility/dist/btreemap'
+import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import Decimal from 'decimal.js'
 import { Context, IndexerContext, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
-import { AssetId } from '../../primitives'
+import {
+  AssetId,
+  getIndexOf,
+  getScalarIndexOf,
+  IOCategoricalAssetId,
+  IOScalarAssetId,
+  IOZtgAssetId,
+} from '../../primitives'
 import { Data } from '../../primitives/data'
 
 /**
@@ -347,10 +357,61 @@ export const rpcPool = (
   return pool
 }
 
+/**
+ * Get the weight of an asset in a pool by its AssetId.
+ *
+ * @param pool Pool<C, MS>,
+ * @param assetId AssetId
+ * @returns O.IOption<Decimal>
+ */
+export const getAssetWeight = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+  pool: Pool<C, MS>,
+  assetId: AssetId,
+): O.IOption<Decimal> => {
+  const weights = pool.weights.unwrapOr(null)
+
+  if (!weights) {
+    return O.option(O.none())
+  }
+
+  const entries = [...weights.entries()]
+  let weight: string | undefined
+
+  if (IOZtgAssetId.is(assetId)) {
+    weight = entries.find(([asset]) => asset.isZtg)?.[1]?.toString()
+  } else if (IOCategoricalAssetId.is(assetId)) {
+    weight = entries
+      .find(
+        ([asset]) =>
+          asset.isCategoricalOutcome &&
+          asset.asCategoricalOutcome[1].toNumber() === getIndexOf(assetId),
+      )
+      ?.toString()
+  } else if (IOScalarAssetId.is(assetId)) {
+    weight = entries
+      .find(
+        ([asset]) =>
+          asset.isScalarOutcome &&
+          ((asset.asScalarOutcome[1].isLong && assetId.ScalarOutcome[1] === 'Long') ||
+            (asset.asScalarOutcome[1].isShort && assetId.ScalarOutcome[1] === 'Short')),
+      )
+      ?.toString()
+  }
+
+  return weight ? O.option(O.some(new Decimal(weight))) : O.option(O.none())
+}
+
+/**
+ * Map storage entries to rpc pools
+ *
+ * @param ctx RpcContext<MS>
+ * @param entries [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][]
+ * @returns RpcPool[]
+ */
 export const fromEntries = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   ctx: C,
   entries: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][],
-) => {
+): RpcPool[] => {
   return entries.map(
     ([
       {

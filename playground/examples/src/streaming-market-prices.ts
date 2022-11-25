@@ -36,7 +36,6 @@ async function main(marketId: number) {
    * Log prices with ticker metadata from the corresponding asset|category index.
    */
   poolPrices$.pipe(withLatestFrom(market$)).subscribe(([prices, market]) => {
-    market.poolId
     market.categories?.map((category, index) => {
       const [block, price] = prices[index]
       console.log(

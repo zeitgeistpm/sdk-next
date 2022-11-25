@@ -8,6 +8,7 @@ import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import { KeyringPairOrExtSigner, signAndSend, TransactionError } from '@zeitgeistpm/rpc'
 import { TransactionHooks } from '@zeitgeistpm/rpc'
+import * as O from '@zeitgeistpm/utility/dist/option'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
@@ -18,6 +19,7 @@ import {
   Context,
   FullContext,
   IndexerContext,
+  isIndexerContext,
   isRpcContext,
   RpcContext,
 } from '../../context'
@@ -282,10 +284,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   })
 
   market.saturate = Te.from(async () => {
-    const [metadata, poolId] = await Promise.all([
-      market.fetchMetadata(),
-      context.api.query.marketCommons.marketPool(id),
-    ])
+    const [metadata] = await Promise.all([market.fetchMetadata()])
 
     const base: IndexedBase = {
       id: `${market.marketId}`,
@@ -295,7 +294,6 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       oracle: primitive.oracle.toHuman(),
       deadlines: primitive.deadlines,
       creatorFee: primitive.creatorFee.toNumber(),
-      poolId: poolId.isSome ? poolId.unwrap().toNumber() : undefined,
       scoringRule: primitive.scoringRule.type,
       status: primitive.status.toHuman() as FullMarketFragment['status'],
       period: primitive.period.toHuman() as FullMarketFragment['period'],
@@ -337,7 +335,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
     let marketWithMethods = market as Market<typeof context, MS>
 
     marketWithMethods.deploySwapPool = Te.from(async params => {
-      assert(!(await hasPool(market)), () => {
+      assert(!(await hasPool(context, market)), () => {
         throw new Error('Cannot deploy pool for market that allready has pool.')
       })
 
@@ -365,7 +363,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
     })
 
     marketWithMethods.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
-      assert(!(await hasPool(market)), () => {
+      assert(!(await hasPool(context, market)), () => {
         throw new Error('Cannot deploy pool for market that allready has pool.')
       })
 
@@ -490,6 +488,38 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
 }
 
 /**
+ * Get the pool id of a market in a way to works for both indexed and rpc data.
+ *
+ * @param market Market<C, MS>
+ * @returns Promise<O.IOption<number>>
+ */
+export const getPoolId = async <
+  C extends Context<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+>(
+  context: C,
+  market: Market<C, MS>,
+): Promise<O.IOption<number>> => {
+  if (isIndexedData(market)) {
+    return market.pool?.poolId ? O.option(O.some(market.pool?.poolId)) : O.option(O.none())
+  } else {
+    if (isRpcContext(context)) {
+      const pool = await context.api.query.marketCommons.marketPool(market.marketId)
+      return pool.isSome ? O.option(O.some(pool.unwrap().toNumber())) : O.option(O.none())
+    } else {
+      const {
+        pools: [pool],
+      } = await context.indexer.pools({
+        where: {
+          marketId_eq: market.marketId,
+        },
+      })
+      return pool ? O.option(O.some(pool.poolId)) : O.option(O.none())
+    }
+  }
+}
+
+/**
  * Check if a rpc or indexed market has pool associated.
  *
  * @param market Market<C, MS>
@@ -499,13 +529,10 @@ export const hasPool = async <
   C extends Context<MS>,
   MS extends MetadataStorage = MetadataStorage,
 >(
+  context: C,
   market: Market<C, MS>,
 ): Promise<boolean> => {
-  if (isIndexedData(market)) {
-    return isNumber(market.poolId)
-  }
-  const saturated = await market.saturate().unwrap()
-  return isNumber(saturated.poolId)
+  return O.isSome(await getPoolId(context, market))
 }
 
 /**

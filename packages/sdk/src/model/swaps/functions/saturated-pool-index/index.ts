@@ -1,6 +1,5 @@
-import { BTreeMap } from '@polkadot/types'
-import { Codec } from '@polkadot/types/types'
 import { isNotNull } from '@zeitgeistpm/utility/dist/null'
+import { mapget } from '@zeitgeistpm/utility/dist/btreemap'
 import { Decimal } from 'decimal.js'
 import {
   Context,
@@ -56,7 +55,9 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
   const [{ markets: marketsForPools }, { assets: assetsForPools }] = await Promise.all([
     ctx.indexer.markets({
       where: {
-        poolId_in: ids,
+        pool: {
+          poolId_in: ids,
+        },
       },
     }),
     ctx.indexer.assets({
@@ -69,7 +70,7 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
   const byPool = (
     await Promise.all(
       pools.map(async pool => {
-        const poolMarket = marketsForPools.find(m => m.poolId === pool.poolId)
+        const poolMarket = marketsForPools.find(m => m.pool?.poolId === pool.poolId)
         const poolAssets = assetsForPools.filter(a => a.poolId === pool.poolId)
 
         if (!poolMarket || poolAssets.length === 0) return null
@@ -217,21 +218,4 @@ export const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
     }),
     {},
   )
-}
-
-/**
- * Get a value from a BTreeMap for a key.
- *
- * @note fix for BTreeMap.get as it seems broken.
- * @param map BTreeMap<K, V>
- * @param key K
- * @returns  V | null
- */
-const mapget = <K extends Codec, V extends Codec>(map: BTreeMap<K, V>, key: K) => {
-  for (const [_k, value] of map.entries()) {
-    if (key.eq(_k)) {
-      return value
-    }
-  }
-  return null
 }

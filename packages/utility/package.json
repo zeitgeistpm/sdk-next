@@ -26,6 +26,11 @@
       "require": "./dist/async/index.cjs",
       "import": "./dist/async/index.mjs"
     },
+    "./dist/btreemap": {
+      "types": "./dist/btreemap/index.d.ts",
+      "require": "./dist/btreemap/index.cjs",
+      "import": "./dist/btreemap/index.mjs"
+    },
     "./dist/codec": {
       "types": "./dist/codec/index.d.ts",
       "require": "./dist/codec/index.cjs",
