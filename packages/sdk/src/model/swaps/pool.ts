@@ -2,6 +2,7 @@ import { Option, StorageKey, u128, Vec } from '@polkadot/types'
 import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
+import { isEqual } from 'lodash'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
 import {
   KeyringPairOrExtSigner,
@@ -14,7 +15,7 @@ import { mapget } from '@zeitgeistpm/utility/dist/btreemap'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import Decimal from 'decimal.js'
-import { Context, IndexerContext, RpcContext } from '../../context'
+import { Context, IndexerContext, isRpcContext, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import {
   AssetId,
@@ -24,7 +25,7 @@ import {
   IOScalarAssetId,
   IOZtgAssetId,
 } from '../../primitives'
-import { Data } from '../../primitives/data'
+import { Data, isRpcData } from '../../primitives/data'
 
 /**
  * Union Pool type of indexed and rpc types.
@@ -364,38 +365,45 @@ export const rpcPool = (
  * @param assetId AssetId
  * @returns O.IOption<Decimal>
  */
-export const getAssetWeight = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage>(
   pool: Pool<C, MS>,
   assetId: AssetId,
 ): O.IOption<Decimal> => {
-  const weights = pool.weights.unwrapOr(null)
-
-  if (!weights) {
-    return O.option(O.none())
-  }
-
-  const entries = [...weights.entries()]
   let weight: string | undefined
 
-  if (IOZtgAssetId.is(assetId)) {
-    weight = entries.find(([asset]) => asset.isZtg)?.[1]?.toString()
-  } else if (IOCategoricalAssetId.is(assetId)) {
-    weight = entries
-      .find(
-        ([asset]) =>
-          asset.isCategoricalOutcome &&
-          asset.asCategoricalOutcome[1].toNumber() === getIndexOf(assetId),
-      )
-      ?.toString()
-  } else if (IOScalarAssetId.is(assetId)) {
-    weight = entries
-      .find(
-        ([asset]) =>
-          asset.isScalarOutcome &&
-          ((asset.asScalarOutcome[1].isLong && assetId.ScalarOutcome[1] === 'Long') ||
-            (asset.asScalarOutcome[1].isShort && assetId.ScalarOutcome[1] === 'Short')),
-      )
-      ?.toString()
+  if (isRpcData(pool)) {
+    const weights = pool.weights.unwrapOr(null)
+
+    if (!weights) {
+      return O.option(O.none())
+    }
+
+    const entries = [...weights.entries()]
+
+    if (IOZtgAssetId.is(assetId)) {
+      weight = entries.find(([asset]) => asset.isZtg)?.[1]?.toString()
+    } else if (IOCategoricalAssetId.is(assetId)) {
+      weight = entries
+        .find(
+          ([asset]) =>
+            asset.isCategoricalOutcome &&
+            asset.asCategoricalOutcome[1].toNumber() === getIndexOf(assetId),
+        )
+        ?.toString()
+    } else if (IOScalarAssetId.is(assetId)) {
+      weight = entries
+        .find(
+          ([asset]) =>
+            asset.isScalarOutcome &&
+            ((asset.asScalarOutcome[1].isLong && assetId.ScalarOutcome[1] === 'Long') ||
+              (asset.asScalarOutcome[1].isShort && assetId.ScalarOutcome[1] === 'Short')),
+        )
+        ?.toString()
+    }
+  } else {
+    weight = pool.weights.find(
+      weight => weight?.assetId && isEqual(JSON.parse(weight?.assetId), assetId),
+    )?.len
   }
 
   return weight ? O.option(O.some(new Decimal(weight))) : O.option(O.none())
