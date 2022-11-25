@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.4.1
+
+### Patch Changes
+
+- 1379ad3: Added method getAssetWeight to get asset weight of pool by an AssetId.
+
 ## 2.4.0
 
 ### Minor Changes
