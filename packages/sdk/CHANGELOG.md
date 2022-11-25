@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.6.3
+
+### Patch Changes
+
+- d391fba: Add method getMarketIdOf to get MarketId of scalar or categorical AssetIds.
+
 ## 2.6.2
 
 ### Patch Changes
