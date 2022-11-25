@@ -2,7 +2,7 @@ import { Option, StorageKey, u128, Vec } from '@polkadot/types'
 import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
 import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
-import { isEqual } from 'lodash'
+import { isEqual } from 'lodash-es'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
 import {
   KeyringPairOrExtSigner,
@@ -19,6 +19,7 @@ import { Context, IndexerContext, isRpcContext, RpcContext } from '../../context
 import { MetadataStorage } from '../../meta'
 import {
   AssetId,
+  fromString,
   getIndexOf,
   getScalarIndexOf,
   IOCategoricalAssetId,
@@ -402,7 +403,7 @@ export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage
     }
   } else {
     weight = pool.weights.find(
-      weight => weight?.assetId && isEqual(JSON.parse(weight?.assetId), assetId),
+      weight => weight?.assetId && isEqual(fromString(weight?.assetId).unwrap(), assetId),
     )?.len
   }
 

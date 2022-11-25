@@ -7222,6 +7222,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash-es@npm:^4.17.6":
+  version: 4.17.6
+  resolution: "@types/lodash-es@npm:4.17.6"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 9bd239dd525086e278821949ce12fbdd4f100a060fed9323fc7ad5661113e1641f28a7ebab617230ed3474680d8f4de705c1928b48252bb684be6ec9eed715db
+  languageName: node
+  linkType: hard
+
 "@types/lodash.memoize@npm:^4.1.7":
   version: 4.1.7
   resolution: "@types/lodash.memoize@npm:4.1.7"
@@ -7711,7 +7720,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/indexer@^2.3.1, @zeitgeistpm/indexer@workspace:packages/indexer":
+"@zeitgeistpm/indexer@^2.4.0, @zeitgeistpm/indexer@workspace:packages/indexer":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/indexer@workspace:packages/indexer"
   dependencies:
@@ -7726,12 +7735,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/rpc@^2.2.1, @zeitgeistpm/rpc@workspace:packages/rpc":
+"@zeitgeistpm/rpc@^2.2.5, @zeitgeistpm/rpc@workspace:packages/rpc":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/rpc@workspace:packages/rpc"
   dependencies:
     "@zeitgeistpm/augment-api": ^2.2.2
-    "@zeitgeistpm/utility": ^2.3.1
+    "@zeitgeistpm/utility": ^2.3.6
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/keyring": "*"
@@ -7743,15 +7752,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/sdk@workspace:packages/sdk"
   dependencies:
+    "@types/lodash-es": ^4.17.6
     "@types/lodash.memoize": ^4.1.7
     "@types/ms": ^0.7.31
     "@zeitgeistpm/augment-api": ^2.2.2
-    "@zeitgeistpm/indexer": ^2.3.1
-    "@zeitgeistpm/rpc": ^2.2.1
-    "@zeitgeistpm/utility": ^2.3.3
+    "@zeitgeistpm/indexer": ^2.4.0
+    "@zeitgeistpm/rpc": ^2.2.5
+    "@zeitgeistpm/utility": ^2.4.1
     "@zeitgeistpm/web3.storage": ^2.2.1
     cids: ^1.1.9
     decimal.js: ^10.4.2
+    lodash-es: ^4.17.21
     lodash.memoize: ^4.1.2
     ms: ^2.1.3
     polly-js: ^1.8.3
@@ -7764,7 +7775,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.3.1, @zeitgeistpm/utility@^2.3.3, @zeitgeistpm/utility@workspace:packages/utility":
+"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.3.1, @zeitgeistpm/utility@^2.3.6, @zeitgeistpm/utility@^2.4.1, @zeitgeistpm/utility@workspace:packages/utility":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/utility@workspace:packages/utility"
   dependencies:
@@ -15212,6 +15223,13 @@ __metadata:
   dependencies:
     p-locate: ^5.0.0
   checksum: 72eb661788a0368c099a184c59d2fee760b3831c9c1c33955e8a19ae4a21b4116e53fa736dc086cdeb9fce9f7cc508f2f92d2d3aae516f133e16a2bb59a39f5a
+  languageName: node
+  linkType: hard
+
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
   languageName: node
   linkType: hard
 
