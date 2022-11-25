@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.6.4
+
+### Patch Changes
+
+- 8b967c2: Fix lodash import error.
+
 ## 2.6.3
 
 ### Patch Changes
