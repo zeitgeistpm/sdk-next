@@ -108,6 +108,15 @@ export const fromString = (str: string): O.IOption<AssetId> => {
 }
 
 /**
+ * Get the MarketId of a scalar or categorical asset id.
+ *
+ * @param assetId ScalarAssetId | CategoricalAssetId
+ * @returns MarketId
+ */
+export const getMarketIdOf = (assetId: ScalarAssetId | CategoricalAssetId): MarketId =>
+  IOScalarAssetId.is(assetId) ? assetId.ScalarOutcome[0] : assetId.CategoricalOutcome[0]
+
+/**
  * Get asset index of a scalar asset, short being 0 and long being 1
  *
  * @param scalarAssetId ScalarAssetId
