@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.6.2
+
+### Patch Changes
+
+- 2f2b419: getAssetWeight now also works with indexed Pools.
+
 ## 2.6.1
 
 ### Patch Changes
