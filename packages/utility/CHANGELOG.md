@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.4.2
+
+### Patch Changes
+
+- e18895c: parse ztg asset ids when looking for weight
+
 ## 2.4.1
 
 ### Patch Changes
