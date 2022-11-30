@@ -1,10 +1,10 @@
 import type RpcError from '@polkadot/rpc-provider/coder/error'
 import { SignedBlock } from '@polkadot/types/interfaces'
-import type { RegistryError } from '@polkadot/types/types'
+import type { ISubmittableResult, RegistryError } from '@polkadot/types/types'
 
 export type TransactionHooks = {
   hooks?: {
-    inBlock?: (block: SignedBlock) => void
+    inBlock?: (result: ISubmittableResult) => void
     retracted?: () => void
   }
 }

@@ -47,8 +47,7 @@ export const signAndSend: Te.TaskEither<
       }
 
       if (result.status.isInBlock) {
-        const signedBlock = await api.rpc.chain.getBlock(result.status.asInBlock)
-        hooks?.inBlock?.(signedBlock)
+        hooks?.inBlock?.(result)
       }
 
       if (result.status.isFinalized) {
