@@ -56,6 +56,11 @@
       "require": "./dist/math/index.cjs",
       "import": "./dist/math/index.mjs"
     },
+    "./dist/na": {
+      "types": "./dist/na/index.d.ts",
+      "require": "./dist/na/index.cjs",
+      "import": "./dist/na/index.mjs"
+    },
     "./dist/null": {
       "types": "./dist/null/index.d.ts",
       "require": "./dist/null/index.cjs",

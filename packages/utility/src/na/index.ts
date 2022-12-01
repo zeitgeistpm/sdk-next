@@ -1,4 +1,4 @@
-import { isNotNull } from '@zeitgeistpm/utility/dist/null'
+import { isNotNull } from '../null'
 
 /**
  * Type representing values that are not available.
@@ -25,14 +25,6 @@ const sym: unique symbol = Symbol()
  * Const symbold representing a not available value.
  */
 export const NA: NA = na('Not available.')
-
-/**
- * Get the reason the value is not available.
- *
- * @param na NA
- * @returns string
- */
-export const reasonOf = (na: NA) => na.reason
 
 /**
  * Typeguard for NA values.
