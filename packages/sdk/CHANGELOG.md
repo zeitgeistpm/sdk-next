@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.7.0
+
+### Minor Changes
+
+- fa828f6: Update `api.rpc.swaps.getSpotPrice` params.
+
+### Patch Changes
+
+- Updated dependencies [fa828f6]
+  - @zeitgeistpm/augment-api@2.3.0
+
 ## 2.6.6
 
 ### Patch Changes
