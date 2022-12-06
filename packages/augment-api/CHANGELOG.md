@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.4.0
+
+### Minor Changes
+
+- 2b5e3dd: Add toString on NA, and augment api changes.
+
 ## 2.3.0
 
 ### Minor Changes

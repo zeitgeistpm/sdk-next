@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.8.0
+
+### Minor Changes
+
+- 2b5e3dd: Add toString on NA, and augment api changes.
+
+### Patch Changes
+
+- Updated dependencies [2b5e3dd]
+  - @zeitgeistpm/augment-api@2.4.0
+
 ## 2.7.0
 
 ### Minor Changes
