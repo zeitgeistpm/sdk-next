@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.9.0
+
+### Minor Changes
+
+- ca8f1d3: Added toCompositeIndexerAssetId to help identify asset ids in the indexer.
+
+### Patch Changes
+
+- Updated dependencies [ca8f1d3]
+  - @zeitgeistpm/augment-api@2.5.0
+  - @zeitgeistpm/utility@2.5.0
+
 ## 2.8.0
 
 ### Minor Changes

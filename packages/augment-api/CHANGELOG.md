@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.5.0
+
+### Minor Changes
+
+- ca8f1d3: Added toCompositeIndexerAssetId to help identify asset ids in the indexer.
+
 ## 2.4.0
 
 ### Minor Changes
