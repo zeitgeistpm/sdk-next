@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.9.1
+
+### Patch Changes
+
+- cb14392: Able to pass current now to projectEndTimestamp
+- Updated dependencies [cb14392]
+  - @zeitgeistpm/utility@2.5.1
+
 ## 2.9.0
 
 ### Minor Changes

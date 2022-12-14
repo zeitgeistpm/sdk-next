@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.5.1
+
+### Patch Changes
+
+- cb14392: Able to pass current now to projectEndTimestamp
+
 ## 2.5.0
 
 ### Minor Changes
