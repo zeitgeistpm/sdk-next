@@ -74,5 +74,5 @@ const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>
     entries = await ctx.api.query.swaps.pools.entries()
   }
 
-  return fromEntries(ctx, entries)
+  return fromEntries<C, MS>(ctx, entries)
 }

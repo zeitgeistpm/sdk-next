@@ -514,7 +514,7 @@ declare module '@polkadot/rpc-core/types/jsonrpc' {
       /**
        * get spot price
        **/
-      getSpotPrice: AugmentedRpc<(poolId: u128 | AnyNumber | Uint8Array, assetIn: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, assetOut: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array) => Observable<u128>>;
+      getSpotPrice: AugmentedRpc<(poolId: u128 | AnyNumber | Uint8Array, assetIn: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, assetOut: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, at: Option<BlockHash> | null | Uint8Array | BlockHash | string, withFees: bool | boolean | Uint8Array) => Observable<u128>>;
       /**
        * get spot prices
        **/

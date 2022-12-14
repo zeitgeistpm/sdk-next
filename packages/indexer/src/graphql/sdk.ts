@@ -946,6 +946,8 @@ export type HistoricalPool = {
   __typename?: 'HistoricalPool';
   /** Height of the block */
   blockNumber: Scalars['Int'];
+  /** Volume difference */
+  dVolume?: Maybe<Scalars['BigInt']>;
   /** Event method which initiated this change */
   event: Scalars['String'];
   id: Scalars['String'];
@@ -970,6 +972,8 @@ export type HistoricalPoolEdge = {
 export enum HistoricalPoolOrderByInput {
   BlockNumberAsc = 'blockNumber_ASC',
   BlockNumberDesc = 'blockNumber_DESC',
+  DVolumeAsc = 'dVolume_ASC',
+  DVolumeDesc = 'dVolume_DESC',
   EventAsc = 'event_ASC',
   EventDesc = 'event_DESC',
   IdAsc = 'id_ASC',
@@ -998,6 +1002,15 @@ export type HistoricalPoolWhereInput = {
   blockNumber_lte?: InputMaybe<Scalars['Int']>;
   blockNumber_not_eq?: InputMaybe<Scalars['Int']>;
   blockNumber_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  dVolume_eq?: InputMaybe<Scalars['BigInt']>;
+  dVolume_gt?: InputMaybe<Scalars['BigInt']>;
+  dVolume_gte?: InputMaybe<Scalars['BigInt']>;
+  dVolume_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  dVolume_isNull?: InputMaybe<Scalars['Boolean']>;
+  dVolume_lt?: InputMaybe<Scalars['BigInt']>;
+  dVolume_lte?: InputMaybe<Scalars['BigInt']>;
+  dVolume_not_eq?: InputMaybe<Scalars['BigInt']>;
+  dVolume_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   event_contains?: InputMaybe<Scalars['String']>;
   event_containsInsensitive?: InputMaybe<Scalars['String']>;
   event_endsWith?: InputMaybe<Scalars['String']>;

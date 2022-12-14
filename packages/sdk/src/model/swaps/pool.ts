@@ -420,7 +420,7 @@ export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage
 export const fromEntries = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   ctx: C,
   entries: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][],
-): RpcPool[] => {
+): Pool<C, MS>[] => {
   return entries.map(
     ([
       {

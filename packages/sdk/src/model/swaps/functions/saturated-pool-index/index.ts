@@ -73,6 +73,10 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
         const poolMarket = marketsForPools.find(m => m.pool?.poolId === pool.poolId)
         const poolAssets = assetsForPools.filter(a => a.poolId === pool.poolId)
 
+        if (pool?.poolId === 167) {
+          console.log(poolAssets)
+        }
+
         if (!poolMarket || poolAssets.length === 0) return null
 
         const assets: SaturatedPoolEntryAsset[] = pool.weights
@@ -168,7 +172,7 @@ export const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
           .then(m => rpcMarket(ctx, pool.marketId, m.unwrap()).saturate()),
         Promise.all(
           pool.assets.map(asset =>
-            ctx.api.rpc.swaps.getSpotPrice(pool.poolId, { Ztg: null }, asset),
+            ctx.api.rpc.swaps.getSpotPrice(pool.poolId, { Ztg: null }, asset, null, false),
           ),
         ),
         ctx.api.query.tokens.accounts.multi(outcomeAssets.map(asset => [accountId, asset])),

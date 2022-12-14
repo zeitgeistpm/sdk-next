@@ -1,6 +1,7 @@
 import { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
-import { isString } from '@polkadot/util'
+import { isCodec, isString } from '@polkadot/util'
 import * as O from '@zeitgeistpm/utility/dist/option'
+import { camelcaseObjectKeys } from '@zeitgeistpm/utility/dist/object'
 import { literal, number, tuple, type, union, Infer } from 'superstruct'
 import { option } from 'yargs'
 import { IOMarketId, MarketId } from './marketid'
@@ -137,3 +138,25 @@ export const getIndexOf = (assetId: AssetId): number | null =>
     : IOScalarAssetId.is(assetId)
     ? getScalarIndexOf(assetId)
     : null
+
+/**
+ * String id type used to identify assets in the indexer.
+ */
+export type CompositeIndexerAssetId = string & {
+  readonly CompositeIndexerAssetId: unique symbol
+}
+
+/**
+ *
+ * @param assetId AssetId | ZeitgeistPrimitivesAsset
+ * @returns
+ */
+export const toCompositeIndexerAssetId = (
+  assetId: AssetId | ZeitgeistPrimitivesAsset,
+): CompositeIndexerAssetId => {
+  return JSON.stringify(
+    camelcaseObjectKeys(
+      isCodec(assetId) ? fromPrimitive(assetId as ZeitgeistPrimitivesAsset) : assetId,
+    ),
+  ) as CompositeIndexerAssetId
+}

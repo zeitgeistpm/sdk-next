@@ -12,7 +12,7 @@ import * as O from '@zeitgeistpm/utility/dist/option'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import { blockDate } from '@zeitgeistpm/utility/dist/time'
+import { blockDate, ChainTime } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
 import { NA } from 'primitives/na'
 import {
@@ -551,8 +551,9 @@ export const projectEndTimestamp = async <
 >(
   ctx: C,
   market: Market<C, MS>,
+  _now?: ChainTime,
 ): Promise<number | NA> => {
-  const chainTime = isRpcContext(ctx) ? await now(ctx) : null
+  const chainTime = isRpcContext(ctx) ? await (_now ?? now(ctx)) : null
 
   if (isRpcData(market)) {
     if (market.period.isTimestamp) {

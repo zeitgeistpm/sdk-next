@@ -27,4 +27,5 @@ export enum SupportedParachain {
   ROCOCO = 'rococo',
   BSR = 'bsr',
   LOCAL = 'local',
+  UNKNOWN = 'unknown',
 }

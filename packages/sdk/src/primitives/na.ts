@@ -6,6 +6,7 @@ import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 export type NA = {
   __type: typeof sym
   reason: string
+  toString: () => string
 }
 
 /**
@@ -17,6 +18,7 @@ export type NA = {
 export const na = (reason: string): NA => ({
   __type: sym,
   reason,
+  toString: () => `NA(${reason})`,
 })
 
 const sym: unique symbol = Symbol()

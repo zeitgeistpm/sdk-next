@@ -1,3 +1,5 @@
+import { camelCase } from 'lodash-es'
+
 /**
  * Map over an object and set all key values to undefined type
  * @generic T extends object
@@ -13,3 +15,12 @@ export type MappedUndefined<T extends object> = {
  * @generic T extends object
  */
 export type Unpartial<T extends object> = MappedUndefined<T> | T
+
+export const camelcaseObjectKeys = (obj: Record<any, any>) => {
+  return Object.keys(obj).reduce((acc, key) => {
+    return {
+      ...acc,
+      [camelCase(key)]: obj[key],
+    }
+  }, {})
+}

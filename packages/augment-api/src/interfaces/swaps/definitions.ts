@@ -61,6 +61,14 @@ export default {
           name: 'assetOut',
           type: 'SwapsAsset',
         },
+        {
+          name: 'at',
+          type: 'Option<BlockHash>',
+        },
+        {
+          name: 'withFees',
+          type: 'bool',
+        },
       ],
       type: 'u128',
     },
