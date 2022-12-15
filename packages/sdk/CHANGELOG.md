@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.9.2
+
+### Patch Changes
+
+- b69c2c0: Added method getScalarBounds function to Market data type.
+
 ## 2.9.1
 
 ### Patch Changes
