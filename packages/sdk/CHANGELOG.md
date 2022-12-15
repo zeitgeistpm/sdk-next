@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.9.3
+
+### Patch Changes
+
+- 803bea6: Fix getScalarBounds to parse scalar type string properly
+
 ## 2.9.2
 
 ### Patch Changes
