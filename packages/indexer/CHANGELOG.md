@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.5.0
+
+### Minor Changes
+
+- 575b574: Added outcomeAssets to market
+
 ## 2.4.0
 
 ### Minor Changes

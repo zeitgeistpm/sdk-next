@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.11.0
+
+### Minor Changes
+
+- 575b574: Added outcomeAssets to market
+
+### Patch Changes
+
+- Updated dependencies [575b574]
+  - @zeitgeistpm/indexer@2.5.0
+
 ## 2.10.0
 
 ### Minor Changes
