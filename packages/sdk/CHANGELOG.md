@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.10.0
+
+### Minor Changes
+
+- f097298: Rename AssetId#fromString to AssetId#fromCompositeIndexerAssetId
+
 ## 2.9.3
 
 ### Patch Changes
