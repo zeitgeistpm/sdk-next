@@ -33,6 +33,7 @@ fragment FullMarket on Market {
   scoringRule
   resolvedOutcome
   scalarType
+  outcomeAssets
   marketType {
     categorical
     scalar

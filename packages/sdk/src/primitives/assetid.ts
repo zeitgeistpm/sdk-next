@@ -1,9 +1,8 @@
 import { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
-import { isCodec, isString } from '@polkadot/util'
-import * as O from '@zeitgeistpm/utility/dist/option'
+import { isCodec } from '@polkadot/util'
 import { camelcaseObjectKeys } from '@zeitgeistpm/utility/dist/object'
-import { literal, number, tuple, type, union, Infer } from 'superstruct'
-import { option } from 'yargs'
+import * as O from '@zeitgeistpm/utility/dist/option'
+import { Infer, literal, number, tuple, type, union } from 'superstruct'
 import { IOMarketId, MarketId } from './marketid'
 
 /**
@@ -74,40 +73,6 @@ export const fromPrimitive = (asset: ZeitgeistPrimitivesAsset): AssetId => {
   return { Ztg: null }
 }
 
-export const fromString = (str: string): O.IOption<AssetId> => {
-  if (str.toLowerCase() === 'ztg') {
-    return O.option(
-      O.some({
-        Ztg: null,
-      } as AssetId),
-    )
-  }
-
-  const parsed = O.tryCatch(() => JSON.parse(str))
-  if (O.isNone(parsed)) return parsed
-
-  const obj = parsed.value
-  let assetId: AssetId | null = null
-
-  if ('categoricalOutcome' in obj) {
-    assetId = {
-      CategoricalOutcome: obj['categoricalOutcome'],
-    } as AssetId
-  }
-  if ('scalarOutcome' in obj) {
-    assetId = {
-      ScalarOutcome: obj['scalarOutcome'],
-    } as AssetId
-  }
-  if ('poolShare' in obj) {
-    assetId = {
-      PoolShare: obj['poolShare'],
-    } as AssetId
-  }
-
-  return O.option(assetId ? O.some(assetId) : O.none())
-}
-
 /**
  * Get the MarketId of a scalar or categorical asset id.
  *
@@ -159,4 +124,46 @@ export const toCompositeIndexerAssetId = (
       isCodec(assetId) ? fromPrimitive(assetId as ZeitgeistPrimitivesAsset) : assetId,
     ),
   ) as CompositeIndexerAssetId
+}
+
+/**
+ * Convert a indexer asset id to an AssetId.
+ *
+ * @param assetIdString CompositeIndexerAssetId | string
+ * @returns O.IOption<AssetId>
+ */
+export const fromCompositeIndexerAssetId = (
+  assetIdString: CompositeIndexerAssetId | string,
+): O.IOption<AssetId> => {
+  if (assetIdString.toLowerCase() === 'ztg') {
+    return O.option(
+      O.some({
+        Ztg: null,
+      } as AssetId),
+    )
+  }
+
+  const parsed = O.tryCatch(() => JSON.parse(assetIdString))
+  if (O.isNone(parsed)) return parsed
+
+  const obj = parsed.value
+  let assetId: AssetId | null = null
+
+  if ('categoricalOutcome' in obj) {
+    assetId = {
+      CategoricalOutcome: obj['categoricalOutcome'],
+    } as AssetId
+  }
+  if ('scalarOutcome' in obj) {
+    assetId = {
+      ScalarOutcome: obj['scalarOutcome'],
+    } as AssetId
+  }
+  if ('poolShare' in obj) {
+    assetId = {
+      PoolShare: obj['poolShare'],
+    } as AssetId
+  }
+
+  return O.option(assetId ? O.some(assetId) : O.none())
 }

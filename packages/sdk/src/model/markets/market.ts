@@ -6,26 +6,37 @@ import {
 import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
-import { KeyringPairOrExtSigner, signAndSend, TransactionError } from '@zeitgeistpm/rpc'
-import { TransactionHooks } from '@zeitgeistpm/rpc'
-import * as O from '@zeitgeistpm/utility/dist/option'
+import {
+  KeyringPairOrExtSigner,
+  signAndSend,
+  TransactionError,
+  TransactionHooks,
+} from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
+import * as E from '@zeitgeistpm/utility/dist/either'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
+import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { blockDate, ChainTime } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
-import { NA } from 'primitives/na'
+import Decimal from 'decimal.js'
 import {
   Context,
   FullContext,
   IndexerContext,
-  isIndexerContext,
   isRpcContext,
   RpcContext,
 } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
-import { Data, isIndexedData, isRpcData } from '../../primitives'
+import {
+  Data,
+  isIndexedData,
+  isRpcData,
+  NA,
+  toCompositeIndexerAssetId,
+  ZTG,
+} from '../../primitives'
 import { now } from '../time/functions/now'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
@@ -284,7 +295,16 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   })
 
   market.saturate = Te.from(async () => {
-    const [metadata] = await Promise.all([market.fetchMetadata()])
+    const [metadata, pool] = await Promise.all([
+      market.fetchMetadata(),
+      context.api.query.marketCommons.marketPool(market.marketId).then(id => {
+        if (id.isSome) {
+          return context.api.query.swaps.pools(id.unwrap()).then(p => p.unwrapOr(null))
+        }
+      }),
+    ])
+
+    const outcomeAssets = pool ? pool.assets.toArray().map(toCompositeIndexerAssetId) : []
 
     const base: IndexedBase = {
       id: `${market.marketId}`,
@@ -295,6 +315,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       deadlines: primitive.deadlines,
       creatorFee: primitive.creatorFee.toNumber(),
       scoringRule: primitive.scoringRule.type,
+      outcomeAssets: outcomeAssets,
       status: primitive.status.toHuman() as FullMarketFragment['status'],
       period: primitive.period.toHuman() as FullMarketFragment['period'],
       marketType: primitive.marketType.toHuman() as FullMarketFragment['marketType'],
@@ -572,4 +593,32 @@ export const projectEndTimestamp = async <
   }
 
   return NA
+}
+
+/**
+ * Get scalar market bounds.
+ *
+ * @param market Market<Context>
+ * @returns E.IEither<Error, [Decimal, Decimal]>
+ */
+export const getScalarBounds = (
+  market: Market<Context>,
+): E.IEither<Error, [Decimal, Decimal]> => {
+  if (isRpcData(market)) {
+    if (!market.marketType.isScalar)
+      return E.either(E.left(new Error('Not a scalar market')))
+    const bounds = market.marketType.asScalar
+    return E.either(
+      E.right([
+        new Decimal(bounds[0].toString()).div(ZTG),
+        new Decimal(bounds[1].toString()).div(ZTG),
+      ]),
+    )
+  } else {
+    if (!market.marketType.scalar) return E.either(E.left(new Error('Not a scalar market')))
+    const bounds = market.marketType.scalar.split(',')
+    return E.either(
+      E.right([new Decimal(bounds[0]).div(ZTG), new Decimal(bounds[1]).div(ZTG)]),
+    )
+  }
 }

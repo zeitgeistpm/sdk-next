@@ -19,7 +19,7 @@ import { Context, IndexerContext, isRpcContext, RpcContext } from '../../context
 import { MetadataStorage } from '../../meta'
 import {
   AssetId,
-  fromString,
+  fromCompositeIndexerAssetId,
   getIndexOf,
   getScalarIndexOf,
   IOCategoricalAssetId,
@@ -403,7 +403,9 @@ export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage
     }
   } else {
     weight = pool.weights.find(
-      weight => weight?.assetId && isEqual(fromString(weight?.assetId).unwrap(), assetId),
+      weight =>
+        weight?.assetId &&
+        isEqual(fromCompositeIndexerAssetId(weight?.assetId).unwrap(), assetId),
     )?.len
   }
 
