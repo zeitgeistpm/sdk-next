@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.3.0
+
+### Minor Changes
+
+- 5954781: Improved module exports in package jsons.
+
+### Patch Changes
+
+- Updated dependencies [5954781]
+  - @zeitgeistpm/utility@2.6.0
+
 ## 2.2.1
 
 ### Patch Changes

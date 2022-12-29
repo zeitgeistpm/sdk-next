@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.6.0
+
+### Minor Changes
+
+- 5954781: Improved module exports in package jsons.
+
 ## 2.5.1
 
 ### Patch Changes

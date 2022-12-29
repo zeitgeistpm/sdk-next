@@ -1,27 +1,30 @@
 {
   "name": "@zeitgeistpm/web3.storage",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "publishConfig": {
     "access": "public"
   },
-  "type": "module",
-  "main": "./dist/index.cjs",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist/*"
+    "dist/*",
+    "src"
   ],
   "scripts": {
     "build": "yarn compile",
     "compile": "rimraf ./dist && rollup -c"
   },
   "dependencies": {
-    "@zeitgeistpm/utility": "^2.3.1",
+    "@zeitgeistpm/utility": "^2.6.0",
     "cids": "^1.1.9",
     "ipfs-http-client": "^58.0.1",
     "merge-options": "^3.0.4",

@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 2.12.0
+
+### Minor Changes
+
+- 5954781: Improved module exports in package jsons.
+
+### Patch Changes
+
+- Updated dependencies [5954781]
+  - @zeitgeistpm/augment-api@2.6.0
+  - @zeitgeistpm/indexer@2.6.0
+  - @zeitgeistpm/rpc@2.3.0
+  - @zeitgeistpm/utility@2.6.0
+  - @zeitgeistpm/web3.storage@2.3.0
+
 ## 2.11.0
 
 ### Minor Changes
