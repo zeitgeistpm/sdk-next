@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 2.4.0
+
+### Minor Changes
+
+- a3b45d8: Type changes.
+
+### Patch Changes
+
+- Updated dependencies [a3b45d8]
+  - @zeitgeistpm/augment-api@2.7.0
+  - @zeitgeistpm/utility@2.7.0
+
 ## 2.3.0
 
 ### Minor Changes
