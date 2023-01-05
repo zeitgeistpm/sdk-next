@@ -21,11 +21,11 @@
     "src"
   ],
   "scripts": {
-    "build": "yarn generate:defs && yarn generate:meta && yarn compile",
+    "build": "yarn fetch:metadata && yarn generate:defs && yarn generate:meta && yarn compile",
     "compile": "rimraf ./dist && rollup -c",
     "generate:defs": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-defs --package @zeitgeistpm/augment-api/interfaces --input ./src/interfaces --endpoint ./src/metadata/latest.json",
     "generate:meta": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-chain --package @zeitgeistpm/augment-api/interfaces --endpoint ./src/metadata/latest.json --output ./src/interfaces  --strict",
-    "fetch:metadata": "node ./scripts/fetchMetadata.mjs -o './src/metadata/latest.json' -e 'ws://127.0.0.1:9944'"
+    "fetch:metadata": "node ./scripts/fetchMetadata.mjs --outfile './src/metadata/latest.json' --endpoint 'wss://bsr.zeitgeist.pm/'"
   },
   "author": "Zeitgeist PM <contact@zeitgeist.pm>",
   "license": "GPL-3.0",

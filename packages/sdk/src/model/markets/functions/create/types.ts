@@ -1,6 +1,7 @@
 import { SubmittableExtrinsic } from '@polkadot/api/types'
 import type {
   ZeitgeistPrimitivesMarketMarketCreation,
+  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
   ZeitgeistPrimitivesPoolScoringRule,
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
@@ -68,15 +69,10 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
    * @note Authorized is the only one available atm.
    */
   disputeMechanism:
-    | {
-        Authorized: string
-      }
-    | {
-        SimpleDisputes: null
-      }
-    | {
-        Court: null
-      }
+    | ZeitgeistPrimitivesMarketMarketDisputeMechanism
+    | 'Authorized'
+    | 'Court'
+    | 'SimpleDisputes'
 }
 
 /**

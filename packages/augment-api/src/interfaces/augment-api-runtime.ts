@@ -6,17 +6,15 @@
 import '@polkadot/api-base/types/calls';
 
 import type { ApiTypes, AugmentedCall, DecoratedCallBase } from '@polkadot/api-base/types';
-import type { Bytes, Null, Option, Vec, u32 } from '@polkadot/types-codec';
+import type { Bytes, Null, Option, Vec, bool, u32 } from '@polkadot/types-codec';
 import type { AnyNumber, ITuple } from '@polkadot/types-codec/types';
-import type { OpaqueKeyOwnershipProof } from '@polkadot/types/interfaces/babe';
 import type { CheckInherentsResult, InherentData } from '@polkadot/types/interfaces/blockbuilder';
 import type { BlockHash } from '@polkadot/types/interfaces/chain';
-import type { AuthorityId } from '@polkadot/types/interfaces/consensus';
+import type { CollationInfo } from '@polkadot/types/interfaces/cumulus';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
-import type { AuthorityList, GrandpaEquivocationProof, SetId } from '@polkadot/types/interfaces/grandpa';
 import type { OpaqueMetadata } from '@polkadot/types/interfaces/metadata';
 import type { FeeDetails, RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
-import type { AccountId, Block, Header, Index, KeyTypeId, SlotDuration } from '@polkadot/types/interfaces/runtime';
+import type { AccountId, Block, Header, Index, KeyTypeId } from '@polkadot/types/interfaces/runtime';
 import type { RuntimeVersion } from '@polkadot/types/interfaces/state';
 import type { ApplyExtrinsicResult } from '@polkadot/types/interfaces/system';
 import type { TransactionSource, TransactionValidity } from '@polkadot/types/interfaces/txqueue';
@@ -34,16 +32,12 @@ declare module '@polkadot/api-base/types/calls' {
        **/
       accountNonce: AugmentedCall<ApiType, (accountId: AccountId | string | Uint8Array) => Observable<Index>>;
     };
-    /** 0xdd718d5cc53262d4/1 */
-    auraApi: {
+    /** 0x1fba3ffbb7e07e8d/2 */
+    authorFilterAPI: {
       /**
-       * Return the current set of authorities.
+       * The runtime api used to predict whether an author will be eligible in the given slot
        **/
-      authorities: AugmentedCall<ApiType, () => Observable<Vec<AuthorityId>>>;
-      /**
-       * Returns the slot duration for Aura.
-       **/
-      slotDuration: AugmentedCall<ApiType, () => Observable<SlotDuration>>;
+      canAuthor: AugmentedCall<ApiType, (author: AccountId | string | Uint8Array, relayParent: u32 | AnyNumber | Uint8Array, parentHeader: Header | { parentHash?: any; number?: any; stateRoot?: any; extrinsicsRoot?: any; digest?: any } | string | Uint8Array) => Observable<bool>>;
     };
     /** 0x40fe3ad401f8959a/6 */
     blockBuilder: {
@@ -64,6 +58,13 @@ declare module '@polkadot/api-base/types/calls' {
        **/
       inherentExtrinsics: AugmentedCall<ApiType, (inherent: InherentData | { data?: any } | string | Uint8Array) => Observable<Vec<Extrinsic>>>;
     };
+    /** 0xea93e3f16f3d6962/2 */
+    collectCollationInfo: {
+      /**
+       * Collect information about a collation.
+       **/
+      collectCollationInfo: AugmentedCall<ApiType, (header: Header | { parentHash?: any; number?: any; stateRoot?: any; extrinsicsRoot?: any; digest?: any } | string | Uint8Array) => Observable<CollationInfo>>;
+    };
     /** 0xdf6acb689907609b/4 */
     core: {
       /**
@@ -79,31 +80,19 @@ declare module '@polkadot/api-base/types/calls' {
        **/
       version: AugmentedCall<ApiType, () => Observable<RuntimeVersion>>;
     };
-    /** 0xed99c5acb25eedf5/3 */
-    grandpaApi: {
-      /**
-       * Get current GRANDPA authority set id.
-       **/
-      currentSetId: AugmentedCall<ApiType, () => Observable<SetId>>;
-      /**
-       * Generates a proof of key ownership for the given authority in the given set.
-       **/
-      generateKeyOwnershipProof: AugmentedCall<ApiType, (setId: SetId | AnyNumber | Uint8Array, authorityId: AuthorityId | string | Uint8Array) => Observable<Option<OpaqueKeyOwnershipProof>>>;
-      /**
-       * Get the current GRANDPA authorities and weights. This should not change except for when changes are scheduled and the corresponding delay has passed.
-       **/
-      grandpaAuthorities: AugmentedCall<ApiType, () => Observable<AuthorityList>>;
-      /**
-       * Submits an unsigned extrinsic to report an equivocation.
-       **/
-      submitReportEquivocationUnsignedExtrinsic: AugmentedCall<ApiType, (equivocationProof: GrandpaEquivocationProof | { setId?: any; equivocation?: any } | string | Uint8Array, keyOwnerProof: OpaqueKeyOwnershipProof | string | Uint8Array) => Observable<Option<Null>>>;
-    };
     /** 0x37e397fc7c91f5e4/1 */
     metadata: {
       /**
        * Returns the metadata of a runtime
        **/
       metadata: AugmentedCall<ApiType, () => Observable<OpaqueMetadata>>;
+    };
+    /** 0x2aa62120049dd2d2/1 */
+    nimbusApi: {
+      /**
+       * The runtime api used to predict whether a Nimbus author will be eligible in the given slot
+       **/
+      canAuthor: AugmentedCall<ApiType, (author: AccountId | string | Uint8Array, relayParent: u32 | AnyNumber | Uint8Array, parentHeader: Header | { parentHash?: any; number?: any; stateRoot?: any; extrinsicsRoot?: any; digest?: any } | string | Uint8Array) => Observable<bool>>;
     };
     /** 0xf78b278be53f454c/2 */
     offchainWorkerApi: {

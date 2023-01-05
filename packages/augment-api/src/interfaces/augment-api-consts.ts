@@ -6,9 +6,9 @@
 import '@polkadot/api-base/types/consts';
 
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
-import type { Option, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
-import type { Percent, Permill } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportPalletId, FrameSupportWeightsRuntimeDbWeight, FrameSupportWeightsWeightToFeeCoefficient, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
+import type { Bytes, Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { Perbill, Percent, Permill } from '@polkadot/types/interfaces/runtime';
+import type { FrameSupportPalletId, FrameSupportWeightsRuntimeDbWeight, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, XcmV1MultiLocation, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
 
@@ -38,6 +38,49 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maxReserves: u32 & AugmentedConst<ApiType>;
     };
+    bounties: {
+      /**
+       * The amount held on deposit for placing a bounty proposal.
+       **/
+      bountyDepositBase: u128 & AugmentedConst<ApiType>;
+      /**
+       * The delay period for which a bounty beneficiary need to wait before claim the payout.
+       **/
+      bountyDepositPayoutDelay: u64 & AugmentedConst<ApiType>;
+      /**
+       * Bounty duration in blocks.
+       **/
+      bountyUpdatePeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * Minimum value for a bounty.
+       **/
+      bountyValueMinimum: u128 & AugmentedConst<ApiType>;
+      /**
+       * Maximum amount of funds that should be placed in a deposit for making a proposal.
+       **/
+      curatorDepositMax: Option<u128> & AugmentedConst<ApiType>;
+      /**
+       * Minimum amount of funds that should be placed in a deposit for making a proposal.
+       **/
+      curatorDepositMin: Option<u128> & AugmentedConst<ApiType>;
+      /**
+       * The curator deposit is calculated as a percentage of the curator fee.
+       * 
+       * This deposit has optional upper and lower bounds with `CuratorDepositMax` and
+       * `CuratorDepositMin`.
+       **/
+      curatorDepositMultiplier: Permill & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit per byte within the tip report reason or bounty description.
+       **/
+      dataDepositPerByte: u128 & AugmentedConst<ApiType>;
+      /**
+       * Maximum acceptable reason length.
+       * 
+       * Benchmarks depend on this value, be sure to update weights file when changing this value
+       **/
+      maximumReasonLength: u32 & AugmentedConst<ApiType>;
+    };
     court: {
       /**
        * Block duration to cast a vote on an outcome.
@@ -55,6 +98,23 @@ declare module '@polkadot/api-base/types/consts' {
        * Slashed funds are send to the treasury
        **/
       treasuryPalletId: FrameSupportPalletId & AugmentedConst<ApiType>;
+    };
+    crowdloan: {
+      /**
+       * Percentage to be payed at initialization
+       **/
+      initializationPayment: Perbill & AugmentedConst<ApiType>;
+      maxInitContributors: u32 & AugmentedConst<ApiType>;
+      /**
+       * A fraction representing the percentage of proofs
+       * that need to be presented to change a reward address through the relay keys
+       **/
+      rewardAddressRelayVoteThreshold: Perbill & AugmentedConst<ApiType>;
+      /**
+       * Network Identifier to be appended into the signatures for reward address change/association
+       * Prevents replay attacks from one network to the other
+       **/
+      signatureNetworkIdentifier: Bytes & AugmentedConst<ApiType>;
     };
     democracy: {
       /**
@@ -114,11 +174,39 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       votingPeriod: u64 & AugmentedConst<ApiType>;
     };
-    grandpa: {
+    globalDisputes: {
       /**
-       * Max Authorities in use
+       * The vote lock identifier.
        **/
-      maxAuthorities: u32 & AugmentedConst<ApiType>;
+      globalDisputeLockId: U8aFixed & AugmentedConst<ApiType>;
+      /**
+       * The pallet identifier.
+       **/
+      globalDisputesPalletId: FrameSupportPalletId & AugmentedConst<ApiType>;
+      /**
+       * The maximum numbers of distinct markets
+       * on which one account can simultaneously vote on outcomes.
+       * Otherwise users can just keep voting on different global disputes and never unlock.
+       * When the user unlocks, the user has again `MaxGlobalDisputeVotes` number of votes.
+       **/
+      maxGlobalDisputeVotes: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of owners
+       * for a voting outcome for private API calls of `push_voting_outcome`.
+       **/
+      maxOwners: u32 & AugmentedConst<ApiType>;
+      /**
+       * The minimum required amount to vote on an outcome.
+       **/
+      minOutcomeVoteAmount: u128 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of keys to remove from a storage map.
+       **/
+      removeKeysLimit: u32 & AugmentedConst<ApiType>;
+      /**
+       * The fee required to add a voting outcome.
+       **/
+      votingOutcomeFee: u128 & AugmentedConst<ApiType>;
     };
     identity: {
       /**
@@ -153,6 +241,12 @@ declare module '@polkadot/api-base/types/consts' {
     liquidityMining: {
       palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
     };
+    marketCommons: {
+      /**
+       * The prefix used to calculate the prize pool accounts.
+       **/
+      predictionMarketsPalletId: FrameSupportPalletId & AugmentedConst<ApiType>;
+    };
     multiSig: {
       /**
        * The base amount of currency needed to reserve for creating a multisig execution or to
@@ -173,6 +267,80 @@ declare module '@polkadot/api-base/types/consts' {
        * The maximum amount of signatories allowed in the multisig.
        **/
       maxSignatories: u16 & AugmentedConst<ApiType>;
+    };
+    parachainStaking: {
+      /**
+       * Number of rounds candidate requests to decrease self-bond must wait to be executable
+       **/
+      candidateBondLessDelay: u32 & AugmentedConst<ApiType>;
+      /**
+       * Default number of blocks per round at genesis
+       **/
+      defaultBlocksPerRound: u32 & AugmentedConst<ApiType>;
+      /**
+       * Default commission due to collators, is `CollatorCommission` storage value in genesis
+       **/
+      defaultCollatorCommission: Perbill & AugmentedConst<ApiType>;
+      /**
+       * Default percent of inflation set aside for parachain bond account
+       **/
+      defaultParachainBondReservePercent: Percent & AugmentedConst<ApiType>;
+      /**
+       * Number of rounds that delegation less requests must wait before executable
+       **/
+      delegationBondLessDelay: u32 & AugmentedConst<ApiType>;
+      /**
+       * Number of rounds that candidates remain bonded before exit request is executable
+       **/
+      leaveCandidatesDelay: u32 & AugmentedConst<ApiType>;
+      /**
+       * Number of rounds that delegators remain bonded before exit request is executable
+       **/
+      leaveDelegatorsDelay: u32 & AugmentedConst<ApiType>;
+      /**
+       * Maximum bottom delegations (not counted) per candidate
+       **/
+      maxBottomDelegationsPerCandidate: u32 & AugmentedConst<ApiType>;
+      /**
+       * Maximum delegations per delegator
+       **/
+      maxDelegationsPerDelegator: u32 & AugmentedConst<ApiType>;
+      /**
+       * Maximum top delegations counted per candidate
+       **/
+      maxTopDelegationsPerCandidate: u32 & AugmentedConst<ApiType>;
+      /**
+       * Minimum number of blocks per round
+       **/
+      minBlocksPerRound: u32 & AugmentedConst<ApiType>;
+      /**
+       * Minimum stake required for any account to be a collator candidate
+       **/
+      minCandidateStk: u128 & AugmentedConst<ApiType>;
+      /**
+       * Minimum stake required for any candidate to be in `SelectedCandidates` for the round
+       **/
+      minCollatorStk: u128 & AugmentedConst<ApiType>;
+      /**
+       * Minimum stake for any registered on-chain account to delegate
+       **/
+      minDelegation: u128 & AugmentedConst<ApiType>;
+      /**
+       * Minimum stake for any registered on-chain account to be a delegator
+       **/
+      minDelegatorStk: u128 & AugmentedConst<ApiType>;
+      /**
+       * Minimum number of selected candidates every round
+       **/
+      minSelectedCandidates: u32 & AugmentedConst<ApiType>;
+      /**
+       * Number of rounds that delegations remain bonded before revocation request is executable
+       **/
+      revokeDelegationDelay: u32 & AugmentedConst<ApiType>;
+      /**
+       * Number of rounds after which block authors are rewarded
+       **/
+      rewardPaymentDelay: u32 & AugmentedConst<ApiType>;
     };
     predictionMarkets: {
       /**
@@ -211,6 +379,10 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maxDisputes: u32 & AugmentedConst<ApiType>;
       /**
+       * The maximum number of bytes allowed as edit reason.
+       **/
+      maxEditReasonLen: u32 & AugmentedConst<ApiType>;
+      /**
        * The maximum number of blocks allowed to be specified as grace_period
        * in create_market.
        **/
@@ -220,6 +392,10 @@ declare module '@polkadot/api-base/types/consts' {
        * in create_market.
        **/
       maxOracleDuration: u64 & AugmentedConst<ApiType>;
+      /**
+       * The maximum length of reject reason string.
+       **/
+      maxRejectReasonLen: u32 & AugmentedConst<ApiType>;
       /**
        * The shortest period of collecting subsidy for a Rikiddo market.
        **/
@@ -406,10 +582,6 @@ declare module '@polkadot/api-base/types/consts' {
     };
     transactionPayment: {
       /**
-       * The polynomial that is applied in order to derive fee from length.
-       **/
-      lengthToFee: Vec<FrameSupportWeightsWeightToFeeCoefficient> & AugmentedConst<ApiType>;
-      /**
        * A fee mulitplier for `Operational` extrinsics to compute "virtual tip" to boost their
        * `priority`
        * 
@@ -433,10 +605,6 @@ declare module '@polkadot/api-base/types/consts' {
        * transactions.
        **/
       operationalFeeMultiplier: u8 & AugmentedConst<ApiType>;
-      /**
-       * The polynomial that is applied in order to derive fee from weight.
-       **/
-      weightToFee: Vec<FrameSupportWeightsWeightToFeeCoefficient> & AugmentedConst<ApiType>;
     };
     treasury: {
       /**
@@ -483,6 +651,19 @@ declare module '@polkadot/api-base/types/consts' {
        * The minimum amount transferred to call `vested_transfer`.
        **/
       minVestedTransfer: u128 & AugmentedConst<ApiType>;
+    };
+    xTokens: {
+      /**
+       * Base XCM weight.
+       * 
+       * The actually weight for an XCM message is `T::BaseXcmWeight +
+       * T::Weigher::weight(&msg)`.
+       **/
+      baseXcmWeight: u64 & AugmentedConst<ApiType>;
+      /**
+       * Self chain location.
+       **/
+      selfLocation: XcmV1MultiLocation & AugmentedConst<ApiType>;
     };
   } // AugmentedConsts
 } // declare module

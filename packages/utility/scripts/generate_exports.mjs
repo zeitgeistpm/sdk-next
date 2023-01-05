@@ -9,17 +9,22 @@ import fs from 'fs'
 
 const folders = glob.sync('./src/*')
 
-const pckexports = folders.reduce((exp, folder) => {
-  const modulename = path.basename(folder)
-  return {
-    ...exp,
-    [`./dist/${modulename}`]: {
-      types: `./dist/${modulename}/index.d.ts`,
-      require: `./dist/${modulename}/index.cjs`,
-      import: `./dist/${modulename}/index.mjs`,
-    },
-  }
-}, {})
+const pckexports = folders.reduce(
+  (exp, folder) => {
+    const modulename = path.basename(folder)
+    return {
+      ...exp,
+      [`./dist/${modulename}`]: {
+        types: `./dist/${modulename}/index.d.ts`,
+        default: `./dist/${modulename}/index.js`,
+        import: `./dist/${modulename}/index.mjs`,
+      },
+    }
+  },
+  {
+    './package.json': './package.json',
+  },
+)
 
 const pckjson = JSON.parse(fs.readFileSync('./package.json'))
 
@@ -34,3 +39,19 @@ fs.writeFileSync(
     2,
   ),
 )
+
+// "main": "./dist/index.js",
+//   "module": "./dist/index.esm.js",
+//   "types": "./dist/index.d.ts",
+//   "exports": {
+//     ".": {
+//       "types": "./dist/index.d.ts",
+//       "import": "./dist/index.mjs",
+//       "default": "./dist/index.js"
+//     },
+//     "./package.json": "./package.json"
+//   },
+//   "files": [
+//     "dist/*",
+//     "src"
+//   ],

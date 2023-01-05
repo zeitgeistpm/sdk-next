@@ -1,8 +1,8 @@
-const { WsProvider } = require('@polkadot/api')
-const yargs = require('yargs')
-const fs = require('fs')
-
-const { argv } = yargs
+import { WsProvider } from '@polkadot/api'
+import yargs from 'yargs'
+import * as fs from 'fs'
+console.log(process.argv.slice(2))
+const { argv } = yargs(process.argv.slice(2))
   .option('endpoint', {
     alias: 'e',
     description: 'endpoint to fetch from',
@@ -32,9 +32,7 @@ async function main() {
   const outfile = Array.isArray(argv.outfile) ? argv.outfile : [argv.outfile]
 
   outfile.forEach(file => {
-    console.log(
-      `Writing metadata to file ${file}:\n${metadata.substring(0, 100)}...`,
-    )
+    console.log(`Writing metadata to file ${file}:\n${metadata.substring(0, 100)}...`)
     fs.writeFileSync(file, metadata)
   })
 
