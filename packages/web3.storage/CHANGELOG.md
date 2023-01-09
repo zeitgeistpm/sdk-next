@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.4.1
+
+### Patch Changes
+
+- b0c646c: Put default exports last in utility package exports.
+- Updated dependencies [b0c646c]
+  - @zeitgeistpm/utility@2.7.1
+
 ## 2.4.0
 
 ### Minor Changes

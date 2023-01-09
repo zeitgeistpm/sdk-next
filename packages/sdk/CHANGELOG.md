@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.14.1
+
+### Patch Changes
+
+- b0c646c: Put default exports last in utility package exports.
+- Updated dependencies [b0c646c]
+  - @zeitgeistpm/augment-api@2.7.1
+  - @zeitgeistpm/indexer@2.8.1
+  - @zeitgeistpm/rpc@2.4.1
+  - @zeitgeistpm/utility@2.7.1
+  - @zeitgeistpm/web3.storage@2.4.1
+
 ## 2.14.0
 
 ### Minor Changes
