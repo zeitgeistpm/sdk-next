@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.8.0
+
+### Minor Changes
+
+- 40456fb: Changed the indexer markets dispute mechanism type.
+
 ## 2.7.0
 
 ### Minor Changes

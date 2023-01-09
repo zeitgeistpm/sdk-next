@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.14.0
+
+### Minor Changes
+
+- 40456fb: Changed the indexer markets dispute mechanism type.
+
+### Patch Changes
+
+- Updated dependencies [40456fb]
+  - @zeitgeistpm/indexer@2.8.0
+
 ## 2.13.0
 
 ### Minor Changes
