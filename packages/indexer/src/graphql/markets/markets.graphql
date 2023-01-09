@@ -50,11 +50,7 @@ fragment FullMarket on Market {
       scalar
     }
   }
-  disputeMechanism {
-    Authorized: authorized
-    Court: court
-    SimpleDisputes: simpleDisputes
-  }
+  disputeMechanism 
   categories {
     ticker
     name

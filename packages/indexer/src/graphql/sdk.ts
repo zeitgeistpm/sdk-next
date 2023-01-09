@@ -1110,6 +1110,8 @@ export type HistoricalPoolsConnection = {
 /** Prediction market details */
 export type Market = {
   __typename?: 'Market';
+  /** Address responsible for authorizing disputes. Null if Adv Comm is the authority */
+  authorizedAddress?: Maybe<Scalars['String']>;
   /** Share details */
   categories?: Maybe<Array<Maybe<CategoryMetadata>>>;
   /** Can be `Permissionless` or `Advised` */
@@ -1122,8 +1124,8 @@ export type Market = {
   deadlines?: Maybe<MarketDeadlines>;
   /** Description of the market */
   description?: Maybe<Scalars['String']>;
-  /** Can be `authorized` or `court` or `simpleDisputes` */
-  disputeMechanism: MarketDisputeMechanism;
+  /** Can be `Authorized` or `Court` or `SimpleDisputes` */
+  disputeMechanism: Scalars['String'];
   /** Unique identifier of the object */
   id: Scalars['String'];
   /** Image for the market */
@@ -1198,43 +1200,6 @@ export type MarketDeadlinesWhereInput = {
   oracleDuration_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
 };
 
-/** Market's dispute details. Only one field would have value rest would be null." */
-export type MarketDisputeMechanism = {
-  __typename?: 'MarketDisputeMechanism';
-  /** Account address */
-  authorized?: Maybe<Scalars['String']>;
-  /** True if mechanism is court else null */
-  court?: Maybe<Scalars['Boolean']>;
-  /** True if mechanism is simple-disputes else null */
-  simpleDisputes?: Maybe<Scalars['Boolean']>;
-};
-
-export type MarketDisputeMechanismWhereInput = {
-  authorized_contains?: InputMaybe<Scalars['String']>;
-  authorized_containsInsensitive?: InputMaybe<Scalars['String']>;
-  authorized_endsWith?: InputMaybe<Scalars['String']>;
-  authorized_eq?: InputMaybe<Scalars['String']>;
-  authorized_gt?: InputMaybe<Scalars['String']>;
-  authorized_gte?: InputMaybe<Scalars['String']>;
-  authorized_in?: InputMaybe<Array<Scalars['String']>>;
-  authorized_isNull?: InputMaybe<Scalars['Boolean']>;
-  authorized_lt?: InputMaybe<Scalars['String']>;
-  authorized_lte?: InputMaybe<Scalars['String']>;
-  authorized_not_contains?: InputMaybe<Scalars['String']>;
-  authorized_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  authorized_not_endsWith?: InputMaybe<Scalars['String']>;
-  authorized_not_eq?: InputMaybe<Scalars['String']>;
-  authorized_not_in?: InputMaybe<Array<Scalars['String']>>;
-  authorized_not_startsWith?: InputMaybe<Scalars['String']>;
-  authorized_startsWith?: InputMaybe<Scalars['String']>;
-  court_eq?: InputMaybe<Scalars['Boolean']>;
-  court_isNull?: InputMaybe<Scalars['Boolean']>;
-  court_not_eq?: InputMaybe<Scalars['Boolean']>;
-  simpleDisputes_eq?: InputMaybe<Scalars['Boolean']>;
-  simpleDisputes_isNull?: InputMaybe<Scalars['Boolean']>;
-  simpleDisputes_not_eq?: InputMaybe<Scalars['Boolean']>;
-};
-
 export type MarketEdge = {
   __typename?: 'MarketEdge';
   cursor: Scalars['String'];
@@ -1242,6 +1207,8 @@ export type MarketEdge = {
 };
 
 export enum MarketOrderByInput {
+  AuthorizedAddressAsc = 'authorizedAddress_ASC',
+  AuthorizedAddressDesc = 'authorizedAddress_DESC',
   CreationAsc = 'creation_ASC',
   CreationDesc = 'creation_DESC',
   CreatorFeeAsc = 'creatorFee_ASC',
@@ -1256,12 +1223,8 @@ export enum MarketOrderByInput {
   DeadlinesOracleDurationDesc = 'deadlines_oracleDuration_DESC',
   DescriptionAsc = 'description_ASC',
   DescriptionDesc = 'description_DESC',
-  DisputeMechanismAuthorizedAsc = 'disputeMechanism_authorized_ASC',
-  DisputeMechanismAuthorizedDesc = 'disputeMechanism_authorized_DESC',
-  DisputeMechanismCourtAsc = 'disputeMechanism_court_ASC',
-  DisputeMechanismCourtDesc = 'disputeMechanism_court_DESC',
-  DisputeMechanismSimpleDisputesAsc = 'disputeMechanism_simpleDisputes_ASC',
-  DisputeMechanismSimpleDisputesDesc = 'disputeMechanism_simpleDisputes_DESC',
+  DisputeMechanismAsc = 'disputeMechanism_ASC',
+  DisputeMechanismDesc = 'disputeMechanism_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   ImgAsc = 'img_ASC',
@@ -1457,6 +1420,23 @@ export type MarketTypeWhereInput = {
 export type MarketWhereInput = {
   AND?: InputMaybe<Array<MarketWhereInput>>;
   OR?: InputMaybe<Array<MarketWhereInput>>;
+  authorizedAddress_contains?: InputMaybe<Scalars['String']>;
+  authorizedAddress_containsInsensitive?: InputMaybe<Scalars['String']>;
+  authorizedAddress_endsWith?: InputMaybe<Scalars['String']>;
+  authorizedAddress_eq?: InputMaybe<Scalars['String']>;
+  authorizedAddress_gt?: InputMaybe<Scalars['String']>;
+  authorizedAddress_gte?: InputMaybe<Scalars['String']>;
+  authorizedAddress_in?: InputMaybe<Array<Scalars['String']>>;
+  authorizedAddress_isNull?: InputMaybe<Scalars['Boolean']>;
+  authorizedAddress_lt?: InputMaybe<Scalars['String']>;
+  authorizedAddress_lte?: InputMaybe<Scalars['String']>;
+  authorizedAddress_not_contains?: InputMaybe<Scalars['String']>;
+  authorizedAddress_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  authorizedAddress_not_endsWith?: InputMaybe<Scalars['String']>;
+  authorizedAddress_not_eq?: InputMaybe<Scalars['String']>;
+  authorizedAddress_not_in?: InputMaybe<Array<Scalars['String']>>;
+  authorizedAddress_not_startsWith?: InputMaybe<Scalars['String']>;
+  authorizedAddress_startsWith?: InputMaybe<Scalars['String']>;
   categories_isNull?: InputMaybe<Scalars['Boolean']>;
   creation_contains?: InputMaybe<Scalars['String']>;
   creation_containsInsensitive?: InputMaybe<Scalars['String']>;
@@ -1520,8 +1500,23 @@ export type MarketWhereInput = {
   description_not_in?: InputMaybe<Array<Scalars['String']>>;
   description_not_startsWith?: InputMaybe<Scalars['String']>;
   description_startsWith?: InputMaybe<Scalars['String']>;
-  disputeMechanism?: InputMaybe<MarketDisputeMechanismWhereInput>;
+  disputeMechanism_contains?: InputMaybe<Scalars['String']>;
+  disputeMechanism_containsInsensitive?: InputMaybe<Scalars['String']>;
+  disputeMechanism_endsWith?: InputMaybe<Scalars['String']>;
+  disputeMechanism_eq?: InputMaybe<Scalars['String']>;
+  disputeMechanism_gt?: InputMaybe<Scalars['String']>;
+  disputeMechanism_gte?: InputMaybe<Scalars['String']>;
+  disputeMechanism_in?: InputMaybe<Array<Scalars['String']>>;
   disputeMechanism_isNull?: InputMaybe<Scalars['Boolean']>;
+  disputeMechanism_lt?: InputMaybe<Scalars['String']>;
+  disputeMechanism_lte?: InputMaybe<Scalars['String']>;
+  disputeMechanism_not_contains?: InputMaybe<Scalars['String']>;
+  disputeMechanism_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  disputeMechanism_not_endsWith?: InputMaybe<Scalars['String']>;
+  disputeMechanism_not_eq?: InputMaybe<Scalars['String']>;
+  disputeMechanism_not_in?: InputMaybe<Array<Scalars['String']>>;
+  disputeMechanism_not_startsWith?: InputMaybe<Scalars['String']>;
+  disputeMechanism_startsWith?: InputMaybe<Scalars['String']>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -2522,7 +2517,7 @@ export type MarketsQueryVariables = Exact<{
 }>;
 
 
-export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, pool?: { __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null }> };
+export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, disputeMechanism: string, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, pool?: { __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null }> };
 
 export type MarketStatusCountQueryVariables = Exact<{
   status: Scalars['String'];
@@ -2531,7 +2526,7 @@ export type MarketStatusCountQueryVariables = Exact<{
 
 export type MarketStatusCountQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string }> };
 
-export type FullMarketFragment = { __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, disputeMechanism: { __typename?: 'MarketDisputeMechanism', Authorized?: string | null, Court?: boolean | null, SimpleDisputes?: boolean | null }, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, pool?: { __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null };
+export type FullMarketFragment = { __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, disputeMechanism: string, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: string | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, pool?: { __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null };
 
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2659,11 +2654,7 @@ export const FullMarketFragmentDoc = gql`
       scalar
     }
   }
-  disputeMechanism {
-    Authorized: authorized
-    Court: court
-    SimpleDisputes: simpleDisputes
-  }
+  disputeMechanism
   categories {
     ticker
     name
