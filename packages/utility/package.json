@@ -8,103 +8,103 @@
     "./package.json": "./package.json",
     "./dist/aeither": {
       "types": "./dist/aeither/index.d.ts",
-      "default": "./dist/aeither/index.js",
-      "import": "./dist/aeither/index.mjs"
+      "import": "./dist/aeither/index.mjs",
+      "default": "./dist/aeither/index.js"
     },
     "./dist/array": {
       "types": "./dist/array/index.d.ts",
-      "default": "./dist/array/index.js",
-      "import": "./dist/array/index.mjs"
+      "import": "./dist/array/index.mjs",
+      "default": "./dist/array/index.js"
     },
     "./dist/assert": {
       "types": "./dist/assert/index.d.ts",
-      "default": "./dist/assert/index.js",
-      "import": "./dist/assert/index.mjs"
+      "import": "./dist/assert/index.mjs",
+      "default": "./dist/assert/index.js"
     },
     "./dist/async": {
       "types": "./dist/async/index.d.ts",
-      "default": "./dist/async/index.js",
-      "import": "./dist/async/index.mjs"
+      "import": "./dist/async/index.mjs",
+      "default": "./dist/async/index.js"
     },
     "./dist/btreemap": {
       "types": "./dist/btreemap/index.d.ts",
-      "default": "./dist/btreemap/index.js",
-      "import": "./dist/btreemap/index.mjs"
+      "import": "./dist/btreemap/index.mjs",
+      "default": "./dist/btreemap/index.js"
     },
     "./dist/codec": {
       "types": "./dist/codec/index.d.ts",
-      "default": "./dist/codec/index.js",
-      "import": "./dist/codec/index.mjs"
+      "import": "./dist/codec/index.mjs",
+      "default": "./dist/codec/index.js"
     },
     "./dist/either": {
       "types": "./dist/either/index.d.ts",
-      "default": "./dist/either/index.js",
-      "import": "./dist/either/index.mjs"
+      "import": "./dist/either/index.mjs",
+      "default": "./dist/either/index.js"
     },
     "./dist/error": {
       "types": "./dist/error/index.d.ts",
-      "default": "./dist/error/index.js",
-      "import": "./dist/error/index.mjs"
+      "import": "./dist/error/index.mjs",
+      "default": "./dist/error/index.js"
     },
     "./dist/function": {
       "types": "./dist/function/index.d.ts",
-      "default": "./dist/function/index.js",
-      "import": "./dist/function/index.mjs"
+      "import": "./dist/function/index.mjs",
+      "default": "./dist/function/index.js"
     },
     "./dist/math": {
       "types": "./dist/math/index.d.ts",
-      "default": "./dist/math/index.js",
-      "import": "./dist/math/index.mjs"
+      "import": "./dist/math/index.mjs",
+      "default": "./dist/math/index.js"
     },
     "./dist/na": {
       "types": "./dist/na/index.d.ts",
-      "default": "./dist/na/index.js",
-      "import": "./dist/na/index.mjs"
+      "import": "./dist/na/index.mjs",
+      "default": "./dist/na/index.js"
     },
     "./dist/null": {
       "types": "./dist/null/index.d.ts",
-      "default": "./dist/null/index.js",
-      "import": "./dist/null/index.mjs"
+      "import": "./dist/null/index.mjs",
+      "default": "./dist/null/index.js"
     },
     "./dist/object": {
       "types": "./dist/object/index.d.ts",
-      "default": "./dist/object/index.js",
-      "import": "./dist/object/index.mjs"
+      "import": "./dist/object/index.mjs",
+      "default": "./dist/object/index.js"
     },
     "./dist/observable": {
       "types": "./dist/observable/index.d.ts",
-      "default": "./dist/observable/index.js",
-      "import": "./dist/observable/index.mjs"
+      "import": "./dist/observable/index.mjs",
+      "default": "./dist/observable/index.js"
     },
     "./dist/option": {
       "types": "./dist/option/index.d.ts",
-      "default": "./dist/option/index.js",
-      "import": "./dist/option/index.mjs"
+      "import": "./dist/option/index.mjs",
+      "default": "./dist/option/index.js"
     },
     "./dist/pfunc": {
       "types": "./dist/pfunc/index.d.ts",
-      "default": "./dist/pfunc/index.js",
-      "import": "./dist/pfunc/index.mjs"
+      "import": "./dist/pfunc/index.mjs",
+      "default": "./dist/pfunc/index.js"
     },
     "./dist/task": {
       "types": "./dist/task/index.d.ts",
-      "default": "./dist/task/index.js",
-      "import": "./dist/task/index.mjs"
+      "import": "./dist/task/index.mjs",
+      "default": "./dist/task/index.js"
     },
     "./dist/taskeither": {
       "types": "./dist/taskeither/index.d.ts",
-      "default": "./dist/taskeither/index.js",
-      "import": "./dist/taskeither/index.mjs"
+      "import": "./dist/taskeither/index.mjs",
+      "default": "./dist/taskeither/index.js"
     },
     "./dist/time": {
       "types": "./dist/time/index.d.ts",
-      "default": "./dist/time/index.js",
-      "import": "./dist/time/index.mjs"
+      "import": "./dist/time/index.mjs",
+      "default": "./dist/time/index.js"
     },
     "./dist/ztg": {
       "types": "./dist/ztg/index.d.ts",
-      "default": "./dist/ztg/index.js",
-      "import": "./dist/ztg/index.mjs"
+      "import": "./dist/ztg/index.mjs",
+      "default": "./dist/ztg/index.js"
     }
   },
   "files": [
