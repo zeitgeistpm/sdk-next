@@ -129,13 +129,13 @@ export const toCompositeIndexerAssetId = (
 /**
  * Convert a indexer asset id to an AssetId.
  *
- * @param assetIdString CompositeIndexerAssetId | string
+ * @param raw CompositeIndexerAssetId | string
  * @returns O.IOption<AssetId>
  */
 export const fromCompositeIndexerAssetId = (
-  assetIdString: CompositeIndexerAssetId | string,
+  raw: CompositeIndexerAssetId | string | object,
 ): O.IOption<AssetId> => {
-  if (assetIdString.toLowerCase() === 'ztg') {
+  if (typeof raw === 'string' && raw.toLowerCase() === 'ztg') {
     return O.option(
       O.some({
         Ztg: null,
@@ -143,7 +143,7 @@ export const fromCompositeIndexerAssetId = (
     )
   }
 
-  const parsed = O.tryCatch(() => JSON.parse(assetIdString))
+  const parsed = O.tryCatch(() => (typeof raw === 'object' ? raw : JSON.parse(raw)))
   if (O.isNone(parsed)) return parsed
 
   const obj = parsed.value
