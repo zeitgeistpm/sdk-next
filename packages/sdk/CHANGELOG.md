@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.14.2
+
+### Patch Changes
+
+- 5dc168e: Parse object in fromCompositeIndexerAssetId
+
 ## 2.14.1
 
 ### Patch Changes
