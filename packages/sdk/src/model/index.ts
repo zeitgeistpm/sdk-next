@@ -18,8 +18,8 @@ export const model = <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
 ): Model<C, MS> => {
   return {
-    markets: Market.markets(ctx),
-    swaps: Swaps.swaps(ctx),
-    time: Time.time(ctx),
+    markets: Market.model(ctx),
+    swaps: Swaps.model(ctx),
+    time: Time.model(ctx),
   }
 }

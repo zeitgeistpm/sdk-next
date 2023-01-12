@@ -4,7 +4,7 @@ import { MetadataStorage } from '../../meta'
 import { now, now$ } from './functions/now'
 import { Time } from './types'
 
-export const time = <C extends Context<MS>, MS extends MetadataStorage>(
+export const model = <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
 ): Time<C, MS> => {
   if (isRpcContext<MS>(ctx)) {

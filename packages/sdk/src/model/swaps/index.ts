@@ -16,7 +16,7 @@ export * from './types'
  * @param ctx C
  * @returns Swaps<C>
  */
-export const swaps = <C extends Context<MS>, MS extends MetadataStorage>(
+export const model = <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
 ): Swaps<C, MS> => {
   const swaps: Swaps<C, MS> = {
