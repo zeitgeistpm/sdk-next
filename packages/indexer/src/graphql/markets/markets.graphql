@@ -41,6 +41,8 @@ fragment FullMarket on Market {
   period {
     block
     timestamp
+    end
+    start
   }
   report {
     at

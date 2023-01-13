@@ -61,6 +61,11 @@ export const option = <A>(_option: Option<A>): IOption<A> => ({
   bind: <B>(f: (a: A) => Option<B>) => option(bind(f, _option)),
 })
 
+export const fromNullable = <A>(value: A | null | undefined): IOption<A> => {
+  if (value === null || value === undefined) return option(none())
+  return option<A>(some<A>(value))
+}
+
 export const tryCatch = <A>(f: () => A): IOption<A> => {
   try {
     const value = f()

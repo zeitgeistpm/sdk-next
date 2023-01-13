@@ -2,6 +2,7 @@ import { u128 } from '@polkadot/types'
 import {
   ZeitgeistPrimitivesMarket,
   ZeitgeistPrimitivesMarketMarketDispute,
+  ZeitgeistPrimitivesMarketMarketStatus,
 } from '@polkadot/types/lookup'
 import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
@@ -17,7 +18,7 @@ import * as E from '@zeitgeistpm/utility/dist/either'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import { blockDate, ChainTime } from '@zeitgeistpm/utility/dist/time'
+import { blockDate, ChainTime, dateBlock } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
 import Decimal from 'decimal.js'
 import {
@@ -95,7 +96,7 @@ export type RpcMarket<
 export type SaturatedRpcMarket<
   C extends RpcContext<MS>,
   MS extends MetadataStorage,
-> = RpcMarket<C, MS> & IndexedBase & MarketTypeOf<MS>
+> = IndexedBase & MarketTypeOf<MS> & RpcMarket<C, MS>
 
 /**
  * Interface on market with methods for deploying swap pools, buying and selling sets of assets..
@@ -316,7 +317,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       creatorFee: primitive.creatorFee.toNumber(),
       scoringRule: primitive.scoringRule.type,
       outcomeAssets: outcomeAssets,
-      status: primitive.status.toHuman() as FullMarketFragment['status'],
+      status: primitive.status.toString() as FullMarketFragment['status'],
       period: primitive.period.toHuman() as FullMarketFragment['period'],
       marketType: primitive.marketType.toHuman() as FullMarketFragment['marketType'],
       disputeMechanism:
@@ -621,4 +622,60 @@ export const getScalarBounds = (
       E.right([new Decimal(bounds[0]).div(ZTG), new Decimal(bounds[1]).div(ZTG)]),
     )
   }
+}
+
+export const getDeadlines = (market: Market<Context>) => {
+  if (isRpcData(market)) {
+    return {
+      gracePeriod: market.deadlines.gracePeriod.toNumber() as number,
+      oracleDuration: market.deadlines.oracleDuration.toNumber() as number,
+      disputeDuration: market.deadlines.disputeDuration.toNumber() as number,
+    }
+  }
+  return {
+    gracePeriod: Number(market.deadlines?.gracePeriod ?? 0),
+    oracleDuration: Number(market.deadlines?.oracleDuration ?? 0),
+    disputeDuration: Number(market.deadlines?.disputeDuration ?? 0),
+  }
+}
+
+export const isInGracePeriod = (market: Market<Context>) => {
+  if (getStatus(market) !== 'Closed') return false
+
+  const deadlines = getDeadlines(market)
+}
+
+export const getStatus = (
+  market: Market<Context>,
+): ZeitgeistPrimitivesMarketMarketStatus['type'] => {
+  return isRpcData(market)
+    ? market.status.type
+    : (market.status as ZeitgeistPrimitivesMarketMarketStatus['type'])
+}
+
+export const getPeriod = (market: Market<Context>, now: ChainTime) => {
+  if (isRpcData(market)) {
+    const start = market.period.isTimestamp
+      ? market.period.asTimestamp.start.toNumber()
+      : blockDate(now, market.period.asBlock.start.toNumber()).getTime()
+    const end = market.period.isTimestamp
+      ? market.period.asTimestamp.end.toNumber()
+      : blockDate(now, market.period.asBlock.end.toNumber()).getTime()
+
+    return { start, end }
+  }
+  return {
+    start: Number(market.period.start),
+    end: Number(market.period.start),
+  }
+}
+
+export const hasReport = (market: Market<Context>): boolean => {
+  return isRpcData(market) ? market.report.isSome : !!market.report
+}
+
+export const getReporter = (market: Market<Context>) => {
+  return O.fromNullable(
+    isRpcData(market) ? market.report.unwrapOr(null)?.by.toString() : market.report?.by,
+  )
 }
