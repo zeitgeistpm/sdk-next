@@ -1,6 +1,7 @@
 import { IOption } from '@zeitgeistpm/utility/dist/option'
 import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import { ChainTime } from '@zeitgeistpm/utility/dist/time'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
@@ -8,6 +9,7 @@ import { CreateMarketTransaction, Market, RpcMarket } from '../types'
 import { CreateMarketParams, CreateMarketResult } from './functions/create/types'
 import { MarketGetQuery } from './functions/get/types'
 import { MarketList, MarketsListQuery } from './functions/list/types'
+import { MarketStage } from './marketstage'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -71,5 +73,9 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
           tx: (params: CreateMarketParams<C, MS>) => Promise<CreateMarketTransaction>
         }
       >
+    : never
+
+  getStage: C extends RpcContext<MS>
+    ? (market: Market<C, MS>, time?: ChainTime) => Promise<MarketStage>
     : never
 }

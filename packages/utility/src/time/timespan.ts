@@ -113,3 +113,16 @@ export const blocksToDates = (now: ChainTime, dates: BlockTimespan): DateTimespa
     end: blockDate(now, dates.end),
   }
 }
+
+/**
+ * Get the duration of a timespan in milliseconds.
+ *
+ * @param time ChainTime
+ * @param timeSpan Timespan
+ * @returns number
+ */
+export const toMs = (time: ChainTime, timeSpan: Timespan): number => {
+  return isDates(timeSpan)
+    ? timeSpan.end.getTime() - timeSpan.start.getTime()
+    : (timeSpan.end - timeSpan.start) * time.period
+}

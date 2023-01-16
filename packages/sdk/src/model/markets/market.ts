@@ -666,7 +666,7 @@ export const getPeriod = (market: Market<Context>, now: ChainTime) => {
   }
   return {
     start: Number(market.period.start),
-    end: Number(market.period.start),
+    end: Number(market.period.end),
   }
 }
 
@@ -677,5 +677,11 @@ export const hasReport = (market: Market<Context>): boolean => {
 export const getReporter = (market: Market<Context>) => {
   return O.fromNullable(
     isRpcData(market) ? market.report.unwrapOr(null)?.by.toString() : market.report?.by,
+  )
+}
+
+export const getReportedAt = (market: Market<Context>) => {
+  return O.fromNullable(
+    isRpcData(market) ? market.report.unwrapOr(null)?.at.toNumber() : market.report?.at,
   )
 }

@@ -1,12 +1,21 @@
 import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import { ChainTime } from '@zeitgeistpm/utility/dist/time'
 import { Context, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { create, transaction } from './functions/create'
 import { get, observeMarket$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
 import { list } from './functions/list'
-import { CreateMarketParams, Markets, MarketsListQuery, CreateMarketResult } from './types'
+import { getStage } from './functions/stage'
+import { MarketStage } from './marketstage'
+import {
+  CreateMarketParams,
+  Markets,
+  MarketsListQuery,
+  CreateMarketResult,
+  Market,
+} from './types'
 
 export * from './types'
 
@@ -43,6 +52,12 @@ export const model = <C extends Context<MS>, MS extends MetadataStorage>(
           },
         )
       : undefined) as Markets<typeof ctx, MS>['create'],
+
+    getStage: (isRpcContext<MS>(ctx)
+      ? async (market: Market<typeof ctx>, time?: ChainTime): Promise<MarketStage> => {
+          return getStage(ctx, market, time)
+        }
+      : undefined) as Markets<typeof ctx, MS>['getStage'],
   }
 
   return markets
