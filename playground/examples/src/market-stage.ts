@@ -1,4 +1,5 @@
 import { batterystation, create } from '@zeitgeistpm/sdk'
+import { isInfinite } from '@zeitgeistpm/sdk'
 import ms from 'ms'
 
 async function main() {
@@ -7,15 +8,19 @@ async function main() {
    */
   const sdk = await create(batterystation())
 
-  const market = (await sdk.model.markets.get({ marketId: 543 })).unwrap()
-  const stage = await sdk.model.markets.getStage(market!)
-  console.log(stage.type, ms(stage.remainingTime ?? Infinity))
-
-  setInterval(async () => {
+  const log = async () => {
     const market = (await sdk.model.markets.get({ marketId: 543 })).unwrap()
     const stage = await sdk.model.markets.getStage(market!)
-    console.log(stage.type, ms(stage.remainingTime ?? Infinity))
-  }, ms('1m'))
+    console.log(
+      market!.marketId,
+      stage.type,
+      isInfinite(stage) ? 'infinte' : ms(stage.remainingTime ?? Infinity),
+    )
+  }
+
+  log()
+
+  setInterval(log, ms('20s'))
 }
 
 main().catch(error => {

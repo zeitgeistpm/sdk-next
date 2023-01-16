@@ -14,6 +14,7 @@ import { MarketStage } from './marketstage'
 export * from './functions/create/types'
 export * from './functions/list/types'
 export * from './market'
+export * from './marketstage'
 
 /**
  * Zeitgeist Markets model.
