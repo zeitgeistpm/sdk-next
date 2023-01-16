@@ -8,14 +8,15 @@ async function main() {
    */
   const sdk = await create(batterystation())
 
-  /**
-   * Fetch a set of pools.
-   */
-  const market = (await sdk.model.markets.get({ marketId: 367 })).unwrap()
-
+  const market = (await sdk.model.markets.get({ marketId: 543 })).unwrap()
   const stage = await sdk.model.markets.getStage(market!)
-
   console.log(stage.type, ms(stage.remainingTime ?? Infinity))
+
+  setInterval(async () => {
+    const market = (await sdk.model.markets.get({ marketId: 543 })).unwrap()
+    const stage = await sdk.model.markets.getStage(market!)
+    console.log(stage.type, ms(stage.remainingTime ?? Infinity))
+  }, ms('1m'))
 }
 
 main().catch(error => {

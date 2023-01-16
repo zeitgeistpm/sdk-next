@@ -51,6 +51,11 @@
       "import": "./dist/function/index.mjs",
       "default": "./dist/function/index.js"
     },
+    "./dist/infinity": {
+      "types": "./dist/infinity/index.d.ts",
+      "import": "./dist/infinity/index.mjs",
+      "default": "./dist/infinity/index.js"
+    },
     "./dist/math": {
       "types": "./dist/math/index.d.ts",
       "import": "./dist/math/index.mjs",

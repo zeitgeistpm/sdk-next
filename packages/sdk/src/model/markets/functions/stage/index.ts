@@ -1,5 +1,6 @@
+import { infinity } from '@zeitgeistpm/utility/dist/infinity'
 import { blockDate, ChainTime, toMs } from '@zeitgeistpm/utility/dist/time'
-import { MarketStage, MarketStageType } from '../../marketstage'
+import { MarketStage } from '../../marketstage'
 import { now } from '../../../time/functions/now'
 import { Context, RpcContext } from '../../../../context'
 import {
@@ -11,6 +12,16 @@ import {
   Market,
 } from '../../market'
 
+/**
+ * Get the market stage for a market.
+ * The market stage contains information about the current stage of the market lifecycle
+ * and the total time of current the stage + estimated time remaining for the current stage.
+ *
+ * @param ctx Context
+ * @param market Market<Context>
+ * @param time ChainTime | undefined
+ * @returns Promise<MarketStage>
+ */
 export const getStage = async (
   ctx: RpcContext,
   market: Market<Context>,
@@ -20,7 +31,6 @@ export const getStage = async (
 
   const status = getStatus(market)
   const deadlines = getDeadlines(market)
-  const reporter = getReporter(market).unwrap()
   const { start, end } = getPeriod(market, time)
 
   const graceDuration = toMs(time, { start: 0, end: deadlines.gracePeriod })
@@ -29,7 +39,7 @@ export const getStage = async (
   const correctionDuration = 24 * 60 * 60 * 1000 // TODO: get from chain when governance of const is in place.
 
   if (status === 'Proposed') {
-    return { type: 'Proposed', remainingTime: null, totalTime: null }
+    return { type: 'Proposed', remainingTime: infinity, totalTime: infinity }
   }
 
   if (status === 'Active') {
@@ -48,26 +58,29 @@ export const getStage = async (
       }
     }
 
-    if (time.now > oracleReportingEnds) {
-      return { type: 'OpenReportWaiting', remainingTime: null, totalTime: null }
-    } else {
+    if (time.now < oracleReportingEnds) {
       return {
-        type: 'OracleReportWaiting',
+        type: 'ReportPeriod',
         remainingTime: oracleDuration - (time.now - oraclePeriodStarts),
         totalTime: oracleDuration,
+        access: 'oracle',
+      }
+    } else {
+      return {
+        type: 'ReportPeriod',
+        remainingTime: infinity,
+        totalTime: infinity,
+        access: 'open',
       }
     }
   }
 
   if (status === 'Reported') {
-    const type: MarketStageType =
-      market.oracle === reporter ? 'OracleReportCooldown' : 'OpenReportCooldown'
-
     const reportedAtBlock = getReportedAt(market).unwrapOr(0)
     const reportedAtTimestamp = blockDate(time, reportedAtBlock).getTime()
     const remainingTime = disputeDuration - (time.now - reportedAtTimestamp)
 
-    return { type, remainingTime, totalTime: disputeDuration }
+    return { type: 'Reported', remainingTime, totalTime: disputeDuration }
   }
 
   if (status === 'Disputed') {
@@ -82,11 +95,11 @@ export const getStage = async (
       return { type: 'AuthorizedReport', remainingTime, totalTime: correctionDuration }
     }
 
-    return { type: 'Disputed', remainingTime: null, totalTime: null }
+    return { type: 'Disputed', remainingTime: infinity, totalTime: infinity }
   }
 
   if (status === 'Resolved') {
-    return { type: 'Resolved', remainingTime: 0, totalTime: 0 }
+    return { type: 'Resolved', remainingTime: infinity, totalTime: infinity }
   }
 
   throw new Error(`Couldn't determine market stage by status ${status}`)
