@@ -1,4 +1,3 @@
-import { Init } from '@polkadot/api/base/Init'
 import { batterystation, create } from '@zeitgeistpm/sdk'
 import ms from 'ms'
 
