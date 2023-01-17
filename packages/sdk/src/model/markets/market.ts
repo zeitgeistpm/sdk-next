@@ -617,7 +617,7 @@ export const getScalarBounds = (
     )
   } else {
     if (!market.marketType.scalar) return E.either(E.left(new Error('Not a scalar market')))
-    const bounds = market.marketType.scalar.split(',')
+    const bounds = market.marketType.scalar as [string, string]
     return E.either(
       E.right([new Decimal(bounds[0]).div(ZTG), new Decimal(bounds[1]).div(ZTG)]),
     )
