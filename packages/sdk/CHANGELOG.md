@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.15.0
+
+### Minor Changes
+
+- 5abcec4: Added getMarketStage to models Market and updated market indexed marketType scalar being array and not string.
+
+### Patch Changes
+
+- Updated dependencies [5abcec4]
+  - @zeitgeistpm/indexer@2.9.0
+  - @zeitgeistpm/utility@2.8.0
+
 ## 2.14.2
 
 ### Patch Changes
