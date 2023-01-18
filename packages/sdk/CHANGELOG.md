@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.15.1
+
+### Patch Changes
+
+- 38ad0b9: markets passed to getStage can have either indexer or rpc context
+
 ## 2.15.0
 
 ### Minor Changes
