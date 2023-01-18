@@ -664,6 +664,7 @@ export const getPeriod = (market: Market<Context>, now: ChainTime) => {
 
     return { start, end }
   }
+
   return {
     start: Number(market.period.start),
     end: Number(market.period.end),

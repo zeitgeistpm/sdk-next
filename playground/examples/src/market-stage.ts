@@ -15,6 +15,7 @@ async function main() {
       market!.marketId,
       stage.type,
       isInfinite(stage) ? 'infinte' : ms(stage.remainingTime ?? Infinity),
+      stage.type === 'ReportPeriod' ? stage.access : '',
     )
   }
 

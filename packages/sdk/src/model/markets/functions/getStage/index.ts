@@ -49,6 +49,8 @@ export const getStage = async (
     const oraclePeriodStarts = end + graceDuration
     const oracleReportingEnds = oraclePeriodStarts + oracleDuration
 
+    //TODO: if market period is in blocks, use blocks to determine actual stage, time remainng and total time can still be calculated.
+
     if (time.now < oraclePeriodStarts) {
       return {
         type: 'GracePeriod',
