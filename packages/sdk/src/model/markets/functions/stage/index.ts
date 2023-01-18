@@ -36,7 +36,6 @@ export const getStage = async (
   const graceDuration = toMs(time, { start: 0, end: deadlines.gracePeriod })
   const oracleDuration = toMs(time, { start: 0, end: deadlines.oracleDuration })
   const disputeDuration = toMs(time, { start: 0, end: deadlines.disputeDuration })
-  const correctionDuration = 24 * 60 * 60 * 1000 // TODO: get from chain when governance of const is in place.
 
   if (status === 'Proposed') {
     return { type: 'Proposed', remainingTime: infinity, totalTime: infinity }
@@ -90,6 +89,7 @@ export const getStage = async (
       const block = await ctx.api.rpc.chain.getBlock(report.createdAtHash)
       const reportedAtBlock = block.block.header.number.toNumber()
       const reportedAtTimestamp = blockDate(time, reportedAtBlock).getTime()
+      const correctionDuration = 24 * 60 * 60 * 1000 // TODO: get from chain when governance of const is in place.
       const remainingTime = correctionDuration - (time.now - reportedAtTimestamp)
 
       return { type: 'AuthorizedReport', remainingTime, totalTime: correctionDuration }
