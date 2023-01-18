@@ -30,6 +30,7 @@ export type GracePeriod = DynamicStage<'GracePeriod'>
 
 /**
  * The market is in its reporting stage.
+ * Can be in a finite oracle reporting stage or a indefinte open reporting stage.
  */
 export type ReportPeriod =
   | (DynamicStage<'ReportPeriod'> & { access: 'oracle' })
