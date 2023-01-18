@@ -7,7 +7,8 @@ export type MarketStage =
   | Proposed
   | Trading
   | GracePeriod
-  | ReportPeriod
+  | OracleReportingPeriod
+  | OpenReportingPeriod
   | Reported
   | Disputed
   | AuthorizedReport
@@ -29,12 +30,14 @@ export type Trading = DynamicStage<'Trading'>
 export type GracePeriod = DynamicStage<'GracePeriod'>
 
 /**
- * The market is in its reporting stage.
- * Can be in a finite oracle reporting stage or a indefinte open reporting stage.
+ * The market is in its reporting stage where oracle reports are accepted.
  */
-export type ReportPeriod =
-  | (DynamicStage<'ReportPeriod'> & { access: 'oracle' })
-  | (InfiniteStage<'ReportPeriod'> & { access: 'open' })
+export type OracleReportingPeriod = DynamicStage<'OracleReportingPeriod'>
+
+/**
+ * The market is in its reporting stage where reports from anyone are accepted.
+ */
+export type OpenReportingPeriod = InfiniteStage<'OpenReportingPeriod'>
 
 /**
  * The market has been reported and will be resolved if no dispute is raised.

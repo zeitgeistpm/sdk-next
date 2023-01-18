@@ -61,17 +61,15 @@ export const getStage = async (
 
     if (time.now < oracleReportingEnds) {
       return {
-        type: 'ReportPeriod',
+        type: 'OracleReportingPeriod',
         remainingTime: oracleDuration - (time.now - oraclePeriodStarts),
         totalTime: oracleDuration,
-        access: 'oracle',
       }
     } else {
       return {
-        type: 'ReportPeriod',
+        type: 'OpenReportingPeriod',
         remainingTime: infinity,
         totalTime: infinity,
-        access: 'open',
       }
     }
   }
