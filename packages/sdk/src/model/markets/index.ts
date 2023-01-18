@@ -7,7 +7,7 @@ import { create, transaction } from './functions/create'
 import { get, observeMarket$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
 import { list } from './functions/list'
-import { getStage } from './functions/stage'
+import { getStage } from './functions/getStage'
 import { MarketStage } from './marketstage'
 import {
   CreateMarketParams,
