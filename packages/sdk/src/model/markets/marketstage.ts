@@ -1,4 +1,5 @@
 import { Infinity, isInfinity } from '@zeitgeistpm/utility/dist/infinity'
+
 /**
  * Union type of all possible market stages.
  */
