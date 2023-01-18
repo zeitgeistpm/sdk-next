@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.15.2
+
+### Patch Changes
+
+- 0337f9d: Make open reporting and oracle reporting market stages distinct types.
+
 ## 2.15.1
 
 ### Patch Changes
