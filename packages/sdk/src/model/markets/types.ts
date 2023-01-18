@@ -77,6 +77,6 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
     : never
 
   getStage: C extends RpcContext<MS>
-    ? (market: Market<C, MS>, time?: ChainTime) => Promise<MarketStage>
+    ? (market: Market<Context<MS>, MS>, time?: ChainTime) => Promise<MarketStage>
     : never
 }

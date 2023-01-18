@@ -54,7 +54,7 @@ export const model = <C extends Context<MS>, MS extends MetadataStorage>(
       : undefined) as Markets<typeof ctx, MS>['create'],
 
     getStage: (isRpcContext<MS>(ctx)
-      ? async (market: Market<typeof ctx>, time?: ChainTime): Promise<MarketStage> => {
+      ? async (market: Market<Context>, time?: ChainTime): Promise<MarketStage> => {
           return getStage(ctx, market, time)
         }
       : undefined) as Markets<typeof ctx, MS>['getStage'],
