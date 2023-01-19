@@ -1,16 +1,9 @@
 import { infinity } from '@zeitgeistpm/utility/dist/infinity'
 import { blockDate, ChainTime, toMs } from '@zeitgeistpm/utility/dist/time'
-import { MarketStage } from '../../marketstage'
-import { now } from '../../../time/functions/now'
 import { Context, RpcContext } from '../../../../context'
-import {
-  getDeadlines,
-  getPeriod,
-  getReportedAt,
-  getReporter,
-  getStatus,
-  Market,
-} from '../../market'
+import { now } from '../../../time/functions/now'
+import { getDeadlines, getPeriod, getReportedAt, getStatus, Market } from '../../market'
+import { MarketStage } from '../../marketstage'
 
 /**
  * Get the market stage for a market.
