@@ -18,10 +18,9 @@ import { MarketStage } from '../../marketstage'
 export const getStage = async (
   ctx: RpcContext,
   market: Market<Context>,
-  time?: ChainTime,
+  providedTime?: ChainTime,
 ): Promise<MarketStage> => {
-  time = time ?? (await now(ctx))
-
+  const time = providedTime ?? (await now(ctx))
   const status = getStatus(market)
   const deadlines = getDeadlines(market)
   const { start, end } = getPeriod(market, time)
