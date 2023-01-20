@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.9.1
+
+### Patch Changes
+
+- fd1acd8: Indexer uses global fetch.
+
 ## 2.9.0
 
 ### Minor Changes

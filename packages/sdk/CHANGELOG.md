@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.15.3
+
+### Patch Changes
+
+- fd1acd8: Indexer uses global fetch.
+- Updated dependencies [fd1acd8]
+  - @zeitgeistpm/indexer@2.9.1
+
 ## 2.15.2
 
 ### Patch Changes
