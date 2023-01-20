@@ -1146,6 +1146,8 @@ export type Market = {
   pool?: Maybe<Pool>;
   /** Market question */
   question?: Maybe<Scalars['String']>;
+  /** Reasoning for market rejection */
+  rejectReason?: Maybe<Scalars['String']>;
   /** Reported outcome of the market. Null if the market is not reported yet */
   report?: Maybe<MarketReport>;
   /** Resolved outcome for the market */
@@ -1269,6 +1271,8 @@ export enum MarketOrderByInput {
   PoolZtgQtyDesc = 'pool_ztgQty_DESC',
   QuestionAsc = 'question_ASC',
   QuestionDesc = 'question_DESC',
+  RejectReasonAsc = 'rejectReason_ASC',
+  RejectReasonDesc = 'rejectReason_DESC',
   ReportAtAsc = 'report_at_ASC',
   ReportAtDesc = 'report_at_DESC',
   ReportByAsc = 'report_by_ASC',
@@ -1606,6 +1610,23 @@ export type MarketWhereInput = {
   question_not_in?: InputMaybe<Array<Scalars['String']>>;
   question_not_startsWith?: InputMaybe<Scalars['String']>;
   question_startsWith?: InputMaybe<Scalars['String']>;
+  rejectReason_contains?: InputMaybe<Scalars['String']>;
+  rejectReason_containsInsensitive?: InputMaybe<Scalars['String']>;
+  rejectReason_endsWith?: InputMaybe<Scalars['String']>;
+  rejectReason_eq?: InputMaybe<Scalars['String']>;
+  rejectReason_gt?: InputMaybe<Scalars['String']>;
+  rejectReason_gte?: InputMaybe<Scalars['String']>;
+  rejectReason_in?: InputMaybe<Array<Scalars['String']>>;
+  rejectReason_isNull?: InputMaybe<Scalars['Boolean']>;
+  rejectReason_lt?: InputMaybe<Scalars['String']>;
+  rejectReason_lte?: InputMaybe<Scalars['String']>;
+  rejectReason_not_contains?: InputMaybe<Scalars['String']>;
+  rejectReason_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  rejectReason_not_endsWith?: InputMaybe<Scalars['String']>;
+  rejectReason_not_eq?: InputMaybe<Scalars['String']>;
+  rejectReason_not_in?: InputMaybe<Array<Scalars['String']>>;
+  rejectReason_not_startsWith?: InputMaybe<Scalars['String']>;
+  rejectReason_startsWith?: InputMaybe<Scalars['String']>;
   report?: InputMaybe<MarketReportWhereInput>;
   report_isNull?: InputMaybe<Scalars['Boolean']>;
   resolvedOutcome_contains?: InputMaybe<Scalars['String']>;

@@ -13,7 +13,7 @@ export * from './types'
  * @returns ZeitgeistIndexer
  */
 export const create = (config: Config): ZeitgeistIndexer => {
-  const client = new GraphQLClient(config.uri)
+  const client = new GraphQLClient(config.uri, { fetch: globalThis.fetch })
   const gql = getSdk(client)
   return {
     client,
