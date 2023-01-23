@@ -1,5 +1,5 @@
-import { CommentMetadata, MarketMetadata, MetadataStorage } from '../../meta'
-import { FullConfig, IndexerConfig, RpcConfig } from '../types'
+import type { CommentMetadata, MarketMetadata, MetadataStorage } from '../../meta'
+import type { FullConfig, IndexerConfig, RpcConfig } from '../types'
 import { ZeitgeistIpfs } from './storage'
 import { SupportedParachain } from './types'
 

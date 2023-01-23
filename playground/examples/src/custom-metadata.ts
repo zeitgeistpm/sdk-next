@@ -33,7 +33,7 @@ async function main() {
   const params: CreateStandaloneMarketParams<typeof sdk.context> = {
     signer,
     creationType: 'Permissionless',
-    disputeMechanism: { Authorized: signer.address },
+    disputeMechanism: 'Authorized',
     marketType: { Categorical: 2 },
     oracle: signer.address,
     period: { Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] },

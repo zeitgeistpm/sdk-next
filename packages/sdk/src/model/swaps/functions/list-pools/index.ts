@@ -1,3 +1,6 @@
+import type { Option, StorageKey, u128 } from '@polkadot/types'
+import type { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
+import { isNull } from '@polkadot/util'
 import {
   Context,
   IndexerContext,
@@ -6,14 +9,11 @@ import {
   isRpcContext,
   RpcContext,
 } from '../../../../context/types'
-import { isPaginated } from '../../../../types/query'
-import { PoolsListQuery } from '../../types'
-import { fromEntries, Pool, rpcPool, RpcPool } from '../../pool'
 import { MetadataStorage } from '../../../../meta'
+import { isPaginated } from '../../../../types/query'
+import { fromEntries, Pool } from '../../pool'
 import { PoolList } from '../../poolslist'
-import { isNull } from '@polkadot/util'
-import { Option, StorageKey, u128 } from '@polkadot/types'
-import { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
+import { PoolsListQuery } from '../../types'
 
 /**
  * Query for a list of pools.

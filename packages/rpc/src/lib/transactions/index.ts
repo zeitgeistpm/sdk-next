@@ -1,6 +1,5 @@
 import type { ApiPromise } from '@polkadot/api'
 import type { SubmittableExtrinsic } from '@polkadot/api/types'
-import { SignedBlock } from '@polkadot/types/interfaces'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { isExtSigner, KeyringPairOrExtSigner } from '../keyring'

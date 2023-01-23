@@ -1,5 +1,5 @@
-import { BTreeMap } from '@polkadot/types'
-import { Codec } from '@polkadot/types/types'
+import type { BTreeMap } from '@polkadot/types'
+import type { Codec } from '@polkadot/types/types'
 
 /**
  * Get a value from a BTreeMap for a key.

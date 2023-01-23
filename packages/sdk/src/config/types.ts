@@ -1,11 +1,14 @@
-import { MetadataStorage } from '../meta/types'
+import type { MetadataStorage } from '../meta/types'
 
 export * from './known'
 
 /**
  * Union type of possible configurations.
  */
-export type Config<MS extends MetadataStorage> = FullConfig<MS> | RpcConfig<MS> | IndexerConfig
+export type Config<MS extends MetadataStorage> =
+  | FullConfig<MS>
+  | RpcConfig<MS>
+  | IndexerConfig
 
 export type BaseConfig = {
   /**
@@ -58,7 +61,9 @@ export const asIndexerConfig = <MS extends MetadataStorage>(
  * @param config FullConfig<MS>
  * @returns RpcConfig<MS>
  */
-export const asRpcConfig = <MS extends MetadataStorage>(config: FullConfig<MS>): RpcConfig<MS> => ({
+export const asRpcConfig = <MS extends MetadataStorage>(
+  config: FullConfig<MS>,
+): RpcConfig<MS> => ({
   provider: config.provider,
   storage: config.storage,
   connectionRetries: config.connectionRetries,

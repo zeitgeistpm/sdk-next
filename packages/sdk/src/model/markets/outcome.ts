@@ -1,6 +1,6 @@
-import { u128, u16 } from '@polkadot/types'
-import { ZeitgeistPrimitivesOutcomeReport } from '@polkadot/types/lookup'
-import { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
+import type { u128, u16 } from '@polkadot/types'
+import type { ZeitgeistPrimitivesOutcomeReport } from '@polkadot/types/lookup'
+import type { KeyringPairOrExtSigner } from '@zeitgeistpm/rpc'
 
 export type ReportOutcomeParams = {
   marketId: number | u128

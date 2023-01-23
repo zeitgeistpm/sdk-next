@@ -1,4 +1,4 @@
-import { SubmittableExtrinsic } from '@polkadot/api/types'
+import type { SubmittableExtrinsic } from '@polkadot/api/types'
 import type {
   ZeitgeistPrimitivesMarketMarketCreation,
   ZeitgeistPrimitivesMarketMarketDisputeMechanism,
@@ -11,7 +11,7 @@ import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { Pool } from '../../../swaps/pool'
-import { Market, RpcMarket } from '../../market'
+import { Market } from '../../market'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.

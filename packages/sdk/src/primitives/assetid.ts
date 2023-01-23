@@ -1,4 +1,4 @@
-import { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
+import type { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
 import { isCodec } from '@polkadot/util'
 import { camelcaseObjectKeys } from '@zeitgeistpm/utility/dist/object'
 import * as O from '@zeitgeistpm/utility/dist/option'

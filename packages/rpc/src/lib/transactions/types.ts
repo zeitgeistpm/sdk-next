@@ -1,5 +1,4 @@
 import type RpcError from '@polkadot/rpc-provider/coder/error'
-import { SignedBlock } from '@polkadot/types/interfaces'
 import type { ISubmittableResult, RegistryError } from '@polkadot/types/types'
 
 export type TransactionHooks = {

@@ -1,6 +1,9 @@
-import { Option, StorageKey, u128, Vec } from '@polkadot/types'
-import { ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
-import { ISubmittableResult } from '@polkadot/types/types'
+import type { Option, StorageKey, u128, Vec } from '@polkadot/types'
+import type {
+  ZeitgeistPrimitivesAsset,
+  ZeitgeistPrimitivesPool,
+} from '@polkadot/types/lookup'
+import type { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
 import { isEqual } from 'lodash-es'
 import { PoolsQuery } from '@zeitgeistpm/indexer'

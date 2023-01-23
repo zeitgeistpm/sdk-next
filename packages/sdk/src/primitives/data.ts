@@ -1,4 +1,4 @@
-import { Codec } from '@polkadot/types/types'
+import type { Codec } from '@polkadot/types/types'
 import { isCodec } from '@polkadot/util'
 import { MetadataStorage } from '../meta'
 import { FullContext, IndexerContext, RpcContext } from '../context'

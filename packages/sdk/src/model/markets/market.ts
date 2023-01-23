@@ -1,12 +1,12 @@
-import { u128 } from '@polkadot/types'
+import type { u128 } from '@polkadot/types'
+import type { ISubmittableResult } from '@polkadot/types/types'
+import type { FullMarketFragment } from '@zeitgeistpm/indexer'
 import {
   ZeitgeistPrimitivesMarket,
   ZeitgeistPrimitivesMarketMarketDispute,
   ZeitgeistPrimitivesMarketMarketStatus,
 } from '@polkadot/types/lookup'
-import { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
-import { FullMarketFragment } from '@zeitgeistpm/indexer'
 import {
   KeyringPairOrExtSigner,
   signAndSend,
