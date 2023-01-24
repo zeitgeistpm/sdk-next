@@ -953,8 +953,8 @@ export type HistoricalPool = {
   id: Scalars['String'];
   /** Zeitgeist's identifier for pool */
   poolId: Scalars['Int'];
-  /** New status of the pool */
-  poolStatus?: Maybe<Scalars['String']>;
+  /** Current status of the pool */
+  poolStatus: Scalars['String'];
   /** Timestamp of the block */
   timestamp: Scalars['DateTime'];
   /** New updated volume */

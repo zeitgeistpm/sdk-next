@@ -1,12 +1,12 @@
 import type { u128 } from '@polkadot/types'
-import type { ISubmittableResult } from '@polkadot/types/types'
-import type { FullMarketFragment } from '@zeitgeistpm/indexer'
 import {
   ZeitgeistPrimitivesMarket,
   ZeitgeistPrimitivesMarketMarketDispute,
   ZeitgeistPrimitivesMarketMarketStatus,
 } from '@polkadot/types/lookup'
+import type { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
+import type { FullMarketFragment } from '@zeitgeistpm/indexer'
 import {
   KeyringPairOrExtSigner,
   signAndSend,
@@ -18,7 +18,7 @@ import * as E from '@zeitgeistpm/utility/dist/either'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import { blockDate, ChainTime, dateBlock } from '@zeitgeistpm/utility/dist/time'
+import { blockDate, ChainTime } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
 import Decimal from 'decimal.js'
 import {
@@ -637,12 +637,6 @@ export const getDeadlines = (market: Market<Context>) => {
     oracleDuration: Number(market.deadlines?.oracleDuration ?? 0),
     disputeDuration: Number(market.deadlines?.disputeDuration ?? 0),
   }
-}
-
-export const isInGracePeriod = (market: Market<Context>) => {
-  if (getStatus(market) !== 'Closed') return false
-
-  const deadlines = getDeadlines(market)
 }
 
 export const getStatus = (
