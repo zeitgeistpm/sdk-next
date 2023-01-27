@@ -64,9 +64,11 @@ export type ZTGPriceInfo = {
  * @returns Promise<ZTGInfo>
  */
 export const fetchZTGInfo = async (): Promise<ZTGPriceInfo> => {
+  //TODO: have a failover to different api.
   const res = await fetch(
     'https://api.coingecko.com/api/v3/simple/price?ids=zeitgeist&vs_currencies=usd&include_24hr_change=true',
   )
+
   const json = await res.json()
 
   return {
