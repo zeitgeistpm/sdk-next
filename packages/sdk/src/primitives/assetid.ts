@@ -37,6 +37,8 @@ export const IOScalarAssetId = type({
   ScalarOutcome: IOScalarIndex,
 })
 
+export const IOMarketOutcomeAssetId = union([IOCategoricalAssetId, IOScalarAssetId])
+
 export const IOZtgAssetId = type({
   Ztg: literal(null),
 })
