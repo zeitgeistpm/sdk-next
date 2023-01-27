@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.15.5
+
+### Patch Changes
+
+- f31c341: Added failover to subscan fetching in fetchZTGInfo if Coingecko fails
+- Updated dependencies [f31c341]
+  - @zeitgeistpm/indexer@2.9.2
+  - @zeitgeistpm/utility@2.8.1
+
 ## 2.15.4
 
 ### Patch Changes

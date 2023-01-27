@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.8.1
+
+### Patch Changes
+
+- f31c341: Added failover to subscan fetching in fetchZTGInfo if Coingecko fails
+
 ## 2.8.0
 
 ### Minor Changes
