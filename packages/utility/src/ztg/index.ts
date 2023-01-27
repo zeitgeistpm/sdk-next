@@ -63,8 +63,10 @@ export type ZTGPriceInfo = {
  *
  * @returns Promise<ZTGInfo>
  */
-export const fetchZTGInfo = async (): Promise<ZTGPriceInfo> => {
-  //TODO: have a failover to different api.
+export const fetchZTGInfo = async (): Promise<ZTGPriceInfo> =>
+  fetchZTGInfoFromCoingecko().catch(() => fetchZTGInfoFromSubscan())
+
+export const fetchZTGInfoFromCoingecko = async (): Promise<ZTGPriceInfo> => {
   const res = await fetch(
     'https://api.coingecko.com/api/v3/simple/price?ids=zeitgeist&vs_currencies=usd&include_24hr_change=true',
   )
@@ -74,5 +76,17 @@ export const fetchZTGInfo = async (): Promise<ZTGPriceInfo> => {
   return {
     price: new Decimal(json.zeitgeist.usd),
     change: new Decimal(json.zeitgeist.usd_24h_change),
+  }
+}
+
+export const fetchZTGInfoFromSubscan = async (): Promise<ZTGPriceInfo> => {
+  const res = await fetch('https://zeitgeist.api.subscan.io/api/scan/token')
+
+  const json = await res.json()
+  const data = json.data.detail.ZTG
+
+  return {
+    price: new Decimal(data.price),
+    change: new Decimal(data.price_change).mul(100),
   }
 }
