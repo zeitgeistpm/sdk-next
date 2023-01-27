@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.15.4
+
+### Patch Changes
+
+- fe76985: Added IOMarketOutcomeAssetId for checking if asset id is related to a market outcome
+
 ## 2.15.3
 
 ### Patch Changes
