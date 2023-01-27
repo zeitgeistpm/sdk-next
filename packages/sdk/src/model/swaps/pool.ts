@@ -5,7 +5,6 @@ import type {
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
-import { isEqual } from 'lodash-es'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
 import {
   KeyringPairOrExtSigner,
@@ -14,17 +13,16 @@ import {
   TransactionHooks,
 } from '@zeitgeistpm/rpc'
 import { Unpacked } from '@zeitgeistpm/utility/dist/array'
-import { mapget } from '@zeitgeistpm/utility/dist/btreemap'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import Decimal from 'decimal.js'
-import { Context, IndexerContext, isRpcContext, RpcContext } from '../../context'
+import { isEqual } from 'lodash-es'
+import { Context, IndexerContext, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import {
   AssetId,
   fromCompositeIndexerAssetId,
   getIndexOf,
-  getScalarIndexOf,
   IOCategoricalAssetId,
   IOScalarAssetId,
   IOZtgAssetId,
