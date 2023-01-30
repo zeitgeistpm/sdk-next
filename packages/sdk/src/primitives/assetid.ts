@@ -131,6 +131,8 @@ export const toCompositeIndexerAssetId = (
 /**
  * Convert a indexer asset id to an AssetId.
  *
+ * TODO: should return an Either since parsing can fail. Users expect parsing to work, not working is an exception.
+ *
  * @param raw CompositeIndexerAssetId | string
  * @returns O.IOption<AssetId>
  */

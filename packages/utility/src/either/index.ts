@@ -36,6 +36,9 @@ export const isRight = <L, R>(either: Either<L, R>): either is Right<R> => 'righ
  */
 export const isLeft = <L, R>(either: Either<L, R>): either is Left<L> => 'left' in either
 
+/**
+ * Unwrap the right value. Throws if the either is a left.
+ */
 export const unwrap = <L, R>(either: Either<L, R>) => unrightOr<L, R>(throws, either)
 
 /**
