@@ -1,10 +1,9 @@
 import { infinity } from '@zeitgeistpm/utility/dist/infinity'
-import * as Time from '@zeitgeistpm/utility/dist/time'
-import * as AE from '@zeitgeistpm/utility/dist/aeither'
 import * as O from '@zeitgeistpm/utility/dist/option'
+import * as Time from '@zeitgeistpm/utility/dist/time'
 import { Context, RpcContext } from '../../../../context'
 import { now } from '../../../time/functions/now'
-import { getDeadlines, timespanOf, getReportedAt, getStatus, Market } from '../../market'
+import { getDeadlines, getReportedAt, getStatus, Market, timespanOf } from '../../market'
 import { MarketStage } from '../../marketstage'
 
 /**
