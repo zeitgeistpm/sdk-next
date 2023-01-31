@@ -1,8 +1,10 @@
 import { infinity } from '@zeitgeistpm/utility/dist/infinity'
-import { blockDate, ChainTime, toMs } from '@zeitgeistpm/utility/dist/time'
+import * as Time from '@zeitgeistpm/utility/dist/time'
+import * as AE from '@zeitgeistpm/utility/dist/aeither'
+import * as O from '@zeitgeistpm/utility/dist/option'
 import { Context, RpcContext } from '../../../../context'
 import { now } from '../../../time/functions/now'
-import { getDeadlines, getPeriod, getReportedAt, getStatus, Market } from '../../market'
+import { getDeadlines, timespanOf, getReportedAt, getStatus, Market } from '../../market'
 import { MarketStage } from '../../marketstage'
 
 /**
@@ -18,16 +20,16 @@ import { MarketStage } from '../../marketstage'
 export const getStage = async (
   ctx: RpcContext,
   market: Market<Context>,
-  providedTime?: ChainTime,
+  providedTime?: Time.ChainTime,
 ): Promise<MarketStage> => {
   const time = providedTime ?? (await now(ctx))
   const status = getStatus(market)
   const deadlines = getDeadlines(market)
-  const { start, end } = getPeriod(market, time)
+  const { start, end } = Time.asBlocks(time, timespanOf(market, time))
 
-  const graceDuration = toMs(time, { start: 0, end: deadlines.gracePeriod })
-  const oracleDuration = toMs(time, { start: 0, end: deadlines.oracleDuration })
-  const disputeDuration = toMs(time, { start: 0, end: deadlines.disputeDuration })
+  const graceDuration = Time.toMs(time, { start: 0, end: deadlines.gracePeriod })
+  const oracleDuration = Time.toMs(time, { start: 0, end: deadlines.oracleDuration })
+  const disputeDuration = Time.toMs(time, { start: 0, end: deadlines.disputeDuration })
 
   if (status === 'Proposed') {
     return { type: 'Proposed', remainingTime: infinity, totalTime: infinity }
@@ -68,7 +70,7 @@ export const getStage = async (
 
   if (status === 'Reported') {
     const reportedAtBlock = getReportedAt(market).unwrapOr(0)
-    const reportedAtTimestamp = blockDate(time, reportedAtBlock).getTime()
+    const reportedAtTimestamp = Time.blockDate(time, reportedAtBlock).getTime()
     const remainingTime = disputeDuration - (time.now - reportedAtTimestamp)
 
     return { type: 'Reported', remainingTime, totalTime: disputeDuration }
@@ -80,8 +82,14 @@ export const getStage = async (
     if (!report.isEmpty) {
       const block = await ctx.api.rpc.chain.getBlock(report.createdAtHash)
       const reportedAtBlock = block.block.header.number.toNumber()
-      const reportedAtTimestamp = blockDate(time, reportedAtBlock).getTime()
-      const correctionDuration = 24 * 60 * 60 * 1000 // TODO: get from chain when governance of const is in place.
+      const reportedAtTimestamp = Time.blockDate(time, reportedAtBlock).getTime()
+
+      const correctionPeriod = O.tryCatch(
+        () => (ctx.api.consts.authorized as any)['correctionPeriod'].toNumber() as number,
+      ).unwrapOr(7200)
+
+      const correctionDuration = Time.toMs(time, { start: 0, end: correctionPeriod })
+
       const remainingTime = correctionDuration - (time.now - reportedAtTimestamp)
 
       return { type: 'AuthorizedReport', remainingTime, totalTime: correctionDuration }
@@ -92,6 +100,10 @@ export const getStage = async (
 
   if (status === 'Resolved') {
     return { type: 'Resolved', remainingTime: infinity, totalTime: infinity }
+  }
+
+  if (status === 'Destroyed') {
+    return { type: 'Destroyed', remainingTime: infinity, totalTime: infinity }
   }
 
   throw new Error(`Couldn't determine market stage by status ${status}`)
