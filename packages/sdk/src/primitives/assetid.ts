@@ -1,6 +1,7 @@
 import type { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
 import { isCodec } from '@polkadot/util'
-import { camelcaseObjectKeys } from '@zeitgeistpm/utility/dist/object'
+import * as E from '@zeitgeistpm/utility/dist/either'
+import { upperFirstObjectKeys } from '@zeitgeistpm/utility/dist/object'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import { Infer, literal, number, tuple, type, union } from 'superstruct'
 import { IOMarketId, MarketId } from './marketid'
@@ -14,6 +15,8 @@ export type ScalarAssetId = Infer<typeof IOScalarAssetId>
 export type CategoricalAssetId = Infer<typeof IOCategoricalAssetId>
 export type ZtgAssetId = Infer<typeof IOZtgAssetId>
 export type PoolShareAssetId = Infer<typeof IOPoolShareAssetId>
+
+export type MarketOutcomeAssetId = Infer<typeof IOMarketOutcomeAssetId>
 
 export type ScalarIndex = Infer<typeof IOScalarIndex>
 export type CategoricalIndex = Infer<typeof IOCategoricalIndex>
@@ -107,28 +110,6 @@ export const getIndexOf = (assetId: AssetId): number | null =>
     : null
 
 /**
- * String id type used to identify assets in the indexer.
- */
-export type CompositeIndexerAssetId = string & {
-  readonly CompositeIndexerAssetId: unique symbol
-}
-
-/**
- *
- * @param assetId AssetId | ZeitgeistPrimitivesAsset
- * @returns
- */
-export const toCompositeIndexerAssetId = (
-  assetId: AssetId | ZeitgeistPrimitivesAsset,
-): CompositeIndexerAssetId => {
-  return JSON.stringify(
-    camelcaseObjectKeys(
-      isCodec(assetId) ? fromPrimitive(assetId as ZeitgeistPrimitivesAsset) : assetId,
-    ),
-  ) as CompositeIndexerAssetId
-}
-
-/**
  * Convert a indexer asset id to an AssetId.
  *
  * TODO: should return an Either since parsing can fail. Users expect parsing to work, not working is an exception.
@@ -136,38 +117,43 @@ export const toCompositeIndexerAssetId = (
  * @param raw CompositeIndexerAssetId | string
  * @returns O.IOption<AssetId>
  */
-export const fromCompositeIndexerAssetId = (
-  raw: CompositeIndexerAssetId | string | object,
-): O.IOption<AssetId> => {
+export const parseAssetId = (raw: string | object): E.IEither<SyntaxError, AssetId> => {
   if (typeof raw === 'string' && raw.toLowerCase() === 'ztg') {
-    return O.option(
-      O.some({
+    return E.either(
+      E.right({
         Ztg: null,
       } as AssetId),
     )
   }
 
   const parsed = O.tryCatch(() => (typeof raw === 'object' ? raw : JSON.parse(raw)))
-  if (O.isNone(parsed)) return parsed
+  if (O.isNone(parsed)) return E.either(E.left(new SyntaxError('Invalid asset id json')))
 
-  const obj = parsed.value
+  const obj = upperFirstObjectKeys(parsed.value)
   let assetId: AssetId | null = null
 
-  if ('categoricalOutcome' in obj) {
+  if ('Ztg' in obj) {
     assetId = {
-      CategoricalOutcome: obj['categoricalOutcome'],
+      Ztg: null,
     } as AssetId
   }
-  if ('scalarOutcome' in obj) {
+  if ('CategoricalOutcome' in obj) {
     assetId = {
-      ScalarOutcome: obj['scalarOutcome'],
+      CategoricalOutcome: obj['CategoricalOutcome'],
     } as AssetId
   }
-  if ('poolShare' in obj) {
+  if ('ScalarOutcome' in obj) {
     assetId = {
-      PoolShare: obj['poolShare'],
+      ScalarOutcome: obj['ScalarOutcome'],
+    } as AssetId
+  }
+  if ('PoolShare' in obj) {
+    assetId = {
+      PoolShare: obj['PoolShare'],
     } as AssetId
   }
 
-  return O.option(assetId ? O.some(assetId) : O.none())
+  return E.either(
+    assetId ? E.right(assetId) : E.left(new SyntaxError('Invalid asset id structure')),
+  )
 }

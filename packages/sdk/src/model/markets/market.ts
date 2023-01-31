@@ -16,6 +16,7 @@ import {
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
+import { upperFirstObjectKeys } from '@zeitgeistpm/utility/dist/object'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { blockDate, ChainTime, Timespan } from '@zeitgeistpm/utility/dist/time'
@@ -30,14 +31,7 @@ import {
 } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
-import {
-  Data,
-  isIndexedData,
-  isRpcData,
-  NA,
-  toCompositeIndexerAssetId,
-  ZTG,
-} from '../../primitives'
+import { Data, isIndexedData, isRpcData, NA, ZTG } from '../../primitives'
 import { now } from '../time/functions/now'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
@@ -319,7 +313,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       }),
     ])
 
-    const outcomeAssets = pool ? pool.assets.toArray().map(toCompositeIndexerAssetId) : []
+    const outcomeAssets = pool ? pool.assets.toArray().map(a => JSON.stringify(a)) : []
 
     const base: IndexedBase = {
       id: `${market.marketId}`,

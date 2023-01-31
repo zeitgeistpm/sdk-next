@@ -82,7 +82,7 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
         const assets: SaturatedPoolEntryAsset[] = pool.weights
           .filter(isNotNull)
           .map(weight => {
-            const assetId = AssetId.fromCompositeIndexerAssetId(weight.assetId).unwrap()!
+            const assetId = AssetId.parseAssetId(weight.assetId).unwrap()!
             const assetIndex = AssetId.getIndexOf(assetId)!
 
             const percentage = Math.round(

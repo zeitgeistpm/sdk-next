@@ -21,7 +21,8 @@
   ],
   "scripts": {
     "build": "yarn compile",
-    "compile": "rimraf ./dist && rollup -c"
+    "compile": "rimraf ./dist && rollup -c",
+    "test": "vitest run"
   },
   "peerDependencies": {
     "@polkadot/api": "*",
