@@ -9,7 +9,7 @@ import {
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { RpcMarket, rpcMarket } from '../../market'
-import { attachMarketMethods, IndexedMarket, Market } from '../../types'
+import { attachMarketMethods, Market } from '../../types'
 import { MarketGetQuery } from './types'
 
 /**
