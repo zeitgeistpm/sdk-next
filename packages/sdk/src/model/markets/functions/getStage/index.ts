@@ -27,10 +27,6 @@ export const getStage = async (
   const deadlines = getDeadlines(market)
   const { start, end } = Time.asBlocks(time, timespanOf(market, time))
 
-  const graceDuration = Time.toMs(time, { start: 0, end: deadlines.gracePeriod })
-  const oracleDuration = Time.toMs(time, { start: 0, end: deadlines.oracleDuration })
-  const disputeDuration = Time.toMs(time, { start: 0, end: deadlines.disputeDuration })
-
   if (status === 'Proposed') {
     return { type: 'Proposed', remainingTime: infinity, totalTime: infinity }
   }
@@ -40,6 +36,8 @@ export const getStage = async (
   }
 
   if (status === 'Closed') {
+    const graceDuration = Time.toMs(time, { start: 0, end: deadlines.gracePeriod })
+    const oracleDuration = Time.toMs(time, { start: 0, end: deadlines.oracleDuration })
     const oraclePeriodStarts = end + graceDuration
     const oracleReportingEnds = oraclePeriodStarts + oracleDuration
 
@@ -69,6 +67,7 @@ export const getStage = async (
   }
 
   if (status === 'Reported') {
+    const disputeDuration = Time.toMs(time, { start: 0, end: deadlines.disputeDuration })
     const reportedAtBlock = getReportedAt(market).unwrapOr(0)
     const reportedAtTimestamp = Time.blockDate(time, reportedAtBlock).getTime()
     const remainingTime = disputeDuration - (time.now - reportedAtTimestamp)
@@ -89,7 +88,6 @@ export const getStage = async (
       ).unwrapOr(7200)
 
       const correctionDuration = Time.toMs(time, { start: 0, end: correctionPeriod })
-
       const remainingTime = correctionDuration - (time.now - reportedAtTimestamp)
 
       return { type: 'AuthorizedReport', remainingTime, totalTime: correctionDuration }
