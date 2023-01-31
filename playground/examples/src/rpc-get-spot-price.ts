@@ -1,11 +1,4 @@
-import {
-  batterystation,
-  batterystationIndexer,
-  batterystationRpc,
-  create,
-  mainnetIndexer,
-  mainnetRpc,
-} from '@zeitgeistpm/sdk'
+import { batterystation, create } from '@zeitgeistpm/sdk'
 
 const ZTG = '10000000000'
 
