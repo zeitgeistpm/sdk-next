@@ -5,8 +5,7 @@ import * as O from '../option'
 /**
  * Async Either type.
  */
-export type AEither<L, R> = Promise<E.IEither<L, R> | E.Either<L, R>>
-
+export type AEither<L, R> = Promise<E.IEither<L, R>>
 /**
  * Convert a promise to an async either.
  *
