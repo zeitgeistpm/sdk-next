@@ -4,7 +4,8 @@
 
 ### Minor Changes
 
-- a3dd51d: - The raw `sdk.indexer` and `sdk.api` instances can now be found directly on the sdk at top level(based on the context when created), and does not need to be refered through `sdk.context`
+- a3dd51d: Refactors needed.
+  - The raw `sdk.indexer` and `sdk.api` instances can now be found directly on the sdk at top level(based on the context when created), and does not need to be refered through `sdk.context`
   - `fromCompositeIndexerAssetId` method renamed to `parseAssetId`
   - `sdk.asRpc()` and `sdk.asIndexer()` has been removed, use `isRpcSdk(sdk)` and `isIndexedSdk(sdk)` respectively.
   - `baseAsset` parameter added market creation parameter used in `sdk.model.markets.create`
