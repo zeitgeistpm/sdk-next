@@ -10,7 +10,7 @@ import {
   RpcContext,
 } from '../../../../context/types'
 import { MetadataStorage } from '../../../../meta'
-import { isPaginated } from '../../../../types/query'
+import { isPaginated } from '../../../../primitives/pagination'
 import { fromEntries, Pool } from '../../pool'
 import { PoolList } from '../../poolslist'
 import { PoolsListQuery } from '../../types'
@@ -63,7 +63,7 @@ const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>
 ): Promise<Pool<C, MS>[]> => {
   let entries: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][]
 
-  if (isPaginated(query)) {
+  if (query && isPaginated(query)) {
     const keys = query.keys ?? (await ctx.api.query.swaps.pools.keys())
     entries = await ctx.api.query.swaps.pools.entriesPaged({
       args: [],

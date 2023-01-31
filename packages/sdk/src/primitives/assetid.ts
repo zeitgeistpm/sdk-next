@@ -1,5 +1,4 @@
 import type { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
-import { isCodec } from '@polkadot/util'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import { upperFirstObjectKeys } from '@zeitgeistpm/utility/dist/object'
 import * as O from '@zeitgeistpm/utility/dist/option'
@@ -110,11 +109,11 @@ export const getIndexOf = (assetId: AssetId): number | null =>
     : null
 
 /**
- * Convert a indexer asset id to an AssetId.
+ * Convert a indexer asset id string or object to an AssetId.
  *
  * TODO: should return an Either since parsing can fail. Users expect parsing to work, not working is an exception.
  *
- * @param raw CompositeIndexerAssetId | string
+ * @param raw object | string
  * @returns O.IOption<AssetId>
  */
 export const parseAssetId = (raw: string | object): E.IEither<SyntaxError, AssetId> => {
@@ -129,7 +128,7 @@ export const parseAssetId = (raw: string | object): E.IEither<SyntaxError, Asset
   const parsed = O.tryCatch(() => (typeof raw === 'object' ? raw : JSON.parse(raw)))
   if (O.isNone(parsed)) return E.either(E.left(new SyntaxError('Invalid asset id json')))
 
-  const obj = upperFirstObjectKeys(parsed.value)
+  const obj: any = upperFirstObjectKeys(parsed.value)
   let assetId: AssetId | null = null
 
   if ('Ztg' in obj) {

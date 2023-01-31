@@ -7,7 +7,7 @@ import {
   RpcContext,
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
-import { isPaginated } from '../../../../types/query'
+import { isPaginated } from '../../../../primitives/pagination'
 import {
   MarketList,
   MarketsListQuery,
@@ -59,13 +59,14 @@ const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>
   context: C,
   query?: MarketsListQuery<C>,
 ): Promise<MarketList<C, MS>> => {
-  const entries = isPaginated(query)
-    ? await context.api.query.marketCommons.markets.entriesPaged({
-        args: [],
-        pageSize: query.limit,
-        startKey: `${query.offset}`,
-      })
-    : await context.api.query.marketCommons.markets.entries()
+  const entries =
+    query && isPaginated(query)
+      ? await context.api.query.marketCommons.markets.entriesPaged({
+          args: [],
+          pageSize: query.limit,
+          startKey: `${query.offset}`,
+        })
+      : await context.api.query.marketCommons.markets.entries()
 
   const list = entries.map(
     ([

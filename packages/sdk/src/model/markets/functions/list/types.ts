@@ -2,7 +2,7 @@ import type { MarketOrderByInput, MarketWhereInput } from '@zeitgeistpm/indexer'
 import type { Unpartial } from '@zeitgeistpm/utility/dist/object'
 import { MetadataStorage } from '../../../../meta'
 import { Context, IndexerContext, RpcContext } from '../../../../context'
-import { PaginationQuery } from '../../../../types/query'
+import { PaginationQuery } from '../../../../primitives/pagination'
 import { Market, IndexedMarket, RpcMarket } from '../../types'
 
 /**

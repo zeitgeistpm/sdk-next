@@ -75,6 +75,7 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
+      params.baseAsset,
       params.oracle,
       params.period,
       params.deadlines,
@@ -87,6 +88,7 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
     )
   } else {
     tx = context.api.tx.predictionMarkets.createMarket(
+      params.baseAsset,
       params.oracle,
       params.period,
       params.deadlines,

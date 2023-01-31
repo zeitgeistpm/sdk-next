@@ -30,8 +30,9 @@ async function main() {
   const keyring = new Keyring({ ss58Format: 73, type: 'sr25519' })
   const signer = keyring.addFromUri('//Alice', { name: 'Alice default' })
 
-  const params: CreateStandaloneMarketParams<typeof sdk.context> = {
+  const params: CreateStandaloneMarketParams<typeof sdk> = {
     signer,
+    baseAsset: { Ztg: null },
     creationType: 'Permissionless',
     disputeMechanism: 'Authorized',
     marketType: { Categorical: 2 },

@@ -12,7 +12,7 @@ export const Unsubscriber: React.FC = () => {
     setSub(
       sdk$.subscribe(sdk => {
         if (isRpcSdk(sdk)) {
-          sdk.context.provider.on('disconnected', () => {
+          sdk.provider.on('disconnected', () => {
             console.log('disconnected')
           })
         }
@@ -22,7 +22,7 @@ export const Unsubscriber: React.FC = () => {
     setsndSub(
       sdk$.subscribe(sdk => {
         if (isRpcSdk(sdk)) {
-          sdk.context.provider.on('disconnected', () => {
+          sdk.provider.on('disconnected', () => {
             console.log('snd disconnected')
           })
         }

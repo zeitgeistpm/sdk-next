@@ -10,12 +10,12 @@ async function main() {
 
   const log = async () => {
     const market = (await sdk.model.markets.get({ marketId: 545 })).unwrap()
+    console.log(market)
     const stage = await sdk.model.markets.getStage(market!)
     console.log(
       market!.marketId,
       stage.type,
       isInfinite(stage) ? 'infinte' : ms(stage.remainingTime ?? Infinity),
-      stage.type === 'ReportPeriod' ? stage.access : '',
     )
   }
 

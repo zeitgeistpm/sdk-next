@@ -7,7 +7,7 @@ import '@polkadot/api-base/types/consts';
 
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
 import type { Bytes, Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
-import type { Perbill, Percent, Permill } from '@polkadot/types/interfaces/runtime';
+import type { Perbill, Percent, Permill, Weight } from '@polkadot/types/interfaces/runtime';
 import type { FrameSupportPalletId, FrameSupportWeightsRuntimeDbWeight, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, XcmV1MultiLocation, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
@@ -18,6 +18,11 @@ declare module '@polkadot/api-base/types/consts' {
       getNativeCurrencyId: ZeitgeistPrimitivesAsset & AugmentedConst<ApiType>;
     };
     authorized: {
+      /**
+       * The period, in which the authority can correct the outcome of a market.
+       * This value must not be zero.
+       **/
+      correctionPeriod: u64 & AugmentedConst<ApiType>;
       /**
        * Identifier of this pallet
        **/
@@ -274,18 +279,6 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       candidateBondLessDelay: u32 & AugmentedConst<ApiType>;
       /**
-       * Default number of blocks per round at genesis
-       **/
-      defaultBlocksPerRound: u32 & AugmentedConst<ApiType>;
-      /**
-       * Default commission due to collators, is `CollatorCommission` storage value in genesis
-       **/
-      defaultCollatorCommission: Perbill & AugmentedConst<ApiType>;
-      /**
-       * Default percent of inflation set aside for parachain bond account
-       **/
-      defaultParachainBondReservePercent: Percent & AugmentedConst<ApiType>;
-      /**
        * Number of rounds that delegation less requests must wait before executable
        **/
       delegationBondLessDelay: u32 & AugmentedConst<ApiType>;
@@ -362,10 +355,6 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       disputeFactor: u128 & AugmentedConst<ApiType>;
       /**
-       * The number of blocks the dispute period remains open.
-       **/
-      disputePeriod: u64 & AugmentedConst<ApiType>;
-      /**
        * The maximum number of categories available for categorical markets.
        **/
       maxCategories: u16 & AugmentedConst<ApiType>;
@@ -428,10 +417,6 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
       /**
-       * The number of blocks the reporting period remains open.
-       **/
-      reportingPeriod: u64 & AugmentedConst<ApiType>;
-      /**
        * The base amount of currency that must be bonded for a permissionless market,
        * guaranteeing that it will resolve as anything but `Invalid`.
        **/
@@ -487,7 +472,7 @@ declare module '@polkadot/api-base/types/consts' {
        * The maximum weight that may be scheduled per block for any dispatchables of less
        * priority than `schedule::HARD_DEADLINE`.
        **/
-      maximumWeight: u64 & AugmentedConst<ApiType>;
+      maximumWeight: Weight & AugmentedConst<ApiType>;
       /**
        * The maximum number of scheduled calls in the queue for a single block.
        * Not strictly enforced, but used for weight estimation.
@@ -552,7 +537,7 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       dbWeight: FrameSupportWeightsRuntimeDbWeight & AugmentedConst<ApiType>;
       /**
-       * The designated SS85 prefix of this chain.
+       * The designated SS58 prefix of this chain.
        * 
        * This replaces the "ss58Format" property declared in the chain spec. Reason is
        * that the runtime should know about the prefix in order to make use of it as

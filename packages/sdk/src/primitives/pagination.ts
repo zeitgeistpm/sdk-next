@@ -20,11 +20,14 @@ export type PaginationQuery = {
  * @param query any
  * @returns query is PaginationQuery
  */
-export const isPaginated = <T>(query: T): query is PaginationQuery & T =>
+export const isPaginated = <T extends Record<any, any>>(
+  query: T,
+): query is PaginationQuery & T =>
   Boolean(
     query &&
       isObject(query) &&
       'offset' in query &&
+      'limit' in query &&
       isNumber(query['offset']) &&
       isNumber(query['limit']),
   )

@@ -13,9 +13,9 @@ async function main() {
   /**
    * Fetching asset indexes works with both rpc and indexer mode.
    */
-  const sdk = await create(batterystationRpc())
+  const sdk = await create(batterystation())
 
-  const prices = await sdk.context.api.rpc.swaps.getSpotPrice(
+  const prices = await sdk.api.rpc.swaps.getSpotPrice(
     66,
     { Ztg: null },
     { CategoricalOutcome: [372, 0] },

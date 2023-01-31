@@ -11,7 +11,7 @@ async function main() {
   /**
    * Fetch a set of pools.
    */
-  const markets = await sdk.context.indexer.marketStatusCount({ status: 'Active' })
+  const markets = await sdk.indexer.marketStatusCount({ status: 'Active' })
 
   console.log(markets)
 }

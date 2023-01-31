@@ -41,7 +41,7 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
      * @param query MarketGetQuery
      * @returns Promise<Market<C, MS> | null>
      */
-    (query: MarketGetQuery) => IOption<Market<C, MS>>,
+    (query: MarketGetQuery) => Promise<IOption<Market<C, MS>>>,
     C extends RpcContext<MS>
       ? {
           /**

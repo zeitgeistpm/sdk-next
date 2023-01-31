@@ -1,4 +1,4 @@
-import { MetadataStorage } from './meta/index.js'
+import { isNull } from '@polkadot/util'
 import {
   Context,
   FullContext,
@@ -7,8 +7,8 @@ import {
   isRpcContext,
   RpcContext,
 } from './context/types.js'
+import { MetadataStorage } from './meta/index.js'
 import { Model, model } from './model/index.js'
-import { isNull } from '@polkadot/util'
 
 export * from './config/types.js'
 export * from './context/types.js'
@@ -17,27 +17,20 @@ export * from './model/types.js'
 /**
  * Top level Zeitgeist SDK type.
  */
-export type Sdk<C extends Context<MS>, MS extends MetadataStorage = MetadataStorage> = {
+export type Sdk<C extends Context<MS>, MS extends MetadataStorage = MetadataStorage> = C & {
   /**
-   * The context for the sdk, can be indexed, rpc or both.
-   * If the context has indexer capabilities they will be prefered when fetching data.
-   * To force rpc usage use sdk.asRpc()
+   * The context that was used to create the sdk.
+   * Used for internal type narrowing to work correctly..
+   *
+   * @private - pseudo private property
    */
-  readonly context: C
+  readonly __context: C
   /**
    * Enriched zeitgeist models with features for qyerying data on chain and indexer,
    * and for creating transaction flows with for example richer validation to ensure that
    * the markets you have the official standard of metadata so that they show up in the official frontend.
    */
   readonly model: Model<C, MS>
-  /**
-   * Force the sdk to use rpc if available.
-   */
-  asRpc: C extends RpcContext<MS> ? () => Sdk<C, MS> | null : never
-  /**
-   * Force the sdk to use indexer if available.
-   */
-  asIndexer: C extends IndexerContext ? () => Sdk<C, MS> | null : never
 }
 
 /**
@@ -52,39 +45,17 @@ export const sdk = <C extends Context<MS>, MS extends MetadataStorage = Metadata
   context: C,
 ): Sdk<C, MS> => {
   let instance = {
-    context,
+    __context: context,
+    ...context,
     model: model(context),
   } as Sdk<C, MS>
-
-  if (isRpcContext(context)) {
-    ;(instance as Sdk<RpcContext<MS>, MS>).asRpc = () => {
-      if (isRpcContext(context)) {
-        return sdk<RpcContext<MS>, MS>({
-          api: context.api,
-          storage: context.storage,
-          provider: context.provider,
-        })
-      }
-      return null
-    }
-  }
-
-  if (isIndexerContext(context)) {
-    ;(instance as Sdk<IndexerContext, MS>).asIndexer = () => {
-      if (isIndexerContext(context)) {
-        return sdk<IndexerContext, MS>({
-          indexer: context.indexer,
-        })
-      }
-      return null
-    }
-  }
 
   return instance
 }
 
 /**
- * Typeguard for full sdk
+ * Typeguard for full sdk.
+ *
  * @param sdk
  * @returns sdk is Sdk<FullContext>
  */
@@ -93,21 +64,22 @@ export const isFullSdk = <MS extends MetadataStorage>(
 ): sdk is Sdk<FullContext<MS>, MS> => isIndexedSdk(sdk) && isRpcSdk(sdk)
 
 /**
- * Typeguard for indexer sdk
+ * Typeguard for indexer sdk.
+ *
  * @param sdk
  * @returns sdk is Sdk<IndexerContext>
  */
 export const isIndexedSdk = <MS extends MetadataStorage>(
   sdk: any,
-): sdk is Sdk<IndexerContext, MS> =>
-  !isNull(sdk) && 'context' in sdk && isIndexerContext(sdk.context)
+): sdk is Sdk<IndexerContext, MS> => !isNull(sdk) && sdk && isIndexerContext(sdk.__context)
 
 /**
- * Typeguard for rpc sdk
+ * Typeguard for rpc sdk.
+ *
  * @param sdk
  * @returns sdk is Sdk<RpcContext>
  */
 export const isRpcSdk = <MS extends MetadataStorage>(
   sdk: any,
 ): sdk is Sdk<RpcContext<MS>, MS> =>
-  Boolean(!isNull(sdk) && 'context' in sdk && isRpcContext<MS>(sdk.context))
+  Boolean(!isNull(sdk) && isRpcContext<MS>(sdk.__context))

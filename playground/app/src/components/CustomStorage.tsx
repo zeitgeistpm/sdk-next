@@ -3,7 +3,7 @@ import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp'
 import {
   batterystation,
   batterystationRpc,
-  builder,
+  create$,
   CommentMetadata,
   Context,
   create,
@@ -59,7 +59,7 @@ const CustomStorage: React.FC = () => {
     sdk.model.markets.get
   }
 
-  builder(batterystation()).subscribe(sdk => {
+  create$(batterystation()).subscribe(sdk => {
     if (isRpcSdk(sdk)) {
       sdk.model.markets.get({ marketId: 0 }).then(market => {})
     }
@@ -87,16 +87,18 @@ const CustomStorage: React.FC = () => {
         gracePeriod: 200,
         oracleDuration: 500,
       },
-      disputeMechanism: { Authorized: address },
+      disputeMechanism: 'Authorized',
       marketType: { Scalar: [1, 2] as [number, number] },
       oracle: address,
-      period: { Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] as [number, number] },
+      period: {
+        Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] as [number, number],
+      },
       pool: {
         amount: `${300 * 10 ** 10}`,
         swapFee: `${1000}`,
         weights: [`${baseWeight}`, `${baseWeight}`],
       },
-    } as CreateMarketWithPoolParams<typeof sdk.context>
+    } as CreateMarketWithPoolParams<typeof sdk>
 
     const response = await sdk.model.markets.create({
       ...params,

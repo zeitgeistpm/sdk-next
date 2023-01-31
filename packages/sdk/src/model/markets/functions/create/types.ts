@@ -1,5 +1,6 @@
 import type { SubmittableExtrinsic } from '@polkadot/api/types'
 import type {
+  ZeitgeistPrimitivesAsset,
   ZeitgeistPrimitivesMarketMarketCreation,
   ZeitgeistPrimitivesMarketMarketDisputeMechanism,
   ZeitgeistPrimitivesPoolScoringRule,
@@ -8,6 +9,7 @@ import type { ISubmittableResult } from '@polkadot/types/types'
 import type { KeyringPairOrExtSigner, TransactionHooks } from '@zeitgeistpm/rpc'
 import type { IEither } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import { AssetId } from '../../../../primitives'
 import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { Pool } from '../../../swaps/pool'
@@ -26,6 +28,10 @@ export type CreateMarketParams<C extends RpcContext<MS>, MS extends MetadataStor
  * Base parameters for creating a market.
  */
 export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends MetadataStorage> = {
+  /**
+   * The base asset of the market. Can be ZTG or another
+   */
+  baseAsset: ZeitgeistPrimitivesAsset | AssetId
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
