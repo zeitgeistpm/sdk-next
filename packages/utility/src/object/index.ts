@@ -16,6 +16,14 @@ export type MappedUndefined<T extends object> = {
  */
 export type Unpartial<T extends object> = MappedUndefined<T> | T
 
+/**
+ * Uppercase the first letter of all object keyes
+ *
+ * @note This is a shallow operation
+ *
+ * @param obj Record<any, any>
+ * @returns Record<any, any>
+ */
 export const upperFirstObjectKeys = (obj: Record<any, any>) => {
   return Object.keys(obj).reduce((acc, key) => {
     return {
