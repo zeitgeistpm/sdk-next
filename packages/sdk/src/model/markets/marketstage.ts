@@ -13,6 +13,7 @@ export type MarketStage =
   | Disputed
   | AuthorizedReport
   | Resolved
+  | Destroyed
 
 /**
  * The market has been proposed and is waiting to be approved.
@@ -58,6 +59,11 @@ export type AuthorizedReport = DynamicStage<'AuthorizedReport'>
  * The market has been resolved.
  */
 export type Resolved = InfiniteStage<'Resolved'>
+
+/**
+ * The market has been destroyed.
+ */
+export type Destroyed = InfiniteStage<'Destroyed'>
 
 /**
  * A stage with a dynamic remaining time.
