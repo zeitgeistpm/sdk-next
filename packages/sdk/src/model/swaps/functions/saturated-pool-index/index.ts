@@ -1,5 +1,5 @@
-import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 import { mapget } from '@zeitgeistpm/utility/dist/btreemap'
+import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 import { Decimal } from 'decimal.js'
 import {
   Context,
@@ -13,7 +13,7 @@ import * as AssetId from '../../../../primitives/assetid'
 import { ZTG } from '../../../../primitives/ztg'
 import { rpcMarket } from '../../../markets'
 import { Pool } from '../../pool'
-import { SaturatedPoolIndex, SaturatedPoolEntryAsset } from './types'
+import { SaturatedPoolEntryAsset, SaturatedPoolIndex } from './types'
 
 export * from './types'
 
