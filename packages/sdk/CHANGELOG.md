@@ -10,6 +10,7 @@
   - `sdk.asRpc()` and `sdk.asIndexer()` has been removed, use `isRpcSdk(sdk)` and `isIndexedSdk(sdk)` respectively.
   - `baseAsset` parameter added market creation parameter used in `sdk.model.markets.create`
   - `sdk.model.markets.get` should now correctly return a promise compliant value. Will most likely be an `AEither` in the future that can also be awaited as per the Promise spec.
+  - `sdk.model.markets.getStage` now uses `CorrectionPeriod` (if can be read from chain) for `Disputed` markets.
 
 ### Patch Changes
 
