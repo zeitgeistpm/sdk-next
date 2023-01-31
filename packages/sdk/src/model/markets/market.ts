@@ -18,7 +18,7 @@ import * as E from '@zeitgeistpm/utility/dist/either'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import { blockDate, ChainTime } from '@zeitgeistpm/utility/dist/time'
+import { blockDate, ChainTime, Timespan } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
 import Decimal from 'decimal.js'
 import {
@@ -97,6 +97,11 @@ export type SaturatedRpcMarket<
   C extends RpcContext<MS>,
   MS extends MetadataStorage,
 > = IndexedBase & MarketTypeOf<MS> & RpcMarket<C, MS>
+
+/**
+ * The base type of indexed data that also can be infered from the rpc data.
+ */
+export type IndexedBase = Omit<FullMarketFragment, keyof MarketMetadata>
 
 /**
  * Interface on market with methods for deploying swap pools, buying and selling sets of assets..
@@ -246,6 +251,20 @@ export type MarketMethods = {
 }
 
 /**
+ * Union type of all market statuses as string.
+ */
+export type MarketStatus = ZeitgeistPrimitivesMarketMarketStatus['type'] | 'Destroyed'
+
+/**
+ * Type for market deadlines as numbers.
+ */
+export type MarketDeadlines = {
+  gracePeriod: number
+  oracleDuration: number
+  disputeDuration: number
+}
+
+/**
  * Typeguard to check if market has associated marketmethods.
  *
  * @param market Market<C, MS>
@@ -257,11 +276,6 @@ export const hasMarketMethods = <
 >(
   market: Market<C, MS>,
 ): market is Market<C, MS> & MarketMethods => 'deploySwapPool' in market
-
-/**
- * The base type of indexed data that also can be infered from the rpc data.
- */
-export type IndexedBase = Omit<FullMarketFragment, keyof MarketMetadata>
 
 /**
  * Augment a market primitive with id and data expanding utility functions.
@@ -624,7 +638,13 @@ export const getScalarBounds = (
   }
 }
 
-export const getDeadlines = (market: Market<Context>) => {
+/**
+ * Get the market deadlines.
+ *
+ * @param market Market<Context>
+ * @returns MarketDeadlines
+ */
+export const getDeadlines = (market: Market<Context>): MarketDeadlines => {
   if (isRpcData(market)) {
     return {
       gracePeriod: market.deadlines.gracePeriod.toNumber() as number,
@@ -639,42 +659,71 @@ export const getDeadlines = (market: Market<Context>) => {
   }
 }
 
-export const getStatus = (
-  market: Market<Context>,
-): ZeitgeistPrimitivesMarketMarketStatus['type'] => {
+/**
+ * Get the market status.
+ *
+ * @param market Market<Context>
+ * @returns MarketStatus
+ */
+export const getStatus = (market: Market<Context>): MarketStatus => {
   return isRpcData(market)
     ? market.status.type
     : (market.status as ZeitgeistPrimitivesMarketMarketStatus['type'])
 }
 
-export const getPeriod = (market: Market<Context>, now: ChainTime) => {
+/**
+ * Get the market period as a Timespan.
+ *
+ * @param market Market<Context>
+ * @param now ChainTime
+ * @returns Timespan
+ */
+export const timespanOf = (market: Market<Context>, now: ChainTime): Timespan => {
   if (isRpcData(market)) {
     const start = market.period.isTimestamp
       ? market.period.asTimestamp.start.toNumber()
-      : blockDate(now, market.period.asBlock.start.toNumber()).getTime()
+      : blockDate(now, market.period.asBlock.start.toNumber())
     const end = market.period.isTimestamp
       ? market.period.asTimestamp.end.toNumber()
-      : blockDate(now, market.period.asBlock.end.toNumber()).getTime()
+      : blockDate(now, market.period.asBlock.end.toNumber())
 
-    return { start, end }
+    return { start, end } as Timespan
   }
 
   return {
-    start: Number(market.period.start),
-    end: Number(market.period.end),
+    start: new Date(market.period.start),
+    end: new Date(market.period.end),
   }
 }
 
+/**
+ * Check if a market has a report.
+ *
+ * @param market Market<Context>
+ * @returns boolean
+ */
 export const hasReport = (market: Market<Context>): boolean => {
   return isRpcData(market) ? market.report.isSome : !!market.report
 }
 
+/**
+ * Get the market reporter address if market is reported.
+ *
+ * @param market Market<Context>
+ * @returns O.IOption<string>
+ */
 export const getReporter = (market: Market<Context>) => {
   return O.fromNullable(
     isRpcData(market) ? market.report.unwrapOr(null)?.by.toString() : market.report?.by,
   )
 }
 
+/**
+ * Get the market reported at block if market is reported.
+ *
+ * @param market Market<Context>
+ * @returns O.IOption<number>
+ */
 export const getReportedAt = (market: Market<Context>) => {
   return O.fromNullable(
     isRpcData(market) ? market.report.unwrapOr(null)?.at.toNumber() : market.report?.at,
