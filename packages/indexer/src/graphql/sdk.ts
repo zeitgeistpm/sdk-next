@@ -1112,6 +1112,10 @@ export type Market = {
   __typename?: 'Market';
   /** Address responsible for authorizing disputes. Null if Adv Comm is the authority */
   authorizedAddress?: Maybe<Scalars['String']>;
+  /** The base asset in the market swap pool (usually a currency) */
+  baseAsset: Scalars['String'];
+  /** Tracks the status of the advisory, oracle and validity bonds */
+  bonds?: Maybe<MarketBonds>;
   /** Share details */
   categories?: Maybe<Array<Maybe<CategoryMetadata>>>;
   /** Can be `Permissionless` or `Advised` */
@@ -1164,6 +1168,69 @@ export type Market = {
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+/** Market's bond details */
+export type MarketBond = {
+  __typename?: 'MarketBond';
+  /** The flag which determines if the bond was already unreserved and/or (partially) slashed */
+  isSettled: Scalars['Boolean'];
+  /** Amount reserved */
+  value: Scalars['BigInt'];
+  /** The account that reserved the bond */
+  who: Scalars['String'];
+};
+
+export type MarketBondWhereInput = {
+  isSettled_eq?: InputMaybe<Scalars['Boolean']>;
+  isSettled_isNull?: InputMaybe<Scalars['Boolean']>;
+  isSettled_not_eq?: InputMaybe<Scalars['Boolean']>;
+  value_eq?: InputMaybe<Scalars['BigInt']>;
+  value_gt?: InputMaybe<Scalars['BigInt']>;
+  value_gte?: InputMaybe<Scalars['BigInt']>;
+  value_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  value_isNull?: InputMaybe<Scalars['Boolean']>;
+  value_lt?: InputMaybe<Scalars['BigInt']>;
+  value_lte?: InputMaybe<Scalars['BigInt']>;
+  value_not_eq?: InputMaybe<Scalars['BigInt']>;
+  value_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  who_contains?: InputMaybe<Scalars['String']>;
+  who_containsInsensitive?: InputMaybe<Scalars['String']>;
+  who_endsWith?: InputMaybe<Scalars['String']>;
+  who_eq?: InputMaybe<Scalars['String']>;
+  who_gt?: InputMaybe<Scalars['String']>;
+  who_gte?: InputMaybe<Scalars['String']>;
+  who_in?: InputMaybe<Array<Scalars['String']>>;
+  who_isNull?: InputMaybe<Scalars['Boolean']>;
+  who_lt?: InputMaybe<Scalars['String']>;
+  who_lte?: InputMaybe<Scalars['String']>;
+  who_not_contains?: InputMaybe<Scalars['String']>;
+  who_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  who_not_endsWith?: InputMaybe<Scalars['String']>;
+  who_not_eq?: InputMaybe<Scalars['String']>;
+  who_not_in?: InputMaybe<Array<Scalars['String']>>;
+  who_not_startsWith?: InputMaybe<Scalars['String']>;
+  who_startsWith?: InputMaybe<Scalars['String']>;
+};
+
+/**
+ * Amount reserved for creation of markets, selecting oracles, joining the council,
+ * making treasury proposals, setting on-chain identities, voting,
+ * creating DAOs, and other parts of the protocol.
+ */
+export type MarketBonds = {
+  __typename?: 'MarketBonds';
+  /** Bond associated with creation of markets */
+  creation?: Maybe<MarketBond>;
+  /** Bond associated with oracle selection */
+  oracle?: Maybe<MarketBond>;
+};
+
+export type MarketBondsWhereInput = {
+  creation?: InputMaybe<MarketBondWhereInput>;
+  creation_isNull?: InputMaybe<Scalars['Boolean']>;
+  oracle?: InputMaybe<MarketBondWhereInput>;
+  oracle_isNull?: InputMaybe<Scalars['Boolean']>;
+};
+
 /** Deadlines for the market represented in blocks */
 export type MarketDeadlines = {
   __typename?: 'MarketDeadlines';
@@ -1211,6 +1278,8 @@ export type MarketEdge = {
 export enum MarketOrderByInput {
   AuthorizedAddressAsc = 'authorizedAddress_ASC',
   AuthorizedAddressDesc = 'authorizedAddress_DESC',
+  BaseAssetAsc = 'baseAsset_ASC',
+  BaseAssetDesc = 'baseAsset_DESC',
   CreationAsc = 'creation_ASC',
   CreationDesc = 'creation_DESC',
   CreatorFeeAsc = 'creatorFee_ASC',
@@ -1426,6 +1495,25 @@ export type MarketWhereInput = {
   authorizedAddress_not_in?: InputMaybe<Array<Scalars['String']>>;
   authorizedAddress_not_startsWith?: InputMaybe<Scalars['String']>;
   authorizedAddress_startsWith?: InputMaybe<Scalars['String']>;
+  baseAsset_contains?: InputMaybe<Scalars['String']>;
+  baseAsset_containsInsensitive?: InputMaybe<Scalars['String']>;
+  baseAsset_endsWith?: InputMaybe<Scalars['String']>;
+  baseAsset_eq?: InputMaybe<Scalars['String']>;
+  baseAsset_gt?: InputMaybe<Scalars['String']>;
+  baseAsset_gte?: InputMaybe<Scalars['String']>;
+  baseAsset_in?: InputMaybe<Array<Scalars['String']>>;
+  baseAsset_isNull?: InputMaybe<Scalars['Boolean']>;
+  baseAsset_lt?: InputMaybe<Scalars['String']>;
+  baseAsset_lte?: InputMaybe<Scalars['String']>;
+  baseAsset_not_contains?: InputMaybe<Scalars['String']>;
+  baseAsset_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  baseAsset_not_endsWith?: InputMaybe<Scalars['String']>;
+  baseAsset_not_eq?: InputMaybe<Scalars['String']>;
+  baseAsset_not_in?: InputMaybe<Array<Scalars['String']>>;
+  baseAsset_not_startsWith?: InputMaybe<Scalars['String']>;
+  baseAsset_startsWith?: InputMaybe<Scalars['String']>;
+  bonds?: InputMaybe<MarketBondsWhereInput>;
+  bonds_isNull?: InputMaybe<Scalars['Boolean']>;
   categories_isNull?: InputMaybe<Scalars['Boolean']>;
   creation_contains?: InputMaybe<Scalars['String']>;
   creation_containsInsensitive?: InputMaybe<Scalars['String']>;
@@ -1770,7 +1858,7 @@ export type Pool = {
   __typename?: 'Pool';
   /** Zeitgeist's identifier for account */
   accountId?: Maybe<Scalars['String']>;
-  /** Zeitgeist's identifier for pool */
+  /** The base asset in the market swap pool (usually a currency) */
   baseAsset: Scalars['String'];
   /** Timestamp of pool creation */
   createdAt: Scalars['DateTime'];

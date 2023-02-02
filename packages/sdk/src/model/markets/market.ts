@@ -566,6 +566,98 @@ export const hasPool = async <
 }
 
 /**
+ * Get the market status.
+ *
+ * @param market Market<Context>
+ * @returns MarketStatus
+ */
+export const getStatus = (market: Market<Context>): MarketStatus => {
+  return isRpcData(market)
+    ? market.status.type
+    : (market.status as ZeitgeistPrimitivesMarketMarketStatus['type'])
+}
+
+/**
+ * Get the market deadlines.
+ *
+ * @param market Market<Context>
+ * @returns MarketDeadlines
+ */
+export const getDeadlines = (market: Market<Context>): MarketDeadlines => {
+  if (isRpcData(market)) {
+    return {
+      gracePeriod: market.deadlines.gracePeriod.toNumber() as number,
+      oracleDuration: market.deadlines.oracleDuration.toNumber() as number,
+      disputeDuration: market.deadlines.disputeDuration.toNumber() as number,
+    }
+  }
+  return {
+    gracePeriod: Number(market.deadlines?.gracePeriod ?? 0),
+    oracleDuration: Number(market.deadlines?.oracleDuration ?? 0),
+    disputeDuration: Number(market.deadlines?.disputeDuration ?? 0),
+  }
+}
+
+/**
+ * Get the market period as a Timespan.
+ *
+ * @param market Market<Context>
+ * @param now ChainTime
+ * @returns Timespan
+ */
+export const timespanOf = (market: Market<Context>, now: ChainTime): Timespan => {
+  if (isRpcData(market)) {
+    const start = market.period.isTimestamp
+      ? market.period.asTimestamp.start.toNumber()
+      : blockDate(now, market.period.asBlock.start.toNumber())
+    const end = market.period.isTimestamp
+      ? market.period.asTimestamp.end.toNumber()
+      : blockDate(now, market.period.asBlock.end.toNumber())
+
+    return { start, end } as Timespan
+  }
+
+  return {
+    start: new Date(market.period.start),
+    end: new Date(market.period.end),
+  }
+}
+
+/**
+ * Check if a market has a report.
+ *
+ * @param market Market<Context>
+ * @returns boolean
+ */
+export const hasReport = (market: Market<Context>): boolean => {
+  return isRpcData(market) ? market.report.isSome : !!market.report
+}
+
+/**
+ * Get the market reporter address if market is reported.
+ *
+ * @param market Market<Context>
+ * @returns O.IOption<string>
+ */
+export const getReporter = (market: Market<Context>) => {
+  return O.fromNullable(
+    isRpcData(market) ? market.report.unwrapOr(null)?.by.toString() : market.report?.by,
+  )
+}
+
+/**
+ * Get the market reported at block if market is reported.
+ *
+ * @param market Market<Context>
+ * @returns O.IOption<number>
+ */
+export const getReportedAt = (market: Market<Context>) => {
+  return O.fromNullable(
+    isRpcData(market) ? market.report.unwrapOr(null)?.at.toNumber() : market.report?.at,
+  )
+}
+
+/**
  * Get the projected end timestamp for a market.
  *
  * @note If market has period as timestamps will use that directly and if its set to a block end date
@@ -630,96 +722,4 @@ export const getScalarBounds = (
       E.right([new Decimal(bounds[0]).div(ZTG), new Decimal(bounds[1]).div(ZTG)]),
     )
   }
-}
-
-/**
- * Get the market deadlines.
- *
- * @param market Market<Context>
- * @returns MarketDeadlines
- */
-export const getDeadlines = (market: Market<Context>): MarketDeadlines => {
-  if (isRpcData(market)) {
-    return {
-      gracePeriod: market.deadlines.gracePeriod.toNumber() as number,
-      oracleDuration: market.deadlines.oracleDuration.toNumber() as number,
-      disputeDuration: market.deadlines.disputeDuration.toNumber() as number,
-    }
-  }
-  return {
-    gracePeriod: Number(market.deadlines?.gracePeriod ?? 0),
-    oracleDuration: Number(market.deadlines?.oracleDuration ?? 0),
-    disputeDuration: Number(market.deadlines?.disputeDuration ?? 0),
-  }
-}
-
-/**
- * Get the market status.
- *
- * @param market Market<Context>
- * @returns MarketStatus
- */
-export const getStatus = (market: Market<Context>): MarketStatus => {
-  return isRpcData(market)
-    ? market.status.type
-    : (market.status as ZeitgeistPrimitivesMarketMarketStatus['type'])
-}
-
-/**
- * Get the market period as a Timespan.
- *
- * @param market Market<Context>
- * @param now ChainTime
- * @returns Timespan
- */
-export const timespanOf = (market: Market<Context>, now: ChainTime): Timespan => {
-  if (isRpcData(market)) {
-    const start = market.period.isTimestamp
-      ? market.period.asTimestamp.start.toNumber()
-      : blockDate(now, market.period.asBlock.start.toNumber())
-    const end = market.period.isTimestamp
-      ? market.period.asTimestamp.end.toNumber()
-      : blockDate(now, market.period.asBlock.end.toNumber())
-
-    return { start, end } as Timespan
-  }
-
-  return {
-    start: new Date(market.period.start),
-    end: new Date(market.period.end),
-  }
-}
-
-/**
- * Check if a market has a report.
- *
- * @param market Market<Context>
- * @returns boolean
- */
-export const hasReport = (market: Market<Context>): boolean => {
-  return isRpcData(market) ? market.report.isSome : !!market.report
-}
-
-/**
- * Get the market reporter address if market is reported.
- *
- * @param market Market<Context>
- * @returns O.IOption<string>
- */
-export const getReporter = (market: Market<Context>) => {
-  return O.fromNullable(
-    isRpcData(market) ? market.report.unwrapOr(null)?.by.toString() : market.report?.by,
-  )
-}
-
-/**
- * Get the market reported at block if market is reported.
- *
- * @param market Market<Context>
- * @returns O.IOption<number>
- */
-export const getReportedAt = (market: Market<Context>) => {
-  return O.fromNullable(
-    isRpcData(market) ? market.report.unwrapOr(null)?.at.toNumber() : market.report?.at,
-  )
 }

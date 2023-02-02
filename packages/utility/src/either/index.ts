@@ -26,6 +26,9 @@ export const left = <A>(left: A): Left<A> => ({
   left,
 })
 
+export const isEither = (obj: any): obj is Either<any, any> =>
+  typeof obj === 'object' && obj && (isRight(obj) || isLeft(obj))
+
 /**
  * Typeguard for right values
  */
@@ -42,6 +45,11 @@ export const isLeft = <L, R>(either: Either<L, R>): either is Left<L> => 'left' 
 export const unwrap = <L, R>(either: Either<L, R>) => unrightOr<L, R>(throws, either)
 
 /**
+ * Unwrap the right value. Throws if the either is a left.
+ */
+export const unwrapLeft = <L, R>(either: Either<L, R>) => unleftOr<L, R>(throws, either)
+
+/**
  * Maps the right value if present with the mapping function.
  *
  * @example ```typescript
@@ -50,7 +58,7 @@ export const unwrap = <L, R>(either: Either<L, R>) => unrightOr<L, R>(throws, ei
  * ```
  */
 export const map = <L, R, B>(f: (a: R) => B, either: Either<L, R>): Either<L, B> =>
-  isLeft(either) ? either : { right: f(either.right) }
+  isLeft(either) ? either : right(f(either.right))
 
 /**
  * Chains eithers, where it returns out a Left if one of the composed functions returns left.
@@ -70,9 +78,21 @@ export const map = <L, R, B>(f: (a: R) => B, either: Either<L, R>): Either<L, B>
  * ```
  */
 export const bind = <L, R, B>(
-  f: (a: R) => Either<L, B>,
+  f: (a: R) => Either<L, B> | B,
   either: Either<L, R>,
-): Either<L, B> => (isLeft(either) ? either : f(either.right))
+): Either<L, B> => {
+  if (isLeft(either)) {
+    return either
+  }
+
+  const next = f(either.right)
+
+  if (isEither(next)) {
+    return next
+  }
+
+  return right(next)
+}
 
 /**
  * Unwraps a the right value into an Option<R>
@@ -135,6 +155,11 @@ export type IEither<L, R> = Either<L, R> & {
    */
   unwrap: () => R
   /**
+   * Tries to unwrap the left value. Throws error if value is right.
+   * @throws Error
+   */
+  unwrapLeft: () => L
+  /**
    * Unwraps a the right value into an Option<R>
    */
   unright: () => O.IOption<R>
@@ -160,7 +185,19 @@ export type IEither<L, R> = Either<L, R> & {
    * Chains eithers where it returns out a Left if one of the composed functions returns left
    * or the Right value if all succeedes.
    */
-  bind: <B>(f: (a: R) => Either<L, B>) => IEither<L, B>
+  bind: <B>(f: (a: R) => Either<L, B> | B) => IEither<L, B>
+  /**
+   * Boolean check if value is right
+   *
+   * @returns boolean & E.IEither<L, R>
+   */
+  isRight: () => null | IEither<L, R>
+  /**
+   * Boolean check if value is left
+   *
+   * @returns boolean & E.IEither<L, R>
+   */
+  isLeft: () => null | IEither<L, R>
 }
 
 /**
@@ -172,12 +209,15 @@ export type IEither<L, R> = Either<L, R> & {
 export const either = <L, R>(_either: Either<L, R>): IEither<L, R> => ({
   ..._either,
   unwrap: () => unwrap(_either),
+  unwrapLeft: () => unwrapLeft(_either),
   unright: () => unright(_either),
   unleft: () => unleft(_either),
   unrightOr: (or: OrHandler<L, R>) => unrightOr(or, _either),
   unleftOr: (or: OrHandler<R, L>) => unleftOr(or, _either),
   map: <B>(f: (a: R) => B) => either(map(f, _either)),
-  bind: <B>(f: (a: R) => Either<L, B>) => either(bind(f, _either)),
+  bind: <B>(f: (a: R) => Either<L, B> | B) => either(bind(f, _either)),
+  isRight: () => (isRight(_either) ? either<L, R>(_either) : null),
+  isLeft: () => (isLeft(_either) ? either<L, R>(_either) : null),
 })
 
 /**

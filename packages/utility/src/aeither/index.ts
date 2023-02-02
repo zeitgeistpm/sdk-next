@@ -1,3 +1,4 @@
+import { isPromise } from '@polkadot/util'
 import * as E from '../either'
 import { throws } from '../error'
 import * as O from '../option'
@@ -14,15 +15,17 @@ export type AEither<L, R> = Promise<E.IEither<L, R>>
  * @param promise Promise<R>
  * @returns AEither<L, R>
  */
-export const from = <L, R>(f: () => Promise<R>): AEither<L, R> => {
-  return new Promise(async resolve => {
-    try {
-      const value: R = await f()
-      resolve(E.either(E.right(value)))
-    } catch (error) {
-      resolve(E.either(E.left(error as L)))
-    }
-  })
+export const from = <L, R>(f: () => Promise<R>): IAEither<L, R> => {
+  return aeither(
+    new Promise(async resolve => {
+      try {
+        const value: R = await f()
+        resolve(E.either(E.right(value)))
+      } catch (error) {
+        resolve(E.either(E.left(error as L)))
+      }
+    }),
+  )
 }
 /**
  * Tries to unwrap the right value into a promised right value. Throws error if value is left.
@@ -32,6 +35,15 @@ export const from = <L, R>(f: () => Promise<R>): AEither<L, R> => {
  */
 export const unwrap = async <L, R>(either: AEither<L, R>): Promise<R> =>
   E.unrightOr<L, R>(throws, await either)
+
+/**
+ * Tries to unwrap the left value into a promised left value. Throws error if value is right.
+ * @throws Error
+ *
+ * @returns Promise<L>
+ */
+export const unwrapLeft = async <L, R>(either: AEither<L, R>): Promise<L> =>
+  E.unleftOr<L, R>(throws, await either)
 
 /**
  * Unwraps a the right value into an optional value ignoring lefts by returning `none`
@@ -86,9 +98,15 @@ export const map = async <L, R, B>(f: (a: R) => B, either: AEither<L, R>): AEith
  * @returns IAEither<L, B>
  */
 export const bind = async <L, R, B>(
-  f: (a: R) => AEither<L, B>,
+  f: (a: R) => AEither<L, B> | Promise<B>,
   either: AEither<L, R>,
-): AEither<L, B> => f(E.unwrap(await either))
+): AEither<L, B> => {
+  try {
+    return E.either(E.right((await f(E.unwrap(await either))) as B))
+  } catch (error) {
+    return E.either(E.left(error as L))
+  }
+}
 
 /**
  * Interface over AEither to call methods directly on Either objects that implements it.
@@ -101,6 +119,13 @@ export type IAEither<L, R> = {
    * @returns Promise<R>
    */
   unwrap: () => Promise<R>
+  /**
+   * Tries to unwrap the left value into a promised left value. Throws error if value is right.
+   * @throws Error
+   *
+   * @returns Promise<L>
+   */
+  unwrapLeft: () => Promise<L>
   /**
    * Unwraps a the right value into an optional value ignoring lefts by returning `none`
    *
@@ -139,13 +164,25 @@ export type IAEither<L, R> = {
    *
    * @returns IAEither<L, B>
    */
-  bind: <B>(f: (a: R) => AEither<L, B>) => IAEither<L, B>
+  bind: <B>(f: (a: R) => AEither<L, B> | Promise<B>) => IAEither<L, B>
   /**
    * Return the raw either async.
    *
    * @returns Promise<E.IEither<L, R>>
    */
   asEither: () => Promise<E.IEither<L, R>>
+  /**
+   * Boolean check if value is right
+   *
+   * @returns Promise<false | E.IEither<L, R>>
+   */
+  isRight: () => Promise<null | E.IEither<L, R>>
+  /**
+   * Boolean check if value is left
+   *
+   * @returns Promise<false | E.IEither<L, R>>
+   */
+  isLeft: () => Promise<null | E.IEither<L, R>>
 } & Promise<R>
 
 /**
@@ -158,20 +195,23 @@ export type OrHandler<P, A> = A | ((value: P) => A)
 /**
  * Bind methods to a AEither object for utility and "syntactic" sugar over async eithers..
  *
- * @param either AEither<L, R>
+ * @param _either AEither<L, R>
  * @returns IAEither<L, R>
  */
-export const aeither = <L, R>(either: AEither<L, R>): IAEither<L, R> => ({
-  unwrap: async () => unwrap(either),
-  unright: async () => unright(either),
-  unleft: async () => unleft(either),
-  unrightOr: async or => unrightOr(or, either),
-  unleftOr: async or => unleftOr(or, either),
-  map: <B>(f: (a: R) => B) => aeither<L, B>(map<L, R, B>(f, either)),
-  bind: <B>(f: (a: R) => AEither<L, B>) => aeither(bind<L, R, B>(f, either)),
-  asEither: async () => E.either(await either),
+export const aeither = <L, R>(_either: AEither<L, R>): IAEither<L, R> => ({
+  unwrap: async () => unwrap(_either),
+  unwrapLeft: async () => unwrapLeft(_either),
+  unright: async () => unright(_either),
+  unleft: async () => unleft(_either),
+  unrightOr: async or => unrightOr(or, _either),
+  unleftOr: async or => unleftOr(or, _either),
+  map: <B>(f: (a: R) => B) => aeither<L, B>(map<L, R, B>(f, _either)),
+  bind: <B>(f: (a: R) => AEither<L, B> | Promise<B>) => aeither(bind<L, R, B>(f, _either)),
+  asEither: async () => E.either(await _either),
+  isRight: async () => (await _either).isRight(),
+  isLeft: async () => (await _either).isLeft(),
   then(onResolve, onReject) {
-    either.then(value => {
+    _either.then(value => {
       if (E.isRight(value)) {
         onResolve?.(value.right)
       } else {
@@ -181,7 +221,7 @@ export const aeither = <L, R>(either: AEither<L, R>): IAEither<L, R> => ({
     return this as any
   },
   catch(onReject) {
-    either.then(value => {
+    _either.then(value => {
       if (E.isLeft(value)) {
         onReject?.(value.left)
       }
