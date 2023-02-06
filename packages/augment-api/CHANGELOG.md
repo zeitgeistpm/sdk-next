@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.8.1
+
+### Patch Changes
+
+- 70085da: Added `bonds` to market data(rpc and indexed). And `rejectReason` to indexed markets only.
+
 ## 2.8.0
 
 ### Minor Changes
