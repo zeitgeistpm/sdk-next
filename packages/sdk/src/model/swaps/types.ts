@@ -2,15 +2,15 @@ import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
-import { PoolGetQuery } from './functions/get-pool/types'
-import { PoolsListQuery } from './functions/list-pools/types'
-import { SaturatedPoolIndex } from './functions/saturated-pool-index/types'
+import { PoolGetQuery } from './functions/getPool/types'
+import { PoolsListQuery } from './functions/listPools/types'
+import { SaturatedPoolIndex } from './functions/saturatedPoolsIndex/types'
 import {
   PoolAssetPricesAtBlock,
   PoolPrices,
   PoolPricesQuery,
   PoolPricesStreamQuery,
-} from './functions/pool-prices/types'
+} from './functions/poolPrices/types'
 import { Pool } from './pool'
 import { PoolList } from './poolslist'
 import { IOption } from '@zeitgeistpm/utility/dist/option'

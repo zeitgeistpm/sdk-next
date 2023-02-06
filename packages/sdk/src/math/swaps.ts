@@ -1,9 +1,5 @@
 import { Decimal } from 'decimal.js'
-
-/**
- * Acceptable bignumber represantation types.
- */
-export type BigNumber = string | number | Decimal
+import { BigNumber } from './bignumber'
 
 /**
  * Calculate the spot price for an asset given the balance in and out and weights.
@@ -90,4 +86,57 @@ export const calcInGivenOut = (
     .times(foo)
     .div(new Decimal(1).minus(new Decimal(swapFee)))
   return tokenAmountIn
+}
+
+/**
+ *
+ * @param lowerBound BigNumber - the lower bound of the scalar market
+ * @param upperBound BigNumber - the upper bound of the scalar market
+ * @param resolvedNumber BigNumber - the resolved number of the scalar market
+ * @param shortAssetAmount BigNumber - the amount of short tokens, usually the users balance for the short token
+ * @param longAssetAmount BigNumber - the amount of long tokens, usually the users balance for the long token
+ * @returns Decimal
+ */
+export const calcScalarWinnings = (
+  lowerBound: BigNumber,
+  upperBound: BigNumber,
+  resolvedNumber: BigNumber,
+  shortAssetAmount: BigNumber,
+  longAssetAmount: BigNumber,
+): Decimal => {
+  const { longTokenValue, shortTokenValue } = calcScalarResolvedPrices(
+    lowerBound,
+    upperBound,
+    resolvedNumber,
+  )
+  const longRewards = new Decimal(longAssetAmount).mul(longTokenValue)
+  const shortRewards = new Decimal(shortAssetAmount).mul(shortTokenValue)
+
+  return new Decimal(longRewards).plus(shortRewards)
+}
+
+/**
+ *
+ * @param lowerBound BigNumber - the lower bound of the scalar market
+ * @param upperBound BigNumber - the upper bound of the scalar market
+ * @param resolvedNumber BigNumber - the resolved number of the scalar market
+ * @returns
+ */
+export const calcScalarResolvedPrices = (
+  lowerBound: BigNumber,
+  upperBound: BigNumber,
+  resolvedNumber: BigNumber,
+): {
+  longTokenValue: Decimal
+  shortTokenValue: Decimal
+} => {
+  const priceRange = new Decimal(upperBound).minus(lowerBound)
+  const resolvedNumberAsPercentage = new Decimal(resolvedNumber)
+    .minus(lowerBound)
+    .div(priceRange)
+
+  const longTokenValue = resolvedNumberAsPercentage
+  const shortTokenValue = new Decimal(1).minus(resolvedNumberAsPercentage)
+
+  return { longTokenValue, shortTokenValue }
 }

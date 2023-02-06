@@ -2611,7 +2611,7 @@ export type MarketsQueryVariables = Exact<{
 }>;
 
 
-export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, rejectReason?: string | null, disputeMechanism: string, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null, end: any, start: any }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, pool?: { __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null }> };
+export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, rejectReason?: string | null, disputeMechanism: string, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null, end: any, start: any }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, bonds?: { __typename?: 'MarketBonds', creation?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null } | null, pool?: { __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null }> };
 
 export type MarketStatusCountQueryVariables = Exact<{
   status: Scalars['String'];
@@ -2620,7 +2620,7 @@ export type MarketStatusCountQueryVariables = Exact<{
 
 export type MarketStatusCountQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string }> };
 
-export type FullMarketFragment = { __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, rejectReason?: string | null, disputeMechanism: string, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null, end: any, start: any }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, pool?: { __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null };
+export type FullMarketFragment = { __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: string, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, rejectReason?: string | null, disputeMechanism: string, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null, end: any, start: any }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, bonds?: { __typename?: 'MarketBonds', creation?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null } | null, pool?: { __typename?: 'Pool', id: string, accountId?: string | null, baseAsset: string, createdAt: any, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null };
 
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2761,6 +2761,18 @@ export const FullMarketFragmentDoc = gql`
     disputeDuration
     gracePeriod
     oracleDuration
+  }
+  bonds {
+    creation {
+      isSettled
+      value
+      who
+    }
+    oracle {
+      isSettled
+      value
+      who
+    }
   }
   pool {
     ...FullPool

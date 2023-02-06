@@ -12,7 +12,7 @@ async function main() {
     66,
     { Ztg: null },
     { CategoricalOutcome: [372, 0] },
-    null,
+    '0x02072f158822700d6c657fcd1fff8fb53d26f11219e68527e5d7c77b7ca6537b',
     true,
   )
 

@@ -52,15 +52,16 @@ const rpcPoolPrices = async <C extends RpcContext>(
   ctx: C,
   query: PoolPricesQuery,
 ): Promise<PoolPrices> => {
-  const [time, pool, { start, end }] = await Promise.all([
-    now(ctx),
+  const time = await now(ctx)
+
+  const [pool, { start, end }] = await Promise.all([
     ctx.api.query.swaps.pools(query.pool).then(o => o.unwrap()),
-    asBlocks(await now(ctx), query.timespan),
+    asBlocks(time, query.timespan),
   ])
 
   const ztg = { Ztg: null }
 
-  let blocks = range(start, end)
+  let blocks = range(start, end) as BlockNumber[]
 
   if (query.resolution) {
     const step = asMs(query.resolution) / time.period
@@ -71,11 +72,13 @@ const rpcPoolPrices = async <C extends RpcContext>(
 
   const prices = await Promise.all(
     assets.map(async asset => {
+      console.log('FOOOO')
       const prices = await ctx.api.rpc.swaps.getSpotPrices(query.pool, ztg, asset, blocks)
-      return zip(
+      console.log('BAAR')
+      return zip<BlockNumber, Decimal>(
         blocks,
         prices.map(price => new Decimal(price.toString())),
-      ) as PoolAssetPricesAtBlock
+      )
     }),
   )
 

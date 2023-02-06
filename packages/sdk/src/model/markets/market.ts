@@ -16,12 +16,13 @@ import {
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
-import { upperFirstObjectKeys } from '@zeitgeistpm/utility/dist/object'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { blockDate, ChainTime, Timespan } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
 import Decimal from 'decimal.js'
+import { getPool } from 'model/swaps/functions/getPool'
+import { poolPrices } from 'model/swaps/functions/poolPrices'
 import {
   Context,
   FullContext,
@@ -721,5 +722,20 @@ export const getScalarBounds = (
     return E.either(
       E.right([new Decimal(bounds[0]).div(ZTG), new Decimal(bounds[1]).div(ZTG)]),
     )
+  }
+}
+
+export const getPrediction = async <C extends Context<MS>, MS extends MetadataStorage>(
+  ctx: C,
+  market: Market<Context>,
+) => {
+  if (isRpcData(market)) {
+    if (market.status.type === 'Resolved') {
+      const report = market.report.unwrap()
+      const outcome = report.outcome.toNumber()
+      const pool = (await getPool(ctx, market)).unwrap()!!
+      poolPrices
+    }
+  } else {
   }
 }

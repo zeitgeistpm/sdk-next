@@ -1,4 +1,3 @@
-import { isPromise } from '@polkadot/util'
 import * as E from '../either'
 import { throws } from '../error'
 import * as O from '../option'
