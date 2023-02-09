@@ -725,6 +725,12 @@ export const getScalarBounds = (
   }
 }
 
+/**
+ *
+ *
+ * @param ctx Context<MS>
+ * @param market Market<C>
+ */
 export const getPrediction = async <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
   market: Market<Context>,
