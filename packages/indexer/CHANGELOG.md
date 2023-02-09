@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.11.0
+
+### Minor Changes
+
+- 28f27ef: Gql schema changes.
+
 ## 2.10.1
 
 ### Patch Changes

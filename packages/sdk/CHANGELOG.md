@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.17.0
+
+### Minor Changes
+
+- 28f27ef: Gql schema changes.
+
+### Patch Changes
+
+- Updated dependencies [28f27ef]
+  - @zeitgeistpm/indexer@2.11.0
+
 ## 2.16.1
 
 ### Patch Changes
