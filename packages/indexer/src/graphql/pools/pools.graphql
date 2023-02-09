@@ -10,10 +10,10 @@ query pools(
 }
 
 fragment FullPool on Pool {
-  id
   accountId
   baseAsset
   createdAt
+  id
   marketId
   poolId
   poolStatus

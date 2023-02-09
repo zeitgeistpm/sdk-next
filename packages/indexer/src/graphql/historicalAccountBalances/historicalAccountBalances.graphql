@@ -15,15 +15,12 @@ query historicalAccountBalances(
 }
 
 fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
-  id
-  assetId
   accountId
+  assetId
   balance
   blockNumber
   dBalance
-  dValue
   event
-  pvalue
+  id
   timestamp
-  value
 }

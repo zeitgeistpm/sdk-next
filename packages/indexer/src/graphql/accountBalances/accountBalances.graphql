@@ -15,15 +15,13 @@ query accountBalances(
 }
 
 fragment FullAccountBalance on AccountBalance {
-  id
-  assetId
-  balance
-  value
   account {
-    id
     accountId
+    id
     marketId
     poolId
-    pvalue
   }
+  assetId
+  balance
+  id
 }
