@@ -714,11 +714,9 @@ export type HistoricalMarket = {
   marketId: Scalars['Int'];
   /** Zeitgeist's identifier for pool */
   poolId?: Maybe<Scalars['Int']>;
-  /** New market report. Null if no change */
-  report?: Maybe<MarketReport>;
-  /** New resolved outcome. Null if no change */
+  /** Latest resolved outcome */
   resolvedOutcome?: Maybe<Scalars['String']>;
-  /** New status. Null if no change */
+  /** Latest market status */
   status?: Maybe<Scalars['String']>;
   /** Timestamp of the block */
   timestamp: Scalars['DateTime'];
@@ -741,10 +739,6 @@ export enum HistoricalMarketOrderByInput {
   MarketIdDesc = 'marketId_DESC',
   PoolIdAsc = 'poolId_ASC',
   PoolIdDesc = 'poolId_DESC',
-  ReportAtAsc = 'report_at_ASC',
-  ReportAtDesc = 'report_at_DESC',
-  ReportByAsc = 'report_by_ASC',
-  ReportByDesc = 'report_by_DESC',
   ResolvedOutcomeAsc = 'resolvedOutcome_ASC',
   ResolvedOutcomeDesc = 'resolvedOutcome_DESC',
   StatusAsc = 'status_ASC',
@@ -817,8 +811,6 @@ export type HistoricalMarketWhereInput = {
   poolId_lte?: InputMaybe<Scalars['Int']>;
   poolId_not_eq?: InputMaybe<Scalars['Int']>;
   poolId_not_in?: InputMaybe<Array<Scalars['Int']>>;
-  report?: InputMaybe<MarketReportWhereInput>;
-  report_isNull?: InputMaybe<Scalars['Boolean']>;
   resolvedOutcome_contains?: InputMaybe<Scalars['String']>;
   resolvedOutcome_containsInsensitive?: InputMaybe<Scalars['String']>;
   resolvedOutcome_endsWith?: InputMaybe<Scalars['String']>;
@@ -1063,6 +1055,8 @@ export type Market = {
   description?: Maybe<Scalars['String']>;
   /** Can be `Authorized` or `Court` or `SimpleDisputes` */
   disputeMechanism: Scalars['String'];
+  /** The dispute information for each dispute that's been issued */
+  disputes?: Maybe<Array<Maybe<MarketReport>>>;
   /** Unique identifier of the object */
   id: Scalars['String'];
   /** Image for the market */
@@ -1527,6 +1521,7 @@ export type MarketWhereInput = {
   disputeMechanism_not_in?: InputMaybe<Array<Scalars['String']>>;
   disputeMechanism_not_startsWith?: InputMaybe<Scalars['String']>;
   disputeMechanism_startsWith?: InputMaybe<Scalars['String']>;
+  disputes_isNull?: InputMaybe<Scalars['Boolean']>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -2086,6 +2081,7 @@ export type Query = {
   marketById?: Maybe<Market>;
   /** @deprecated Use marketById */
   marketByUniqueInput?: Maybe<Market>;
+  marketStats: Array<StatsResult>;
   markets: Array<Market>;
   marketsConnection: MarketsConnection;
   poolById?: Maybe<Pool>;
@@ -2094,7 +2090,6 @@ export type Query = {
   pools: Array<Pool>;
   poolsConnection: PoolsConnection;
   squidStatus?: Maybe<SquidStatus>;
-  stats: Array<StatsResult>;
 };
 
 
@@ -2290,6 +2285,11 @@ export type QueryMarketByUniqueInputArgs = {
 };
 
 
+export type QueryMarketStatsArgs = {
+  ids: Array<Scalars['String']>;
+};
+
+
 export type QueryMarketsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -2329,11 +2329,6 @@ export type QueryPoolsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy: Array<PoolOrderByInput>;
   where?: InputMaybe<PoolWhereInput>;
-};
-
-
-export type QueryStatsArgs = {
-  marketIds: Array<Scalars['String']>;
 };
 
 export type SquidStatus = {

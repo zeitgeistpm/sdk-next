@@ -1,6 +1,5 @@
 import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
-import { options } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import { assign } from '@zeitgeistpm/utility/dist/observable'
 import polly from 'polly-js'
@@ -163,6 +162,7 @@ export const createRpcContext = async <MS extends MetadataStorage<any, any>>(
   config: RpcConfig<MS>,
 ): Promise<RpcContext<MS>> => {
   const { ApiPromise, WsProvider } = await import('@polkadot/api')
+  const { options } = await import('@zeitgeistpm/rpc')
 
   debug(`connecting to rpc: ${config.provider}`, config)
 

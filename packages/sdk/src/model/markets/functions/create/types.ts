@@ -11,7 +11,7 @@ import type { IEither } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { AssetId } from '../../../../primitives'
 import { RpcContext } from '../../../../context'
-import { MarketTypeOf, MetadataStorage } from '../../../../meta'
+import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../../../meta'
 import { Pool } from '../../../swaps/pool'
 import { Market } from '../../market'
 
@@ -132,9 +132,7 @@ export type CreateMarketWithPoolParams<
  */
 export const isWithPool = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   params: CreateMarketParams<C, MS>,
-): params is CreateMarketWithPoolParams<C, MS> => {
-  return 'pool' in params
-}
+): params is CreateMarketWithPoolParams<C, MS> => params && 'pool' in params
 
 /**
  * The result of creating a market.
@@ -182,5 +180,5 @@ export type CreateMarketData<
  */
 export type CreateMarketTransaction = {
   tx: SubmittableExtrinsic<'promise', ISubmittableResult>
-  rollbackMetadata: Te.TaskEither<Error, void, []> //() => Promise<IEither<Error, void>>
+  rollbackMetadata: Te.TaskEither<Error, void, []>
 }

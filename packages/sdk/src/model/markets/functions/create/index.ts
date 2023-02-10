@@ -68,10 +68,7 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
   const storage = context.storage.of('markets')
   const cid = await storage.put(params.metadata)
 
-  const rollbackMetadata = Te.from(async () => {
-    if (!context.storage) return
-    await context.storage.of('markets').del(cid)
-  })
+  const rollbackMetadata = Te.from(async () => context.storage?.of('markets').del(cid))
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
