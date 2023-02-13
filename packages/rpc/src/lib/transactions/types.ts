@@ -4,6 +4,7 @@ import type { ISubmittableResult, RegistryError } from '@polkadot/types/types'
 export type TransactionHooks = {
   hooks?: {
     inBlock?: (result: ISubmittableResult) => void
+    isFinalized?: (result: ISubmittableResult) => void
     retracted?: () => void
   }
 }

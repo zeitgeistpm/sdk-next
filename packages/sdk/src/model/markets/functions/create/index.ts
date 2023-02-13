@@ -1,6 +1,7 @@
 import type { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
 import type { EventRecord } from '@polkadot/types/interfaces'
 import type { ISubmittableResult } from '@polkadot/types/types'
+import { isString, isU8a, u8aToHex } from '@polkadot/util'
 import { signAndSend } from '@zeitgeistpm/rpc'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
@@ -25,9 +26,13 @@ import {
  * @param params CreateMarketParams<C, MS>
  * @returns void
  */
-export const create = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
+export const create = async <
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage,
+  P extends CreateMarketParams<C, MS> = CreateMarketParams<C, MS>,
+>(
   context: C,
-  params: CreateMarketParams<C, MS>,
+  params: P,
 ): Promise<CreateMarketResult<C, MS>> => {
   const { tx, rollbackMetadata } = await transaction(context, params)
   const response = signAndSend({
@@ -66,9 +71,15 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
   const storage = context.storage.of('markets')
-  const cid = await storage.put(params.metadata)
+  const key = await storage.put(params.metadata)
 
-  const rollbackMetadata = Te.from(async () => context.storage?.of('markets').del(cid))
+  const rollbackMetadata = Te.from(async () => context.storage?.of('markets').del(key))
+
+  const Sha3_384 = isString(key)
+    ? key
+    : isU8a(key.cid)
+    ? u8aToHex(key.cid)
+    : key.cid.multihash.bytes
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
@@ -76,7 +87,7 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
       params.oracle,
       params.period,
       params.deadlines,
-      { Sha3_384: cid.cid.multihash.bytes },
+      { Sha3_384 },
       params.marketType,
       params.disputeMechanism,
       params.pool.swapFee,
@@ -89,7 +100,7 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
       params.oracle,
       params.period,
       params.deadlines,
-      { Sha3_384: cid.cid.multihash.bytes },
+      { Sha3_384 },
       params.creationType,
       params.marketType,
       params.disputeMechanism,

@@ -1,3 +1,4 @@
+import { AEither } from '@zeitgeistpm/utility/dist/aeither'
 import { IOption } from '@zeitgeistpm/utility/dist/option'
 import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
@@ -59,21 +60,13 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
    * Create a market. Only available when connecting to rpc.
    */
   create: C extends RpcContext<MS>
-    ? PFunc<
-        Te.TaskEither<
-          Error,
-          CreateMarketResult<C, MS>,
-          [params: CreateMarketParams<C, MS>]
-        >,
-        {
-          /**
-           * Create a transaction that can be signed and sent manually.
-           * @param query CreateMarketParams<C, MS>
-           * @returns Promise<CreateMarketTransaction>
-           */
-          tx: (params: CreateMarketParams<C, MS>) => Promise<CreateMarketTransaction>
-        }
-      >
+    ? <
+        C extends RpcContext<MS>,
+        MS extends MetadataStorage,
+        P extends CreateMarketParams<C, MS> = CreateMarketParams<C, MS>,
+      >(
+        params: P,
+      ) => Promise<CreateMarketResult<C, MS, P>>
     : never
 
   /**

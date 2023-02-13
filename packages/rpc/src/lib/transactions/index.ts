@@ -18,9 +18,10 @@ export const signAndSend: Te.TaskEither<
       api: ApiPromise
       tx: SubmittableExtrinsic<'promise', ISubmittableResult>
       signer: KeyringPairOrExtSigner
+      waitForFinalization?: boolean
     } & TransactionHooks,
   ]
-> = Te.from(async ({ api, tx, signer, hooks }) => {
+> = Te.from(async ({ api, tx, signer, hooks, waitForFinalization }) => {
   return new Promise(async (resolve, reject) => {
     let unsub: () => void
 
@@ -47,9 +48,13 @@ export const signAndSend: Te.TaskEither<
 
       if (result.status.isInBlock) {
         hooks?.inBlock?.(result)
+        if (!waitForFinalization) {
+          resolve(result)
+        }
       }
 
-      if (result.status.isFinalized) {
+      if (waitForFinalization && result.status.isFinalized) {
+        hooks?.isFinalized?.(result)
         resolve(result)
       }
     }

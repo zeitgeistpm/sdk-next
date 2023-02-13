@@ -79,6 +79,11 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
     | 'Authorized'
     | 'Court'
     | 'SimpleDisputes'
+  /**
+   * If true, the extrinsic will wait for the market to be finalize in a block before resolving.
+   * Otherwise it will resolve immediately after inclusion.
+   */
+  waitForFinalization?: boolean
 }
 
 /**
@@ -140,7 +145,11 @@ export const isWithPool = <C extends RpcContext<MS>, MS extends MetadataStorage>
  *
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
-export type CreateMarketResult<C extends RpcContext<MS>, MS extends MetadataStorage> = {
+export type CreateMarketResult<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+  P extends CreateMarketParams<C, MS> = CreateMarketParams<C, MS>,
+> = {
   raw: ISubmittableResult
   /**
    * Lazy function to saturate response with created Market and Pool.
@@ -152,7 +161,7 @@ export type CreateMarketResult<C extends RpcContext<MS>, MS extends MetadataStor
    *
    * @returns EitherInterface<Error, CreateMarketData<P>>
    */
-  saturate: () => IEither<Error, CreateMarketData<C, MS, CreateMarketParams<C, MS>>>
+  saturate: () => IEither<Error, CreateMarketData<C, MS, P>>
 }
 
 /**

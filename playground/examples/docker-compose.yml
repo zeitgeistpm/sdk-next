@@ -1,0 +1,13 @@
+version: "3.4"
+services:
+
+  node:
+    image: zeitgeistpm/zeitgeist-node:v0.3.8
+    container_name: node
+    restart: unless-stopped
+    environment:
+      - PORT=9944
+      - NODE_URI=ws://node:9944/0
+    ports:
+      - 9944:9944
+    command: --dev --tmp --ws-external --pruning archive

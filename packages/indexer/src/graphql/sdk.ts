@@ -1369,6 +1369,13 @@ export type MarketReportWhereInput = {
   outcome_isNull?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type MarketStats = {
+  __typename?: 'MarketStats';
+  liquidity: Scalars['BigInt'];
+  marketId: Scalars['Float'];
+  participants: Scalars['Float'];
+};
+
 /** Market's types */
 export type MarketType = {
   __typename?: 'MarketType';
@@ -2081,7 +2088,7 @@ export type Query = {
   marketById?: Maybe<Market>;
   /** @deprecated Use marketById */
   marketByUniqueInput?: Maybe<Market>;
-  marketStats: Array<StatsResult>;
+  marketStats: Array<MarketStats>;
   markets: Array<Market>;
   marketsConnection: MarketsConnection;
   poolById?: Maybe<Pool>;
@@ -2335,12 +2342,6 @@ export type SquidStatus = {
   __typename?: 'SquidStatus';
   /** The height of the processed part of the chain */
   height?: Maybe<Scalars['Int']>;
-};
-
-export type StatsResult = {
-  __typename?: 'StatsResult';
-  marketId: Scalars['Float'];
-  participants: Scalars['Float'];
 };
 
 export type Subscription = {
