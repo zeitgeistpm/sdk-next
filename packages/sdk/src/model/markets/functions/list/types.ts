@@ -11,7 +11,10 @@ import { Market, IndexedMarket, RpcMarket } from '../../types'
  *
  * @generic C Context - the context to fetch the marketlist for.
  */
-export type MarketList<C extends Context<MS>, MS extends MetadataStorage> = Market<C, MS>[]
+export type MarketList<
+  C extends Context<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+> = Market<C, MS>[]
 
 /**
  * Markets list Query type

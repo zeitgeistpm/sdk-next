@@ -1,13 +1,13 @@
-import { create, FullContext, mainnet, Sdk } from '@zeitgeistpm/sdk'
+import { create, FullContext, mainnet, MarketList, RpcContext, Sdk } from '@zeitgeistpm/sdk'
 
 const sdk: Sdk<FullContext> = await create(mainnet())
 
 /**
  * Clone the sdk and force it to use the rpc api.
  */
-const rpcSdk = sdk.asRpc()
+const rpcSdk: Sdk<RpcContext> = sdk.asRpc()
 
-const markets = await rpcSdk.model.markets.list()
+const markets: MarketList<RpcContext> = await rpcSdk.model.markets.list()
 
 /**
  * Saturate the markets with data from IPFS so we can peek its question

@@ -1,9 +1,9 @@
-import { create, mainnetRpc, RpcContext, Sdk } from '@zeitgeistpm/sdk'
+import { create, mainnetRpc, MarketList, RpcContext, Sdk } from '@zeitgeistpm/sdk'
 import { isNotNull } from '@zeitgeistpm/utility/dist/null'
 
 const sdk: Sdk<RpcContext> = await create(mainnetRpc())
 
-const all = await sdk.model.markets.list()
+const all: MarketList<RpcContext> = await sdk.model.markets.list()
 
 const activeSportsMarkets = (
   await Promise.all(
