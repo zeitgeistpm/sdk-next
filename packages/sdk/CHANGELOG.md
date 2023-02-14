@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.18.1
+
+### Patch Changes
+
+- e9b9107: Reintroduced the `asRpc()` method on `Sdk`
+
 ## 2.18.0
 
 ### Minor Changes
