@@ -10,7 +10,7 @@ query markets(
 }
 
 query marketStatusCount(
-  $status: String!
+  $status: MarketStatus!
 ) {
   markets(where: {status_eq: $status}) {
     id
