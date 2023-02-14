@@ -1,5 +1,17 @@
 import { Decimal } from 'decimal.js'
+import { BASE } from './base'
 import { BigNumber } from './bignumber'
+
+/**
+ * Helper to convert a float percentage to a swap fee.
+ *
+ * @param fee string | number | Decimal - the fee as a float '1' | 1 | new Decimal(1) would be 1% swap fee.
+ * @returns Decimal
+ */
+export const swapFeeFromFloat = (fee: string | number | Decimal): Decimal => {
+  const feedecimal = new Decimal(fee)
+  return feedecimal.mul(BASE.div(100))
+}
 
 /**
  * Calculate the spot price for an asset given the balance in and out and weights.

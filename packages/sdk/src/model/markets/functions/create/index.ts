@@ -34,6 +34,7 @@ export const create = async <
   context: C,
   params: P,
 ): Promise<CreateMarketResult<C, MS>> => {
+  //TODO: make this a AEither
   const { tx, rollbackMetadata } = await transaction(context, params)
   const response = signAndSend({
     api: context.api,

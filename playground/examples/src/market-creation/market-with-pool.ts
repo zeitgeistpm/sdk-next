@@ -2,13 +2,12 @@ import { KeyringPair } from '@polkadot/keyring/types'
 import {
   create,
   CreateMarketWithPoolParams,
-  createStorage,
-  mainnet,
+  localhostRpc,
   RpcContext,
   Sdk,
   ZTG,
 } from '@zeitgeistpm/sdk'
-import { IPFS } from '@zeitgeistpm/web3.storage'
+import { weightsFromRelativeRatio } from '@zeitgeistpm/sdk'
 import { getSigner } from '../getSigner'
 
 /**
@@ -16,22 +15,13 @@ import { getSigner } from '../getSigner'
  */
 // const sdk: Sdk<RpcContext> = await create(mainnet())
 
-const sdk: Sdk<RpcContext> = await create({
-  provider: 'ws://127.0.0.1:9944',
-  storage: createStorage(
-    IPFS.storage({
-      node: {
-        url: 'http://127.0.0.1:5001',
-      },
-    }),
-  ),
-})
+const sdk: Sdk<RpcContext> = await create(localhostRpc())
 
 /**
  * Get the signer from the wallet extension or other keyring.
  */
 const signer: KeyringPair = getSigner()
-
+console.log(weightsFromRelativeRatio([1, 2]))
 /**
  * Params for creating a standalone market without pool.
  */
@@ -62,20 +52,26 @@ const params: CreateMarketWithPoolParams<typeof sdk> = {
   pool: {
     amount: ZTG.mul(300).toString(),
     swapFee: '1',
-    weights: ['50000000000', '50000000000'],
+    weights: weightsFromRelativeRatio([2, 4]),
   },
 }
 
-/**
- * Create market transaction and send it.
- */
-const response = await sdk.model.markets.create(params)
+try {
+  /**
+   * Create market transaction and send it.
+   */
+  const response = await sdk.model.markets.create(params)
 
-/**
- * Fetch created market from events on finalized block and saturate the metadata.
- * @note in this case the metadata is already in scope so saturating is redundant, but shown as an example.
- */
-const { market, pool } = response.saturate().unwrap()
+  /**
+   * Fetch created market from events on finalized block and saturate the metadata.
+   * @note in this case the metadata is already in scope so saturating is redundant, but shown as an example.
+   */
+  const { market, pool } = response.saturate().unwrap()
 
-console.log(`Market created with id: ${market.marketId}`)
-console.log(`Pool created with id: ${pool.poolId}`)
+  console.log(`Market created with id: ${market.marketId}`)
+  console.log(`Pool created with id: ${pool.poolId}`)
+} catch (e) {
+  console.error(e)
+} finally {
+  process.exit(1)
+}

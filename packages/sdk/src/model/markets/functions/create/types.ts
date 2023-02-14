@@ -14,6 +14,7 @@ import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf } from '../../../../meta'
 import { Pool } from '../../../swaps/pool'
 import { Market } from '../../market'
+import { u128 } from '@polkadot/types'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -59,15 +60,31 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
    */
   period:
     | {
+        /**
+         * The start and end block of the market.
+         */
         Block: [number, number]
       }
     | {
+        /**
+         * The start and end timestamp of the market.
+         */
         Timestamp: [number, number]
       }
 
   deadlines: {
+    /**
+     * The number of blocks to wait after trading ends and before the oracle can resolve the market.
+     */
     gracePeriod: number
+    /**
+     * The number of blocks to wait for the oracle to resolve the market.
+     * If this period is exceeded, the market will go into open resolving where anyone can resolve the market.
+     */
     oracleDuration: number
+    /**
+     * The number of blocks to await possible disputes after market is resolved.
+     */
     disputeDuration: number
   }
   /**
@@ -117,15 +134,15 @@ export type CreateMarketWithPoolParams<
     /**
      * The fee to swap in and out of the pool.
      */
-    swapFee: string
+    swapFee: string | u128
     /**
      * The ammount to deploy in ZTG
      */
-    amount: string
+    amount: string | u128
     /**
      * Weighting of the assets.
      */
-    weights: string[]
+    weights: Array<string | u128>
   }
 }
 

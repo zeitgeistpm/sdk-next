@@ -1,4 +1,5 @@
-import type { CommentMetadata, MarketMetadata, MetadataStorage } from '../../meta'
+import { IPFS } from '@zeitgeistpm/web3.storage'
+import { CommentMetadata, createStorage, MarketMetadata, MetadataStorage } from '../../meta'
 import type { FullConfig, IndexerConfig, RpcConfig } from '../types'
 import { ZeitgeistIpfs } from './storage'
 import { SupportedParachain } from './types'
@@ -73,6 +74,21 @@ export const batterystationIndexer = (): IndexerConfig => {
     indexer: indexers.bsr.uri,
   }
 }
+
+/**
+ * Create a standard local rpc node config with local node and local ipfs standards.
+ * @returns RpcConfig<MS>
+ */
+export const localhostRpc = <MS extends MetadataStorage>(): RpcConfig<MS> => ({
+  provider: 'ws://127.0.0.1:9944',
+  storage: createStorage(
+    IPFS.storage({
+      node: {
+        url: 'http://127.0.0.1:5001',
+      },
+    }),
+  ) as MS,
+})
 
 /**
  * Known rpc endpoints.

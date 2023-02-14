@@ -10,7 +10,7 @@ import {
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import * as AssetId from '../../../../primitives/assetid'
-import { ZTG } from '../../../../primitives/ztg'
+import { ZTG } from '../../../../math/ztg'
 import { rpcMarket } from '../../../markets'
 import { Pool } from '../../pool'
 import { SaturatedPoolEntryAsset, SaturatedPoolIndex } from './types'
