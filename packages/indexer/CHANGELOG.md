@@ -1,5 +1,13 @@
 # @zeitgeistpm/indexer
 
+## 2.12.0
+
+### Minor Changes
+
+- 41e51f1: - Added helpers for swap fee and weights calculation. `evenWeights(x_number_of_outcomes)`, `weightsFromRelativeRatio([int_ratio, int_ratio, ...])` and `swapFeeFromFloat(percent)`
+  - Changed the indexer gql market status type to correct enum.
+  - Improved market creation and metadata storage.
+
 ## 2.11.0
 
 ### Minor Changes
