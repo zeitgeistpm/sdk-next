@@ -7,11 +7,11 @@ export type PaginationQuery = {
   /**
    * The index to start at.
    */
-  offset: number
+  offset?: number
   /**
    * The number of items to fetch.
    */
-  limit: number
+  limit?: number
 }
 
 /**

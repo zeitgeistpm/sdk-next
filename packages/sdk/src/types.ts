@@ -31,6 +31,11 @@ export type Sdk<C extends Context<MS>, MS extends MetadataStorage = MetadataStor
    * the markets you have the official standard of metadata so that they show up in the official frontend.
    */
   readonly model: Model<C, MS>
+
+  /**
+   * Utility for creating a new sdk with rpc features.
+   */
+  asRpc: C extends RpcContext<MS> | FullContext<MS> ? () => Sdk<RpcContext<MS>, MS> : never
 }
 
 /**
@@ -49,6 +54,15 @@ export const sdk = <C extends Context<MS>, MS extends MetadataStorage = Metadata
     ...context,
     model: model(context),
   } as Sdk<C, MS>
+
+  if (isRpcContext<MS>(context)) {
+    const __context: RpcContext<MS> = {
+      api: context.api,
+      provider: context.provider,
+      storage: context.storage,
+    }
+    ;(instance as any).asRpc = () => sdk(__context)
+  }
 
   return instance
 }
