@@ -6,8 +6,9 @@ import {
   RpcContext,
   Sdk,
   ZTG,
+  evenWeights,
+  swapFeeFromFloat,
 } from '@zeitgeistpm/sdk'
-import { weightsFromRelativeRatio } from '@zeitgeistpm/sdk'
 import { getSigner } from '../getSigner'
 
 /**
@@ -21,7 +22,7 @@ const sdk: Sdk<RpcContext> = await create(localhostRpc())
  * Get the signer from the wallet extension or other keyring.
  */
 const signer: KeyringPair = getSigner()
-console.log(weightsFromRelativeRatio([1, 2]))
+
 /**
  * Params for creating a standalone market without pool.
  */
@@ -51,8 +52,8 @@ const params: CreateMarketWithPoolParams<typeof sdk> = {
   },
   pool: {
     amount: ZTG.mul(300).toString(),
-    swapFee: '1',
-    weights: weightsFromRelativeRatio([2, 4]),
+    swapFee: swapFeeFromFloat(1).toString(),
+    weights: evenWeights(2),
   },
 }
 
