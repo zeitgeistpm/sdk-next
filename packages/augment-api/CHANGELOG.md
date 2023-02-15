@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.9.1
+
+### Patch Changes
+
+- 124de44: Added some helper methods `getSwapFee`, `getAssetIds` and `getAssetBalance` to Pool
+
 ## 2.9.0
 
 ### Minor Changes

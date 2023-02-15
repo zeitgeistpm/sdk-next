@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.6.1
+
+### Patch Changes
+
+- 124de44: Added some helper methods `getSwapFee`, `getAssetIds` and `getAssetBalance` to Pool
+- Updated dependencies [124de44]
+  - @zeitgeistpm/augment-api@2.9.1
+
 ## 2.6.0
 
 ### Minor Changes

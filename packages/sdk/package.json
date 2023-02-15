@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/sdk",
-  "version": "2.18.1",
+  "version": "2.18.2",
   "publishConfig": {
     "access": "public"
   },
@@ -30,9 +30,9 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^2.9.0",
-    "@zeitgeistpm/indexer": "^2.12.0",
-    "@zeitgeistpm/rpc": "^2.6.0",
+    "@zeitgeistpm/augment-api": "^2.9.1",
+    "@zeitgeistpm/indexer": "^2.12.1",
+    "@zeitgeistpm/rpc": "^2.6.1",
     "@zeitgeistpm/utility": "^2.10.0",
     "@zeitgeistpm/web3.storage": "^2.6.0",
     "cids": "^1.1.9",

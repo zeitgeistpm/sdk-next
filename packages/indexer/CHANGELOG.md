@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.12.1
+
+### Patch Changes
+
+- 124de44: Added some helper methods `getSwapFee`, `getAssetIds` and `getAssetBalance` to Pool
+
 ## 2.12.0
 
 ### Minor Changes
