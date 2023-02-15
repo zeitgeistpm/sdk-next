@@ -1,16 +1,15 @@
-import { Observable, of } from 'rxjs'
 import * as O from '@zeitgeistpm/utility/dist/option'
+import { Observable, of } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 import {
   Context,
   IndexerContext,
-  isFullContext,
   isIndexerContext,
   isRpcContext,
   RpcContext,
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
-import { IndexedPool, Pool, RpcPool, rpcPool } from '../../pool'
+import { attachPoolMethods, Pool, rpcPool } from '../../pool'
 import { isMarketIdQuery, PoolGetQuery } from '../../types'
 
 /**
@@ -26,11 +25,21 @@ export const getPool = async <C extends Context<MS>, MS extends MetadataStorage>
   context: C,
   query: PoolGetQuery,
 ): Promise<O.IOption<Pool<C, MS>>> => {
+  let pool: O.IOption<Pool<C, MS>> = O.option(O.none())
+
   if (isIndexerContext<MS>(context)) {
-    return getFromIndexer(context, query)
+    pool = await getFromIndexer(context, query)
   } else if (isRpcContext<MS>(context)) {
-    return getFromRpc<typeof context, MS>(context, query)
+    pool = await getFromRpc<typeof context, MS>(context, query)
   }
+
+  return pool.map(pool => {
+    if (isRpcContext(context)) {
+      attachPoolMethods(context, pool)
+    }
+    return pool
+  })
+
   throw new Error('unrechable code detected.')
 }
 

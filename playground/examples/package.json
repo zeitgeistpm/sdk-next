@@ -11,6 +11,7 @@
     "@polkadot/api": "^9.8.1",
     "@zeitgeistpm/sdk": "*",
     "@zeitgeistpm/utility": "*",
+    "decimal.js": "^10.4.3",
     "ink": "^3.2.0",
     "react": "^18.2.0"
   }

@@ -36,7 +36,7 @@
     "@zeitgeistpm/utility": "^2.10.0",
     "@zeitgeistpm/web3.storage": "^2.6.0",
     "cids": "^1.1.9",
-    "decimal.js": "^10.4.2",
+    "decimal.js": "^10.4.3",
     "lodash-es": "^4.17.21",
     "lodash.memoize": "^4.1.2",
     "ms": "^2.1.3",

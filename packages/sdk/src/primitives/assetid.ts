@@ -1,4 +1,5 @@
 import type { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
+import { isCodec } from '@polkadot/util'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import { upperFirstObjectKeys } from '@zeitgeistpm/utility/dist/object'
 import * as O from '@zeitgeistpm/utility/dist/option'
@@ -116,7 +117,13 @@ export const getIndexOf = (assetId: AssetId): number | null =>
  * @param raw object | string
  * @returns O.IOption<AssetId>
  */
-export const parseAssetId = (raw: string | object): E.IEither<SyntaxError, AssetId> => {
+export const parseAssetId = (
+  raw: string | object | ZeitgeistPrimitivesAsset,
+): E.IEither<SyntaxError, AssetId> => {
+  if (isCodec(raw)) {
+    return E.either(E.right(fromPrimitive(raw as ZeitgeistPrimitivesAsset)))
+  }
+
   if (typeof raw === 'string' && raw.toLowerCase() === 'ztg') {
     return E.either(
       E.right({

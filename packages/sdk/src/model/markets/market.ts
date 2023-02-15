@@ -34,7 +34,7 @@ import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '.
 import { MarketMetadata } from '../../meta/market'
 import { Data, isIndexedData, isRpcData, NA, ZTG } from '../../primitives'
 import { now } from '../time/functions/now'
-import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
+import { ExchangeFullSetParams, Pool, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
 import { ReportOutcomeParams } from './outcome'
 
@@ -60,7 +60,7 @@ export type Market<
 export type IndexedMarket<
   C extends Context<MS>,
   MS extends MetadataStorage = MetadataStorage,
-> = FullMarketFragment & (C extends RpcContext<MS> ? MarketMethods : {})
+> = FullMarketFragment & (C extends RpcContext<MS> ? MarketMethods<C, MS> : {})
 
 /**
  * Concrete Market type for a rpc market.
@@ -69,7 +69,7 @@ export type RpcMarket<
   C extends RpcContext<MS>,
   MS extends MetadataStorage = MetadataStorage,
 > = ZeitgeistPrimitivesMarket &
-  MarketMethods & {
+  MarketMethods<C, MS> & {
     /**
      * Market id/index. Set for conformity and convenince when fetching markets from rpc.
      */
@@ -101,7 +101,7 @@ export type IndexedBase = Omit<FullMarketFragment, keyof MarketMetadata>
 /**
  * Interface on market with methods for deploying swap pools, buying and selling sets of assets..
  */
-export type MarketMethods = {
+export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * Deploy a swap pool for the market.
    *
@@ -270,7 +270,7 @@ export const hasMarketMethods = <
   MS extends MetadataStorage = MetadataStorage,
 >(
   market: Market<C, MS>,
-): market is Market<C, MS> & MarketMethods => 'deploySwapPool' in market
+): market is Market<C, MS> & MarketMethods<C, MS> => 'deploySwapPool' in market
 
 /**
  * Augment a market primitive with id and data expanding utility functions.
