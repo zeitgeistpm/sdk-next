@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.18.3
+
+### Patch Changes
+
+- 97f0b7f: Added methods `getSwapFee`, `getAssetIds`, `getAssetWeight` and `getAssetBalance` to the Pool model.
+
 ## 2.18.2
 
 ### Patch Changes
