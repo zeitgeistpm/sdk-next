@@ -1,14 +1,11 @@
 import { KeyringPair } from '@polkadot/keyring/types'
+import { batterystation } from '@zeitgeistpm/sdk'
 import {
   AssetId,
   calcInGivenOut,
   create,
   FullContext,
-  getAssetBalance,
-  getAssetIds,
-  getAssetWeight,
   getIndexOf,
-  getSwapFee,
   mainnet,
   Market,
   Pool,
@@ -18,9 +15,9 @@ import {
 } from '@zeitgeistpm/sdk'
 import { getBsrTestingSigner } from '../getSigner'
 
-const sdk: Sdk<FullContext> = await create(mainnet())
+const sdk: Sdk<FullContext> = await create(batterystation())
 
-const marketId = 1
+const marketId = 190
 
 const market: Market<FullContext> = await sdk.model.markets
   .get({ marketId })
@@ -30,7 +27,7 @@ const pool: Pool<FullContext> = await sdk.model.swaps
   .getPool({ marketId })
   .then(pool => pool.unwrap()!)
 
-const marketAssets: AssetId[] = getAssetIds(pool)
+const marketAssets: AssetId[] = pool.getAssetIds()
 
 const baseAsset: ZtgAssetId = { Ztg: null }
 const outcomeAssetIndex = market?.categories?.findIndex(
@@ -38,13 +35,16 @@ const outcomeAssetIndex = market?.categories?.findIndex(
 )
 const outcomeAsset = marketAssets.find(asset => getIndexOf(asset) === outcomeAssetIndex)!
 
-const baseAssetBalance = await getAssetBalance(sdk, pool, baseAsset)
-const outcomeAssetBalance = await getAssetBalance(sdk, pool, outcomeAsset)
-const baseAssetWeight = getAssetWeight(pool, baseAsset).unwrap()!
-const outcomeAssetWeight = getAssetWeight(pool, outcomeAsset).unwrap()!
+const [baseAssetBalance, outcomeAssetBalance] = await Promise.all([
+  pool.getAssetBalance(baseAsset),
+  pool.getAssetBalance(outcomeAsset),
+])
+
+const baseAssetWeight = pool.getAssetWeight(baseAsset).unwrap()!
+const outcomeAssetWeight = pool.getAssetWeight(outcomeAsset).unwrap()!
 
 const amountToBuy = ZTG.mul(20).toString()
-const swapFee = getSwapFee(pool).unwrap()!
+const swapFee = pool.getSwapFee()
 
 const slippage = 0.1
 

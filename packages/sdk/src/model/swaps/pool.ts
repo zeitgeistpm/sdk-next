@@ -52,12 +52,14 @@ export type Pool<
 export type IndexedPool<
   C extends Context<MS>,
   MS extends MetadataStorage = MetadataStorage,
-> = Unpacked<PoolsQuery['pools']> & (C extends RpcContext<MS> ? PoolMethods : {})
+> = Unpacked<PoolsQuery['pools']> &
+  PoolMethods &
+  (C extends RpcContext<MS> ? PoolTransactions : {})
 
 /**
  * Concrete Pool type for rpc Pool.
  */
-export type RpcPool = (ZeitgeistPrimitivesPool & PoolMethods) & {
+export type RpcPool = (ZeitgeistPrimitivesPool & PoolMethods & PoolTransactions) & {
   /**
    * The pool id/index on chain.
    */
@@ -65,6 +67,30 @@ export type RpcPool = (ZeitgeistPrimitivesPool & PoolMethods) & {
 }
 
 export type PoolMethods = {
+  getSwapFee: () => Decimal
+  getAssetIds: () => AssetId[]
+  getAssetWeight: (assetId: AssetId) => O.IOption<Decimal>
+  getAssetBalance: Te.TaskEither<Error, Decimal, [assetId: AssetId]>
+}
+
+export const attachPoolMethods = <
+  C extends Context<MS>,
+  MS extends MetadataStorage = MetadataStorage,
+>(
+  ctx: C,
+  primitive: ZeitgeistPrimitivesPool | Unpacked<PoolsQuery['pools']>,
+) => {
+  let pool = primitive as Pool<C, MS>
+
+  pool.getSwapFee = () => getSwapFee(pool)
+  pool.getAssetIds = () => getAssetIds(pool)
+  pool.getAssetWeight = assetId => getAssetWeight(pool, assetId)
+  pool.getAssetBalance = Te.from(assetId => getAssetBalance(ctx, pool, assetId))
+
+  return pool
+}
+
+export type PoolTransactions = {
   /**
    * Get the account id for the pool.
    */
@@ -228,7 +254,7 @@ export const rpcPool = (
 ): RpcPool => {
   let pool = primitive as RpcPool
   pool.poolId = isNumber(poolId) ? poolId : poolId.toNumber()
-  return attachPoolMethods(ctx, pool)
+  return attachPoolMethods(ctx, attachPoolTransactionMethods(ctx, pool))
 }
 
 /**
@@ -239,7 +265,7 @@ export const rpcPool = (
  * @param primitive ZeitgeistPrimitivesPool
  * @returns RpcPool
  */
-export const attachPoolMethods = (
+export const attachPoolTransactionMethods = (
   ctx: RpcContext,
   primitive: ZeitgeistPrimitivesPool | Unpacked<PoolsQuery['pools']>,
 ): RpcPool => {
@@ -380,15 +406,15 @@ export const attachPoolMethods = (
  * Get the swap fee of a pool.
  *
  * @param pool Pool<C, MS>,
- * @returns O.IOption<Decimal>
+ * @returns Decimal
  */
 export const getSwapFee = <C extends Context<MS>, MS extends MetadataStorage>(
   pool: Pool<C, MS>,
-): O.IOption<Decimal> => {
+): Decimal => {
   if (isRpcData(pool)) {
-    return O.option(O.some(new Decimal(pool.swapFee.unwrapOrDefault().toNumber())))
+    return new Decimal(pool.swapFee.unwrapOrDefault().toNumber())
   } else {
-    return O.option(O.some(new Decimal(pool.swapFee || '0')))
+    return new Decimal(pool.swapFee || '0')
   }
 }
 
@@ -463,27 +489,6 @@ export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage
 }
 
 /**
- * Map storage entries to rpc pools
- *
- * @param ctx RpcContext<MS>
- * @param entries [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][]
- * @returns RpcPool[]
- */
-export const fromEntries = <C extends RpcContext<MS>, MS extends MetadataStorage>(
-  ctx: C,
-  entries: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][],
-): Pool<C, MS>[] => {
-  return entries.map(
-    ([
-      {
-        args: [poolId],
-      },
-      pool,
-    ]) => rpcPool(ctx, poolId.toNumber(), pool.unwrap()) as Pool<C, MS>,
-  )
-}
-
-/**
  * Fetch the balance of an asset in a pool, prioritizing rpc data if the sdk is in full context mode.
  * Can be used for both pools outcome assets and the pool's native/base asset.
  *
@@ -523,4 +528,25 @@ export const getAssetBalance = async <C extends Context<MS>, MS extends Metadata
 
     return new Decimal(indexedAsset.assets[0].amountInPool)
   }
+}
+
+/**
+ * Map storage entries to rpc pools
+ *
+ * @param ctx RpcContext<MS>
+ * @param entries [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][]
+ * @returns RpcPool[]
+ */
+export const fromEntries = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+  ctx: C,
+  entries: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][],
+): Pool<C, MS>[] => {
+  return entries.map(
+    ([
+      {
+        args: [poolId],
+      },
+      pool,
+    ]) => rpcPool(ctx, poolId.toNumber(), pool.unwrap()) as Pool<C, MS>,
+  )
 }

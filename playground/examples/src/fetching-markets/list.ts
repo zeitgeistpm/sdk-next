@@ -10,7 +10,7 @@ import {
 
 const sdk: Sdk<FullContext> = await create(mainnet())
 
-const activeSportsMarkets: MarketList<FullContext> = await sdk.model.markets.list({
+const activeSportsMarkets = await sdk.model.markets.list({
   limit: 10,
   where: {
     tags_containsAll: ['Sports'],

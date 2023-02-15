@@ -11,7 +11,12 @@ import {
 } from '../../../../context/types'
 import { MetadataStorage } from '../../../../meta'
 import { isPaginated } from '../../../../primitives/pagination'
-import { fromEntries, Pool } from '../../pool'
+import {
+  attachPoolMethods,
+  attachPoolTransactionMethods,
+  fromEntries,
+  Pool,
+} from '../../pool'
 import { PoolList } from '../../poolslist'
 import { PoolsListQuery } from '../../types'
 
@@ -38,6 +43,13 @@ export const listPools = async <C extends Context<MS>, MS extends MetadataStorag
   if (isNull(pools)) {
     throw new Error('No pools. Should be unreachable code path')
   }
+
+  pools.map(pool => {
+    if (isRpcContext(context)) {
+      attachPoolTransactionMethods(context, pool)
+    }
+    return attachPoolMethods(context, pool)
+  })
 
   return pools as PoolList<C, MS>
 }

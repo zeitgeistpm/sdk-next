@@ -9,7 +9,7 @@ import {
   RpcContext,
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
-import { attachPoolMethods, Pool, rpcPool } from '../../pool'
+import { attachPoolMethods, attachPoolTransactionMethods, Pool, rpcPool } from '../../pool'
 import { isMarketIdQuery, PoolGetQuery } from '../../types'
 
 /**
@@ -33,12 +33,14 @@ export const getPool = async <C extends Context<MS>, MS extends MetadataStorage>
     pool = await getFromRpc<typeof context, MS>(context, query)
   }
 
-  return pool.map(pool => {
-    if (isRpcContext(context)) {
-      attachPoolMethods(context, pool)
-    }
-    return pool
-  })
+  return pool
+    .map(pool => {
+      if (isRpcContext(context)) {
+        attachPoolTransactionMethods(context, pool)
+      }
+      return pool
+    })
+    .map(pool => attachPoolMethods(context, pool))
 
   throw new Error('unrechable code detected.')
 }
