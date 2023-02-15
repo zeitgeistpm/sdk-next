@@ -33,13 +33,15 @@ const pool: Pool<FullContext> = await sdk.model.swaps
 const marketAssets: AssetId[] = getAssetIds(pool)
 
 const baseAsset: ZtgAssetId = { Ztg: null }
-const yesOutcomeIndex = market?.categories?.findIndex(category => category?.name === 'Yes')
-const yesAsset = marketAssets.find(asset => getIndexOf(asset) === yesOutcomeIndex)!
+const outcomeAssetIndex = market?.categories?.findIndex(
+  category => category?.name === 'Yes',
+)
+const outcomeAsset = marketAssets.find(asset => getIndexOf(asset) === outcomeAssetIndex)!
 
 const baseAssetBalance = await getAssetBalance(sdk, pool, baseAsset)
-const outcomeAssetBalance = await getAssetBalance(sdk, pool, yesAsset)
+const outcomeAssetBalance = await getAssetBalance(sdk, pool, outcomeAsset)
 const baseAssetWeight = getAssetWeight(pool, baseAsset).unwrap()!
-const outcomeAssetWeight = getAssetWeight(pool, yesAsset).unwrap()!
+const outcomeAssetWeight = getAssetWeight(pool, outcomeAsset).unwrap()!
 
 const amountToBuy = ZTG.mul(20).toString()
 const swapFee = getSwapFee(pool).unwrap()!
@@ -60,7 +62,7 @@ const signer: KeyringPair = getBsrTestingSigner()
 const submitableResult = await pool.swapExactAmountOut({
   assetIn: { Ztg: null },
   assetAmountOut: amountToBuy,
-  assetOut: yesAsset,
+  assetOut: outcomeAsset,
   signer,
   maxAssetAmountIn: maxAssetAmountIn.toFixed(0),
 })
