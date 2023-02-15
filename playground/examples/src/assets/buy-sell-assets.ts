@@ -36,10 +36,10 @@ const baseAsset: ZtgAssetId = { Ztg: null }
 const yesOutcomeIndex = market?.categories?.findIndex(category => category?.name === 'Yes')
 const yesAsset = marketAssets.find(asset => getIndexOf(asset) === yesOutcomeIndex)!
 
-const poolBaseAssetBalance = await getAssetBalance(sdk, pool, baseAsset)
-const poolAssetBalance = await getAssetBalance(sdk, pool, yesAsset)
+const baseAssetBalance = await getAssetBalance(sdk, pool, baseAsset)
+const outcomeAssetBalance = await getAssetBalance(sdk, pool, yesAsset)
 const baseAssetWeight = getAssetWeight(pool, baseAsset).unwrap()!
-const assetWeight = getAssetWeight(pool, yesAsset).unwrap()!
+const outcomeAssetWeight = getAssetWeight(pool, yesAsset).unwrap()!
 
 const amountToBuy = ZTG.mul(20).toString()
 const swapFee = getSwapFee(pool).unwrap()!
@@ -47,10 +47,10 @@ const swapFee = getSwapFee(pool).unwrap()!
 const slippage = 0.1
 
 const maxAssetAmountIn = calcInGivenOut(
-  poolBaseAssetBalance,
+  baseAssetBalance,
   baseAssetWeight,
-  poolAssetBalance,
-  assetWeight,
+  outcomeAssetBalance,
+  outcomeAssetWeight,
   amountToBuy,
   swapFee.div(ZTG).toNumber(),
 ).mul(slippage / 100 + 1)
