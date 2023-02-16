@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.18.5
+
+### Patch Changes
+
+- 23ddd08: Method `sdk.model.markets.get` now accepts `string` or `number` in addition to `{marketId: number}` as params.
+
 ## 2.18.4
 
 ### Patch Changes
