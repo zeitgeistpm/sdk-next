@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.12.2
+
+### Patch Changes
+
+- 669d9dd: Added a `slippageFromFloat` helper.
+
 ## 2.12.1
 
 ### Patch Changes

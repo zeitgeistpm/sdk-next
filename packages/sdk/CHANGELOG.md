@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.18.4
+
+### Patch Changes
+
+- 669d9dd: Added a `slippageFromFloat` helper.
+- Updated dependencies [669d9dd]
+  - @zeitgeistpm/indexer@2.12.2
+
 ## 2.18.3
 
 ### Patch Changes
