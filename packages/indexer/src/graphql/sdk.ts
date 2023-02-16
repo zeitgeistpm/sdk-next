@@ -2089,6 +2089,7 @@ export type Query = {
   pools: Array<Pool>;
   poolsConnection: PoolsConnection;
   squidStatus?: Maybe<SquidStatus>;
+  stats: Array<Stats>;
 };
 
 
@@ -2334,6 +2335,11 @@ export type SquidStatus = {
   __typename?: 'SquidStatus';
   /** The height of the processed part of the chain */
   height?: Maybe<Scalars['Int']>;
+};
+
+export type Stats = {
+  __typename?: 'Stats';
+  totalLiquidity: Scalars['BigInt'];
 };
 
 export type Subscription = {
