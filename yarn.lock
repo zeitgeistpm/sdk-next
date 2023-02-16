@@ -7739,7 +7739,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zeitgeistpm/augment-api@^2.9.0, @zeitgeistpm/augment-api@workspace:packages/augment-api":
+"@zeitgeistpm/augment-api@^2.9.1, @zeitgeistpm/augment-api@workspace:packages/augment-api":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/augment-api@workspace:packages/augment-api"
   dependencies:
@@ -7751,7 +7751,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/indexer@^2.12.0, @zeitgeistpm/indexer@workspace:packages/indexer":
+"@zeitgeistpm/indexer@^2.12.2, @zeitgeistpm/indexer@workspace:packages/indexer":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/indexer@workspace:packages/indexer"
   dependencies:
@@ -7766,11 +7766,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/rpc@^2.6.0, @zeitgeistpm/rpc@workspace:packages/rpc":
+"@zeitgeistpm/rpc@^2.6.1, @zeitgeistpm/rpc@workspace:packages/rpc":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/rpc@workspace:packages/rpc"
   dependencies:
-    "@zeitgeistpm/augment-api": ^2.9.0
+    "@zeitgeistpm/augment-api": ^2.9.1
     "@zeitgeistpm/utility": ^2.10.0
   peerDependencies:
     "@polkadot/api": "*"
@@ -7786,9 +7786,9 @@ __metadata:
     "@types/lodash-es": ^4.17.6
     "@types/lodash.memoize": ^4.1.7
     "@types/ms": ^0.7.31
-    "@zeitgeistpm/augment-api": ^2.9.0
-    "@zeitgeistpm/indexer": ^2.12.0
-    "@zeitgeistpm/rpc": ^2.6.0
+    "@zeitgeistpm/augment-api": ^2.9.1
+    "@zeitgeistpm/indexer": ^2.12.2
+    "@zeitgeistpm/rpc": ^2.6.1
     "@zeitgeistpm/utility": ^2.10.0
     "@zeitgeistpm/web3.storage": ^2.6.0
     cids: ^1.1.9

@@ -1,3 +1,4 @@
+import { isNumber, isString } from '@polkadot/util'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import { Observable } from 'rxjs'
 import {
@@ -41,9 +42,12 @@ const getFromIndexer = async <C extends IndexerContext, MS extends MetadataStora
   context: C,
   query: MarketGetQuery,
 ): Promise<O.IOption<Market<C, MS>>> => {
+  const marketId = isNumber(query) || isString(query) ? Number(query) : query.marketId
+
   const {
     markets: [market],
-  } = await context.indexer.markets({ where: { marketId_eq: query.marketId } })
+  } = await context.indexer.markets({ where: { marketId_eq: marketId } })
+
   if (market) {
     return O.option(
       O.some(
@@ -65,9 +69,10 @@ const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
 ): Promise<O.IOption<Market<C, MS>>> => {
-  const market = await context.api.query.marketCommons.markets(query.marketId)
+  const marketId = isNumber(query) || isString(query) ? Number(query) : query.marketId
+  const market = await context.api.query.marketCommons.markets(marketId)
   if (!market.isSome) O.option(O.none())
-  return O.option(O.some(rpcMarket<C, MS>(context, query.marketId, market.unwrap())))
+  return O.option(O.some(rpcMarket<C, MS>(context, marketId, market.unwrap())))
 }
 
 /**
@@ -82,11 +87,12 @@ export const observeMarket$ = <C extends RpcContext<MS>, MS extends MetadataStor
   query: MarketGetQuery,
 ): Observable<RpcMarket<C, MS>> => {
   return new Observable(subscription => {
-    const unsub = context.api.query.marketCommons.markets(query.marketId, market => {
+    const marketId = isNumber(query) || isString(query) ? Number(query) : query.marketId
+    const unsub = context.api.query.marketCommons.markets(marketId, market => {
       if (!market.isSome) {
         return subscription.unsubscribe()
       }
-      subscription.next(rpcMarket<C, MS>(context, query.marketId, market.unwrap()))
+      subscription.next(rpcMarket<C, MS>(context, marketId, market.unwrap()))
     })
 
     return async () => {

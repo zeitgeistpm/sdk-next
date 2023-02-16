@@ -12,10 +12,8 @@ export const MAX_TOTAL_OUTCOMES_WEIGHT = MAX_TOTAL_WEIGHT.div(2)
  * @returns string[]
  */
 export const weightsFromRelativeRatio = (ratio: number[]): string[] => {
-  const total = ratio.reduce((a, b) => a + b, 0)
-  return ratio.map(r =>
-    new Decimal(r / total).mul(MAX_TOTAL_OUTCOMES_WEIGHT).floor().toString(),
-  )
+  const total = ratio.reduce((a, b) => a.add(new Decimal(b)), new Decimal(0))
+  return ratio.map(r => new Decimal(r).div(total).mul(MAX_TOTAL_OUTCOMES_WEIGHT).toString())
 }
 
 /**
