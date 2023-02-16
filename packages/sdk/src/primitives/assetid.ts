@@ -102,12 +102,14 @@ export const getScalarIndexOf = (scalarAssetId: ScalarAssetId): number =>
  * @param assetId AssetId
  * @returns number | null
  */
-export const getIndexOf = (assetId: AssetId): number | null =>
-  IOCategoricalAssetId.is(assetId)
-    ? assetId.CategoricalOutcome[1]
-    : IOScalarAssetId.is(assetId)
-    ? getScalarIndexOf(assetId)
-    : null
+export const getIndexOf = (assetId: MarketOutcomeAssetId): number => {
+  if (IOCategoricalAssetId.is(assetId)) {
+    return assetId.CategoricalOutcome[1]
+  } else if (IOScalarAssetId.is(assetId)) {
+    return getScalarIndexOf(assetId)
+  }
+  throw new Error("Can't get index of non market outcome asset id")
+}
 
 /**
  * Convert a indexer asset id string or object to an AssetId.

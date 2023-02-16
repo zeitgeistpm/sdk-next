@@ -1,12 +1,5 @@
 import { MarketStatus } from '@zeitgeistpm/indexer'
-import {
-  create,
-  FullContext,
-  mainnet,
-  MarketList,
-  MetadataStorage,
-  Sdk,
-} from '@zeitgeistpm/sdk'
+import { create, FullContext, mainnet, Sdk } from '@zeitgeistpm/sdk'
 
 const sdk: Sdk<FullContext> = await create(mainnet())
 

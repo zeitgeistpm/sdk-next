@@ -83,6 +83,11 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
           .filter(isNotNull)
           .map(weight => {
             const assetId = AssetId.parseAssetId(weight.assetId).unwrap()!
+
+            if (!AssetId.IOMarketOutcomeAssetId.is(assetId)) {
+              return null
+            }
+
             const assetIndex = AssetId.getIndexOf(assetId)!
 
             const percentage = Math.round(

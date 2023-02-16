@@ -1,5 +1,5 @@
 import { KeyringPair } from '@polkadot/keyring/types'
-import { batterystation, slippageFromFloat } from '@zeitgeistpm/sdk'
+import { batterystation, IOMarketOutcomeAssetId, slippageFromFloat } from '@zeitgeistpm/sdk'
 import {
   AssetId,
   calcInGivenOut,
@@ -33,7 +33,9 @@ const baseAsset: ZtgAssetId = { Ztg: null }
 const outcomeAssetIndex = market?.categories?.findIndex(
   category => category?.name === 'Yes',
 )
-const outcomeAsset = marketAssets.find(asset => getIndexOf(asset) === outcomeAssetIndex)!
+const outcomeAsset = marketAssets.find(
+  asset => IOMarketOutcomeAssetId.is(asset) && getIndexOf(asset) === outcomeAssetIndex,
+)!
 
 const [baseAssetBalance, outcomeAssetBalance] = await Promise.all([
   pool.getAssetBalance(baseAsset),

@@ -11,7 +11,12 @@ import {
   RpcContext,
 } from '../../../../context'
 import { BlockNumber } from '../../../../primitives'
-import { getIndexOf, IOAssetId } from '../../../../primitives/assetid'
+import {
+  getIndexOf,
+  IOAssetId,
+  IOCategoricalAssetId,
+  parseAssetId,
+} from '../../../../primitives/assetid'
 import { now } from '../../../time/functions/now'
 import type {
   AssetPriceAtBlock,
@@ -124,9 +129,9 @@ const indexerPoolPrices = async (
   for (const record of historicalAssets) {
     if (!record.newPrice) continue
 
-    const assetId = JSON.parse(record.assetId)
+    const assetId = parseAssetId(record.assetId).unwrap()
 
-    if (!IOAssetId.is(assetId)) {
+    if (!IOCategoricalAssetId.is(assetId)) {
       console.warn('found wrongly formated asset id', assetId)
       continue
     }
