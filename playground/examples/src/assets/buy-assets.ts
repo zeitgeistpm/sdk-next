@@ -1,5 +1,5 @@
 import { KeyringPair } from '@polkadot/keyring/types'
-import { batterystation } from '@zeitgeistpm/sdk'
+import { batterystation, slippageFromFloat } from '@zeitgeistpm/sdk'
 import {
   AssetId,
   calcInGivenOut,
@@ -46,7 +46,7 @@ const outcomeAssetWeight = pool.getAssetWeight(outcomeAsset).unwrap()!
 const amountToBuy = ZTG.mul(20).toString()
 const swapFee = pool.getSwapFee()
 
-const slippage = 0.1
+const slippage = slippageFromFloat(0.1, 'buying')
 
 const maxAssetAmountIn = calcInGivenOut(
   baseAssetBalance,
@@ -55,7 +55,7 @@ const maxAssetAmountIn = calcInGivenOut(
   outcomeAssetWeight,
   amountToBuy,
   swapFee.div(ZTG).toNumber(),
-).mul(slippage / 100 + 1)
+).mul(slippage)
 
 const signer: KeyringPair = getBsrTestingSigner()
 
