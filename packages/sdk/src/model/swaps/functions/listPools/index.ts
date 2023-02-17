@@ -11,12 +11,7 @@ import {
 } from '../../../../context/types'
 import { MetadataStorage } from '../../../../meta'
 import { isPaginated } from '../../../../primitives/pagination'
-import {
-  attachPoolMethods,
-  attachPoolTransactionMethods,
-  fromEntries,
-  Pool,
-} from '../../pool'
+import { attachPoolMethods, attachPoolRcpOnlyMethods, fromEntries, Pool } from '../../pool'
 import { PoolList } from '../../poolslist'
 import { PoolsListQuery } from '../../types'
 
@@ -46,7 +41,7 @@ export const listPools = async <C extends Context<MS>, MS extends MetadataStorag
 
   pools.map(pool => {
     if (isRpcContext(context)) {
-      attachPoolTransactionMethods(context, pool)
+      attachPoolRcpOnlyMethods(context, pool)
     }
     return attachPoolMethods(context, pool)
   })

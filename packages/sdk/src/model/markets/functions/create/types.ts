@@ -6,7 +6,11 @@ import type {
   ZeitgeistPrimitivesPoolScoringRule,
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
-import type { KeyringPairOrExtSigner, TransactionHooks } from '@zeitgeistpm/rpc'
+import type {
+  ExtractableResult,
+  KeyringPairOrExtSigner,
+  TransactionHooks,
+} from '@zeitgeistpm/rpc'
 import type { IEither } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { AssetId } from '../../../../primitives'
@@ -166,20 +170,7 @@ export type CreateMarketResult<
   C extends RpcContext<MS>,
   MS extends MetadataStorage = MetadataStorage,
   P extends CreateMarketParams<C, MS> = CreateMarketParams<C, MS>,
-> = {
-  raw: ISubmittableResult
-  /**
-   * Lazy function to saturate response with created Market and Pool.
-   *
-   * @example ```ts
-   * const result = await sdk.model.markets.create(...params)
-   * const { market, pool } = result.saturate().unwrap()
-   * ```
-   *
-   * @returns EitherInterface<Error, CreateMarketData<P>>
-   */
-  saturate: () => IEither<Error, CreateMarketData<C, MS, P>>
-}
+> = ExtractableResult<IEither<Error, CreateMarketData<C, MS, P>>>
 
 /**
  * The lazy data extracted from the market creation result.

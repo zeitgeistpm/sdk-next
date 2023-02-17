@@ -1,6 +1,19 @@
 import type RpcError from '@polkadot/rpc-provider/coder/error'
 import type { ISubmittableResult, RegistryError } from '@polkadot/types/types'
 
+export type ExtractableResult<R> = {
+  /**
+   * Raw response from the node.
+   */
+  raw: ISubmittableResult
+  /**
+   * Lazy function to saturate response with extracted event data.
+   *
+   * @returns R
+   */
+  saturate: () => R
+}
+
 export type TransactionHooks = {
   hooks?: {
     inBlock?: (result: ISubmittableResult) => void

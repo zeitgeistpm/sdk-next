@@ -54,16 +54,34 @@ export type IndexedPool<
   MS extends MetadataStorage = MetadataStorage,
 > = Unpacked<PoolsQuery['pools']> &
   PoolMethods &
-  (C extends RpcContext<MS> ? PoolTransactions : {})
+  (C extends RpcContext<MS> ? PoolRpcOnlyMethods : {})
 
 /**
  * Concrete Pool type for rpc Pool.
  */
-export type RpcPool = (ZeitgeistPrimitivesPool & PoolMethods & PoolTransactions) & {
+export type RpcPool = (ZeitgeistPrimitivesPool & PoolMethods & PoolRpcOnlyMethods) & {
   /**
    * The pool id/index on chain.
    */
   poolId: number
+}
+
+/**
+ * Create new RpcPool with associated context, id and on chain primitive.
+ *
+ * @param ctx RpcContext
+ * @param poolId number | u128
+ * @param primitive ZeitgeistPrimitivesPool
+ * @returns RpcPool
+ */
+export const rpcPool = (
+  ctx: RpcContext,
+  poolId: number | u128,
+  primitive: ZeitgeistPrimitivesPool,
+): RpcPool => {
+  let pool = primitive as RpcPool
+  pool.poolId = isNumber(poolId) ? poolId : poolId.toNumber()
+  return attachPoolMethods(ctx, attachPoolRcpOnlyMethods(ctx, pool))
 }
 
 export type PoolMethods = {
@@ -90,11 +108,16 @@ export const attachPoolMethods = <
   return pool
 }
 
-export type PoolTransactions = {
+export type PoolRpcOnlyMethods = {
   /**
    * Get the account id for the pool.
    */
-  accountId: Te.TaskEither<Error, string, []>
+  getAccountId: Te.TaskEither<Error, string, []>
+  /**
+   * Get the total issuance of pool shares for the pool.
+   */
+  getTotalIssuance: Te.TaskEither<Error, Decimal, []>
+
   swapExactAmountIn: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
@@ -148,98 +171,6 @@ export type PoolTransactions = {
 }
 
 /**
- * Params needed to create a pool.
- */
-export type PoolDeploymentParams = {
-  marketId: number | u128
-  swapFee: string | number | u128
-  amount: string | number | u128
-  weights: Array<string | number | u128>
-  signer: KeyringPairOrExtSigner
-}
-
-/**
- * Params needed to exhange(buy or sell) a full set of assets for a pool.
- */
-export type ExchangeFullSetParams = {
-  marketId: number | u128
-  amount: number
-  signer: KeyringPairOrExtSigner
-}
-
-export type SwapExactAmountInParams = {
-  poolId: string | u128 | number | Uint8Array
-  assetIn: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
-  assetAmountIn: string | u128 | number | Uint8Array
-  assetOut: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
-  minAssetAmountOut?: string | u128 | number | Uint8Array
-  maxPrice?: string | u128 | number | Uint8Array
-  signer: KeyringPairOrExtSigner
-}
-
-export type SwapExactAmountOutParams = {
-  poolId: string | u128 | number | Uint8Array
-  assetIn: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
-  maxAssetAmountIn?: string | u128 | number | Uint8Array | null
-  assetOut: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
-  assetAmountOut: string | u128 | number | Uint8Array
-  maxPrice?: string | u128 | number | Uint8Array | null
-  signer: KeyringPairOrExtSigner
-}
-
-export type PoolJoinParams = {
-  poolId: string | u128 | number | Uint8Array
-  poolAmount: string | u128 | number | Uint8Array
-  maxAssetsIn: Vec<u128> | Array<string | u128 | number | Uint8Array>
-  signer: KeyringPairOrExtSigner
-}
-
-export type PoolJoinWithExactAmountParams = {
-  poolId: string | u128 | number | Uint8Array
-  assetIn: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
-  assetAmount: string | u128 | number | Uint8Array
-  minPoolAmount: string | u128 | number | Uint8Array
-  signer: KeyringPairOrExtSigner
-}
-
-export type PoolJoinWithExactPoolAmount = {
-  poolId: string | u128 | number | Uint8Array
-  asset: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
-  poolAmount: string | u128 | number | Uint8Array
-  maxAssetAmount: string | u128 | number | Uint8Array
-  signer: KeyringPairOrExtSigner
-}
-
-export type PoolExitParams = {
-  poolId: string | u128 | number | Uint8Array
-  poolAmount: string | u128 | number | Uint8Array
-  minAssetsOut: Vec<u128> | Array<string | u128 | number | Uint8Array>
-  signer: KeyringPairOrExtSigner
-}
-
-export type PoolExitSubsidyParams = {
-  poolId: string | u128 | number | Uint8Array
-  amount: string | u128 | number | Uint8Array
-  signer: KeyringPairOrExtSigner
-}
-
-export type PoolExitWithExactAssetAmountParams = {
-  poolId: string | u128 | number | Uint8Array
-  asset: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
-  assetAmount: string | u128 | number | Uint8Array
-  maxPoolAmount: string | u128 | number | Uint8Array
-  signer: KeyringPairOrExtSigner
-}
-
-export type PoolExitWithExactPoolAmountParams = {
-  poolId: string | u128 | number | Uint8Array
-  asset: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
-  poolAmount: string | u128 | number | Uint8Array
-  minAssetAmount: string | u128 | number | Uint8Array
-  signer: KeyringPairOrExtSigner
-}
-
-/**
  * Create new RpcPool with associated context, id and on chain primitive.
  *
  * @param ctx RpcContext
@@ -247,33 +178,22 @@ export type PoolExitWithExactPoolAmountParams = {
  * @param primitive ZeitgeistPrimitivesPool
  * @returns RpcPool
  */
-export const rpcPool = (
-  ctx: RpcContext,
-  poolId: number | u128,
-  primitive: ZeitgeistPrimitivesPool,
-): RpcPool => {
-  let pool = primitive as RpcPool
-  pool.poolId = isNumber(poolId) ? poolId : poolId.toNumber()
-  return attachPoolMethods(ctx, attachPoolTransactionMethods(ctx, pool))
-}
-
-/**
- * Create new RpcPool with associated context, id and on chain primitive.
- *
- * @param ctx RpcContext
- * @param poolId number | u128
- * @param primitive ZeitgeistPrimitivesPool
- * @returns RpcPool
- */
-export const attachPoolTransactionMethods = (
+export const attachPoolRcpOnlyMethods = (
   ctx: RpcContext,
   primitive: ZeitgeistPrimitivesPool | Unpacked<PoolsQuery['pools']>,
 ): RpcPool => {
   let pool = primitive as RpcPool
 
-  pool.accountId = Te.from(async () =>
+  pool.getAccountId = Te.from(async () =>
     (await ctx.api.rpc.swaps.poolAccountId(pool.poolId)).toString(),
   )
+
+  pool.getTotalIssuance = Te.from(async () => {
+    const totalPoolShares = await ctx.api.query.tokens.totalIssuance({
+      PoolShare: pool.poolId,
+    })
+    return new Decimal(totalPoolShares.toString())
+  })
 
   pool.swapExactAmountIn = Te.from(async params =>
     signAndSend({
@@ -403,6 +323,98 @@ export const attachPoolTransactionMethods = (
 }
 
 /**
+ * Params needed to create a pool.
+ */
+export type PoolDeploymentParams = {
+  marketId: number | u128
+  swapFee: string | number | u128
+  amount: string | number | u128
+  weights: Array<string | number | u128>
+  signer: KeyringPairOrExtSigner
+}
+
+/**
+ * Params needed to exhange(buy or sell) a full set of assets for a pool.
+ */
+export type ExchangeFullSetParams = {
+  marketId: number | u128
+  amount: number
+  signer: KeyringPairOrExtSigner
+}
+
+export type SwapExactAmountInParams = {
+  poolId: string | u128 | number | Uint8Array
+  assetIn: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  assetAmountIn: string | u128 | number | Uint8Array
+  assetOut: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  minAssetAmountOut?: string | u128 | number | Uint8Array
+  maxPrice?: string | u128 | number | Uint8Array
+  signer: KeyringPairOrExtSigner
+}
+
+export type SwapExactAmountOutParams = {
+  poolId: string | u128 | number | Uint8Array
+  assetIn: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  maxAssetAmountIn?: string | u128 | number | Uint8Array | null
+  assetOut: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  assetAmountOut: string | u128 | number | Uint8Array
+  maxPrice?: string | u128 | number | Uint8Array | null
+  signer: KeyringPairOrExtSigner
+}
+
+export type PoolJoinParams = {
+  poolId: string | u128 | number | Uint8Array
+  poolAmount: string | u128 | number | Uint8Array
+  maxAssetsIn: Vec<u128> | Array<string | u128 | number | Uint8Array>
+  signer: KeyringPairOrExtSigner
+}
+
+export type PoolJoinWithExactAmountParams = {
+  poolId: string | u128 | number | Uint8Array
+  assetIn: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  assetAmount: string | u128 | number | Uint8Array
+  minPoolAmount: string | u128 | number | Uint8Array
+  signer: KeyringPairOrExtSigner
+}
+
+export type PoolJoinWithExactPoolAmount = {
+  poolId: string | u128 | number | Uint8Array
+  asset: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  poolAmount: string | u128 | number | Uint8Array
+  maxAssetAmount: string | u128 | number | Uint8Array
+  signer: KeyringPairOrExtSigner
+}
+
+export type PoolExitParams = {
+  poolId: string | u128 | number | Uint8Array
+  poolAmount: string | u128 | number | Uint8Array
+  minAssetsOut: Vec<u128> | Array<string | u128 | number | Uint8Array>
+  signer: KeyringPairOrExtSigner
+}
+
+export type PoolExitSubsidyParams = {
+  poolId: string | u128 | number | Uint8Array
+  amount: string | u128 | number | Uint8Array
+  signer: KeyringPairOrExtSigner
+}
+
+export type PoolExitWithExactAssetAmountParams = {
+  poolId: string | u128 | number | Uint8Array
+  asset: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  assetAmount: string | u128 | number | Uint8Array
+  maxPoolAmount: string | u128 | number | Uint8Array
+  signer: KeyringPairOrExtSigner
+}
+
+export type PoolExitWithExactPoolAmountParams = {
+  poolId: string | u128 | number | Uint8Array
+  asset: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  poolAmount: string | u128 | number | Uint8Array
+  minAssetAmount: string | u128 | number | Uint8Array
+  signer: KeyringPairOrExtSigner
+}
+
+/**
  * Get the swap fee of a pool.
  *
  * @param pool Pool<C, MS>,
@@ -527,6 +539,25 @@ export const getAssetBalance = async <C extends Context<MS>, MS extends Metadata
     })
 
     return new Decimal(indexedAsset.assets[0].amountInPool)
+  }
+}
+
+export const getTotalIssuance = async <C extends Context<MS>, MS extends MetadataStorage>(
+  ctx: C,
+  pool: Pool<C, MS>,
+) => {
+  if (isRpcContext(ctx)) {
+    const totalPoolShares = await ctx.api.query.tokens.totalIssuance({
+      PoolShare: pool.poolId,
+    })
+    return new Decimal(totalPoolShares.toString())
+  } else {
+    const { accountBalances } = await ctx.indexer.accountBalances({
+      where: {
+        assetId_eq: JSON.stringify({ poolShare: pool.poolId }),
+      },
+    })
+    return new Decimal(accountBalances[0].balance)
   }
 }
 

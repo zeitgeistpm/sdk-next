@@ -9,7 +9,7 @@ import {
   evenWeights,
   swapFeeFromFloat,
 } from '@zeitgeistpm/sdk'
-import { getSigner } from '../getSigner'
+import { getTestSigner } from '../getSigner'
 
 /**
  * Initialize the SDK in full or rpc mode to be able to submit transactions to the chein.
@@ -21,7 +21,7 @@ const sdk: Sdk<RpcContext> = await create(localhostRpc())
 /**
  * Get the signer from the wallet extension or other keyring.
  */
-const signer: KeyringPair = getSigner()
+const signer: KeyringPair = getTestSigner()
 
 /**
  * Params for creating a standalone market without pool.

@@ -8,6 +8,7 @@ import type { ISubmittableResult } from '@polkadot/types/types'
 import { isNumber } from '@polkadot/util'
 import type { FullMarketFragment } from '@zeitgeistpm/indexer'
 import {
+  ExtractableResult,
   KeyringPairOrExtSigner,
   signAndSend,
   TransactionError,
@@ -110,7 +111,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
    */
   deploySwapPool: Te.TaskEither<
     TransactionError,
-    RpcPool,
+    ExtractableResult<E.IEither<Error, RpcPool>>,
     [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
   >
   /**
@@ -121,7 +122,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
    */
   deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
     TransactionError,
-    RpcPool,
+    ExtractableResult<E.IEither<Error, RpcPool>>,
     [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
   >
   /**
@@ -384,13 +385,11 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         hooks: params.hooks,
       })
 
-      const pool = extractPoolCreationEventForMarket(
-        context,
-        extrinsic.events,
-        market.marketId,
-      )
-
-      return pool.unwrap()
+      return {
+        raw: extrinsic,
+        saturate: () =>
+          extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId),
+      }
     })
 
     marketWithMethods.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
@@ -412,13 +411,11 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         hooks: params.hooks,
       })
 
-      const pool = extractPoolCreationEventForMarket(
-        context,
-        extrinsic.events,
-        market.marketId,
-      )
-
-      return pool.unwrap()
+      return {
+        raw: extrinsic,
+        saturate: () =>
+          extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId),
+      }
     })
 
     marketWithMethods.buyCompleteSet = Te.from(async params => {

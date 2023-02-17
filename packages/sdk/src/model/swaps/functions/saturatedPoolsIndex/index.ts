@@ -169,7 +169,7 @@ export const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
       const swapPrct = new Decimal(pool.swapFee.unwrap().toNumber()).dividedBy(100000000)
       const weights = pool.weights.unwrap()
 
-      const accountId = await pool.accountId().unwrap()
+      const accountId = await pool.getAccountId().unwrap()
 
       const [market, prices, tokens, ztgBalance] = await Promise.all([
         ctx.api.query.marketCommons

@@ -9,7 +9,7 @@ import {
   RpcContext,
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
-import { attachPoolMethods, attachPoolTransactionMethods, Pool, rpcPool } from '../../pool'
+import { attachPoolMethods, attachPoolRcpOnlyMethods, Pool, rpcPool } from '../../pool'
 import { isMarketIdQuery, PoolGetQuery } from '../../types'
 
 /**
@@ -36,7 +36,7 @@ export const getPool = async <C extends Context<MS>, MS extends MetadataStorage>
   return pool
     .map(pool => {
       if (isRpcContext(context)) {
-        attachPoolTransactionMethods(context, pool)
+        attachPoolRcpOnlyMethods(context, pool)
       }
       return pool
     })
