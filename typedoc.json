@@ -1,0 +1,12 @@
+{
+  "out": "docs",
+  "entryPointStrategy": "packages",
+  "entryPoints": [
+      "packages/sdk",
+      "packages/indexer",
+      "packages/rpc",
+      "packages/utility",
+      "packages/augment-api",
+      "packages/web3.storage",
+  ]
+}

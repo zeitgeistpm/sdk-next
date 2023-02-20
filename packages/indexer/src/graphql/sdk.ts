@@ -2340,6 +2340,7 @@ export type SquidStatus = {
 export type Stats = {
   __typename?: 'Stats';
   totalLiquidity: Scalars['BigInt'];
+  totalVolume: Scalars['BigInt'];
 };
 
 export type Subscription = {
@@ -2561,6 +2562,16 @@ export type MarketStatusCountQuery = { __typename?: 'Query', markets: Array<{ __
 
 export type FullMarketFragment = { __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: MarketStatus, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, rejectReason?: string | null, disputeMechanism: string, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null, end: any, start: any }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, bonds?: { __typename?: 'MarketBonds', creation?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null } | null, pool?: { __typename?: 'Pool', accountId?: string | null, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null };
 
+export type HistoricalMarketsQueryVariables = Exact<{
+  where?: InputMaybe<HistoricalMarketWhereInput>;
+  order?: InputMaybe<Array<HistoricalMarketOrderByInput> | HistoricalMarketOrderByInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type HistoricalMarketsQuery = { __typename?: 'Query', historicalMarkets: Array<{ __typename?: 'HistoricalMarket', blockNumber: number, event: string, id: string, marketId: number, poolId?: number | null, resolvedOutcome?: string | null, status: MarketStatus, timestamp: any }> };
+
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2577,6 +2588,26 @@ export type PoolsQueryVariables = Exact<{
 export type PoolsQuery = { __typename?: 'Query', pools: Array<{ __typename?: 'Pool', accountId?: string | null, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> }> };
 
 export type FullPoolFragment = { __typename?: 'Pool', accountId?: string | null, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> };
+
+export type HistoricalPoolsQueryVariables = Exact<{
+  where?: InputMaybe<HistoricalPoolWhereInput>;
+  order?: InputMaybe<Array<HistoricalPoolOrderByInput> | HistoricalPoolOrderByInput>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type HistoricalPoolsQuery = { __typename?: 'Query', historicalPools: Array<{ __typename?: 'HistoricalPool', blockNumber: number, dVolume?: any | null, event: string, id: string, poolId: number, poolStatus: string, timestamp: any, volume?: any | null, ztgQty?: any | null }> };
+
+export type SquidStatusQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SquidStatusQuery = { __typename?: 'Query', squidStatus?: { __typename?: 'SquidStatus', height?: number | null } | null };
+
+export type StatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type StatsQuery = { __typename?: 'Query', stats: Array<{ __typename?: 'Stats', totalLiquidity: any, totalVolume: any }> };
 
 export const FullAccountBalanceFragmentDoc = gql`
     fragment FullAccountBalance on AccountBalance {
@@ -2760,6 +2791,25 @@ export const MarketStatusCountDocument = gql`
   }
 }
     `;
+export const HistoricalMarketsDocument = gql`
+    query historicalMarkets($where: HistoricalMarketWhereInput, $order: [HistoricalMarketOrderByInput!], $limit: Int, $offset: Int) {
+  historicalMarkets(
+    where: $where
+    limit: $limit
+    offset: $offset
+    orderBy: $order
+  ) {
+    blockNumber
+    event
+    id
+    marketId
+    poolId
+    resolvedOutcome
+    status
+    timestamp
+  }
+}
+    `;
 export const PingQueryDocument = gql`
     query pingQuery {
   markets(limit: 1) {
@@ -2774,6 +2824,36 @@ export const PoolsDocument = gql`
   }
 }
     ${FullPoolFragmentDoc}`;
+export const HistoricalPoolsDocument = gql`
+    query historicalPools($where: HistoricalPoolWhereInput, $order: [HistoricalPoolOrderByInput!], $offset: Int, $limit: Int) {
+  historicalPools {
+    blockNumber
+    dVolume
+    event
+    id
+    poolId
+    poolStatus
+    timestamp
+    volume
+    ztgQty
+  }
+}
+    `;
+export const SquidStatusDocument = gql`
+    query squidStatus {
+  squidStatus {
+    height
+  }
+}
+    `;
+export const StatsDocument = gql`
+    query stats {
+  stats {
+    totalLiquidity
+    totalVolume
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -2800,11 +2880,23 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     marketStatusCount(variables: MarketStatusCountQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketStatusCountQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MarketStatusCountQuery>(MarketStatusCountDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'marketStatusCount', 'query');
     },
+    historicalMarkets(variables?: HistoricalMarketsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalMarketsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<HistoricalMarketsQuery>(HistoricalMarketsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalMarkets', 'query');
+    },
     pingQuery(variables?: PingQueryQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<PingQueryQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PingQueryQuery>(PingQueryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'pingQuery', 'query');
     },
     pools(variables?: PoolsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<PoolsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PoolsQuery>(PoolsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'pools', 'query');
+    },
+    historicalPools(variables?: HistoricalPoolsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalPoolsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<HistoricalPoolsQuery>(HistoricalPoolsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalPools', 'query');
+    },
+    squidStatus(variables?: SquidStatusQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SquidStatusQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SquidStatusQuery>(SquidStatusDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'squidStatus', 'query');
+    },
+    stats(variables?: StatsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<StatsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<StatsQuery>(StatsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'stats', 'query');
     }
   };
 }

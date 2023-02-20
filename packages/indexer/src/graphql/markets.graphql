@@ -80,3 +80,22 @@ fragment FullMarket on Market {
     ...FullPool
   }
 }
+
+query historicalMarkets(
+  $where: HistoricalMarketWhereInput
+  $order: [HistoricalMarketOrderByInput!]
+  $limit: Int
+  $offset: Int
+) {
+  historicalMarkets(where: $where, limit: $limit, offset: $offset, orderBy: $order) {
+    blockNumber
+    event
+    id
+    marketId
+    poolId
+    resolvedOutcome
+    status
+    timestamp
+  }
+}
+

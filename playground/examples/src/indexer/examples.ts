@@ -1,16 +1,9 @@
 import { MarketOrderByInput, MarketStatus } from '@zeitgeistpm/indexer'
-import {
-  batterystation,
-  batterystationIndexer,
-  create,
-  FullContext,
-  IndexerContext,
-  Sdk,
-} from '@zeitgeistpm/sdk'
+import { batterystationIndexer, create, IndexerContext, Sdk } from '@zeitgeistpm/sdk'
 
 const sdk: Sdk<IndexerContext> = await create(batterystationIndexer())
 
-const markets = sdk.indexer.markets({
+const { markets } = await sdk.indexer.markets({
   offset: 0,
   limit: 10,
   order: MarketOrderByInput.CreationDesc,

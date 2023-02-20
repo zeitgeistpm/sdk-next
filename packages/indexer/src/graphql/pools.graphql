@@ -28,3 +28,22 @@ fragment FullPool on Pool {
   }
   ztgQty
 }
+
+query historicalPools(
+  $where: HistoricalPoolWhereInput
+  $order: [HistoricalPoolOrderByInput!]
+  $offset: Int
+  $limit: Int
+) {
+  historicalPools {
+    blockNumber
+    dVolume
+    event
+    id
+    poolId
+    poolStatus
+    timestamp
+    volume
+    ztgQty
+  }
+}

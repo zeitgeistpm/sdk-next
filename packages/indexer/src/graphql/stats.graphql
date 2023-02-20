@@ -1,0 +1,6 @@
+query stats {
+  stats {
+    totalLiquidity
+    totalVolume
+  }
+}
