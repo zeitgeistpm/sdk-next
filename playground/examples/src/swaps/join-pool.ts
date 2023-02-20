@@ -4,14 +4,17 @@ import {
   FullContext,
   IOMarketOutcomeAssetId,
   Sdk,
+  slippageFromFloat,
+  ZTG,
 } from '@zeitgeistpm/sdk'
+import Decimal from 'decimal.js'
 import { getBsrTestingSigner } from '../getSigner'
 
 const sdk: Sdk<FullContext> = await create(batterystation())
 
 const pool = await sdk.model.swaps
   .getPool({
-    marketId: 572,
+    marketId: 372,
   })
   .then(pool => pool.unwrap()!)
 
@@ -19,24 +22,28 @@ const assets = pool
   .getAssetIds()
   .filter(IOMarketOutcomeAssetId.is.bind(IOMarketOutcomeAssetId))
 
+const ztgToPutIn = ZTG.mul(100)
+
 const totalPoolShares = await pool.getTotalIssuance()
 
-const poolBalances = await Promise.all(assets.map(asset => pool.getAssetBalance(asset)))
+const baseAssetBalance = await pool.getAssetBalance({ Ztg: null })
+const ratio = baseAssetBalance.div(ztgToPutIn)
 
-console.log(assets)
+let maxAssetsIn = await Promise.all(
+  assets.map(async asset => {
+    const assetBalance = await pool.getAssetBalance(asset)
+    return assetBalance.div(ratio).toFixed(0, Decimal.ROUND_UP)
+  }),
+)
 
-throw new Error('Stop')
+maxAssetsIn.push(ztgToPutIn.toFixed(0))
 
-// const slippage = slippageFromFloat(0.1, 'buying')
+const poolAmmount = totalPoolShares.div(ratio).toFixed(0, Decimal.ROUND_DOWN)
 
-// const amountsIn = assets.map(asset =>
-//   new Decimal(asset.amount).mul(slippageMul).mul(ZTG).toFixed(0, Decimal.ROUND_UP),
-// )
-
-pool.join({
+const result = await pool.join({
   signer: getBsrTestingSigner(),
-  maxAssetsIn: [],
-  poolAmount: 1,
+  maxAssetsIn: maxAssetsIn,
+  poolAmount: poolAmmount,
 })
 
 process.exit()

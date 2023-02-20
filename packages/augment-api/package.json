@@ -37,5 +37,8 @@
     "@polkadot/rpc-core": "*",
     "@polkadot/types": "*"
   },
-  "gitHead": "f65183993419e36276711f4634c57536ffad93a1"
+  "gitHead": "f65183993419e36276711f4634c57536ffad93a1",
+  "typedoc": {
+    "entryPoint": "./src/index.ts"
+  }
 }

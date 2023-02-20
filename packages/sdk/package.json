@@ -48,5 +48,8 @@
     "@types/lodash-es": "^4.17.6",
     "@types/lodash.memoize": "^4.1.7",
     "@types/ms": "^0.7.31"
+  },
+  "typedoc": {
+    "entryPoint": "./src/index.ts"
   }
 }

@@ -6,6 +6,6 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "declarationDir": "./dist",
-    "outDir": "./dist",
+    "outDir": "./dist"
   }
 }

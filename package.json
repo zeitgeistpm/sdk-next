@@ -10,7 +10,8 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "coverage": "turbo run coverage",
-    "document": "npx typedoc"
+    "document": "npx typedoc",
+    "grok": "yarn grok ./packages/sdk/dist --outDir grocs"
   },
   "packageManager": "yarn@3.2.2",
   "devDependencies": {
@@ -21,6 +22,7 @@
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^9.0.2",
     "@types/glob": "^8.0.0",
+    "@ui-js/grok": "^1.8.0",
     "@vitest/coverage-c8": "^0.23.1",
     "changeset": "^0.2.6",
     "delay": "^5.0.0",

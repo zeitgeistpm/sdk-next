@@ -8,7 +8,7 @@
     "declarationDir": "./dist",
     "outDir": "./dist",
     "paths": {
-      "@zeitgeistpm/augment-api/*": ["src/*"],
+      "@zeitgeistpm/augment-api/*": ["./*"],
     },
   }
 }
