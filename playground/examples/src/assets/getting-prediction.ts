@@ -3,6 +3,7 @@ import {
   create,
   FullContext,
   getIndexOf,
+  getScalarBounds,
   IOMarketOutcomeAssetId,
   mainnet,
   Market,
@@ -11,7 +12,7 @@ import {
 
 const sdk: Sdk<FullContext> = await create(mainnet())
 
-const marketId = 90
+const marketId = 63
 
 const market: Market<FullContext> = await sdk.model.markets
   .get({ marketId })
@@ -49,9 +50,19 @@ const assetPrices = await Promise.all(
 
 const predictedPrice = assetPrices.sort((a, b) => (a.price.gt(b.price) ? -1 : 1)).at(0)!
 
-console.log(
-  `${market.question}`,
-  `The prediction is ${predictedPrice.name} at ${predictedPrice.price.toString()}`,
-)
+if (market.marketType.scalar) {
+  const [lower, upper] = getScalarBounds(market).unwrap()!
+  const predictedValue = upper.minus(lower).mul(predictedPrice.price).plus(lower)
+
+  console.log(
+    `${market.question}`,
+    `The prediction is ${predictedPrice.name} at ${predictedValue.toFixed(2)}`,
+  )
+} else {
+  console.log(
+    `${market.question}`,
+    `The prediction is ${predictedPrice.name} at ${predictedPrice.price.toString()}`,
+  )
+}
 
 process.exit(0)
