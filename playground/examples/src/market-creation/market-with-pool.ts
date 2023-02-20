@@ -74,5 +74,5 @@ try {
 } catch (e) {
   console.error(e)
 } finally {
-  process.exit(1)
+  process.exit(0)
 }
