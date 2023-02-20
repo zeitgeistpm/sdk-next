@@ -2,10 +2,8 @@ import {
   batterystation,
   create,
   FullContext,
-  hasPool,
   IOMarketOutcomeAssetId,
   Sdk,
-  slippageFromFloat,
 } from '@zeitgeistpm/sdk'
 import { getBsrTestingSigner } from '../getSigner'
 
