@@ -337,8 +337,8 @@ export type PoolDeploymentParams = {
  * Params needed to exhange(buy or sell) a full set of assets for a pool.
  */
 export type ExchangeFullSetParams = {
-  marketId: number | u128
-  amount: number
+  marketId: number | string | u128
+  amount: number | string | u128
   signer: KeyringPairOrExtSigner
 }
 

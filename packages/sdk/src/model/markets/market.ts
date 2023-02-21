@@ -92,7 +92,7 @@ export type RpcMarket<
 export type SaturatedRpcMarket<
   C extends RpcContext<MS>,
   MS extends MetadataStorage,
-> = IndexedBase & MarketTypeOf<MS> & RpcMarket<C, MS>
+> = RpcMarket<C, MS> & IndexedBase & MarketTypeOf<MS>
 
 /**
  * The base type of indexed data that also can be infered from the rpc data.
