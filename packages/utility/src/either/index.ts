@@ -7,20 +7,36 @@ import * as O from '../option'
  *
  * Can represent either a left or a right value. Used often in
  * error handling where something can either succeede(R) or fail(L).
+ *
+ * @typeParam L - the left value type
+ * @typeParam R - the right value type
+ *
  */
 export type Either<L, R> = Left<L> | Right<R>
+
+/**
+ * Right type
+ * @typeParam R - the right value type
+ */
 export type Right<R> = { right: R }
+
+/**
+ * Left type
+ * @typeParam L - the left value type
+ */
 export type Left<L> = { left: L }
 
 /**
- * Create a Right with value.
+ * Right type constructor
+ * @typeParam R - the right value type
  */
 export const right = <A>(right: A): Right<A> => ({
   right,
 })
 
 /**
- * Create a Left with value.
+ * Left type constructor
+ * @typeParam L - the left value type
  */
 export const left = <A>(left: A): Left<A> => ({
   left,
@@ -125,6 +141,9 @@ export type OrHandler<P, A> = A | ((value: P) => A)
  * Tries to unwrap the right value or uses the default value or lazy function
  * to produce the correct result.
  *
+ * @typeParam L - the left value type
+ * @typeParam R - the right value type
+ *
  * @example ```typescript
  *   unrightOr(right(1), 2) // -> 1
  *   unrightOr(left(NaN), 2) // -> 2
@@ -137,6 +156,9 @@ export const unrightOr = <L, R>(or: OrHandler<L, R>, either: Either<L, R>): R =>
  * Tries to unwrap the left value or uses the default value or lazy function
  * to produce the correct result.
  *
+ * @typeParam L - the left value type
+ * @typeParam R - the right value type
+ *
  * @example ```typescript
  *   unleftOr(right(1), 2) // -> 2
  *   unleftOr(left(NaN), 2) // -> NaN
@@ -147,6 +169,9 @@ export const unleftOr = <L, R>(or: OrHandler<R, L>, either: Either<L, R>): L =>
 
 /**
  * Interface over either to call either methods directly on Either objects that implements it.
+ *
+ * @typeParam L - the left value type
+ * @typeParam R - the right value type
  */
 export type IEither<L, R> = Either<L, R> & {
   /**

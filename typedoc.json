@@ -6,5 +6,6 @@
       "packages/indexer",
       "packages/rpc",
       "packages/web3.storage",
+      "packages/utility"
   ]
 }

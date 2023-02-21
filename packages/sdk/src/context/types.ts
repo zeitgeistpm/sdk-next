@@ -29,6 +29,9 @@ export type RpcContext<MS extends MetadataStorage = MetadataStorage> = {
  * Zeitgeist SDK context with indexer features enabled.
  */
 export type IndexerContext = {
+  /**
+   * {@link @zeitgeistpm/indexer!ZeitgeistIndexer}
+   */
   readonly indexer: ZeitgeistIndexer
 }
 

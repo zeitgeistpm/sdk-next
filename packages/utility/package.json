@@ -4,6 +4,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     "./dist/aeither": {
@@ -50,6 +53,11 @@
       "types": "./dist/function/index.d.ts",
       "import": "./dist/function/index.mjs",
       "default": "./dist/function/index.js"
+    },
+    "./dist/index.ts": {
+      "types": "./dist/index.ts/index.d.ts",
+      "import": "./dist/index.ts/index.mjs",
+      "default": "./dist/index.ts/index.js"
     },
     "./dist/infinity": {
       "types": "./dist/infinity/index.d.ts",
@@ -130,5 +138,8 @@
   },
   "devDependencies": {
     "@types/lodash.omit": "^4.5.7"
+  },
+  "typedoc": {
+    "entryPoint": "./src/index.ts"
   }
 }

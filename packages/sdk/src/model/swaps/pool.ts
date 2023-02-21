@@ -4,7 +4,7 @@ import type {
   ZeitgeistPrimitivesPool,
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
-import { isNumber } from '@polkadot/util'
+import { isCodec, isNumber } from '@polkadot/util'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
 import {
   KeyringPairOrExtSigner,
@@ -458,9 +458,11 @@ export const getAssetIds = <C extends Context<MS>, MS extends MetadataStorage>(
  */
 export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage>(
   pool: Pool<C, MS>,
-  assetId: AssetId,
+  _assetId: AssetId | ZeitgeistPrimitivesAsset,
 ): O.IOption<Decimal> => {
   let weight: string | undefined
+
+  const assetId = isCodec(_assetId) ? parseAssetId(_assetId).unwrap() : _assetId
 
   if (isRpcData(pool)) {
     const weights = pool.weights.unwrapOr(null)
@@ -512,8 +514,10 @@ export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage
 export const getAssetBalance = async <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
   pool: Pool<C, MS>,
-  assetId: AssetId,
+  _assetId: AssetId,
 ): Promise<Decimal> => {
+  const assetId = isCodec(_assetId) ? parseAssetId(_assetId).unwrap() : _assetId
+
   if (isRpcContext(ctx)) {
     const poolAccountId = (await ctx.api.rpc.swaps.poolAccountId(pool.poolId)).toString()
 

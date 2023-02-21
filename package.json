@@ -10,8 +10,7 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "coverage": "turbo run coverage",
-    "document": "npx typedoc",
-    "grocs": "yarn grok ./packages/sdk/dist --outDir grocs"
+    "document": "yarn typedoc"
   },
   "packageManager": "yarn@3.2.2",
   "devDependencies": {

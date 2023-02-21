@@ -11,6 +11,7 @@ export type Config = {
 
 /**
  * The zeitgeist indexer client.
+ *
  */
 export type ZeitgeistIndexer = GQLSdk &
   Augments & {
