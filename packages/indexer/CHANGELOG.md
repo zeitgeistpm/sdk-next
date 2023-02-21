@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.12.3
+
+### Patch Changes
+
+- 9db63fa: Some minor type changes.
+
 ## 2.12.2
 
 ### Patch Changes

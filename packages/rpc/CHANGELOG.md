@@ -1,5 +1,14 @@
 # @zeitgeistpm/rpc
 
+## 2.6.2
+
+### Patch Changes
+
+- 9db63fa: Some minor type changes.
+- Updated dependencies [9db63fa]
+  - @zeitgeistpm/augment-api@2.9.2
+  - @zeitgeistpm/utility@2.10.1
+
 ## 2.6.1
 
 ### Patch Changes

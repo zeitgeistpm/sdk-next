@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.9.2
+
+### Patch Changes
+
+- 9db63fa: Some minor type changes.
+
 ## 2.9.1
 
 ### Patch Changes

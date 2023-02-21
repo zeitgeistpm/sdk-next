@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.10.1
+
+### Patch Changes
+
+- 9db63fa: Some minor type changes.
+
 ## 2.10.0
 
 ### Minor Changes

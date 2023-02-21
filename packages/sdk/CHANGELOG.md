@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.18.6
+
+### Patch Changes
+
+- 9db63fa: Some minor type changes.
+- Updated dependencies [9db63fa]
+  - @zeitgeistpm/augment-api@2.9.2
+  - @zeitgeistpm/indexer@2.12.3
+  - @zeitgeistpm/rpc@2.6.2
+  - @zeitgeistpm/utility@2.10.1
+  - @zeitgeistpm/web3.storage@2.6.1
+
 ## 2.18.5
 
 ### Patch Changes
