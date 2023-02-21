@@ -34,8 +34,5 @@
   },
   "peerDependencies": {
     "@polkadot/util": "*"
-  },
-  "typedoc": {
-    "entryPoint": "./src/index.ts"
   }
 }

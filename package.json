@@ -9,13 +9,13 @@
     "pub": "turbo run build test && changeset version && changeset publish",
     "build": "turbo run build",
     "test": "turbo run test",
-    "coverage": "turbo run coverage",
-    "document": "npx typedoc",
-    "grocs": "yarn grok ./packages/sdk/dist --outDir grocs"
+    "document": "turbo run document",
+    "coverage": "turbo run coverage"
   },
   "packageManager": "yarn@3.2.2",
   "devDependencies": {
     "@changesets/cli": "^2.25.0",
+    "@microsoft/api-documenter": "^7.21.5",
     "@open-web3/dev-config": "^0.2.3",
     "@open-web3/util": "^2.0.1",
     "@rollup/plugin-commonjs": "^23.0.2",
@@ -33,10 +33,12 @@
     "ts-node": "^10.9.1",
     "tsup": "^6.3.0",
     "turbo": "^1.4.3",
-    "typedoc": "^0.23.25",
     "typescript": "^4.8.4",
     "vite-node": "^0.22.1",
     "vitest": "^0.23.4",
     "yargs": "^17.5.1"
+  },
+  "dependencies": {
+    "@microsoft/api-extractor": "^7.34.4"
   }
 }

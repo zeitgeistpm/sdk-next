@@ -22,7 +22,8 @@
   "scripts": {
     "build": "yarn compile",
     "compile": "rimraf ./dist && rollup -c",
-    "test": "vitest run"
+    "test": "vitest run",
+    "document": "api-extractor run --local && api-documenter markdown -i dist -o docs/api"
   },
   "peerDependencies": {
     "@polkadot/api": "*",
@@ -48,8 +49,5 @@
     "@types/lodash-es": "^4.17.6",
     "@types/lodash.memoize": "^4.1.7",
     "@types/ms": "^0.7.31"
-  },
-  "typedoc": {
-    "entryPoint": "./src/index.ts"
   }
 }

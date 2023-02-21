@@ -8,6 +8,9 @@
     "test": {
       "cache": false
     },
+    "document": {
+      "cache": false
+    },
     "coverage": {
       "cache": false
     },
