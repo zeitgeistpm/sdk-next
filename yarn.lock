@@ -7739,7 +7739,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zeitgeistpm/augment-api@^2.9.1, @zeitgeistpm/augment-api@workspace:packages/augment-api":
+"@zeitgeistpm/augment-api@^2.9.2, @zeitgeistpm/augment-api@workspace:packages/augment-api":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/augment-api@workspace:packages/augment-api"
   dependencies:
@@ -7751,7 +7751,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/indexer@^2.12.2, @zeitgeistpm/indexer@workspace:packages/indexer":
+"@zeitgeistpm/indexer@^2.12.3, @zeitgeistpm/indexer@workspace:packages/indexer":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/indexer@workspace:packages/indexer"
   dependencies:
@@ -7766,12 +7766,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/rpc@^2.6.1, @zeitgeistpm/rpc@workspace:packages/rpc":
+"@zeitgeistpm/rpc@^2.6.2, @zeitgeistpm/rpc@workspace:packages/rpc":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/rpc@workspace:packages/rpc"
   dependencies:
-    "@zeitgeistpm/augment-api": ^2.9.1
-    "@zeitgeistpm/utility": ^2.10.0
+    "@zeitgeistpm/augment-api": ^2.9.2
+    "@zeitgeistpm/utility": ^2.10.1
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/keyring": "*"
@@ -7786,11 +7786,11 @@ __metadata:
     "@types/lodash-es": ^4.17.6
     "@types/lodash.memoize": ^4.1.7
     "@types/ms": ^0.7.31
-    "@zeitgeistpm/augment-api": ^2.9.1
-    "@zeitgeistpm/indexer": ^2.12.2
-    "@zeitgeistpm/rpc": ^2.6.1
-    "@zeitgeistpm/utility": ^2.10.0
-    "@zeitgeistpm/web3.storage": ^2.6.0
+    "@zeitgeistpm/augment-api": ^2.9.2
+    "@zeitgeistpm/indexer": ^2.12.3
+    "@zeitgeistpm/rpc": ^2.6.2
+    "@zeitgeistpm/utility": ^2.10.1
+    "@zeitgeistpm/web3.storage": ^2.6.1
     cids: ^1.1.9
     decimal.js: ^10.4.3
     lodash-es: ^4.17.21
@@ -7806,7 +7806,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.10.0, @zeitgeistpm/utility@workspace:packages/utility":
+"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.10.1, @zeitgeistpm/utility@workspace:packages/utility":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/utility@workspace:packages/utility"
   dependencies:
@@ -7822,11 +7822,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/web3.storage@^2.6.0, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
+"@zeitgeistpm/web3.storage@^2.6.1, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/web3.storage@workspace:packages/web3.storage"
   dependencies:
-    "@zeitgeistpm/utility": ^2.10.0
+    "@zeitgeistpm/utility": ^2.10.1
     cids: ^1.1.9
     ipfs-http-client: ^60.0.0
     ipfs-only-hash: ^4.0.0
@@ -18997,6 +18997,7 @@ __metadata:
     tsup: ^6.3.0
     turbo: ^1.4.3
     typedoc: ^0.23.25
+    typedoc-plugin-markdown: ^3.14.0
     typescript: ^4.8.4
     vite-node: ^0.22.1
     vitest: ^0.23.4
@@ -20679,6 +20680,17 @@ __metadata:
   peerDependencies:
     typedoc: ">=0.23.0"
   checksum: e062618e3bf31c9dad5a70c4a028ef4853b8cbe85128f73bbb434ddf2346773e3cc23254dc8e84d5470fd6e1ba7edbe953e173332be3332efe128a54d8721faf
+  languageName: node
+  linkType: hard
+
+"typedoc-plugin-markdown@npm:^3.14.0":
+  version: 3.14.0
+  resolution: "typedoc-plugin-markdown@npm:3.14.0"
+  dependencies:
+    handlebars: ^4.7.7
+  peerDependencies:
+    typedoc: ">=0.23.0"
+  checksum: 6205600052185b4b193ab8a253d9df5ccbc95002c948a07f9024bcd26f0f23fbcc089fda4d6b4c8f4172f4eaca2bf9c32129989f6baaace7261cf4a0e41c976b
   languageName: node
   linkType: hard
 
