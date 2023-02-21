@@ -37,9 +37,9 @@ Type representing values that are not available.
 
 #### Defined in
 
-[packages/utility/src/na/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/na/index.ts#L6)
+[packages/utility/src/na/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/na/index.ts#L6)
 
-[packages/utility/src/na/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/na/index.ts#L27)
+[packages/utility/src/na/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/na/index.ts#L27)
 
 ## Variables
 
@@ -51,9 +51,9 @@ Const symbold representing a not available value.
 
 #### Defined in
 
-[packages/utility/src/na/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/na/index.ts#L6)
+[packages/utility/src/na/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/na/index.ts#L6)
 
-[packages/utility/src/na/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/na/index.ts#L27)
+[packages/utility/src/na/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/na/index.ts#L27)
 
 ## Functions
 
@@ -83,7 +83,7 @@ value is T
 
 #### Defined in
 
-[packages/utility/src/na/index.ts:47](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/na/index.ts#L47)
+[packages/utility/src/na/index.ts:47](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/na/index.ts#L47)
 
 ___
 
@@ -107,7 +107,7 @@ value is NA
 
 #### Defined in
 
-[packages/utility/src/na/index.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/na/index.ts#L35)
+[packages/utility/src/na/index.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/na/index.ts#L35)
 
 ___
 
@@ -131,4 +131,4 @@ NA
 
 #### Defined in
 
-[packages/utility/src/na/index.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/na/index.ts#L17)
+[packages/utility/src/na/index.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/na/index.ts#L17)

@@ -32,7 +32,7 @@ Unpack the item type of an array.
 
 #### Defined in
 
-[packages/utility/src/array/index.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/array/index.ts#L4)
+[packages/utility/src/array/index.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/array/index.ts#L4)
 
 ## Functions
 
@@ -67,7 +67,7 @@ A[]
 
 #### Defined in
 
-[packages/utility/src/array/index.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/array/index.ts#L37)
+[packages/utility/src/array/index.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/array/index.ts#L37)
 
 ___
 
@@ -92,7 +92,7 @@ number[]
 
 #### Defined in
 
-[packages/utility/src/array/index.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/array/index.ts#L13)
+[packages/utility/src/array/index.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/array/index.ts#L13)
 
 ___
 
@@ -132,4 +132,4 @@ B - item type of snd placement array
 
 #### Defined in
 
-[packages/utility/src/array/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/array/index.ts#L27)
+[packages/utility/src/array/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/array/index.ts#L27)

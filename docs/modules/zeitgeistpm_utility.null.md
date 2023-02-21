@@ -43,4 +43,4 @@ value is T
 
 #### Defined in
 
-[packages/utility/src/null/index.ts:9](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/null/index.ts#L9)
+[packages/utility/src/null/index.ts:9](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/null/index.ts#L9)

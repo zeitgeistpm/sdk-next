@@ -45,7 +45,7 @@ T - type of values in the channel
 
 #### Defined in
 
-[packages/utility/src/async/channel.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/channel.ts#L7)
+[packages/utility/src/async/channel.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/channel.ts#L7)
 
 ___
 
@@ -63,7 +63,7 @@ Channel buffers can be concrete values, return values or deferred waiters.
 
 #### Defined in
 
-[packages/utility/src/async/channel.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/channel.ts#L26)
+[packages/utility/src/async/channel.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/channel.ts#L26)
 
 ___
 
@@ -93,7 +93,7 @@ T - value of the deffered
 
 #### Defined in
 
-[packages/utility/src/async/deferred.ts:5](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/deferred.ts#L5)
+[packages/utility/src/async/deferred.ts:5](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/deferred.ts#L5)
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/async/channel.ts:32](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/channel.ts#L32)
+[packages/utility/src/async/channel.ts:32](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/channel.ts#L32)
 
 ## Variables
 
@@ -127,7 +127,7 @@ A returned value type. Terminates the channel.
 
 #### Defined in
 
-[packages/utility/src/async/channel.ts:31](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/channel.ts#L31)
+[packages/utility/src/async/channel.ts:31](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/channel.ts#L31)
 
 ## Functions
 
@@ -161,7 +161,7 @@ Channel<T>
 
 #### Defined in
 
-[packages/utility/src/async/channel.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/channel.ts#L51)
+[packages/utility/src/async/channel.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/channel.ts#L51)
 
 ___
 
@@ -189,7 +189,7 @@ Deferred<T>
 
 #### Defined in
 
-[packages/utility/src/async/deferred.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/deferred.ts#L17)
+[packages/utility/src/async/deferred.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/deferred.ts#L17)
 
 ___
 
@@ -213,7 +213,7 @@ Promise<void>
 
 #### Defined in
 
-[packages/utility/src/async/delay.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/delay.ts#L7)
+[packages/utility/src/async/delay.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/delay.ts#L7)
 
 ___
 
@@ -247,7 +247,7 @@ value is Deferred<T>
 
 #### Defined in
 
-[packages/utility/src/async/deferred.ts:40](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/deferred.ts#L40)
+[packages/utility/src/async/deferred.ts:40](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/deferred.ts#L40)
 
 ___
 
@@ -281,4 +281,4 @@ value is Returned<T>
 
 #### Defined in
 
-[packages/utility/src/async/channel.ts:41](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/async/channel.ts#L41)
+[packages/utility/src/async/channel.ts:41](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/async/channel.ts#L41)

@@ -31,4 +31,4 @@ Asserts an expresson and throw onError return value if falsy.
 
 #### Defined in
 
-[packages/utility/src/assert/index.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/assert/index.ts#L4)
+[packages/utility/src/assert/index.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/assert/index.ts#L4)

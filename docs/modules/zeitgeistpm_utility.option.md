@@ -43,7 +43,7 @@
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:49](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L49)
+[packages/utility/src/option/index.ts:49](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L49)
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L11)
+[packages/utility/src/option/index.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L11)
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L4)
+[packages/utility/src/option/index.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L4)
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:24](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L24)
+[packages/utility/src/option/index.ts:24](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L24)
 
 ___
 
@@ -114,7 +114,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L6)
+[packages/utility/src/option/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L6)
 
 ## Functions
 
@@ -142,7 +142,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:34](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L34)
+[packages/utility/src/option/index.ts:34](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L34)
 
 ___
 
@@ -168,7 +168,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L37)
+[packages/utility/src/option/index.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L37)
 
 ___
 
@@ -194,7 +194,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:68](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L68)
+[packages/utility/src/option/index.ts:68](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L68)
 
 ___
 
@@ -220,7 +220,7 @@ option is None
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L29)
+[packages/utility/src/option/index.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L29)
 
 ___
 
@@ -246,7 +246,7 @@ option is Some<A\>
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L26)
+[packages/utility/src/option/index.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L26)
 
 ___
 
@@ -274,7 +274,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:31](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L31)
+[packages/utility/src/option/index.ts:31](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L31)
 
 ___
 
@@ -288,7 +288,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L20)
+[packages/utility/src/option/index.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L20)
 
 ___
 
@@ -314,7 +314,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:58](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L58)
+[packages/utility/src/option/index.ts:58](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L58)
 
 ___
 
@@ -340,7 +340,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L15)
+[packages/utility/src/option/index.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L15)
 
 ___
 
@@ -366,7 +366,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:73](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L73)
+[packages/utility/src/option/index.ts:73](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L73)
 
 ___
 
@@ -392,7 +392,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:40](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L40)
+[packages/utility/src/option/index.ts:40](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L40)
 
 ___
 
@@ -419,4 +419,4 @@ ___
 
 #### Defined in
 
-[packages/utility/src/option/index.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/option/index.ts#L43)
+[packages/utility/src/option/index.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/option/index.ts#L43)

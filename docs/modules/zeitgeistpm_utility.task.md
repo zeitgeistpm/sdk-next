@@ -39,4 +39,4 @@
 
 #### Defined in
 
-[packages/utility/src/task/index.ts:1](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/task/index.ts#L1)
+[packages/utility/src/task/index.ts:1](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/task/index.ts#L1)

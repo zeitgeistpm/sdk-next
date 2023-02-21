@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[packages/utility/src/error/index.ts:1](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/error/index.ts#L1)
+[packages/utility/src/error/index.ts:1](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/error/index.ts#L1)
 
 ___
 
@@ -69,4 +69,4 @@ ___
 
 #### Defined in
 
-[packages/utility/src/error/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/error/index.ts#L6)
+[packages/utility/src/error/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/error/index.ts#L6)

@@ -8,7 +8,4 @@
       "packages/web3.storage",
       "packages/utility"
   ],
-  "plugin": [
-    "typedoc-plugin-markdown"
-  ],
 }

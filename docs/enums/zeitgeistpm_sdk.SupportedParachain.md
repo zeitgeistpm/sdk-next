@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[packages/sdk/src/config/known/types.ts:28](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/types.ts#L28)
+[packages/sdk/src/config/known/types.ts:28](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/types.ts#L28)
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/config/known/types.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/types.ts#L26)
+[packages/sdk/src/config/known/types.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/types.ts#L26)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/config/known/types.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/types.ts#L29)
+[packages/sdk/src/config/known/types.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/types.ts#L29)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/config/known/types.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/types.ts#L27)
+[packages/sdk/src/config/known/types.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/types.ts#L27)
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/config/known/types.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/types.ts#L30)
+[packages/sdk/src/config/known/types.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/types.ts#L30)

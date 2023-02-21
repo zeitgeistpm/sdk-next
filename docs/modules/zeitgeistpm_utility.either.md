@@ -52,7 +52,7 @@ error handling where something can either succeede(R) or fail(L).
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L15)
+[packages/utility/src/either/index.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L15)
 
 ___
 
@@ -71,7 +71,7 @@ Interface over either to call either methods directly on Either objects that imp
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:176](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L176)
+[packages/utility/src/either/index.ts:176](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L176)
 
 ___
 
@@ -95,7 +95,7 @@ Left type
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L27)
+[packages/utility/src/either/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L27)
 
 ___
 
@@ -116,7 +116,7 @@ P - the input value, in case of Left it will be R and vice versa.
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:138](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L138)
+[packages/utility/src/either/index.ts:138](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L138)
 
 ___
 
@@ -140,7 +140,7 @@ Right type
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:21](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L21)
+[packages/utility/src/either/index.ts:21](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L21)
 
 ## Functions
 
@@ -186,7 +186,7 @@ chain(validate, left('error'))
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:96](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L96)
+[packages/utility/src/either/index.ts:96](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L96)
 
 ___
 
@@ -217,7 +217,7 @@ EitherInterface<L, R>
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:234](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L234)
+[packages/utility/src/either/index.ts:234](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L234)
 
 ___
 
@@ -237,7 +237,7 @@ obj is Either<any, any\>
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L45)
+[packages/utility/src/either/index.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L45)
 
 ___
 
@@ -266,7 +266,7 @@ either is Left<L\>
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:56](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L56)
+[packages/utility/src/either/index.ts:56](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L56)
 
 ___
 
@@ -295,7 +295,7 @@ either is Right<R\>
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L51)
+[packages/utility/src/either/index.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L51)
 
 ___
 
@@ -323,7 +323,7 @@ Left type constructor
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:41](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L41)
+[packages/utility/src/either/index.ts:41](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L41)
 
 ___
 
@@ -361,7 +361,7 @@ map(left("error"), num => num + 1) === left("error")
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:76](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L76)
+[packages/utility/src/either/index.ts:76](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L76)
 
 ___
 
@@ -389,7 +389,7 @@ Right type constructor
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:33](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L33)
+[packages/utility/src/either/index.ts:33](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L33)
 
 ___
 
@@ -420,7 +420,7 @@ Either<Error, R>
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:254](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L254)
+[packages/utility/src/either/index.ts:254](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L254)
 
 ___
 
@@ -456,7 +456,7 @@ unleft(left(NaN)).unwrapOr(2) === NaN
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:132](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L132)
+[packages/utility/src/either/index.ts:132](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L132)
 
 ___
 
@@ -494,7 +494,7 @@ to produce the correct result.
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:167](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L167)
+[packages/utility/src/either/index.ts:167](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L167)
 
 ___
 
@@ -530,7 +530,7 @@ unright(left(NaN)).unwrapOr(2) === 2
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:121](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L121)
+[packages/utility/src/either/index.ts:121](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L121)
 
 ___
 
@@ -568,7 +568,7 @@ to produce the correct result.
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:152](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L152)
+[packages/utility/src/either/index.ts:152](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L152)
 
 ___
 
@@ -597,7 +597,7 @@ Unwrap the right value. Throws if the either is a left.
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:61](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L61)
+[packages/utility/src/either/index.ts:61](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L61)
 
 ___
 
@@ -626,4 +626,4 @@ Unwrap the right value. Throws if the either is a left.
 
 #### Defined in
 
-[packages/utility/src/either/index.ts:66](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/either/index.ts#L66)
+[packages/utility/src/either/index.ts:66](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/either/index.ts#L66)

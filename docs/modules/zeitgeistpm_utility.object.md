@@ -35,7 +35,7 @@ T extends object
 
 #### Defined in
 
-[packages/utility/src/object/index.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/object/index.ts#L7)
+[packages/utility/src/object/index.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/object/index.ts#L7)
 
 ___
 
@@ -58,7 +58,7 @@ T extends object
 
 #### Defined in
 
-[packages/utility/src/object/index.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/object/index.ts#L17)
+[packages/utility/src/object/index.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/object/index.ts#L17)
 
 ## Functions
 
@@ -86,4 +86,4 @@ Record<any, any>
 
 #### Defined in
 
-[packages/utility/src/object/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/object/index.ts#L27)
+[packages/utility/src/object/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/object/index.ts#L27)

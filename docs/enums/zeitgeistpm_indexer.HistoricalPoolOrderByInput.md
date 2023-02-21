@@ -35,7 +35,7 @@
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:886](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L886)
+[packages/indexer/src/graphql/sdk.ts:886](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L886)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:887](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L887)
+[packages/indexer/src/graphql/sdk.ts:887](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L887)
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:888](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L888)
+[packages/indexer/src/graphql/sdk.ts:888](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L888)
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:889](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L889)
+[packages/indexer/src/graphql/sdk.ts:889](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L889)
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:890](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L890)
+[packages/indexer/src/graphql/sdk.ts:890](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L890)
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:891](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L891)
+[packages/indexer/src/graphql/sdk.ts:891](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L891)
 
 ___
 
@@ -95,7 +95,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:892](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L892)
+[packages/indexer/src/graphql/sdk.ts:892](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L892)
 
 ___
 
@@ -105,7 +105,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:893](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L893)
+[packages/indexer/src/graphql/sdk.ts:893](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L893)
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:894](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L894)
+[packages/indexer/src/graphql/sdk.ts:894](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L894)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:895](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L895)
+[packages/indexer/src/graphql/sdk.ts:895](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L895)
 
 ___
 
@@ -135,7 +135,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:896](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L896)
+[packages/indexer/src/graphql/sdk.ts:896](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L896)
 
 ___
 
@@ -145,7 +145,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:897](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L897)
+[packages/indexer/src/graphql/sdk.ts:897](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L897)
 
 ___
 
@@ -155,7 +155,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:898](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L898)
+[packages/indexer/src/graphql/sdk.ts:898](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L898)
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:899](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L899)
+[packages/indexer/src/graphql/sdk.ts:899](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L899)
 
 ___
 
@@ -175,7 +175,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:900](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L900)
+[packages/indexer/src/graphql/sdk.ts:900](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L900)
 
 ___
 
@@ -185,7 +185,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:901](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L901)
+[packages/indexer/src/graphql/sdk.ts:901](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L901)
 
 ___
 
@@ -195,7 +195,7 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:902](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L902)
+[packages/indexer/src/graphql/sdk.ts:902](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L902)
 
 ___
 
@@ -205,4 +205,4 @@ ___
 
 #### Defined in
 
-[packages/indexer/src/graphql/sdk.ts:903](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/indexer/src/graphql/sdk.ts#L903)
+[packages/indexer/src/graphql/sdk.ts:903](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/indexer/src/graphql/sdk.ts#L903)

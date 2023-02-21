@@ -61,7 +61,7 @@ addTwoSubOne(10) === 11
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L22)
+[packages/utility/src/function/index.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L22)
 
 ▸ **compose**<`A`, `B`, `C`\>(`ab`, `bc`): (...`a`: `A`) => `C`
 
@@ -98,7 +98,7 @@ addTwoSubOne(10) === 11
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:23](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L23)
+[packages/utility/src/function/index.ts:23](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L23)
 
 ▸ **compose**<`A`, `B`, `C`, `D`\>(`ab`, `bc`, `cd`): (...`a`: `A`) => `D`
 
@@ -137,7 +137,7 @@ addTwoSubOne(10) === 11
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L27)
+[packages/utility/src/function/index.ts:27](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L27)
 
 ▸ **compose**<`A`, `B`, `C`, `D`, `E`\>(`ab`, `bc`, `cd`, `de`): (...`a`: `A`) => `E`
 
@@ -178,7 +178,7 @@ addTwoSubOne(10) === 11
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:32](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L32)
+[packages/utility/src/function/index.ts:32](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L32)
 
 ▸ **compose**<`A`, `B`, `C`, `D`, `E`, `F`\>(`ab`, `bc`, `cd`, `de`, `ef`): (...`a`: `A`) => `F`
 
@@ -221,7 +221,7 @@ addTwoSubOne(10) === 11
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:38](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L38)
+[packages/utility/src/function/index.ts:38](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L38)
 
 ▸ **compose**<`A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`ab`, `bc`, `cd`, `de`, `ef`, `fg`): (...`a`: `A`) => `G`
 
@@ -266,7 +266,7 @@ addTwoSubOne(10) === 11
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L45)
+[packages/utility/src/function/index.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L45)
 
 ▸ **compose**<`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`ab`, `bc`, `cd`, `de`, `ef`, `fg`, `gh`): (...`a`: `A`) => `H`
 
@@ -313,7 +313,7 @@ addTwoSubOne(10) === 11
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:53](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L53)
+[packages/utility/src/function/index.ts:53](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L53)
 
 ▸ **compose**<`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`ab`, `bc`, `cd`, `de`, `ef`, `fg`, `gh`, `hi`): (...`a`: `A`) => `I`
 
@@ -362,7 +362,7 @@ addTwoSubOne(10) === 11
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:62](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L62)
+[packages/utility/src/function/index.ts:62](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L62)
 
 ▸ **compose**<`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`ab`, `bc`, `cd`, `de`, `ef`, `fg`, `gh`, `hi`, `ij`): (...`a`: `A`) => `J`
 
@@ -413,7 +413,7 @@ addTwoSubOne(10) === 11
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:72](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L72)
+[packages/utility/src/function/index.ts:72](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L72)
 
 ___
 
@@ -445,4 +445,4 @@ A - type of the identity
 
 #### Defined in
 
-[packages/utility/src/function/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/function/index.ts#L6)
+[packages/utility/src/function/index.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/function/index.ts#L6)

@@ -40,7 +40,7 @@
 
 #### Defined in
 
-[packages/rpc/src/lib/keyring/types.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/lib/keyring/types.ts#L4)
+[packages/rpc/src/lib/keyring/types.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/lib/keyring/types.ts#L4)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[packages/rpc/src/lib/transactions/types.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/lib/transactions/types.ts#L4)
+[packages/rpc/src/lib/transactions/types.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/lib/transactions/types.ts#L4)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[packages/rpc/src/lib/keyring/types.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/lib/keyring/types.ts#L6)
+[packages/rpc/src/lib/keyring/types.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/lib/keyring/types.ts#L6)
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 #### Defined in
 
-[packages/rpc/src/lib/transactions/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/lib/transactions/types.ts#L25)
+[packages/rpc/src/lib/transactions/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/lib/transactions/types.ts#L25)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-[packages/rpc/src/lib/transactions/types.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/lib/transactions/types.ts#L17)
+[packages/rpc/src/lib/transactions/types.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/lib/transactions/types.ts#L17)
 
 ___
 
@@ -120,7 +120,7 @@ Configuration for provider.
 
 #### Defined in
 
-[packages/rpc/src/index.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/index.ts#L12)
+[packages/rpc/src/index.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/index.ts#L12)
 
 ## Functions
 
@@ -144,7 +144,7 @@ signer is ExtSigner
 
 #### Defined in
 
-[packages/rpc/src/lib/keyring/index.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/lib/keyring/index.ts#L11)
+[packages/rpc/src/lib/keyring/index.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/lib/keyring/index.ts#L11)
 
 ___
 
@@ -168,7 +168,7 @@ ApiOptions
 
 #### Defined in
 
-[packages/rpc/src/index.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/index.ts#L22)
+[packages/rpc/src/index.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/index.ts#L22)
 
 ___
 
@@ -222,4 +222,4 @@ ___
 
 #### Defined in
 
-[packages/rpc/src/lib/transactions/types.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/lib/transactions/types.ts#L45)
+[packages/rpc/src/lib/transactions/types.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/lib/transactions/types.ts#L45)

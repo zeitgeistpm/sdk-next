@@ -42,7 +42,7 @@ Async Either type.
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L8)
+[packages/utility/src/aeither/index.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L8)
 
 ___
 
@@ -61,7 +61,7 @@ Interface over AEither to call methods directly on Either objects that implement
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:113](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L113)
+[packages/utility/src/aeither/index.ts:113](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L113)
 
 ___
 
@@ -84,7 +84,7 @@ P - the input value, in case of Left it will be R and vice versa.
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:192](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L192)
+[packages/utility/src/aeither/index.ts:192](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L192)
 
 ## Functions
 
@@ -115,7 +115,7 @@ IAEither<L, R>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:200](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L200)
+[packages/utility/src/aeither/index.ts:200](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L200)
 
 ___
 
@@ -149,7 +149,7 @@ IAEither<L, B>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:99](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L99)
+[packages/utility/src/aeither/index.ts:99](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L99)
 
 ___
 
@@ -188,7 +188,7 @@ AEither<L, R>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L17)
+[packages/utility/src/aeither/index.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L17)
 
 ___
 
@@ -221,7 +221,7 @@ IAEither<L, B>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:90](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L90)
+[packages/utility/src/aeither/index.ts:90](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L90)
 
 ___
 
@@ -252,7 +252,7 @@ Promise<O.IOption<L>>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:60](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L60)
+[packages/utility/src/aeither/index.ts:60](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L60)
 
 ___
 
@@ -285,7 +285,7 @@ Promise<L>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:80](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L80)
+[packages/utility/src/aeither/index.ts:80](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L80)
 
 ___
 
@@ -316,7 +316,7 @@ Promise<O.IOption<R>>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:52](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L52)
+[packages/utility/src/aeither/index.ts:52](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L52)
 
 ___
 
@@ -349,7 +349,7 @@ Promise<R>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:69](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L69)
+[packages/utility/src/aeither/index.ts:69](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L69)
 
 ___
 
@@ -384,7 +384,7 @@ Promise<R>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L35)
+[packages/utility/src/aeither/index.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L35)
 
 ___
 
@@ -419,4 +419,4 @@ Promise<L>
 
 #### Defined in
 
-[packages/utility/src/aeither/index.ts:44](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/aeither/index.ts#L44)
+[packages/utility/src/aeither/index.ts:44](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/aeither/index.ts#L44)

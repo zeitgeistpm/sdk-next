@@ -58,7 +58,7 @@ Args extends ReadonlyArray<unknown>> - args passed to the task
 
 #### Defined in
 
-[packages/utility/src/taskeither/index.ts:10](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/taskeither/index.ts#L10)
+[packages/utility/src/taskeither/index.ts:10](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/taskeither/index.ts#L10)
 
 ## Functions
 
@@ -98,4 +98,4 @@ TaskEither<L, R, Args>
 
 #### Defined in
 
-[packages/utility/src/taskeither/index.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/taskeither/index.ts#L22)
+[packages/utility/src/taskeither/index.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/taskeither/index.ts#L22)

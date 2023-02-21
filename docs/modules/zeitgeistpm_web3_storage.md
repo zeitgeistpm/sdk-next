@@ -36,7 +36,7 @@ Cluster configuration
 
 #### Defined in
 
-[packages/web3.storage/src/storage/providers/ipfs/types.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/web3.storage/src/storage/providers/ipfs/types.ts#L29)
+[packages/web3.storage/src/storage/providers/ipfs/types.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/web3.storage/src/storage/providers/ipfs/types.ts#L29)
 
 ___
 
@@ -57,7 +57,7 @@ Must sepcify a node, but can also specify a cluster to pin data to.
 
 #### Defined in
 
-[packages/web3.storage/src/storage/providers/ipfs/types.ts:5](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/web3.storage/src/storage/providers/ipfs/types.ts#L5)
+[packages/web3.storage/src/storage/providers/ipfs/types.ts:5](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/web3.storage/src/storage/providers/ipfs/types.ts#L5)
 
 ___
 
@@ -76,7 +76,7 @@ Singel node configuration
 
 #### Defined in
 
-[packages/web3.storage/src/storage/providers/ipfs/types.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/web3.storage/src/storage/providers/ipfs/types.ts#L14)
+[packages/web3.storage/src/storage/providers/ipfs/types.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/web3.storage/src/storage/providers/ipfs/types.ts#L14)
 
 ___
 
@@ -104,4 +104,4 @@ has metadata stored in some external storage like IPFS.
 
 #### Defined in
 
-[packages/web3.storage/src/storage/types.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/web3.storage/src/storage/types.ts#L11)
+[packages/web3.storage/src/storage/types.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/web3.storage/src/storage/types.ts#L11)

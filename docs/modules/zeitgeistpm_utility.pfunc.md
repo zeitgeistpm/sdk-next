@@ -39,7 +39,7 @@ P - properties to augments function with.
 
 #### Defined in
 
-[packages/utility/src/pfunc/index.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/pfunc/index.ts#L7)
+[packages/utility/src/pfunc/index.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/pfunc/index.ts#L7)
 
 ## Functions
 
@@ -79,4 +79,4 @@ Functor<F, P>
 
 #### Defined in
 
-[packages/utility/src/pfunc/index.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/pfunc/index.ts#L18)
+[packages/utility/src/pfunc/index.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/pfunc/index.ts#L18)

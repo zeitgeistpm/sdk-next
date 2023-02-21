@@ -46,7 +46,7 @@ not in use, just testing type narrowing.
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L25)
+[packages/sdk/src/meta/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L25)
 
 ___
 
@@ -58,7 +58,7 @@ Storage for Market metadata.
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L20)
+[packages/sdk/src/meta/types.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L20)
 
 ## Methods
 
@@ -94,4 +94,4 @@ K extends keyof this
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:34](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L34)
+[packages/sdk/src/meta/types.ts:34](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L34)

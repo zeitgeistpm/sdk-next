@@ -42,7 +42,7 @@ Ztg info with price in usd and 24 hour change
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:56](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L56)
+[packages/utility/src/ztg/index.ts:56](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L56)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L13)
+[packages/utility/src/ztg/index.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L13)
 
 ## Variables
 
@@ -64,7 +64,7 @@ Decimal point in a native ztg
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L18)
+[packages/utility/src/ztg/index.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L18)
 
 ## Functions
 
@@ -82,7 +82,7 @@ Promise<ZTGInfo>
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:66](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L66)
+[packages/utility/src/ztg/index.ts:66](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L66)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:69](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L69)
+[packages/utility/src/ztg/index.ts:69](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L69)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:82](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L82)
+[packages/utility/src/ztg/index.ts:82](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L82)
 
 ___
 
@@ -134,7 +134,7 @@ Ztg
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L51)
+[packages/utility/src/ztg/index.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L51)
 
 ___
 
@@ -158,7 +158,7 @@ value is Ztg
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L26)
+[packages/utility/src/ztg/index.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L26)
 
 ___
 
@@ -176,7 +176,7 @@ Ztg
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L43)
+[packages/utility/src/ztg/index.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L43)
 
 ___
 
@@ -200,4 +200,4 @@ Ztg
 
 #### Defined in
 
-[packages/utility/src/ztg/index.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/ztg/index.ts#L35)
+[packages/utility/src/ztg/index.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/ztg/index.ts#L35)

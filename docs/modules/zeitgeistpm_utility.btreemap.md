@@ -44,4 +44,4 @@ V | null
 
 #### Defined in
 
-[packages/utility/src/btreemap/index.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/btreemap/index.ts#L14)
+[packages/utility/src/btreemap/index.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/btreemap/index.ts#L14)

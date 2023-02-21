@@ -237,7 +237,7 @@ This type delinieates an asset at an index in a market pool.
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L13)
+[packages/sdk/src/primitives/assetid.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L13)
 
 ___
 
@@ -249,7 +249,7 @@ Discrete price for a asset at a certain block.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:38](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L38)
+[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:38](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L38)
 
 ___
 
@@ -274,7 +274,7 @@ Concrete MarketList for rpc context
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/list/types.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/list/types.ts#L39)
+[packages/sdk/src/model/markets/functions/list/types.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/list/types.ts#L39)
 
 ___
 
@@ -286,7 +286,7 @@ The market has an authorized report and is awaiting resolution after the Correct
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:56](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L56)
+[packages/sdk/src/model/markets/marketstage.ts:56](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L56)
 
 ___
 
@@ -303,7 +303,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L13)
+[packages/sdk/src/config/types.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L13)
 
 ___
 
@@ -313,7 +313,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/math/bignumber.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/bignumber.ts#L3)
+[packages/sdk/src/math/bignumber.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/bignumber.ts#L3)
 
 ___
 
@@ -325,7 +325,7 @@ BlockNumber opaque(newtype)
 
 #### Defined in
 
-[packages/sdk/src/primitives/blocknumber.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/blocknumber.ts#L7)
+[packages/sdk/src/primitives/blocknumber.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/blocknumber.ts#L7)
 
 ___
 
@@ -335,7 +335,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L15)
+[packages/sdk/src/primitives/assetid.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L15)
 
 ___
 
@@ -345,7 +345,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L22)
+[packages/sdk/src/primitives/assetid.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L22)
 
 ___
 
@@ -355,7 +355,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/meta/market/types.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/market/types.ts#L4)
+[packages/sdk/src/meta/market/types.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/market/types.ts#L4)
 
 ___
 
@@ -372,7 +372,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/meta/comment/types.ts:1](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/comment/types.ts#L1)
+[packages/sdk/src/meta/comment/types.ts:1](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/comment/types.ts#L1)
 
 ___
 
@@ -390,7 +390,7 @@ Union type of possible configurations.
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L8)
+[packages/sdk/src/config/types.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L8)
 
 ___
 
@@ -408,7 +408,7 @@ Union type that can be either rpc, indexer or full context.
 
 #### Defined in
 
-[packages/sdk/src/context/types.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/context/types.ts#L8)
+[packages/sdk/src/context/types.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/context/types.ts#L8)
 
 ___
 
@@ -444,7 +444,7 @@ Base parameters for creating a market.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/create/types.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/create/types.ts#L35)
+[packages/sdk/src/model/markets/functions/create/types.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/create/types.ts#L35)
 
 ___
 
@@ -475,7 +475,7 @@ P extends CreateMarketParams - Data will contain market and pool if params is wi
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/create/types.ts:180](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/create/types.ts#L180)
+[packages/sdk/src/model/markets/functions/create/types.ts:180](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/create/types.ts#L180)
 
 ___
 
@@ -494,7 +494,7 @@ Union type for creating a standalone market or permissionless cpmm market with p
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/create/types.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/create/types.ts#L26)
+[packages/sdk/src/model/markets/functions/create/types.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/create/types.ts#L26)
 
 ___
 
@@ -519,7 +519,7 @@ P extends CreateMarketParams - Data will contain market and pool if params is wi
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/create/types.ts:169](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/create/types.ts#L169)
+[packages/sdk/src/model/markets/functions/create/types.ts:169](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/create/types.ts#L169)
 
 ___
 
@@ -543,7 +543,7 @@ its the consumers responsibility to call rollback if transaction fails.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/create/types.ts:198](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/create/types.ts#L198)
+[packages/sdk/src/model/markets/functions/create/types.ts:198](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/create/types.ts#L198)
 
 ___
 
@@ -562,7 +562,7 @@ Parameters for creating a market with a pool.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/create/types.ts:133](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/create/types.ts#L133)
+[packages/sdk/src/model/markets/functions/create/types.ts:133](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/create/types.ts#L133)
 
 ___
 
@@ -581,7 +581,7 @@ Parameters for creating a market without a pool
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/create/types.ts:113](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/create/types.ts#L113)
+[packages/sdk/src/model/markets/functions/create/types.ts:113](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/create/types.ts#L113)
 
 ___
 
@@ -600,7 +600,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/data.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/data.ts#L6)
+[packages/sdk/src/primitives/data.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/data.ts#L6)
 
 ___
 
@@ -612,7 +612,7 @@ The market has been destroyed.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:66](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L66)
+[packages/sdk/src/model/markets/marketstage.ts:66](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L66)
 
 ___
 
@@ -624,7 +624,7 @@ The market has been disputed and is awaiting an authorized report.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L51)
+[packages/sdk/src/model/markets/marketstage.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L51)
 
 ___
 
@@ -650,7 +650,7 @@ A stage with a dynamic remaining time.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:71](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L71)
+[packages/sdk/src/model/markets/marketstage.ts:71](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L71)
 
 ___
 
@@ -670,7 +670,7 @@ Params needed to exhange(buy or sell) a full set of assets for a pool.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:339](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L339)
+[packages/sdk/src/model/swaps/pool.ts:339](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L339)
 
 ___
 
@@ -686,7 +686,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:24](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L24)
+[packages/sdk/src/config/types.ts:24](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L24)
 
 ___
 
@@ -704,7 +704,7 @@ Zeitgeist SDK context with both rpc and indexer features enabled.
 
 #### Defined in
 
-[packages/sdk/src/context/types.ts:16](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/context/types.ts#L16)
+[packages/sdk/src/context/types.ts:16](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/context/types.ts#L16)
 
 ___
 
@@ -729,7 +729,7 @@ Concrete MarketList for indexed context
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/list/types.ts:32](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/list/types.ts#L32)
+[packages/sdk/src/model/markets/functions/list/types.ts:32](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/list/types.ts#L32)
 
 ___
 
@@ -741,7 +741,7 @@ The market has been closed and is in the grace period awaiting to go into its re
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:31](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L31)
+[packages/sdk/src/model/markets/marketstage.ts:31](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L31)
 
 ___
 
@@ -753,7 +753,7 @@ The base type of indexed data that also can be infered from the rpc data.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:100](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L100)
+[packages/sdk/src/model/markets/market.ts:100](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L100)
 
 ___
 
@@ -770,7 +770,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/data.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/data.ts#L13)
+[packages/sdk/src/primitives/data.ts:13](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/data.ts#L13)
 
 ___
 
@@ -789,7 +789,7 @@ Concrete Market type for a indexed market.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:61](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L61)
+[packages/sdk/src/model/markets/market.ts:61](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L61)
 
 ___
 
@@ -808,7 +808,7 @@ Concrete Pool type for indexed Pool.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:52](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L52)
+[packages/sdk/src/model/swaps/pool.ts:52](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L52)
 
 ___
 
@@ -818,7 +818,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L37)
+[packages/sdk/src/config/types.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L37)
 
 ___
 
@@ -836,7 +836,7 @@ Zeitgeist SDK context with indexer features enabled.
 
 #### Defined in
 
-[packages/sdk/src/context/types.ts:31](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/context/types.ts#L31)
+[packages/sdk/src/context/types.ts:31](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/context/types.ts#L31)
 
 ___
 
@@ -862,7 +862,7 @@ A stage with an infinite remaining time.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:76](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L76)
+[packages/sdk/src/model/markets/marketstage.ts:76](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L76)
 
 ___
 
@@ -879,7 +879,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/config/known/types.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/types.ts#L8)
+[packages/sdk/src/config/known/types.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/types.ts#L8)
 
 ___
 
@@ -898,7 +898,7 @@ Union type for Indexed and Rpc Markets.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:48](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L48)
+[packages/sdk/src/model/markets/market.ts:48](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L48)
 
 ___
 
@@ -918,7 +918,7 @@ Type for market deadlines as numbers.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:257](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L257)
+[packages/sdk/src/model/markets/market.ts:257](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L257)
 
 ___
 
@@ -930,7 +930,7 @@ MarketId opaque(newtype)
 
 #### Defined in
 
-[packages/sdk/src/primitives/marketid.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/marketid.ts#L7)
+[packages/sdk/src/primitives/marketid.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/marketid.ts#L7)
 
 ___
 
@@ -952,7 +952,7 @@ MS extends MetadataStorage
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:77](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L77)
+[packages/sdk/src/meta/types.ts:77](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L77)
 
 ___
 
@@ -976,7 +976,7 @@ C Context - the context to fetch the marketlist for.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/list/types.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/list/types.ts#L14)
+[packages/sdk/src/model/markets/functions/list/types.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/list/types.ts#L14)
 
 ___
 
@@ -986,7 +986,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/meta/market/types.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/market/types.ts#L3)
+[packages/sdk/src/meta/market/types.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/market/types.ts#L3)
 
 ___
 
@@ -1022,7 +1022,7 @@ Interface on market with methods for deploying swap pools, buying and selling se
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:105](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L105)
+[packages/sdk/src/model/markets/market.ts:105](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L105)
 
 ___
 
@@ -1032,7 +1032,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:19](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L19)
+[packages/sdk/src/primitives/assetid.ts:19](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L19)
 
 ___
 
@@ -1044,7 +1044,7 @@ Union type of all possible market stages.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L6)
+[packages/sdk/src/model/markets/marketstage.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L6)
 
 ___
 
@@ -1056,7 +1056,7 @@ Union type of all market statuses as string.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:252](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L252)
+[packages/sdk/src/model/markets/market.ts:252](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L252)
 
 ___
 
@@ -1078,7 +1078,7 @@ MS extends MetadataStorage
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:71](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L71)
+[packages/sdk/src/meta/types.ts:71](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L71)
 
 ___
 
@@ -1107,7 +1107,7 @@ Query and create markets.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/types.ts:24](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/types.ts#L24)
+[packages/sdk/src/model/markets/types.ts:24](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/types.ts#L24)
 
 ___
 
@@ -1119,7 +1119,7 @@ Concrete markets Query for indexed context
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/list/types.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/list/types.ts#L51)
+[packages/sdk/src/model/markets/functions/list/types.ts:51](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/list/types.ts#L51)
 
 ___
 
@@ -1142,7 +1142,7 @@ C Context - the context to query in.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/list/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/list/types.ts#L25)
+[packages/sdk/src/model/markets/functions/list/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/list/types.ts#L25)
 
 ___
 
@@ -1154,7 +1154,7 @@ Concrete markets Query for rpc context
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/list/types.ts:46](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/list/types.ts#L46)
+[packages/sdk/src/model/markets/functions/list/types.ts:46](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/list/types.ts#L46)
 
 ___
 
@@ -1184,7 +1184,7 @@ to the indexer.
 
 #### Defined in
 
-[packages/sdk/src/model/types.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/types.ts#L17)
+[packages/sdk/src/model/types.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/types.ts#L17)
 
 ___
 
@@ -1204,9 +1204,9 @@ Type representing values that are not available.
 
 #### Defined in
 
-[packages/sdk/src/primitives/na.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/na.ts#L6)
+[packages/sdk/src/primitives/na.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/na.ts#L6)
 
-[packages/sdk/src/primitives/na.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/na.ts#L29)
+[packages/sdk/src/primitives/na.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/na.ts#L29)
 
 ___
 
@@ -1218,7 +1218,7 @@ The market is in its reporting stage where reports from anyone are accepted.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:41](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L41)
+[packages/sdk/src/model/markets/marketstage.ts:41](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L41)
 
 ___
 
@@ -1230,7 +1230,7 @@ The market is in its reporting stage where oracle reports are accepted.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:36](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L36)
+[packages/sdk/src/model/markets/marketstage.ts:36](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L36)
 
 ___
 
@@ -1254,7 +1254,7 @@ C Context - the context to fetch the marketlist for.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L39)
+[packages/sdk/src/model/swaps/pool.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L39)
 
 ___
 
@@ -1266,7 +1266,7 @@ Discrete prices for all assets by index in a pool at a certain block.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:33](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L33)
+[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:33](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L33)
 
 ___
 
@@ -1288,7 +1288,7 @@ Params needed to create a pool.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:328](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L328)
+[packages/sdk/src/model/swaps/pool.ts:328](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L328)
 
 ___
 
@@ -1307,7 +1307,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:388](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L388)
+[packages/sdk/src/model/swaps/pool.ts:388](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L388)
 
 ___
 
@@ -1325,7 +1325,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:395](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L395)
+[packages/sdk/src/model/swaps/pool.ts:395](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L395)
 
 ___
 
@@ -1345,7 +1345,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:401](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L401)
+[packages/sdk/src/model/swaps/pool.ts:401](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L401)
 
 ___
 
@@ -1365,7 +1365,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:409](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L409)
+[packages/sdk/src/model/swaps/pool.ts:409](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L409)
 
 ___
 
@@ -1383,7 +1383,7 @@ Fetch a pool byt its id.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/getPool/types.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/getPool/types.ts#L11)
+[packages/sdk/src/model/swaps/functions/getPool/types.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/getPool/types.ts#L11)
 
 ___
 
@@ -1401,7 +1401,7 @@ Fetch a pool by its associated market id.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/getPool/types.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/getPool/types.ts#L18)
+[packages/sdk/src/model/swaps/functions/getPool/types.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/getPool/types.ts#L18)
 
 ___
 
@@ -1413,7 +1413,7 @@ Get pool query, can fetch by either pool or market id.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/getPool/types.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/getPool/types.ts#L6)
+[packages/sdk/src/model/swaps/functions/getPool/types.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/getPool/types.ts#L6)
 
 ___
 
@@ -1432,7 +1432,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:365](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L365)
+[packages/sdk/src/model/swaps/pool.ts:365](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L365)
 
 ___
 
@@ -1452,7 +1452,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:372](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L372)
+[packages/sdk/src/model/swaps/pool.ts:372](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L372)
 
 ___
 
@@ -1472,7 +1472,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:380](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L380)
+[packages/sdk/src/model/swaps/pool.ts:380](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L380)
 
 ___
 
@@ -1496,7 +1496,7 @@ C Context - the context to fetch the marketlist for.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/poolslist.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/poolslist.ts#L11)
+[packages/sdk/src/model/swaps/poolslist.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/poolslist.ts#L11)
 
 ___
 
@@ -1515,7 +1515,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:87](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L87)
+[packages/sdk/src/model/swaps/pool.ts:87](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L87)
 
 ___
 
@@ -1527,7 +1527,7 @@ Time series of pool prices at a block for assets by index in a pool.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:28](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L28)
+[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:28](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L28)
 
 ___
 
@@ -1545,7 +1545,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L6)
+[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L6)
 
 ___
 
@@ -1566,7 +1566,7 @@ Streaming query paramaters.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L43)
+[packages/sdk/src/model/swaps/functions/poolPrices/types.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/poolPrices/types.ts#L43)
 
 ___
 
@@ -1593,7 +1593,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:111](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L111)
+[packages/sdk/src/model/swaps/pool.ts:111](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L111)
 
 ___
 
@@ -1603,7 +1603,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L17)
+[packages/sdk/src/primitives/assetid.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L17)
 
 ___
 
@@ -1624,7 +1624,7 @@ Concrete pool Query for indexed context
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/listPools/types.ts:38](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/listPools/types.ts#L38)
+[packages/sdk/src/model/swaps/functions/listPools/types.ts:38](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/listPools/types.ts#L38)
 
 ___
 
@@ -1648,7 +1648,7 @@ C Context - the context to query in.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/listPools/types.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/listPools/types.ts#L12)
+[packages/sdk/src/model/swaps/functions/listPools/types.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/listPools/types.ts#L12)
 
 ___
 
@@ -1660,7 +1660,7 @@ The market has been proposed and is waiting to be approved.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:21](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L21)
+[packages/sdk/src/model/markets/marketstage.ts:21](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L21)
 
 ___
 
@@ -1672,7 +1672,7 @@ The market has been reported and will be resolved if no dispute is raised.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:46](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L46)
+[packages/sdk/src/model/markets/marketstage.ts:46](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L46)
 
 ___
 
@@ -1684,7 +1684,7 @@ The market has been resolved.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:61](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L61)
+[packages/sdk/src/model/markets/marketstage.ts:61](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L61)
 
 ___
 
@@ -1700,7 +1700,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L26)
+[packages/sdk/src/config/types.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L26)
 
 ___
 
@@ -1726,7 +1726,7 @@ Zeitgeist SDK context with rpc and storage features enabled.
 
 #### Defined in
 
-[packages/sdk/src/context/types.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/context/types.ts#L22)
+[packages/sdk/src/context/types.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/context/types.ts#L22)
 
 ___
 
@@ -1745,7 +1745,7 @@ Concrete Market type for a rpc market.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:69](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L69)
+[packages/sdk/src/model/markets/market.ts:69](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L69)
 
 ___
 
@@ -1757,7 +1757,7 @@ Concrete Pool type for rpc Pool.
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:62](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L62)
+[packages/sdk/src/model/swaps/pool.ts:62](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L62)
 
 ___
 
@@ -1782,7 +1782,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts#L17)
+[packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts:17](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts#L17)
 
 ___
 
@@ -1805,7 +1805,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts:36](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts#L36)
+[packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts:36](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts#L36)
 
 ___
 
@@ -1828,7 +1828,7 @@ An index by pool id for pool assets(prices, metadata categories, pool amounts et
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts:10](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts#L10)
+[packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts:10](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/saturatedPoolsIndex/types.ts#L10)
 
 ___
 
@@ -1845,7 +1845,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:92](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L92)
+[packages/sdk/src/model/markets/market.ts:92](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L92)
 
 ___
 
@@ -1855,7 +1855,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L14)
+[packages/sdk/src/primitives/assetid.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L14)
 
 ___
 
@@ -1865,7 +1865,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:21](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L21)
+[packages/sdk/src/primitives/assetid.ts:21](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L21)
 
 ___
 
@@ -1875,7 +1875,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:23](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L23)
+[packages/sdk/src/primitives/assetid.ts:23](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L23)
 
 ___
 
@@ -1885,7 +1885,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/meta/market/types.ts:5](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/market/types.ts#L5)
+[packages/sdk/src/meta/market/types.ts:5](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/market/types.ts#L5)
 
 ___
 
@@ -1904,7 +1904,7 @@ Top level Zeitgeist SDK type.
 
 #### Defined in
 
-[packages/sdk/src/types.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/types.ts#L20)
+[packages/sdk/src/types.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/types.ts#L20)
 
 ___
 
@@ -1914,7 +1914,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/math/slippage.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/slippage.ts#L3)
+[packages/sdk/src/math/slippage.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/slippage.ts#L3)
 
 ___
 
@@ -1940,7 +1940,7 @@ K extends keyof MSS>
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:65](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L65)
+[packages/sdk/src/meta/types.ts:65](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L65)
 
 ___
 
@@ -1966,7 +1966,7 @@ K extends keyof MSS>
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:57](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L57)
+[packages/sdk/src/meta/types.ts:57](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L57)
 
 ___
 
@@ -1988,7 +1988,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:345](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L345)
+[packages/sdk/src/model/swaps/pool.ts:345](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L345)
 
 ___
 
@@ -2010,7 +2010,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:355](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L355)
+[packages/sdk/src/model/swaps/pool.ts:355](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L355)
 
 ___
 
@@ -2038,7 +2038,7 @@ Zeitgeist Swaps model..
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/types.ts#L25)
+[packages/sdk/src/model/swaps/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/types.ts#L25)
 
 ___
 
@@ -2067,7 +2067,7 @@ T extends keyof MetadataStorage
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:49](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L49)
+[packages/sdk/src/meta/types.ts:49](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L49)
 
 ___
 
@@ -2095,7 +2095,7 @@ T extends keyof MetadataStorage
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L43)
+[packages/sdk/src/meta/types.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L43)
 
 ___
 
@@ -2118,7 +2118,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/time/types.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/time/types.ts#L7)
+[packages/sdk/src/model/time/types.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/time/types.ts#L7)
 
 ___
 
@@ -2130,7 +2130,7 @@ The market is active and trading.
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L26)
+[packages/sdk/src/model/markets/marketstage.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L26)
 
 ___
 
@@ -2140,7 +2140,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:16](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L16)
+[packages/sdk/src/primitives/assetid.ts:16](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L16)
 
 ## Variables
 
@@ -2150,7 +2150,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/math/base.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/base.ts#L3)
+[packages/sdk/src/math/base.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/base.ts#L3)
 
 ___
 
@@ -2160,7 +2160,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:53](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L53)
+[packages/sdk/src/primitives/assetid.ts:53](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L53)
 
 ___
 
@@ -2172,7 +2172,7 @@ Io type for validation of block numbers.
 
 #### Defined in
 
-[packages/sdk/src/primitives/blocknumber.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/blocknumber.ts#L20)
+[packages/sdk/src/primitives/blocknumber.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/blocknumber.ts#L20)
 
 ___
 
@@ -2182,7 +2182,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L35)
+[packages/sdk/src/primitives/assetid.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L35)
 
 ___
 
@@ -2192,7 +2192,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:32](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L32)
+[packages/sdk/src/primitives/assetid.ts:32](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L32)
 
 ___
 
@@ -2204,7 +2204,7 @@ IO validation of Market Categories using superstruct
 
 #### Defined in
 
-[packages/sdk/src/meta/market/types.ts:10](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/market/types.ts#L10)
+[packages/sdk/src/meta/market/types.ts:10](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/market/types.ts#L10)
 
 ___
 
@@ -2216,7 +2216,7 @@ Io type for validation of market ids.
 
 #### Defined in
 
-[packages/sdk/src/primitives/marketid.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/marketid.ts#L20)
+[packages/sdk/src/primitives/marketid.ts:20](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/marketid.ts#L20)
 
 ___
 
@@ -2228,7 +2228,7 @@ IO validation of Market metadata object using superstruct
 
 #### Defined in
 
-[packages/sdk/src/meta/market/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/market/types.ts#L25)
+[packages/sdk/src/meta/market/types.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/market/types.ts#L25)
 
 ___
 
@@ -2238,7 +2238,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L43)
+[packages/sdk/src/primitives/assetid.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L43)
 
 ___
 
@@ -2248,7 +2248,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:49](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L49)
+[packages/sdk/src/primitives/assetid.ts:49](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L49)
 
 ___
 
@@ -2258,7 +2258,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L39)
+[packages/sdk/src/primitives/assetid.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L39)
 
 ___
 
@@ -2268,7 +2268,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:33](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L33)
+[packages/sdk/src/primitives/assetid.ts:33](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L33)
 
 ___
 
@@ -2281,7 +2281,7 @@ Usefull for decoding from a string or json object.
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L30)
+[packages/sdk/src/primitives/assetid.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L30)
 
 ___
 
@@ -2291,7 +2291,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L45)
+[packages/sdk/src/primitives/assetid.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L45)
 
 ___
 
@@ -2301,7 +2301,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/math/weights.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/weights.ts#L6)
+[packages/sdk/src/math/weights.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/weights.ts#L6)
 
 ___
 
@@ -2311,7 +2311,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/math/weights.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/weights.ts#L4)
+[packages/sdk/src/math/weights.ts:4](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/weights.ts#L4)
 
 ___
 
@@ -2323,9 +2323,9 @@ Const symbold representing a not available value.
 
 #### Defined in
 
-[packages/sdk/src/primitives/na.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/na.ts#L6)
+[packages/sdk/src/primitives/na.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/na.ts#L6)
 
-[packages/sdk/src/primitives/na.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/na.ts#L29)
+[packages/sdk/src/primitives/na.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/na.ts#L29)
 
 ___
 
@@ -2335,7 +2335,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/math/ztg.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/ztg.ts#L3)
+[packages/sdk/src/math/ztg.ts:3](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/ztg.ts#L3)
 
 ___
 
@@ -2361,7 +2361,7 @@ Known indexer endpoints.
 
 #### Defined in
 
-[packages/sdk/src/config/known/index.ts:122](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/index.ts#L122)
+[packages/sdk/src/config/known/index.ts:122](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/index.ts#L122)
 
 ___
 
@@ -2393,7 +2393,7 @@ Known rpc endpoints.
 
 #### Defined in
 
-[packages/sdk/src/config/known/index.ts:96](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/index.ts#L96)
+[packages/sdk/src/config/known/index.ts:96](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/index.ts#L96)
 
 ## Functions
 
@@ -2417,7 +2417,7 @@ MetadataStorage
 
 #### Defined in
 
-[packages/sdk/src/config/known/storage.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/storage.ts#L8)
+[packages/sdk/src/config/known/storage.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/storage.ts#L8)
 
 ___
 
@@ -2447,7 +2447,7 @@ IndexerConfig
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:50](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L50)
+[packages/sdk/src/config/types.ts:50](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L50)
 
 ___
 
@@ -2477,7 +2477,7 @@ RpcConfig<MS>
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:64](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L64)
+[packages/sdk/src/config/types.ts:64](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L64)
 
 ___
 
@@ -2509,7 +2509,7 @@ Market<C, MS>
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:362](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L362)
+[packages/sdk/src/model/markets/market.ts:362](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L362)
 
 ___
 
@@ -2537,7 +2537,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:94](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L94)
+[packages/sdk/src/model/swaps/pool.ts:94](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L94)
 
 ___
 
@@ -2562,7 +2562,7 @@ RpcPool
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:181](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L181)
+[packages/sdk/src/model/swaps/pool.ts:181](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L181)
 
 ___
 
@@ -2586,7 +2586,7 @@ KnownPreset<FullConfig>
 
 #### Defined in
 
-[packages/sdk/src/config/known/index.ts:47](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/index.ts#L47)
+[packages/sdk/src/config/known/index.ts:47](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/index.ts#L47)
 
 ___
 
@@ -2604,7 +2604,7 @@ KnownPreset<IndexerConfig>
 
 #### Defined in
 
-[packages/sdk/src/config/known/index.ts:72](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/index.ts#L72)
+[packages/sdk/src/config/known/index.ts:72](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/index.ts#L72)
 
 ___
 
@@ -2628,7 +2628,7 @@ KnownPreset<RpcConfig>
 
 #### Defined in
 
-[packages/sdk/src/config/known/index.ts:61](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/index.ts#L61)
+[packages/sdk/src/config/known/index.ts:61](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/index.ts#L61)
 
 ___
 
@@ -2657,7 +2657,7 @@ Decimal
 
 #### Defined in
 
-[packages/sdk/src/math/swaps.ts:85](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/swaps.ts#L85)
+[packages/sdk/src/math/swaps.ts:85](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/swaps.ts#L85)
 
 ___
 
@@ -2686,7 +2686,7 @@ Decimal
 
 #### Defined in
 
-[packages/sdk/src/math/swaps.ts:55](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/swaps.ts#L55)
+[packages/sdk/src/math/swaps.ts:55](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/swaps.ts#L55)
 
 ___
 
@@ -2713,7 +2713,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/math/swaps.ts:137](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/swaps.ts#L137)
+[packages/sdk/src/math/swaps.ts:137](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/swaps.ts#L137)
 
 ___
 
@@ -2739,7 +2739,7 @@ Decimal
 
 #### Defined in
 
-[packages/sdk/src/math/swaps.ts:112](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/swaps.ts#L112)
+[packages/sdk/src/math/swaps.ts:112](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/swaps.ts#L112)
 
 ___
 
@@ -2772,7 +2772,7 @@ Decimal
 
 #### Defined in
 
-[packages/sdk/src/math/swaps.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/swaps.ts#L29)
+[packages/sdk/src/math/swaps.ts:29](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/swaps.ts#L29)
 
 ___
 
@@ -2810,7 +2810,7 @@ Promise<Sdk<FullContext>>
 
 #### Defined in
 
-[packages/sdk/src/create.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/create.ts#L35)
+[packages/sdk/src/create.ts:35](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/create.ts#L35)
 
 ▸ **create**<`MS`\>(`config`): `Promise`<[`Sdk`](zeitgeistpm_sdk.md#sdk)<[`RpcContext`](zeitgeistpm_sdk.md#rpccontext)<`MS`\>, `MS`\>\>
 
@@ -2844,7 +2844,7 @@ Promise<Sdk<RpcContext>>
 
 #### Defined in
 
-[packages/sdk/src/create.ts:46](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/create.ts#L46)
+[packages/sdk/src/create.ts:46](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/create.ts#L46)
 
 ▸ **create**<`MS`\>(`config`): `Promise`<[`Sdk`](zeitgeistpm_sdk.md#sdk)<[`IndexerContext`](zeitgeistpm_sdk.md#indexercontext), `MS`\>\>
 
@@ -2878,7 +2878,7 @@ Promise<Sdk<IndexerContext>>
 
 #### Defined in
 
-[packages/sdk/src/create.ts:57](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/create.ts#L57)
+[packages/sdk/src/create.ts:57](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/create.ts#L57)
 
 ___
 
@@ -2917,7 +2917,7 @@ Observable<Sdk<Context<MS>, MS>>
 
 #### Defined in
 
-[packages/sdk/src/create.ts:106](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/create.ts#L106)
+[packages/sdk/src/create.ts:106](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/create.ts#L106)
 
 ___
 
@@ -2947,7 +2947,7 @@ Promise<FullContext>
 
 #### Defined in
 
-[packages/sdk/src/create.ts:142](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/create.ts#L142)
+[packages/sdk/src/create.ts:142](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/create.ts#L142)
 
 ___
 
@@ -2971,7 +2971,7 @@ Promise<IndexerContext>
 
 #### Defined in
 
-[packages/sdk/src/create.ts:204](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/create.ts#L204)
+[packages/sdk/src/create.ts:204](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/create.ts#L204)
 
 ___
 
@@ -3001,7 +3001,7 @@ Promise<RpcContext>
 
 #### Defined in
 
-[packages/sdk/src/create.ts:161](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/create.ts#L161)
+[packages/sdk/src/create.ts:161](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/create.ts#L161)
 
 ___
 
@@ -3038,7 +3038,7 @@ C extends TaggedMetadata<'comments'> = CommentMetadata - comment metadata
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:87](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L87)
+[packages/sdk/src/meta/types.ts:87](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L87)
 
 ___
 
@@ -3062,7 +3062,7 @@ string[]
 
 #### Defined in
 
-[packages/sdk/src/math/weights.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/weights.ts#L25)
+[packages/sdk/src/math/weights.ts:25](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/weights.ts#L25)
 
 ___
 
@@ -3094,7 +3094,7 @@ RpcPool[]
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:575](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L575)
+[packages/sdk/src/model/swaps/pool.ts:575](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L575)
 
 ___
 
@@ -3114,7 +3114,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:60](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L60)
+[packages/sdk/src/primitives/assetid.ts:60](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L60)
 
 ___
 
@@ -3148,7 +3148,7 @@ Decimal
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:514](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L514)
+[packages/sdk/src/model/swaps/pool.ts:514](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L514)
 
 ___
 
@@ -3179,7 +3179,7 @@ AssetId[]
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:439](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L439)
+[packages/sdk/src/model/swaps/pool.ts:439](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L439)
 
 ___
 
@@ -3211,7 +3211,7 @@ O.IOption<Decimal>
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:459](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L459)
+[packages/sdk/src/model/swaps/pool.ts:459](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L459)
 
 ___
 
@@ -3235,7 +3235,7 @@ MarketDeadlines
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:584](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L584)
+[packages/sdk/src/model/markets/market.ts:584](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L584)
 
 ___
 
@@ -3259,7 +3259,7 @@ number | null
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:105](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L105)
+[packages/sdk/src/primitives/assetid.ts:105](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L105)
 
 ___
 
@@ -3283,7 +3283,7 @@ MarketId
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:87](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L87)
+[packages/sdk/src/primitives/assetid.ts:87](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L87)
 
 ___
 
@@ -3315,7 +3315,7 @@ Promise<O.IOption<number>>
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:524](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L524)
+[packages/sdk/src/model/markets/market.ts:524](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L524)
 
 ___
 
@@ -3343,7 +3343,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:731](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L731)
+[packages/sdk/src/model/markets/market.ts:731](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L731)
 
 ___
 
@@ -3367,7 +3367,7 @@ O.IOption<number>
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:652](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L652)
+[packages/sdk/src/model/markets/market.ts:652](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L652)
 
 ___
 
@@ -3391,7 +3391,7 @@ O.IOption<string>
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:640](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L640)
+[packages/sdk/src/model/markets/market.ts:640](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L640)
 
 ___
 
@@ -3415,7 +3415,7 @@ E.IEither<Error, [Decimal, Decimal]>
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:703](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L703)
+[packages/sdk/src/model/markets/market.ts:703](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L703)
 
 ___
 
@@ -3440,7 +3440,7 @@ number
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:96](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L96)
+[packages/sdk/src/primitives/assetid.ts:96](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L96)
 
 ___
 
@@ -3464,7 +3464,7 @@ MarketStatus
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:572](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L572)
+[packages/sdk/src/model/markets/market.ts:572](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L572)
 
 ___
 
@@ -3495,7 +3495,7 @@ Decimal
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:423](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L423)
+[packages/sdk/src/model/swaps/pool.ts:423](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L423)
 
 ___
 
@@ -3523,7 +3523,7 @@ ___
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:549](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L549)
+[packages/sdk/src/model/swaps/pool.ts:549](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L549)
 
 ___
 
@@ -3554,7 +3554,7 @@ market is Market<C, MS> & MarketMethods
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:269](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L269)
+[packages/sdk/src/model/markets/market.ts:269](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L269)
 
 ___
 
@@ -3586,7 +3586,7 @@ Promise<boolean>
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:556](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L556)
+[packages/sdk/src/model/markets/market.ts:556](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L556)
 
 ___
 
@@ -3610,7 +3610,7 @@ boolean
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:630](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L630)
+[packages/sdk/src/model/markets/market.ts:630](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L630)
 
 ___
 
@@ -3640,7 +3640,7 @@ value is T
 
 #### Defined in
 
-[packages/sdk/src/primitives/na.ts:57](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/na.ts#L57)
+[packages/sdk/src/primitives/na.ts:57](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/na.ts#L57)
 
 ___
 
@@ -3664,7 +3664,7 @@ n is BlockNumber
 
 #### Defined in
 
-[packages/sdk/src/primitives/blocknumber.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/blocknumber.ts#L15)
+[packages/sdk/src/primitives/blocknumber.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/blocknumber.ts#L15)
 
 ___
 
@@ -3694,7 +3694,7 @@ is FullConfig<MS>
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:79](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L79)
+[packages/sdk/src/config/types.ts:79](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L79)
 
 ___
 
@@ -3724,7 +3724,7 @@ config is FullContext
 
 #### Defined in
 
-[packages/sdk/src/context/types.ts:44](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/context/types.ts#L44)
+[packages/sdk/src/context/types.ts:44](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/context/types.ts#L44)
 
 ___
 
@@ -3754,7 +3754,7 @@ sdk is Sdk<FullContext>
 
 #### Defined in
 
-[packages/sdk/src/types.ts:76](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/types.ts#L76)
+[packages/sdk/src/types.ts:76](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/types.ts#L76)
 
 ___
 
@@ -3781,7 +3781,7 @@ object is I
 
 #### Defined in
 
-[packages/sdk/src/primitives/data.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/data.ts#L22)
+[packages/sdk/src/primitives/data.ts:22](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/data.ts#L22)
 
 ___
 
@@ -3811,7 +3811,7 @@ sdk is Sdk<IndexerContext>
 
 #### Defined in
 
-[packages/sdk/src/types.ts:86](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/types.ts#L86)
+[packages/sdk/src/types.ts:86](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/types.ts#L86)
 
 ___
 
@@ -3841,7 +3841,7 @@ is IndexerConfig<MS>
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:99](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L99)
+[packages/sdk/src/config/types.ts:99](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L99)
 
 ___
 
@@ -3871,7 +3871,7 @@ config is IndexerContext
 
 #### Defined in
 
-[packages/sdk/src/context/types.ts:65](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/context/types.ts#L65)
+[packages/sdk/src/context/types.ts:65](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/context/types.ts#L65)
 
 ___
 
@@ -3895,7 +3895,7 @@ stage is InfiniteStage<any>
 
 #### Defined in
 
-[packages/sdk/src/model/markets/marketstage.ts:84](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/marketstage.ts#L84)
+[packages/sdk/src/model/markets/marketstage.ts:84](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/marketstage.ts#L84)
 
 ___
 
@@ -3922,7 +3922,7 @@ config is KnownPreset<C, MS\>
 
 #### Defined in
 
-[packages/sdk/src/config/known/types.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/types.ts#L12)
+[packages/sdk/src/config/known/types.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/types.ts#L12)
 
 ___
 
@@ -3946,7 +3946,7 @@ n is MarketId
 
 #### Defined in
 
-[packages/sdk/src/primitives/marketid.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/marketid.ts#L15)
+[packages/sdk/src/primitives/marketid.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/marketid.ts#L15)
 
 ___
 
@@ -3970,7 +3970,7 @@ query is PoolGetByMarketIdQuery
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/getPool/types.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/getPool/types.ts#L37)
+[packages/sdk/src/model/swaps/functions/getPool/types.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/getPool/types.ts#L37)
 
 ___
 
@@ -3994,7 +3994,7 @@ value is NA
 
 #### Defined in
 
-[packages/sdk/src/primitives/na.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/na.ts#L45)
+[packages/sdk/src/primitives/na.ts:45](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/na.ts#L45)
 
 ___
 
@@ -4018,7 +4018,7 @@ query is PoolGetByIdQuery
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/functions/getPool/types.ts:28](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/functions/getPool/types.ts#L28)
+[packages/sdk/src/model/swaps/functions/getPool/types.ts:28](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/functions/getPool/types.ts#L28)
 
 ___
 
@@ -4048,7 +4048,7 @@ is RpcConfig<MS>
 
 #### Defined in
 
-[packages/sdk/src/config/types.ts:89](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/types.ts#L89)
+[packages/sdk/src/config/types.ts:89](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/types.ts#L89)
 
 ___
 
@@ -4078,7 +4078,7 @@ config is RpcContext
 
 #### Defined in
 
-[packages/sdk/src/context/types.ts:54](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/context/types.ts#L54)
+[packages/sdk/src/context/types.ts:54](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/context/types.ts#L54)
 
 ___
 
@@ -4105,7 +4105,7 @@ object is R
 
 #### Defined in
 
-[packages/sdk/src/primitives/data.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/data.ts#L18)
+[packages/sdk/src/primitives/data.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/data.ts#L18)
 
 ___
 
@@ -4135,7 +4135,7 @@ sdk is Sdk<RpcContext>
 
 #### Defined in
 
-[packages/sdk/src/types.ts:96](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/types.ts#L96)
+[packages/sdk/src/types.ts:96](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/types.ts#L96)
 
 ___
 
@@ -4166,7 +4166,7 @@ params is CreateMarketWithPoolParams
 
 #### Defined in
 
-[packages/sdk/src/model/markets/functions/create/types.ts:159](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/functions/create/types.ts#L159)
+[packages/sdk/src/model/markets/functions/create/types.ts:159](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/functions/create/types.ts#L159)
 
 ___
 
@@ -4190,7 +4190,7 @@ RpcConfig<MS>
 
 #### Defined in
 
-[packages/sdk/src/config/known/index.ts:82](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/index.ts#L82)
+[packages/sdk/src/config/known/index.ts:82](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/index.ts#L82)
 
 ___
 
@@ -4214,7 +4214,7 @@ KnownPreset<FullConfig>
 
 #### Defined in
 
-[packages/sdk/src/config/known/index.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/index.ts#L14)
+[packages/sdk/src/config/known/index.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/index.ts#L14)
 
 ___
 
@@ -4232,7 +4232,7 @@ KnownPreset<IndexerConfig>
 
 #### Defined in
 
-[packages/sdk/src/config/known/index.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/index.ts#L37)
+[packages/sdk/src/config/known/index.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/index.ts#L37)
 
 ___
 
@@ -4256,7 +4256,7 @@ KnownPreset<RpcConfig>
 
 #### Defined in
 
-[packages/sdk/src/config/known/index.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/config/known/index.ts#L26)
+[packages/sdk/src/config/known/index.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/config/known/index.ts#L26)
 
 ___
 
@@ -4280,7 +4280,7 @@ NA
 
 #### Defined in
 
-[packages/sdk/src/primitives/na.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/na.ts#L18)
+[packages/sdk/src/primitives/na.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/na.ts#L18)
 
 ___
 
@@ -4306,7 +4306,7 @@ O.IOption<AssetId>
 
 #### Defined in
 
-[packages/sdk/src/primitives/assetid.ts:122](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/assetid.ts#L122)
+[packages/sdk/src/primitives/assetid.ts:122](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/assetid.ts#L122)
 
 ___
 
@@ -4344,7 +4344,7 @@ Promise<number | NA>
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:668](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L668)
+[packages/sdk/src/model/markets/market.ts:668](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L668)
 
 ___
 
@@ -4368,7 +4368,7 @@ string
 
 #### Defined in
 
-[packages/sdk/src/primitives/na.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/primitives/na.ts#L37)
+[packages/sdk/src/primitives/na.ts:37](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/primitives/na.ts#L37)
 
 ___
 
@@ -4401,7 +4401,7 @@ AugmentedAugmentedRpcMarket
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:284](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L284)
+[packages/sdk/src/model/markets/market.ts:284](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L284)
 
 ___
 
@@ -4427,7 +4427,7 @@ RpcPool
 
 #### Defined in
 
-[packages/sdk/src/model/swaps/pool.ts:77](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/swaps/pool.ts#L77)
+[packages/sdk/src/model/swaps/pool.ts:77](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/swaps/pool.ts#L77)
 
 ___
 
@@ -4461,7 +4461,7 @@ M & SaturatedMetadataStorage<MS>
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:105](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L105)
+[packages/sdk/src/meta/types.ts:105](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L105)
 
 ___
 
@@ -4500,7 +4500,7 @@ Sdk<C, MS>
 
 #### Defined in
 
-[packages/sdk/src/types.ts:49](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/types.ts#L49)
+[packages/sdk/src/types.ts:49](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/types.ts#L49)
 
 ___
 
@@ -4525,7 +4525,7 @@ Decimal
 
 #### Defined in
 
-[packages/sdk/src/math/slippage.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/slippage.ts#L12)
+[packages/sdk/src/math/slippage.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/slippage.ts#L12)
 
 ___
 
@@ -4549,7 +4549,7 @@ Decimal
 
 #### Defined in
 
-[packages/sdk/src/math/swaps.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/swaps.ts#L11)
+[packages/sdk/src/math/swaps.ts:11](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/swaps.ts#L11)
 
 ___
 
@@ -4580,7 +4580,7 @@ Storage<any, TaggedID<any>>
 
 #### Defined in
 
-[packages/sdk/src/meta/types.ts:117](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/meta/types.ts#L117)
+[packages/sdk/src/meta/types.ts:117](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/meta/types.ts#L117)
 
 ___
 
@@ -4608,7 +4608,7 @@ Teardown a context. Only applicable to rpc context for disconnection ws.
 
 #### Defined in
 
-[packages/sdk/src/context/types.ts:75](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/context/types.ts#L75)
+[packages/sdk/src/context/types.ts:75](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/context/types.ts#L75)
 
 ___
 
@@ -4633,7 +4633,7 @@ Timespan
 
 #### Defined in
 
-[packages/sdk/src/model/markets/market.ts:606](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/model/markets/market.ts#L606)
+[packages/sdk/src/model/markets/market.ts:606](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/model/markets/market.ts#L606)
 
 ___
 
@@ -4657,4 +4657,4 @@ string[]
 
 #### Defined in
 
-[packages/sdk/src/math/weights.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/sdk/src/math/weights.ts#L14)
+[packages/sdk/src/math/weights.ts:14](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/sdk/src/math/weights.ts#L14)

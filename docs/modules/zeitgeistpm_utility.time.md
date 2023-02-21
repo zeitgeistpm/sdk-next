@@ -47,7 +47,7 @@ A timespan represented as blocks
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L12)
+[packages/utility/src/time/timespan.ts:12](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L12)
 
 ___
 
@@ -67,7 +67,7 @@ Chain time data.
 
 #### Defined in
 
-[packages/utility/src/time/time.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/time.ts#L8)
+[packages/utility/src/time/time.ts:8](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/time.ts#L8)
 
 ___
 
@@ -86,7 +86,7 @@ A timespan represented as dates.
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L26)
+[packages/utility/src/time/timespan.ts:26](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L26)
 
 ___
 
@@ -104,7 +104,7 @@ const twoHours: Duration = "2 hours"
 
 #### Defined in
 
-[packages/utility/src/time/duration.ts:10](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/duration.ts#L10)
+[packages/utility/src/time/duration.ts:10](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/duration.ts#L10)
 
 ___
 
@@ -116,7 +116,7 @@ Duration period, ca be second, minutes, hours etc
 
 #### Defined in
 
-[packages/utility/src/time/duration.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/duration.ts#L15)
+[packages/utility/src/time/duration.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/duration.ts#L15)
 
 ___
 
@@ -128,7 +128,7 @@ Union type of timespan dealing with blocknumbers or dates.
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L7)
+[packages/utility/src/time/timespan.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L7)
 
 ## Functions
 
@@ -153,7 +153,7 @@ BlockNumber
 
 #### Defined in
 
-[packages/utility/src/time/time.ts:54](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/time.ts#L54)
+[packages/utility/src/time/time.ts:54](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/time.ts#L54)
 
 ___
 
@@ -178,7 +178,7 @@ Promise<BlockTimespan>
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:82](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L82)
+[packages/utility/src/time/timespan.ts:82](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L82)
 
 ___
 
@@ -202,7 +202,7 @@ number
 
 #### Defined in
 
-[packages/utility/src/time/duration.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/duration.ts#L39)
+[packages/utility/src/time/duration.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/duration.ts#L39)
 
 ___
 
@@ -227,7 +227,7 @@ Date
 
 #### Defined in
 
-[packages/utility/src/time/time.ts:42](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/time.ts#L42)
+[packages/utility/src/time/time.ts:42](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/time.ts#L42)
 
 ___
 
@@ -256,7 +256,7 @@ Promise<BlockTimespan>
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:110](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L110)
+[packages/utility/src/time/timespan.ts:110](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L110)
 
 ___
 
@@ -281,7 +281,7 @@ number
 
 #### Defined in
 
-[packages/utility/src/time/time.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/time.ts#L30)
+[packages/utility/src/time/time.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/time.ts#L30)
 
 ___
 
@@ -310,7 +310,7 @@ Promise<BlockTimespan>
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:94](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L94)
+[packages/utility/src/time/timespan.ts:94](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L94)
 
 ___
 
@@ -335,7 +335,7 @@ Promise<BlockTimespan>
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:62](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L62)
+[packages/utility/src/time/timespan.ts:62](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L62)
 
 ▸ **from**(`now`, `timespan`): [`DateTimespan`](zeitgeistpm_utility.time.md#datetimespan)
 
@@ -356,7 +356,7 @@ Promise<DateTimespan>
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:70](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L70)
+[packages/utility/src/time/timespan.ts:70](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L70)
 
 ___
 
@@ -380,7 +380,7 @@ timespan is BlockTimespan
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L43)
+[packages/utility/src/time/timespan.ts:43](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L43)
 
 ___
 
@@ -404,7 +404,7 @@ timespan is DateTimespan
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:52](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L52)
+[packages/utility/src/time/timespan.ts:52](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L52)
 
 ___
 
@@ -428,7 +428,7 @@ duration is Duration
 
 #### Defined in
 
-[packages/utility/src/time/duration.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/duration.ts#L30)
+[packages/utility/src/time/duration.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/duration.ts#L30)
 
 ___
 
@@ -453,4 +453,4 @@ number
 
 #### Defined in
 
-[packages/utility/src/time/timespan.ts:124](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/time/timespan.ts#L124)
+[packages/utility/src/time/timespan.ts:124](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/time/timespan.ts#L124)

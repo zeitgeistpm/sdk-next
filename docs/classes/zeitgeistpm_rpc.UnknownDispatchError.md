@@ -46,7 +46,7 @@ Error.constructor
 
 #### Defined in
 
-[packages/rpc/src/lib/transactions/types.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/rpc/src/lib/transactions/types.ts#L39)
+[packages/rpc/src/lib/transactions/types.ts:39](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/rpc/src/lib/transactions/types.ts#L39)
 
 ## Properties
 

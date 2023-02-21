@@ -41,4 +41,4 @@ T - type of metadata
 
 #### Defined in
 
-[packages/web3.storage/src/storage/providers/localstorage/index.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/web3.storage/src/storage/providers/localstorage/index.ts#L15)
+[packages/web3.storage/src/storage/providers/localstorage/index.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/web3.storage/src/storage/providers/localstorage/index.ts#L15)

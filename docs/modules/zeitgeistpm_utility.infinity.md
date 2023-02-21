@@ -26,7 +26,7 @@
 
 #### Defined in
 
-[packages/utility/src/infinity/index.ts:1](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/infinity/index.ts#L1)
+[packages/utility/src/infinity/index.ts:1](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/infinity/index.ts#L1)
 
 ## Variables
 
@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[packages/utility/src/infinity/index.ts:5](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/infinity/index.ts#L5)
+[packages/utility/src/infinity/index.ts:5](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/infinity/index.ts#L5)
 
 ## Functions
 
@@ -56,4 +56,4 @@ number is Infinity
 
 #### Defined in
 
-[packages/utility/src/infinity/index.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/infinity/index.ts#L7)
+[packages/utility/src/infinity/index.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/infinity/index.ts#L7)

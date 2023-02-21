@@ -42,4 +42,4 @@ T - type of metadata
 
 #### Defined in
 
-[packages/web3.storage/src/storage/providers/ipfs/index.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/web3.storage/src/storage/providers/ipfs/index.ts#L18)
+[packages/web3.storage/src/storage/providers/ipfs/index.ts:18](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/web3.storage/src/storage/providers/ipfs/index.ts#L18)

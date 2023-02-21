@@ -43,7 +43,7 @@ A encoder and decoder of metadata objects.
 
 #### Defined in
 
-[packages/utility/src/codec/types.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/codec/types.ts#L6)
+[packages/utility/src/codec/types.ts:6](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/codec/types.ts#L6)
 
 ## Functions
 
@@ -60,7 +60,7 @@ Simple wrapper around JSON.parse|stringify
 
 #### Defined in
 
-[packages/utility/src/codec/impl/base64.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/codec/impl/base64.ts#L7)
+[packages/utility/src/codec/impl/base64.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/codec/impl/base64.ts#L7)
 
 ___
 
@@ -83,7 +83,7 @@ Simple wrapper around JSON.parse|stringify
 
 #### Defined in
 
-[packages/utility/src/codec/impl/json.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/codec/impl/json.ts#L7)
+[packages/utility/src/codec/impl/json.ts:7](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/codec/impl/json.ts#L7)
 
 ___
 
@@ -123,7 +123,7 @@ O - type of output
 
 #### Defined in
 
-[packages/utility/src/codec/index.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/codec/index.ts#L15)
+[packages/utility/src/codec/index.ts:15](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/codec/index.ts#L15)
 
 ___
 
@@ -166,7 +166,7 @@ O - output of last codec
 
 #### Defined in
 
-[packages/utility/src/codec/index.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/codec/index.ts#L30)
+[packages/utility/src/codec/index.ts:30](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/codec/index.ts#L30)
 
 ___
 
@@ -203,4 +203,4 @@ O - type of output
 
 #### Defined in
 
-[packages/utility/src/codec/index.ts:42](https://github.com/zeitgeistpm/sdk-next/blob/037ec07/packages/utility/src/codec/index.ts#L42)
+[packages/utility/src/codec/index.ts:42](https://github.com/zeitgeistpm/sdk-next/blob/80e59d4/packages/utility/src/codec/index.ts#L42)
