@@ -34,7 +34,7 @@ import {
 } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
-import { Data, isIndexedData, isRpcData, NA, ZTG } from '../../primitives'
+import { Data, isIndexedData, isRpcData, ZTG } from '../../primitives'
 import { now } from '../time/functions/now'
 import { ExchangeFullSetParams, Pool, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
@@ -655,7 +655,7 @@ export const getReportedAt = (market: Market<Context>) => {
  *
  * @param context Context<MS>
  * @param market Market<C, MS>
- * @returns Promise<number | NA>
+ * @returns Promise<number | null>
  */
 export const projectEndTimestamp = async <
   C extends Context<MS>,
@@ -664,7 +664,7 @@ export const projectEndTimestamp = async <
   ctx: C,
   market: Market<C, MS>,
   _now?: ChainTime,
-): Promise<number | NA> => {
+): Promise<number | null> => {
   const chainTime = isRpcContext(ctx) ? await (_now ?? now(ctx)) : null
 
   if (isRpcData(market)) {
@@ -683,7 +683,7 @@ export const projectEndTimestamp = async <
     }
   }
 
-  return NA
+  return null
 }
 
 /**
