@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.20.0
+
+### Minor Changes
+
+- 90739fa: Removed the `NA` type in favour of null
+
+### Patch Changes
+
+- Updated dependencies [90739fa]
+  - @zeitgeistpm/utility@2.12.0
+
 ## 2.19.0
 
 ### Minor Changes

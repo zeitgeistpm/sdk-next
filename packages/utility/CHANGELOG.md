@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.12.0
+
+### Minor Changes
+
+- 90739fa: Removed the `NA` type in favour of null
+
 ## 2.11.0
 
 ### Minor Changes

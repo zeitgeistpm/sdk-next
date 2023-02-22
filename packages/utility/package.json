@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/utility",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "publishConfig": {
     "access": "public"
   },
@@ -63,11 +63,6 @@
       "types": "./dist/infinity/index.d.ts",
       "import": "./dist/infinity/index.mjs",
       "default": "./dist/infinity/index.js"
-    },
-    "./dist/na": {
-      "types": "./dist/na/index.d.ts",
-      "import": "./dist/na/index.mjs",
-      "default": "./dist/na/index.js"
     },
     "./dist/null": {
       "types": "./dist/null/index.d.ts",
