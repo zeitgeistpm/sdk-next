@@ -11,7 +11,7 @@ export * from './types'
  * Connect to the mainnet rpc and indexer
  * @returns KnownPreset<FullConfig>
  */
-export const mainnet = <MS extends MetadataStorage>(): FullConfig<MS> => {
+export const mainnet = <MS extends MetadataStorage<any>>(): FullConfig<MS> => {
   return {
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
     indexer: indexers.zeitgeist.uri,
@@ -23,7 +23,7 @@ export const mainnet = <MS extends MetadataStorage>(): FullConfig<MS> => {
  * Connect to the mainnet rpc only
  * @returns KnownPreset<RpcConfig>
  */
-export const mainnetRpc = <MS extends MetadataStorage>(): RpcConfig<MS> => {
+export const mainnetRpc = <MS extends MetadataStorage<any>>(): RpcConfig<MS> => {
   return {
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
     storage: ZeitgeistIpfs<MS>(),
@@ -44,9 +44,7 @@ export const mainnetIndexer = (): IndexerConfig => {
  * Connect to the batterystation testnet rpc and indexer.
  * @returns KnownPreset<FullConfig>
  */
-export const batterystation = <
-  MS extends MetadataStorage<MarketMetadata>,
->(): FullConfig<MS> => {
+export const batterystation = <MS extends MetadataStorage<any>>(): FullConfig<MS> => {
   return {
     provider: [rpcs.bsr.uri],
     indexer: indexers.bsr.uri,
@@ -58,7 +56,7 @@ export const batterystation = <
  * Connect to the batterystation rpc only
  * @returns KnownPreset<RpcConfig>
  */
-export const batterystationRpc = <MS extends MetadataStorage>(): RpcConfig<MS> => {
+export const batterystationRpc = <MS extends MetadataStorage<any>>(): RpcConfig<MS> => {
   return {
     provider: [rpcs.bsr.uri],
     storage: ZeitgeistIpfs<MS>(),
@@ -79,7 +77,7 @@ export const batterystationIndexer = (): IndexerConfig => {
  * Create a standard local rpc node config with local node and local ipfs standards.
  * @returns RpcConfig<MS>
  */
-export const localhostRpc = <MS extends MetadataStorage>(): RpcConfig<MS> => ({
+export const localhostRpc = <MS extends MetadataStorage<any>>(): RpcConfig<MS> => ({
   provider: 'ws://127.0.0.1:9944',
   storage: createStorage(
     IPFS.storage({

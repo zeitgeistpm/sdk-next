@@ -5,7 +5,7 @@ import {
   ZeitgeistPrimitivesMarketMarketStatus,
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
-import { isNumber } from '@polkadot/util'
+import { isCodec, isNumber } from '@polkadot/util'
 import type { FullMarketFragment } from '@zeitgeistpm/indexer'
 import {
   ExtractableResult,
@@ -16,6 +16,7 @@ import {
 } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as E from '@zeitgeistpm/utility/dist/either'
+import * as Ae from '@zeitgeistpm/utility/dist/aeither'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
@@ -75,18 +76,11 @@ export type RpcMarket<
      * Market id/index. Set for conformity and convenince when fetching markets from rpc.
      */
     marketId: number
-    /**
-     * Fetch metadata from external storage(default IPFS).
-     */
-    fetchMetadata: Te.TaskEither<Error, MarketTypeOf<MS>, []>
+
     /**
      * Conform a rpc market to a indexed market type by fetching metadata, poolid from external storage(default IPFS) and decoding data.
      */
     saturate: Te.TaskEither<Error, SaturatedRpcMarket<C, MS>, []>
-    /**
-     * Fetch disputes for the market.
-     */
-    fetchDisputes: Te.TaskEither<Error, ZeitgeistPrimitivesMarketMarketDispute[], []>
   }
 
 export type SaturatedRpcMarket<
@@ -103,6 +97,10 @@ export type IndexedBase = Omit<FullMarketFragment, keyof MarketMetadata>
  * Interface on market with methods for deploying swap pools, buying and selling sets of assets..
  */
 export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
+  /**
+   * Fetch metadata from external storage(default IPFS).
+   */
+  fetchMetadata: Te.TaskEither<Error, MarketTypeOf<MS>, []>
   /**
    * Deploy a swap pool for the market.
    *
@@ -286,24 +284,9 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   id: u128 | number,
   primitive: ZeitgeistPrimitivesMarket,
 ): Market<C, MS> => {
-  let market = primitive as Market<C, MS>
+  let market = attachMarketMethods(context, primitive as Market<C, MS>) as Market<C, MS>
 
   market.marketId = isNumber(id) ? id : id.toNumber()
-
-  market.fetchMetadata = Te.from(async () => {
-    const hex = market.metadata.toHex()
-    const cid = new CID('f0155' + hex.slice(2))
-    const id = { __meta: 'markets', cid: cid } as StorageIdTypeOf<MS['markets']>
-    const metadata = await context.storage.of('markets').get(id)
-    return metadata.unwrapOr(
-      throwsC(Error(`could not fetch metadata for market: ${market.marketId}`)),
-    )
-  })
-
-  market.fetchDisputes = Te.from(async () => {
-    const disputes = await context.api.query.predictionMarkets.disputes(id)
-    return disputes.toArray()
-  })
 
   market.saturate = Te.from(async () => {
     const [metadata, pool] = await Promise.all([
@@ -327,6 +310,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       creatorFee: primitive.creatorFee.toNumber(),
       scoringRule: primitive.scoringRule.type,
       outcomeAssets: outcomeAssets,
+      metadata: primitive.metadata.toHex(),
       status: primitive.status.toString() as FullMarketFragment['status'],
       period: primitive.period.toHuman() as FullMarketFragment['period'],
       marketType: primitive.marketType.toHuman() as FullMarketFragment['marketType'],
@@ -347,8 +331,6 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
     return saturatedRpcMarket
   })
 
-  market = attachMarketMethods(context, market)
-
   return market
 }
 
@@ -365,6 +347,16 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
 ): Market<C, MS> => {
   if (isRpcContext<MS>(context)) {
     let marketWithMethods = market as Market<typeof context, MS>
+
+    marketWithMethods.fetchMetadata = Te.from(async () => {
+      const hex = isCodec(market.metadata) ? market.metadata.toHex() : market.metadata
+      const cid = new CID('f0155' + hex.slice(2))
+      const id = { __meta: 'markets', cid: cid } as StorageIdTypeOf<MS['markets']>
+      const metadata = await context.storage.of('markets').get(id)
+      return metadata.unwrapOr(
+        throwsC(Error(`could not fetch metadata for market: ${market.marketId}`)),
+      )
+    })
 
     marketWithMethods.deploySwapPool = Te.from(async params => {
       assert(!(await hasPool(context, market)), () => {

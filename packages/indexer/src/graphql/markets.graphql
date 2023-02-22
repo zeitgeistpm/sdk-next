@@ -35,6 +35,7 @@ fragment FullMarket on Market {
   scalarType
   outcomeAssets
   rejectReason
+  metadata
   marketType {
     categorical
     scalar

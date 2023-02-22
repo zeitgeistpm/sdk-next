@@ -5,7 +5,7 @@ import { IPFS } from '@zeitgeistpm/web3.storage'
  * Default IPFS metadata storage for the zeitgeist ecosystem.
  * @returns MetadataStorage
  */
-export const ZeitgeistIpfs = <MS extends MetadataStorage>(): MS => {
+export const ZeitgeistIpfs = <MS extends MetadataStorage<any>>(): MS => {
   return createStorage(
     IPFS.storage({
       node: { url: 'http://ipfs.zeitgeist.pm:5001' },
