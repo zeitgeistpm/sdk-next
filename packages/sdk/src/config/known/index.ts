@@ -1,5 +1,5 @@
 import { IPFS } from '@zeitgeistpm/web3.storage'
-import { CommentMetadata, createStorage, MarketMetadata, MetadataStorage } from '../../meta'
+import { createStorage, MarketMetadata, MetadataStorage } from '../../meta'
 import type { FullConfig, IndexerConfig, RpcConfig } from '../types'
 import { ZeitgeistIpfs } from './storage'
 import { SupportedParachain } from './types'
@@ -45,7 +45,7 @@ export const mainnetIndexer = (): IndexerConfig => {
  * @returns KnownPreset<FullConfig>
  */
 export const batterystation = <
-  MS extends MetadataStorage<MarketMetadata, CommentMetadata>,
+  MS extends MetadataStorage<MarketMetadata>,
 >(): FullConfig<MS> => {
   return {
     provider: [rpcs.bsr.uri],

@@ -1,7 +1,6 @@
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import type { Storage } from '@zeitgeistpm/web3.storage'
 import type { CID } from 'ipfs-http-client'
-import type { CommentMetadata } from './comment'
 import type { MarketMetadata } from './market'
 
 /**
@@ -10,19 +9,11 @@ import type { MarketMetadata } from './market'
  * @generic M = MarketMetadata
  * @generic C = Comment
  */
-export interface MetadataStorage<
-  M extends TaggedMetadata<'markets'> = MarketMetadata,
-  C extends TaggedMetadata<'comments'> = CommentMetadata,
-> {
+export interface MetadataStorage<M extends TaggedMetadata<'markets'> = MarketMetadata> {
   /**
    * Storage for Market metadata.
    */
   readonly markets: Storage<M, TaggedID<'markets'>>
-  /**
-   * Storage for Market comments.
-   * @notes not in use, just testing type narrowing.
-   */
-  readonly comments: Storage<C, TaggedID<'comments'>>
   /**
    * Use storage narrowed to a sub storage type.
    *
@@ -84,16 +75,12 @@ export type MarketIdTypeOf<MS extends MetadataStorage> = StorageIdTypeOf<MS['mar
  * @param storage Storage<any, any>
  * @returns
  */
-export const createStorage = <
-  M extends TaggedMetadata<'markets'> = MarketMetadata,
-  C extends TaggedMetadata<'comments'> = CommentMetadata,
->(
+export const createStorage = <M extends TaggedMetadata<'markets'> = MarketMetadata>(
   storage: Storage<any, any>,
-): MetadataStorage<M, C> =>
-  saturate<MetadataStorage<M, C>>({
+): MetadataStorage<M> =>
+  saturate<MetadataStorage<M>>({
     markets: tagged('markets', storage),
-    comments: tagged('comments', storage),
-  } as MetadataStorage<M, C>)
+  } as MetadataStorage<M>)
 
 /**
  * Create a sturatable metadata storage.
@@ -102,7 +89,7 @@ export const createStorage = <
  * @param storage M
  * @returns M & SaturatedMetadataStorage<MS>
  */
-export const saturate = <MS extends MetadataStorage<any, any>>(storage: MS): MS => ({
+export const saturate = <MS extends MetadataStorage<any>>(storage: MS): MS => ({
   ...storage,
   of: key => storage[key] as any,
 })

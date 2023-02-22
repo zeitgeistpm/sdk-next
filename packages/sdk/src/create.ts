@@ -32,7 +32,7 @@ import {
  * @param config FullConfig - Rpc and indexer config
  * @returns Promise<Sdk<FullContext>>
  */
-export async function create<MS extends MetadataStorage<any, any>>(
+export async function create<MS extends MetadataStorage<any>>(
   config: FullConfig<MS>,
 ): Promise<Sdk<FullContext<MS>, MS>>
 /**
@@ -43,7 +43,7 @@ export async function create<MS extends MetadataStorage<any, any>>(
  * @param config RpcConfig - Config for the rpc node
  * @returns Promise<Sdk<RpcContext>>
  */
-export async function create<MS extends MetadataStorage<any, any>>(
+export async function create<MS extends MetadataStorage<any>>(
   config: RpcConfig<MS>,
 ): Promise<Sdk<RpcContext<MS>, MS>>
 /**
@@ -54,10 +54,10 @@ export async function create<MS extends MetadataStorage<any, any>>(
  * @param config IndexerConfig - Config for the indexer
  * @returns Promise<Sdk<IndexerContext>>
  */
-export async function create<MS extends MetadataStorage<any, any>>(
+export async function create<MS extends MetadataStorage<any>>(
   config: IndexerConfig,
 ): Promise<Sdk<IndexerContext, MS>>
-export async function create<MS extends MetadataStorage<any, any>>(config: Config<MS>) {
+export async function create<MS extends MetadataStorage<any>>(config: Config<MS>) {
   assert(
     isFullConfig(config) || isRpcConfig(config) || isIndexerConfig(config),
     () =>
@@ -139,7 +139,7 @@ export const create$ = <MS extends MetadataStorage = MetadataStorage>(
  * @param config RpcConfig
  * @returns Promise<FullContext>
  */
-export const createFullContext = async <MS extends MetadataStorage<any, any>>(
+export const createFullContext = async <MS extends MetadataStorage<any>>(
   config: FullConfig<MS>,
 ): Promise<FullContext<MS>> => {
   const [rpc, indexer] = await Promise.all([
@@ -158,7 +158,7 @@ export const createFullContext = async <MS extends MetadataStorage<any, any>>(
  * @param config RpcConfig
  * @returns Promise<RpcContext>
  */
-export const createRpcContext = async <MS extends MetadataStorage<any, any>>(
+export const createRpcContext = async <MS extends MetadataStorage<any>>(
   config: RpcConfig<MS>,
 ): Promise<RpcContext<MS>> => {
   const { ApiPromise, WsProvider } = await import('@polkadot/api')

@@ -21,7 +21,7 @@ export * from './marketstage'
  * Zeitgeist Markets model.
  * Query and create markets.
  */
-export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
+export type Markets<C extends Context<MS>, MS extends MetadataStorage = MetadataStorage> = {
   /**
    * List markets. Stronger quering is enabled when connecting to indexer.
    *
@@ -60,11 +60,7 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage> = {
    * Create a market. Only available when connecting to rpc.
    */
   create: C extends RpcContext<MS>
-    ? <
-        C extends RpcContext<MS>,
-        MS extends MetadataStorage,
-        P extends CreateMarketParams<C, MS> = CreateMarketParams<C, MS>,
-      >(
+    ? <C extends RpcContext<MS>, P extends CreateMarketParams<C, MS>>(
         params: P,
       ) => Promise<CreateMarketResult<C, MS, P>>
     : never
