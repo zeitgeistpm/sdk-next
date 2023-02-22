@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.11.0
+
+### Minor Changes
+
+- d179ee9: fetchMetadata now works in indexed markets in rpc mode also.
+
 ## 2.10.1
 
 ### Patch Changes

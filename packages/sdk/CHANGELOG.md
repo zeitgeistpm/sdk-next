@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 2.19.0
+
+### Minor Changes
+
+- d179ee9: fetchMetadata now works in indexed markets in rpc mode also.
+
+### Patch Changes
+
+- Updated dependencies [d179ee9]
+  - @zeitgeistpm/indexer@2.13.0
+  - @zeitgeistpm/augment-api@2.10.0
+  - @zeitgeistpm/rpc@2.7.0
+  - @zeitgeistpm/utility@2.11.0
+  - @zeitgeistpm/web3.storage@2.7.0
+
 ## 2.18.6
 
 ### Patch Changes
