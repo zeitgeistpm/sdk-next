@@ -6,7 +6,10 @@ import {
 } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isCodec, isNumber } from '@polkadot/util'
-import type { FullMarketFragment } from '@zeitgeistpm/indexer'
+import type {
+  MarketStatus as IndexerMarketStatus,
+  FullMarketFragment,
+} from '@zeitgeistpm/indexer'
 import {
   ExtractableResult,
   KeyringPairOrExtSigner,
@@ -247,7 +250,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
 /**
  * Union type of all market statuses as string.
  */
-export type MarketStatus = ZeitgeistPrimitivesMarketMarketStatus['type'] | 'Destroyed'
+export type MarketStatus = keyof typeof IndexerMarketStatus
 
 /**
  * Type for market deadlines as numbers.

@@ -21,7 +21,7 @@ export const storage = <T extends object>(
     put: Te.from(async data => {
       const content = codec.decode(data).unrightOr(throws)
       console.log({ content })
-      const crypto = globalThis.crypto ?? (await import('node:crypto'))
+      const crypto = globalThis.crypto ?? (await import('crypto'))
 
       const buffer = await crypto.subtle.digest(
         'SHA-384',

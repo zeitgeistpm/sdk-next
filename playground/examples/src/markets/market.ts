@@ -1,19 +1,4 @@
-import { KeyringPair } from '@polkadot/keyring/types'
-import {
-  create,
-  CreateMarketWithPoolParams,
-  localhostRpc,
-  RpcContext,
-  Sdk,
-  ZTG,
-  evenWeights,
-  swapFeeFromFloat,
-  batterystation,
-  FullContext,
-  batterystationRpc,
-  MarketStatus,
-} from '@zeitgeistpm/sdk'
-import { getTestSigner } from '../getSigner'
+import { batterystationRpc, create, RpcContext, Sdk } from '@zeitgeistpm/sdk'
 
 /**
  * Initialize the SDK in full or rpc mode to be able to submit transactions to the chein.
