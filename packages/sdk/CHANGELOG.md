@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.21.1
+
+### Patch Changes
+
+- 0a0e647: Use `crypto` instead of `node:crypto`
+- Updated dependencies [0a0e647]
+  - @zeitgeistpm/web3.storage@2.7.1
+
 ## 2.21.0
 
 ### Minor Changes
