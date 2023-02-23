@@ -18,10 +18,6 @@ const pool = await sdk.model.swaps
   })
   .then(pool => pool.unwrap()!)
 
-const outcomeAssets = pool
-  .getAssetIds()
-  .filter(IOMarketOutcomeAssetId.is.bind(IOMarketOutcomeAssetId))
-
 // total amount of pool shares issued to other users providing liquidity
 const totalPoolShares = await pool.getTotalIssuance()
 
@@ -34,6 +30,10 @@ const ztgToPutIn = ZTG.mul(100)
 // ratio between the amount of ztg in the pool and the amount ztg the user wants to add to the pool
 // this ratio must be the same for all assets so that adding liqudity doesn't change the current prices
 const ratio = baseAssetBalance.div(ztgToPutIn)
+
+const outcomeAssets = pool
+  .getAssetIds()
+  .filter(IOMarketOutcomeAssetId.is.bind(IOMarketOutcomeAssetId))
 
 const assetsMaxIn = await Promise.all(
   outcomeAssets.map(async asset => {
