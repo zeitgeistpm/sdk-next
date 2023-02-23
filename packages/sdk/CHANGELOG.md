@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.21.0
+
+### Minor Changes
+
+- 3a9fb85: MarketStatus in sdk is now `MarketStatusString`
+
 ## 2.20.0
 
 ### Minor Changes
