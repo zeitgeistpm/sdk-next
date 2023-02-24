@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.21.2
+
+### Patch Changes
+
+- 1480957: Fix getMarketStage
+
 ## 2.21.1
 
 ### Patch Changes
