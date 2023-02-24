@@ -23,7 +23,12 @@ import * as Ae from '@zeitgeistpm/utility/dist/aeither'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import { blockDate, ChainTime, Timespan } from '@zeitgeistpm/utility/dist/time'
+import {
+  blockDate,
+  ChainTime,
+  DateTimespan,
+  Timespan,
+} from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
 import Decimal from 'decimal.js'
 import { getPool } from 'model/swaps/functions/getPool'
@@ -565,9 +570,7 @@ export const hasPool = async <
  * @returns MarketStatus
  */
 export const getStatus = (market: Market<Context>): MarketStatus => {
-  return isRpcData(market)
-    ? market.status.type
-    : (market.status as ZeitgeistPrimitivesMarketMarketStatus['type'])
+  return isRpcData(market) ? market.status.type : market.status
 }
 
 /**
@@ -598,21 +601,21 @@ export const getDeadlines = (market: Market<Context>): MarketDeadlines => {
  * @param now ChainTime
  * @returns Timespan
  */
-export const timespanOf = (market: Market<Context>, now: ChainTime): Timespan => {
+export const timespanOf = (market: Market<Context>, now: ChainTime): DateTimespan => {
   if (isRpcData(market)) {
     const start = market.period.isTimestamp
-      ? market.period.asTimestamp.start.toNumber()
+      ? new Date(market.period.asTimestamp.start.toNumber())
       : blockDate(now, market.period.asBlock.start.toNumber())
     const end = market.period.isTimestamp
-      ? market.period.asTimestamp.end.toNumber()
+      ? new Date(market.period.asTimestamp.end.toNumber())
       : blockDate(now, market.period.asBlock.end.toNumber())
 
-    return { start, end } as Timespan
+    return { start, end }
   }
 
   return {
-    start: new Date(market.period.start),
-    end: new Date(market.period.end),
+    start: new Date(Number(market.period.start)),
+    end: new Date(Number(market.period.end)),
   }
 }
 

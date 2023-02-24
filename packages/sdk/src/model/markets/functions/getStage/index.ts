@@ -24,7 +24,10 @@ export const getStage = async (
   const time = providedTime ?? (await now(ctx))
   const status = getStatus(market)
   const deadlines = getDeadlines(market)
-  const { start, end } = Time.asBlocks(time, timespanOf(market, time))
+  const timespan = timespanOf(market, time)
+
+  const start = timespan.start.getTime()
+  const end = timespan.end.getTime()
 
   if (status === 'Proposed') {
     return { type: 'Proposed', remainingTime: infinity, totalTime: infinity }
