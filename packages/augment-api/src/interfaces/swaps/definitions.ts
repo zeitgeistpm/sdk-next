@@ -40,11 +40,15 @@ export default {
           type: 'SwapsAsset',
         },
         {
+          name: 'withFees',
+          type: 'bool',
+        },
+        {
           name: 'blocks',
           type: 'Vec<u128>',
         },
       ],
-      type: 'Vec<u128>',
+      type: 'Vec<Balance>',
     },
     getSpotPrice: {
       description: 'get spot price',
@@ -62,12 +66,12 @@ export default {
           type: 'SwapsAsset',
         },
         {
-          name: 'at',
-          type: 'Option<BlockHash>',
-        },
-        {
           name: 'withFees',
           type: 'bool',
+        },
+        {
+          name: 'at',
+          type: 'Option<BlockHash>',
         },
       ],
       type: 'u128',

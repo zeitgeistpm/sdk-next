@@ -25,7 +25,7 @@ import type { MmrLeafBatchProof, MmrLeafProof } from '@polkadot/types/interfaces
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { FeeDetails, RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
-import type { AccountId, BlockNumber, H160, H256, H64, Hash, Header, Index, Justification, KeyValue, SignedBlock, StorageData } from '@polkadot/types/interfaces/runtime';
+import type { AccountId, Balance, BlockNumber, H160, H256, H64, Hash, Header, Index, Justification, KeyValue, SignedBlock, StorageData } from '@polkadot/types/interfaces/runtime';
 import type { MigrationStatusResult, ReadProof, RuntimeVersion, TraceBlockResponse } from '@polkadot/types/interfaces/state';
 import type { ApplyExtrinsicResult, ChainProperties, ChainType, Health, NetworkState, NodeRole, PeerInfo, SyncState } from '@polkadot/types/interfaces/system';
 import type { IExtrinsic, Observable } from '@polkadot/types/types';
@@ -514,11 +514,11 @@ declare module '@polkadot/rpc-core/types/jsonrpc' {
       /**
        * get spot price
        **/
-      getSpotPrice: AugmentedRpc<(poolId: u128 | AnyNumber | Uint8Array, assetIn: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, assetOut: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, at: Option<BlockHash> | null | Uint8Array | BlockHash | string, withFees: bool | boolean | Uint8Array) => Observable<u128>>;
+      getSpotPrice: AugmentedRpc<(poolId: u128 | AnyNumber | Uint8Array, assetIn: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, assetOut: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, withFees: bool | boolean | Uint8Array, at: Option<BlockHash> | null | Uint8Array | BlockHash | string) => Observable<u128>>;
       /**
        * get spot prices
        **/
-      getSpotPrices: AugmentedRpc<(poolId: u128 | AnyNumber | Uint8Array, assetIn: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, assetOut: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, blocks: Vec<u128> | (u128 | AnyNumber | Uint8Array)[]) => Observable<Vec<u128>>>;
+      getSpotPrices: AugmentedRpc<(poolId: u128 | AnyNumber | Uint8Array, assetIn: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, assetOut: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, withFees: bool | boolean | Uint8Array, blocks: Vec<u128> | (u128 | AnyNumber | Uint8Array)[]) => Observable<Vec<Balance>>>;
       /**
        * Get account id for a pool.
        **/

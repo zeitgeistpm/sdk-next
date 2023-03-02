@@ -88,3 +88,27 @@ export type Swaps<C extends Context<MS>, MS extends MetadataStorage> = {
       : {}
   >
 }
+
+;(
+  poolId: u128 | AnyNumber | Uint8Array,
+  assetIn:
+    | SwapsAsset
+    | { CategoricalOutcome: any }
+    | { ScalarOutcome: any }
+    | { CombinatorialOutcome: any }
+    | { PoolShare: any }
+    | { Ztg: any }
+    | string
+    | Uint8Array,
+  assetOut:
+    | SwapsAsset
+    | { CategoricalOutcome: any }
+    | { ScalarOutcome: any }
+    | { CombinatorialOutcome: any }
+    | { PoolShare: any }
+    | { Ztg: any }
+    | string
+    | Uint8Array,
+  withFees: bool | boolean | Uint8Array,
+  blocks: Vec<u128> | (u128 | AnyNumber | Uint8Array)[],
+) => Observable<Vec<Balance>>
