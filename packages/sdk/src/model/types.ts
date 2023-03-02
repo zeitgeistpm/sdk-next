@@ -23,7 +23,7 @@ export type Model<C extends Context<MS>, MS extends MetadataStorage> = {
   markets: Markets<C, MS>
   /**
    * Model for interacting with zeitgeist swaps module.
-   * Has functionality ti List liqudity pools, join pools with liquidity and swap assets in and out.
+   * Has functionality to List liqudity pools, join pools with liquidity and swap assets in and out.
    */
   swaps: Swaps<C, MS>
   /**

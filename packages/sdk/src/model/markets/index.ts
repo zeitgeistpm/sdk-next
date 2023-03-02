@@ -1,21 +1,14 @@
 import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
-import * as AE from '@zeitgeistpm/utility/dist/aeither'
 import { ChainTime } from '@zeitgeistpm/utility/dist/time'
-import { Context, isRpcContext, RpcContext } from '../../context'
+import { Context, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
-import { create, transaction } from './functions/create'
+import { create } from './functions/create'
 import { get, observeMarket$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
-import { list } from './functions/list'
 import { getStage } from './functions/getStage'
+import { list } from './functions/list'
 import { MarketStage } from './marketstage'
-import {
-  CreateMarketParams,
-  Markets,
-  MarketsListQuery,
-  CreateMarketResult,
-  Market,
-} from './types'
+import { CreateMarketParams, Market, Markets, MarketsListQuery } from './types'
 
 export * from './types'
 

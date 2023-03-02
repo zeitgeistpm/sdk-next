@@ -1,14 +1,10 @@
 import type { u128 } from '@polkadot/types'
-import {
-  ZeitgeistPrimitivesMarket,
-  ZeitgeistPrimitivesMarketMarketDispute,
-  ZeitgeistPrimitivesMarketMarketStatus,
-} from '@polkadot/types/lookup'
+import { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isCodec, isNumber } from '@polkadot/util'
 import type {
-  MarketStatus as IndexerMarketStatus,
   FullMarketFragment,
+  MarketStatus as IndexerMarketStatus,
 } from '@zeitgeistpm/indexer'
 import {
   ExtractableResult,
@@ -19,16 +15,10 @@ import {
 } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as E from '@zeitgeistpm/utility/dist/either'
-import * as Ae from '@zeitgeistpm/utility/dist/aeither'
 import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import {
-  blockDate,
-  ChainTime,
-  DateTimespan,
-  Timespan,
-} from '@zeitgeistpm/utility/dist/time'
+import { blockDate, ChainTime, DateTimespan } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
 import Decimal from 'decimal.js'
 import { getPool } from 'model/swaps/functions/getPool'
@@ -44,7 +34,7 @@ import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '.
 import { MarketMetadata } from '../../meta/market'
 import { Data, isIndexedData, isRpcData, ZTG } from '../../primitives'
 import { now } from '../time/functions/now'
-import { ExchangeFullSetParams, Pool, PoolDeploymentParams, RpcPool } from '../types'
+import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
 import { ReportOutcomeParams } from './outcome'
 

@@ -8,7 +8,7 @@ import { BigNumber } from './bignumber'
  * @param fee string | number | Decimal - the fee as a float '1' | 1 | new Decimal(1) would be 1% swap fee.
  * @returns Decimal
  */
-export const swapFeeFromFloat = (fee: string | number | Decimal): Decimal => {
+export const swapFeeFromFloat = (fee: BigNumber): Decimal => {
   const feedecimal = new Decimal(fee)
   return feedecimal.mul(BASE.div(100))
 }

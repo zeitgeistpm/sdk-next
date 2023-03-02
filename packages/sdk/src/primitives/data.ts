@@ -3,6 +3,12 @@ import { isCodec } from '@polkadot/util'
 import { MetadataStorage } from '../meta'
 import { FullContext, IndexerContext, RpcContext } from '../context'
 
+/**
+ * Data type where the data can be either a rpc or indexer data type.
+ * This data type prefers indexer data over rpc data.
+ *
+ * Meaning that when the context is Indexer|Full context, the indexer data type is used.
+ */
 export declare type Data<
   C extends RpcContext<MS> | IndexerContext | FullContext<MS>,
   R extends Codec,

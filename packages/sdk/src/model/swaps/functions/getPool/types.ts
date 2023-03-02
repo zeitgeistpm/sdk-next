@@ -3,7 +3,7 @@ import { isNumber } from '@polkadot/util'
 /**
  * Get pool query, can fetch by either pool or market id.
  */
-export type PoolGetQuery = PoolGetByIdQuery | PoolGetByMarketIdQuery
+export type PoolGetQuery = number | string | PoolGetByIdQuery | PoolGetByMarketIdQuery
 
 /**
  * Fetch a pool byt its id.
@@ -26,7 +26,7 @@ export type PoolGetByMarketIdQuery = {
  * @returns query is PoolGetByIdQuery
  */
 export const isPoolIdQuery = (query: PoolGetQuery): query is PoolGetByIdQuery =>
-  'poolId' in query && isNumber(query.poolId)
+  typeof query === 'object' && 'poolId' in query && isNumber(query.poolId)
 
 /**
  * Typeguard for PoolGetByMarketIdQuery
@@ -35,4 +35,4 @@ export const isPoolIdQuery = (query: PoolGetQuery): query is PoolGetByIdQuery =>
  * @returns query is PoolGetByMarketIdQuery
  */
 export const isMarketIdQuery = (query: PoolGetQuery): query is PoolGetByMarketIdQuery =>
-  'marketId' in query && isNumber(query.marketId)
+  typeof query === 'object' && 'marketId' in query && isNumber(query.marketId)

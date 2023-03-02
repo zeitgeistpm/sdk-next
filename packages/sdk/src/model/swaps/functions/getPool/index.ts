@@ -1,3 +1,5 @@
+import { isNumber, isString } from '@polkadot/util'
+import { InputMaybe, PoolWhereInput } from '@zeitgeistpm/indexer'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import { Observable, of } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
@@ -10,7 +12,7 @@ import {
 } from '../../../../context'
 import { MetadataStorage } from '../../../../meta'
 import { attachPoolMethods, attachPoolRcpOnlyMethods, Pool, rpcPool } from '../../pool'
-import { isMarketIdQuery, PoolGetQuery } from '../../types'
+import { isMarketIdQuery, isPoolIdQuery, PoolGetQuery } from '../../types'
 
 /**
  * Fetch a pool by its market id or pool id.
@@ -53,12 +55,16 @@ const getFromIndexer = async <C extends Context<MS>, MS extends MetadataStorage>
   context: IndexerContext,
   query: PoolGetQuery,
 ): Promise<O.IOption<Pool<C, MS>>> => {
+  const where: InputMaybe<PoolWhereInput> = isMarketIdQuery(query)
+    ? { marketId_eq: query.marketId }
+    : isPoolIdQuery(query)
+    ? { poolId_eq: query.poolId }
+    : { poolId_eq: isNumber(query) ? query : Number(query) }
+
   const {
     pools: [pool],
   } = await context.indexer.pools({
-    where: isMarketIdQuery(query)
-      ? { marketId_eq: query.marketId }
-      : { poolId_eq: query.poolId },
+    where,
   })
   if (pool) {
     return O.option(O.some(pool as Pool<C, MS>))
@@ -81,7 +87,7 @@ const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
     if (mPoolId.isNone) O.option(O.none())
     poolId = mPoolId.unwrap().toNumber()
   } else {
-    poolId = query.poolId
+    poolId = isNumber(query) ? query : Number(query)
   }
 
   const marketPool = await context.api.query.swaps.pools(poolId)
@@ -104,7 +110,7 @@ export const observePool$ = <C extends RpcContext<MS>, MS extends MetadataStorag
 ): Observable<Pool<C, MS>> => {
   const poolId$ = isMarketIdQuery(query)
     ? observeMarketPoolId$(context, query.marketId)
-    : of(query.poolId)
+    : of(isNumber(query) ? query : Number(query))
 
   return poolId$.pipe(
     switchMap(

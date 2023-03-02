@@ -22,13 +22,13 @@ import { Context, IndexerContext, isRpcContext, RpcContext } from '../../context
 import { MetadataStorage } from '../../meta'
 import {
   AssetId,
-  parseAssetId,
   getIndexOf,
   IOCategoricalAssetId,
   IOScalarAssetId,
   IOZtgAssetId,
+  parseAssetId,
 } from '../../primitives'
-import { Data, isIndexedData, isRpcData } from '../../primitives/data'
+import { Data, isRpcData } from '../../primitives/data'
 
 /**
  * Union Pool type of indexed and rpc types.
