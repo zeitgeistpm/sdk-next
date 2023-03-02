@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.21.3
+
+### Patch Changes
+
+- 75e2e3d: `swaps.getPool` now also accepts a number or string representing the `poolId`
+
 ## 2.21.2
 
 ### Patch Changes
