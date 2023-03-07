@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.21.5
+
+### Patch Changes
+
+- db4b6f5: Bug fix for `saturatedPoolsIndex`
+
 ## 2.21.4
 
 ### Patch Changes
