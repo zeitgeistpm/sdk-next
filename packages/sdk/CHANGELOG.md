@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.21.4
+
+### Patch Changes
+
+- 07b4749: Ztg now included in assets returned by `model.swaps.saturatedPoolsIndex`
+
 ## 2.21.3
 
 ### Patch Changes
