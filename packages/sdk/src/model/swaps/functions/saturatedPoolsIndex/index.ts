@@ -14,6 +14,7 @@ import { ZTG } from '../../../../math/ztg'
 import { rpcMarket } from '../../../markets'
 import { Pool } from '../../pool'
 import { SaturatedPoolEntryAsset, SaturatedPoolIndex } from './types'
+import { isNumber } from '@polkadot/util'
 
 export * from './types'
 
@@ -84,12 +85,6 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
           .map(weight => {
             const assetId = AssetId.parseAssetId(weight.assetId).unwrap()!
 
-            if (!AssetId.IOMarketOutcomeAssetId.is(assetId)) {
-              return null
-            }
-
-            const assetIndex = AssetId.getIndexOf(assetId)!
-
             const percentage = Math.round(
               new Decimal(weight.len).dividedBy(pool.totalWeight).mul(100).toNumber(),
             )
@@ -108,13 +103,18 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
             }
 
             const asset = poolAssets.find(a => a.assetId === weight.assetId)!
+            const assetIndex = AssetId.IOMarketOutcomeAssetId.is(assetId)
+              ? AssetId.getIndexOf(assetId)
+              : undefined
 
             const category = !poolMarket.categories
               ? {
                   name: `unknown[${assetIndex}]`,
                   ticker: `UNKN-${assetIndex}`,
                 }
-              : poolMarket.categories?.[assetIndex] ?? {
+              : isNumber(assetIndex) && poolMarket.categories?.[assetIndex]
+              ? poolMarket.categories?.[assetIndex]!
+              : {
                   name: 'ztg',
                   ticker: 'ZTG',
                 }
@@ -177,7 +177,7 @@ export const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
           .then(m => rpcMarket(ctx, pool.marketId, m.unwrap()).saturate()),
         Promise.all(
           pool.assets.map(asset =>
-            ctx.api.rpc.swaps.getSpotPrice(pool.poolId, { Ztg: null }, asset, null, false),
+            ctx.api.rpc.swaps.getSpotPrice(pool.poolId, { Ztg: null }, asset, false, null),
           ),
         ),
         ctx.api.query.tokens.accounts.multi(outcomeAssets.map(asset => [accountId, asset])),
