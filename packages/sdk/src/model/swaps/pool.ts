@@ -17,7 +17,7 @@ import { unwrap } from '@zeitgeistpm/utility/dist/either'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import Decimal from 'decimal.js'
-import { isEqual } from 'lodash-es'
+import { isEqual } from 'lodash'
 import { Context, IndexerContext, isRpcContext, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import {

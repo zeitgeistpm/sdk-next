@@ -1,4 +1,4 @@
-import { upperFirst } from 'lodash-es'
+import { upperFirst } from 'lodash'
 
 /**
  * Map over an object and set all key values to undefined type

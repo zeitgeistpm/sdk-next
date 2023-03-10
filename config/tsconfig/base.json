@@ -8,6 +8,7 @@
     "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "inlineSources": false,
     "isolatedModules": true,
     "module": "ESNext",

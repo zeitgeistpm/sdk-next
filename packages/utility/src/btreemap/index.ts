@@ -1,7 +1,7 @@
 import type { BTreeMap } from '@polkadot/types'
 import type { Codec } from '@polkadot/types/types'
 import { isCodec } from '@polkadot/util'
-import { isEqual } from 'lodash-es'
+import { isEqual } from 'lodash'
 
 /**
  * Get a value from a BTreeMap for a key.
