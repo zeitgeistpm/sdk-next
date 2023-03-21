@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.11.1
+
+### Patch Changes
+
+- 8d88958: Fix assets.pool
+
 ## 2.11.0
 
 ### Minor Changes

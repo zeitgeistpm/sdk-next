@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.22.1
+
+### Patch Changes
+
+- 8d88958: Fix assets.pool
+- Updated dependencies [8d88958]
+  - @zeitgeistpm/augment-api@2.11.1
+  - @zeitgeistpm/indexer@2.14.1
+
 ## 2.22.0
 
 ### Minor Changes
