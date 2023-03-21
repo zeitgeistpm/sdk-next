@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.14.2
+
+### Patch Changes
+
+- 0ffd0c6: Remove console log
+
 ## 2.14.1
 
 ### Patch Changes

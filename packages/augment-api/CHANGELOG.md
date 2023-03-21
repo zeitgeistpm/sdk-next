@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.11.2
+
+### Patch Changes
+
+- 0ffd0c6: Remove console log
+
 ## 2.11.1
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.22.2
+
+### Patch Changes
+
+- 0ffd0c6: Remove console log
+- Updated dependencies [0ffd0c6]
+  - @zeitgeistpm/augment-api@2.11.2
+  - @zeitgeistpm/indexer@2.14.2
+
 ## 2.22.1
 
 ### Patch Changes
