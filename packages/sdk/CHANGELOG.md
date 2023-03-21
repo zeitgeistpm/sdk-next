@@ -1,5 +1,18 @@
 # @zeitgeistpm/sdk
 
+## 2.22.0
+
+### Minor Changes
+
+- 80267c9: poolId removed from indexed Asset, use `asset.pool.poolId` instead.
+
+### Patch Changes
+
+- Updated dependencies [80267c9]
+  - @zeitgeistpm/augment-api@2.11.0
+  - @zeitgeistpm/indexer@2.14.0
+  - @zeitgeistpm/utility@2.13.0
+
 ## 2.21.5
 
 ### Patch Changes

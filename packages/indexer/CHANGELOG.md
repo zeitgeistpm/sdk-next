@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.14.0
+
+### Minor Changes
+
+- 80267c9: poolId removed from indexed Asset, use `asset.pool.poolId` instead.
+
 ## 2.13.0
 
 ### Minor Changes
