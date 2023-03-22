@@ -219,8 +219,8 @@ export type Asset = {
   assetId: Scalars['String'];
   /** Unique identifier of the object */
   id: Scalars['String'];
-  /** Zeitgeist's identifier for pool */
-  poolId?: Maybe<Scalars['Int']>;
+  /** Connected pool */
+  pool?: Maybe<Pool>;
   /** Spot price of the asset in the pool */
   price?: Maybe<Scalars['Float']>;
 };
@@ -238,8 +238,32 @@ export enum AssetOrderByInput {
   AssetIdDesc = 'assetId_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
-  PoolIdAsc = 'poolId_ASC',
-  PoolIdDesc = 'poolId_DESC',
+  PoolAccountIdAsc = 'pool_accountId_ASC',
+  PoolAccountIdDesc = 'pool_accountId_DESC',
+  PoolBaseAssetAsc = 'pool_baseAsset_ASC',
+  PoolBaseAssetDesc = 'pool_baseAsset_DESC',
+  PoolCreatedAtAsc = 'pool_createdAt_ASC',
+  PoolCreatedAtDesc = 'pool_createdAt_DESC',
+  PoolIdAsc = 'pool_id_ASC',
+  PoolIdDesc = 'pool_id_DESC',
+  PoolMarketIdAsc = 'pool_marketId_ASC',
+  PoolMarketIdDesc = 'pool_marketId_DESC',
+  PoolPoolIdAsc = 'pool_poolId_ASC',
+  PoolPoolIdDesc = 'pool_poolId_DESC',
+  PoolPoolStatusAsc = 'pool_poolStatus_ASC',
+  PoolPoolStatusDesc = 'pool_poolStatus_DESC',
+  PoolScoringRuleAsc = 'pool_scoringRule_ASC',
+  PoolScoringRuleDesc = 'pool_scoringRule_DESC',
+  PoolSwapFeeAsc = 'pool_swapFee_ASC',
+  PoolSwapFeeDesc = 'pool_swapFee_DESC',
+  PoolTotalSubsidyAsc = 'pool_totalSubsidy_ASC',
+  PoolTotalSubsidyDesc = 'pool_totalSubsidy_DESC',
+  PoolTotalWeightAsc = 'pool_totalWeight_ASC',
+  PoolTotalWeightDesc = 'pool_totalWeight_DESC',
+  PoolVolumeAsc = 'pool_volume_ASC',
+  PoolVolumeDesc = 'pool_volume_DESC',
+  PoolZtgQtyAsc = 'pool_ztgQty_ASC',
+  PoolZtgQtyDesc = 'pool_ztgQty_DESC',
   PriceAsc = 'price_ASC',
   PriceDesc = 'price_DESC'
 }
@@ -290,15 +314,8 @@ export type AssetWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
-  poolId_eq?: InputMaybe<Scalars['Int']>;
-  poolId_gt?: InputMaybe<Scalars['Int']>;
-  poolId_gte?: InputMaybe<Scalars['Int']>;
-  poolId_in?: InputMaybe<Array<Scalars['Int']>>;
-  poolId_isNull?: InputMaybe<Scalars['Boolean']>;
-  poolId_lt?: InputMaybe<Scalars['Int']>;
-  poolId_lte?: InputMaybe<Scalars['Int']>;
-  poolId_not_eq?: InputMaybe<Scalars['Int']>;
-  poolId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  pool?: InputMaybe<PoolWhereInput>;
+  pool_isNull?: InputMaybe<Scalars['Boolean']>;
   price_eq?: InputMaybe<Scalars['Float']>;
   price_gt?: InputMaybe<Scalars['Float']>;
   price_gte?: InputMaybe<Scalars['Float']>;
@@ -1785,6 +1802,8 @@ export type Pool = {
   __typename?: 'Pool';
   /** Zeitgeist's identifier for account */
   accountId?: Maybe<Scalars['String']>;
+  /** List of assets connected to the pool */
+  assets: Array<Asset>;
   /** The base asset in the market swap pool (usually a currency) */
   baseAsset: Scalars['String'];
   /** Timestamp of pool creation */
@@ -1809,6 +1828,15 @@ export type Pool = {
   weights: Array<Maybe<Weight>>;
   /** Amount of ZTG present in the pool */
   ztgQty: Scalars['BigInt'];
+};
+
+
+/** Liquidity pool details */
+export type PoolAssetsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<AssetOrderByInput>>;
+  where?: InputMaybe<AssetWhereInput>;
 };
 
 export type PoolEdge = {
@@ -1866,6 +1894,9 @@ export type PoolWhereInput = {
   accountId_not_in?: InputMaybe<Array<Scalars['String']>>;
   accountId_not_startsWith?: InputMaybe<Scalars['String']>;
   accountId_startsWith?: InputMaybe<Scalars['String']>;
+  assets_every?: InputMaybe<AssetWhereInput>;
+  assets_none?: InputMaybe<AssetWhereInput>;
+  assets_some?: InputMaybe<AssetWhereInput>;
   baseAsset_contains?: InputMaybe<Scalars['String']>;
   baseAsset_containsInsensitive?: InputMaybe<Scalars['String']>;
   baseAsset_endsWith?: InputMaybe<Scalars['String']>;
@@ -2040,6 +2071,18 @@ export type PoolsConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type Price = {
+  __typename?: 'Price';
+  assetId: Scalars['String'];
+  price?: Maybe<Scalars['Float']>;
+};
+
+export type PriceHistory = {
+  __typename?: 'PriceHistory';
+  prices: Array<Price>;
+  timestamp: Scalars['DateTime'];
+};
+
 export type Query = {
   __typename?: 'Query';
   accountBalanceById?: Maybe<AccountBalance>;
@@ -2088,6 +2131,7 @@ export type Query = {
   poolByUniqueInput?: Maybe<Pool>;
   pools: Array<Pool>;
   poolsConnection: PoolsConnection;
+  priceHistory?: Maybe<Array<PriceHistory>>;
   squidStatus?: Maybe<SquidStatus>;
   stats: Array<Stats>;
 };
@@ -2331,6 +2375,14 @@ export type QueryPoolsConnectionArgs = {
   where?: InputMaybe<PoolWhereInput>;
 };
 
+
+export type QueryPriceHistoryArgs = {
+  endTime?: InputMaybe<Scalars['String']>;
+  interval?: InputMaybe<Scalars['String']>;
+  marketId: Scalars['Float'];
+  startTime?: InputMaybe<Scalars['String']>;
+};
+
 export type SquidStatus = {
   __typename?: 'SquidStatus';
   /** The height of the processed part of the chain */
@@ -2515,9 +2567,9 @@ export type AssetsQueryVariables = Exact<{
 }>;
 
 
-export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: 'Asset', id: string, assetId: string, poolId?: number | null, price?: number | null, amountInPool?: any | null }> };
+export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: 'Asset', id: string, assetId: string, price?: number | null, amountInPool?: any | null, pool?: { __typename?: 'Pool', accountId?: string | null, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null }> };
 
-export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, poolId?: number | null, price?: number | null, amountInPool?: any | null };
+export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, price?: number | null, amountInPool?: any | null, pool?: { __typename?: 'Pool', accountId?: string | null, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null };
 
 export type HistoricalAccountBalancesQueryVariables = Exact<{
   where?: InputMaybe<HistoricalAccountBalanceWhereInput>;
@@ -2622,15 +2674,38 @@ export const FullAccountBalanceFragmentDoc = gql`
   id
 }
     `;
+export const FullPoolFragmentDoc = gql`
+    fragment FullPool on Pool {
+  accountId
+  baseAsset
+  createdAt
+  id
+  marketId
+  poolId
+  poolStatus
+  scoringRule
+  swapFee
+  totalSubsidy
+  totalWeight
+  volume
+  weights {
+    assetId
+    len
+  }
+  ztgQty
+}
+    `;
 export const FullAssetFragmentDoc = gql`
     fragment FullAsset on Asset {
   id
   assetId
-  poolId
   price
   amountInPool
+  pool {
+    ...FullPool
+  }
 }
-    `;
+    ${FullPoolFragmentDoc}`;
 export const FullHistoricalAccountBalanceFragmentDoc = gql`
     fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
   accountId
@@ -2656,27 +2731,6 @@ export const FullHistoricalAssetsFragmentDoc = gql`
   newPrice
   timestamp
   ztgTraded
-}
-    `;
-export const FullPoolFragmentDoc = gql`
-    fragment FullPool on Pool {
-  accountId
-  baseAsset
-  createdAt
-  id
-  marketId
-  poolId
-  poolStatus
-  scoringRule
-  swapFee
-  totalSubsidy
-  totalWeight
-  volume
-  weights {
-    assetId
-    len
-  }
-  ztgQty
 }
     `;
 export const FullMarketFragmentDoc = gql`

@@ -9,12 +9,11 @@ import {
 import { MetadataStorage } from '../../../../meta'
 import { isPaginated } from '../../../../primitives/pagination'
 import {
+  attachMarketMethods,
+  Market,
   MarketList,
   MarketsListQuery,
   rpcMarket,
-  attachMarketMethods,
-  IndexedMarket,
-  Market,
 } from '../../types'
 
 /**

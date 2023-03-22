@@ -12,7 +12,9 @@ query assets(
 fragment FullAsset on Asset {
   id
   assetId
-  poolId
   price
   amountInPool
+  pool {
+    ...FullPool
+  }
 }

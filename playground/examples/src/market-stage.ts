@@ -9,7 +9,7 @@ async function main() {
   const sdk = await create(mainnet())
 
   const log = async () => {
-    const market = (await sdk.model.markets.get({ marketId: 54 })).unwrap()
+    const market = (await sdk.model.markets.get({ marketId: 64 })).unwrap()
     const stage = await sdk.model.markets.getStage(market!)
     console.log(stage)
   }

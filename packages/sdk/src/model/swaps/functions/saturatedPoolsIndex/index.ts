@@ -63,7 +63,9 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
     }),
     ctx.indexer.assets({
       where: {
-        poolId_in: ids,
+        pool: {
+          poolId_in: ids,
+        },
       },
     }),
   ])
@@ -72,11 +74,7 @@ export const indexer = async <C extends IndexerContext, MS extends MetadataStora
     await Promise.all(
       pools.map(async pool => {
         const poolMarket = marketsForPools.find(m => m.pool?.poolId === pool.poolId)
-        const poolAssets = assetsForPools.filter(a => a.poolId === pool.poolId)
-
-        if (pool?.poolId === 167) {
-          console.log(poolAssets)
-        }
+        const poolAssets = assetsForPools.filter(a => a.pool?.poolId === pool.poolId)
 
         if (!poolMarket || poolAssets.length === 0) return null
 

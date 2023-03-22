@@ -579,8 +579,8 @@ export const getDeadlines = (market: Market<Context>): MarketDeadlines => {
   }
   return {
     gracePeriod: Number(market.deadlines?.gracePeriod ?? 0),
-    oracleDuration: Number(market.deadlines?.oracleDuration ?? 0),
-    disputeDuration: Number(market.deadlines?.disputeDuration ?? 0),
+    oracleDuration: Number(market.deadlines?.oracleDuration ?? 28_000),
+    disputeDuration: Number(market.deadlines?.disputeDuration ?? 28_000),
   }
 }
 
