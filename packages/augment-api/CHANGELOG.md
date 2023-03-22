@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.11.3
+
+### Patch Changes
+
+- eb03b93: Fix remaining time issue on getStage used on indexed markets without deadlines set.
+
 ## 2.11.2
 
 ### Patch Changes

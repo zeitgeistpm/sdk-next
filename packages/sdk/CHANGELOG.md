@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.22.3
+
+### Patch Changes
+
+- eb03b93: Fix remaining time issue on getStage used on indexed markets without deadlines set.
+- Updated dependencies [eb03b93]
+  - @zeitgeistpm/augment-api@2.11.3
+  - @zeitgeistpm/indexer@2.14.3
+
 ## 2.22.2
 
 ### Patch Changes

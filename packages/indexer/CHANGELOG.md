@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.14.3
+
+### Patch Changes
+
+- eb03b93: Fix remaining time issue on getStage used on indexed markets without deadlines set.
+
 ## 2.14.2
 
 ### Patch Changes
