@@ -75,7 +75,7 @@ export const sdk = <C extends Context<MS>, MS extends MetadataStorage = Metadata
  */
 export const isFullSdk = <MS extends MetadataStorage>(
   sdk: unknown,
-): sdk is Sdk<FullContext<MS>, MS> => isIndexedSdk(sdk) && isRpcSdk(sdk)
+): sdk is Sdk<FullContext<MS>, MS> => Boolean(sdk && isIndexedSdk(sdk) && isRpcSdk(sdk))
 
 /**
  * Typeguard for indexer sdk.
@@ -85,7 +85,7 @@ export const isFullSdk = <MS extends MetadataStorage>(
  */
 export const isIndexedSdk = <MS extends MetadataStorage>(
   sdk: any,
-): sdk is Sdk<IndexerContext, MS> => !isNull(sdk) && sdk && isIndexerContext(sdk.__context)
+): sdk is Sdk<IndexerContext, MS> => Boolean(sdk && isIndexerContext(sdk.__context))
 
 /**
  * Typeguard for rpc sdk.
@@ -95,5 +95,4 @@ export const isIndexedSdk = <MS extends MetadataStorage>(
  */
 export const isRpcSdk = <MS extends MetadataStorage>(
   sdk: any,
-): sdk is Sdk<RpcContext<MS>, MS> =>
-  Boolean(!isNull(sdk) && isRpcContext<MS>(sdk.__context))
+): sdk is Sdk<RpcContext<MS>, MS> => Boolean(sdk && isRpcContext<MS>(sdk.__context))

@@ -214,15 +214,15 @@ export type AccountsConnection = {
 export type Asset = {
   __typename?: 'Asset';
   /** Balance of the asset present in the pool account */
-  amountInPool?: Maybe<Scalars['BigInt']>;
+  amountInPool: Scalars['BigInt'];
   /** Zeitgeist's identifier for asset */
   assetId: Scalars['String'];
   /** Unique identifier of the object */
   id: Scalars['String'];
   /** Connected pool */
-  pool?: Maybe<Pool>;
+  pool: Pool;
   /** Spot price of the asset in the pool */
-  price?: Maybe<Scalars['Float']>;
+  price: Scalars['Float'];
 };
 
 export type AssetEdge = {
@@ -2567,9 +2567,9 @@ export type AssetsQueryVariables = Exact<{
 }>;
 
 
-export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: 'Asset', id: string, assetId: string, price?: number | null, amountInPool?: any | null, pool?: { __typename?: 'Pool', accountId?: string | null, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null }> };
+export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: 'Asset', id: string, assetId: string, price: number, amountInPool: any, pool: { __typename?: 'Pool', accountId?: string | null, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } }> };
 
-export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, price?: number | null, amountInPool?: any | null, pool?: { __typename?: 'Pool', accountId?: string | null, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } | null };
+export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, price: number, amountInPool: any, pool: { __typename?: 'Pool', accountId?: string | null, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any } | null> } };
 
 export type HistoricalAccountBalancesQueryVariables = Exact<{
   where?: InputMaybe<HistoricalAccountBalanceWhereInput>;
