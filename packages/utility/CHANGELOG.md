@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.14.0
+
+### Minor Changes
+
+- 7c64b3e: isRpcSdk and isIndexerSdk now handles undefined values
+
 ## 2.13.0
 
 ### Minor Changes
