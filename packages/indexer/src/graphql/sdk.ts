@@ -357,8 +357,6 @@ export type HistoricalAccountBalance = {
   accountId: Scalars['String'];
   /** Zeitgeist's identifier for asset */
   assetId: Scalars['String'];
-  /** Balance of the asset */
-  balance: Scalars['BigInt'];
   /** Height of the block */
   blockNumber: Scalars['Int'];
   /** Balance difference */
@@ -382,8 +380,6 @@ export enum HistoricalAccountBalanceOrderByInput {
   AccountIdDesc = 'accountId_DESC',
   AssetIdAsc = 'assetId_ASC',
   AssetIdDesc = 'assetId_DESC',
-  BalanceAsc = 'balance_ASC',
-  BalanceDesc = 'balance_DESC',
   BlockNumberAsc = 'blockNumber_ASC',
   BlockNumberDesc = 'blockNumber_DESC',
   DBalanceAsc = 'dBalance_ASC',
@@ -433,15 +429,6 @@ export type HistoricalAccountBalanceWhereInput = {
   assetId_not_in?: InputMaybe<Array<Scalars['String']>>;
   assetId_not_startsWith?: InputMaybe<Scalars['String']>;
   assetId_startsWith?: InputMaybe<Scalars['String']>;
-  balance_eq?: InputMaybe<Scalars['BigInt']>;
-  balance_gt?: InputMaybe<Scalars['BigInt']>;
-  balance_gte?: InputMaybe<Scalars['BigInt']>;
-  balance_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  balance_isNull?: InputMaybe<Scalars['Boolean']>;
-  balance_lt?: InputMaybe<Scalars['BigInt']>;
-  balance_lte?: InputMaybe<Scalars['BigInt']>;
-  balance_not_eq?: InputMaybe<Scalars['BigInt']>;
-  balance_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   blockNumber_eq?: InputMaybe<Scalars['Int']>;
   blockNumber_gt?: InputMaybe<Scalars['Int']>;
   blockNumber_gte?: InputMaybe<Scalars['Int']>;
@@ -1035,6 +1022,11 @@ export type HistoricalPoolsConnection = {
   edges: Array<HistoricalPoolEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type IntervalArgs = {
+  unit: Unit;
+  value: Scalars['Int'];
 };
 
 /** Prediction market details */
@@ -2378,8 +2370,8 @@ export type QueryPoolsConnectionArgs = {
 
 export type QueryPriceHistoryArgs = {
   endTime?: InputMaybe<Scalars['String']>;
-  interval?: InputMaybe<Scalars['String']>;
-  marketId: Scalars['Float'];
+  interval?: InputMaybe<IntervalArgs>;
+  marketId: Scalars['Int'];
   startTime?: InputMaybe<Scalars['String']>;
 };
 
@@ -2534,6 +2526,14 @@ export type SubscriptionPoolsArgs = {
   where?: InputMaybe<PoolWhereInput>;
 };
 
+/** Unit for the interval */
+export enum Unit {
+  Day = 'Day',
+  Hour = 'Hour',
+  Minute = 'Minute',
+  Second = 'Second'
+}
+
 /** Asset weightage details */
 export type Weight = {
   __typename?: 'Weight';
@@ -2579,9 +2579,9 @@ export type HistoricalAccountBalancesQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalAccountBalancesQuery = { __typename?: 'Query', historicalAccountBalances: Array<{ __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, balance: any, blockNumber: number, dBalance: any, event: string, id: string, timestamp: any }> };
+export type HistoricalAccountBalancesQuery = { __typename?: 'Query', historicalAccountBalances: Array<{ __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, timestamp: any }> };
 
-export type FullHistoricalAccountBalanceFragment = { __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, balance: any, blockNumber: number, dBalance: any, event: string, id: string, timestamp: any };
+export type FullHistoricalAccountBalanceFragment = { __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, timestamp: any };
 
 export type HistoricalAssetsQueryVariables = Exact<{
   where?: InputMaybe<HistoricalAssetWhereInput>;
@@ -2710,7 +2710,6 @@ export const FullHistoricalAccountBalanceFragmentDoc = gql`
     fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
   accountId
   assetId
-  balance
   blockNumber
   dBalance
   event

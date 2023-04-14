@@ -17,7 +17,6 @@ query historicalAccountBalances(
 fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
   accountId
   assetId
-  balance
   blockNumber
   dBalance
   event
