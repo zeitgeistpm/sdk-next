@@ -3,6 +3,7 @@ import { Context } from '../context'
 import * as Market from './markets'
 import * as Swaps from './swaps'
 import * as Time from './time'
+import * as ChainMetadata from './chain-metadata'
 import { Model } from './types'
 
 export * from './types'
@@ -21,5 +22,6 @@ export const model = <C extends Context<MS>, MS extends MetadataStorage>(
     markets: Market.model(ctx),
     swaps: Swaps.model(ctx),
     time: Time.model(ctx),
+    chainMetadata: ChainMetadata.model(ctx),
   }
 }
