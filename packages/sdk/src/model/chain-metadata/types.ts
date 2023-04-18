@@ -13,10 +13,10 @@ export type ChainMetadata<
   /**
    * Fetch error and pallet tables.
    */
-  fetchTables: C extends RpcContext<MS> ? () => Promise<IOption<Tables>> : never
+  fetchTables: C extends RpcContext<MS> ? () => Promise<IOption<ChanMetadataTable>> : never
 }
 
-export type Tables = {
+export type ChanMetadataTable = {
   errorTable: ErrorTablePopulated
   palletTable: PalletTablePopulated
   getErrorEntry: (palletIndex: number, errorIndex: number) => ErrorTableEntry | null
