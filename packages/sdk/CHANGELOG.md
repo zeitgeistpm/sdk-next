@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.23.1
+
+### Patch Changes
+
+- e6b5c8a: Expose `sdk.model.chainMetadata.fetchTables` for fetching error metadata.
+
 ## 2.23.0
 
 ### Minor Changes
