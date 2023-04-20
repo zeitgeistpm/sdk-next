@@ -4,6 +4,7 @@ import * as AssetId from '../../src/primitives/assetid'
 describe('sdk.primitives.AssetId', () => {
   describe('#parseAssetId', () => {
     it('should be able to parse asset ids from well formed json strings', () => {
+      expect(AssetId.IOZtgAssetId.is(AssetId.parseAssetId('Ztg').unwrap())).toBe(true)
       expect(AssetId.IOZtgAssetId.is(AssetId.parseAssetId('{"Ztg":null}').unwrap())).toBe(
         true,
       )
@@ -23,6 +24,7 @@ describe('sdk.primitives.AssetId', () => {
     })
 
     it('should be able to parse asset ids starting with lowercase keys as they are in the indexer data', () => {
+      expect(AssetId.IOZtgAssetId.is(AssetId.parseAssetId('ztg').unwrap())).toBe(true)
       expect(AssetId.IOZtgAssetId.is(AssetId.parseAssetId('{"ztg":null}').unwrap())).toBe(
         true,
       )
