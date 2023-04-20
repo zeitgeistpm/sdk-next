@@ -119,8 +119,6 @@ export const getIndexOf = (assetId: MarketOutcomeAssetId): number => {
 /**
  * Convert a indexer asset id string or object to an AssetId.
  *
- * TODO: should return an Either since parsing can fail. Users expect parsing to work, not working is an exception.
- *
  * @param raw object | string
  * @returns O.IOption<AssetId>
  */
