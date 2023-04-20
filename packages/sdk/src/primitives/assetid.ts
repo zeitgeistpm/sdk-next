@@ -50,11 +50,16 @@ export const IOPoolShareAssetId = type({
   PoolShare: number(),
 })
 
+export const IOForeignAssetId = type({
+  ForeignAsset: number(),
+})
+
 export const IOAssetId = union([
   IOCategoricalAssetId,
   IOScalarAssetId,
   IOZtgAssetId,
   IOPoolShareAssetId,
+  IOForeignAssetId,
 ])
 
 export const fromPrimitive = (asset: ZeitgeistPrimitivesAsset): AssetId => {
@@ -135,33 +140,16 @@ export const parseAssetId = (
   }
 
   const parsed = O.tryCatch(() => (typeof raw === 'object' ? raw : JSON.parse(raw)))
-  if (O.isNone(parsed)) return E.either(E.left(new SyntaxError('Invalid asset id json')))
 
-  const obj: any = upperFirstObjectKeys(parsed.value)
-  let assetId: AssetId | null = null
-
-  if ('Ztg' in obj) {
-    assetId = {
-      Ztg: null,
-    } as AssetId
-  }
-  if ('CategoricalOutcome' in obj) {
-    assetId = {
-      CategoricalOutcome: obj['CategoricalOutcome'],
-    } as AssetId
-  }
-  if ('ScalarOutcome' in obj) {
-    assetId = {
-      ScalarOutcome: obj['ScalarOutcome'],
-    } as AssetId
-  }
-  if ('PoolShare' in obj) {
-    assetId = {
-      PoolShare: obj['PoolShare'],
-    } as AssetId
+  if (O.isNone(parsed)) {
+    return E.either(E.left(new SyntaxError('Invalid asset id json')))
   }
 
-  return E.either(
-    assetId ? E.right(assetId) : E.left(new SyntaxError('Invalid asset id structure')),
-  )
+  const conformed: any = upperFirstObjectKeys(parsed.value)
+
+  if (IOAssetId.is(conformed)) {
+    return E.either(E.right(conformed))
+  }
+
+  return E.either(E.left(new SyntaxError('Invalid asset id structure')))
 }
