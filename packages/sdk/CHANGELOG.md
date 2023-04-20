@@ -1,5 +1,18 @@
 # @zeitgeistpm/sdk
 
+## 2.24.0
+
+### Minor Changes
+
+- 48e8ea3: - Introduced the `IOBaseAssetId` and support for it in `parseAssetId`
+  - Added utility `getBaseAsset(pool)` for getting the base asset of a pool.
+  - Full and Rpc sdk now exposes `sdk.storage.data.get|set|del` for storing, reading and deleting arbitrary data(IPFS)
+
+### Patch Changes
+
+- Updated dependencies [48e8ea3]
+  - @zeitgeistpm/utility@2.15.0
+
 ## 2.23.1
 
 ### Patch Changes
