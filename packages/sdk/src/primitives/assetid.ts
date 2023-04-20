@@ -62,25 +62,37 @@ export const IOAssetId = union([
   IOForeignAssetId,
 ])
 
-export const fromPrimitive = (asset: ZeitgeistPrimitivesAsset): AssetId => {
+export const fromPrimitive = (
+  asset: ZeitgeistPrimitivesAsset,
+): E.IEither<Error, AssetId> => {
+  let assetId: AssetId | undefined
   if (asset.isCategoricalOutcome) {
-    return {
+    assetId = {
       CategoricalOutcome: [
         asset.asCategoricalOutcome[0].toNumber() as MarketId,
         asset.asCategoricalOutcome[1].toNumber(),
       ],
     }
   } else if (asset.isScalarOutcome) {
-    return {
+    assetId = {
       ScalarOutcome: [
         asset.asScalarOutcome[0].toNumber() as MarketId,
         asset.asScalarOutcome[1].type,
       ],
     }
   } else if (asset.isPoolShare) {
-    return { PoolShare: asset.asPoolShare.toNumber() }
+    assetId = { PoolShare: asset.asPoolShare.toNumber() }
+  } else if (asset.isForeignAsset) {
+    assetId = { ForeignAsset: asset.asForeignAsset.toNumber() }
+  } else if (asset.isZtg) {
+    assetId = { Ztg: null }
   }
-  return { Ztg: null }
+
+  if (assetId) {
+    return E.either(E.right(assetId))
+  }
+
+  return E.either(E.left(new Error('Invalid asset id codec passed')))
 }
 
 /**
@@ -126,7 +138,7 @@ export const parseAssetId = (
   raw: string | object | ZeitgeistPrimitivesAsset,
 ): E.IEither<SyntaxError, AssetId> => {
   if (isCodec(raw)) {
-    return E.either(E.right(fromPrimitive(raw as ZeitgeistPrimitivesAsset)))
+    return fromPrimitive(raw as ZeitgeistPrimitivesAsset)
   }
 
   if (typeof raw === 'string' && raw.toLowerCase() === 'ztg') {

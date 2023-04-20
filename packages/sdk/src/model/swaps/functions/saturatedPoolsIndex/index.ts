@@ -203,7 +203,7 @@ export const rpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
         return {
           amount: new Decimal(accounts[index].toNumber()),
           price: new Decimal(prices[index].toNumber()),
-          assetId: AssetId.fromPrimitive(asset),
+          assetId: AssetId.fromPrimitive(asset).unwrap(),
           category: market.categories?.[index] || {
             name: 'ztg',
             ticker: 'ZTG',
