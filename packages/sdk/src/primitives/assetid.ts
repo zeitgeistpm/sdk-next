@@ -119,8 +119,8 @@ export const getIndexOf = (assetId: MarketOutcomeAssetId): number => {
 /**
  * Convert a indexer asset id string or object to an AssetId.
  *
- * @param raw object | string
- * @returns O.IOption<AssetId>
+ * @param raw object | string | ZeitgeistPrimitivesAsset
+ * @returns E.IEither<SyntaxError, AssetId>
  */
 export const parseAssetId = (
   raw: string | object | ZeitgeistPrimitivesAsset,
