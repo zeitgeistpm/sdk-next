@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.25.0
+
+### Minor Changes
+
+- 9975958: Metadata#img passed to models.market.create can now be a File | ArrayBuffer | Blob | AwaitIterable | ReadableStream
+
+### Patch Changes
+
+- Updated dependencies [9975958]
+  - @zeitgeistpm/utility@2.16.0
+
 ## 2.24.0
 
 ### Minor Changes
