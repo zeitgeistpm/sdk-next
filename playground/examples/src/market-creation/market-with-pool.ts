@@ -8,20 +8,28 @@ import {
   ZTG,
   evenWeights,
   swapFeeFromFloat,
+  batterystation,
 } from '@zeitgeistpm/sdk'
-import { getTestSigner } from '../getSigner'
+import { getBsrTestingSigner, getTestSigner } from '../getSigner'
+import * as FS from 'fs'
+import * as Path from 'path'
+
+import { Blob } from 'buffer'
 
 /**
  * Initialize the SDK in full or rpc mode to be able to submit transactions to the chein.
  */
 // const sdk: Sdk<RpcContext> = await create(mainnet())
 
-const sdk: Sdk<RpcContext> = await create(localhostRpc())
+const sdk: Sdk<RpcContext> = await create(batterystation())
 
 /**
  * Get the signer from the wallet extension or other keyring.
  */
-const signer: KeyringPair = getTestSigner()
+const signer: KeyringPair = getBsrTestingSigner()
+const cwd = process.cwd()
+const imagePath = Path.join(cwd, './playground/examples/src/market-creation/img.png')
+const image = FS.readFileSync(imagePath)
 
 /**
  * Params for creating a standalone market without pool.
@@ -44,6 +52,7 @@ const params: CreateMarketWithPoolParams<typeof sdk> = {
     question: 'Will the example work?',
     description: 'Testing the sdk.',
     slug: 'standalone-market-example',
+    img: new Blob([image]),
     categories: [
       { name: 'yes', ticker: 'Y' },
       { name: 'no', ticker: 'N' },
@@ -51,7 +60,7 @@ const params: CreateMarketWithPoolParams<typeof sdk> = {
     tags: ['dev'],
   },
   pool: {
-    amount: ZTG.mul(300).toString(),
+    amount: ZTG.mul(100).toString(),
     swapFee: swapFeeFromFloat(1).toString(),
     weights: evenWeights(2),
   },

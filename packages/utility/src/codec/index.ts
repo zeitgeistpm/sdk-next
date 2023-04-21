@@ -1,5 +1,6 @@
 import { throws } from '../error'
 import { tryCatch, either } from '../either'
+import * as AE from '../aeither'
 import { Codec } from './types'
 
 export * from './types'
@@ -13,11 +14,11 @@ export * from './impl'
  * @generic O - type of output
  */
 export const codec = <I, O>(config: {
-  encode: (input: I) => O
-  decode: (input: O) => I
+  encode: (input: I) => Promise<O>
+  decode: (input: O) => Promise<I>
 }): Codec<I, O> => ({
-  encode: data => either(tryCatch(() => config.encode(data))),
-  decode: data => either(tryCatch(() => config.decode(data))),
+  encode: data => AE.from(async () => config.encode(data)),
+  decode: data => AE.from(async () => config.decode(data)),
 })
 
 /**
@@ -27,19 +28,22 @@ export const codec = <I, O>(config: {
  * @generic IO - output of first codec, input for the second.
  * @generic O - output of last codec
  */
-export const compose = <I, IO, O>(codeca: Codec<I, IO>, codecb: Codec<IO, O>): Codec<I, O> => ({
-  encode: data => codecb.encode(codeca.encode(data).unrightOr(throws)),
-  decode: data => codeca.decode(codecb.decode(data).unrightOr(throws)),
-})
+// export const compose = <I, IO, O>(
+//   codeca: Codec<I, IO>,
+//   codecb: Codec<IO, O>,
+// ): Codec<I, O> => ({
+//   encode: data => codecb.encode(codeca.encode(data).unrightOr(throws)),
+//   decode: data => codeca.decode(codecb.decode(data).unrightOr(throws)),
+// })
 
-/**
- *
- * Flip the encoding decoding of a codec.
- *
- * @generic I - type of input
- * @generic O - type of output
- */
-export const flip = <I, O>(codec: Codec<O, I>): Codec<I, O> => ({
-  encode: data => codec.decode(data),
-  decode: data => codec.encode(data),
-})
+// /**
+//  *
+//  * Flip the encoding decoding of a codec.
+//  *
+//  * @generic I - type of input
+//  * @generic O - type of output
+//  */
+// export const flip = <I, O>(codec: Codec<O, I>): Codec<I, O> => ({
+//   encode: data => codec.decode(data),
+//   decode: data => codec.encode(data),
+// })

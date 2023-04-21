@@ -6,7 +6,7 @@ import { signAndSend } from '@zeitgeistpm/rpc'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
-import { MetadataStorage } from '../../../../meta'
+import { MetadataStorage, StorageTypeOf } from '../../../../meta'
 import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
 import { RpcMarket, rpcMarket } from '../../market'
 import {
@@ -34,7 +34,6 @@ export const create = async <
   context: C,
   params: P,
 ): Promise<CreateMarketResult<C, MS>> => {
-  //TODO: make this a AEither
   const { tx, rollbackMetadata } = await transaction(context, params)
   const response = signAndSend({
     api: context.api,
@@ -71,10 +70,29 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
 ): Promise<CreateMarketTransaction> => {
   let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 
-  const storage = context.storage.of('markets')
-  const key = await storage.put(params.metadata)
+  const marketImageCid = isString(params.metadata.img)
+    ? params.metadata.img
+    : params.metadata.img
+    ? await context.storage.files.put(params.metadata.img).unwrap()
+    : undefined
 
-  const rollbackMetadata = Te.from(async () => context.storage?.of('markets').del(key))
+  const marketStorage = context.storage.of('markets')
+
+  const key = await marketStorage.put({
+    ...params.metadata,
+    img: marketImageCid?.toString(),
+  } as StorageTypeOf<MS['markets']>)
+
+  const rollbackMetadata = Te.from(async () => {
+    let operations = [context.storage?.of('markets').del(key)]
+
+    if (marketImageCid && !isString(marketImageCid)) {
+      marketImageCid
+      operations.push(context.storage?.files.del(marketImageCid))
+    }
+
+    return Promise.all(operations)
+  })
 
   const Sha3_384 = isString(key)
     ? key

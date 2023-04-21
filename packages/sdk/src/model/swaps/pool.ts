@@ -23,6 +23,7 @@ import { MetadataStorage } from '../../meta'
 import {
   AssetId,
   getIndexOf,
+  IOBaseAssetId,
   IOCategoricalAssetId,
   IOScalarAssetId,
   IOZtgAssetId,
@@ -450,6 +451,19 @@ export const getAssetIds = <C extends Context<MS>, MS extends MetadataStorage>(
 }
 
 /**
+ *
+ * Get the base asset of a pool.
+ *
+ * @param pool Pool<C, MS>,
+ * @returns AssetId
+ */
+export const getBaseAsset = <C extends Context<MS>, MS extends MetadataStorage>(
+  pool: Pool<C, MS>,
+): AssetId => {
+  return getAssetIds(pool).find(assetId => IOBaseAssetId.is(assetId)) as AssetId
+}
+
+/**
  * Get the weight of an asset in a pool by its AssetId.
  *
  * @param pool Pool<C, MS>,
@@ -537,7 +551,9 @@ export const getAssetBalance = async <C extends Context<MS>, MS extends Metadata
   } else {
     const indexedAsset = await ctx.indexer.assets({
       where: {
-        poolId_eq: pool.poolId,
+        pool: {
+          poolId_eq: pool.poolId,
+        },
         assetId_eq: JSON.stringify(assetId),
       },
     })

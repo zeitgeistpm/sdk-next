@@ -716,17 +716,17 @@ export const getScalarBounds = (
  * @param ctx Context<MS>
  * @param market Market<C>
  */
-export const getPrediction = async <C extends Context<MS>, MS extends MetadataStorage>(
-  ctx: C,
-  market: Market<Context>,
-) => {
-  if (isRpcData(market)) {
-    if (market.status.type === 'Resolved') {
-      const report = market.report.unwrap()
-      const outcome = report.outcome.toNumber()
-      const pool = (await getPool(ctx, market)).unwrap()!!
-      poolPrices
-    }
-  } else {
-  }
-}
+// export const getPrediction = async <C extends Context<MS>, MS extends MetadataStorage>(
+//   ctx: C,
+//   market: Market<Context>,
+// ) => {
+//   if (isRpcData(market)) {
+//     if (market.status.type === 'Resolved') {
+//       const report = market.report.unwrap()
+//       const outcome = report.outcome.toNumber()
+//       const pool = (await getPool(ctx, market)).unwrap()!!
+//       poolPrices
+//     }
+//   } else {
+//   }
+// }

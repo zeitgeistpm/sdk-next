@@ -13,8 +13,10 @@ import { IOMarketId, MarketId } from './marketid'
 export type AssetId = Infer<typeof IOAssetId>
 export type ScalarAssetId = Infer<typeof IOScalarAssetId>
 export type CategoricalAssetId = Infer<typeof IOCategoricalAssetId>
-export type ZtgAssetId = Infer<typeof IOZtgAssetId>
 export type PoolShareAssetId = Infer<typeof IOPoolShareAssetId>
+export type ZtgAssetId = Infer<typeof IOZtgAssetId>
+export type ForeignAssetId = Infer<typeof IOForeignAssetId>
+export type BaseAssetId = Infer<typeof IOBaseAssetId>
 
 export type MarketOutcomeAssetId = Infer<typeof IOMarketOutcomeAssetId>
 
@@ -42,24 +44,25 @@ export const IOScalarAssetId = type({
 
 export const IOMarketOutcomeAssetId = union([IOCategoricalAssetId, IOScalarAssetId])
 
-export const IOZtgAssetId = type({
-  Ztg: literal(null),
-})
-
 export const IOPoolShareAssetId = type({
   PoolShare: number(),
+})
+
+export const IOZtgAssetId = type({
+  Ztg: literal(null),
 })
 
 export const IOForeignAssetId = type({
   ForeignAsset: number(),
 })
 
+export const IOBaseAssetId = union([IOZtgAssetId, IOForeignAssetId])
+
 export const IOAssetId = union([
   IOCategoricalAssetId,
   IOScalarAssetId,
-  IOZtgAssetId,
   IOPoolShareAssetId,
-  IOForeignAssetId,
+  IOBaseAssetId,
 ])
 
 export const fromPrimitive = (

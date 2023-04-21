@@ -1,6 +1,7 @@
 import { TaskEither } from '@zeitgeistpm/utility/dist/taskeither'
 import { IOption } from '@zeitgeistpm/utility/dist/option'
 import type { CID } from 'ipfs-http-client'
+import { Codec } from '@zeitgeistpm/utility/dist/codec'
 
 export * from './providers/ipfs/types'
 
@@ -8,7 +9,7 @@ export * from './providers/ipfs/types'
  * A generic metadata type for on chain objects that
  * has metadata stored in some external storage like IPFS.
  */
-export type Storage<A extends object, ID = CID> = {
+export type Storage<A, ID = CID> = {
   /**
    * Get item from storage
    *
@@ -29,4 +30,6 @@ export type Storage<A extends object, ID = CID> = {
    * @generic ID - id type
    */
   del: TaskEither<Error, void, [ID]>
+
+  withCodec: <A>(codec: Codec<string | Uint8Array, A>) => Storage<A, ID>
 }

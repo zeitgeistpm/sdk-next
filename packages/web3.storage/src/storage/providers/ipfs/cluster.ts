@@ -33,16 +33,24 @@ const b64 = Base64Codec()
  * Pinns a cid to the cluster.
  */
 export const pin = Te.from(
-  async (cid: string, config: IPFSClusterConfiguration): Promise<IPFSClusterPinningResponse> => {
-    const response = await fetch(new URL(`/pins/${cid}?replication-min=2&replication-max=2`, config.url).href, {
-      headers: headers(config),
-      method: `POST`,
-    })
+  async (
+    cid: string,
+    config: IPFSClusterConfiguration,
+  ): Promise<IPFSClusterPinningResponse> => {
+    const response = await fetch(
+      new URL(`/pins/${cid}?replication-min=2&replication-max=2`, config.url).href,
+      {
+        headers: await headers(config),
+        method: `POST`,
+      },
+    )
 
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(`[${data?.code ?? '500'}]: ${data?.message ?? 'Unknown cluster api error.'}`)
+      throw new Error(
+        `[${data?.code ?? '500'}]: ${data?.message ?? 'Unknown cluster api error.'}`,
+      )
     }
 
     return data
@@ -54,29 +62,36 @@ export const pin = Te.from(
  * Unpinns a cid from the cluster.
  */
 export const unpin = Te.from(
-  async (cid: string, config: IPFSClusterConfiguration): Promise<IPFSClusterPinningResponse> => {
+  async (
+    cid: string,
+    config: IPFSClusterConfiguration,
+  ): Promise<IPFSClusterPinningResponse> => {
     const response = await fetch(new URL(`/pins/${cid}`, config.url).href, {
-      headers: headers(config),
+      headers: await headers(config),
       method: `DELETE`,
     })
 
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(`[${data?.code ?? '500'}]: ${data?.message ?? 'Unknown cluster api error.'}`)
+      throw new Error(
+        `[${data?.code ?? '500'}]: ${data?.message ?? 'Unknown cluster api error.'}`,
+      )
     }
 
     return data
   },
 )
 
-const headers = (config: IPFSClusterConfiguration) => {
+const headers = async (config: IPFSClusterConfiguration) => {
   const headers = new Headers({
     'Content-Type': 'multipart/form-data',
   })
 
   if (config.auth) {
-    const authorization = b64.encode(`${config.auth.username}:${config.auth.password}`).unrightOr(throws)
+    const authorization = await b64
+      .encode(`${config.auth.username}:${config.auth.password}`)
+      .unrightOr(throws)
     headers.append('Authorization', `Basic ${authorization}`)
   }
 

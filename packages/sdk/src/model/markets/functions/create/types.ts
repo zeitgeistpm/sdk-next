@@ -19,6 +19,7 @@ import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'
 import { Pool } from '../../../swaps/pool'
 import { Market } from '../../market'
+import { Blob } from 'buffer'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -44,7 +45,7 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
   /**
    * Metadata to store in external storage alongside the market.
    */
-  metadata: MarketTypeOf<MS>
+  metadata: Omit<MarketTypeOf<MS>, 'img'> & { img?: Blob }
   /**
    * Type of market, categorical or scalar
    */
@@ -197,5 +198,5 @@ export type CreateMarketData<
  */
 export type CreateMarketTransaction = {
   tx: SubmittableExtrinsic<'promise', ISubmittableResult>
-  rollbackMetadata: Te.TaskEither<Error, void, []>
+  rollbackMetadata: Te.TaskEither<Error, void[], []>
 }

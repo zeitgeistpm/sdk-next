@@ -1,7 +1,11 @@
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import * as E from '@zeitgeistpm/utility/dist/either'
 import type { Storage } from '@zeitgeistpm/web3.storage'
 import type { CID } from 'ipfs-http-client'
+import { Blob } from 'buffer'
 import type { MarketMetadata } from './market'
+import type { ToContent } from 'ipfs-core-types/dist/src/utils'
+import { codec } from '@zeitgeistpm/utility/dist/codec'
 
 /**
  * Generic metadata storage type.
@@ -14,6 +18,11 @@ export interface MetadataStorage<M extends TaggedMetadata<'markets'> = MarketMet
    * Storage for Market metadata.
    */
   readonly markets: Storage<M, TaggedID<'markets'>>
+
+  /**
+   * File storage, used for market images.
+   */
+  readonly files: Storage<Blob>
   /**
    * Use storage narrowed to a sub storage type.
    *
@@ -80,6 +89,12 @@ export const createStorage = <M extends TaggedMetadata<'markets'> = MarketMetada
 ): MetadataStorage<M> =>
   saturate<MetadataStorage<M>>({
     markets: tagged('markets', storage),
+    files: storage.withCodec(
+      codec({
+        decode: async d => new Uint8Array(await d.arrayBuffer()) as string | Uint8Array,
+        encode: async d => new Blob([d]),
+      }),
+    ),
   } as MetadataStorage<M>)
 
 /**
