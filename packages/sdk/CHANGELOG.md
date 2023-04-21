@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.26.0
+
+### Minor Changes
+
+- 0f2ed92: Work
+
+### Patch Changes
+
+- Updated dependencies [0f2ed92]
+  - @zeitgeistpm/utility@2.17.0
+  - @zeitgeistpm/web3.storage@2.8.0
+
 ## 2.25.0
 
 ### Minor Changes

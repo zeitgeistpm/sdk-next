@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.17.0
+
+### Minor Changes
+
+- 0f2ed92: Work
+
 ## 2.16.0
 
 ### Minor Changes
