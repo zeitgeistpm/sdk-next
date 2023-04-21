@@ -44,7 +44,7 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
   /**
    * Metadata to store in external storage alongside the market.
    */
-  metadata: Omit<MarketTypeOf<MS>, 'img'> & { img?: Blob }
+  metadata: Omit<MarketTypeOf<MS>, 'img'> & { img?: Blob | string }
   /**
    * Type of market, categorical or scalar
    */
