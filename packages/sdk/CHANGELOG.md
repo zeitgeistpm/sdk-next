@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 2.27.0
+
+### Minor Changes
+
+- d53b525: - Use native `Blob` for storage file encoding decoding.
+  - All or handlers like `Either.unwrapOr|unleftOr` etc can return another type.
+  - Implemented `unwrapOr` on either and async either that behaves the same as `unrightOr`
+
+### Patch Changes
+
+- Updated dependencies [d53b525]
+  - @zeitgeistpm/indexer@2.16.0
+  - @zeitgeistpm/utility@2.18.0
+  - @zeitgeistpm/web3.storage@2.9.0
+
 ## 2.26.0
 
 ### Minor Changes

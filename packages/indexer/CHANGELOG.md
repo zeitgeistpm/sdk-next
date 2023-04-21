@@ -1,5 +1,13 @@
 # @zeitgeistpm/indexer
 
+## 2.16.0
+
+### Minor Changes
+
+- d53b525: - Use native `Blob` for storage file encoding decoding.
+  - All or handlers like `Either.unwrapOr|unleftOr` etc can return another type.
+  - Implemented `unwrapOr` on either and async either that behaves the same as `unrightOr`
+
 ## 2.15.0
 
 ### Minor Changes
