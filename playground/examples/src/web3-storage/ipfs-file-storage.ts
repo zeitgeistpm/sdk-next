@@ -1,10 +1,7 @@
-import { Codec } from '@zeitgeistpm/utility/dist/codec'
+import { createStorage } from '@zeitgeistpm/sdk'
 import { IPFS } from '@zeitgeistpm/web3.storage'
 import * as FS from 'fs'
 import * as Path from 'path'
-import { Blob } from 'buffer'
-import { isSome } from '@zeitgeistpm/utility/dist/option'
-import { createStorage } from '@zeitgeistpm/sdk'
 
 const storage = createStorage(
   IPFS.storage({

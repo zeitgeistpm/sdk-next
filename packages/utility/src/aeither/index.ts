@@ -66,10 +66,10 @@ export const unleft = async <L, R>(either: AEither<L, R>): Promise<O.IOption<L>>
  *
  * @returns Promise<R>
  */
-export const unrightOr = async <L, R>(
-  or: OrHandler<L, R>,
+export const unrightOr = async <L, R, B = R>(
+  or: OrHandler<L, R | B>,
   either: AEither<L, R>,
-): Promise<R> => E.unrightOr(or, await either)
+): Promise<R | B> => E.unrightOr<L, R, B>(or, await either)
 
 /**
  * Tries to unwrap the left value or uses the default value or lazy function
@@ -77,10 +77,10 @@ export const unrightOr = async <L, R>(
  *
  * @returns Promise<L>
  */
-export const unleftOr = async <L, R>(
-  or: OrHandler<R, L>,
+export const unleftOr = async <L, R, B = L>(
+  or: OrHandler<R, L | B>,
   either: AEither<L, R>,
-): Promise<L> => E.unleftOr(or, await either)
+): Promise<L | B> => E.unleftOr<L, R, B>(or, await either)
 
 /**
  * Maps the right value if present with the mapping function.
@@ -108,6 +108,11 @@ export const bind = async <L, R, B>(
 }
 
 /**
+ * Alias for unrightOr
+ */
+export const unwrapOr = unrightOr
+
+/**
  * Interface over AEither to call methods directly on Either objects that implements it.
  */
 export type IAEither<L, R> = {
@@ -118,6 +123,11 @@ export type IAEither<L, R> = {
    * @returns Promise<R>
    */
   unwrap: () => Promise<R>
+  /**
+   * Tries to unwrap the right value or uses the default value or lazy function
+   * to produce the correct result(or throw error).
+   */
+  unwrapOr: <B>(or: OrHandler<L, R | B>) => Promise<R | B>
   /**
    * Tries to unwrap the left value into a promised left value. Throws error if value is right.
    * @throws Error
@@ -143,14 +153,14 @@ export type IAEither<L, R> = {
    *
    * @returns Promise<R>
    */
-  unrightOr: (or: OrHandler<L, R>) => Promise<R>
+  unrightOr: <B>(or: OrHandler<L, R | B>) => Promise<R | B>
   /**
    * Tries to unwrap the left value or uses the default value or lazy function
    * to produce the correct result.
    *
    * @returns Promise<L>
    */
-  unleftOr: (or: OrHandler<R, L>) => Promise<L>
+  unleftOr: <B>(or: OrHandler<R, L | B>) => Promise<L | B>
   /**
    * Maps the right value if present with the mapping function.
    *
@@ -199,11 +209,12 @@ export type OrHandler<P, A> = A | ((value: P) => A)
  */
 export const aeither = <L, R>(_either: AEither<L, R>): IAEither<L, R> => ({
   unwrap: async () => unwrap(_either),
+  unwrapOr: <B>(or: OrHandler<L, R | B>) => unrightOr<L, R, B>(or, _either),
   unwrapLeft: async () => unwrapLeft(_either),
   unright: async () => unright(_either),
   unleft: async () => unleft(_either),
-  unrightOr: async or => unrightOr(or, _either),
-  unleftOr: async or => unleftOr(or, _either),
+  unrightOr: <B>(or: OrHandler<L, R | B>) => unrightOr<L, R, B>(or, _either),
+  unleftOr: <B>(or: OrHandler<R, L | B>) => unleftOr<L, R, B>(or, _either),
   map: <B>(f: (a: R) => B) => aeither<L, B>(map<L, R, B>(f, _either)),
   bind: <B>(f: (a: R) => AEither<L, B> | Promise<B>) => aeither(bind<L, R, B>(f, _either)),
   asEither: async () => E.either(await _either),

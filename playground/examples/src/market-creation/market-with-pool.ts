@@ -1,20 +1,17 @@
 import { KeyringPair } from '@polkadot/keyring/types'
 import {
+  batterystation,
   create,
   CreateMarketWithPoolParams,
-  localhostRpc,
+  evenWeights,
   RpcContext,
   Sdk,
-  ZTG,
-  evenWeights,
   swapFeeFromFloat,
-  batterystation,
+  ZTG,
 } from '@zeitgeistpm/sdk'
-import { getBsrTestingSigner, getTestSigner } from '../getSigner'
 import * as FS from 'fs'
 import * as Path from 'path'
-
-import { Blob } from 'buffer'
+import { getBsrTestingSigner } from '../getSigner'
 
 /**
  * Initialize the SDK in full or rpc mode to be able to submit transactions to the chein.
@@ -29,7 +26,7 @@ const sdk: Sdk<RpcContext> = await create(batterystation())
 const signer: KeyringPair = getBsrTestingSigner()
 const cwd = process.cwd()
 const imagePath = Path.join(cwd, './playground/examples/src/market-creation/img.png')
-const image = FS.readFileSync(imagePath)
+const imageBlob = new Blob([FS.readFileSync(imagePath)])
 
 /**
  * Params for creating a standalone market without pool.
@@ -52,7 +49,7 @@ const params: CreateMarketWithPoolParams<typeof sdk> = {
     question: 'Will the example work?',
     description: 'Testing the sdk.',
     slug: 'standalone-market-example',
-    img: new Blob([image]),
+    img: imageBlob,
     categories: [
       { name: 'yes', ticker: 'Y' },
       { name: 'no', ticker: 'N' },

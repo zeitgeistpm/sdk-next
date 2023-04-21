@@ -17,6 +17,71 @@ describe('aeither', () => {
     })
   })
 
+  describe('unwrap', () => {
+    it('should throw error if value is left', async () => {
+      const value = aeither(Promise.resolve(E.either(E.left('left'))))
+      try {
+        await value.unwrap()
+      } catch (error) {
+        expect(error).toBe('left')
+        return
+      }
+      throw new Error("shouldn't reach here")
+    })
+  })
+
+  describe('unwrapOr', () => {
+    it('should return the or value if the value is left', async () => {
+      const value = aeither(Promise.resolve(E.either(E.left('left'))))
+      const handled = await value.unwrapOr('or')
+      expect(handled).toBe('or')
+    })
+    it('should return the value if the value is right', async () => {
+      const value = aeither(Promise.resolve(E.either(E.right('right'))))
+      const handled = await value.unwrapOr('or')
+      expect(handled).toBe('right')
+    })
+  })
+
+  describe('unrightOr', () => {
+    it('should return the or value if the value is left', async () => {
+      const value = aeither(Promise.resolve(E.either(E.left('left'))))
+      const handled = await value.unrightOr('or')
+      expect(handled).toBe('or')
+    })
+    it('should return the value if the value is right', async () => {
+      const value = aeither(Promise.resolve(E.either(E.right('right'))))
+      const handled = await value.unrightOr('or')
+      expect(handled).toBe('right')
+    })
+  })
+
+  describe('unleftOr', () => {
+    it('should return the or value if the value is right', async () => {
+      const value = aeither(Promise.resolve(E.either(E.right('right'))))
+      const handled = await value.unleftOr('or')
+      expect(handled).toBe('or')
+    })
+    it('should return the value if the value is left', async () => {
+      const value = aeither(Promise.resolve(E.either(E.left('left'))))
+      const handled = await value.unleftOr('or')
+      expect(handled).toBe('left')
+    })
+  })
+
+  // describe('unleftOr', () => {
+  //   it('should return the or value if its not right', async () => {
+  //     const error = from(async () => {
+  //       throw new Error('error')
+  //     })
+  //     expect(await error.unleftOr('ok')).toBe('error')
+  //   })
+  //   it('should return value if value is right', async () => {
+  //     const value = from(async () => 'ok')
+  //     expect(await value.unleftOr('error')).toBe('error')
+  //   })
+  // })
+
   describe('bind', () => {
     it('should work when returning a Either of bound B or raw B', async () => {
       const result = await from(async () => 1)

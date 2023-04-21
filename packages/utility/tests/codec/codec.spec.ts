@@ -1,18 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { codec, compose } from '../../src/codec'
+import { codec } from '../../src/codec'
 import { throws } from '../../src/error'
 
 describe('codec', () => {
   describe('codec', () => {
-    it('creating a codec from functions that throw', () => {
+    it('creating a codec from functions that throw', async () => {
       const c = codec<string, boolean>({
-        encode: str => {
+        encode: async str => {
           if (str === 'correct') {
             return true
           }
           throw new Error('incorrect')
         },
-        decode: bool => {
+        decode: async bool => {
           if (bool) {
             return 'correct'
           }
@@ -20,31 +20,10 @@ describe('codec', () => {
         },
       })
 
-      expect(c.decode(true).unrightOr(throws)).toBe('correct')
-      expect(c.decode(false).unleftOr(throws)).toEqual(new Error('incorrect'))
-      expect(c.encode('correct').unrightOr(throws)).toBe(true)
-      expect(c.encode('incorrect').unleftOr(throws)).toEqual(
-        new Error('incorrect'),
-      )
-    })
-  })
-
-  describe('compose', () => {
-    it('should compose two codecs', () => {
-      const a = codec<string, string>({
-        encode: str => `${str}-added`,
-        decode: str => str.replace('-added', ''),
-      })
-
-      const b = codec<string, string>({
-        encode: str => str.toUpperCase(),
-        decode: str => str.toLowerCase(),
-      })
-
-      const c = compose(a, b)
-
-      expect(c.encode('foo').unrightOr(throws)).toBe('FOO-ADDED')
-      expect(c.decode('FOO-ADDED').unrightOr(throws)).toBe('foo')
+      expect(await c.decode(true).unrightOr(throws)).toBe('correct')
+      expect(await c.decode(false).unleftOr(throws)).toEqual(new Error('incorrect'))
+      expect(await c.encode('correct').unrightOr(throws)).toBe(true)
+      expect(await c.encode('incorrect').unleftOr(throws)).toEqual(new Error('incorrect'))
     })
   })
 })

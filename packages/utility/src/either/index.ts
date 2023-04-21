@@ -149,8 +149,10 @@ export type OrHandler<P, A> = A | ((value: P) => A)
  *   unrightOr(left(NaN), 2) // -> 2
  * ```
  */
-export const unrightOr = <L, R>(or: OrHandler<L, R>, either: Either<L, R>): R =>
-  isRight(either) ? either.right : isFunction(or) ? or(either.left) : or
+export const unrightOr = <L, R, B = R>(
+  or: OrHandler<L, R | B>,
+  either: Either<L, R | B>,
+): R | B => (isRight(either) ? either.right : isFunction(or) ? or(either.left) : or)
 
 /**
  * Tries to unwrap the left value or uses the default value or lazy function
@@ -164,8 +166,15 @@ export const unrightOr = <L, R>(or: OrHandler<L, R>, either: Either<L, R>): R =>
  *   unleftOr(left(NaN), 2) // -> NaN
  * ```
  */
-export const unleftOr = <L, R>(or: OrHandler<R, L>, either: Either<L, R>): L =>
-  isLeft(either) ? either.left : isFunction(or) ? or(either.right) : or
+export const unleftOr = <L, R, B = L>(
+  or: OrHandler<R, L | B>,
+  either: Either<L | B, R>,
+): L | B => (isLeft(either) ? either.left : isFunction(or) ? or(either.right) : or)
+
+/**
+ * Alias for unrightOr
+ */
+export const unwrapOr = unrightOr
 
 /**
  * Interface over either to call either methods directly on Either objects that implements it.
@@ -179,6 +188,11 @@ export type IEither<L, R> = Either<L, R> & {
    * @throws Error
    */
   unwrap: () => R
+  /**
+   * Tries to unwrap the right value or uses the default value or lazy function
+   * to produce the correct result(or throw error).
+   */
+  unwrapOr: <B>(or: OrHandler<L, R | B>) => R | B
   /**
    * Tries to unwrap the left value. Throws error if value is right.
    * @throws Error
@@ -196,7 +210,7 @@ export type IEither<L, R> = Either<L, R> & {
    * Tries to unwrap the right value or uses the default value or lazy function
    * to produce the correct result(or throw error).
    */
-  unrightOr: (or: OrHandler<L, R>) => R
+  unrightOr: <B>(or: OrHandler<L, R | B>) => R | B
   /**
    * Tries to unwrap the left value or uses the default value or lazy function
    * to produce the correct result.
@@ -234,11 +248,12 @@ export type IEither<L, R> = Either<L, R> & {
 export const either = <L, R>(_either: Either<L, R>): IEither<L, R> => ({
   ..._either,
   unwrap: () => unwrap(_either),
+  unwrapOr: <B>(or: OrHandler<L, R | B>) => unrightOr<L, R, B>(or, _either),
   unwrapLeft: () => unwrapLeft(_either),
   unright: () => unright(_either),
   unleft: () => unleft(_either),
-  unrightOr: (or: OrHandler<L, R>) => unrightOr(or, _either),
-  unleftOr: (or: OrHandler<R, L>) => unleftOr(or, _either),
+  unrightOr: <B>(or: OrHandler<L, R | B>) => unrightOr<L, R, B>(or, _either),
+  unleftOr: <B>(or: OrHandler<R, L | B>) => unleftOr<L, R, B>(or, _either),
   map: <B>(f: (a: R) => B) => either(map(f, _either)),
   bind: <B>(f: (a: R) => Either<L, B> | B) => either(bind(f, _either)),
   isRight: () => (isRight(_either) ? either<L, R>(_either) : null),

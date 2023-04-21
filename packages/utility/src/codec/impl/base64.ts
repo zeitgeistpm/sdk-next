@@ -6,14 +6,14 @@ import { Codec, codec } from '..'
  */
 export const Base64Codec = (): Codec<string, string> =>
   codec({
-    encode: output => {
+    encode: async output => {
       try {
         return btoa(output)
       } catch (err) {
         return Buffer.from(output).toString('base64')
       }
     },
-    decode: input => {
+    decode: async input => {
       try {
         return atob(input)
       } catch (err) {

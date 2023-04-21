@@ -240,6 +240,8 @@ export enum AssetOrderByInput {
   IdDesc = 'id_DESC',
   PoolAccountIdAsc = 'pool_accountId_ASC',
   PoolAccountIdDesc = 'pool_accountId_DESC',
+  PoolBaseAssetQtyAsc = 'pool_baseAssetQty_ASC',
+  PoolBaseAssetQtyDesc = 'pool_baseAssetQty_DESC',
   PoolBaseAssetAsc = 'pool_baseAsset_ASC',
   PoolBaseAssetDesc = 'pool_baseAsset_DESC',
   PoolCreatedAtAsc = 'pool_createdAt_ASC',
@@ -861,6 +863,8 @@ export type HistoricalMarketsConnection = {
  */
 export type HistoricalPool = {
   __typename?: 'HistoricalPool';
+  /** New amount of market's base asset present in the pool */
+  baseAssetQty?: Maybe<Scalars['BigInt']>;
   /** Height of the block */
   blockNumber: Scalars['Int'];
   /** Volume difference */
@@ -887,6 +891,8 @@ export type HistoricalPoolEdge = {
 };
 
 export enum HistoricalPoolOrderByInput {
+  BaseAssetQtyAsc = 'baseAssetQty_ASC',
+  BaseAssetQtyDesc = 'baseAssetQty_DESC',
   BlockNumberAsc = 'blockNumber_ASC',
   BlockNumberDesc = 'blockNumber_DESC',
   DVolumeAsc = 'dVolume_ASC',
@@ -910,6 +916,15 @@ export enum HistoricalPoolOrderByInput {
 export type HistoricalPoolWhereInput = {
   AND?: InputMaybe<Array<HistoricalPoolWhereInput>>;
   OR?: InputMaybe<Array<HistoricalPoolWhereInput>>;
+  baseAssetQty_eq?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_gt?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_gte?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  baseAssetQty_isNull?: InputMaybe<Scalars['Boolean']>;
+  baseAssetQty_lt?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_lte?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_not_eq?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   blockNumber_eq?: InputMaybe<Scalars['Int']>;
   blockNumber_gt?: InputMaybe<Scalars['Int']>;
   blockNumber_gte?: InputMaybe<Scalars['Int']>;
@@ -1238,6 +1253,8 @@ export enum MarketOrderByInput {
   PeriodStartDesc = 'period_start_DESC',
   PoolAccountIdAsc = 'pool_accountId_ASC',
   PoolAccountIdDesc = 'pool_accountId_DESC',
+  PoolBaseAssetQtyAsc = 'pool_baseAssetQty_ASC',
+  PoolBaseAssetQtyDesc = 'pool_baseAssetQty_DESC',
   PoolBaseAssetAsc = 'pool_baseAsset_ASC',
   PoolBaseAssetDesc = 'pool_baseAsset_DESC',
   PoolCreatedAtAsc = 'pool_createdAt_ASC',
@@ -1798,6 +1815,8 @@ export type Pool = {
   assets: Array<Asset>;
   /** The base asset in the market swap pool (usually a currency) */
   baseAsset: Scalars['String'];
+  /** Amount of market's base asset present in the pool */
+  baseAssetQty: Scalars['BigInt'];
   /** Timestamp of pool creation */
   createdAt: Scalars['DateTime'];
   id: Scalars['String'];
@@ -1840,6 +1859,8 @@ export type PoolEdge = {
 export enum PoolOrderByInput {
   AccountIdAsc = 'accountId_ASC',
   AccountIdDesc = 'accountId_DESC',
+  BaseAssetQtyAsc = 'baseAssetQty_ASC',
+  BaseAssetQtyDesc = 'baseAssetQty_DESC',
   BaseAssetAsc = 'baseAsset_ASC',
   BaseAssetDesc = 'baseAsset_DESC',
   CreatedAtAsc = 'createdAt_ASC',
@@ -1889,6 +1910,15 @@ export type PoolWhereInput = {
   assets_every?: InputMaybe<AssetWhereInput>;
   assets_none?: InputMaybe<AssetWhereInput>;
   assets_some?: InputMaybe<AssetWhereInput>;
+  baseAssetQty_eq?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_gt?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_gte?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  baseAssetQty_isNull?: InputMaybe<Scalars['Boolean']>;
+  baseAssetQty_lt?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_lte?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_not_eq?: InputMaybe<Scalars['BigInt']>;
+  baseAssetQty_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   baseAsset_contains?: InputMaybe<Scalars['String']>;
   baseAsset_containsInsensitive?: InputMaybe<Scalars['String']>;
   baseAsset_endsWith?: InputMaybe<Scalars['String']>;
@@ -2541,6 +2571,8 @@ export type Weight = {
   assetId: Scalars['String'];
   /** Length or weight of the asset */
   len: Scalars['BigInt'];
+  /** Length or weight of the asset */
+  weight: Scalars['BigInt'];
 };
 
 export type WhereIdInput = {

@@ -19,7 +19,6 @@ import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'
 import { Pool } from '../../../swaps/pool'
 import { Market } from '../../market'
-import { Blob } from 'buffer'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.

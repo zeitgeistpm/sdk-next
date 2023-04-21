@@ -1,11 +1,8 @@
-import { u8aToString, u8aConcat } from '@polkadot/util/u8a'
-import { Codec } from '@zeitgeistpm/utility/dist/codec'
-import { JsonCodec } from '@zeitgeistpm/utility/dist/codec'
-import { throws } from '@zeitgeistpm/utility/dist/error'
+import { u8aConcat } from '@polkadot/util/u8a'
+import { Codec, JsonCodec } from '@zeitgeistpm/utility/dist/codec'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import * as IPFSHTTPClient from 'ipfs-http-client'
-import { Blob } from 'buffer'
 import { Storage } from '../..'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
@@ -26,7 +23,8 @@ export const storage = <T>(
 
   return {
     put: Te.from(async data => {
-      const content = await codec.decode(data).unrightOr(throws)
+      const content = (await codec.decode(data).unright()).unwrap()
+      if (!content) throw new Error('Invalid content')
 
       const { cid } = await node.add(
         { content },

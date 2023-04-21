@@ -14,6 +14,39 @@ describe('either', () => {
     })
   })
 
+  describe('unwrapOr', () => {
+    it('should return the or value if its not right', () => {
+      const error = either(left(new Error('left value')))
+      expect(error.unwrapOr('or')).toBe('or')
+    })
+    it('should return value if value is right', () => {
+      const error = either(right('ok'))
+      expect(error.unwrapOr('null')).toBe('ok')
+    })
+  })
+
+  describe('unrightOr', () => {
+    it('should return the or value if its not right', () => {
+      const error = either(left(new Error('left value')))
+      expect(error.unrightOr('or')).toBe('or')
+    })
+    it('should return value if value is right', () => {
+      const error = either(right('ok'))
+      expect(error.unrightOr('null')).toBe('ok')
+    })
+  })
+
+  describe('unleftOr', () => {
+    it('should return the or value if its not left', () => {
+      const error = either(right('ok'))
+      expect(error.unleftOr('or')).toBe('or')
+    })
+    it('should return value if value is right', () => {
+      const error = either(left('error'))
+      expect(error.unleftOr('ok')).toBe('error')
+    })
+  })
+
   describe('bind', () => {
     it('should work with returning Either of B or raw B value from chained functions', async () => {
       expect(

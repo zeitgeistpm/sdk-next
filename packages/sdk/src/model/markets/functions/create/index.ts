@@ -35,6 +35,7 @@ export const create = async <
   params: P,
 ): Promise<CreateMarketResult<C, MS>> => {
   const { tx, rollbackMetadata } = await transaction(context, params)
+
   const response = signAndSend({
     api: context.api,
     tx,

@@ -1,11 +1,8 @@
+import { BlobFileCodec } from '@zeitgeistpm/utility/dist/codec'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import * as E from '@zeitgeistpm/utility/dist/either'
 import type { Storage } from '@zeitgeistpm/web3.storage'
 import type { CID } from 'ipfs-http-client'
-import { Blob } from 'buffer'
 import type { MarketMetadata } from './market'
-import type { ToContent } from 'ipfs-core-types/dist/src/utils'
-import { codec } from '@zeitgeistpm/utility/dist/codec'
 
 /**
  * Generic metadata storage type.
@@ -84,17 +81,13 @@ export type MarketIdTypeOf<MS extends MetadataStorage> = StorageIdTypeOf<MS['mar
  * @param storage Storage<any, any>
  * @returns
  */
+
 export const createStorage = <M extends TaggedMetadata<'markets'> = MarketMetadata>(
   storage: Storage<any, any>,
 ): MetadataStorage<M> =>
   saturate<MetadataStorage<M>>({
     markets: tagged('markets', storage),
-    files: storage.withCodec(
-      codec({
-        decode: async d => new Uint8Array(await d.arrayBuffer()) as string | Uint8Array,
-        encode: async d => new Blob([d]),
-      }),
-    ),
+    files: storage.withCodec(BlobFileCodec),
   } as MetadataStorage<M>)
 
 /**

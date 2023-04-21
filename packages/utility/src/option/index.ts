@@ -48,7 +48,7 @@ export const unwrapOr = <A>(or: OrHandler<A>, option: Option<A>): A => {
 
 export type IOption<A> = Option<A> & {
   unwrap: () => null | A
-  unwrapOr: (or: OrHandler<A>) => A
+  unwrapOr: <B>(or: OrHandler<A | B>) => A | B
   map: <B>(f: (a: A) => B) => IOption<B>
   bind: <B>(f: (a: A) => Option<B>) => IOption<B>
   isSome: () => boolean
@@ -58,7 +58,7 @@ export type IOption<A> = Option<A> & {
 export const option = <A>(_option: Option<A>): IOption<A> => ({
   ..._option,
   unwrap: () => unwrap(_option),
-  unwrapOr: or => unwrapOr(or, _option),
+  unwrapOr: <B>(or: OrHandler<A | B>) => unwrapOr<A | B>(or, _option),
   map: <B>(f: (a: A) => B) => option(map(f, _option)),
   bind: <B>(f: (a: A) => Option<B>) => option(bind(f, _option)),
   isSome: () => isSome(_option),
