@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.16.1
+
+### Patch Changes
+
+- 5490eda: Bump
+
 ## 2.16.0
 
 ### Minor Changes

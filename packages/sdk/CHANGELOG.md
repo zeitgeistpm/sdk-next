@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.27.1
+
+### Patch Changes
+
+- 5490eda: Bump
+- Updated dependencies [5490eda]
+  - @zeitgeistpm/indexer@2.16.1
+
 ## 2.27.0
 
 ### Minor Changes
