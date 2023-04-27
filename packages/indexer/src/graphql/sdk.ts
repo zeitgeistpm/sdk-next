@@ -2640,6 +2640,13 @@ export type HistoricalAssetsQuery = { __typename?: 'Query', historicalAssets: Ar
 
 export type FullHistoricalAssetsFragment = { __typename?: 'HistoricalAsset', accountId?: string | null, assetId: string, blockNumber: number, dAmountInPool?: any | null, dPrice?: number | null, event: string, id: string, newAmountInPool?: any | null, newPrice?: number | null, timestamp: any, ztgTraded?: any | null };
 
+export type MarketStatsQueryVariables = Exact<{
+  ids: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type MarketStatsQuery = { __typename?: 'Query', marketStats: Array<{ __typename?: 'MarketStats', liquidity: any, marketId: number, participants: number }> };
+
 export type MarketsQueryVariables = Exact<{
   where?: InputMaybe<MarketWhereInput>;
   order?: InputMaybe<Array<MarketOrderByInput> | MarketOrderByInput>;
@@ -2879,6 +2886,15 @@ export const HistoricalAssetsDocument = gql`
   }
 }
     ${FullHistoricalAssetsFragmentDoc}`;
+export const MarketStatsDocument = gql`
+    query marketStats($ids: [String!]!) {
+  marketStats(ids: $ids) {
+    liquidity
+    marketId
+    participants
+  }
+}
+    `;
 export const MarketsDocument = gql`
     query markets($where: MarketWhereInput, $order: [MarketOrderByInput!], $limit: Int, $offset: Int) {
   markets(where: $where, limit: $limit, offset: $offset, orderBy: $order) {
@@ -2975,6 +2991,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     historicalAssets(variables?: HistoricalAssetsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalAssetsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HistoricalAssetsQuery>(HistoricalAssetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalAssets', 'query');
+    },
+    marketStats(variables: MarketStatsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketStatsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MarketStatsQuery>(MarketStatsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'marketStats', 'query');
     },
     markets(variables?: MarketsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MarketsQuery>(MarketsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'markets', 'query');

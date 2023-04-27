@@ -1,0 +1,7 @@
+query marketStats($ids: [String!]!) {
+  marketStats(ids: $ids) {
+    liquidity
+    marketId
+    participants
+  }
+}
