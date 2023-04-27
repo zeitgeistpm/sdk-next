@@ -25,8 +25,10 @@ fragment FullPool on Pool {
   weights {
     assetId
     len
+    weight
   }
   ztgQty
+  baseAssetQty
 }
 
 query historicalPools(

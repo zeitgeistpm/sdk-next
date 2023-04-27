@@ -28,11 +28,11 @@ export const model = <C extends Context<MS>, MS extends MetadataStorage>(
             {},
           )
 
-          const errorTable: ErrorTablePopulated = inner.v14.lookup.types.reduce(
-            (table: ErrorTablePopulated, type: any) => {
-              if (type.type.path.includes('Error') && type.type.def.variant) {
-                const errors = type.type.def.variant.variants.errors
-                const index = type.id
+          const errorTable: ErrorTablePopulated = [...inner.v14.lookup.types].reduce(
+            (table: ErrorTablePopulated, module: any) => {
+              if (module.type.path.includes('Error') && module.type.def.variant) {
+                const errors = module.type.def.variant.variants
+                const index = module.id
 
                 return {
                   ...table,

@@ -9,6 +9,12 @@ describe('sdk.primitives.AssetId', () => {
         true,
       )
       expect(
+        AssetId.IOForeignAssetId.is(AssetId.parseAssetId('{"ForeignAsset":1}').unwrap()),
+      ).toBe(true)
+      expect(
+        AssetId.IOBaseAssetId.is(AssetId.parseAssetId('{"ForeignAsset":1}').unwrap()),
+      ).toBe(true)
+      expect(
         AssetId.IOCategoricalAssetId.is(
           AssetId.parseAssetId('{"CategoricalOutcome":[1,2]}').unwrap(),
         ),
@@ -28,6 +34,12 @@ describe('sdk.primitives.AssetId', () => {
       expect(AssetId.IOZtgAssetId.is(AssetId.parseAssetId('{"ztg":null}').unwrap())).toBe(
         true,
       )
+      expect(
+        AssetId.IOForeignAssetId.is(AssetId.parseAssetId('{"foreignAsset":1}').unwrap()),
+      ).toBe(true)
+      expect(
+        AssetId.IOBaseAssetId.is(AssetId.parseAssetId('{"foreignAsset":1}').unwrap()),
+      ).toBe(true)
       expect(
         AssetId.IOCategoricalAssetId.is(
           AssetId.parseAssetId('{"categoricalOutcome":[1,2]}').unwrap(),

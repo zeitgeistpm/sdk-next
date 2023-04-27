@@ -32,7 +32,7 @@ import {
 } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../meta'
 import { MarketMetadata } from '../../meta/market'
-import { Data, isIndexedData, isRpcData, ZTG } from '../../primitives'
+import { Data, isIndexedData, isRpcData, parseAssetId, ZTG } from '../../primitives'
 import { now } from '../time/functions/now'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
@@ -309,6 +309,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       scoringRule: primitive.scoringRule.type,
       outcomeAssets: outcomeAssets,
       metadata: primitive.metadata.toHex(),
+      baseAsset: JSON.stringify(parseAssetId(primitive.baseAsset).unwrap()),
       status: primitive.status.toString() as FullMarketFragment['status'],
       period: primitive.period.toHuman() as FullMarketFragment['period'],
       marketType: primitive.marketType.toHuman() as FullMarketFragment['marketType'],

@@ -27,6 +27,15 @@ export type ErrorTableEntry = {
   documentation: string
 }
 
+export const getMessageFromError = ({
+  documentation,
+  errorName,
+}: ErrorTableEntry): string => {
+  return documentation.length > 0
+    ? documentation
+    : `Transaction failed, error code: ${errorName}`
+}
+
 export type ErrorTablePopulated = {
   [key: number]: {
     [key: number]: ErrorTableEntry
