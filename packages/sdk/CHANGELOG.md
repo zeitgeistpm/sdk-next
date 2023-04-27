@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.27.2
+
+### Patch Changes
+
+- 9592102: Fix chain metadata fetching of error tables.
+- Updated dependencies [9592102]
+  - @zeitgeistpm/indexer@2.16.2
+
 ## 2.27.1
 
 ### Patch Changes

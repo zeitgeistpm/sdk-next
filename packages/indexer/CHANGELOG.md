@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.16.2
+
+### Patch Changes
+
+- 9592102: Fix chain metadata fetching of error tables.
+
 ## 2.16.1
 
 ### Patch Changes
