@@ -10,19 +10,13 @@ const activeSportsMarkets = await sdk.model.markets.list({
   },
 })
 
-activeSportsMarkets.forEach(market => {
-  console.log(`${market.marketId}: ${market.question}`)
+const stats = await sdk.indexer.marketStats({
+  ids: activeSportsMarkets.map(m => m.marketId.toString()),
 })
 
-if (isIndexedSdk(sdk)) {
-  const stats = await sdk.indexer.marketStats({
-    ids: ['190'],
-  })
-
-  stats.marketStats.forEach(stat => {
-    stat.liquidity
-    stat.participants
-  })
-}
+activeSportsMarkets.forEach((market, index) => {
+  const stat = stats.marketStats[index]
+  console.log(`${market.marketId}: ${market.question}`, stat)
+})
 
 process.exit()
