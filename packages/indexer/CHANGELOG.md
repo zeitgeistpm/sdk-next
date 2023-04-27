@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.16.3
+
+### Patch Changes
+
+- a5e02c7: Added `baseAsset` to market indexer query
+
 ## 2.16.2
 
 ### Patch Changes

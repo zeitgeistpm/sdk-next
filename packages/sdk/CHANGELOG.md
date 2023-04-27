@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.27.3
+
+### Patch Changes
+
+- a5e02c7: Added `baseAsset` to market indexer query
+- Updated dependencies [a5e02c7]
+  - @zeitgeistpm/indexer@2.16.3
+
 ## 2.27.2
 
 ### Patch Changes
