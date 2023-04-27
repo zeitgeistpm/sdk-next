@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.27.4
+
+### Patch Changes
+
+- 2f25979: Add market stats fetching to indexer.
+- Updated dependencies [2f25979]
+  - @zeitgeistpm/indexer@2.16.4
+
 ## 2.27.3
 
 ### Patch Changes

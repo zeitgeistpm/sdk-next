@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.16.4
+
+### Patch Changes
+
+- 2f25979: Add market stats fetching to indexer.
+
 ## 2.16.3
 
 ### Patch Changes
