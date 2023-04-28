@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.28.0
+
+### Minor Changes
+
+- 01f29db: Update gql schemas and typegen.
+
+### Patch Changes
+
+- Updated dependencies [01f29db]
+  - @zeitgeistpm/indexer@2.17.0
+
 ## 2.27.4
 
 ### Patch Changes

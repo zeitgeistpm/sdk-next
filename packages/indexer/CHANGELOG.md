@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.17.0
+
+### Minor Changes
+
+- 01f29db: Update gql schemas and typegen.
+
 ## 2.16.4
 
 ### Patch Changes
