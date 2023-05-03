@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.17.1
+
+### Patch Changes
+
+- 42753ab: Fix getAssetWeight
+
 ## 2.17.0
 
 ### Minor Changes

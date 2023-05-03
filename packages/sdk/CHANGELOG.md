@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.28.1
+
+### Patch Changes
+
+- 42753ab: Fix getAssetWeight
+- Updated dependencies [42753ab]
+  - @zeitgeistpm/indexer@2.17.1
+
 ## 2.28.0
 
 ### Minor Changes
