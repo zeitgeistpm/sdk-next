@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 2.17.2
+
+### Patch Changes
+
+- a855edf: Add `isMetaComplete` to Market GQL schema
+
 ## 2.17.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.1
+
+### Patch Changes
+
+- a855edf: Add `isMetaComplete` to Market GQL schema
+
 ## 2.18.0
 
 ### Minor Changes
