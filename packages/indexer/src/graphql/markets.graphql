@@ -18,54 +18,8 @@ query marketStatusCount(
 }
 
 fragment FullMarket on Market {
-  id
-  marketId
-  description
-  creator
-  creatorFee
-  creation
-  oracle
-  question
-  slug
-  img
-  tags
-  status
-  scoringRule
-  resolvedOutcome
-  scalarType
-  outcomeAssets
-  rejectReason
-  metadata
+  authorizedAddress
   baseAsset
-  marketType {
-    categorical
-    scalar
-  }
-  period {
-    block
-    timestamp
-    end
-    start
-  }
-  report {
-    at
-    by
-    outcome {
-      categorical
-      scalar
-    }
-  }
-  disputeMechanism 
-  categories {
-    ticker
-    name
-    color
-  }
-  deadlines {
-    disputeDuration
-    gracePeriod
-    oracleDuration
-  }
   bonds {
     creation {
       isSettled
@@ -78,9 +32,89 @@ fragment FullMarket on Market {
       who
     }
   }
-  pool {
-    ...FullPool
+  categories {
+    color
+    img
+    name
+    ticker
   }
+  creation
+  creator
+  creatorFee
+  deadlines {
+    disputeDuration
+    gracePeriod
+    oracleDuration
+  }
+  description
+  disputeMechanism
+  disputes {
+    at
+    by
+    outcome {
+      categorical
+      scalar
+    }
+  }
+  id
+  img
+  marketId
+  marketType {
+    categorical
+    scalar
+  }
+  metadata
+  isMetaComplete
+  oracle
+  outcomeAssets
+  period {
+    block
+    end
+    start
+    timestamp
+  }
+  pool {
+    accountId
+    assets {
+      amountInPool
+      assetId
+      id
+      price
+    }
+    baseAsset
+    baseAssetQty
+    createdAt
+    id
+    marketId
+    poolId
+    poolStatus
+    scoringRule
+    swapFee
+    totalSubsidy
+    totalWeight
+    volume
+    weights {
+      assetId
+      weight
+    }
+    ztgQty
+  }
+  question
+  rejectReason
+  report {
+    at
+    by
+    outcome {
+      categorical
+      scalar
+    }
+  }
+  resolvedOutcome
+  scalarType
+  scoringRule
+  slug
+  status
+  tags
 }
 
 query historicalMarkets(

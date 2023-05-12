@@ -33,3 +33,17 @@ export const IOMarketMetadata = object({
   scalarType: optional(union([literal('date'), literal('number')])),
   categories: optional(array(IOMarketCategoryMetadata)),
 })
+
+/**
+ * Check if a market has complete market categories metadata.
+ *
+ * @param metadata MarketMetadata - meta data to check
+ * @returns boolean
+ */
+export const categoryMetadataIsComplete = (metadata: MarketMetadata): boolean => {
+  return Boolean(
+    metadata.categories &&
+      metadata.categories.length > 0 &&
+      !metadata.categories.find(c => !c.name),
+  )
+}

@@ -17,6 +17,7 @@ query historicalAssets(
 fragment FullHistoricalAssets on HistoricalAsset {
   accountId
   assetId
+  baseAssetTraded
   blockNumber
   dAmountInPool
   dPrice
@@ -25,5 +26,4 @@ fragment FullHistoricalAssets on HistoricalAsset {
   newAmountInPool
   newPrice
   timestamp
-  ztgTraded
 }

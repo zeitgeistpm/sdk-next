@@ -487,8 +487,10 @@ export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage
 
     const entries = [...weights.entries()]
 
-    if (IOZtgAssetId.is(assetId)) {
-      weight = entries.find(([asset]) => asset.isZtg)?.[1]?.toString()
+    if (IOBaseAssetId.is(assetId)) {
+      weight = entries
+        .find(([asset]) => asset.isZtg || asset.isForeignAsset)?.[1]
+        ?.toString()
     } else if (IOCategoricalAssetId.is(assetId)) {
       weight = entries
         .find(
@@ -510,7 +512,7 @@ export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage
   } else {
     weight = pool.weights.find(
       weight => weight?.assetId && isEqual(parseAssetId(weight?.assetId).unwrap(), assetId),
-    )?.len
+    )?.weight
   }
 
   return weight ? O.option(O.some(new Decimal(weight))) : O.option(O.none())

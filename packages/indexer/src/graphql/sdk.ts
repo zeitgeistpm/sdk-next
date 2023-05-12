@@ -256,6 +256,8 @@ export enum AssetOrderByInput {
   PoolPoolStatusDesc = 'pool_poolStatus_DESC',
   PoolScoringRuleAsc = 'pool_scoringRule_ASC',
   PoolScoringRuleDesc = 'pool_scoringRule_DESC',
+  PoolStatusAsc = 'pool_status_ASC',
+  PoolStatusDesc = 'pool_status_DESC',
   PoolSwapFeeAsc = 'pool_swapFee_ASC',
   PoolSwapFeeDesc = 'pool_swapFee_DESC',
   PoolTotalSubsidyAsc = 'pool_totalSubsidy_ASC',
@@ -501,10 +503,7 @@ export type HistoricalAccountBalancesConnection = {
   totalCount: Scalars['Int'];
 };
 
-/**
- * A type that records the price history of an outcome asset and
- * trade history of an account
- */
+/** A type that records the price history of an outcome asset. */
 export type HistoricalAsset = {
   __typename?: 'HistoricalAsset';
   /** Account which executed the trade */
@@ -727,7 +726,7 @@ export type HistoricalMarket = {
   /** Height of the block */
   blockNumber: Scalars['Int'];
   /** Event method which initiated this change */
-  event: Scalars['String'];
+  event: MarketEvent;
   id: Scalars['String'];
   /** Zeitgeist's identifier for market */
   marketId: Scalars['Int'];
@@ -778,23 +777,11 @@ export type HistoricalMarketWhereInput = {
   blockNumber_lte?: InputMaybe<Scalars['Int']>;
   blockNumber_not_eq?: InputMaybe<Scalars['Int']>;
   blockNumber_not_in?: InputMaybe<Array<Scalars['Int']>>;
-  event_contains?: InputMaybe<Scalars['String']>;
-  event_containsInsensitive?: InputMaybe<Scalars['String']>;
-  event_endsWith?: InputMaybe<Scalars['String']>;
-  event_eq?: InputMaybe<Scalars['String']>;
-  event_gt?: InputMaybe<Scalars['String']>;
-  event_gte?: InputMaybe<Scalars['String']>;
-  event_in?: InputMaybe<Array<Scalars['String']>>;
+  event_eq?: InputMaybe<MarketEvent>;
+  event_in?: InputMaybe<Array<MarketEvent>>;
   event_isNull?: InputMaybe<Scalars['Boolean']>;
-  event_lt?: InputMaybe<Scalars['String']>;
-  event_lte?: InputMaybe<Scalars['String']>;
-  event_not_contains?: InputMaybe<Scalars['String']>;
-  event_not_containsInsensitive?: InputMaybe<Scalars['String']>;
-  event_not_endsWith?: InputMaybe<Scalars['String']>;
-  event_not_eq?: InputMaybe<Scalars['String']>;
-  event_not_in?: InputMaybe<Array<Scalars['String']>>;
-  event_not_startsWith?: InputMaybe<Scalars['String']>;
-  event_startsWith?: InputMaybe<Scalars['String']>;
+  event_not_eq?: InputMaybe<MarketEvent>;
+  event_not_in?: InputMaybe<Array<MarketEvent>>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -889,6 +876,8 @@ export type HistoricalPool = {
   poolId: Scalars['Int'];
   /** Current status of the pool */
   poolStatus: Scalars['String'];
+  /** Current status of the pool */
+  status: PoolStatus;
   /** Timestamp of the block */
   timestamp: Scalars['DateTime'];
   /** New updated volume */
@@ -918,6 +907,8 @@ export enum HistoricalPoolOrderByInput {
   PoolIdDesc = 'poolId_DESC',
   PoolStatusAsc = 'poolStatus_ASC',
   PoolStatusDesc = 'poolStatus_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC',
   TimestampAsc = 'timestamp_ASC',
   TimestampDesc = 'timestamp_DESC',
   VolumeAsc = 'volume_ASC',
@@ -1016,6 +1007,11 @@ export type HistoricalPoolWhereInput = {
   poolStatus_not_in?: InputMaybe<Array<Scalars['String']>>;
   poolStatus_not_startsWith?: InputMaybe<Scalars['String']>;
   poolStatus_startsWith?: InputMaybe<Scalars['String']>;
+  status_eq?: InputMaybe<PoolStatus>;
+  status_in?: InputMaybe<Array<PoolStatus>>;
+  status_isNull?: InputMaybe<Scalars['Boolean']>;
+  status_not_eq?: InputMaybe<PoolStatus>;
+  status_not_in?: InputMaybe<Array<PoolStatus>>;
   timestamp_eq?: InputMaybe<Scalars['DateTime']>;
   timestamp_gt?: InputMaybe<Scalars['DateTime']>;
   timestamp_gte?: InputMaybe<Scalars['DateTime']>;
@@ -1048,6 +1044,189 @@ export type HistoricalPoolWhereInput = {
 export type HistoricalPoolsConnection = {
   __typename?: 'HistoricalPoolsConnection';
   edges: Array<HistoricalPoolEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+/** A type that records the trade history of an account. */
+export type HistoricalSwap = {
+  __typename?: 'HistoricalSwap';
+  /** Account which executed the trade */
+  accountId: Scalars['String'];
+  /** Units of asset user sold */
+  assetAmountIn: Scalars['BigInt'];
+  /** Units of asset user bought */
+  assetAmountOut: Scalars['BigInt'];
+  /** Asset sold by the user */
+  assetIn: Scalars['String'];
+  /** Asset bought by the user */
+  assetOut: Scalars['String'];
+  /** Height of the block */
+  blockNumber: Scalars['Int'];
+  /** Event method which initiated this swap */
+  event: Scalars['String'];
+  /** Unique identifier of the object */
+  id: Scalars['String'];
+  /** Timestamp of the block */
+  timestamp: Scalars['DateTime'];
+};
+
+export type HistoricalSwapEdge = {
+  __typename?: 'HistoricalSwapEdge';
+  cursor: Scalars['String'];
+  node: HistoricalSwap;
+};
+
+export enum HistoricalSwapOrderByInput {
+  AccountIdAsc = 'accountId_ASC',
+  AccountIdDesc = 'accountId_DESC',
+  AssetAmountInAsc = 'assetAmountIn_ASC',
+  AssetAmountInDesc = 'assetAmountIn_DESC',
+  AssetAmountOutAsc = 'assetAmountOut_ASC',
+  AssetAmountOutDesc = 'assetAmountOut_DESC',
+  AssetInAsc = 'assetIn_ASC',
+  AssetInDesc = 'assetIn_DESC',
+  AssetOutAsc = 'assetOut_ASC',
+  AssetOutDesc = 'assetOut_DESC',
+  BlockNumberAsc = 'blockNumber_ASC',
+  BlockNumberDesc = 'blockNumber_DESC',
+  EventAsc = 'event_ASC',
+  EventDesc = 'event_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  TimestampAsc = 'timestamp_ASC',
+  TimestampDesc = 'timestamp_DESC'
+}
+
+export type HistoricalSwapWhereInput = {
+  AND?: InputMaybe<Array<HistoricalSwapWhereInput>>;
+  OR?: InputMaybe<Array<HistoricalSwapWhereInput>>;
+  accountId_contains?: InputMaybe<Scalars['String']>;
+  accountId_containsInsensitive?: InputMaybe<Scalars['String']>;
+  accountId_endsWith?: InputMaybe<Scalars['String']>;
+  accountId_eq?: InputMaybe<Scalars['String']>;
+  accountId_gt?: InputMaybe<Scalars['String']>;
+  accountId_gte?: InputMaybe<Scalars['String']>;
+  accountId_in?: InputMaybe<Array<Scalars['String']>>;
+  accountId_isNull?: InputMaybe<Scalars['Boolean']>;
+  accountId_lt?: InputMaybe<Scalars['String']>;
+  accountId_lte?: InputMaybe<Scalars['String']>;
+  accountId_not_contains?: InputMaybe<Scalars['String']>;
+  accountId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  accountId_not_endsWith?: InputMaybe<Scalars['String']>;
+  accountId_not_eq?: InputMaybe<Scalars['String']>;
+  accountId_not_in?: InputMaybe<Array<Scalars['String']>>;
+  accountId_not_startsWith?: InputMaybe<Scalars['String']>;
+  accountId_startsWith?: InputMaybe<Scalars['String']>;
+  assetAmountIn_eq?: InputMaybe<Scalars['BigInt']>;
+  assetAmountIn_gt?: InputMaybe<Scalars['BigInt']>;
+  assetAmountIn_gte?: InputMaybe<Scalars['BigInt']>;
+  assetAmountIn_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  assetAmountIn_isNull?: InputMaybe<Scalars['Boolean']>;
+  assetAmountIn_lt?: InputMaybe<Scalars['BigInt']>;
+  assetAmountIn_lte?: InputMaybe<Scalars['BigInt']>;
+  assetAmountIn_not_eq?: InputMaybe<Scalars['BigInt']>;
+  assetAmountIn_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  assetAmountOut_eq?: InputMaybe<Scalars['BigInt']>;
+  assetAmountOut_gt?: InputMaybe<Scalars['BigInt']>;
+  assetAmountOut_gte?: InputMaybe<Scalars['BigInt']>;
+  assetAmountOut_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  assetAmountOut_isNull?: InputMaybe<Scalars['Boolean']>;
+  assetAmountOut_lt?: InputMaybe<Scalars['BigInt']>;
+  assetAmountOut_lte?: InputMaybe<Scalars['BigInt']>;
+  assetAmountOut_not_eq?: InputMaybe<Scalars['BigInt']>;
+  assetAmountOut_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  assetIn_contains?: InputMaybe<Scalars['String']>;
+  assetIn_containsInsensitive?: InputMaybe<Scalars['String']>;
+  assetIn_endsWith?: InputMaybe<Scalars['String']>;
+  assetIn_eq?: InputMaybe<Scalars['String']>;
+  assetIn_gt?: InputMaybe<Scalars['String']>;
+  assetIn_gte?: InputMaybe<Scalars['String']>;
+  assetIn_in?: InputMaybe<Array<Scalars['String']>>;
+  assetIn_isNull?: InputMaybe<Scalars['Boolean']>;
+  assetIn_lt?: InputMaybe<Scalars['String']>;
+  assetIn_lte?: InputMaybe<Scalars['String']>;
+  assetIn_not_contains?: InputMaybe<Scalars['String']>;
+  assetIn_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  assetIn_not_endsWith?: InputMaybe<Scalars['String']>;
+  assetIn_not_eq?: InputMaybe<Scalars['String']>;
+  assetIn_not_in?: InputMaybe<Array<Scalars['String']>>;
+  assetIn_not_startsWith?: InputMaybe<Scalars['String']>;
+  assetIn_startsWith?: InputMaybe<Scalars['String']>;
+  assetOut_contains?: InputMaybe<Scalars['String']>;
+  assetOut_containsInsensitive?: InputMaybe<Scalars['String']>;
+  assetOut_endsWith?: InputMaybe<Scalars['String']>;
+  assetOut_eq?: InputMaybe<Scalars['String']>;
+  assetOut_gt?: InputMaybe<Scalars['String']>;
+  assetOut_gte?: InputMaybe<Scalars['String']>;
+  assetOut_in?: InputMaybe<Array<Scalars['String']>>;
+  assetOut_isNull?: InputMaybe<Scalars['Boolean']>;
+  assetOut_lt?: InputMaybe<Scalars['String']>;
+  assetOut_lte?: InputMaybe<Scalars['String']>;
+  assetOut_not_contains?: InputMaybe<Scalars['String']>;
+  assetOut_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  assetOut_not_endsWith?: InputMaybe<Scalars['String']>;
+  assetOut_not_eq?: InputMaybe<Scalars['String']>;
+  assetOut_not_in?: InputMaybe<Array<Scalars['String']>>;
+  assetOut_not_startsWith?: InputMaybe<Scalars['String']>;
+  assetOut_startsWith?: InputMaybe<Scalars['String']>;
+  blockNumber_eq?: InputMaybe<Scalars['Int']>;
+  blockNumber_gt?: InputMaybe<Scalars['Int']>;
+  blockNumber_gte?: InputMaybe<Scalars['Int']>;
+  blockNumber_in?: InputMaybe<Array<Scalars['Int']>>;
+  blockNumber_isNull?: InputMaybe<Scalars['Boolean']>;
+  blockNumber_lt?: InputMaybe<Scalars['Int']>;
+  blockNumber_lte?: InputMaybe<Scalars['Int']>;
+  blockNumber_not_eq?: InputMaybe<Scalars['Int']>;
+  blockNumber_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  event_contains?: InputMaybe<Scalars['String']>;
+  event_containsInsensitive?: InputMaybe<Scalars['String']>;
+  event_endsWith?: InputMaybe<Scalars['String']>;
+  event_eq?: InputMaybe<Scalars['String']>;
+  event_gt?: InputMaybe<Scalars['String']>;
+  event_gte?: InputMaybe<Scalars['String']>;
+  event_in?: InputMaybe<Array<Scalars['String']>>;
+  event_isNull?: InputMaybe<Scalars['Boolean']>;
+  event_lt?: InputMaybe<Scalars['String']>;
+  event_lte?: InputMaybe<Scalars['String']>;
+  event_not_contains?: InputMaybe<Scalars['String']>;
+  event_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  event_not_endsWith?: InputMaybe<Scalars['String']>;
+  event_not_eq?: InputMaybe<Scalars['String']>;
+  event_not_in?: InputMaybe<Array<Scalars['String']>>;
+  event_not_startsWith?: InputMaybe<Scalars['String']>;
+  event_startsWith?: InputMaybe<Scalars['String']>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  timestamp_eq?: InputMaybe<Scalars['DateTime']>;
+  timestamp_gt?: InputMaybe<Scalars['DateTime']>;
+  timestamp_gte?: InputMaybe<Scalars['DateTime']>;
+  timestamp_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  timestamp_isNull?: InputMaybe<Scalars['Boolean']>;
+  timestamp_lt?: InputMaybe<Scalars['DateTime']>;
+  timestamp_lte?: InputMaybe<Scalars['DateTime']>;
+  timestamp_not_eq?: InputMaybe<Scalars['DateTime']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type HistoricalSwapsConnection = {
+  __typename?: 'HistoricalSwapsConnection';
+  edges: Array<HistoricalSwapEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
@@ -1086,6 +1265,8 @@ export type Market = {
   id: Scalars['String'];
   /** Image for the market */
   img?: Maybe<Scalars['String']>;
+  /** Checks if metadata is compatible for display on Zeitgeist App */
+  isMetaComplete: Scalars['Boolean'];
   /** Zeitgeist's identifier for market */
   marketId: Scalars['Int'];
   /** Type of the market */
@@ -1227,6 +1408,20 @@ export type MarketEdge = {
   node: Market;
 };
 
+/** Market's event options */
+export enum MarketEvent {
+  MarketApproved = 'MarketApproved',
+  MarketClosed = 'MarketClosed',
+  MarketCreated = 'MarketCreated',
+  MarketDestroyed = 'MarketDestroyed',
+  MarketDisputed = 'MarketDisputed',
+  MarketExpired = 'MarketExpired',
+  MarketRejected = 'MarketRejected',
+  MarketReported = 'MarketReported',
+  MarketResolved = 'MarketResolved',
+  PoolCreate = 'PoolCreate'
+}
+
 export enum MarketOrderByInput {
   AuthorizedAddressAsc = 'authorizedAddress_ASC',
   AuthorizedAddressDesc = 'authorizedAddress_DESC',
@@ -1252,6 +1447,8 @@ export enum MarketOrderByInput {
   IdDesc = 'id_DESC',
   ImgAsc = 'img_ASC',
   ImgDesc = 'img_DESC',
+  IsMetaCompleteAsc = 'isMetaComplete_ASC',
+  IsMetaCompleteDesc = 'isMetaComplete_DESC',
   MarketIdAsc = 'marketId_ASC',
   MarketIdDesc = 'marketId_DESC',
   MarketTypeCategoricalAsc = 'marketType_categorical_ASC',
@@ -1282,6 +1479,8 @@ export enum MarketOrderByInput {
   PoolPoolStatusDesc = 'pool_poolStatus_DESC',
   PoolScoringRuleAsc = 'pool_scoringRule_ASC',
   PoolScoringRuleDesc = 'pool_scoringRule_DESC',
+  PoolStatusAsc = 'pool_status_ASC',
+  PoolStatusDesc = 'pool_status_DESC',
   PoolSwapFeeAsc = 'pool_swapFee_ASC',
   PoolSwapFeeDesc = 'pool_swapFee_DESC',
   PoolTotalSubsidyAsc = 'pool_totalSubsidy_ASC',
@@ -1399,8 +1598,8 @@ export type MarketReportWhereInput = {
 export type MarketStats = {
   __typename?: 'MarketStats';
   liquidity: Scalars['BigInt'];
-  marketId: Scalars['Float'];
-  participants: Scalars['Float'];
+  marketId: Scalars['Int'];
+  participants: Scalars['Int'];
 };
 
 /** Market's status options */
@@ -1606,6 +1805,9 @@ export type MarketWhereInput = {
   img_not_in?: InputMaybe<Array<Scalars['String']>>;
   img_not_startsWith?: InputMaybe<Scalars['String']>;
   img_startsWith?: InputMaybe<Scalars['String']>;
+  isMetaComplete_eq?: InputMaybe<Scalars['Boolean']>;
+  isMetaComplete_isNull?: InputMaybe<Scalars['Boolean']>;
+  isMetaComplete_not_eq?: InputMaybe<Scalars['Boolean']>;
   marketId_eq?: InputMaybe<Scalars['Int']>;
   marketId_gt?: InputMaybe<Scalars['Int']>;
   marketId_gte?: InputMaybe<Scalars['Int']>;
@@ -1833,6 +2035,7 @@ export type Pool = {
   /** Timestamp of pool creation */
   createdAt: Scalars['DateTime'];
   id: Scalars['String'];
+  /** Zeitgeist's identifier for market connected to the pool */
   marketId: Scalars['Int'];
   /** Zeitgeist's identifier for pool */
   poolId: Scalars['Int'];
@@ -1840,6 +2043,8 @@ export type Pool = {
   poolStatus: Scalars['String'];
   /** Scoring rule used for the pool */
   scoringRule: Scalars['String'];
+  /** Status of the pool */
+  status: PoolStatus;
   /** Fee applied to each swap */
   swapFee: Scalars['String'];
   /** Subsidy gathered for the market */
@@ -1888,6 +2093,8 @@ export enum PoolOrderByInput {
   PoolStatusDesc = 'poolStatus_DESC',
   ScoringRuleAsc = 'scoringRule_ASC',
   ScoringRuleDesc = 'scoringRule_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC',
   SwapFeeAsc = 'swapFee_ASC',
   SwapFeeDesc = 'swapFee_DESC',
   TotalSubsidyAsc = 'totalSubsidy_ASC',
@@ -1898,6 +2105,16 @@ export enum PoolOrderByInput {
   VolumeDesc = 'volume_DESC',
   ZtgQtyAsc = 'ztgQty_ASC',
   ZtgQtyDesc = 'ztgQty_DESC'
+}
+
+/** Pool's status options */
+export enum PoolStatus {
+  Active = 'Active',
+  Clean = 'Clean',
+  Closed = 'Closed',
+  CollectingSubsidy = 'CollectingSubsidy',
+  Destroyed = 'Destroyed',
+  Initialized = 'Initialized'
 }
 
 export type PoolWhereInput = {
@@ -2027,6 +2244,11 @@ export type PoolWhereInput = {
   scoringRule_not_in?: InputMaybe<Array<Scalars['String']>>;
   scoringRule_not_startsWith?: InputMaybe<Scalars['String']>;
   scoringRule_startsWith?: InputMaybe<Scalars['String']>;
+  status_eq?: InputMaybe<PoolStatus>;
+  status_in?: InputMaybe<Array<PoolStatus>>;
+  status_isNull?: InputMaybe<Scalars['Boolean']>;
+  status_not_eq?: InputMaybe<PoolStatus>;
+  status_not_in?: InputMaybe<Array<PoolStatus>>;
   swapFee_contains?: InputMaybe<Scalars['String']>;
   swapFee_containsInsensitive?: InputMaybe<Scalars['String']>;
   swapFee_endsWith?: InputMaybe<Scalars['String']>;
@@ -2155,6 +2377,11 @@ export type Query = {
   historicalPoolByUniqueInput?: Maybe<HistoricalPool>;
   historicalPools: Array<HistoricalPool>;
   historicalPoolsConnection: HistoricalPoolsConnection;
+  historicalSwapById?: Maybe<HistoricalSwap>;
+  /** @deprecated Use historicalSwapById */
+  historicalSwapByUniqueInput?: Maybe<HistoricalSwap>;
+  historicalSwaps: Array<HistoricalSwap>;
+  historicalSwapsConnection: HistoricalSwapsConnection;
   marketById?: Maybe<Market>;
   /** @deprecated Use marketById */
   marketByUniqueInput?: Maybe<Market>;
@@ -2354,6 +2581,32 @@ export type QueryHistoricalPoolsConnectionArgs = {
 };
 
 
+export type QueryHistoricalSwapByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryHistoricalSwapByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+export type QueryHistoricalSwapsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<HistoricalSwapOrderByInput>>;
+  where?: InputMaybe<HistoricalSwapWhereInput>;
+};
+
+
+export type QueryHistoricalSwapsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: Array<HistoricalSwapOrderByInput>;
+  where?: InputMaybe<HistoricalSwapWhereInput>;
+};
+
+
 export type QueryMarketByIdArgs = {
   id: Scalars['String'];
 };
@@ -2365,7 +2618,7 @@ export type QueryMarketByUniqueInputArgs = {
 
 
 export type QueryMarketStatsArgs = {
-  ids: Array<Scalars['String']>;
+  marketId: Array<Scalars['Int']>;
 };
 
 
@@ -2446,6 +2699,8 @@ export type Subscription = {
   historicalMarkets: Array<HistoricalMarket>;
   historicalPoolById?: Maybe<HistoricalPool>;
   historicalPools: Array<HistoricalPool>;
+  historicalSwapById?: Maybe<HistoricalSwap>;
+  historicalSwaps: Array<HistoricalSwap>;
   marketById?: Maybe<Market>;
   markets: Array<Market>;
   poolById?: Maybe<Pool>;
@@ -2544,6 +2799,19 @@ export type SubscriptionHistoricalPoolsArgs = {
 };
 
 
+export type SubscriptionHistoricalSwapByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionHistoricalSwapsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<HistoricalSwapOrderByInput>>;
+  where?: InputMaybe<HistoricalSwapWhereInput>;
+};
+
+
 export type SubscriptionMarketByIdArgs = {
   id: Scalars['String'];
 };
@@ -2612,9 +2880,9 @@ export type AssetsQueryVariables = Exact<{
 }>;
 
 
-export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: 'Asset', id: string, assetId: string, price: number, amountInPool: any, pool: { __typename?: 'Pool', accountId: string, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, baseAssetQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any, weight: any } | null> } }> };
+export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: 'Asset', id: string, assetId: string, amountInPool: any, price: number, pool: { __typename?: 'Pool', accountId: string, baseAsset: string, baseAssetQty: any, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any } | null> } }> };
 
-export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, price: number, amountInPool: any, pool: { __typename?: 'Pool', accountId: string, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, baseAssetQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any, weight: any } | null> } };
+export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, amountInPool: any, price: number, pool: { __typename?: 'Pool', accountId: string, baseAsset: string, baseAssetQty: any, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any } | null> } };
 
 export type HistoricalAccountBalancesQueryVariables = Exact<{
   where?: InputMaybe<HistoricalAccountBalanceWhereInput>;
@@ -2636,12 +2904,12 @@ export type HistoricalAssetsQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalAssetsQuery = { __typename?: 'Query', historicalAssets: Array<{ __typename?: 'HistoricalAsset', accountId?: string | null, assetId: string, blockNumber: number, dAmountInPool?: any | null, dPrice?: number | null, event: string, id: string, newAmountInPool?: any | null, newPrice?: number | null, timestamp: any, ztgTraded?: any | null }> };
+export type HistoricalAssetsQuery = { __typename?: 'Query', historicalAssets: Array<{ __typename?: 'HistoricalAsset', accountId?: string | null, assetId: string, baseAssetTraded?: any | null, blockNumber: number, dAmountInPool?: any | null, dPrice?: number | null, event: string, id: string, newAmountInPool?: any | null, newPrice?: number | null, timestamp: any }> };
 
-export type FullHistoricalAssetsFragment = { __typename?: 'HistoricalAsset', accountId?: string | null, assetId: string, blockNumber: number, dAmountInPool?: any | null, dPrice?: number | null, event: string, id: string, newAmountInPool?: any | null, newPrice?: number | null, timestamp: any, ztgTraded?: any | null };
+export type FullHistoricalAssetsFragment = { __typename?: 'HistoricalAsset', accountId?: string | null, assetId: string, baseAssetTraded?: any | null, blockNumber: number, dAmountInPool?: any | null, dPrice?: number | null, event: string, id: string, newAmountInPool?: any | null, newPrice?: number | null, timestamp: any };
 
 export type MarketStatsQueryVariables = Exact<{
-  ids: Array<Scalars['String']> | Scalars['String'];
+  ids: Array<Scalars['Int']> | Scalars['Int'];
 }>;
 
 
@@ -2655,7 +2923,7 @@ export type MarketsQueryVariables = Exact<{
 }>;
 
 
-export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: MarketStatus, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, rejectReason?: string | null, metadata: string, baseAsset: string, disputeMechanism: string, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null, end: any, start: any }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, bonds?: { __typename?: 'MarketBonds', creation?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null } | null, pool?: { __typename?: 'Pool', accountId: string, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, baseAssetQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any, weight: any } | null> } | null }> };
+export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: string, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: string, id: string, img?: string | null, marketId: number, metadata: string, isMetaComplete: boolean, oracle: string, outcomeAssets: Array<string | null>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: string, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, bonds?: { __typename?: 'MarketBonds', creation?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', accountId: string, baseAsset: string, baseAssetQty: any, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any } | null> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null }> };
 
 export type MarketStatusCountQueryVariables = Exact<{
   status: MarketStatus;
@@ -2664,7 +2932,7 @@ export type MarketStatusCountQueryVariables = Exact<{
 
 export type MarketStatusCountQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string }> };
 
-export type FullMarketFragment = { __typename?: 'Market', id: string, marketId: number, description?: string | null, creator: string, creatorFee?: number | null, creation: string, oracle: string, question?: string | null, slug?: string | null, img?: string | null, tags?: Array<string | null> | null, status: MarketStatus, scoringRule: string, resolvedOutcome?: string | null, scalarType?: string | null, outcomeAssets: Array<string | null>, rejectReason?: string | null, metadata: string, baseAsset: string, disputeMechanism: string, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, timestamp?: Array<any | null> | null, end: any, start: any }, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', ticker?: string | null, name?: string | null, color?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, bonds?: { __typename?: 'MarketBonds', creation?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null } | null, pool?: { __typename?: 'Pool', accountId: string, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, baseAssetQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any, weight: any } | null> } | null };
+export type FullMarketFragment = { __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: string, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: string, id: string, img?: string | null, marketId: number, metadata: string, isMetaComplete: boolean, oracle: string, outcomeAssets: Array<string | null>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: string, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, bonds?: { __typename?: 'MarketBonds', creation?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null } | null> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', accountId: string, baseAsset: string, baseAssetQty: any, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any } | null> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } } | null };
 
 export type HistoricalMarketsQueryVariables = Exact<{
   where?: InputMaybe<HistoricalMarketWhereInput>;
@@ -2674,7 +2942,7 @@ export type HistoricalMarketsQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalMarketsQuery = { __typename?: 'Query', historicalMarkets: Array<{ __typename?: 'HistoricalMarket', blockNumber: number, event: string, id: string, marketId: number, poolId?: number | null, resolvedOutcome?: string | null, status: MarketStatus, timestamp: any }> };
+export type HistoricalMarketsQuery = { __typename?: 'Query', historicalMarkets: Array<{ __typename?: 'HistoricalMarket', blockNumber: number, event: MarketEvent, id: string, marketId: number, poolId?: number | null, resolvedOutcome?: string | null, status: MarketStatus, timestamp: any }> };
 
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2689,9 +2957,9 @@ export type PoolsQueryVariables = Exact<{
 }>;
 
 
-export type PoolsQuery = { __typename?: 'Query', pools: Array<{ __typename?: 'Pool', accountId: string, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, baseAssetQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any, weight: any } | null> }> };
+export type PoolsQuery = { __typename?: 'Query', pools: Array<{ __typename?: 'Pool', accountId: string, baseAsset: string, baseAssetQty: any, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any } | null> }> };
 
-export type FullPoolFragment = { __typename?: 'Pool', accountId: string, baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, ztgQty: any, baseAssetQty: any, weights: Array<{ __typename?: 'Weight', assetId: string, len: any, weight: any } | null> };
+export type FullPoolFragment = { __typename?: 'Pool', accountId: string, baseAsset: string, baseAssetQty: any, createdAt: any, id: string, marketId: number, poolId: number, poolStatus: string, scoringRule: string, swapFee: string, totalSubsidy: string, totalWeight: string, volume: any, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any } | null> };
 
 export type HistoricalPoolsQueryVariables = Exact<{
   where?: InputMaybe<HistoricalPoolWhereInput>;
@@ -2701,7 +2969,7 @@ export type HistoricalPoolsQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalPoolsQuery = { __typename?: 'Query', historicalPools: Array<{ __typename?: 'HistoricalPool', blockNumber: number, dVolume?: any | null, event: string, id: string, poolId: number, poolStatus: string, timestamp: any, volume?: any | null, ztgQty?: any | null }> };
+export type HistoricalPoolsQuery = { __typename?: 'Query', historicalPools: Array<{ __typename?: 'HistoricalPool', baseAssetQty?: any | null, blockNumber: number, dVolume?: any | null, event: string, id: string, poolId: number, poolStatus: string, timestamp: any, volume?: any | null }> };
 
 export type SquidStatusQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2729,7 +2997,14 @@ export const FullAccountBalanceFragmentDoc = gql`
 export const FullPoolFragmentDoc = gql`
     fragment FullPool on Pool {
   accountId
+  assets {
+    amountInPool
+    assetId
+    id
+    price
+  }
   baseAsset
+  baseAssetQty
   createdAt
   id
   marketId
@@ -2742,19 +3017,16 @@ export const FullPoolFragmentDoc = gql`
   volume
   weights {
     assetId
-    len
     weight
   }
-  ztgQty
-  baseAssetQty
 }
     `;
 export const FullAssetFragmentDoc = gql`
     fragment FullAsset on Asset {
   id
   assetId
-  price
   amountInPool
+  price
   pool {
     ...FullPool
   }
@@ -2775,6 +3047,7 @@ export const FullHistoricalAssetsFragmentDoc = gql`
     fragment FullHistoricalAssets on HistoricalAsset {
   accountId
   assetId
+  baseAssetTraded
   blockNumber
   dAmountInPool
   dPrice
@@ -2783,59 +3056,12 @@ export const FullHistoricalAssetsFragmentDoc = gql`
   newAmountInPool
   newPrice
   timestamp
-  ztgTraded
 }
     `;
 export const FullMarketFragmentDoc = gql`
     fragment FullMarket on Market {
-  id
-  marketId
-  description
-  creator
-  creatorFee
-  creation
-  oracle
-  question
-  slug
-  img
-  tags
-  status
-  scoringRule
-  resolvedOutcome
-  scalarType
-  outcomeAssets
-  rejectReason
-  metadata
+  authorizedAddress
   baseAsset
-  marketType {
-    categorical
-    scalar
-  }
-  period {
-    block
-    timestamp
-    end
-    start
-  }
-  report {
-    at
-    by
-    outcome {
-      categorical
-      scalar
-    }
-  }
-  disputeMechanism
-  categories {
-    ticker
-    name
-    color
-  }
-  deadlines {
-    disputeDuration
-    gracePeriod
-    oracleDuration
-  }
   bonds {
     creation {
       isSettled
@@ -2848,11 +3074,91 @@ export const FullMarketFragmentDoc = gql`
       who
     }
   }
-  pool {
-    ...FullPool
+  categories {
+    color
+    img
+    name
+    ticker
   }
+  creation
+  creator
+  creatorFee
+  deadlines {
+    disputeDuration
+    gracePeriod
+    oracleDuration
+  }
+  description
+  disputeMechanism
+  disputes {
+    at
+    by
+    outcome {
+      categorical
+      scalar
+    }
+  }
+  id
+  img
+  marketId
+  marketType {
+    categorical
+    scalar
+  }
+  metadata
+  isMetaComplete
+  oracle
+  outcomeAssets
+  period {
+    block
+    end
+    start
+    timestamp
+  }
+  pool {
+    accountId
+    assets {
+      amountInPool
+      assetId
+      id
+      price
+    }
+    baseAsset
+    baseAssetQty
+    createdAt
+    id
+    marketId
+    poolId
+    poolStatus
+    scoringRule
+    swapFee
+    totalSubsidy
+    totalWeight
+    volume
+    weights {
+      assetId
+      weight
+    }
+    ztgQty
+  }
+  question
+  rejectReason
+  report {
+    at
+    by
+    outcome {
+      categorical
+      scalar
+    }
+  }
+  resolvedOutcome
+  scalarType
+  scoringRule
+  slug
+  status
+  tags
 }
-    ${FullPoolFragmentDoc}`;
+    `;
 export const AccountBalancesDocument = gql`
     query accountBalances($where: AccountBalanceWhereInput, $order: [AccountBalanceOrderByInput!], $offset: Int, $limit: Int) {
   accountBalances(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
@@ -2887,8 +3193,8 @@ export const HistoricalAssetsDocument = gql`
 }
     ${FullHistoricalAssetsFragmentDoc}`;
 export const MarketStatsDocument = gql`
-    query marketStats($ids: [String!]!) {
-  marketStats(ids: $ids) {
+    query marketStats($ids: [Int!]!) {
+  marketStats(marketId: $ids) {
     liquidity
     marketId
     participants
@@ -2945,6 +3251,7 @@ export const PoolsDocument = gql`
 export const HistoricalPoolsDocument = gql`
     query historicalPools($where: HistoricalPoolWhereInput, $order: [HistoricalPoolOrderByInput!], $offset: Int, $limit: Int) {
   historicalPools {
+    baseAssetQty
     blockNumber
     dVolume
     event
@@ -2953,7 +3260,6 @@ export const HistoricalPoolsDocument = gql`
     poolStatus
     timestamp
     volume
-    ztgQty
   }
 }
     `;

@@ -260,6 +260,8 @@ export const either = <L, R>(_either: Either<L, R>): IEither<L, R> => ({
   isLeft: () => (isLeft(_either) ? either<L, R>(_either) : null),
 })
 
+export const from = <R>(value: R) => either(right(value))
+
 /**
  * Tries a function and converts the caught error to Left or returned value to Right.
  *

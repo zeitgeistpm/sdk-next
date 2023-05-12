@@ -7760,7 +7760,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/indexer@^2.16.0, @zeitgeistpm/indexer@workspace:packages/indexer":
+"@zeitgeistpm/indexer@^2.17.1, @zeitgeistpm/indexer@workspace:packages/indexer":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/indexer@workspace:packages/indexer"
   dependencies:
@@ -7796,7 +7796,7 @@ __metadata:
     "@types/lodash.memoize": ^4.1.7
     "@types/ms": ^0.7.31
     "@zeitgeistpm/augment-api": ^2.11.3
-    "@zeitgeistpm/indexer": ^2.16.0
+    "@zeitgeistpm/indexer": ^2.17.1
     "@zeitgeistpm/rpc": ^2.7.0
     "@zeitgeistpm/utility": ^2.18.0
     "@zeitgeistpm/web3.storage": ^2.9.0

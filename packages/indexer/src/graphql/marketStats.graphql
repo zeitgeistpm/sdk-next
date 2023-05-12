@@ -1,5 +1,5 @@
-query marketStats($ids: [String!]!) {
-  marketStats(ids: $ids) {
+query marketStats($ids: [Int!]!) {
+  marketStats(marketId: $ids) {
     liquidity
     marketId
     participants

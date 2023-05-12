@@ -21,8 +21,6 @@ import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { blockDate, ChainTime, DateTimespan } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
 import Decimal from 'decimal.js'
-import { getPool } from 'model/swaps/functions/getPool'
-import { poolPrices } from 'model/swaps/functions/poolPrices'
 import {
   Context,
   FullContext,
@@ -31,7 +29,7 @@ import {
   RpcContext,
 } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../meta'
-import { MarketMetadata } from '../../meta/market'
+import { MarketMetadata, categoryMetadataIsComplete } from '../../meta/market'
 import { Data, isIndexedData, isRpcData, parseAssetId, ZTG } from '../../primitives'
 import { now } from '../time/functions/now'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
@@ -98,7 +96,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
   /**
    * Fetch metadata from external storage(default IPFS).
    */
-  fetchMetadata: Te.TaskEither<Error, MarketTypeOf<MS>, []>
+  fetchMetadata: Te.TaskEither<Error, O.IOption<MarketTypeOf<MS>>, []>
   /**
    * Deploy a swap pool for the market.
    *
@@ -298,7 +296,10 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
     const outcomeAssets = pool ? pool.assets.toArray().map(a => JSON.stringify(a)) : []
 
+    const isMetaComplete = O.isSome(metadata) && categoryMetadataIsComplete(metadata.value)
+
     const base: IndexedBase = {
+      isMetaComplete,
       id: `${market.marketId}`,
       marketId: market.marketId,
       creation: primitive.creation.type,
@@ -352,9 +353,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       const cid = new CID('f0155' + hex.slice(2))
       const id = { __meta: 'markets', cid: cid } as StorageIdTypeOf<MS['markets']>
       const metadata = await context.storage.of('markets').get(id)
-      return metadata.unwrapOr(
-        throwsC(Error(`could not fetch metadata for market: ${market.marketId}`)),
-      )
+      return metadata
     })
 
     marketWithMethods.deploySwapPool = Te.from(async params => {
