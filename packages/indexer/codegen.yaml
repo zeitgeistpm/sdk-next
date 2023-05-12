@@ -1,4 +1,4 @@
-schema: https://processor.bsr.zeitgeist.pm/graphql
+schema: https://processor.zeitgeist.pm/graphql
 documents: ./**/*.graphql
 generates:
   ./src/graphql/sdk.ts: # output typescript file path
