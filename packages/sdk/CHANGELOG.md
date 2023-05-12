@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.29.1
+
+### Patch Changes
+
+- 1fd1451: baseAssetQty and use dev processor for gql schema
+- Updated dependencies [1fd1451]
+  - @zeitgeistpm/indexer@3.0.1
+
 ## 2.29.0
 
 ### Minor Changes

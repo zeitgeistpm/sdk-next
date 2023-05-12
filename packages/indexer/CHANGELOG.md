@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.1
+
+### Patch Changes
+
+- 1fd1451: baseAssetQty and use dev processor for gql schema
+
 ## 3.0.0
 
 ### Major Changes
