@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.2
+
+### Patch Changes
+
+- 5694a36: Added `indexer#historicalSwaps`
+
 ## 3.0.1
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.29.2
+
+### Patch Changes
+
+- 5694a36: Added `indexer#historicalSwaps`
+- Updated dependencies [5694a36]
+  - @zeitgeistpm/indexer@3.0.2
+
 ## 2.29.1
 
 ### Patch Changes
