@@ -97,7 +97,7 @@ fragment FullMarket on Market {
       assetId
       weight
     }
-    ztgQty
+    baseAssetQty
   }
   question
   rejectReason
