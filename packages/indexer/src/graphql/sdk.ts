@@ -2863,6 +2863,18 @@ export type HistoricalAssetsQuery = { __typename?: 'Query', historicalAssets: Ar
 
 export type FullHistoricalAssetsFragment = { __typename?: 'HistoricalAsset', accountId?: string | null, assetId: string, baseAssetTraded?: any | null, blockNumber: number, dAmountInPool?: any | null, dPrice?: number | null, event: string, id: string, newAmountInPool?: any | null, newPrice?: number | null, timestamp: any };
 
+export type HistoricalSwapsQueryVariables = Exact<{
+  where?: InputMaybe<HistoricalSwapWhereInput>;
+  order?: InputMaybe<Array<HistoricalSwapOrderByInput> | HistoricalSwapOrderByInput>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type HistoricalSwapsQuery = { __typename?: 'Query', historicalSwaps: Array<{ __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string }> };
+
+export type FullHistoricalSwapFragment = { __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string };
+
 export type MarketStatsQueryVariables = Exact<{
   ids: Array<Scalars['Int']> | Scalars['Int'];
 }>;
@@ -3013,6 +3025,19 @@ export const FullHistoricalAssetsFragmentDoc = gql`
   timestamp
 }
     `;
+export const FullHistoricalSwapFragmentDoc = gql`
+    fragment FullHistoricalSwap on HistoricalSwap {
+  id
+  event
+  blockNumber
+  timestamp
+  accountId
+  assetAmountIn
+  assetAmountOut
+  assetIn
+  assetOut
+}
+    `;
 export const FullMarketFragmentDoc = gql`
     fragment FullMarket on Market {
   authorizedAddress
@@ -3147,6 +3172,13 @@ export const HistoricalAssetsDocument = gql`
   }
 }
     ${FullHistoricalAssetsFragmentDoc}`;
+export const HistoricalSwapsDocument = gql`
+    query historicalSwaps($where: HistoricalSwapWhereInput, $order: [HistoricalSwapOrderByInput!], $offset: Int, $limit: Int) {
+  historicalSwaps(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullHistoricalSwap
+  }
+}
+    ${FullHistoricalSwapFragmentDoc}`;
 export const MarketStatsDocument = gql`
     query marketStats($ids: [Int!]!) {
   marketStats(marketId: $ids) {
@@ -3252,6 +3284,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     historicalAssets(variables?: HistoricalAssetsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalAssetsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HistoricalAssetsQuery>(HistoricalAssetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalAssets', 'query');
+    },
+    historicalSwaps(variables?: HistoricalSwapsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalSwapsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<HistoricalSwapsQuery>(HistoricalSwapsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalSwaps', 'query');
     },
     marketStats(variables: MarketStatsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketStatsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MarketStatsQuery>(MarketStatsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'marketStats', 'query');

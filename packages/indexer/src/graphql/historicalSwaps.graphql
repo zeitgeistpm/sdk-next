@@ -1,0 +1,27 @@
+query historicalSwaps(
+  $where: HistoricalSwapWhereInput
+  $order: [HistoricalSwapOrderByInput!]
+  $offset: Int
+  $limit: Int
+) {
+  historicalSwaps(
+    where: $where
+    orderBy: $order
+    offset: $offset
+    limit: $limit
+  ) {
+    ...FullHistoricalSwap
+  }
+}
+
+fragment FullHistoricalSwap on HistoricalSwap {
+  id
+  event
+  blockNumber
+  timestamp
+  accountId
+  assetAmountIn
+  assetAmountOut
+  assetIn
+  assetOut
+}
