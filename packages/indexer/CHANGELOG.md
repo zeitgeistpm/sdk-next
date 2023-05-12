@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.0
+
+### Major Changes
+
+- 0b7bdd9: Changes made
+
 ## 2.17.2
 
 ### Patch Changes

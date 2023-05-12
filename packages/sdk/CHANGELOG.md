@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.29.0
+
+### Minor Changes
+
+- 0b7bdd9: Changes made
+
+### Patch Changes
+
+- Updated dependencies [0b7bdd9]
+  - @zeitgeistpm/indexer@3.0.0
+
 ## 2.28.2
 
 ### Patch Changes
