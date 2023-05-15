@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.2
+
+### Patch Changes
+
+- ab01524: Utility type `Unpacked<T>` can now unpack `Set<T>` generic types.
+
 ## 2.18.1
 
 ### Patch Changes
