@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.1
+
+### Patch Changes
+
+- 96ae13b: Fix retry ws provider bug.
+- Updated dependencies [96ae13b]
+  - @zeitgeistpm/utility@2.18.3
+
 ## 2.9.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.3
+
+### Patch Changes
+
+- 96ae13b: Fix retry ws provider bug.
+
 ## 2.18.2
 
 ### Patch Changes

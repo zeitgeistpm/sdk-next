@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.29.3
+
+### Patch Changes
+
+- 96ae13b: Fix retry ws provider bug.
+- Updated dependencies [96ae13b]
+  - @zeitgeistpm/indexer@3.0.3
+  - @zeitgeistpm/augment-api@2.11.4
+  - @zeitgeistpm/rpc@2.7.1
+  - @zeitgeistpm/utility@2.18.3
+  - @zeitgeistpm/web3.storage@2.9.1
+
 ## 2.29.2
 
 ### Patch Changes

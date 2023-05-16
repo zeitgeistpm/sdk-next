@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.11.4
+
+### Patch Changes
+
+- 96ae13b: Fix retry ws provider bug.
+
 ## 2.11.3
 
 ### Patch Changes

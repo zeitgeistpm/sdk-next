@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.3
+
+### Patch Changes
+
+- 96ae13b: Fix retry ws provider bug.
+
 ## 3.0.2
 
 ### Patch Changes

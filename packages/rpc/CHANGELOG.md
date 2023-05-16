@@ -1,5 +1,14 @@
 # @zeitgeistpm/rpc
 
+## 2.7.1
+
+### Patch Changes
+
+- 96ae13b: Fix retry ws provider bug.
+- Updated dependencies [96ae13b]
+  - @zeitgeistpm/augment-api@2.11.4
+  - @zeitgeistpm/utility@2.18.3
+
 ## 2.7.0
 
 ### Minor Changes
