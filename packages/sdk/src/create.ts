@@ -166,24 +166,7 @@ export const createRpcContext = async <MS extends MetadataStorage<any>>(
 
   debug(`connecting to rpc: ${config.provider}`, config)
 
-  const provider = await polly()
-    .logger(_ => {
-      debug(`rpc connection failed, retrying..`, config, 'warn')
-    })
-    .waitAndRetry(config.connectionRetries ?? 8)
-    .executeForPromise<WsProvider>(
-      () =>
-        new Promise((resolve, reject) => {
-          const provider = new WsProvider(config.provider)
-          provider.on('error', error => {
-            reject(error)
-          })
-          provider.on('connected', () => {
-            resolve(provider)
-          })
-        }),
-    )
-
+  const provider = new WsProvider(config.provider)
   const api = await ApiPromise.create({ ...options({ provider }) })
 
   debug(`connected to node rpc`, { ...config, color: '#36a4e3' })

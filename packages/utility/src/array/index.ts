@@ -1,7 +1,7 @@
 /**
  * Unpack the item type of an array.
  */
-export type Unpacked<T> = T extends (infer U)[] ? U : T
+export type Unpacked<T> = T extends (infer U)[] ? U : T extends Set<infer U> ? U : T
 
 /**
  * Create a range.
