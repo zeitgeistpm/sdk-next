@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.29.4
+
+### Patch Changes
+
+- 1be031c: Update Duration type to accept camelcase
+- Updated dependencies [1be031c]
+  - @zeitgeistpm/utility@2.18.4
+
 ## 2.29.3
 
 ### Patch Changes

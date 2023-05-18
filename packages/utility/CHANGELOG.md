@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.4
+
+### Patch Changes
+
+- 1be031c: Update Duration type to accept camelcase
+
 ## 2.18.3
 
 ### Patch Changes
