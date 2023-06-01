@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.4
+
+### Patch Changes
+
+- d7311ef: Scalar market type now supports [string, string] in case of big numbers.
+
 ## 3.0.3
 
 ### Patch Changes

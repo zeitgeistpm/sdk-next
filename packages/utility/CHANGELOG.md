@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.5
+
+### Patch Changes
+
+- d7311ef: Scalar market type now supports [string, string] in case of big numbers.
+
 ## 2.18.4
 
 ### Patch Changes
