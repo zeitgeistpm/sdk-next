@@ -1233,6 +1233,8 @@ export type Market = {
   disputeMechanism: Scalars['String'];
   /** The dispute information for each dispute that's been issued */
   disputes?: Maybe<Array<Maybe<MarketReport>>>;
+  /** Checks if each category has a name for display on UI */
+  hasValidMetaCategories: Scalars['Boolean'];
   /** Unique identifier of the object */
   id: Scalars['String'];
   /** Image for the market */
@@ -1415,6 +1417,8 @@ export enum MarketOrderByInput {
   DescriptionDesc = 'description_DESC',
   DisputeMechanismAsc = 'disputeMechanism_ASC',
   DisputeMechanismDesc = 'disputeMechanism_DESC',
+  HasValidMetaCategoriesAsc = 'hasValidMetaCategories_ASC',
+  HasValidMetaCategoriesDesc = 'hasValidMetaCategories_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   ImgAsc = 'img_ASC',
@@ -1741,6 +1745,9 @@ export type MarketWhereInput = {
   disputeMechanism_not_startsWith?: InputMaybe<Scalars['String']>;
   disputeMechanism_startsWith?: InputMaybe<Scalars['String']>;
   disputes_isNull?: InputMaybe<Scalars['Boolean']>;
+  hasValidMetaCategories_eq?: InputMaybe<Scalars['Boolean']>;
+  hasValidMetaCategories_isNull?: InputMaybe<Scalars['Boolean']>;
+  hasValidMetaCategories_not_eq?: InputMaybe<Scalars['Boolean']>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;

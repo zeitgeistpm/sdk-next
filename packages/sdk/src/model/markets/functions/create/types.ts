@@ -53,7 +53,7 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
         Categorical: number
       }
     | {
-        Scalar: [number, number]
+        Scalar: [number, number] | [string, string]
       }
   /**
    * The resolver of the market outcome

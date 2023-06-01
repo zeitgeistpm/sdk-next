@@ -14,12 +14,19 @@ export type Duration = `${'-' | ''}${number} ${DurationPeriod}${'s' | ''}`
  */
 export type DurationPeriod =
   | 'second'
+  | 'Second'
   | 'minute'
+  | 'Minute'
   | 'hour'
+  | 'Hour'
   | 'day'
+  | 'Day'
   | 'week'
+  | 'Week'
   | 'month'
+  | 'Month'
   | 'year'
+  | 'Year'
 
 /**
  * Typeguard for duration strings.
@@ -28,7 +35,10 @@ export type DurationPeriod =
  * @returns duration is Duration
  */
 export const isDuration = (duration: unknown): duration is Duration =>
-  Boolean(isString(duration) && duration.match(/[1-9]+ second|minute|hour|day|week|month/))
+  Boolean(
+    isString(duration) &&
+      duration.toLowerCase().match(/[1-9]+ second|minute|hour|day|week|month/),
+  )
 
 /**
  * Get duration in milliseconds.
