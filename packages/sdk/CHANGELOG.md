@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.29.6
+
+### Patch Changes
+
+- e844bbb: Use https for know default ipfs client.
+- Updated dependencies [e844bbb]
+  - @zeitgeistpm/indexer@3.0.5
+
 ## 2.29.5
 
 ### Patch Changes

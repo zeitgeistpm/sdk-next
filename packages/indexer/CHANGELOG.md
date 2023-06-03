@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.5
+
+### Patch Changes
+
+- e844bbb: Use https for know default ipfs client.
+
 ## 3.0.4
 
 ### Patch Changes
