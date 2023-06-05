@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.6
+
+### Patch Changes
+
+- ee5a954: Expose the method to creat transaction using models.market.create.tx
+
 ## 3.0.5
 
 ### Patch Changes

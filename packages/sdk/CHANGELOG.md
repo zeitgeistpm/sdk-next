@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.29.7
+
+### Patch Changes
+
+- ee5a954: Expose the method to creat transaction using models.market.create.tx
+- Updated dependencies [ee5a954]
+  - @zeitgeistpm/indexer@3.0.6
+
 ## 2.29.6
 
 ### Patch Changes
