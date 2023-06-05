@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.8
+
+### Patch Changes
+
+- d2c9b04: static .is on StoragError
+
 ## 3.0.7
 
 ### Patch Changes

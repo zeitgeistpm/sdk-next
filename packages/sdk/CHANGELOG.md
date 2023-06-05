@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.29.9
+
+### Patch Changes
+
+- d2c9b04: static .is on StoragError
+- Updated dependencies [d2c9b04]
+  - @zeitgeistpm/indexer@3.0.8
+  - @zeitgeistpm/utility@2.18.7
+  - @zeitgeistpm/web3.storage@2.9.3
+
 ## 2.29.8
 
 ### Patch Changes

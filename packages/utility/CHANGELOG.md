@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.7
+
+### Patch Changes
+
+- d2c9b04: static .is on StoragError
+
 ## 2.18.6
 
 ### Patch Changes

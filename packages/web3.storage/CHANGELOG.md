@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.3
+
+### Patch Changes
+
+- d2c9b04: static .is on StoragError
+- Updated dependencies [d2c9b04]
+  - @zeitgeistpm/utility@2.18.7
+
 ## 2.9.2
 
 ### Patch Changes
