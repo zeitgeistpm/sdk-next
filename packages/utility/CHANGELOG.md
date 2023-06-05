@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.8
+
+### Patch Changes
+
+- 91f5176: Fix
+
 ## 2.18.7
 
 ### Patch Changes

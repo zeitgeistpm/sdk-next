@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.29.10
+
+### Patch Changes
+
+- 91f5176: Fix
+- Updated dependencies [91f5176]
+  - @zeitgeistpm/indexer@3.0.9
+  - @zeitgeistpm/utility@2.18.8
+  - @zeitgeistpm/web3.storage@2.9.4
+
 ## 2.29.9
 
 ### Patch Changes

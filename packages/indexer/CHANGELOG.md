@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.9
+
+### Patch Changes
+
+- 91f5176: Fix
+
 ## 3.0.8
 
 ### Patch Changes

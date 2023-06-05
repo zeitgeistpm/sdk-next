@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.4
+
+### Patch Changes
+
+- 91f5176: Fix
+- Updated dependencies [91f5176]
+  - @zeitgeistpm/utility@2.18.8
+
 ## 2.9.3
 
 ### Patch Changes
