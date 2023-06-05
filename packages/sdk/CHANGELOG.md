@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.30.0
+
+### Minor Changes
+
+- 3e3f2a1: Add disputed and reported info to market history
+
+### Patch Changes
+
+- Updated dependencies [3e3f2a1]
+  - @zeitgeistpm/indexer@3.1.0
+
 ## 2.29.5
 
 ### Patch Changes

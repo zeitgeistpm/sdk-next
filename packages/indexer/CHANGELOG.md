@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.1.0
+
+### Minor Changes
+
+- 3e3f2a1: Add disputed and reported info to market history
+
 ## 3.0.4
 
 ### Patch Changes
