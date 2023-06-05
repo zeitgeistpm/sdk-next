@@ -710,11 +710,15 @@ export type HistoricalMarket = {
   __typename?: 'HistoricalMarket';
   /** Height of the block */
   blockNumber: Scalars['Int'];
+  /** The account that reported or disputed */
+  by?: Maybe<Scalars['String']>;  
   /** Event method which initiated this change */
   event: MarketEvent;
   id: Scalars['String'];
   /** Zeitgeist's identifier for market */
   marketId: Scalars['Int'];
+  /** Reported or disputed outcome for the market */
+  outcome?: Maybe<OutcomeReport>;
   /** Zeitgeist's identifier for pool */
   poolId?: Maybe<Scalars['Int']>;
   /** Latest resolved outcome */
@@ -734,12 +738,18 @@ export type HistoricalMarketEdge = {
 export enum HistoricalMarketOrderByInput {
   BlockNumberAsc = 'blockNumber_ASC',
   BlockNumberDesc = 'blockNumber_DESC',
+  ByAsc = 'by_ASC',
+  ByDesc = 'by_DESC',
   EventAsc = 'event_ASC',
   EventDesc = 'event_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   MarketIdAsc = 'marketId_ASC',
   MarketIdDesc = 'marketId_DESC',
+  OutcomeCategoricalAsc = 'outcome_categorical_ASC',
+  OutcomeCategoricalDesc = 'outcome_categorical_DESC',
+  OutcomeScalarAsc = 'outcome_scalar_ASC',
+  OutcomeScalarDesc = 'outcome_scalar_DESC',
   PoolIdAsc = 'poolId_ASC',
   PoolIdDesc = 'poolId_DESC',
   ResolvedOutcomeAsc = 'resolvedOutcome_ASC',
@@ -762,6 +772,23 @@ export type HistoricalMarketWhereInput = {
   blockNumber_lte?: InputMaybe<Scalars['Int']>;
   blockNumber_not_eq?: InputMaybe<Scalars['Int']>;
   blockNumber_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  by_contains?: InputMaybe<Scalars['String']>;
+  by_containsInsensitive?: InputMaybe<Scalars['String']>;
+  by_endsWith?: InputMaybe<Scalars['String']>;
+  by_eq?: InputMaybe<Scalars['String']>;
+  by_gt?: InputMaybe<Scalars['String']>;
+  by_gte?: InputMaybe<Scalars['String']>;
+  by_in?: InputMaybe<Array<Scalars['String']>>;
+  by_isNull?: InputMaybe<Scalars['Boolean']>;
+  by_lt?: InputMaybe<Scalars['String']>;
+  by_lte?: InputMaybe<Scalars['String']>;
+  by_not_contains?: InputMaybe<Scalars['String']>;
+  by_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  by_not_endsWith?: InputMaybe<Scalars['String']>;
+  by_not_eq?: InputMaybe<Scalars['String']>;
+  by_not_in?: InputMaybe<Array<Scalars['String']>>;
+  by_not_startsWith?: InputMaybe<Scalars['String']>;
+  by_startsWith?: InputMaybe<Scalars['String']>;
   event_eq?: InputMaybe<MarketEvent>;
   event_in?: InputMaybe<Array<MarketEvent>>;
   event_isNull?: InputMaybe<Scalars['Boolean']>;
@@ -793,6 +820,8 @@ export type HistoricalMarketWhereInput = {
   marketId_lte?: InputMaybe<Scalars['Int']>;
   marketId_not_eq?: InputMaybe<Scalars['Int']>;
   marketId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  outcome?: InputMaybe<OutcomeReportWhereInput>;
+  outcome_isNull?: InputMaybe<Scalars['Boolean']>;
   poolId_eq?: InputMaybe<Scalars['Int']>;
   poolId_gt?: InputMaybe<Scalars['Int']>;
   poolId_gte?: InputMaybe<Scalars['Int']>;
