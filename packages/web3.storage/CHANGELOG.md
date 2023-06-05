@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.2
+
+### Patch Changes
+
+- ab26257: StorageErrors for ipfs
+- Updated dependencies [ab26257]
+  - @zeitgeistpm/utility@2.18.6
+
 ## 2.9.1
 
 ### Patch Changes

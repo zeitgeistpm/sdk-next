@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.29.8
+
+### Patch Changes
+
+- ab26257: StorageErrors for ipfs
+- Updated dependencies [ab26257]
+  - @zeitgeistpm/indexer@3.0.7
+  - @zeitgeistpm/utility@2.18.6
+  - @zeitgeistpm/web3.storage@2.9.2
+
 ## 2.29.7
 
 ### Patch Changes

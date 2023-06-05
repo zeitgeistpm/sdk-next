@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.6
+
+### Patch Changes
+
+- ab26257: StorageErrors for ipfs
+
 ## 2.18.5
 
 ### Patch Changes

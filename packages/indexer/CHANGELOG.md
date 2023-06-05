@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.7
+
+### Patch Changes
+
+- ab26257: StorageErrors for ipfs
+
 ## 3.0.6
 
 ### Patch Changes
