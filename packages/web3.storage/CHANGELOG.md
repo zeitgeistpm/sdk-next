@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.8
+
+### Patch Changes
+
+- d4ee2ed: Unpin from node softly
+- Updated dependencies [d4ee2ed]
+  - @zeitgeistpm/utility@2.18.12
+
 ## 2.9.7
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.7.5
+
+### Patch Changes
+
+- d4ee2ed: Unpin from node softly
+- Updated dependencies [d4ee2ed]
+  - @zeitgeistpm/utility@2.18.12
+
 ## 2.7.4
 
 ### Patch Changes

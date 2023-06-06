@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.12
+
+### Patch Changes
+
+- d4ee2ed: Unpin from node softly
+
 ## 2.18.11
 
 ### Patch Changes
