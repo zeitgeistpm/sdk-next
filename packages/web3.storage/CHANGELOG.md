@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.5
+
+### Patch Changes
+
+- d683955: Fix ipfs port
+- Updated dependencies [d683955]
+  - @zeitgeistpm/utility@2.18.9
+
 ## 2.9.4
 
 ### Patch Changes

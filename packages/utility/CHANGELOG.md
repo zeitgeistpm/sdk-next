@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.9
+
+### Patch Changes
+
+- d683955: Fix ipfs port
+
 ## 2.18.8
 
 ### Patch Changes
