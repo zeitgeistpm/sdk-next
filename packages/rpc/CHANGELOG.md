@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.7.3
+
+### Patch Changes
+
+- 3427623: Remove node pin if cluster adding fails
+- Updated dependencies [3427623]
+  - @zeitgeistpm/utility@2.18.10
+
 ## 2.7.2
 
 ### Patch Changes

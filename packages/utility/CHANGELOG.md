@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.10
+
+### Patch Changes
+
+- 3427623: Remove node pin if cluster adding fails
+
 ## 2.18.9
 
 ### Patch Changes

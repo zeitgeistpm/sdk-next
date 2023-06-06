@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.29.12
+
+### Patch Changes
+
+- 3427623: Remove node pin if cluster adding fails
+- Updated dependencies [3427623]
+  - @zeitgeistpm/rpc@2.7.3
+  - @zeitgeistpm/utility@2.18.10
+  - @zeitgeistpm/web3.storage@2.9.6
+
 ## 2.29.11
 
 ### Patch Changes
