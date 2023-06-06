@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.11
+
+### Patch Changes
+
+- 78e8b5d: Remove node pin fbefore cluster on del
+
 ## 2.18.10
 
 ### Patch Changes

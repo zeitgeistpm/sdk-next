@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.7.4
+
+### Patch Changes
+
+- 78e8b5d: Remove node pin fbefore cluster on del
+- Updated dependencies [78e8b5d]
+  - @zeitgeistpm/utility@2.18.11
+
 ## 2.7.3
 
 ### Patch Changes

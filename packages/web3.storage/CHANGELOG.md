@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.7
+
+### Patch Changes
+
+- 78e8b5d: Remove node pin fbefore cluster on del
+- Updated dependencies [78e8b5d]
+  - @zeitgeistpm/utility@2.18.11
+
 ## 2.9.6
 
 ### Patch Changes
