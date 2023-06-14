@@ -64,7 +64,7 @@ fragment FullMarket on Market {
     scalar
   }
   metadata
-  isMetaComplete
+  hasValidMetaCategories
   oracle
   outcomeAssets
   period {

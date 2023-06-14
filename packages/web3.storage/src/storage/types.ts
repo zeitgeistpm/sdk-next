@@ -16,20 +16,39 @@ export type Storage<A, ID = CID> = {
    * @generic ID - id type
    * @generic T - type of data
    */
-  get: TaskEither<Error, IOption<A>, [ID]>
+  get: TaskEither<StorageError, IOption<A>, [ID]>
   /**
    * Put item to storage
    *
    * @generic ID - id type
    * @generic T - type of data
    */
-  put: TaskEither<Error, ID, [data: A]>
+  put: TaskEither<StorageError, ID, [data: A]>
   /**
    * delete item from storage
    *
    * @generic ID - id type
    */
-  del: TaskEither<Error, void, [ID]>
+  del: TaskEither<StorageError, void, [ID]>
 
   withCodec: <A>(codec: Codec<string | Uint8Array, A>) => Storage<A, ID>
+}
+
+const StorageErrorSym = Symbol('StorageError')
+
+export class StorageError extends Error {
+  readonly sym = StorageErrorSym
+  readonly raw: Error
+
+  constructor(message: string, raw: Error) {
+    super(message)
+    this.name = 'StorageError'
+    this.raw = raw
+  }
+
+  static is(error: any): error is StorageError {
+    return (
+      error instanceof StorageError || ('sym' in error && error.sym === StorageErrorSym)
+    )
+  }
 }

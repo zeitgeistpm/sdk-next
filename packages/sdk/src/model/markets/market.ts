@@ -2,9 +2,10 @@ import type { u128 } from '@polkadot/types'
 import { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isCodec, isNumber } from '@polkadot/util'
-import type {
-  FullMarketFragment,
-  MarketStatus as IndexerMarketStatus,
+import {
+  MarketCreation,
+  type FullMarketFragment,
+  type MarketStatus as IndexerMarketStatus,
 } from '@zeitgeistpm/indexer'
 import {
   ExtractableResult,
@@ -296,13 +297,17 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
     const outcomeAssets = pool ? pool.assets.toArray().map(a => JSON.stringify(a)) : []
 
-    const isMetaComplete = O.isSome(metadata) && categoryMetadataIsComplete(metadata.value)
+    const hasValidMetaCategories =
+      O.isSome(metadata) && categoryMetadataIsComplete(metadata.value)
 
     const base: IndexedBase = {
-      isMetaComplete,
+      hasValidMetaCategories,
       id: `${market.marketId}`,
       marketId: market.marketId,
-      creation: primitive.creation.type,
+      creation:
+        primitive.creation.type === 'Advised'
+          ? MarketCreation.Advised
+          : MarketCreation.Permissionless,
       creator: primitive.creator.toHuman(),
       oracle: primitive.oracle.toHuman(),
       deadlines: primitive.deadlines,

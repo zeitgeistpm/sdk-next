@@ -3,7 +3,7 @@ import { Codec, JsonCodec } from '@zeitgeistpm/utility/dist/codec'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import * as IPFSHTTPClient from 'ipfs-http-client'
-import { Storage } from '../..'
+import { Storage, StorageError } from '../..'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
 /**
@@ -22,43 +22,59 @@ export const storage = <T>(
   const hashAlg = config.hashAlg ?? `sha3-384`
 
   return {
-    put: Te.from(async data => {
-      const content = (await codec.decode(data).unright()).unwrap()
-      if (!content) throw new Error('Invalid content')
+    put: Te.from(
+      async data => {
+        const content = (await codec.decode(data).unright()).unwrap()
+        if (!content) throw new Error('Invalid content')
 
-      const { cid } = await node.add(
-        { content },
-        { hashAlg, pin: config?.node.pin ?? true },
-      )
+        const { cid } = await node.add(
+          { content },
+          { hashAlg, pin: config?.node.pin ?? true },
+        )
 
-      if (config.cluster) {
-        await cluster.pin(cid.toString(), config.cluster).catch(_ => {
-          if (config?.node.pin) {
+        if (config.cluster) {
+          try {
+            await cluster.pin(cid.toString(), config.cluster).catch(_ => {
+              if (config?.node.pin) {
+                node.pin.rm(cid)
+              }
+            })
+          } catch (error) {
             node.pin.rm(cid)
+            throw error
           }
-        })
-      }
+        }
 
-      return cid
-    }),
-    get: Te.from(async cid => {
-      const data = (await read(node, cid).unwrap())
-        .map(chunks => u8aConcat(...chunks))
-        .unwrap()
+        return cid
+      },
+      (message, error) => new StorageError(message, error),
+    ),
+    get: Te.from(
+      async cid => {
+        const data = (await read(node, cid).unwrap())
+          .map(chunks => u8aConcat(...chunks))
+          .unwrap()
 
-      if (data) {
-        const a = await codec.encode(data).unright()
-        return a
-      }
+        if (data) {
+          const a = await codec.encode(data).unright()
+          return a
+        }
 
-      return O.option(O.none())
-    }),
-    del: Te.from(async cid => {
-      if (config.cluster) {
-        await cluster.unpin(cid.toString(), config.cluster)
-      }
-      await node.pin.rm(cid.toString())
-    }),
+        return O.option(O.none())
+      },
+      (message, error) => new StorageError(message, error),
+    ),
+    del: Te.from(
+      async cid => {
+        if (config.cluster) {
+          await cluster.unpin(cid.toString(), config.cluster)
+        }
+        node.pin
+          .rm(cid.toString())
+          .catch(error => console.warn("Couldn't unpin from node", error))
+      },
+      (message, error) => new StorageError(message, error),
+    ),
     withCodec: codec => storage(config, codec, node),
   }
 }

@@ -5,7 +5,11 @@ import { Observable } from 'rxjs'
 import { Context, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { Market, RpcMarket } from '../types'
-import { CreateMarketParams, CreateMarketResult } from './functions/create/types'
+import {
+  CreateMarketParams,
+  CreateMarketResult,
+  CreateMarketTransaction,
+} from './functions/create/types'
 import { MarketGetQuery } from './functions/get/types'
 import { MarketList, MarketsListQuery } from './functions/list/types'
 import { MarketStage } from './marketstage'
@@ -58,10 +62,21 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage = Metadata
    * Create a market. Only available when connecting to rpc.
    */
   create: C extends RpcContext<MS>
-    ? <C extends RpcContext<MS>, P extends CreateMarketParams<C, MS>>(
-        params: P,
-      ) => Promise<CreateMarketResult<C, MS, P>>
+    ? PFunc<
+        <C extends RpcContext<MS>, P extends CreateMarketParams<C, MS>>(
+          params: P,
+        ) => Promise<CreateMarketResult<C, MS, P>>,
+        {
+          tx: (params: CreateMarketParams<C, MS>) => CreateMarketTransaction
+        }
+      >
     : never
+
+  // C extends RpcContext<MS>
+  //   ? <C extends RpcContext<MS>, P extends CreateMarketParams<C, MS>>(
+  //       params: P,
+  //     ) => Promise<CreateMarketResult<C, MS, P>>
+  //   : never
 
   /**
    * Get the current stage of a market.

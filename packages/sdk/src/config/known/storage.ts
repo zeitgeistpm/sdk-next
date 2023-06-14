@@ -8,7 +8,7 @@ import { IPFS } from '@zeitgeistpm/web3.storage'
 export const ZeitgeistIpfs = <MS extends MetadataStorage<any>>(): MS => {
   return createStorage(
     IPFS.storage({
-      node: { url: 'https://ipfs.zeitgeist.pm:5001' },
+      node: { url: 'https://ipfs.zeitgeist.pm' },
       cluster: {
         url: 'https://ipfs-cluster.zeitgeist.pm',
         auth: {

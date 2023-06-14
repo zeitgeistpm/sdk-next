@@ -3,12 +3,7 @@ import type { SubmittableExtrinsic } from '@polkadot/api/types'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { isExtSigner, KeyringPairOrExtSigner } from '../keyring'
-import {
-  RetractedError,
-  TransactionError,
-  TransactionHooks,
-  UnknownDispatchError,
-} from './types'
+import { TransactionError, TransactionHooks, UnknownDispatchError } from './types'
 
 export const signAndSend: Te.TaskEither<
   TransactionError,

@@ -19,10 +19,11 @@ export type TaskEither<L, R, Args extends ReadonlyArray<unknown>> = (
  * @param fn (...args: Args) => Promise<R>
  * @returns TaskEither<L, R, Args>
  */
-export const from = <R, L = Error, Args extends ReadonlyArray<unknown> = []>(
+export const from = <R, L extends Error = Error, Args extends ReadonlyArray<unknown> = []>(
   fn: (...args: Args) => Promise<R>,
+  errorWrapper?: (message: string, error: Error) => L,
 ): TaskEither<L, R, Args> => {
   return (...args) => {
-    return Ae.from(() => fn(...args))
+    return Ae.from(() => fn(...args), errorWrapper)
   }
 }

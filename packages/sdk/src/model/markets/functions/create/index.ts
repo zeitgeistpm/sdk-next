@@ -2,7 +2,7 @@ import type { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
 import type { EventRecord } from '@polkadot/types/interfaces'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isString, isU8a, u8aToHex } from '@polkadot/util'
-import { signAndSend } from '@zeitgeistpm/rpc'
+import { TransactionError, signAndSend } from '@zeitgeistpm/rpc'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
@@ -33,7 +33,7 @@ export const create = async <
 >(
   context: C,
   params: P,
-): Promise<CreateMarketResult<C, MS>> => {
+) => {
   const { tx, rollbackMetadata } = await transaction(context, params)
 
   const response = signAndSend({
