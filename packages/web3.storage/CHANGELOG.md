@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.9
+
+### Patch Changes
+
+- d690e08: Replace isMetaComplete with hasValidMetaCategories
+- Updated dependencies [d690e08]
+  - @zeitgeistpm/utility@2.18.13
+
 ## 2.9.8
 
 ### Patch Changes

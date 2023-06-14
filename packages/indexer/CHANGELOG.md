@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.10
+
+### Patch Changes
+
+- d690e08: Replace isMetaComplete with hasValidMetaCategories
+
 ## 3.0.9
 
 ### Patch Changes

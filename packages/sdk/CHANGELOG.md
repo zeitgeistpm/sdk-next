@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.29.15
+
+### Patch Changes
+
+- d690e08: Replace isMetaComplete with hasValidMetaCategories
+- Updated dependencies [d690e08]
+  - @zeitgeistpm/indexer@3.0.10
+  - @zeitgeistpm/rpc@2.7.6
+  - @zeitgeistpm/utility@2.18.13
+  - @zeitgeistpm/web3.storage@2.9.9
+
 ## 2.29.14
 
 ### Patch Changes

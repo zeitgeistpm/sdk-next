@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.18.13
+
+### Patch Changes
+
+- d690e08: Replace isMetaComplete with hasValidMetaCategories
+
 ## 2.18.12
 
 ### Patch Changes

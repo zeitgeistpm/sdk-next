@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 2.7.6
+
+### Patch Changes
+
+- d690e08: Replace isMetaComplete with hasValidMetaCategories
+- Updated dependencies [d690e08]
+  - @zeitgeistpm/utility@2.18.13
+
 ## 2.7.5
 
 ### Patch Changes
