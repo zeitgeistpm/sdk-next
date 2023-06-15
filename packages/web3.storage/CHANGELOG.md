@@ -1,5 +1,11 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.11
+
+### Patch Changes
+
+- 77365d2: Fix
+
 ## 2.9.10
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.29.17
+
+### Patch Changes
+
+- 77365d2: Fix
+- Updated dependencies [77365d2]
+  - @zeitgeistpm/web3.storage@2.9.11
+
 ## 2.29.16
 
 ### Patch Changes
