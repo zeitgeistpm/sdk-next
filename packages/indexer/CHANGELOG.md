@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.11
+
+### Patch Changes
+
+- 7586a91: Add calculateFees to market creation model.
+
 ## 3.0.10
 
 ### Patch Changes

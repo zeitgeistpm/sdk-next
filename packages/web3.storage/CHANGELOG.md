@@ -1,5 +1,11 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.10
+
+### Patch Changes
+
+- 7586a91: Add calculateFees to market creation model.
+
 ## 2.9.9
 
 ### Patch Changes

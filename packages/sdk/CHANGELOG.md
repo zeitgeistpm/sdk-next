@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.29.16
+
+### Patch Changes
+
+- 7586a91: Add calculateFees to market creation model.
+- Updated dependencies [7586a91]
+  - @zeitgeistpm/web3.storage@2.9.10
+  - @zeitgeistpm/indexer@3.0.11
+
 ## 2.29.15
 
 ### Patch Changes
