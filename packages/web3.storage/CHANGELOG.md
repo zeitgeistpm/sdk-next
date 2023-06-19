@@ -1,5 +1,11 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.12
+
+### Patch Changes
+
+- 979bddc: poolStatus to .status
+
 ## 2.9.11
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.29.18
+
+### Patch Changes
+
+- 979bddc: poolStatus to .status
+- Updated dependencies [979bddc]
+  - @zeitgeistpm/indexer@3.0.12
+  - @zeitgeistpm/web3.storage@2.9.12
+
 ## 2.29.17
 
 ### Patch Changes
