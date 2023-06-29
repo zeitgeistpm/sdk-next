@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/sdk",
-  "version": "2.29.19",
+  "version": "2.29.20",
   "publishConfig": {
     "access": "public"
   },

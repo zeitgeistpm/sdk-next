@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.29.20
+
+### Patch Changes
+
+- b131991: parseAssetId takes any type for convenience
+
 ## 2.29.19
 
 ### Patch Changes
