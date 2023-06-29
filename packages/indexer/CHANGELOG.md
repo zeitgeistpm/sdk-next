@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.13
+
+### Patch Changes
+
+- bf2a3fa: Fix isWithPool to be false when pool key is undefined
+
 ## 3.0.12
 
 ### Patch Changes

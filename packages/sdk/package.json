@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/sdk",
-  "version": "2.29.18",
+  "version": "2.29.19",
   "publishConfig": {
     "access": "public"
   },
@@ -30,11 +30,11 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^2.11.4",
-    "@zeitgeistpm/indexer": "^3.0.12",
+    "@zeitgeistpm/augment-api": "^2.11.5",
+    "@zeitgeistpm/indexer": "^3.0.13",
     "@zeitgeistpm/rpc": "^2.7.6",
     "@zeitgeistpm/utility": "^2.18.13",
-    "@zeitgeistpm/web3.storage": "^2.9.12",
+    "@zeitgeistpm/web3.storage": "^2.9.13",
     "cids": "^1.1.9",
     "decimal.js": "^10.4.3",
     "lodash-es": "^4.17.21",

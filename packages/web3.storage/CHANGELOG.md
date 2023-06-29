@@ -1,5 +1,11 @@
 # @zeitgeistpm/web3.storage
 
+## 2.9.13
+
+### Patch Changes
+
+- bf2a3fa: Fix isWithPool to be false when pool key is undefined
+
 ## 2.9.12
 
 ### Patch Changes

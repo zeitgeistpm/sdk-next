@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.29.19
+
+### Patch Changes
+
+- bf2a3fa: Fix isWithPool to be false when pool key is undefined
+- Updated dependencies [bf2a3fa]
+  - @zeitgeistpm/augment-api@2.11.5
+  - @zeitgeistpm/indexer@3.0.13
+  - @zeitgeistpm/web3.storage@2.9.13
+
 ## 2.29.18
 
 ### Patch Changes
