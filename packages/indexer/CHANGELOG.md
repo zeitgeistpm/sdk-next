@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.0.14
+
+### Patch Changes
+
+- 8c8bfcd: Added extrinsic info(hash, name) to `historicalAccountBalances`
+
 ## 3.0.13
 
 ### Patch Changes
