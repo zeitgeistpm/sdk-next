@@ -22,4 +22,8 @@ fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
   event
   id
   timestamp
+  extrinsic {
+    hash
+    name
+  }
 }
