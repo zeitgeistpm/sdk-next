@@ -251,6 +251,141 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       UnexpectedStatus: AugmentedError<ApiType>;
     };
+    contracts: {
+      /**
+       * Code removal was denied because the code is still in use by at least one contract.
+       **/
+      CodeInUse: AugmentedError<ApiType>;
+      /**
+       * No code could be found at the supplied code hash.
+       **/
+      CodeNotFound: AugmentedError<ApiType>;
+      /**
+       * The contract's code was found to be invalid during validation or instrumentation.
+       * A more detailed error can be found on the node console if debug messages are enabled
+       * or in the debug buffer which is returned to RPC clients.
+       **/
+      CodeRejected: AugmentedError<ApiType>;
+      /**
+       * The code supplied to `instantiate_with_code` exceeds the limit specified in the
+       * current schedule.
+       **/
+      CodeTooLarge: AugmentedError<ApiType>;
+      /**
+       * No contract was found at the specified address.
+       **/
+      ContractNotFound: AugmentedError<ApiType>;
+      /**
+       * The contract ran to completion but decided to revert its storage changes.
+       * Please note that this error is only returned from extrinsics. When called directly
+       * or via RPC an `Ok` will be returned. In this case the caller needs to inspect the flags
+       * to determine whether a reversion has taken place.
+       **/
+      ContractReverted: AugmentedError<ApiType>;
+      /**
+       * Contract trapped during execution.
+       **/
+      ContractTrapped: AugmentedError<ApiType>;
+      /**
+       * The debug message specified to `seal_debug_message` does contain invalid UTF-8.
+       **/
+      DebugMessageInvalidUTF8: AugmentedError<ApiType>;
+      /**
+       * Input passed to a contract API function failed to decode as expected type.
+       **/
+      DecodingFailed: AugmentedError<ApiType>;
+      /**
+       * Removal of a contract failed because the deletion queue is full.
+       * 
+       * This can happen when calling `seal_terminate`.
+       * The queue is filled by deleting contracts and emptied by a fixed amount each block.
+       * Trying again during another block is the only way to resolve this issue.
+       **/
+      DeletionQueueFull: AugmentedError<ApiType>;
+      /**
+       * A contract with the same AccountId already exists.
+       **/
+      DuplicateContract: AugmentedError<ApiType>;
+      /**
+       * The topics passed to `seal_deposit_events` contains at least one duplicate.
+       **/
+      DuplicateTopics: AugmentedError<ApiType>;
+      /**
+       * `seal_call` forwarded this contracts input. It therefore is no longer available.
+       **/
+      InputForwarded: AugmentedError<ApiType>;
+      /**
+       * Invalid combination of flags supplied to `seal_call` or `seal_delegate_call`.
+       **/
+      InvalidCallFlags: AugmentedError<ApiType>;
+      /**
+       * A new schedule must have a greater version than the current one.
+       **/
+      InvalidScheduleVersion: AugmentedError<ApiType>;
+      /**
+       * Performing a call was denied because the calling depth reached the limit
+       * of what is specified in the schedule.
+       **/
+      MaxCallDepthReached: AugmentedError<ApiType>;
+      /**
+       * The chain does not provide a chain extension. Calling the chain extension results
+       * in this error. Note that this usually  shouldn't happen as deploying such contracts
+       * is rejected.
+       **/
+      NoChainExtension: AugmentedError<ApiType>;
+      /**
+       * A buffer outside of sandbox memory was passed to a contract API function.
+       **/
+      OutOfBounds: AugmentedError<ApiType>;
+      /**
+       * The executed contract exhausted its gas limit.
+       **/
+      OutOfGas: AugmentedError<ApiType>;
+      /**
+       * The output buffer supplied to a contract API call was too small.
+       **/
+      OutputBufferTooSmall: AugmentedError<ApiType>;
+      /**
+       * The subject passed to `seal_random` exceeds the limit.
+       **/
+      RandomSubjectTooLong: AugmentedError<ApiType>;
+      /**
+       * A call tried to invoke a contract that is flagged as non-reentrant.
+       **/
+      ReentranceDenied: AugmentedError<ApiType>;
+      /**
+       * More storage was created than allowed by the storage deposit limit.
+       **/
+      StorageDepositLimitExhausted: AugmentedError<ApiType>;
+      /**
+       * Origin doesn't have enough balance to pay the required storage deposits.
+       **/
+      StorageDepositNotEnoughFunds: AugmentedError<ApiType>;
+      /**
+       * A contract self destructed in its constructor.
+       * 
+       * This can be triggered by a call to `seal_terminate`.
+       **/
+      TerminatedInConstructor: AugmentedError<ApiType>;
+      /**
+       * Termination of a contract is not allowed while the contract is already
+       * on the call stack. Can be triggered by `seal_terminate`.
+       **/
+      TerminatedWhileReentrant: AugmentedError<ApiType>;
+      /**
+       * The amount of topics passed to `seal_deposit_events` exceeds the limit.
+       **/
+      TooManyTopics: AugmentedError<ApiType>;
+      /**
+       * Performing the requested transfer failed. Probably because there isn't enough
+       * free balance in the sender's account.
+       **/
+      TransferFailed: AugmentedError<ApiType>;
+      /**
+       * The size defined in `T::MaxValueSize` was exceeded.
+       **/
+      ValueTooLarge: AugmentedError<ApiType>;
+    };
     council: {
       /**
        * Members are already initialized!
@@ -329,73 +464,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       OnlyJurorsCanVote: AugmentedError<ApiType>;
     };
-    crowdloan: {
-      /**
-       * User trying to associate a native identity with a relay chain identity for posterior
-       * reward claiming provided an already associated relay chain identity
-       **/
-      AlreadyAssociated: AugmentedError<ApiType>;
-      /**
-       * Trying to introduce a batch that goes beyond the limits of the funds
-       **/
-      BatchBeyondFundPot: AugmentedError<ApiType>;
-      /**
-       * First claim already done
-       **/
-      FirstClaimAlreadyDone: AugmentedError<ApiType>;
-      /**
-       * User submitted an unsifficient number of proofs to change the reward address
-       **/
-      InsufficientNumberOfValidProofs: AugmentedError<ApiType>;
-      /**
-       * User trying to associate a native identity with a relay chain identity for posterior
-       * reward claiming provided a wrong signature
-       **/
-      InvalidClaimSignature: AugmentedError<ApiType>;
-      /**
-       * User trying to claim the first free reward provided the wrong signature
-       **/
-      InvalidFreeClaimSignature: AugmentedError<ApiType>;
-      /**
-       * User trying to claim an award did not have an claim associated with it. This may mean
-       * they did not contribute to the crowdloan, or they have not yet associated a native id
-       * with their contribution
-       **/
-      NoAssociatedClaim: AugmentedError<ApiType>;
-      /**
-       * User provided a signature from a non-contributor relay account
-       **/
-      NonContributedAddressProvided: AugmentedError<ApiType>;
-      /**
-       * The contribution is not high enough to be eligible for rewards
-       **/
-      RewardNotHighEnough: AugmentedError<ApiType>;
-      /**
-       * User trying to claim rewards has already claimed all rewards associated with its
-       * identity and contribution
-       **/
-      RewardsAlreadyClaimed: AugmentedError<ApiType>;
-      /**
-       * Rewards should match funds of the pallet
-       **/
-      RewardsDoNotMatchFund: AugmentedError<ApiType>;
-      /**
-       * Reward vec has already been initialized
-       **/
-      RewardVecAlreadyInitialized: AugmentedError<ApiType>;
-      /**
-       * Reward vec has not yet been fully initialized
-       **/
-      RewardVecNotFullyInitializedYet: AugmentedError<ApiType>;
-      /**
-       * Initialize_reward_vec received too many contributors
-       **/
-      TooManyContributors: AugmentedError<ApiType>;
-      /**
-       * Provided vesting period is not valid
-       **/
-      VestingPeriodNonValid: AugmentedError<ApiType>;
-    };
     cumulusXcm: {
     };
     democracy: {
@@ -412,17 +480,9 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       AlreadyVetoed: AugmentedError<ApiType>;
       /**
-       * Preimage already noted
-       **/
-      DuplicatePreimage: AugmentedError<ApiType>;
-      /**
        * Proposal already made
        **/
       DuplicateProposal: AugmentedError<ApiType>;
-      /**
-       * Imminent
-       **/
-      Imminent: AugmentedError<ApiType>;
       /**
        * The instant referendum origin is currently disallowed.
        **/
@@ -460,10 +520,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       NotDelegating: AugmentedError<ApiType>;
       /**
-       * Not imminent
-       **/
-      NotImminent: AugmentedError<ApiType>;
-      /**
        * Next external proposal not simple majority
        **/
       NotSimpleMajority: AugmentedError<ApiType>;
@@ -471,14 +527,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The given account did not vote on the referendum.
        **/
       NotVoter: AugmentedError<ApiType>;
-      /**
-       * Invalid preimage
-       **/
-      PreimageInvalid: AugmentedError<ApiType>;
-      /**
-       * Preimage not found
-       **/
-      PreimageMissing: AugmentedError<ApiType>;
       /**
        * Proposal still blacklisted
        **/
@@ -492,13 +540,9 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       ReferendumInvalid: AugmentedError<ApiType>;
       /**
-       * Too early
+       * Maximum number of items reached.
        **/
-      TooEarly: AugmentedError<ApiType>;
-      /**
-       * Maximum number of proposals reached.
-       **/
-      TooManyProposals: AugmentedError<ApiType>;
+      TooMany: AugmentedError<ApiType>;
       /**
        * Value too low
        **/
@@ -668,7 +712,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       PoolAlreadyExists: AugmentedError<ApiType>;
     };
-    multiSig: {
+    multisig: {
       /**
        * Call is already approved by this signatory.
        **/
@@ -761,7 +805,7 @@ declare module '@polkadot/api-base/types/errors' {
       PendingDelegationRequestDNE: AugmentedError<ApiType>;
       PendingDelegationRequestNotDueYet: AugmentedError<ApiType>;
       PendingDelegationRevoke: AugmentedError<ApiType>;
-      RoundLengthMustBeAtLeastTotalSelectedCollators: AugmentedError<ApiType>;
+      RoundLengthMustBeGreaterThanTotalSelectedCollators: AugmentedError<ApiType>;
       TooLowCandidateAutoCompoundingDelegationCountToAutoCompound: AugmentedError<ApiType>;
       TooLowCandidateAutoCompoundingDelegationCountToDelegate: AugmentedError<ApiType>;
       TooLowCandidateCountToLeaveCandidates: AugmentedError<ApiType>;
@@ -1088,7 +1132,7 @@ declare module '@polkadot/api-base/types/errors' {
       /**
        * Preimage is too large to store on-chain.
        **/
-      TooLarge: AugmentedError<ApiType>;
+      TooBig: AugmentedError<ApiType>;
     };
     proxy: {
       /**
@@ -1143,6 +1187,10 @@ declare module '@polkadot/api-base/types/errors' {
        * Failed to schedule a call
        **/
       FailedToSchedule: AugmentedError<ApiType>;
+      /**
+       * Attempt to use a non-named function on a named task.
+       **/
+      Named: AugmentedError<ApiType>;
       /**
        * Cannot find the scheduled call.
        **/
@@ -1213,7 +1261,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InsufficientBalance: AugmentedError<ApiType>;
       /**
-       * Liquidity provided to new CPMM pool is less than `MinLiquidity`.
+       * Liquidity provided to new CPMM pool is less than the minimum allowed balance.
        **/
       InsufficientLiquidity: AugmentedError<ApiType>;
       /**

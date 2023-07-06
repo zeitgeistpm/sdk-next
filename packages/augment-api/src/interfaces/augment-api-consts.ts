@@ -6,9 +6,9 @@
 import '@polkadot/api-base/types/consts';
 
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
-import type { Bytes, Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
-import type { Perbill, Percent, Permill, Weight } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportPalletId, FrameSupportWeightsRuntimeDbWeight, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, XcmV1MultiLocation, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
+import type { Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { Percent, Permill } from '@polkadot/types/interfaces/runtime';
+import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, PalletContractsSchedule, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, XcmV1MultiLocation, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
 
@@ -86,6 +86,55 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maximumReasonLength: u32 & AugmentedConst<ApiType>;
     };
+    contracts: {
+      /**
+       * The maximum number of contracts that can be pending for deletion.
+       * 
+       * When a contract is deleted by calling `seal_terminate` it becomes inaccessible
+       * immediately, but the deletion of the storage items it has accumulated is performed
+       * later. The contract is put into the deletion queue. This defines how many
+       * contracts can be queued up at the same time. If that limit is reached `seal_terminate`
+       * will fail. The action must be retried in a later block in that case.
+       * 
+       * The reasons for limiting the queue depth are:
+       * 
+       * 1. The queue is in storage in order to be persistent between blocks. We want to limit
+       * the amount of storage that can be consumed.
+       * 2. The queue is stored in a vector and needs to be decoded as a whole when reading
+       * it at the end of each block. Longer queues take more weight to decode and hence
+       * limit the amount of items that can be deleted per block.
+       **/
+      deletionQueueDepth: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum amount of weight that can be consumed per block for lazy trie removal.
+       * 
+       * The amount of weight that is dedicated per block to work on the deletion queue. Larger
+       * values allow more trie keys to be deleted in each block but reduce the amount of
+       * weight that is left for transactions. See [`Self::DeletionQueueDepth`] for more
+       * information about the deletion queue.
+       **/
+      deletionWeightLimit: SpWeightsWeightV2Weight & AugmentedConst<ApiType>;
+      /**
+       * The amount of balance a caller has to pay for each byte of storage.
+       * 
+       * # Note
+       * 
+       * Changing this value for an existing chain might need a storage migration.
+       **/
+      depositPerByte: u128 & AugmentedConst<ApiType>;
+      /**
+       * The amount of balance a caller has to pay for each storage item.
+       * 
+       * # Note
+       * 
+       * Changing this value for an existing chain might need a storage migration.
+       **/
+      depositPerItem: u128 & AugmentedConst<ApiType>;
+      /**
+       * Cost schedule and limits.
+       **/
+      schedule: PalletContractsSchedule & AugmentedConst<ApiType>;
+    };
     court: {
       /**
        * Block duration to cast a vote on an outcome.
@@ -103,23 +152,6 @@ declare module '@polkadot/api-base/types/consts' {
        * Slashed funds are send to the treasury
        **/
       treasuryPalletId: FrameSupportPalletId & AugmentedConst<ApiType>;
-    };
-    crowdloan: {
-      /**
-       * Percentage to be payed at initialization
-       **/
-      initializationPayment: Perbill & AugmentedConst<ApiType>;
-      maxInitContributors: u32 & AugmentedConst<ApiType>;
-      /**
-       * A fraction representing the percentage of proofs
-       * that need to be presented to change a reward address through the relay keys
-       **/
-      rewardAddressRelayVoteThreshold: Perbill & AugmentedConst<ApiType>;
-      /**
-       * Network Identifier to be appended into the signatures for reward address change/association
-       * Prevents replay attacks from one network to the other
-       **/
-      signatureNetworkIdentifier: Bytes & AugmentedConst<ApiType>;
     };
     democracy: {
       /**
@@ -149,6 +181,14 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       launchPeriod: u64 & AugmentedConst<ApiType>;
       /**
+       * The maximum number of items which can be blacklisted.
+       **/
+      maxBlacklisted: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of deposits a public proposal may have at any time.
+       **/
+      maxDeposits: u32 & AugmentedConst<ApiType>;
+      /**
        * The maximum number of public proposals that can exist at any time.
        **/
       maxProposals: u32 & AugmentedConst<ApiType>;
@@ -163,10 +203,6 @@ declare module '@polkadot/api-base/types/consts' {
        * The minimum amount to be used as a deposit for a public referendum proposal.
        **/
       minimumDeposit: u128 & AugmentedConst<ApiType>;
-      /**
-       * The amount of balance that must be deposited per byte of preimage stored.
-       **/
-      preimageByteDeposit: u128 & AugmentedConst<ApiType>;
       /**
        * The minimum period of vote locking.
        * 
@@ -252,7 +288,7 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       predictionMarketsPalletId: FrameSupportPalletId & AugmentedConst<ApiType>;
     };
-    multiSig: {
+    multisig: {
       /**
        * The base amount of currency needed to reserve for creating a multisig execution or to
        * store a dispatch call for later.
@@ -377,6 +413,10 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maxGracePeriod: u64 & AugmentedConst<ApiType>;
       /**
+       * The maximum allowed duration of a market from creation to market close in blocks.
+       **/
+      maxMarketLifetime: u64 & AugmentedConst<ApiType>;
+      /**
        * The maximum number of blocks allowed to be specified as oracle_duration
        * in create_market.
        **/
@@ -412,6 +452,7 @@ declare module '@polkadot/api-base/types/consts' {
        * in a timely manner.
        **/
       oracleBond: u128 & AugmentedConst<ApiType>;
+      outsiderBond: u128 & AugmentedConst<ApiType>;
       /**
        * The module identifier.
        **/
@@ -469,13 +510,11 @@ declare module '@polkadot/api-base/types/consts' {
     };
     scheduler: {
       /**
-       * The maximum weight that may be scheduled per block for any dispatchables of less
-       * priority than `schedule::HARD_DEADLINE`.
+       * The maximum weight that may be scheduled per block for any dispatchables.
        **/
-      maximumWeight: Weight & AugmentedConst<ApiType>;
+      maximumWeight: SpWeightsWeightV2Weight & AugmentedConst<ApiType>;
       /**
        * The maximum number of scheduled calls in the queue for a single block.
-       * Not strictly enforced, but used for weight estimation.
        **/
       maxScheduledPerBlock: u32 & AugmentedConst<ApiType>;
     };
@@ -500,10 +539,6 @@ declare module '@polkadot/api-base/types/consts' {
        * The minimum amount of assets in a pool.
        **/
       minAssets: u16 & AugmentedConst<ApiType>;
-      /**
-       * The minimum amount of liqudity required to bootstrap a pool.
-       **/
-      minLiquidity: u128 & AugmentedConst<ApiType>;
       /**
        * The minimum amount of subsidy required to state transit a market into active state.
        * Must be greater than 0, but can be arbitrarily close to 0.
@@ -535,7 +570,7 @@ declare module '@polkadot/api-base/types/consts' {
       /**
        * The weight of runtime database operations the runtime can invoke.
        **/
-      dbWeight: FrameSupportWeightsRuntimeDbWeight & AugmentedConst<ApiType>;
+      dbWeight: SpWeightsRuntimeDbWeight & AugmentedConst<ApiType>;
       /**
        * The designated SS58 prefix of this chain.
        * 

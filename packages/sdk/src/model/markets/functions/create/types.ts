@@ -56,6 +56,10 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
         Scalar: [number, number] | [string, string]
       }
   /**
+   * Should the market be signed by a proxy.
+   */
+  proxy?: KeyringPairOrExtSigner
+  /**
    * The resolver of the market outcome
    */
   oracle: string
@@ -158,7 +162,8 @@ export type CreateMarketWithPoolParams<
  */
 export const isWithPool = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   params: CreateMarketParams<C, MS>,
-): params is CreateMarketWithPoolParams<C, MS> => params && 'pool' in params
+): params is CreateMarketWithPoolParams<C, MS> =>
+  params && 'pool' in params && typeof params.pool === 'object'
 
 /**
  * The result of creating a market.

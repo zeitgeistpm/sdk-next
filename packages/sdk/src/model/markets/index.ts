@@ -2,7 +2,7 @@ import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { ChainTime } from '@zeitgeistpm/utility/dist/time'
 import { Context, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
-import { create, transaction } from './functions/create'
+import { calculateFees, create, transaction } from './functions/create'
 import { get, observeMarket$ } from './functions/get'
 import { MarketGetQuery } from './functions/get/types'
 import { getStage } from './functions/getStage'
@@ -37,6 +37,8 @@ export const model = <C extends Context<MS>, MS extends MetadataStorage>(
     create: (isRpcContext<MS>(ctx)
       ? pfunc((params: CreateMarketParams<typeof ctx, MS>) => create(ctx, params), {
           tx: (params: CreateMarketParams<typeof ctx, MS>) => transaction(ctx, params),
+          calculateFees: (params: CreateMarketParams<typeof ctx, MS>) =>
+            calculateFees(ctx, params),
         })
       : undefined) as unknown as Markets<typeof ctx, MS>['create'],
 

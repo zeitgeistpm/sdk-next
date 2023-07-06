@@ -49,6 +49,17 @@ export const storage = <T>(
       },
       (message, error) => new StorageError(message, error),
     ),
+    hash: Te.from(
+      async data => {
+        const content = (await codec.decode(data).unright()).unwrap()
+        if (!content) throw new Error('Invalid content')
+
+        const { cid } = await node.add({ content }, { hashAlg, pin: false, onlyHash: true })
+
+        return cid
+      },
+      (message, error) => new StorageError(message, error),
+    ),
     get: Te.from(
       async cid => {
         const data = (await read(node, cid).unwrap())

@@ -13,6 +13,7 @@ import {
 import { MarketGetQuery } from './functions/get/types'
 import { MarketList, MarketsListQuery } from './functions/list/types'
 import { MarketStage } from './marketstage'
+import { RuntimeDispatchInfo } from '@polkadot/types/interfaces'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -68,6 +69,7 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage = Metadata
         ) => Promise<CreateMarketResult<C, MS, P>>,
         {
           tx: (params: CreateMarketParams<C, MS>) => CreateMarketTransaction
+          calculateFees: (params: CreateMarketParams<C, MS>) => Promise<RuntimeDispatchInfo>
         }
       >
     : never

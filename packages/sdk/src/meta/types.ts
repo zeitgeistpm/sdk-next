@@ -116,6 +116,13 @@ export const tagged = <T extends TaggedMetadata<any>>(
   ({
     get: ({ cid }: TaggedID<any>) => storage.get(cid),
     del: ({ cid }: TaggedID<any>) => storage.del(cid),
+    hash: Te.from<TaggedID<any>, Error, [any]>(async data => {
+      const cid = await storage.hash(data)
+      return {
+        __meta: key,
+        cid: cid,
+      }
+    }),
     put: Te.from<TaggedID<any>, Error, [any]>(async data => {
       const cid = await storage.put(data)
       return {
@@ -123,4 +130,5 @@ export const tagged = <T extends TaggedMetadata<any>>(
         cid: cid,
       }
     }),
+    withCodec: <A>(codec: Codec<string | Uint8Array, A>) => storage.withCodec(codec),
   } as Storage<any, TaggedID<any>>)

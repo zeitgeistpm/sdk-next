@@ -30,7 +30,13 @@ export type Storage<A, ID = CID> = {
    * @generic ID - id type
    */
   del: TaskEither<StorageError, void, [ID]>
-
+  /**
+   * Get hash of item from storage.
+   */
+  hash: TaskEither<StorageError, ID, [data: A]>
+  /**
+   * Use another codec for encoding/decoding data.
+   */
   withCodec: <A>(codec: Codec<string | Uint8Array, A>) => Storage<A, ID>
 }
 

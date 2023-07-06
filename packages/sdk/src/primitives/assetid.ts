@@ -137,9 +137,9 @@ export const getIndexOf = (assetId: MarketOutcomeAssetId): number => {
  * @param raw object | string | ZeitgeistPrimitivesAsset
  * @returns E.IEither<SyntaxError, AssetId>
  */
-export const parseAssetId = (
-  raw: string | object | ZeitgeistPrimitivesAsset,
-): E.IEither<SyntaxError, AssetId> => {
+export const parseAssetId = (raw: any): E.IEither<SyntaxError, AssetId> => {
+  if (!raw) return E.either(E.left(new SyntaxError('Invalid asset id structure')))
+
   if (isCodec(raw)) {
     return fromPrimitive(raw as ZeitgeistPrimitivesAsset)
   }

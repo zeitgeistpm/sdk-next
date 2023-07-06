@@ -23,7 +23,7 @@ fragment FullPool on Pool {
   id
   marketId
   poolId
-  poolStatus
+  status
   scoringRule
   swapFee
   totalSubsidy
@@ -48,7 +48,7 @@ query historicalPools(
     event
     id
     poolId
-    poolStatus
+    status
     timestamp
     volume
   }

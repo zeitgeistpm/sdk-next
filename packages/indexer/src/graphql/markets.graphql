@@ -87,7 +87,7 @@ fragment FullMarket on Market {
     id
     marketId
     poolId
-    poolStatus
+    status
     scoringRule
     swapFee
     totalSubsidy

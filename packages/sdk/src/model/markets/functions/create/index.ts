@@ -1,18 +1,17 @@
 import type { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
-import type { EventRecord } from '@polkadot/types/interfaces'
+import type { EventRecord, RuntimeDispatchInfo } from '@polkadot/types/interfaces'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isString, isU8a, u8aToHex } from '@polkadot/util'
-import { TransactionError, signAndSend } from '@zeitgeistpm/rpc'
+import { signAndSend } from '@zeitgeistpm/rpc'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { FullContext, RpcContext } from '../../../../context'
-import { MetadataStorage, StorageTypeOf } from '../../../../meta'
+import { MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../../../meta'
 import { RpcPool, rpcPool } from '../../../../model/swaps/pool'
 import { RpcMarket, rpcMarket } from '../../market'
 import {
   CreateMarketData,
   CreateMarketParams,
-  CreateMarketResult,
   CreateMarketTransaction,
   isWithPool,
 } from './types'
@@ -36,10 +35,12 @@ export const create = async <
 ) => {
   const { tx, rollbackMetadata } = await transaction(context, params)
 
+  const signer = params.proxy ? params.proxy : params.signer
+
   const response = signAndSend({
     api: context.api,
     tx,
-    signer: params.signer,
+    signer,
     hooks: params.hooks,
   })
 
@@ -69,8 +70,6 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
   context: C,
   params: CreateMarketParams<C, MS>,
 ): Promise<CreateMarketTransaction> => {
-  let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
-
   const marketImageCid = isString(params.metadata.img)
     ? params.metadata.img
     : params.metadata.img
@@ -95,11 +94,48 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
     return Promise.all(operations)
   })
 
-  const Sha3_384 = isString(key)
-    ? key
-    : isU8a(key.cid)
-    ? u8aToHex(key.cid)
-    : key.cid.multihash.bytes
+  const tx = createExtrinsic(context, { ...params, metadataKey: key })
+
+  return {
+    tx,
+    rollbackMetadata,
+  }
+}
+
+export const calculateFees = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
+  context: C,
+  params: CreateMarketParams<C, MS>,
+): Promise<RuntimeDispatchInfo> => {
+  const marketStorage = context.storage.of('markets')
+
+  const marketImageCid = isString(params.metadata.img)
+    ? params.metadata.img
+    : params.metadata.img
+    ? await context.storage.files.hash(params.metadata.img).unwrap()
+    : undefined
+
+  const key = await marketStorage.hash({
+    ...params.metadata,
+    img: marketImageCid?.toString(),
+  } as StorageTypeOf<MS['markets']>)
+
+  const tx = createExtrinsic(context, { ...params, metadataKey: key })
+  const paymentInfo = tx.paymentInfo(params.signer.address)
+
+  return paymentInfo
+}
+
+const createExtrinsic = <C extends RpcContext<MS>, MS extends MetadataStorage>(
+  context: C,
+  params: CreateMarketParams<C, MS> & { metadataKey: StorageIdTypeOf<MS['markets']> },
+) => {
+  let tx: SubmittableExtrinsic<'promise', ISubmittableResult>
+
+  const Sha3_384 = isString(params.metadataKey)
+    ? params.metadataKey
+    : isU8a(params.metadataKey.cid)
+    ? u8aToHex(params.metadataKey.cid)
+    : params.metadataKey.cid.multihash.bytes
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
@@ -128,10 +164,11 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
     )
   }
 
-  return {
-    tx,
-    rollbackMetadata,
+  if (params.proxy) {
+    tx = context.api.tx.proxy.proxy(params.signer.address, 'Any', tx)
   }
+
+  return tx
 }
 
 /**
