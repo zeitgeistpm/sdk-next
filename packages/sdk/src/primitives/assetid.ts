@@ -108,7 +108,7 @@ export const getMarketIdOf = (assetId: ScalarAssetId | CategoricalAssetId): Mark
   IOScalarAssetId.is(assetId) ? assetId.ScalarOutcome[0] : assetId.CategoricalOutcome[0]
 
 /**
- * Get asset index of a scalar asset, short being 0 and long being 1
+ * Get asset index of a scalar asset, short being 1 and long being 0
  *
  * @param scalarAssetId ScalarAssetId
  * @returns number
