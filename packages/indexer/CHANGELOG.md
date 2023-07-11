@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.1.0
+
+### Minor Changes
+
+- 500a2a1: `pool.accountId` moved to `pool.account.accountId` for indexed pools
+
 ## 3.0.14
 
 ### Patch Changes

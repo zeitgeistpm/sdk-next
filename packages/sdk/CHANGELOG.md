@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.30.0
+
+### Minor Changes
+
+- 500a2a1: `pool.accountId` moved to `pool.account.accountId` for indexed pools
+
+### Patch Changes
+
+- Updated dependencies [500a2a1]
+  - @zeitgeistpm/indexer@3.1.0
+
 ## 2.29.21
 
 ### Patch Changes
