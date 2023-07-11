@@ -10,7 +10,9 @@ query pools(
 }
 
 fragment FullPool on Pool {
-  accountId
+  account {
+    accountId
+  }
   assets {
     amountInPool
     assetId
