@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.30.1
+
+### Patch Changes
+
+- 74a97da: Fix poolId not on Account
+- Updated dependencies [74a97da]
+  - @zeitgeistpm/indexer@3.1.1
+
 ## 2.30.0
 
 ### Minor Changes

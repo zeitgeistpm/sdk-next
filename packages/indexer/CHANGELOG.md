@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.1.1
+
+### Patch Changes
+
+- 74a97da: Fix poolId not on Account
+
 ## 3.1.0
 
 ### Minor Changes
