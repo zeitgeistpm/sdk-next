@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.19.0
+
+### Minor Changes
+
+- 1abbbaf: Staging beta release of new GQL schemas.
+
 ## 2.18.13
 
 ### Patch Changes

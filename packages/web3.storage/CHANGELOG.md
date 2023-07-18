@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.10.0
+
+### Minor Changes
+
+- 1abbbaf: Staging beta release of new GQL schemas.
+
+### Patch Changes
+
+- Updated dependencies [1abbbaf]
+  - @zeitgeistpm/utility@2.19.0
+
 ## 2.9.13
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.12.0
+
+### Minor Changes
+
+- 1abbbaf: Staging beta release of new GQL schemas.
+
 ## 2.11.5
 
 ### Patch Changes

@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 2.31.0
+
+### Minor Changes
+
+- 1abbbaf: Staging beta release of new GQL schemas.
+
+### Patch Changes
+
+- Updated dependencies [1abbbaf]
+  - @zeitgeistpm/indexer@3.2.0
+  - @zeitgeistpm/utility@2.19.0
+  - @zeitgeistpm/augment-api@2.12.0
+  - @zeitgeistpm/rpc@2.8.0
+  - @zeitgeistpm/web3.storage@2.10.0
+
 ## 2.30.1
 
 ### Patch Changes

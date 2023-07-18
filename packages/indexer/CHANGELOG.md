@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.2.0
+
+### Minor Changes
+
+- 1abbbaf: Staging beta release of new GQL schemas.
+
 ## 3.1.1
 
 ### Patch Changes

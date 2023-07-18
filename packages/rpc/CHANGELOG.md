@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 2.8.0
+
+### Minor Changes
+
+- 1abbbaf: Staging beta release of new GQL schemas.
+
+### Patch Changes
+
+- Updated dependencies [1abbbaf]
+  - @zeitgeistpm/utility@2.19.0
+  - @zeitgeistpm/augment-api@2.12.0
+
 ## 2.7.6
 
 ### Patch Changes
