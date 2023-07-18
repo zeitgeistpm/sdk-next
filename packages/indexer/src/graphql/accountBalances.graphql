@@ -19,7 +19,6 @@ fragment FullAccountBalance on AccountBalance {
     accountId
     id
     marketId
-    poolId
   }
   assetId
   balance
