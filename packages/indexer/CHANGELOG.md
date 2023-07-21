@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.2.1
+
+### Patch Changes
+
+- ade08e5: Add extrinsic info to `historicalSwaps`
+
 ## 3.2.0
 
 ### Minor Changes

@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.31.1
+
+### Patch Changes
+
+- ade08e5: Add extrinsic info to `historicalSwaps`
+- Updated dependencies [ade08e5]
+  - @zeitgeistpm/indexer@3.2.1
+  - @zeitgeistpm/rpc@2.8.1
+  - @zeitgeistpm/utility@2.19.1
+
 ## 2.31.0
 
 ### Minor Changes

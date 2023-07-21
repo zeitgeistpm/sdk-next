@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.19.1
+
+### Patch Changes
+
+- ade08e5: Add extrinsic info to `historicalSwaps`
+
 ## 2.19.0
 
 ### Minor Changes
