@@ -21,7 +21,6 @@ fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
   dBalance
   event
   id
-  timestamp
   extrinsic {
     hash
     name

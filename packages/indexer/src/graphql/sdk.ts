@@ -2892,9 +2892,9 @@ export type HistoricalAccountBalancesQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalAccountBalancesQuery = { __typename?: 'Query', historicalAccountBalances: Array<{ __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, timestamp: any, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null }> };
+export type HistoricalAccountBalancesQuery = { __typename?: 'Query', historicalAccountBalances: Array<{ __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null }> };
 
-export type FullHistoricalAccountBalanceFragment = { __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, timestamp: any, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null };
+export type FullHistoricalAccountBalanceFragment = { __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null };
 
 export type HistoricalAssetsQueryVariables = Exact<{
   where?: InputMaybe<HistoricalAssetWhereInput>;
@@ -3053,7 +3053,6 @@ export const FullHistoricalAccountBalanceFragmentDoc = gql`
   dBalance
   event
   id
-  timestamp
   extrinsic {
     hash
     name
