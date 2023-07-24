@@ -1,6 +1,6 @@
-import { BlobFileCodec } from '@zeitgeistpm/utility/dist/codec'
+import { BlobFileCodec, Codec } from '@zeitgeistpm/utility/dist/codec'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import type { Storage } from '@zeitgeistpm/web3.storage'
+import type { Storage, StorageError } from '@zeitgeistpm/web3.storage'
 import type { CID } from 'ipfs-http-client'
 import type { MarketMetadata } from './market'
 
@@ -116,19 +116,20 @@ export const tagged = <T extends TaggedMetadata<any>>(
   ({
     get: ({ cid }: TaggedID<any>) => storage.get(cid),
     del: ({ cid }: TaggedID<any>) => storage.del(cid),
-    hash: Te.from<TaggedID<any>, Error, [any]>(async data => {
+    hash: Te.from<TaggedID<any>, StorageError, [any]>(async data => {
       const cid = await storage.hash(data)
       return {
         __meta: key,
         cid: cid,
       }
     }),
-    put: Te.from<TaggedID<any>, Error, [any]>(async data => {
+    put: Te.from<TaggedID<any>, StorageError, [any]>(async data => {
       const cid = await storage.put(data)
       return {
         __meta: key,
         cid: cid,
       }
     }),
-    withCodec: <A>(codec: Codec<string | Uint8Array, A>) => storage.withCodec(codec),
-  } as Storage<any, TaggedID<any>>)
+    withCodec: <A>(codec: Codec<string | Uint8Array, A>) =>
+      storage.withCodec(codec) as Storage<A, any>,
+  } as Storage<T, TaggedID<any>>)

@@ -1,3 +1,4 @@
+import '@zeitgeistpm/augment-api'
 export * from './types'
 export * from './config'
 export * from './meta'
