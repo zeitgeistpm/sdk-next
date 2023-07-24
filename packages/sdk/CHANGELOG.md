@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.32.0
+
+### Minor Changes
+
+- 871f426: Removed field timeStampe from HistoricalAccountBalance
+
+### Patch Changes
+
+- Updated dependencies [871f426]
+  - @zeitgeistpm/indexer@3.3.0
+
 ## 2.31.1
 
 ### Patch Changes

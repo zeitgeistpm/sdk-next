@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.3.0
+
+### Minor Changes
+
+- 871f426: Removed field timeStampe from HistoricalAccountBalance
+
 ## 3.2.1
 
 ### Patch Changes
