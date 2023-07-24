@@ -24,4 +24,8 @@ fragment FullHistoricalSwap on HistoricalSwap {
   assetAmountOut
   assetIn
   assetOut
+  extrinsic {
+    hash
+    name
+  }
 }

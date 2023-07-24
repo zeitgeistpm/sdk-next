@@ -30,6 +30,15 @@ export const options = (opts: ZeitgeistApiOptions): ApiOptions => {
         {},
       ),
     },
+    signedExtensions: {
+      ChargeAssetTxPayment: {
+        extrinsic: {
+          tip: 'Compact<Balance>',
+          assetId: 'Option<ZeitgeistPrimitivesAsset>',
+        },
+        payload: {},
+      },
+    },
     provider: opts.provider,
     noInitWarn: true,
   }

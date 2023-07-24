@@ -1103,6 +1103,8 @@ export type HistoricalSwap = {
   blockNumber: Scalars['Int'];
   /** Event method which initiated this swap */
   event: Scalars['String'];
+  /** Extrinsic responsible for this change */
+  extrinsic?: Maybe<Extrinsic>;
   /** Unique identifier of the object */
   id: Scalars['String'];
   /** Timestamp of the block */
@@ -1130,6 +1132,10 @@ export enum HistoricalSwapOrderByInput {
   BlockNumberDesc = 'blockNumber_DESC',
   EventAsc = 'event_ASC',
   EventDesc = 'event_DESC',
+  ExtrinsicHashAsc = 'extrinsic_hash_ASC',
+  ExtrinsicHashDesc = 'extrinsic_hash_DESC',
+  ExtrinsicNameAsc = 'extrinsic_name_ASC',
+  ExtrinsicNameDesc = 'extrinsic_name_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   TimestampAsc = 'timestamp_ASC',
@@ -1234,6 +1240,8 @@ export type HistoricalSwapWhereInput = {
   event_not_in?: InputMaybe<Array<Scalars['String']>>;
   event_not_startsWith?: InputMaybe<Scalars['String']>;
   event_startsWith?: InputMaybe<Scalars['String']>;
+  extrinsic?: InputMaybe<ExtrinsicWhereInput>;
+  extrinsic_isNull?: InputMaybe<Scalars['Boolean']>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -2908,9 +2916,9 @@ export type HistoricalSwapsQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalSwapsQuery = { __typename?: 'Query', historicalSwaps: Array<{ __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string }> };
+export type HistoricalSwapsQuery = { __typename?: 'Query', historicalSwaps: Array<{ __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null }> };
 
-export type FullHistoricalSwapFragment = { __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string };
+export type FullHistoricalSwapFragment = { __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null };
 
 export type MarketStatsQueryVariables = Exact<{
   ids: Array<Scalars['Int']> | Scalars['Int'];
@@ -3078,6 +3086,10 @@ export const FullHistoricalSwapFragmentDoc = gql`
   assetAmountOut
   assetIn
   assetOut
+  extrinsic {
+    hash
+    name
+  }
 }
     `;
 export const FullMarketFragmentDoc = gql`

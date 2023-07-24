@@ -27,6 +27,7 @@ export type TransactionError =
   | RegistryError
   | RetractedError
   | UnknownDispatchError
+  | Error
 
 export class RetractedError extends Error {
   constructor(message: string) {

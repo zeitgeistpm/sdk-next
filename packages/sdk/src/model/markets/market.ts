@@ -10,28 +10,27 @@ import {
 import {
   ExtractableResult,
   KeyringPairOrExtSigner,
-  signAndSend,
   TransactionError,
   TransactionHooks,
+  signAndSend,
 } from '@zeitgeistpm/rpc'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as E from '@zeitgeistpm/utility/dist/either'
-import { throwsC } from '@zeitgeistpm/utility/dist/error'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import { blockDate, ChainTime, DateTimespan } from '@zeitgeistpm/utility/dist/time'
+import { ChainTime, DateTimespan, blockDate } from '@zeitgeistpm/utility/dist/time'
 import CID from 'cids'
 import Decimal from 'decimal.js'
 import {
   Context,
   FullContext,
   IndexerContext,
-  isRpcContext,
   RpcContext,
+  isRpcContext,
 } from '../../context'
 import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../meta'
 import { MarketMetadata, categoryMetadataIsComplete } from '../../meta/market'
-import { Data, isIndexedData, isRpcData, parseAssetId, ZTG } from '../../primitives'
+import { Data, ZTG, isIndexedData, isRpcData, parseAssetId } from '../../primitives'
 import { now } from '../time/functions/now'
 import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
 import { extractPoolCreationEventForMarket } from './functions/create'
