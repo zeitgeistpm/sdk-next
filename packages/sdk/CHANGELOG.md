@@ -1,5 +1,13 @@
 # @zeitgeistpm/sdk
 
+## 2.32.1
+
+### Patch Changes
+
+- cb0c0f0: Signed extensions
+- Updated dependencies [cb0c0f0]
+  - @zeitgeistpm/indexer@3.3.1
+
 ## 2.32.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.3.1
+
+### Patch Changes
+
+- cb0c0f0: Signed extensions
+
 ## 3.3.0
 
 ### Minor Changes
