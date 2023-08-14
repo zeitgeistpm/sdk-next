@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 2.9.0
+
+### Minor Changes
+
+- f48de0d: change
+
+### Patch Changes
+
+- Updated dependencies [f48de0d]
+  - @zeitgeistpm/augment-api@2.13.0
+  - @zeitgeistpm/utility@2.20.0
+
 ## 2.8.1
 
 ### Patch Changes

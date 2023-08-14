@@ -1,5 +1,38 @@
 # @zeitgeistpm/sdk
 
+## 2.33.0
+
+### Minor Changes
+
+- f48de0d: change
+
+### Patch Changes
+
+- Updated dependencies [f48de0d]
+  - @zeitgeistpm/augment-api@2.13.0
+  - @zeitgeistpm/indexer@3.4.0
+  - @zeitgeistpm/rpc@2.9.0
+  - @zeitgeistpm/utility@2.20.0
+  - @zeitgeistpm/web3.storage@2.11.0
+
+## 2.32.3
+
+### Patch Changes
+
+- d7288af: change
+- Updated dependencies [d7288af]
+  - @zeitgeistpm/augment-api@2.12.2
+  - @zeitgeistpm/indexer@3.3.3
+
+## 2.32.2
+
+### Patch Changes
+
+- be1caf6: changes
+- Updated dependencies [be1caf6]
+  - @zeitgeistpm/augment-api@2.12.1
+  - @zeitgeistpm/indexer@3.3.2
+
 ## 2.32.1
 
 ### Patch Changes

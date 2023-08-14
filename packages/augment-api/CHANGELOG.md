@@ -1,5 +1,23 @@
 # @zeitgeistpm/augment-api
 
+## 2.13.0
+
+### Minor Changes
+
+- f48de0d: change
+
+## 2.12.2
+
+### Patch Changes
+
+- d7288af: change
+
+## 2.12.1
+
+### Patch Changes
+
+- be1caf6: changes
+
 ## 2.12.0
 
 ### Minor Changes

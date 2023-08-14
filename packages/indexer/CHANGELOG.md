@@ -1,5 +1,23 @@
 # @zeitgeistpm/indexer
 
+## 3.4.0
+
+### Minor Changes
+
+- f48de0d: change
+
+## 3.3.3
+
+### Patch Changes
+
+- d7288af: change
+
+## 3.3.2
+
+### Patch Changes
+
+- be1caf6: changes
+
 ## 3.3.1
 
 ### Patch Changes
