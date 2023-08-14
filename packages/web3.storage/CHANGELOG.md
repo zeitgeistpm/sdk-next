@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.11.0
+
+### Minor Changes
+
+- f48de0d: change
+
+### Patch Changes
+
+- Updated dependencies [f48de0d]
+  - @zeitgeistpm/utility@2.20.0
+
 ## 2.10.0
 
 ### Minor Changes

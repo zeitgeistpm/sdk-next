@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.20.0
+
+### Minor Changes
+
+- f48de0d: change
+
 ## 2.19.1
 
 ### Patch Changes
