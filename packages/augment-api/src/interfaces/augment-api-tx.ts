@@ -10,7 +10,7 @@ import type { Data } from '@polkadot/types';
 import type { Bytes, Compact, Option, Struct, U8aFixed, Vec, bool, i128, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { AnyNumber, IMethod, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, MultiAddress, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
-import type { BatteryStationRuntimeOriginCaller, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyConviction, PalletDemocracyVoteAccountVote, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletVestingVestingInfo, SpWeightsWeightV2Weight, XcmV1MultiLocation, XcmV2WeightLimit, XcmVersionedMultiAsset, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesCustomMetadata, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketDisputeMechanism, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPoolScoringRule, ZeitgeistPrimitivesProxyType } from '@polkadot/types/lookup';
+import type { BatteryStationRuntimeOriginCaller, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletContractsWasmDeterminism, PalletDemocracyConviction, PalletDemocracyVoteAccountVote, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletVestingVestingInfo, SpWeightsWeightV2Weight, XcmV1MultiLocation, XcmV2WeightLimit, XcmVersionedMultiAsset, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesCustomMetadata, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketDisputeMechanism, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPoolScoringRule, ZeitgeistPrimitivesProxyType } from '@polkadot/types/lookup';
 
 export type __AugmentedSubmittable = AugmentedSubmittable<() => unknown>;
 export type __SubmittableExtrinsic<ApiType extends ApiTypes> = SubmittableExtrinsic<ApiType>;
@@ -438,7 +438,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Approve a bounty proposal. At a later time, the bounty will be funded and become active
        * and the original deposit will be returned.
        * 
-       * May only be called from `T::ApproveOrigin`.
+       * May only be called from `T::SpendOrigin`.
        * 
        * # <weight>
        * - O(1).
@@ -515,7 +515,7 @@ declare module '@polkadot/api-base/types/submittable' {
       /**
        * Assign a curator to a funded bounty.
        * 
-       * May only be called from `T::ApproveOrigin`.
+       * May only be called from `T::SpendOrigin`.
        * 
        * # <weight>
        * - O(1).
@@ -644,6 +644,10 @@ declare module '@polkadot/api-base/types/submittable' {
        * the in storage version to the current
        * [`InstructionWeights::version`](InstructionWeights).
        * 
+       * - `determinism`: If this is set to any other value but [`Determinism::Deterministic`]
+       * then the only way to use this code is to delegate call into it from an offchain
+       * execution. Set to [`Determinism::Deterministic`] if in doubt.
+       * 
        * # Note
        * 
        * Anyone can instantiate a contract from any uploaded code and thus prevent its removal.
@@ -651,7 +655,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * only be instantiated by permissioned entities. The same is true when uploading
        * through [`Self::instantiate_with_code`].
        **/
-      uploadCode: AugmentedSubmittable<(code: Bytes | string | Uint8Array, storageDepositLimit: Option<Compact<u128>> | null | Uint8Array | Compact<u128> | AnyNumber) => SubmittableExtrinsic<ApiType>, [Bytes, Option<Compact<u128>>]>;
+      uploadCode: AugmentedSubmittable<(code: Bytes | string | Uint8Array, storageDepositLimit: Option<Compact<u128>> | null | Uint8Array | Compact<u128> | AnyNumber, determinism: PalletContractsWasmDeterminism | 'Deterministic' | 'AllowIndeterminism' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [Bytes, Option<Compact<u128>>, PalletContractsWasmDeterminism]>;
     };
     council: {
       /**
@@ -2232,7 +2236,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `delay`: The announcement period required of the initial proxy. Will generally be
        * zero.
        **/
-      addProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | number | Uint8Array, delay: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, ZeitgeistPrimitivesProxyType, u64]>;
+      addProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | 'CreateEditMarket' | 'ReportOutcome' | 'Dispute' | 'ProvideLiquidity' | 'BuySellCompleteSets' | 'Trading' | 'HandleAssets' | number | Uint8Array, delay: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, ZeitgeistPrimitivesProxyType, u64]>;
       /**
        * Publish the hash of a proxy-call that will be made in the future.
        * 
@@ -2271,7 +2275,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * 
        * Fails if there are insufficient funds to pay for deposit.
        **/
-      createPure: AugmentedSubmittable<(proxyType: ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | number | Uint8Array, delay: u64 | AnyNumber | Uint8Array, index: u16 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesProxyType, u64, u16]>;
+      createPure: AugmentedSubmittable<(proxyType: ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | 'CreateEditMarket' | 'ReportOutcome' | 'Dispute' | 'ProvideLiquidity' | 'BuySellCompleteSets' | 'Trading' | 'HandleAssets' | number | Uint8Array, delay: u64 | AnyNumber | Uint8Array, index: u16 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesProxyType, u64, u16]>;
       /**
        * Removes a previously spawned pure proxy.
        * 
@@ -2290,7 +2294,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Fails with `NoPermission` in case the caller is not a previously created pure
        * account whose `pure` call has corresponding parameters.
        **/
-      killPure: AugmentedSubmittable<(spawner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | number | Uint8Array, index: u16 | AnyNumber | Uint8Array, height: Compact<u64> | AnyNumber | Uint8Array, extIndex: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, ZeitgeistPrimitivesProxyType, u16, Compact<u64>, Compact<u32>]>;
+      killPure: AugmentedSubmittable<(spawner: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | 'CreateEditMarket' | 'ReportOutcome' | 'Dispute' | 'ProvideLiquidity' | 'BuySellCompleteSets' | 'Trading' | 'HandleAssets' | number | Uint8Array, index: u16 | AnyNumber | Uint8Array, height: Compact<u64> | AnyNumber | Uint8Array, extIndex: Compact<u32> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, ZeitgeistPrimitivesProxyType, u16, Compact<u64>, Compact<u32>]>;
       /**
        * Dispatch the given `call` from an account that the sender is authorised for through
        * `add_proxy`.
@@ -2304,7 +2308,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `force_proxy_type`: Specify the exact proxy type to be used and checked for this call.
        * - `call`: The call to be made by the `real` account.
        **/
-      proxy: AugmentedSubmittable<(real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<ZeitgeistPrimitivesProxyType> | null | Uint8Array | ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Option<ZeitgeistPrimitivesProxyType>, Call]>;
+      proxy: AugmentedSubmittable<(real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<ZeitgeistPrimitivesProxyType> | null | Uint8Array | ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | 'CreateEditMarket' | 'ReportOutcome' | 'Dispute' | 'ProvideLiquidity' | 'BuySellCompleteSets' | 'Trading' | 'HandleAssets' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Option<ZeitgeistPrimitivesProxyType>, Call]>;
       /**
        * Dispatch the given `call` from an account that the sender is authorized for through
        * `add_proxy`.
@@ -2318,7 +2322,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `force_proxy_type`: Specify the exact proxy type to be used and checked for this call.
        * - `call`: The call to be made by the `real` account.
        **/
-      proxyAnnounced: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<ZeitgeistPrimitivesProxyType> | null | Uint8Array | ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress, Option<ZeitgeistPrimitivesProxyType>, Call]>;
+      proxyAnnounced: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, real: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, forceProxyType: Option<ZeitgeistPrimitivesProxyType> | null | Uint8Array | ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | 'CreateEditMarket' | 'ReportOutcome' | 'Dispute' | 'ProvideLiquidity' | 'BuySellCompleteSets' | 'Trading' | 'HandleAssets' | number, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress, Option<ZeitgeistPrimitivesProxyType>, Call]>;
       /**
        * Remove the given announcement of a delegate.
        * 
@@ -2363,7 +2367,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `proxy`: The account that the `caller` would like to remove as a proxy.
        * - `proxy_type`: The permissions currently enabled for the removed proxy account.
        **/
-      removeProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | number | Uint8Array, delay: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, ZeitgeistPrimitivesProxyType, u64]>;
+      removeProxy: AugmentedSubmittable<(delegate: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, proxyType: ZeitgeistPrimitivesProxyType | 'Any' | 'CancelProxy' | 'Governance' | 'Staking' | 'CreateEditMarket' | 'ReportOutcome' | 'Dispute' | 'ProvideLiquidity' | 'BuySellCompleteSets' | 'Trading' | 'HandleAssets' | number | Uint8Array, delay: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, ZeitgeistPrimitivesProxyType, u64]>;
     };
     scheduler: {
       /**
@@ -2681,10 +2685,6 @@ declare module '@polkadot/api-base/types/submittable' {
       swapExactAmountOut: AugmentedSubmittable<(poolId: Compact<u128> | AnyNumber | Uint8Array, assetIn: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, maxAssetAmountIn: Option<u128> | null | Uint8Array | u128 | AnyNumber, assetOut: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, assetAmountOut: Compact<u128> | AnyNumber | Uint8Array, maxPrice: Option<u128> | null | Uint8Array | u128 | AnyNumber) => SubmittableExtrinsic<ApiType>, [Compact<u128>, ZeitgeistPrimitivesAsset, Option<u128>, ZeitgeistPrimitivesAsset, Compact<u128>, Option<u128>]>;
     };
     system: {
-      /**
-       * A dispatch that will fill the block weight up to the given ratio.
-       **/
-      fillBlock: AugmentedSubmittable<(ratio: Perbill | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Perbill]>;
       /**
        * Kill all storage items with a key that starts with the given prefix.
        * 
@@ -3088,13 +3088,13 @@ declare module '@polkadot/api-base/types/submittable' {
       /**
        * Send a batch of dispatch calls.
        * 
-       * May be called from any origin.
+       * May be called from any origin except `None`.
        * 
        * - `calls`: The calls to be dispatched from the same origin. The number of call must not
        * exceed the constant: `batched_calls_limit` (available in constant metadata).
        * 
-       * If origin is root then call are dispatch without checking origin filter. (This includes
-       * bypassing `frame_system::Config::BaseCallFilter`).
+       * If origin is root then the calls are dispatched without checking origin filter. (This
+       * includes bypassing `frame_system::Config::BaseCallFilter`).
        * 
        * # <weight>
        * - Complexity: O(C) where C is the number of calls to be batched.
@@ -3111,13 +3111,13 @@ declare module '@polkadot/api-base/types/submittable' {
        * Send a batch of dispatch calls and atomically execute them.
        * The whole transaction will rollback and fail if any of the calls failed.
        * 
-       * May be called from any origin.
+       * May be called from any origin except `None`.
        * 
        * - `calls`: The calls to be dispatched from the same origin. The number of call must not
        * exceed the constant: `batched_calls_limit` (available in constant metadata).
        * 
-       * If origin is root then call are dispatch without checking origin filter. (This includes
-       * bypassing `frame_system::Config::BaseCallFilter`).
+       * If origin is root then the calls are dispatched without checking origin filter. (This
+       * includes bypassing `frame_system::Config::BaseCallFilter`).
        * 
        * # <weight>
        * - Complexity: O(C) where C is the number of calls to be batched.
@@ -3141,19 +3141,28 @@ declare module '@polkadot/api-base/types/submittable' {
        * Send a batch of dispatch calls.
        * Unlike `batch`, it allows errors and won't interrupt.
        * 
-       * May be called from any origin.
+       * May be called from any origin except `None`.
        * 
        * - `calls`: The calls to be dispatched from the same origin. The number of call must not
        * exceed the constant: `batched_calls_limit` (available in constant metadata).
        * 
-       * If origin is root then call are dispatch without checking origin filter. (This includes
-       * bypassing `frame_system::Config::BaseCallFilter`).
+       * If origin is root then the calls are dispatch without checking origin filter. (This
+       * includes bypassing `frame_system::Config::BaseCallFilter`).
        * 
        * # <weight>
        * - Complexity: O(C) where C is the number of calls to be batched.
        * # </weight>
        **/
       forceBatch: AugmentedSubmittable<(calls: Vec<Call> | (Call | IMethod | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<Call>]>;
+      /**
+       * Dispatch a function call with a specified weight.
+       * 
+       * This function does not check the weight of the call, and instead allows the
+       * Root origin to specify the weight of the call.
+       * 
+       * The dispatch origin for this call must be _Root_.
+       **/
+      withWeight: AugmentedSubmittable<(call: Call | IMethod | string | Uint8Array, weight: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Call, SpWeightsWeightV2Weight]>;
     };
     vesting: {
       /**
