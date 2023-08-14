@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.12.1
+
+### Patch Changes
+
+- 2fb6e5d: new types
+
 ## 2.12.0
 
 ### Minor Changes

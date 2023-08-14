@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.32.2
+
+### Patch Changes
+
+- 2fb6e5d: new types
+- Updated dependencies [2fb6e5d]
+  - @zeitgeistpm/augment-api@2.12.1
+  - @zeitgeistpm/indexer@3.3.2
+  - @zeitgeistpm/rpc@2.8.2
+
 ## 2.32.1
 
 ### Patch Changes

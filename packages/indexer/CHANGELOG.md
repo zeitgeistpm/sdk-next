@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.3.2
+
+### Patch Changes
+
+- 2fb6e5d: new types
+
 ## 3.3.1
 
 ### Patch Changes
