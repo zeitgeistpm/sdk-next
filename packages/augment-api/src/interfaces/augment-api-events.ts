@@ -77,6 +77,13 @@ declare module '@polkadot/api-base/types/events' {
       RegisteredAsset: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAsset, metadata: OrmlTraitsAssetRegistryAssetMetadata], { assetId: ZeitgeistPrimitivesAsset, metadata: OrmlTraitsAssetRegistryAssetMetadata }>;
       UpdatedAsset: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAsset, metadata: OrmlTraitsAssetRegistryAssetMetadata], { assetId: ZeitgeistPrimitivesAsset, metadata: OrmlTraitsAssetRegistryAssetMetadata }>;
     };
+    assetTxPayment: {
+      /**
+       * A transaction fee `actual_fee`, of which `tip` was added to the minimum inclusion fee,
+       * has been paid by `who` in an asset `asset_id`.
+       **/
+      AssetTxFeePaid: AugmentedEvent<ApiType, [who: AccountId32, actualFee: u128, tip: u128, assetId: Option<u32>], { who: AccountId32, actualFee: u128, tip: u128, assetId: Option<u32> }>;
+    };
     authorFilter: {
       /**
        * The amount of eligible authors for the filter to select has been changed.
@@ -1211,6 +1218,10 @@ declare module '@polkadot/api-base/types/events' {
        * We have ended a spend period and will now allocate funds.
        **/
       Spending: AugmentedEvent<ApiType, [budgetRemaining: u128], { budgetRemaining: u128 }>;
+      /**
+       * The inactive funds of the pallet have been updated.
+       **/
+      UpdatedInactive: AugmentedEvent<ApiType, [reactivated: u128, deactivated: u128], { reactivated: u128, deactivated: u128 }>;
     };
     unknownTokens: {
       /**

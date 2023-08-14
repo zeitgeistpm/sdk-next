@@ -184,7 +184,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       ExistingVestingSchedule: AugmentedError<ApiType>;
       /**
-       * Balance too low to send value
+       * Balance too low to send value.
        **/
       InsufficientBalance: AugmentedError<ApiType>;
       /**
@@ -262,8 +262,13 @@ declare module '@polkadot/api-base/types/errors' {
       CodeNotFound: AugmentedError<ApiType>;
       /**
        * The contract's code was found to be invalid during validation or instrumentation.
+       * 
+       * The most likely cause of this is that an API was used which is not supported by the
+       * node. This hapens if an older node is used with a new version of ink!. Try updating
+       * your node to the newest available version.
+       * 
        * A more detailed error can be found on the node console if debug messages are enabled
-       * or in the debug buffer which is returned to RPC clients.
+       * by supplying `-lruntime::contracts=debug`.
        **/
       CodeRejected: AugmentedError<ApiType>;
       /**
@@ -310,6 +315,10 @@ declare module '@polkadot/api-base/types/errors' {
        * The topics passed to `seal_deposit_events` contains at least one duplicate.
        **/
       DuplicateTopics: AugmentedError<ApiType>;
+      /**
+       * An indetermistic code was used in a context where this is not permitted.
+       **/
+      Indeterministic: AugmentedError<ApiType>;
       /**
        * `seal_call` forwarded this contracts input. It therefore is no longer available.
        **/
@@ -646,6 +655,10 @@ declare module '@polkadot/api-base/types/errors' {
        * Judgement given.
        **/
       JudgementGiven: AugmentedError<ApiType>;
+      /**
+       * Error that occurs when there is an issue paying for judgement.
+       **/
+      JudgementPaymentFailed: AugmentedError<ApiType>;
       /**
        * No identity found.
        **/
