@@ -76,6 +76,10 @@ fragment FullMarket on Market {
   pool {
     account {
       accountId
+      balances {
+        assetId
+        balance
+      }
     }
     assets {
       amountInPool
@@ -84,7 +88,6 @@ fragment FullMarket on Market {
       price
     }
     baseAsset
-    baseAssetQty
     createdAt
     id
     marketId
@@ -99,7 +102,6 @@ fragment FullMarket on Market {
       assetId
       weight
     }
-    baseAssetQty
   }
   question
   rejectReason
@@ -129,7 +131,9 @@ query historicalMarkets(
     blockNumber
     event
     id
-    marketId
+    market {
+      marketId
+    }
     poolId
     resolvedOutcome
     status

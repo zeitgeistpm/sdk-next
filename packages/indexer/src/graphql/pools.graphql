@@ -12,6 +12,10 @@ query pools(
 fragment FullPool on Pool {
   account {
     accountId
+    balances {
+      assetId
+      balance
+    }
   }
   assets {
     amountInPool
@@ -20,7 +24,6 @@ fragment FullPool on Pool {
     price
   }
   baseAsset
-  baseAssetQty
   createdAt
   id
   marketId
@@ -44,7 +47,6 @@ query historicalPools(
   $limit: Int
 ) {
   historicalPools {
-    baseAssetQty
     blockNumber
     dVolume
     event
