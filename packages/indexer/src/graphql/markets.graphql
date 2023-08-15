@@ -131,10 +131,9 @@ query historicalMarkets(
     blockNumber
     event
     id
-    marketId
-    # market {
-    #   marketId
-    # }
+    market {
+      marketId
+    }
     poolId
     resolvedOutcome
     status
