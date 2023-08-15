@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.34.0
+
+### Minor Changes
+
+- 1c83de0: Remove signed extension config.
+
+### Patch Changes
+
+- Updated dependencies [1c83de0]
+  - @zeitgeistpm/indexer@3.5.0
+
 ## 2.33.0
 
 ### Minor Changes

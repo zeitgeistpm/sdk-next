@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.5.0
+
+### Minor Changes
+
+- 1c83de0: Remove signed extension config.
+
 ## 3.4.0
 
 ### Minor Changes
