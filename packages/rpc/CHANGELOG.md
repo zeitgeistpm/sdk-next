@@ -1,5 +1,16 @@
 # @zeitgeistpm/rpc
 
+## 2.10.0
+
+### Minor Changes
+
+- f949a18: Signed extension removal
+
+### Patch Changes
+
+- Updated dependencies [f949a18]
+  - @zeitgeistpm/augment-api@2.14.0
+
 ## 2.9.0
 
 ### Minor Changes

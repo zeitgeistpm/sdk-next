@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.14.0
+
+### Minor Changes
+
+- f949a18: Signed extension removal
+
 ## 2.13.0
 
 ### Minor Changes

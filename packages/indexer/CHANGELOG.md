@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.6.0
+
+### Minor Changes
+
+- f949a18: Signed extension removal
+
 ## 3.5.0
 
 ### Minor Changes
