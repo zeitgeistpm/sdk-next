@@ -240,8 +240,6 @@ export enum AssetOrderByInput {
   AssetIdDesc = 'assetId_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
-  PoolBaseAssetQtyAsc = 'pool_baseAssetQty_ASC',
-  PoolBaseAssetQtyDesc = 'pool_baseAssetQty_DESC',
   PoolBaseAssetAsc = 'pool_baseAsset_ASC',
   PoolBaseAssetDesc = 'pool_baseAsset_DESC',
   PoolCreatedAtAsc = 'pool_createdAt_ASC',
@@ -773,8 +771,8 @@ export type HistoricalMarket = {
   /** Event method which initiated this change */
   event: MarketEvent;
   id: Scalars['String'];
-  /** Zeitgeist's identifier for market */
-  marketId: Scalars['Int'];
+  /** Details of the connected market */
+  market: Market;
   /** Reported or disputed outcome for the market */
   outcome?: Maybe<OutcomeReport>;
   /** Zeitgeist's identifier for pool */
@@ -802,8 +800,46 @@ export enum HistoricalMarketOrderByInput {
   EventDesc = 'event_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
-  MarketIdAsc = 'marketId_ASC',
-  MarketIdDesc = 'marketId_DESC',
+  MarketAuthorizedAddressAsc = 'market_authorizedAddress_ASC',
+  MarketAuthorizedAddressDesc = 'market_authorizedAddress_DESC',
+  MarketBaseAssetAsc = 'market_baseAsset_ASC',
+  MarketBaseAssetDesc = 'market_baseAsset_DESC',
+  MarketCreationAsc = 'market_creation_ASC',
+  MarketCreationDesc = 'market_creation_DESC',
+  MarketCreatorFeeAsc = 'market_creatorFee_ASC',
+  MarketCreatorFeeDesc = 'market_creatorFee_DESC',
+  MarketCreatorAsc = 'market_creator_ASC',
+  MarketCreatorDesc = 'market_creator_DESC',
+  MarketDescriptionAsc = 'market_description_ASC',
+  MarketDescriptionDesc = 'market_description_DESC',
+  MarketDisputeMechanismAsc = 'market_disputeMechanism_ASC',
+  MarketDisputeMechanismDesc = 'market_disputeMechanism_DESC',
+  MarketHasValidMetaCategoriesAsc = 'market_hasValidMetaCategories_ASC',
+  MarketHasValidMetaCategoriesDesc = 'market_hasValidMetaCategories_DESC',
+  MarketIdAsc = 'market_id_ASC',
+  MarketIdDesc = 'market_id_DESC',
+  MarketImgAsc = 'market_img_ASC',
+  MarketImgDesc = 'market_img_DESC',
+  MarketMarketIdAsc = 'market_marketId_ASC',
+  MarketMarketIdDesc = 'market_marketId_DESC',
+  MarketMetadataAsc = 'market_metadata_ASC',
+  MarketMetadataDesc = 'market_metadata_DESC',
+  MarketOracleAsc = 'market_oracle_ASC',
+  MarketOracleDesc = 'market_oracle_DESC',
+  MarketQuestionAsc = 'market_question_ASC',
+  MarketQuestionDesc = 'market_question_DESC',
+  MarketRejectReasonAsc = 'market_rejectReason_ASC',
+  MarketRejectReasonDesc = 'market_rejectReason_DESC',
+  MarketResolvedOutcomeAsc = 'market_resolvedOutcome_ASC',
+  MarketResolvedOutcomeDesc = 'market_resolvedOutcome_DESC',
+  MarketScalarTypeAsc = 'market_scalarType_ASC',
+  MarketScalarTypeDesc = 'market_scalarType_DESC',
+  MarketScoringRuleAsc = 'market_scoringRule_ASC',
+  MarketScoringRuleDesc = 'market_scoringRule_DESC',
+  MarketSlugAsc = 'market_slug_ASC',
+  MarketSlugDesc = 'market_slug_DESC',
+  MarketStatusAsc = 'market_status_ASC',
+  MarketStatusDesc = 'market_status_DESC',
   OutcomeCategoricalAsc = 'outcome_categorical_ASC',
   OutcomeCategoricalDesc = 'outcome_categorical_DESC',
   OutcomeScalarAsc = 'outcome_scalar_ASC',
@@ -869,15 +905,8 @@ export type HistoricalMarketWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
-  marketId_eq?: InputMaybe<Scalars['Int']>;
-  marketId_gt?: InputMaybe<Scalars['Int']>;
-  marketId_gte?: InputMaybe<Scalars['Int']>;
-  marketId_in?: InputMaybe<Array<Scalars['Int']>>;
-  marketId_isNull?: InputMaybe<Scalars['Boolean']>;
-  marketId_lt?: InputMaybe<Scalars['Int']>;
-  marketId_lte?: InputMaybe<Scalars['Int']>;
-  marketId_not_eq?: InputMaybe<Scalars['Int']>;
-  marketId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  market?: InputMaybe<MarketWhereInput>;
+  market_isNull?: InputMaybe<Scalars['Boolean']>;
   outcome?: InputMaybe<OutcomeReportWhereInput>;
   outcome_isNull?: InputMaybe<Scalars['Boolean']>;
   poolId_eq?: InputMaybe<Scalars['Int']>;
@@ -935,8 +964,6 @@ export type HistoricalMarketsConnection = {
  */
 export type HistoricalPool = {
   __typename?: 'HistoricalPool';
-  /** New amount of market's base asset present in the pool */
-  baseAssetQty?: Maybe<Scalars['BigInt']>;
   /** Height of the block */
   blockNumber: Scalars['Int'];
   /** Volume difference */
@@ -961,8 +988,6 @@ export type HistoricalPoolEdge = {
 };
 
 export enum HistoricalPoolOrderByInput {
-  BaseAssetQtyAsc = 'baseAssetQty_ASC',
-  BaseAssetQtyDesc = 'baseAssetQty_DESC',
   BlockNumberAsc = 'blockNumber_ASC',
   BlockNumberDesc = 'blockNumber_DESC',
   DVolumeAsc = 'dVolume_ASC',
@@ -984,15 +1009,6 @@ export enum HistoricalPoolOrderByInput {
 export type HistoricalPoolWhereInput = {
   AND?: InputMaybe<Array<HistoricalPoolWhereInput>>;
   OR?: InputMaybe<Array<HistoricalPoolWhereInput>>;
-  baseAssetQty_eq?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_gt?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_gte?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  baseAssetQty_isNull?: InputMaybe<Scalars['Boolean']>;
-  baseAssetQty_lt?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_lte?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_not_eq?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   blockNumber_eq?: InputMaybe<Scalars['Int']>;
   blockNumber_gt?: InputMaybe<Scalars['Int']>;
   blockNumber_gte?: InputMaybe<Scalars['Int']>;
@@ -1518,8 +1534,6 @@ export enum MarketOrderByInput {
   PeriodEndDesc = 'period_end_DESC',
   PeriodStartAsc = 'period_start_ASC',
   PeriodStartDesc = 'period_start_DESC',
-  PoolBaseAssetQtyAsc = 'pool_baseAssetQty_ASC',
-  PoolBaseAssetQtyDesc = 'pool_baseAssetQty_DESC',
   PoolBaseAssetAsc = 'pool_baseAsset_ASC',
   PoolBaseAssetDesc = 'pool_baseAsset_DESC',
   PoolCreatedAtAsc = 'pool_createdAt_ASC',
@@ -2069,8 +2083,6 @@ export type Pool = {
   assets: Array<Asset>;
   /** The base asset in the market swap pool (usually a currency) */
   baseAsset: Scalars['String'];
-  /** Amount of market's base asset present in the pool */
-  baseAssetQty: Scalars['BigInt'];
   /** Timestamp of pool creation */
   createdAt: Scalars['DateTime'];
   id: Scalars['String'];
@@ -2116,8 +2128,6 @@ export enum PoolOrderByInput {
   AccountIdDesc = 'account_id_DESC',
   AccountMarketIdAsc = 'account_marketId_ASC',
   AccountMarketIdDesc = 'account_marketId_DESC',
-  BaseAssetQtyAsc = 'baseAssetQty_ASC',
-  BaseAssetQtyDesc = 'baseAssetQty_DESC',
   BaseAssetAsc = 'baseAsset_ASC',
   BaseAssetDesc = 'baseAsset_DESC',
   CreatedAtAsc = 'createdAt_ASC',
@@ -2160,15 +2170,6 @@ export type PoolWhereInput = {
   assets_every?: InputMaybe<AssetWhereInput>;
   assets_none?: InputMaybe<AssetWhereInput>;
   assets_some?: InputMaybe<AssetWhereInput>;
-  baseAssetQty_eq?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_gt?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_gte?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  baseAssetQty_isNull?: InputMaybe<Scalars['Boolean']>;
-  baseAssetQty_lt?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_lte?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_not_eq?: InputMaybe<Scalars['BigInt']>;
-  baseAssetQty_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   baseAsset_contains?: InputMaybe<Scalars['String']>;
   baseAsset_containsInsensitive?: InputMaybe<Scalars['String']>;
   baseAsset_endsWith?: InputMaybe<Scalars['String']>;
@@ -2954,7 +2955,7 @@ export type HistoricalMarketsQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalMarketsQuery = { __typename?: 'Query', historicalMarkets: Array<{ __typename?: 'HistoricalMarket', blockNumber: number, event: MarketEvent, id: string, marketId: number, poolId?: number | null, resolvedOutcome?: string | null, status: MarketStatus, timestamp: any }> };
+export type HistoricalMarketsQuery = { __typename?: 'Query', historicalMarkets: Array<{ __typename?: 'HistoricalMarket', blockNumber: number, event: MarketEvent, id: string, poolId?: number | null, resolvedOutcome?: string | null, status: MarketStatus, timestamp: any, market: { __typename?: 'Market', marketId: number } }> };
 
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3273,7 +3274,9 @@ export const HistoricalMarketsDocument = gql`
     blockNumber
     event
     id
-    marketId
+    market {
+      marketId
+    }
     poolId
     resolvedOutcome
     status
