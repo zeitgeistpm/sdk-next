@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.36.0
+
+### Minor Changes
+
+- 3cc11a0: Gql schema changes for HistoricalMarkets.
+
+### Patch Changes
+
+- Updated dependencies [3cc11a0]
+  - @zeitgeistpm/indexer@3.7.0
+
 ## 2.35.0
 
 ### Minor Changes

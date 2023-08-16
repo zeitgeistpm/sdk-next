@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.7.0
+
+### Minor Changes
+
+- 3cc11a0: Gql schema changes for HistoricalMarkets.
+
 ## 3.6.0
 
 ### Minor Changes
