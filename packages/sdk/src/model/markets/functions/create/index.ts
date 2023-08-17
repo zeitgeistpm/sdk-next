@@ -15,6 +15,7 @@ import {
   CreateMarketTransaction,
   isWithPool,
 } from './types'
+import { ForeignAssetId } from '../../../../primitives'
 
 /**
  * Create a market on chain.
@@ -32,6 +33,7 @@ export const create = async <
 >(
   context: C,
   params: P,
+  feePayingAsset?: ForeignAssetId,
 ) => {
   const { tx, rollbackMetadata } = await transaction(context, params)
 
@@ -41,6 +43,7 @@ export const create = async <
     api: context.api,
     tx,
     signer,
+    feePayingAsset,
     hooks: params.hooks,
   })
 

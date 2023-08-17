@@ -9,6 +9,7 @@ import { getStage } from './functions/getStage'
 import { list } from './functions/list'
 import { MarketStage } from './marketstage'
 import { CreateMarketParams, Market, Markets, MarketsListQuery } from './types'
+import { ForeignAssetId } from 'primitives'
 
 export * from './types'
 
@@ -35,11 +36,15 @@ export const model = <C extends Context<MS>, MS extends MetadataStorage>(
     ),
 
     create: (isRpcContext<MS>(ctx)
-      ? pfunc((params: CreateMarketParams<typeof ctx, MS>) => create(ctx, params), {
-          tx: (params: CreateMarketParams<typeof ctx, MS>) => transaction(ctx, params),
-          calculateFees: (params: CreateMarketParams<typeof ctx, MS>) =>
-            calculateFees(ctx, params),
-        })
+      ? pfunc(
+          (params: CreateMarketParams<typeof ctx, MS>, feePayingAsset?: ForeignAssetId) =>
+            create(ctx, params, feePayingAsset),
+          {
+            tx: (params: CreateMarketParams<typeof ctx, MS>) => transaction(ctx, params),
+            calculateFees: (params: CreateMarketParams<typeof ctx, MS>) =>
+              calculateFees(ctx, params),
+          },
+        )
       : undefined) as unknown as Markets<typeof ctx, MS>['create'],
 
     getStage: (isRpcContext<MS>(ctx)

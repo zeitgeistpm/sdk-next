@@ -1,7 +1,12 @@
 import type { ApiPromise } from '@polkadot/api'
-import type { SubmittableExtrinsic } from '@polkadot/api/types'
+import type {
+  AddressOrPair,
+  SignerOptions,
+  SubmittableExtrinsic,
+} from '@polkadot/api/types'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import type { ForeignAssetId } from '@zeitgeistpm/sdk'
 import { isExtSigner, KeyringPairOrExtSigner } from '../keyring'
 import { TransactionError, TransactionHooks, UnknownDispatchError } from './types'
 
@@ -9,6 +14,7 @@ export type SignAndSendParams = {
   api: ApiPromise
   tx: SubmittableExtrinsic<'promise', ISubmittableResult>
   signer: KeyringPairOrExtSigner
+  feePayingAsset?: ForeignAssetId
   waitForFinalization?: boolean
 } & TransactionHooks
 
@@ -17,7 +23,7 @@ export const signAndSend: Te.TaskEither<
   ISubmittableResult,
   [SignAndSendParams]
 > = Te.from<ISubmittableResult, TransactionError, [SignAndSendParams]>(
-  async ({ api, tx, signer, hooks, waitForFinalization }) => {
+  async ({ api, tx, signer, hooks, feePayingAsset, waitForFinalization }) => {
     return new Promise(async (resolve, reject) => {
       let unsub: () => void
 
@@ -55,10 +61,22 @@ export const signAndSend: Te.TaskEither<
         }
       }
 
+      let signerParam: AddressOrPair
+      let signerOptions: Partial<SignerOptions> = {}
+
+      if (isExtSigner(signer)) {
+        signerParam = signer.address
+        signerOptions.signer = signer.signer
+      } else {
+        signerParam = signer
+      }
+
+      if (feePayingAsset) {
+        signerOptions.assetId = feePayingAsset.ForeignAsset
+      }
+
       try {
-        unsub = isExtSigner(signer)
-          ? await tx.signAndSend(signer.address, { signer: signer.signer }, callback)
-          : await tx.signAndSend(signer, callback)
+        unsub = await tx.signAndSend(signerParam, signerOptions, callback)
       } catch (error) {
         reject(error as Error)
       }

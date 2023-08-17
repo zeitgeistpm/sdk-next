@@ -1,6 +1,6 @@
 /** @type {import('@graphql-codegen/cli').CodegenConfig} */
 module.exports = {
-  schema: 'https://processor.bsr.zeitgeist.pm/graphql',
+  schema: 'https://processor.zeitgeist.pm/graphql', // 'https://processor.bsr.zeitgeist.pm/graphql',
   documents: './**/*.graphql',
   generates: {
     './src/graphql/sdk.ts': {

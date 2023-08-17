@@ -14,6 +14,7 @@ import { MarketGetQuery } from './functions/get/types'
 import { MarketList, MarketsListQuery } from './functions/list/types'
 import { MarketStage } from './marketstage'
 import { RuntimeDispatchInfo } from '@polkadot/types/interfaces'
+import { ForeignAssetId } from 'primitives'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -66,6 +67,7 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage = Metadata
     ? PFunc<
         <C extends RpcContext<MS>, P extends CreateMarketParams<C, MS>>(
           params: P,
+          feePayingAsset?: ForeignAssetId,
         ) => Promise<CreateMarketResult<C, MS, P>>,
         {
           tx: (params: CreateMarketParams<C, MS>) => CreateMarketTransaction
