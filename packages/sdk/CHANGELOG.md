@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.36.1
+
+### Patch Changes
+
+- c7b3a54: add second param `feePayingAsset?: ForeignAssetId` to `sdk.model.markets.create(params, feePayingAsset)`
+- Updated dependencies [c7b3a54]
+  - @zeitgeistpm/indexer@3.7.1
+  - @zeitgeistpm/rpc@2.10.1
+
 ## 2.36.0
 
 ### Minor Changes
