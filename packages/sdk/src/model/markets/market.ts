@@ -327,7 +327,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
     let saturatedRpcMarket = {
       ...base,
-      ...(metadata as StorageTypeOf<MS['markets']>),
+      ...(metadata.unwrap() as StorageTypeOf<MS['markets']>),
     } as SaturatedRpcMarket<C, MS>
 
     attachMarketMethods<C, MS>(context, saturatedRpcMarket as Market<C, MS>)
