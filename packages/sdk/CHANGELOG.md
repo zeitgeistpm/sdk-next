@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.37.1
+
+### Patch Changes
+
+- db304bf: Fix market saturate.
+
 ## 2.37.0
 
 ### Minor Changes
