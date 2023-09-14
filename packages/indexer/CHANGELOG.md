@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.8.0
+
+### Minor Changes
+
+- 6b0e276: Added creatorFee to market creation params. Market dispute only takes marketId now. Added generated types for XCM v3.
+
 ## 3.7.1
 
 ### Patch Changes
