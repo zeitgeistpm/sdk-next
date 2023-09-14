@@ -143,6 +143,7 @@ const createExtrinsic = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
       params.baseAsset,
+      params.creatorFee,
       params.oracle,
       params.period,
       params.deadlines,
@@ -156,6 +157,7 @@ const createExtrinsic = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   } else {
     tx = context.api.tx.predictionMarkets.createMarket(
       params.baseAsset,
+      params.creatorFee,
       params.oracle,
       params.period,
       params.deadlines,

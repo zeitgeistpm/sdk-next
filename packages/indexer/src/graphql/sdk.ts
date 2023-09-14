@@ -233,6 +233,20 @@ export type AssetEdge = {
   node: Asset;
 };
 
+/** Kind of asset */
+export enum AssetKind {
+  CategoricalOutcome = 'CategoricalOutcome',
+  ForeignAsset = 'ForeignAsset',
+  PoolShare = 'PoolShare',
+  ScalarOutcome = 'ScalarOutcome',
+  Ztg = 'Ztg'
+}
+
+export type AssetKindValue = {
+  kind: AssetKind;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 export enum AssetOrderByInput {
   AmountInPoolAsc = 'amountInPool_ASC',
   AmountInPoolDesc = 'amountInPool_DESC',
@@ -2475,7 +2489,7 @@ export type QueryAssetsConnectionArgs = {
 
 export type QueryBalanceInfoArgs = {
   accountId: Scalars['String'];
-  assetId?: InputMaybe<Scalars['String']>;
+  assetId: AssetKindValue;
   blockNumber: Scalars['String'];
 };
 

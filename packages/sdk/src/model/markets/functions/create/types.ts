@@ -6,7 +6,7 @@ import type {
   ZeitgeistPrimitivesMarketMarketDisputeMechanism,
   ZeitgeistPrimitivesPoolScoringRule,
 } from '@polkadot/types/lookup'
-import type { ISubmittableResult } from '@polkadot/types/types'
+import type { AnyNumber, ISubmittableResult } from '@polkadot/types/types'
 import type {
   ExtractableResult,
   KeyringPairOrExtSigner,
@@ -19,6 +19,7 @@ import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'
 import { Pool } from '../../../swaps/pool'
 import { Market } from '../../market'
+import { Perbill } from '@polkadot/types/interfaces'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -37,6 +38,11 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
    * The base asset of the market. Can be ZTG or another
    */
   baseAsset: ZeitgeistPrimitivesAsset | AssetId
+  /**
+   * How much does the creator take in fees pr trade in PerBill.
+   * Its a value between 0 and 1 billion. Where 1 billion is 100% trade fee.
+   */
+  creatorFee: Perbill | AnyNumber | Uint8Array
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
