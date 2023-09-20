@@ -15,9 +15,11 @@ import { MarketList, MarketsListQuery } from './functions/list/types'
 import { MarketStage } from './marketstage'
 import { RuntimeDispatchInfo } from '@polkadot/types/interfaces'
 import { ForeignAssetId, MarketId } from '../../primitives'
+import { MetadataVerification } from './functions/verify-metadata/types'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
+export * from './functions/verify-metadata/types'
 export * from './market'
 export * from './marketstage'
 
@@ -77,7 +79,7 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage = Metadata
     : never
 
   verifyMetadata: C extends RpcContext<MS>
-    ? (marketId: MarketId) => Promise<boolean>
+    ? (marketId: MarketId) => Promise<MetadataVerification>
     : never
 
   /**
