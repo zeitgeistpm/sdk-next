@@ -1,9 +1,5 @@
 import { MarketId, MetadataVerification, create, mainnet } from '@zeitgeistpm/sdk'
 
-// const client = createClient({
-//   url: 'redis://:redis@processor.rpc-0.zeitgeist.pm:6379',
-// })
-
 const sdk = await create(mainnet())
 
 const markets = await sdk.model.markets.list()
