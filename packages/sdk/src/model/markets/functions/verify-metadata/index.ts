@@ -21,6 +21,7 @@ export const verifyMetadata = async <C extends FullContext<MS>, MS extends Metad
   ctx: C,
   marketId: MarketId,
 ): Promise<MetadataVerification> => {
+  // Fetch the market from both rpc and indexer.
   const [rpcMarket, idxMarket] = await Promise.all([
     getFromRpc<RpcContext, MetadataStorage>(ctx, marketId),
     ctx.indexer.markets({
