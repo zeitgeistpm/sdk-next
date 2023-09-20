@@ -65,7 +65,7 @@ const getFromIndexer = async <C extends IndexerContext, MS extends MetadataStora
  * Concrete get function for rpc context
  * @private
  */
-const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
+export const getFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>(
   context: C,
   query: MarketGetQuery,
 ): Promise<O.IOption<Market<C, MS>>> => {

@@ -9,7 +9,7 @@ export * from './providers/ipfs/types'
  * A generic metadata type for on chain objects that
  * has metadata stored in some external storage like IPFS.
  */
-export type Storage<A, ID = CID> = {
+export type Storage<A, ID = CID, P = any> = {
   /**
    * Get item from storage
    *
@@ -38,6 +38,10 @@ export type Storage<A, ID = CID> = {
    * Use another codec for encoding/decoding data.
    */
   withCodec: <A>(codec: Codec<string | Uint8Array, A>) => Storage<A, ID>
+  /**
+   * Provider for the storage like IPFS client.
+   */
+  provider: P
 }
 
 const StorageErrorSym = Symbol('StorageError')

@@ -1,6 +1,6 @@
 import { pfunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { ChainTime } from '@zeitgeistpm/utility/dist/time'
-import { Context, isRpcContext } from '../../context'
+import { Context, isFullContext, isRpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
 import { calculateFees, create, transaction } from './functions/create'
 import { get, observeMarket$ } from './functions/get'
@@ -9,7 +9,8 @@ import { getStage } from './functions/getStage'
 import { list } from './functions/list'
 import { MarketStage } from './marketstage'
 import { CreateMarketParams, Market, Markets, MarketsListQuery } from './types'
-import { ForeignAssetId } from 'primitives'
+import { ForeignAssetId, MarketId } from '../../primitives'
+import { verifyMetadata } from './functions/verify-metadata'
 
 export * from './types'
 
@@ -46,6 +47,10 @@ export const model = <C extends Context<MS>, MS extends MetadataStorage>(
           },
         )
       : undefined) as unknown as Markets<typeof ctx, MS>['create'],
+
+    verifyMetadata: (isFullContext<MS>(ctx)
+      ? (marketId: MarketId) => verifyMetadata(ctx, marketId)
+      : undefined) as unknown as Markets<typeof ctx, MS>['verifyMetadata'],
 
     getStage: (isRpcContext<MS>(ctx)
       ? async (market: Market<Context>, time?: ChainTime): Promise<MarketStage> => {

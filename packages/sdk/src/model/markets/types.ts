@@ -14,7 +14,7 @@ import { MarketGetQuery } from './functions/get/types'
 import { MarketList, MarketsListQuery } from './functions/list/types'
 import { MarketStage } from './marketstage'
 import { RuntimeDispatchInfo } from '@polkadot/types/interfaces'
-import { ForeignAssetId } from 'primitives'
+import { ForeignAssetId, MarketId } from '../../primitives'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -76,11 +76,9 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage = Metadata
       >
     : never
 
-  // C extends RpcContext<MS>
-  //   ? <C extends RpcContext<MS>, P extends CreateMarketParams<C, MS>>(
-  //       params: P,
-  //     ) => Promise<CreateMarketResult<C, MS, P>>
-  //   : never
+  verifyMetadata: C extends RpcContext<MS>
+    ? (marketId: MarketId) => Promise<boolean>
+    : never
 
   /**
    * Get the current stage of a market.

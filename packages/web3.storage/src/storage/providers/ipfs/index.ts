@@ -17,7 +17,7 @@ export const storage = <T>(
   config: IPFSConfiguration,
   codec: Codec<string | Uint8Array, T> = JsonCodec(),
   node: IPFSHTTPClient.IPFSHTTPClient = IPFSHTTPClient.create({ url: config.node.url }),
-): Storage<T, IPFSHTTPClient.CID> => {
+): Storage<T, IPFSHTTPClient.CID, IPFSHTTPClient.IPFSHTTPClient> => {
   node = node ?? IPFSHTTPClient.create({ url: config.node.url })
   const hashAlg = config.hashAlg ?? `sha3-384`
 
@@ -87,6 +87,7 @@ export const storage = <T>(
       (message, error) => new StorageError(message, error),
     ),
     withCodec: codec => storage(config, codec, node),
+    provider: node,
   }
 }
 

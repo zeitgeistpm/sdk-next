@@ -12,7 +12,7 @@ import { isCodec, isNumber } from '@polkadot/util'
 import { create, mainnet } from '@zeitgeistpm/sdk'
 import CID from 'cids'
 import { createClient } from 'redis'
-import { poll } from './poll'
+
 import { IOption, option, none } from '@zeitgeistpm/utility/dist/option'
 
 // const client = createClient({
