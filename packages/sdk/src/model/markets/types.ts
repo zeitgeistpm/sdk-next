@@ -79,6 +79,16 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage = Metadata
       >
     : never
 
+  /**
+   * Verify that the market metadata as stored on the indexer matches the metadata as stored in IPFS.
+   * Note that a `SaturatedRpcMarket` is required to verify the metadata.
+   * A saturated rpc market is a market that has fetched and attached metadata from IPFS.
+   * We clean and compare the metadata fields that are stored on both the indexer and rpc/ipfs and see if they match.
+   *
+   * @param rpcMarket SaturatedRpcMarket<RpcContext, MetadataStorage>
+   * @param idxMarket IndexedMarket<IndexerContext> | FullMarketFragment
+   * @returns MetadataVerification
+   */
   verifyMetadata: (
     rpcMarket: SaturatedRpcMarket<RpcContext, MetadataStorage>,
     idxMarket: IndexedMarket<IndexerContext> | FullMarketFragment,
