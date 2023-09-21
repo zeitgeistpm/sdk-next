@@ -1,48 +1,29 @@
 import { isEqual, pick } from 'lodash-es'
 import HumanDiff from 'human-object-diff'
-import { FullContext, RpcContext } from '../../../../context'
+import { Context, FullContext, IndexerContext, RpcContext } from '../../../../context'
 import { MarketMetadata, MetadataStorage, saturate } from '../../../../meta'
 import { MarketId } from '../../../../primitives'
 import { getFromRpc } from '../get'
 import { MetadataVerification } from './types'
 import { isCodec } from '@polkadot/util'
+import { IndexedMarket, SaturatedRpcMarket } from '../../types'
+import { FullMarketFragment } from '@zeitgeistpm/indexer'
 
 /**
  * Verify that the market metadata as stored on the indexer matches the metadata as stored in IPFS.
- * We fetch the market from both indexer and rpc. Then saturate the rpc market by fetching its metadata from IPFS.
- * Then we clean and compare the metadata fields that are stored on both the indexer and rpc and see if they match.
+ * Note that a `SaturatedRpcMarket` is required to verify the metadata.
+ * A saturated rpc market is a market that has fetched and attached metadata from IPFS.
+ * We clean and compare the metadata fields that are stored on both the indexer and rpc/ipfs and see if they match.
  *
  * @generic C extends FullContext<MS>
  * @generic MS extends MetadataStorage
  * @param ctx FullContext<MS>
  * @param marketId MarketId
  */
-export const verifyMetadata = async <C extends FullContext<MS>, MS extends MetadataStorage>(
-  ctx: C,
-  marketId: MarketId,
-): Promise<MetadataVerification> => {
-  // Fetch the market from both rpc and indexer.
-  const [rpcMarket, idxMarket] = await Promise.all([
-    getFromRpc<RpcContext, MetadataStorage>(ctx, marketId),
-    ctx.indexer.markets({
-      where: {
-        marketId_eq: marketId,
-      },
-    }),
-  ]).then(async ([rpcMarket, idxMarkets]) => {
-    if (rpcMarket.isNone()) {
-      throw new Error(`Market ${marketId} not found through rpc.`)
-    } else if (!idxMarkets.markets[0]) {
-      throw new Error(`Market ${marketId} not found on the indexer.`)
-    }
-
-    // Saturating the rpc market with metadata from IPFS
-    // This fetches the metadata from IPFS using the metadata hash stored on chain and attaches it to the rpc market.
-    const saturatedRpcMarket = await rpcMarket.unwrap()?.saturate()
-
-    return [saturatedRpcMarket, idxMarkets.markets[0]]
-  })
-
+export const verifyMetadata = <MS extends MetadataStorage = MetadataStorage>(
+  rpcMarket: SaturatedRpcMarket<RpcContext<MS>, MetadataStorage>,
+  idxMarket: IndexedMarket<IndexerContext> | FullMarketFragment,
+): MetadataVerification => {
   if (rpcMarket?.marketId !== idxMarket?.marketId) {
     console.warn(
       `Indexed and rpc market ids do not match. Rpc[${rpcMarket?.marketId}], Indexer[${idxMarket?.marketId}]. This should not happen.`,
@@ -52,13 +33,20 @@ export const verifyMetadata = async <C extends FullContext<MS>, MS extends Metad
 
   // We compare the metadata hashes stored on chain and on the indexer.
   // If they do not match, we return and error with the hashes for refernce.
-  const rpcHash = isCodec(rpcMarket?.metadata)
+
+  const rpcMetadataHash = isCodec(rpcMarket?.metadata)
     ? rpcMarket?.metadata.toHex()
     : rpcMarket?.metadata
-  const indexedHash = idxMarket?.metadata
 
-  if (rpcHash !== indexedHash) {
-    return { type: 'failure', code: 'metadata_hash_mismatch', rpcHash, indexedHash }
+  const indexedMetadataHash = idxMarket?.metadata
+
+  if (rpcMetadataHash !== indexedMetadataHash) {
+    return {
+      type: 'failure',
+      code: 'metadata_hash_mismatch',
+      rpcHash: rpcMetadataHash,
+      indexedHash: indexedMetadataHash,
+    }
   }
 
   // We compare critical fields that are necessary for market integrity
@@ -70,17 +58,19 @@ export const verifyMetadata = async <C extends FullContext<MS>, MS extends Metad
   ]
 
   // Now we cleanup the metadata fields.
-  // Some optional fields are stored as null in the indexer, but will not be present in IPFS data.
+  // @note Some optional fields are stored as null in the indexer, but will not be present in IPFS data.
   const cleanedIpfsData = removeEmpty(pick(rpcMarket, validationFields))
   const cleanedIndexedData = removeEmpty(pick(idxMarket, validationFields))
 
+  // For the metadata to be valid, the fields we compare must be equal.
   if (!isEqual(cleanedIpfsData, cleanedIndexedData)) {
-    // We diff the data to produce a human readable diff.
+    // If they differ we diff the data to produce a human readable diff.
     const differ = new HumanDiff()
     const diff = differ.diff(cleanedIpfsData, cleanedIndexedData)
     return { type: 'failure', code: 'metadata_differs', diff: diff }
   }
 
+  // All checks passed, metadata is valid.
   return { type: 'success' }
 }
 

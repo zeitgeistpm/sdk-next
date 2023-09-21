@@ -2,9 +2,9 @@ import { IOption } from '@zeitgeistpm/utility/dist/option'
 import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { ChainTime } from '@zeitgeistpm/utility/dist/time'
 import { Observable } from 'rxjs'
-import { Context, RpcContext } from '../../context'
+import { Context, IndexerContext, RpcContext } from '../../context'
 import { MetadataStorage } from '../../meta'
-import { Market, RpcMarket } from '../types'
+import { IndexedMarket, Market, RpcMarket, SaturatedRpcMarket } from '../types'
 import {
   CreateMarketParams,
   CreateMarketResult,
@@ -16,6 +16,7 @@ import { MarketStage } from './marketstage'
 import { RuntimeDispatchInfo } from '@polkadot/types/interfaces'
 import { ForeignAssetId, MarketId } from '../../primitives'
 import { MetadataVerification } from './functions/verify-metadata/types'
+import { FullMarketFragment } from '@zeitgeistpm/indexer'
 
 export * from './functions/create/types'
 export * from './functions/list/types'
@@ -78,9 +79,10 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage = Metadata
       >
     : never
 
-  verifyMetadata: C extends RpcContext<MS>
-    ? (marketId: MarketId) => Promise<MetadataVerification>
-    : never
+  verifyMetadata: (
+    rpcMarket: SaturatedRpcMarket<RpcContext, MetadataStorage>,
+    idxMarket: IndexedMarket<IndexerContext> | FullMarketFragment,
+  ) => MetadataVerification
 
   /**
    * Get the current stage of a market.

@@ -79,6 +79,9 @@ export type RpcMarket<
     saturate: Te.TaskEither<Error, SaturatedRpcMarket<C, MS>, []>
   }
 
+/**
+ * A saturated rpc market is a rpc market with metadata and poolid fetched from external storage(default IPFS).
+ */
 export type SaturatedRpcMarket<
   C extends RpcContext<MS>,
   MS extends MetadataStorage,
