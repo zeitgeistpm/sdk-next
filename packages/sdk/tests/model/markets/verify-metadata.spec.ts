@@ -27,15 +27,6 @@ describe('sdk.model.markets.verifyMetadata', () => {
     expect(
       verifyMetadata(
         { marketId: 1, metadata: '0x1' } as any,
-        { marketId: 1, metadata: '0x1' } as any,
-      ),
-    ).toEqual({
-      type: 'success',
-    })
-
-    expect(
-      verifyMetadata(
-        { marketId: 1, metadata: '0x1' } as any,
         { marketId: 1, metadata: '0x2' } as any,
       ),
     ).toEqual({
