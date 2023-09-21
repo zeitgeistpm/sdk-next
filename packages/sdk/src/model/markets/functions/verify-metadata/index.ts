@@ -24,10 +24,9 @@ export const verifyMetadata = <MS extends MetadataStorage = MetadataStorage>(
   rpcMarket: SaturatedRpcMarket<RpcContext<MS>, MetadataStorage>,
   idxMarket: IndexedMarket<IndexerContext> | FullMarketFragment,
 ): MetadataVerification => {
+  // Since user provides the markets to verify we have to check that they are indeed the same markets.
+  // By checking the market ids.
   if (rpcMarket?.marketId !== idxMarket?.marketId) {
-    console.warn(
-      `Indexed and rpc market ids do not match. Rpc[${rpcMarket?.marketId}], Indexer[${idxMarket?.marketId}]. This should not happen.`,
-    )
     return { type: 'failure', code: 'market_id_mismatch' }
   }
 
