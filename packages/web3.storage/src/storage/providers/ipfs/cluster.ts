@@ -38,7 +38,7 @@ export const pin = Te.from(
     config: IPFSClusterConfiguration,
   ): Promise<IPFSClusterPinningResponse> => {
     const response = await fetch(
-      new URL(`/pins/${cid}?replication-min=2&replication-max=2`, config.url).href,
+      new URL(`/pins/${cid}?replication-min=1&replication-max=12`, config.url).href,
       {
         headers: await headers(config),
         method: `POST`,
