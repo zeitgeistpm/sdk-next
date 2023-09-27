@@ -1,13 +1,11 @@
-import { isEqual, pick } from 'lodash-es'
-import HumanDiff from 'human-object-diff'
-import { Context, FullContext, IndexerContext, RpcContext } from '../../../../context'
-import { MarketMetadata, MetadataStorage, saturate } from '../../../../meta'
-import { MarketId } from '../../../../primitives'
-import { getFromRpc } from '../get'
-import { MetadataVerification } from './types'
 import { isCodec } from '@polkadot/util'
-import { IndexedMarket, SaturatedRpcMarket } from '../../types'
 import { FullMarketFragment } from '@zeitgeistpm/indexer'
+import HumanDiff from 'human-object-diff'
+import { isEqual, pick } from 'lodash-es'
+import { IndexerContext, RpcContext } from '../../../../context'
+import { MarketMetadata, MetadataStorage } from '../../../../meta'
+import { IndexedMarket, SaturatedRpcMarket } from '../../types'
+import { MetadataVerification } from './types'
 
 /**
  * Verify that the market metadata as stored on the indexer matches the metadata as stored in IPFS.
