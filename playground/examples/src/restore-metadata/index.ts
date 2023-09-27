@@ -21,7 +21,6 @@ const rawMeta: { metas: Array<{ marketId: number; meta: string; rawData: string 
   _rawData as any
 
 const rpcSdk: Sdk<RpcContext> = await create(mainnetRpc())
-const idxSdk: Sdk<IndexerContext> = await create(mainnetIndexer())
 
 const fetchMetadata = (market: any) => {
   return new Promise<IOption<MarketMetadata>>(async (resolve, reject) => {
