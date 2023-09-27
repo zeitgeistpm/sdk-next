@@ -55,6 +55,7 @@ await Promise.all(
     if (metadata.isNone()) {
       console.log(`-----restoring ${market.marketId}-----`)
 
+      // TODO: fetch from api/indexer rather than file
       const cachedRawMetadata = rawMeta.metas.find(m => m.marketId === market.marketId)
 
       if (cachedRawMetadata) {
