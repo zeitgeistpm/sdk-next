@@ -6,6 +6,9 @@ import * as IPFSHTTPClient from 'ipfs-http-client'
 import { Storage, StorageError } from '../..'
 import * as cluster from './cluster'
 import { IPFSConfiguration } from './types'
+
+export * as cluster from './cluster'
+
 /**
  *
  * Create a MetadataStorage object that can store data on an IPFS node

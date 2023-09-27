@@ -12,6 +12,7 @@ import * as IPFSHTTPClient from 'ipfs-http-client'
 import { isString, isU8a, u8aToHex } from '@polkadot/util'
 import { isCodec, isNumber } from '@polkadot/util'
 import { create, mainnet } from '@zeitgeistpm/sdk'
+import { IPFS } from '@zeitgeistpm/web3.storage'
 import CID from 'cids'
 import _rawData from './metas.json'
 import { IOption, option, none } from '@zeitgeistpm/utility/dist/option'
@@ -39,45 +40,58 @@ const fetchMetadata = (market: any) => {
 const rpcMarkets = await rpcSdk.model.markets.list()
 
 const ipfs = IPFSHTTPClient.create({ url: 'https://ipfs.zeitgeist.pm' })
+const ipfsCluster = {
+  url: 'https://ipfs-cluster.zeitgeist.pm',
+  auth: {
+    username: 'zeitgeist',
+    password: '5ZpmQl*rWn%Z',
+  },
+}
+
 const hashAlg = `sha3-384`
 
-rpcMarkets.forEach(async market => {
-  const metadata = await fetchMetadata(market)
-  if (metadata.isNone()) {
-    console.log(`-----restoring ${market.marketId}-----`)
+await Promise.all(
+  rpcMarkets.map(async market => {
+    const metadata = await fetchMetadata(market)
+    if (metadata.isNone()) {
+      console.log(`-----restoring ${market.marketId}-----`)
 
-    const indexedMarket = await idxSdk.model.markets.get(market.marketId)
-    const cachedRawMetadata = rawMeta.metas.find(m => m.marketId === market.marketId)
+      const cachedRawMetadata = rawMeta.metas.find(m => m.marketId === market.marketId)
 
-    if (cachedRawMetadata) {
-      const computedCid = await rpcSdk.storage
-        .of('markets')
-        .hash(JSON.parse(cachedRawMetadata.rawData))
-      const computedHash = u8aToHex(computedCid.cid.multihash.bytes)
-      const onChainHash = market.metadata.toHex()
+      if (cachedRawMetadata) {
+        const computedCid = await rpcSdk.storage
+          .of('markets')
+          .hash(JSON.parse(cachedRawMetadata.rawData))
+        const computedHash = u8aToHex(computedCid.cid.multihash.bytes)
+        const onChainHash = market.metadata.toHex()
 
-      if (computedHash === onChainHash) {
-        const { cid } = await ipfs.add(cachedRawMetadata.rawData, { hashAlg, pin: false })
-        const newComputedHash = u8aToHex(cid.multihash.bytes)
+        if (computedHash === onChainHash) {
+          const { cid } = await ipfs.add(cachedRawMetadata.rawData, { hashAlg, pin: true })
+          const newComputedHash = u8aToHex(cid.multihash.bytes)
 
-        if (newComputedHash === onChainHash) {
-          console.log('restored content')
+          if (newComputedHash === onChainHash) {
+            console.log('restored content on node, pinning to cluster..')
+            const response = await IPFS.cluster.pin(cid.toString(), ipfsCluster)
+            console.log('pinned to cluster')
+          } else {
+            console.log('pinned content, but hashes do not match')
+            console.log('computed: ', newComputedHash)
+            console.log('on chain: ', onChainHash)
+          }
         } else {
-          console.log('pinned content, but hashes do not match')
-          console.log('computed: ', newComputedHash)
+          console.log('hashes do not match')
+          console.log('computed: ', computedHash)
           console.log('on chain: ', onChainHash)
         }
       } else {
-        console.log('hashes do not match')
-        console.log('computed: ', computedHash)
-        console.log('on chain: ', onChainHash)
+        console.log('no raw metadata found in backup cache')
       }
-    } else {
-      console.log('no raw metadata found in backup cache')
+
+      console.log(`----------------------`)
     }
+  }),
+)
 
-    console.log(`----------------------`)
+console.log('Finished')
 
-    // reconstruct and chech hash
-  }
-})
+process.exit(0)
