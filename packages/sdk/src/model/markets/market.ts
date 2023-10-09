@@ -164,7 +164,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
   disputeOutcome: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: { marketId: number | u128; signer: KeyringPairOrExtSigner } & TransactionHooks]
+    [params: Omit<ReportOutcomeParams, 'marketId'> & TransactionHooks]
   >
   /**
    * Report the outcome of a market. Can only be called by the markets oracle address.
@@ -447,7 +447,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
     marketWithMethods.disputeOutcome = Te.from(async params => {
       return await signAndSend({
         api: context.api,
-        tx: context.api.tx.predictionMarkets.dispute(market.marketId),
+        tx: context.api.tx.predictionMarkets.dispute(market.marketId, params.outcome),
         signer: params.signer,
         hooks: params.hooks,
       })
@@ -716,24 +716,3 @@ export const getScalarBounds = (
     )
   }
 }
-
-/**
- *
- *
- * @param ctx Context<MS>
- * @param market Market<C>
- */
-// export const getPrediction = async <C extends Context<MS>, MS extends MetadataStorage>(
-//   ctx: C,
-//   market: Market<Context>,
-// ) => {
-//   if (isRpcData(market)) {
-//     if (market.status.type === 'Resolved') {
-//       const report = market.report.unwrap()
-//       const outcome = report.outcome.toNumber()
-//       const pool = (await getPool(ctx, market)).unwrap()!!
-//       poolPrices
-//     }
-//   } else {
-//   }
-// }

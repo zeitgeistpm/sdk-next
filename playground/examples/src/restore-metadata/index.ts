@@ -1,21 +1,10 @@
-import {
-  FullContext,
-  IndexerContext,
-  MarketMetadata,
-  RpcContext,
-  RpcMarket,
-  Sdk,
-  mainnetIndexer,
-  mainnetRpc,
-} from '@zeitgeistpm/sdk'
-import * as IPFSHTTPClient from 'ipfs-http-client'
-import { isString, isU8a, u8aToHex } from '@polkadot/util'
-import { isCodec, isNumber } from '@polkadot/util'
-import { create, mainnet } from '@zeitgeistpm/sdk'
+import { isCodec, u8aToHex } from '@polkadot/util'
+import { MarketMetadata, RpcContext, Sdk, create, mainnetRpc } from '@zeitgeistpm/sdk'
+import { IOption, none, option } from '@zeitgeistpm/utility/dist/option'
 import { IPFS } from '@zeitgeistpm/web3.storage'
 import CID from 'cids'
+import * as IPFSHTTPClient from 'ipfs-http-client'
 import _rawData from './metas.json'
-import { IOption, option, none } from '@zeitgeistpm/utility/dist/option'
 
 const rawMeta: { metas: Array<{ marketId: number; meta: string; rawData: string }> } =
   _rawData as any
@@ -59,9 +48,8 @@ await Promise.all(
       const cachedRawMetadata = rawMeta.metas.find(m => m.marketId === market.marketId)
 
       if (cachedRawMetadata) {
-        const computedCid = await rpcSdk.storage
-          .of('markets')
-          .hash(JSON.parse(cachedRawMetadata.rawData))
+        const parsedMetadata = JSON.parse(cachedRawMetadata.meta)
+        const computedCid = await rpcSdk.storage.of('markets').hash(parsedMetadata)
         const computedHash = u8aToHex(computedCid.cid.multihash.bytes)
         const onChainHash = market.metadata.toHex()
 
@@ -71,7 +59,7 @@ await Promise.all(
 
           if (newComputedHash === onChainHash) {
             console.log('restored content on node, pinning to cluster..')
-            const response = await IPFS.cluster.pin(cid.toString(), ipfsCluster)
+            await IPFS.cluster.pin(cid.toString(), ipfsCluster)
             console.log('pinned to cluster')
           } else {
             console.log('pinned content, but hashes do not match')

@@ -10,7 +10,7 @@ import type { Data } from '@polkadot/types';
 import type { BTreeMap, Bytes, Null, Option, U8aFixed, Vec, bool, u128, u16, u32, u64 } from '@polkadot/types-codec';
 import type { AnyNumber, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
-import type { CumulusPalletDmpQueueConfigData, CumulusPalletDmpQueuePageIndexData, CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot, CumulusPalletXcmpQueueInboundChannelDetails, CumulusPalletXcmpQueueOutboundChannelDetails, CumulusPalletXcmpQueueQueueConfigData, FrameSupportDispatchPerDispatchClassWeight, FrameSupportPreimagesBounded, FrameSystemAccountInfo, FrameSystemEventRecord, FrameSystemLastRuntimeUpgradeInfo, FrameSystemPhase, NimbusPrimitivesNimbusCryptoPublic, OrmlTokensAccountData, OrmlTokensBalanceLock, OrmlTokensReserveData, OrmlTraitsAssetRegistryAssetMetadata, PalletAuthorMappingRegistrationInfo, PalletBalancesAccountData, PalletBalancesBalanceLock, PalletBalancesReserveData, PalletBountiesBounty, PalletCollectiveVotes, PalletContractsStorageContractInfo, PalletContractsStorageDeletedContract, PalletContractsWasmOwnerInfo, PalletContractsWasmPrefabWasmModule, PalletDemocracyReferendumInfo, PalletDemocracyVoteThreshold, PalletDemocracyVoteVoting, PalletIdentityRegistrarInfo, PalletIdentityRegistration, PalletMultisigMultisig, PalletParachainStakingAutoCompoundAutoCompoundConfig, PalletParachainStakingBond, PalletParachainStakingCandidateMetadata, PalletParachainStakingCollatorSnapshot, PalletParachainStakingDelayedPayout, PalletParachainStakingDelegationRequestsScheduledRequest, PalletParachainStakingDelegations, PalletParachainStakingDelegator, PalletParachainStakingInflationInflationInfo, PalletParachainStakingParachainBondConfig, PalletParachainStakingRoundInfo, PalletParachainStakingSetOrderedSet, PalletPreimageRequestStatus, PalletProxyAnnouncement, PalletProxyProxyDefinition, PalletSchedulerScheduled, PalletTransactionPaymentReleases, PalletTreasuryProposal, PalletVestingReleases, PalletVestingVestingInfo, PalletXcmQueryStatus, PalletXcmRemoteLockedFungibleRecord, PalletXcmVersionMigrationStage, PolkadotCorePrimitivesOutboundHrmpMessage, PolkadotPrimitivesV2AbridgedHostConfiguration, PolkadotPrimitivesV2PersistedValidationData, PolkadotPrimitivesV2UpgradeRestriction, SpRuntimeDigest, SpTrieStorageProof, SpWeightsWeightV2Weight, XcmV3MultiLocation, XcmVersionedAssetId, XcmVersionedMultiLocation, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketAuthorityReport, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketOldMarketDispute, ZeitgeistPrimitivesMarketSubsidyUntil, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPool, ZrmlCourtCourtInfo, ZrmlCourtCourtParticipantInfo, ZrmlCourtCourtPoolItem, ZrmlCourtDraw, ZrmlGlobalDisputesGlobalDisputeInfo, ZrmlGlobalDisputesOldWinnerInfo, ZrmlGlobalDisputesOutcomeInfo, ZrmlLiquidityMiningOwnedValuesParams, ZrmlRikiddoRikiddoSigmoidMV } from '@polkadot/types/lookup';
+import type { CumulusPalletDmpQueueConfigData, CumulusPalletDmpQueuePageIndexData, CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot, CumulusPalletXcmpQueueInboundChannelDetails, CumulusPalletXcmpQueueOutboundChannelDetails, CumulusPalletXcmpQueueQueueConfigData, FrameSupportDispatchPerDispatchClassWeight, FrameSupportPreimagesBounded, FrameSystemAccountInfo, FrameSystemEventRecord, FrameSystemLastRuntimeUpgradeInfo, FrameSystemPhase, NimbusPrimitivesNimbusCryptoPublic, OrmlTokensAccountData, OrmlTokensBalanceLock, OrmlTokensReserveData, OrmlTraitsAssetRegistryAssetMetadata, PalletAuthorMappingRegistrationInfo, PalletBalancesAccountData, PalletBalancesBalanceLock, PalletBalancesReserveData, PalletBountiesBounty, PalletCollectiveVotes, PalletContractsStorageContractInfo, PalletContractsStorageDeletedContract, PalletContractsWasmOwnerInfo, PalletContractsWasmPrefabWasmModule, PalletDemocracyReferendumInfo, PalletDemocracyVoteThreshold, PalletDemocracyVoteVoting, PalletIdentityRegistrarInfo, PalletIdentityRegistration, PalletMultisigMultisig, PalletParachainStakingAutoCompoundAutoCompoundConfig, PalletParachainStakingBond, PalletParachainStakingCandidateMetadata, PalletParachainStakingCollatorSnapshot, PalletParachainStakingDelayedPayout, PalletParachainStakingDelegationRequestsScheduledRequest, PalletParachainStakingDelegations, PalletParachainStakingDelegator, PalletParachainStakingInflationInflationInfo, PalletParachainStakingParachainBondConfig, PalletParachainStakingRoundInfo, PalletParachainStakingSetOrderedSet, PalletPreimageRequestStatus, PalletProxyAnnouncement, PalletProxyProxyDefinition, PalletSchedulerScheduled, PalletTransactionPaymentReleases, PalletTreasuryProposal, PalletVestingReleases, PalletVestingVestingInfo, PalletXcmQueryStatus, PalletXcmVersionMigrationStage, PolkadotCorePrimitivesOutboundHrmpMessage, PolkadotPrimitivesV2AbridgedHostConfiguration, PolkadotPrimitivesV2PersistedValidationData, PolkadotPrimitivesV2UpgradeRestriction, SpRuntimeDigest, SpTrieStorageProof, SpWeightsWeightV2Weight, XcmV1MultiLocation, XcmVersionedMultiLocation, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketAuthorityReport, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketSubsidyUntil, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPool, ZrmlCourtJuror, ZrmlGlobalDisputesOutcomeInfo, ZrmlGlobalDisputesWinnerInfo, ZrmlLiquidityMiningOwnedValuesParams, ZrmlRikiddoRikiddoSigmoidMV } from '@polkadot/types/lookup';
 import type { Observable } from '@polkadot/types/types';
 
 export type __AugmentedQuery<ApiType extends ApiTypes> = AugmentedQuery<ApiType, () => unknown>;
@@ -65,7 +65,7 @@ declare module '@polkadot/api-base/types/storage' {
        * Maps a multilocation to an asset id - useful when processing xcm
        * messages.
        **/
-      locationToAssetId: AugmentedQuery<ApiType, (arg: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array) => Observable<Option<ZeitgeistPrimitivesAsset>>, [XcmV3MultiLocation]>;
+      locationToAssetId: AugmentedQuery<ApiType, (arg: XcmV1MultiLocation | { parents?: any; interior?: any } | string | Uint8Array) => Observable<Option<ZeitgeistPrimitivesAsset>>, [XcmV1MultiLocation]>;
       /**
        * The metadata of an asset, indexed by asset id.
        **/
@@ -260,48 +260,27 @@ declare module '@polkadot/api-base/types/storage' {
     };
     court: {
       /**
-       * Mapping from court id to market id.
+       * Counter for the related counted storage map
        **/
-      courtIdToMarketId: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<u128>>, [u128]>;
+      counterForJurors: AugmentedQuery<ApiType, () => Observable<u32>, []>;
       /**
-       * The pool of jurors and delegators who can get randomly selected according to their stake.
-       * The pool is sorted by `stake` in ascending order [min, ..., max].
+       * Accounts that stake funds to decide outcomes.
        **/
-      courtPool: AugmentedQuery<ApiType, () => Observable<Vec<ZrmlCourtCourtPoolItem>>, []>;
+      jurors: AugmentedQuery<ApiType, (arg: AccountId32 | string | Uint8Array) => Observable<Option<ZrmlCourtJuror>>, [AccountId32]>;
       /**
-       * The general information about each court.
+       * An extra layer of pseudo randomness.
        **/
-      courts: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<ZrmlCourtCourtInfo>>, [u128]>;
+      jurorsSelectionNonce: AugmentedQuery<ApiType, () => Observable<u64>, []>;
       /**
-       * Mapping from market id to court id.
+       * Selected jurors that should vote a market outcome until a certain block number
        **/
-      marketIdToCourtId: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<u128>>, [u128]>;
+      requestedJurors: AugmentedQuery<ApiType, (arg1: u128 | AnyNumber | Uint8Array, arg2: AccountId32 | string | Uint8Array) => Observable<Option<u64>>, [u128, AccountId32]>;
       /**
-       * The next identifier for a new court.
+       * Votes of market outcomes for disputes
+       * 
+       * Stores the vote block number and the submitted outcome.
        **/
-      nextCourtId: AugmentedQuery<ApiType, () => Observable<u128>, []>;
-      /**
-       * The general information about each juror and delegator.
-       **/
-      participants: AugmentedQuery<ApiType, (arg: AccountId32 | string | Uint8Array) => Observable<Option<ZrmlCourtCourtParticipantInfo>>, [AccountId32]>;
-      /**
-       * The future block number when jurors should start voting.
-       * This is useful for the user experience of the jurors to vote for multiple courts at once.
-       **/
-      requestBlock: AugmentedQuery<ApiType, () => Observable<u64>, []>;
-      /**
-       * The randomly selected jurors and delegators, their vote weight,
-       * the status about their vote and their selected and risked funds.
-       **/
-      selectedDraws: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Vec<ZrmlCourtDraw>>, [u128]>;
-      /**
-       * An extra layer of pseudo randomness so that we can generate a new random seed with it.
-       **/
-      selectionNonce: AugmentedQuery<ApiType, () => Observable<u64>, []>;
-      /**
-       * The current inflation rate.
-       **/
-      yearlyInflation: AugmentedQuery<ApiType, () => Observable<Perbill>, []>;
+      votes: AugmentedQuery<ApiType, (arg1: u128 | AnyNumber | Uint8Array, arg2: AccountId32 | string | Uint8Array) => Observable<Option<ITuple<[u64, ZeitgeistPrimitivesOutcomeReport]>>>, [u128, AccountId32]>;
     };
     democracy: {
       /**
@@ -368,10 +347,6 @@ declare module '@polkadot/api-base/types/storage' {
        **/
       configuration: AugmentedQuery<ApiType, () => Observable<CumulusPalletDmpQueueConfigData>, []>;
       /**
-       * Counter for the related counted storage map
-       **/
-      counterForOverweight: AugmentedQuery<ApiType, () => Observable<u32>, []>;
-      /**
        * The overweight messages.
        **/
       overweight: AugmentedQuery<ApiType, (arg: u64 | AnyNumber | Uint8Array) => Observable<Option<ITuple<[u32, Bytes]>>>, [u64]>;
@@ -386,11 +361,6 @@ declare module '@polkadot/api-base/types/storage' {
     };
     globalDisputes: {
       /**
-       * Maps the market id to all information
-       * about the global dispute.
-       **/
-      globalDisputesInfo: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<ZrmlGlobalDisputesGlobalDisputeInfo>>, [u128]>;
-      /**
        * All highest lock information (vote id, outcome index and locked balance)
        * for a particular voter.
        * 
@@ -401,7 +371,11 @@ declare module '@polkadot/api-base/types/storage' {
        * Maps the market id to the outcome and providing information about the outcome.
        **/
       outcomes: AugmentedQuery<ApiType, (arg1: u128 | AnyNumber | Uint8Array, arg2: ZeitgeistPrimitivesOutcomeReport | { Categorical: any } | { Scalar: any } | string | Uint8Array) => Observable<Option<ZrmlGlobalDisputesOutcomeInfo>>, [u128, ZeitgeistPrimitivesOutcomeReport]>;
-      winners: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<ZrmlGlobalDisputesOldWinnerInfo>>, [u128]>;
+      /**
+       * Maps the market id to all information
+       * about the winner outcome and if the global dispute is finished.
+       **/
+      winners: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<ZrmlGlobalDisputesWinnerInfo>>, [u128]>;
     };
     identity: {
       /**
@@ -704,10 +678,6 @@ declare module '@polkadot/api-base/types/storage' {
        **/
       currentMigration: AugmentedQuery<ApiType, () => Observable<Option<PalletXcmVersionMigrationStage>>, []>;
       /**
-       * Fungible assets which we know are locked on this chain.
-       **/
-      lockedFungibles: AugmentedQuery<ApiType, (arg: AccountId32 | string | Uint8Array) => Observable<Option<Vec<ITuple<[u128, XcmVersionedMultiLocation]>>>>, [AccountId32]>;
-      /**
        * The ongoing queries.
        **/
       queries: AugmentedQuery<ApiType, (arg: u64 | AnyNumber | Uint8Array) => Observable<Option<PalletXcmQueryStatus>>, [u64]>;
@@ -716,10 +686,6 @@ declare module '@polkadot/api-base/types/storage' {
        **/
       queryCounter: AugmentedQuery<ApiType, () => Observable<u64>, []>;
       /**
-       * Fungible assets which we know are locked on a remote chain.
-       **/
-      remoteLockedFungibles: AugmentedQuery<ApiType, (arg1: u32 | AnyNumber | Uint8Array, arg2: AccountId32 | string | Uint8Array, arg3: XcmVersionedAssetId | { V3: any } | string | Uint8Array) => Observable<Option<PalletXcmRemoteLockedFungibleRecord>>, [u32, AccountId32, XcmVersionedAssetId]>;
-      /**
        * Default version to encode XCM when latest version of destination is unknown. If `None`,
        * then the destinations whose XCM version is unknown are considered unreachable.
        **/
@@ -727,7 +693,7 @@ declare module '@polkadot/api-base/types/storage' {
       /**
        * The Latest versions that we know various locations support.
        **/
-      supportedVersion: AugmentedQuery<ApiType, (arg1: u32 | AnyNumber | Uint8Array, arg2: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => Observable<Option<u32>>, [u32, XcmVersionedMultiLocation]>;
+      supportedVersion: AugmentedQuery<ApiType, (arg1: u32 | AnyNumber | Uint8Array, arg2: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array) => Observable<Option<u32>>, [u32, XcmVersionedMultiLocation]>;
       /**
        * Destinations whose latest XCM version we would like to know. Duplicates not allowed, and
        * the `u32` counter is the number of times that a send to the destination has been attempted,
@@ -737,19 +703,19 @@ declare module '@polkadot/api-base/types/storage' {
       /**
        * All locations that we have requested version notifications from.
        **/
-      versionNotifiers: AugmentedQuery<ApiType, (arg1: u32 | AnyNumber | Uint8Array, arg2: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => Observable<Option<u64>>, [u32, XcmVersionedMultiLocation]>;
+      versionNotifiers: AugmentedQuery<ApiType, (arg1: u32 | AnyNumber | Uint8Array, arg2: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array) => Observable<Option<u64>>, [u32, XcmVersionedMultiLocation]>;
       /**
        * The target locations that are subscribed to our version changes, as well as the most recent
        * of our versions we informed them of.
        **/
-      versionNotifyTargets: AugmentedQuery<ApiType, (arg1: u32 | AnyNumber | Uint8Array, arg2: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => Observable<Option<ITuple<[u64, SpWeightsWeightV2Weight, u32]>>>, [u32, XcmVersionedMultiLocation]>;
+      versionNotifyTargets: AugmentedQuery<ApiType, (arg1: u32 | AnyNumber | Uint8Array, arg2: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array) => Observable<Option<ITuple<[u64, u64, u32]>>>, [u32, XcmVersionedMultiLocation]>;
     };
     predictionMarkets: {
       /**
        * For each market, this holds the dispute information for each dispute that's
        * been issued.
        **/
-      disputes: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Vec<ZeitgeistPrimitivesMarketOldMarketDispute>>, [u128]>;
+      disputes: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Vec<ZeitgeistPrimitivesMarketMarketDispute>>, [u128]>;
       /**
        * The last time frame that was checked for markets to close.
        **/
@@ -830,11 +796,6 @@ declare module '@polkadot/api-base/types/storage' {
       lookup: AugmentedQuery<ApiType, (arg: U8aFixed | string | Uint8Array) => Observable<Option<ITuple<[u64, u32]>>>, [U8aFixed]>;
     };
     simpleDisputes: {
-      /**
-       * For each market, this holds the dispute information for each dispute that's
-       * been issued.
-       **/
-      disputes: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Vec<ZeitgeistPrimitivesMarketMarketDispute>>, [u128]>;
     };
     styx: {
       /**
@@ -1039,14 +1000,14 @@ declare module '@polkadot/api-base/types/storage' {
        * 
        * double_map: who, asset_id => u128
        **/
-      abstractFungibleBalances: AugmentedQuery<ApiType, (arg1: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, arg2: Bytes | string | Uint8Array) => Observable<u128>, [XcmV3MultiLocation, Bytes]>;
+      abstractFungibleBalances: AugmentedQuery<ApiType, (arg1: XcmV1MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, arg2: Bytes | string | Uint8Array) => Observable<u128>, [XcmV1MultiLocation, Bytes]>;
       /**
        * Concrete fungible balances under a given location and a concrete
        * fungible id.
        * 
        * double_map: who, asset_id => u128
        **/
-      concreteFungibleBalances: AugmentedQuery<ApiType, (arg1: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, arg2: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array) => Observable<u128>, [XcmV3MultiLocation, XcmV3MultiLocation]>;
+      concreteFungibleBalances: AugmentedQuery<ApiType, (arg1: XcmV1MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, arg2: XcmV1MultiLocation | { parents?: any; interior?: any } | string | Uint8Array) => Observable<u128>, [XcmV1MultiLocation, XcmV1MultiLocation]>;
     };
     utility: {
     };
@@ -1063,10 +1024,6 @@ declare module '@polkadot/api-base/types/storage' {
       vesting: AugmentedQuery<ApiType, (arg: AccountId32 | string | Uint8Array) => Observable<Option<Vec<PalletVestingVestingInfo>>>, [AccountId32]>;
     };
     xcmpQueue: {
-      /**
-       * Counter for the related counted storage map
-       **/
-      counterForOverweight: AugmentedQuery<ApiType, () => Observable<u32>, []>;
       /**
        * Inbound aggregate XCMP messages. It can only be one per ParaId/block.
        **/

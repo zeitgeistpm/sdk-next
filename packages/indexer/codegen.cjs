@@ -1,6 +1,18 @@
+const endpoint = process.argv.includes('--bsr')
+  ? 'https://processor.bsr.zeitgeist.pm/graphql'
+  : process.argv.includes('--mainnet')
+  ? 'https://processor.rpc-0.zeitgeist.pm/graphql'
+  : null
+
+if (!endpoint) {
+  throw new Error('Please specify --bsr or --mainnet when running gql codegen')
+}
+
+console.log('CODEGEN: endpoint: ', endpoint)
+
 /** @type {import('@graphql-codegen/cli').CodegenConfig} */
 module.exports = {
-  schema: 'https://processor.zeitgeist.pm/graphql', // 'https://processor.bsr.zeitgeist.pm/graphql',
+  schema: endpoint, // 'https://processor.bsr.zeitgeist.pm/graphql',
   documents: './**/*.graphql',
   generates: {
     './src/graphql/sdk.ts': {

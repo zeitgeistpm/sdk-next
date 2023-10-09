@@ -42,7 +42,7 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
    * How much does the creator take in fees pr trade in PerBill.
    * Its a value between 0 and 1 billion. Where 1 billion is 100% trade fee.
    */
-  creatorFee: Perbill | AnyNumber | Uint8Array
+  creatorFee?: Perbill | AnyNumber | Uint8Array
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */

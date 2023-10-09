@@ -189,23 +189,7 @@ export const createRpcContext = async <MS extends MetadataStorage<any>>(
 export const createIndexerContext = async (
   config: IndexerConfig,
 ): Promise<IndexerContext> => {
-  debug(`connecting to indexer: ${config.indexer}`, config)
-
-  const indexer = Indexer.create({ uri: config.indexer })
-
-  const pinged = await polly()
-    .logger(_ => {
-      debug(`indexer connection failed, retrying..`, config, 'warn')
-    })
-    .waitAndRetry(config.connectionRetries ?? 8)
-    .executeForPromise(() => indexer.ping())
-
-  debug(`connected to indexer, response time ${pinged}ms`, {
-    ...config,
-    color: '#52c45e',
-  })
-
-  return { indexer }
+  return { indexer: Indexer.create({ uri: config.indexer }) }
 }
 
 export default create

@@ -7,7 +7,8 @@
   ],
   "scripts": {
     "pub": "turbo run build test && changeset version && changeset publish",
-    "build": "turbo run build",
+    "build:bsr": "turbo run build:bsr",
+    "build:mainnet": "turbo run build:mainnet",
     "test": "turbo run test",
     "coverage": "turbo run coverage",
     "document": "yarn typedoc"
