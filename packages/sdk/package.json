@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/sdk",
-  "version": "2.37.1",
+  "version": "2.38.0",
   "publishConfig": {
     "access": "public"
   },
@@ -20,7 +20,8 @@
     "src"
   ],
   "scripts": {
-    "build": "yarn compile",
+    "build:bsr": "yarn compile",
+    "build:mainnet": "yarn compile",
     "compile": "rimraf ./dist && rollup -c",
     "test": "vitest run"
   },
@@ -30,11 +31,11 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^2.15.0",
-    "@zeitgeistpm/indexer": "^3.8.0",
-    "@zeitgeistpm/rpc": "^2.10.1",
-    "@zeitgeistpm/utility": "^2.20.0",
-    "@zeitgeistpm/web3.storage": "^2.11.0",
+    "@zeitgeistpm/augment-api": "^2.16.0",
+    "@zeitgeistpm/indexer": "^3.9.0",
+    "@zeitgeistpm/rpc": "^2.11.0",
+    "@zeitgeistpm/utility": "^2.21.0",
+    "@zeitgeistpm/web3.storage": "^2.12.0",
     "cids": "^1.1.9",
     "decimal.js": "^10.4.3",
     "lodash-es": "^4.17.21",

@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 2.38.0
+
+### Minor Changes
+
+- 528b8aa: Revert runtime changes to current bsr. Improve build process so we can specify bsr or mainnet.
+
+### Patch Changes
+
+- Updated dependencies [528b8aa]
+  - @zeitgeistpm/augment-api@2.16.0
+  - @zeitgeistpm/indexer@3.9.0
+  - @zeitgeistpm/rpc@2.11.0
+  - @zeitgeistpm/utility@2.21.0
+  - @zeitgeistpm/web3.storage@2.12.0
+
 ## 2.37.1
 
 ### Patch Changes

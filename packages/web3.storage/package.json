@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/web3.storage",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "publishConfig": {
     "access": "public"
   },
@@ -20,11 +20,12 @@
     "src"
   ],
   "scripts": {
-    "build": "yarn compile",
+    "build:bsr": "yarn compile",
+    "build:mainnet": "yarn compile",
     "compile": "rimraf ./dist && rollup -c"
   },
   "dependencies": {
-    "@zeitgeistpm/utility": "^2.20.0",
+    "@zeitgeistpm/utility": "^2.21.0",
     "cids": "^1.1.9",
     "ipfs-http-client": "^60.0.0",
     "ipfs-only-hash": "^4.0.0",

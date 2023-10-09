@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.16.0
+
+### Minor Changes
+
+- 528b8aa: Revert runtime changes to current bsr. Improve build process so we can specify bsr or mainnet.
+
 ## 2.15.0
 
 ### Minor Changes

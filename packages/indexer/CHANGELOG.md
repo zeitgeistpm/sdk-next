@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.9.0
+
+### Minor Changes
+
+- 528b8aa: Revert runtime changes to current bsr. Improve build process so we can specify bsr or mainnet.
+
 ## 3.8.0
 
 ### Minor Changes

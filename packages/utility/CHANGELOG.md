@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.21.0
+
+### Minor Changes
+
+- 528b8aa: Revert runtime changes to current bsr. Improve build process so we can specify bsr or mainnet.
+
 ## 2.20.0
 
 ### Minor Changes

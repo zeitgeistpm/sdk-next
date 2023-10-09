@@ -1,7 +1,7 @@
 {
   "name": "@zeitgeistpm/augment-api",
   "description": "Generated types for the Zeitgeist network.",
-  "version": "2.15.0",
+  "version": "2.16.0",
   "publishConfig": {
     "access": "public"
   },
@@ -21,11 +21,13 @@
     "src"
   ],
   "scripts": {
-    "build": "yarn fetch:metadata && yarn generate:defs && yarn generate:meta && yarn compile",
+    "build:bsr": "yarn fetch:metadata:bsr && yarn generate:defs && yarn generate:meta && yarn compile",
+    "build:mainnet": "yarn fetch:metadata:mainnet && yarn generate:defs && yarn generate:meta && yarn compile",
     "compile": "rimraf ./dist && rollup -c",
     "generate:defs": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-defs --package @zeitgeistpm/augment-api/interfaces --input ./src/interfaces --endpoint ./src/metadata/latest.json",
     "generate:meta": "ts-node --skip-project ../../node_modules/.bin/polkadot-types-from-chain --package @zeitgeistpm/augment-api/interfaces --endpoint ./src/metadata/latest.json --output ./src/interfaces  --strict",
-    "fetch:metadata": "node ./scripts/fetchMetadata.mjs --outfile './src/metadata/latest.json' --endpoint 'wss://bsr.zeitgeist.pm/'"
+    "fetch:metadata:bsr": "node ./scripts/fetchMetadata.mjs --outfile './src/metadata/latest.json' --endpoint 'wss://bsr.zeitgeist.pm/'",
+    "fetch:metadata:mainnet": "node ./scripts/fetchMetadata.mjs --outfile './src/metadata/latest.json' --endpoint 'wss://zeitgeist.api.onfinality.io/public-ws'"
   },
   "author": "Zeitgeist PM <contact@zeitgeist.pm>",
   "license": "GPL-3.0",

@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/utility",
-  "version": "2.20.0",
+  "version": "2.21.0",
   "publishConfig": {
     "access": "public"
   },
@@ -114,7 +114,8 @@
     "dist/*"
   ],
   "scripts": {
-    "build": "yarn compile && yarn generate-exports",
+    "build:bsr": "yarn compile && yarn generate-exports",
+    "build:mainnet": "yarn compile && yarn generate-exports",
     "compile": "rimraf ./dist && rollup -c",
     "generate-exports": "node ./scripts/generate_exports.mjs",
     "test": "vitest run",

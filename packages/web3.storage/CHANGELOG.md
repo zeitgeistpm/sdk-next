@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.12.0
+
+### Minor Changes
+
+- 528b8aa: Revert runtime changes to current bsr. Improve build process so we can specify bsr or mainnet.
+
+### Patch Changes
+
+- Updated dependencies [528b8aa]
+  - @zeitgeistpm/utility@2.21.0
+
 ## 2.11.0
 
 ### Minor Changes

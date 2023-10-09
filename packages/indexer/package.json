@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/indexer",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "publishConfig": {
     "access": "public"
   },
@@ -21,7 +21,8 @@
     "src"
   ],
   "scripts": {
-    "build": "graphql-codegen --config codegen.cjs && yarn compile",
+    "build:bsr": "graphql-codegen --config codegen.cjs --bsr && yarn compile",
+    "build:mainnet": "graphql-codegen --config codegen.cjs --mainnet && yarn compile",
     "compile": "rimraf ./dist && rollup -c"
   },
   "devDependencies": {
