@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.38.1
+
+### Patch Changes
+
+- 7eb11c0: Fix missing dep: human-object-diff
+
 ## 2.38.0
 
 ### Minor Changes
