@@ -1509,6 +1509,13 @@ export enum MarketEvent {
   PoolCreate = 'PoolCreate'
 }
 
+export type MarketMetadata = {
+  __typename?: 'MarketMetadata';
+  decoded?: Maybe<Scalars['String']>;
+  encoded: Scalars['String'];
+  marketId: Scalars['Int'];
+};
+
 export enum MarketOrderByInput {
   AuthorizedAddressAsc = 'authorizedAddress_ASC',
   AuthorizedAddressDesc = 'authorizedAddress_DESC',
@@ -2395,6 +2402,7 @@ export type Query = {
   marketById?: Maybe<Market>;
   /** @deprecated Use marketById */
   marketByUniqueInput?: Maybe<Market>;
+  marketMetadata: Array<MarketMetadata>;
   marketStats: Array<MarketStats>;
   markets: Array<Market>;
   marketsConnection: MarketsConnection;
@@ -2631,6 +2639,11 @@ export type QueryMarketByIdArgs = {
 
 export type QueryMarketByUniqueInputArgs = {
   where: WhereIdInput;
+};
+
+
+export type QueryMarketMetadataArgs = {
+  marketId: Array<Scalars['Int']>;
 };
 
 
