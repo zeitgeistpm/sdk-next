@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.22.0
+
+### Minor Changes
+
+- 3e4f2a0: Release mainnet compatible stable release.
+
 ## 2.21.0
 
 ### Minor Changes

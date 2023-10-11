@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.13.0
+
+### Minor Changes
+
+- 3e4f2a0: Release mainnet compatible stable release.
+
+### Patch Changes
+
+- Updated dependencies [3e4f2a0]
+  - @zeitgeistpm/utility@2.22.0
+
 ## 2.12.0
 
 ### Minor Changes

@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 2.40.0
+
+### Minor Changes
+
+- 3e4f2a0: Release mainnet compatible stable release.
+
+### Patch Changes
+
+- Updated dependencies [3e4f2a0]
+  - @zeitgeistpm/augment-api@2.18.0
+  - @zeitgeistpm/indexer@3.11.0
+  - @zeitgeistpm/rpc@2.12.0
+  - @zeitgeistpm/utility@2.22.0
+  - @zeitgeistpm/web3.storage@2.13.0
+
 ## 2.39.0
 
 ### Minor Changes

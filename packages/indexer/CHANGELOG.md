@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.11.0
+
+### Minor Changes
+
+- 3e4f2a0: Release mainnet compatible stable release.
+
 ## 3.10.0
 
 ### Minor Changes

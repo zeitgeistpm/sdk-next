@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.18.0
+
+### Minor Changes
+
+- 3e4f2a0: Release mainnet compatible stable release.
+
 ## 2.17.0
 
 ### Minor Changes
