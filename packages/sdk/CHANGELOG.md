@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.39.0
+
+### Minor Changes
+
+- b6baa68: Reintroduce creatorFee and dispute changes.
+
+### Patch Changes
+
+- Updated dependencies [b6baa68]
+  - @zeitgeistpm/augment-api@2.17.0
+  - @zeitgeistpm/indexer@3.10.0
+
 ## 2.38.1
 
 ### Patch Changes

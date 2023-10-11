@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.10.0
+
+### Minor Changes
+
+- b6baa68: Reintroduce creatorFee and dispute changes.
+
 ## 3.9.0
 
 ### Minor Changes

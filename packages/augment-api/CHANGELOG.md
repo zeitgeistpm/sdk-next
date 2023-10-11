@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.17.0
+
+### Minor Changes
+
+- b6baa68: Reintroduce creatorFee and dispute changes.
+
 ## 2.16.0
 
 ### Minor Changes
