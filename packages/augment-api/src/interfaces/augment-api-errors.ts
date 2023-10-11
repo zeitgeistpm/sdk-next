@@ -128,6 +128,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       MarketIsNotDisputed: AugmentedError<ApiType>;
       /**
+       * Only one dispute is allowed.
+       **/
+      OnlyOneDisputeAllowed: AugmentedError<ApiType>;
+      /**
        * The report does not match the market's type.
        **/
       OutcomeMismatch: AugmentedError<ApiType>;
@@ -308,6 +312,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       DuplicateContract: AugmentedError<ApiType>;
       /**
+       * The topics passed to `seal_deposit_events` contains at least one duplicate.
+       **/
+      DuplicateTopics: AugmentedError<ApiType>;
+      /**
        * An indetermistic code was used in a context where this is not permitted.
        **/
       Indeterministic: AugmentedError<ApiType>;
@@ -445,199 +453,25 @@ declare module '@polkadot/api-base/types/errors' {
     };
     court: {
       /**
-       * In order to exit the court the juror has to exit
-       * the pool first with `prepare_exit_court`.
+       * It is not possible to insert a Juror that is already stored
        **/
-      AlreadyPreparedExit: AugmentedError<ApiType>;
-      /**
-       * After the first join of the court the amount has to be equal or higher than the current stake.
-       * This is to ensure the slashable amount in active court rounds
-       * is still smaller or equal to the stake.
-       * It is also necessary to calculate the `unconsumed` stake properly.
-       * Otherwise a juror could just reduce the probability to get selected whenever they want.
-       * But this has to be done by `prepare_exit_court` and `exit_court`.
-       * Additionally, the `join_court` and `delegate` extrinsics
-       * use `extend_lock` and not `set_lock` or `remove_lock`.
-       * This means those extrinsics are not meant to get out, but only to get into the court.
-       **/
-      AmountBelowLastJoin: AugmentedError<ApiType>;
-      /**
-       * The amount is too low to kick the lowest juror out of the stake-weighted pool.
-       **/
-      AmountBelowLowestJuror: AugmentedError<ApiType>;
-      /**
-       * The caller has not enough funds to join the court with the specified amount.
-       **/
-      AmountExceedsBalance: AugmentedError<ApiType>;
-      /**
-       * The callers balance is lower than the appeal bond.
-       **/
-      AppealBondExceedsBalance: AugmentedError<ApiType>;
-      /**
-       * The appealed vote item is not an outcome.
-       **/
-      AppealedVoteItemIsNoOutcome: AugmentedError<ApiType>;
-      /**
-       * The amount is below the minimum required stake.
-       **/
-      BelowMinJurorStake: AugmentedError<ApiType>;
-      /**
-       * A juror tried to denounce herself.
-       **/
-      CallerDenouncedItself: AugmentedError<ApiType>;
-      /**
-       * This operation requires the caller to be a juror or delegator.
-       **/
-      CallerIsNotACourtParticipant: AugmentedError<ApiType>;
-      /**
-       * The caller of this function is not part of the juror draws.
-       **/
-      CallerNotInSelectedDraws: AugmentedError<ApiType>;
-      /**
-       * The vote item and salt reveal do not match the commitment vote.
-       **/
-      CommitmentHashMismatch: AugmentedError<ApiType>;
-      /**
-       * The juror stakes of the court already got reassigned.
-       **/
-      CourtAlreadyReassigned: AugmentedError<ApiType>;
-      /**
-       * The court id to market id mapping was not found.
-       **/
-      CourtIdToMarketIdNotFound: AugmentedError<ApiType>;
-      /**
-       * The court is not in the closed state.
-       **/
-      CourtNotClosed: AugmentedError<ApiType>;
-      /**
-       * No court for this market id was found.
-       **/
-      CourtNotFound: AugmentedError<ApiType>;
-      /**
-       * This should not happen, because the juror account should only be once in a pool.
-       **/
-      CourtParticipantTwiceInPool: AugmentedError<ApiType>;
-      /**
-       * The set of delegations should contain only valid and active juror accounts.
-       **/
-      DelegatedToInvalidJuror: AugmentedError<ApiType>;
-      /**
-       * The set of delegations has to be distinct.
-       **/
-      IdenticalDelegationsNotAllowed: AugmentedError<ApiType>;
-      /**
-       * The vote item is not valid for this (binary) court.
-       **/
-      InvalidVoteItemForBinaryCourt: AugmentedError<ApiType>;
-      /**
-       * The vote item is not valid for this (outcome) court.
-       **/
-      InvalidVoteItemForOutcomeCourt: AugmentedError<ApiType>;
-      /**
-       * The caller of this extrinsic needs to be drawn or in the commitment vote state.
-       **/
-      InvalidVoteState: AugmentedError<ApiType>;
-      /**
-       * The juror decided to be a delegator.
-       **/
-      JurorDelegated: AugmentedError<ApiType>;
-      /**
-       * The juror was drawn but did not manage to commitmently vote within the court.
-       **/
-      JurorDidNotVote: AugmentedError<ApiType>;
+      JurorAlreadyExists: AugmentedError<ApiType>;
       /**
        * An account id does not exist on the jurors storage.
        **/
-      JurorDoesNotExist: AugmentedError<ApiType>;
+      JurorDoesNotExists: AugmentedError<ApiType>;
       /**
-       * The juror was not randomly selected for the court.
-       **/
-      JurorNotDrawn: AugmentedError<ApiType>;
-      /**
-       * On dispute or resolution, someone tried to pass a non-court market type.
+       * On dispute or resolution, someone tried to pass a non-court market type
        **/
       MarketDoesNotHaveCourtMechanism: AugmentedError<ApiType>;
       /**
-       * The market id to court id mapping was not found.
+       * No-one voted on an outcome to resolve a market
        **/
-      MarketIdToCourtIdNotFound: AugmentedError<ApiType>;
+      NoVotes: AugmentedError<ApiType>;
       /**
-       * The market is not in a state where it can be disputed.
+       * Forbids voting of unknown accounts
        **/
-      MarketIsNotDisputed: AugmentedError<ApiType>;
-      /**
-       * The report of the market was not found.
-       **/
-      MarketReportNotFound: AugmentedError<ApiType>;
-      /**
-       * The maximum number of appeals has been reached.
-       **/
-      MaxAppealsReached: AugmentedError<ApiType>;
-      /**
-       * The maximum number of court ids is reached.
-       **/
-      MaxCourtIdReached: AugmentedError<ApiType>;
-      /**
-       * The maximum number of possible jurors has been reached.
-       **/
-      MaxCourtParticipantsReached: AugmentedError<ApiType>;
-      /**
-       * The maximum number of delegations is reached for this account.
-       **/
-      MaxDelegationsReached: AugmentedError<ApiType>;
-      /**
-       * The call to `delegate` is not valid if no delegations are provided.
-       **/
-      NoDelegations: AugmentedError<ApiType>;
-      /**
-       * There are not enough jurors in the pool.
-       **/
-      NotEnoughJurorsAndDelegatorsStake: AugmentedError<ApiType>;
-      /**
-       * This operation is only allowed in the aggregation period.
-       **/
-      NotInAggregationPeriod: AugmentedError<ApiType>;
-      /**
-       * This operation is only allowed in the appeal period.
-       **/
-      NotInAppealPeriod: AugmentedError<ApiType>;
-      /**
-       * This operation is only allowed in the voting period.
-       **/
-      NotInVotingPeriod: AugmentedError<ApiType>;
-      /**
-       * The outcome does not match the market outcomes.
-       **/
-      OutcomeMismatch: AugmentedError<ApiType>;
-      /**
-       * The juror should at least wait one inflation period after the funds can be unstaked.
-       * Otherwise hopping in and out for inflation rewards is possible.
-       **/
-      PrematureExit: AugmentedError<ApiType>;
-      /**
-       * The `prepare_exit_at` field is not present.
-       **/
-      PrepareExitAtNotPresent: AugmentedError<ApiType>;
-      /**
-       * A delegation to the own account is not possible.
-       **/
-      SelfDelegationNotAllowed: AugmentedError<ApiType>;
-      /**
-       * The juror was already denounced.
-       **/
-      VoteAlreadyDenounced: AugmentedError<ApiType>;
-      /**
-       * The vote is not commitment.
-       **/
-      VoteAlreadyRevealed: AugmentedError<ApiType>;
-      /**
-       * The vote item was expected to be an outcome, but is actually not an outcome.
-       **/
-      VoteItemIsNoOutcome: AugmentedError<ApiType>;
-      /**
-       * The winner vote item is not an outcome.
-       **/
-      WinnerVoteItemIsNoOutcome: AugmentedError<ApiType>;
+      OnlyJurorsCanVote: AugmentedError<ApiType>;
     };
     cumulusXcm: {
     };
@@ -745,76 +579,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The message index given is unknown.
        **/
       Unknown: AugmentedError<ApiType>;
-    };
-    globalDisputes: {
-      /**
-       * The period in which outcomes can be added is over.
-       **/
-      AddOutcomePeriodIsOver: AugmentedError<ApiType>;
-      /**
-       * Sender tried to vote with an amount below a defined minimum.
-       **/
-      AmountTooLow: AugmentedError<ApiType>;
-      /**
-       * The global dispute was already started.
-       **/
-      GlobalDisputeAlreadyExists: AugmentedError<ApiType>;
-      /**
-       * The operation requires a global dispute in a destroyed state.
-       **/
-      GlobalDisputeNotDestroyed: AugmentedError<ApiType>;
-      /**
-       * No global dispute present at the moment.
-       **/
-      GlobalDisputeNotFound: AugmentedError<ApiType>;
-      /**
-       * Sender does not have enough funds for the vote on an outcome.
-       **/
-      InsufficientAmount: AugmentedError<ApiType>;
-      /**
-       * The global dispute status is invalid for this operation.
-       **/
-      InvalidGlobalDisputeStatus: AugmentedError<ApiType>;
-      /**
-       * The maximum amount of owners is reached.
-       **/
-      MaxOwnersReached: AugmentedError<ApiType>;
-      /**
-       * The maximum number of votes for this account is reached.
-       **/
-      MaxVotesReached: AugmentedError<ApiType>;
-      /**
-       * The amount in the reward pot is zero.
-       **/
-      NoFundsToReward: AugmentedError<ApiType>;
-      /**
-       * It is not inside the period in which votes are allowed.
-       **/
-      NotInGdVotingPeriod: AugmentedError<ApiType>;
-      /**
-       * The voting outcome has been already added.
-       **/
-      OutcomeAlreadyExists: AugmentedError<ApiType>;
-      /**
-       * The outcome specified is not present in the voting outcomes.
-       **/
-      OutcomeDoesNotExist: AugmentedError<ApiType>;
-      /**
-       * Submitted outcome does not match market type.
-       **/
-      OutcomeMismatch: AugmentedError<ApiType>;
-      /**
-       * The outcomes are not fully cleaned yet.
-       **/
-      OutcomesNotFullyCleaned: AugmentedError<ApiType>;
-      /**
-       * Only a shared possession is allowed.
-       **/
-      SharedPossessionRequired: AugmentedError<ApiType>;
-      /**
-       * The global dispute period is not over yet. The winner is not yet determined.
-       **/
-      UnfinishedGlobalDispute: AugmentedError<ApiType>;
     };
     identity: {
       /**
@@ -1061,10 +825,6 @@ declare module '@polkadot/api-base/types/errors' {
     };
     polkadotXcm: {
       /**
-       * The given account is not an identifiable sovereign account for any location.
-       **/
-      AccountNotSovereign: AugmentedError<ApiType>;
-      /**
        * The location is invalid since it already has a subscription from us.
        **/
       AlreadySubscribed: AugmentedError<ApiType>;
@@ -1090,33 +850,13 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       Empty: AugmentedError<ApiType>;
       /**
-       * The operation required fees to be paid which the initiator could not meet.
-       **/
-      FeesNotMet: AugmentedError<ApiType>;
-      /**
        * The message execution fails the filter.
        **/
       Filtered: AugmentedError<ApiType>;
       /**
-       * The unlock operation cannot succeed because there are still users of the lock.
-       **/
-      InUse: AugmentedError<ApiType>;
-      /**
-       * Invalid asset for the operation.
-       **/
-      InvalidAsset: AugmentedError<ApiType>;
-      /**
        * Origin is invalid for sending.
        **/
       InvalidOrigin: AugmentedError<ApiType>;
-      /**
-       * A remote lock with the corresponding data could not be found.
-       **/
-      LockNotFound: AugmentedError<ApiType>;
-      /**
-       * The owner does not own (all) of the asset that they wish to do the operation on.
-       **/
-      LowBalance: AugmentedError<ApiType>;
       /**
        * The referenced subscription could not be found.
        **/
@@ -1130,10 +870,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Too many assets have been attempted for transfer.
        **/
       TooManyAssets: AugmentedError<ApiType>;
-      /**
-       * The asset owner has too many locks on the asset.
-       **/
-      TooManyLocks: AugmentedError<ApiType>;
       /**
        * The desired destination was unreachable, generally because there is a no way of routing
        * to it.
@@ -1167,13 +903,13 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       EditReasonLengthExceedsMaxEditReasonLen: AugmentedError<ApiType>;
       /**
-       * The fee is too high.
-       **/
-      FeeTooHigh: AugmentedError<ApiType>;
-      /**
        * The start of the global dispute for this market happened already.
        **/
-      GlobalDisputeExistsAlready: AugmentedError<ApiType>;
+      GlobalDisputeAlreadyStarted: AugmentedError<ApiType>;
+      /**
+       * The global dispute resolution system is disabled.
+       **/
+      GlobalDisputesDisabled: AugmentedError<ApiType>;
       /**
        * Specified grace_period is greater than MaxGracePeriod.
        **/
@@ -1223,10 +959,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       MarketAlreadyReported: AugmentedError<ApiType>;
       /**
-       * The market dispute mechanism has not failed.
-       **/
-      MarketDisputeMechanismNotFailed: AugmentedError<ApiType>;
-      /**
        * The market duration is longer than allowed.
        **/
       MarketDurationTooLong: AugmentedError<ApiType>;
@@ -1274,6 +1006,14 @@ declare module '@polkadot/api-base/types/errors' {
        * The point in time when the market becomes active is too soon.
        **/
       MarketStartTooSoon: AugmentedError<ApiType>;
+      /**
+       * The maximum number of disputes is needed for this operation.
+       **/
+      MaxDisputesNeeded: AugmentedError<ApiType>;
+      /**
+       * The maximum number of disputes has been reached.
+       **/
+      MaxDisputesReached: AugmentedError<ApiType>;
       /**
        * Tried to settle missing bond.
        **/
@@ -1436,7 +1176,6 @@ declare module '@polkadot/api-base/types/errors' {
       TargetBlockNumberInPast: AugmentedError<ApiType>;
     };
     simpleDisputes: {
-      CannotDisputeSameOutcome: AugmentedError<ApiType>;
       /**
        * 1. Any resolution must either have a `Disputed` or `Reported` market status
        * 2. If status is `Disputed`, then at least one dispute must exist
@@ -1446,13 +1185,6 @@ declare module '@polkadot/api-base/types/errors' {
        * On dispute or resolution, someone tried to pass a non-simple-disputes market type
        **/
       MarketDoesNotHaveSimpleDisputesMechanism: AugmentedError<ApiType>;
-      MarketIsNotReported: AugmentedError<ApiType>;
-      /**
-       * The maximum number of disputes has been reached.
-       **/
-      MaxDisputesReached: AugmentedError<ApiType>;
-      OutcomeMismatch: AugmentedError<ApiType>;
-      StorageOverflow: AugmentedError<ApiType>;
     };
     styx: {
       /**
@@ -1463,12 +1195,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Account has already crossed.
        **/
       HasAlreadyCrossed: AugmentedError<ApiType>;
-    };
-    sudo: {
-      /**
-       * Sender must be the Sudo account
-       **/
-      RequireSudo: AugmentedError<ApiType>;
     };
     swaps: {
       /**

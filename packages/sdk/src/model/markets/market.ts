@@ -164,7 +164,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
   disputeOutcome: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
-    [params: { signer: KeyringPairOrExtSigner } & TransactionHooks]
+    [params: Omit<ReportOutcomeParams, 'marketId'> & TransactionHooks]
   >
   /**
    * Report the outcome of a market. Can only be called by the markets oracle address.
@@ -447,7 +447,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
     marketWithMethods.disputeOutcome = Te.from(async params => {
       return await signAndSend({
         api: context.api,
-        tx: context.api.tx.predictionMarkets.dispute(market.marketId),
+        tx: context.api.tx.predictionMarkets.dispute(market.marketId, params.outcome),
         signer: params.signer,
         hooks: params.hooks,
       })
