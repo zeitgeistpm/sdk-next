@@ -2948,6 +2948,15 @@ export type HistoricalSwapsQuery = { __typename?: 'Query', historicalSwaps: Arra
 
 export type FullHistoricalSwapFragment = { __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null };
 
+export type MarketMetadataQueryVariables = Exact<{
+  marketId: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+
+export type MarketMetadataQuery = { __typename?: 'Query', marketMetadata: Array<{ __typename?: 'MarketMetadata', decoded?: string | null, encoded: string, marketId: number }> };
+
+export type FullMarketMetadataFragment = { __typename?: 'MarketMetadata', decoded?: string | null, encoded: string, marketId: number };
+
 export type MarketStatsQueryVariables = Exact<{
   ids: Array<Scalars['Int']> | Scalars['Int'];
 }>;
@@ -3122,6 +3131,13 @@ export const FullHistoricalSwapFragmentDoc = gql`
   }
 }
     `;
+export const FullMarketMetadataFragmentDoc = gql`
+    fragment FullMarketMetadata on MarketMetadata {
+  decoded
+  encoded
+  marketId
+}
+    `;
 export const FullMarketFragmentDoc = gql`
     fragment FullMarket on Market {
   authorizedAddress
@@ -3180,34 +3196,7 @@ export const FullMarketFragmentDoc = gql`
     timestamp
   }
   pool {
-    account {
-      accountId
-      balances {
-        assetId
-        balance
-      }
-    }
-    assets {
-      amountInPool
-      assetId
-      id
-      price
-    }
-    baseAsset
-    createdAt
-    id
-    marketId
-    poolId
-    status
-    scoringRule
-    swapFee
-    totalSubsidy
-    totalWeight
-    volume
-    weights {
-      assetId
-      weight
-    }
+    ...FullPool
   }
   question
   rejectReason
@@ -3226,7 +3215,7 @@ export const FullMarketFragmentDoc = gql`
   status
   tags
 }
-    `;
+    ${FullPoolFragmentDoc}`;
 export const AccountBalancesDocument = gql`
     query accountBalances($where: AccountBalanceWhereInput, $order: [AccountBalanceOrderByInput!], $offset: Int, $limit: Int) {
   accountBalances(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
@@ -3267,6 +3256,13 @@ export const HistoricalSwapsDocument = gql`
   }
 }
     ${FullHistoricalSwapFragmentDoc}`;
+export const MarketMetadataDocument = gql`
+    query marketMetadata($marketId: [Int!]!) {
+  marketMetadata(marketId: $marketId) {
+    ...FullMarketMetadata
+  }
+}
+    ${FullMarketMetadataFragmentDoc}`;
 export const MarketStatsDocument = gql`
     query marketStats($ids: [Int!]!) {
   marketStats(marketId: $ids) {
@@ -3376,6 +3372,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     historicalSwaps(variables?: HistoricalSwapsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalSwapsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HistoricalSwapsQuery>(HistoricalSwapsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalSwaps', 'query');
+    },
+    marketMetadata(variables: MarketMetadataQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketMetadataQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MarketMetadataQuery>(MarketMetadataDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'marketMetadata', 'query');
     },
     marketStats(variables: MarketStatsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<MarketStatsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MarketStatsQuery>(MarketStatsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'marketStats', 'query');

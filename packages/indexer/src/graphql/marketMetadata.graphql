@@ -1,0 +1,12 @@
+query marketMetadata($marketId: [Int!]!) {
+  marketMetadata(marketId: $marketId) {
+    ...FullMarketMetadata
+  }
+}
+
+fragment FullMarketMetadata on MarketMetadata {
+  decoded
+  encoded
+  marketId
+}
+
