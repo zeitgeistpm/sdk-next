@@ -3,7 +3,14 @@ import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Time from '@zeitgeistpm/utility/dist/time'
 import { Context, RpcContext } from '../../../../context'
 import { now } from '../../../time/functions/now'
-import { getDeadlines, getReportedAt, getStatus, Market, timespanOf } from '../../market'
+import {
+  getDeadlines,
+  getDisputeMechanism,
+  getReportedAt,
+  getStatus,
+  Market,
+  timespanOf,
+} from '../../market'
 import { MarketStage } from '../../marketstage'
 
 /**
@@ -43,8 +50,6 @@ export const getStage = async (
     const oraclePeriodStarts = end + graceDuration
     const oracleReportingEnds = oraclePeriodStarts + oracleDuration
 
-    //TODO: if market period is in blocks, use blocks to determine actual stage, time remainng and total time can still be calculated.
-
     if (time.now < oraclePeriodStarts) {
       return {
         type: 'GracePeriod',
@@ -78,21 +83,44 @@ export const getStage = async (
   }
 
   if (status === 'Disputed') {
-    const report = await ctx.api.query.authorized.authorizedOutcomeReports(market.marketId)
+    const disputeMechanism = getDisputeMechanism(market)
 
-    if (!report.isEmpty) {
-      const block = await ctx.api.rpc.chain.getBlock(report.createdAtHash)
-      const reportedAtBlock = block.block.header.number.toNumber()
-      const reportedAtTimestamp = Time.blockDate(time, reportedAtBlock).getTime()
+    const reportedAtBlock = getReportedAt(market).unwrapOr(0)
+    const reportedAtTimestamp = Time.blockDate(time, reportedAtBlock).getTime()
 
-      const correctionPeriod = O.tryCatch(
-        () => (ctx.api.consts.authorized as any)['correctionPeriod'].toNumber() as number,
-      ).unwrapOr(7200)
+    if (disputeMechanism === 'Authorized') {
+      const report = await ctx.api.query.authorized.authorizedOutcomeReports(
+        market.marketId,
+      )
 
-      const correctionDuration = Time.toMs(time, { start: 0, end: correctionPeriod })
-      const remainingTime = correctionDuration - (time.now - reportedAtTimestamp)
+      if (!report.isEmpty) {
+        const resolvesAtBlock = report.unwrap().resolveAt // use this
+        const resolvesAtTimeStamp = Time.blockDate(
+          time,
+          resolvesAtBlock.toNumber(),
+        ).getTime()
 
-      return { type: 'AuthorizedReport', remainingTime, totalTime: correctionDuration }
+        const totalTime = resolvesAtTimeStamp - reportedAtTimestamp
+        const remainingTime = resolvesAtTimeStamp - time.now
+
+        return { type: 'AuthorizedReport', remainingTime, totalTime }
+      }
+    }
+
+    if (disputeMechanism === 'Court') {
+      // TODO: implement granular court life cycle?
+      // vote period, vote period court constant
+      // aggregation period.
+      // appeal period.
+      //   no appeal -> resolved
+      //   appeal -> back to vote period
+      const courtId = await ctx.api.query.court.marketIdToCourtId(market.marketId)
+      const court = await ctx.api.query.court.courts(courtId.unwrap())
+      const appealEndsBlock = court.unwrap().roundEnds.appeal.toNumber()
+      const appealEndsTimeStamp = Time.blockDate(time, appealEndsBlock).getTime()
+      const totalTime = appealEndsTimeStamp - reportedAtTimestamp
+      const remainingTime = appealEndsTimeStamp - time.now
+      return { type: 'Court', remainingTime, totalTime }
     }
 
     return { type: 'Disputed', remainingTime: infinity, totalTime: infinity }

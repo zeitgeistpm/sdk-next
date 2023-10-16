@@ -1,5 +1,8 @@
 import type { u128 } from '@polkadot/types'
-import { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
+import {
+  ZeitgeistPrimitivesMarket,
+  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
+} from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isCodec, isNumber } from '@polkadot/util'
 import {
@@ -648,6 +651,20 @@ export const getReportedAt = (market: Market<Context>) => {
   return O.fromNullable(
     isRpcData(market) ? market.report.unwrapOr(null)?.at.toNumber() : market.report?.at,
   )
+}
+
+/**
+ * Get the dispute mechanism of a market.
+ *
+ * @param market Market<Context>
+ * @returns ZeitgeistPrimitivesMarketMarketDisputeMechanism['type']
+ */
+export const getDisputeMechanism = (
+  market: Market<Context>,
+): ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'] => {
+  return isRpcData(market)
+    ? market.disputeMechanism.type
+    : (market.disputeMechanism as ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'])
 }
 
 /**

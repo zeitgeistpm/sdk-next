@@ -11,6 +11,7 @@ export type MarketStage =
   | OpenReportingPeriod
   | Reported
   | Disputed
+  | Court
   | AuthorizedReport
   | Resolved
   | Destroyed
@@ -49,6 +50,11 @@ export type Reported = DynamicStage<'Reported'>
  * The market has been disputed and is awaiting an authorized report.
  */
 export type Disputed = InfiniteStage<'Disputed'>
+
+/**
+ * The market has an authorized report and is awaiting resolution after the CorrectionDuration has expired..
+ */
+export type Court = DynamicStage<'Court'>
 
 /**
  * The market has an authorized report and is awaiting resolution after the CorrectionDuration has expired..
