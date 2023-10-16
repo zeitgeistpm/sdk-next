@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.11.0
+
+### Minor Changes
+
+- 146c4f5: add rough court handling to get market stage
+
 ## 3.10.0
 
 ### Minor Changes
