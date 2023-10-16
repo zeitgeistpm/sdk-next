@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.41.0
+
+### Minor Changes
+
+- a633351: add rough court handling to get market stage
+
+### Patch Changes
+
+- Updated dependencies [a633351]
+  - @zeitgeistpm/indexer@3.12.0
+
 ## 2.40.0
 
 ### Minor Changes
