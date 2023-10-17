@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.43.1
+
+### Patch Changes
+
+- 96a7fc6: Fix getDisputeMechanism
+
 ## 2.43.0
 
 ### Minor Changes
