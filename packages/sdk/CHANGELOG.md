@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 2.43.0
+
+### Minor Changes
+
+- 940eadf: Bump
+
+### Patch Changes
+
+- Updated dependencies [940eadf]
+  - @zeitgeistpm/augment-api@2.19.0
+  - @zeitgeistpm/indexer@3.14.0
+  - @zeitgeistpm/rpc@2.12.0
+  - @zeitgeistpm/utility@2.22.0
+  - @zeitgeistpm/web3.storage@2.13.0
+
 ## 2.42.0
 
 ### Minor Changes

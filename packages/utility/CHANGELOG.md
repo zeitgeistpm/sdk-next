@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.22.0
+
+### Minor Changes
+
+- 940eadf: Bump
+
 ## 2.21.0
 
 ### Minor Changes

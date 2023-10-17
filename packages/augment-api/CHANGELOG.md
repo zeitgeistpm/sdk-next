@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.19.0
+
+### Minor Changes
+
+- 940eadf: Bump
+
 ## 2.18.0
 
 ### Minor Changes

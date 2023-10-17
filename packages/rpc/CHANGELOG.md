@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 2.12.0
+
+### Minor Changes
+
+- 940eadf: Bump
+
+### Patch Changes
+
+- Updated dependencies [940eadf]
+  - @zeitgeistpm/augment-api@2.19.0
+  - @zeitgeistpm/utility@2.22.0
+
 ## 2.11.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.13.0
+
+### Minor Changes
+
+- 940eadf: Bump
+
+### Patch Changes
+
+- Updated dependencies [940eadf]
+  - @zeitgeistpm/utility@2.22.0
+
 ## 2.12.0
 
 ### Minor Changes
