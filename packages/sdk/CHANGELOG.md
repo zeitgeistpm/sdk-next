@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.42.0
+
+### Minor Changes
+
+- 39dc4a2: New augmented api types. Scoring rule included.
+
+### Patch Changes
+
+- Updated dependencies [39dc4a2]
+  - @zeitgeistpm/augment-api@2.18.0
+  - @zeitgeistpm/indexer@3.13.0
+
 ## 2.41.0
 
 ### Minor Changes

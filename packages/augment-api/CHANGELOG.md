@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.18.0
+
+### Minor Changes
+
+- 39dc4a2: New augmented api types. Scoring rule included.
+
 ## 2.17.0
 
 ### Minor Changes

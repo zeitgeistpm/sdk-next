@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.13.0
+
+### Minor Changes
+
+- 39dc4a2: New augmented api types. Scoring rule included.
+
 ## 3.12.0
 
 ### Minor Changes
