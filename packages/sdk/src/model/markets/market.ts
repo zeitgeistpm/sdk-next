@@ -661,10 +661,17 @@ export const getReportedAt = (market: Market<Context>) => {
  */
 export const getDisputeMechanism = (
   market: Market<Context>,
-): ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'] => {
-  return isRpcData(market)
-    ? market.disputeMechanism.type
-    : (market.disputeMechanism as ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'])
+): O.IOption<ZeitgeistPrimitivesMarketMarketDisputeMechanism['type']> => {
+  if (isRpcData(market)) {
+    if (market.disputeMechanism.isSome) {
+      return O.fromNullable(market.disputeMechanism.unwrap().type)
+    }
+  } else {
+    O.fromNullable(
+      market.disputeMechanism as ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
+    )
+  }
+  return O.option(O.none())
 }
 
 /**

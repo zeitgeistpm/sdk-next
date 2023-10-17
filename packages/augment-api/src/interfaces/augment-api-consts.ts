@@ -7,7 +7,7 @@ import '@polkadot/api-base/types/consts';
 
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
 import type { Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
-import type { Percent, Permill } from '@polkadot/types/interfaces/runtime';
+import type { Perbill, Percent, Permill } from '@polkadot/types/interfaces/runtime';
 import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, PalletContractsSchedule, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, XcmV3MultiLocation, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
@@ -402,6 +402,13 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maxSignatories: u32 & AugmentedConst<ApiType>;
     };
+    neoSwaps: {
+      maxSwapFee: u128 & AugmentedConst<ApiType>;
+      palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
+    };
+    orderbook: {
+      palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
+    };
     parachainStaking: {
       /**
        * Number of rounds candidate requests to decrease self-bond must wait to be executable
@@ -482,6 +489,10 @@ declare module '@polkadot/api-base/types/consts' {
        * The maximum number of categories available for categorical markets.
        **/
       maxCategories: u16 & AugmentedConst<ApiType>;
+      /**
+       * A upper bound for the fee that is charged each trade and given to the market creator.
+       **/
+      maxCreatorFee: Perbill & AugmentedConst<ApiType>;
       /**
        * The maximum number of blocks allowed to be specified as dispute_duration
        * in create_market.

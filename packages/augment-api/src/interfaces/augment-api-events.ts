@@ -9,7 +9,7 @@ import type { ApiTypes, AugmentedEvent } from '@polkadot/api-base/types';
 import type { Bytes, Null, Option, Result, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, H256, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, PalletParachainStakingDelegationRequestsCancelledScheduledRequest, PalletParachainStakingDelegatorAdded, SessionKeysPrimitivesVrfVrfCryptoPublic, SpRuntimeDispatchError, SpWeightsWeightV2Weight, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesMarketReport, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPool, ZeitgeistPrimitivesProxyType, ZrmlCourtVoteItem, ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsEventsPoolAssetEvent, ZrmlSwapsEventsPoolAssetsEvent, ZrmlSwapsEventsSwapEvent } from '@polkadot/types/lookup';
+import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, PalletParachainStakingDelegationRequestsCancelledScheduledRequest, PalletParachainStakingDelegatorAdded, SessionKeysPrimitivesVrfVrfCryptoPublic, SpRuntimeDispatchError, SpWeightsWeightV2Weight, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesMarketReport, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPool, ZeitgeistPrimitivesProxyType, ZrmlCourtVoteItem, ZrmlOrderbookV1Order, ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsEventsPoolAssetEvent, ZrmlSwapsEventsPoolAssetsEvent, ZrmlSwapsEventsSwapEvent } from '@polkadot/types/lookup';
 
 export type __AugmentedEvent<ApiType extends ApiTypes> = AugmentedEvent<ApiType>;
 
@@ -552,6 +552,41 @@ declare module '@polkadot/api-base/types/events' {
        * A new multisig operation has begun.
        **/
       NewMultisig: AugmentedEvent<ApiType, [approving: AccountId32, multisig: AccountId32, callHash: U8aFixed], { approving: AccountId32, multisig: AccountId32, callHash: U8aFixed }>;
+    };
+    neoSwaps: {
+      /**
+       * Informant bought a position.
+       **/
+      BuyExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, assetOut: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, marketId: u128, assetOut: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
+      /**
+       * Liquidity provider left the pool.
+       **/
+      ExitExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsOut: Vec<u128>, newLiquidityParameter: u128], { who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsOut: Vec<u128>, newLiquidityParameter: u128 }>;
+      /**
+       * Liquidity provider withdrew fees.
+       **/
+      FeesWithdrawn: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, amount: u128], { who: AccountId32, marketId: u128, amount: u128 }>;
+      /**
+       * Liquidity provider joined the pool.
+       **/
+      JoinExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, newLiquidityParameter: u128], { who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, newLiquidityParameter: u128 }>;
+      /**
+       * Pool was createed.
+       **/
+      PoolDeployed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, liquidityParameter: u128], { who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, liquidityParameter: u128 }>;
+      /**
+       * Pool was destroyed.
+       **/
+      PoolDestroyed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsOut: Vec<u128>], { who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsOut: Vec<u128> }>;
+      /**
+       * Informant sold a position.
+       **/
+      SellExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
+    };
+    orderbook: {
+      OrderFilled: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32, taker: AccountId32, filled: u128, unfilledOutcomeAssetAmount: u128, unfilledBaseAssetAmount: u128], { orderId: u128, maker: AccountId32, taker: AccountId32, filled: u128, unfilledOutcomeAssetAmount: u128, unfilledBaseAssetAmount: u128 }>;
+      OrderPlaced: AugmentedEvent<ApiType, [orderId: u128, order: ZrmlOrderbookV1Order], { orderId: u128, order: ZrmlOrderbookV1Order }>;
+      OrderRemoved: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32], { orderId: u128, maker: AccountId32 }>;
     };
     parachainStaking: {
       /**

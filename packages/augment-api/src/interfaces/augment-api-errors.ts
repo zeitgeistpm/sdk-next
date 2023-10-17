@@ -977,6 +977,139 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       WrongTimepoint: AugmentedError<ApiType>;
     };
+    neoSwaps: {
+      /**
+       * Amount paid is above the specified maximum.
+       **/
+      AmountInAboveMax: AugmentedError<ApiType>;
+      /**
+       * Amount received is below the specified minimum.
+       **/
+      AmountOutBelowMin: AugmentedError<ApiType>;
+      /**
+       * The number of assets in the pool is above the allowed maximum.
+       **/
+      AssetCountAboveMax: AugmentedError<ApiType>;
+      /**
+       * Specified asset was not found in this pool.
+       **/
+      AssetNotFound: AugmentedError<ApiType>;
+      /**
+       * Market already has an associated pool.
+       **/
+      DuplicatePool: AugmentedError<ApiType>;
+      /**
+       * Incorrect asset count.
+       **/
+      IncorrectAssetCount: AugmentedError<ApiType>;
+      IncorrectVecLen: AugmentedError<ApiType>;
+      /**
+       * User doesn't own enough pool shares.
+       **/
+      InsufficientPoolShares: AugmentedError<ApiType>;
+      /**
+       * Sum of spot prices is not `1`.
+       **/
+      InvalidSpotPrices: AugmentedError<ApiType>;
+      /**
+       * Market's trading mechanism is not LMSR.
+       **/
+      InvalidTradingMechanism: AugmentedError<ApiType>;
+      /**
+       * The liquidity in the pool is too low.
+       **/
+      LiquidityTooLow: AugmentedError<ApiType>;
+      /**
+       * Pool can only be traded on if the market is active.
+       **/
+      MarketNotActive: AugmentedError<ApiType>;
+      /**
+       * Deploying pools is only supported for scalar or binary markets.
+       **/
+      MarketNotBinaryOrScalar: AugmentedError<ApiType>;
+      /**
+       * Some calculation failed. This shouldn't happen.
+       **/
+      MathError: AugmentedError<ApiType>;
+      /**
+       * The user is not allowed to execute this command.
+       **/
+      NotAllowed: AugmentedError<ApiType>;
+      /**
+       * This feature is not yet implemented.
+       **/
+      NotImplemented: AugmentedError<ApiType>;
+      /**
+       * Some value in the operation is too large or small.
+       **/
+      NumericalLimits: AugmentedError<ApiType>;
+      /**
+       * Outstanding fees prevent liquidity withdrawal.
+       **/
+      OutstandingFees: AugmentedError<ApiType>;
+      /**
+       * Specified market does not have a pool.
+       **/
+      PoolNotFound: AugmentedError<ApiType>;
+      /**
+       * Spot price is above the allowed maximum.
+       **/
+      SpotPriceAboveMax: AugmentedError<ApiType>;
+      /**
+       * Spot price is below the allowed minimum.
+       **/
+      SpotPriceBelowMin: AugmentedError<ApiType>;
+      /**
+       * Pool's swap fee exceeds the allowed upper limit.
+       **/
+      SwapFeeAboveMax: AugmentedError<ApiType>;
+      /**
+       * Pool's swap fee is below the allowed lower limit.
+       **/
+      SwapFeeBelowMin: AugmentedError<ApiType>;
+      /**
+       * This shouldn't happen.
+       **/
+      Unexpected: AugmentedError<ApiType>;
+      /**
+       * Specified monetary amount is zero.
+       **/
+      ZeroAmount: AugmentedError<ApiType>;
+    };
+    orderbook: {
+      /**
+       * The specified amount parameter is zero.
+       **/
+      AmountIsZero: AugmentedError<ApiType>;
+      /**
+       * The specified amount parameter is too high for the order.
+       **/
+      AmountTooHighForOrder: AugmentedError<ApiType>;
+      /**
+       * The specified outcome asset is not part of the market.
+       **/
+      InvalidOutcomeAsset: AugmentedError<ApiType>;
+      /**
+       * The scoring rule is not orderbook.
+       **/
+      InvalidScoringRule: AugmentedError<ApiType>;
+      /**
+       * The maker partial fill leads to a too low quotient for the next order execution.
+       **/
+      MakerPartialFillTooLow: AugmentedError<ApiType>;
+      /**
+       * The market is not active.
+       **/
+      MarketIsNotActive: AugmentedError<ApiType>;
+      /**
+       * The sender is not the order creator.
+       **/
+      NotOrderCreator: AugmentedError<ApiType>;
+      /**
+       * The order does not exist.
+       **/
+      OrderDoesNotExist: AugmentedError<ApiType>;
+    };
     parachainStaking: {
       AlreadyActive: AugmentedError<ApiType>;
       AlreadyDelegatedCandidate: AugmentedError<ApiType>;
@@ -1278,6 +1411,14 @@ declare module '@polkadot/api-base/types/errors' {
        * Tried to settle missing bond.
        **/
       MissingBond: AugmentedError<ApiType>;
+      /**
+       * The market has no dispute mechanism.
+       **/
+      NoDisputeMechanism: AugmentedError<ApiType>;
+      /**
+       * The dispute duration is positive but the market has dispute period.
+       **/
+      NonZeroDisputePeriodOnTrustedMarket: AugmentedError<ApiType>;
       /**
        * Can not report before market.deadlines.grace_period is ended.
        **/

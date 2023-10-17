@@ -83,7 +83,7 @@ export const getStage = async (
   }
 
   if (status === 'Disputed') {
-    const disputeMechanism = getDisputeMechanism(market)
+    const disputeMechanism = getDisputeMechanism(market).unwrap()
 
     const reportedAtBlock = getReportedAt(market).unwrapOr(0)
     const reportedAtTimestamp = Time.blockDate(time, reportedAtBlock).getTime()
