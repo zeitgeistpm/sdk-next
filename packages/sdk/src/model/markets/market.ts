@@ -667,7 +667,7 @@ export const getDisputeMechanism = (
       return O.fromNullable(market.disputeMechanism.unwrap().type)
     }
   } else {
-    O.fromNullable(
+    return O.fromNullable(
       market.disputeMechanism as ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
     )
   }
