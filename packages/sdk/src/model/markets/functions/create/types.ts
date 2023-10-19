@@ -105,7 +105,7 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
    * Market dispute mechanism.
    * @note Authorized is the only one available atm.
    */
-  disputeMechanism:
+  disputeMechanism?:
     | ZeitgeistPrimitivesMarketMarketDisputeMechanism
     | 'Authorized'
     | 'Court'

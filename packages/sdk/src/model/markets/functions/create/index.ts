@@ -149,7 +149,7 @@ const createExtrinsic = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       params.deadlines,
       { Sha3_384 },
       params.marketType,
-      params.disputeMechanism,
+      params.disputeMechanism ?? null,
       params.pool.swapFee,
       params.pool.amount,
       params.pool.weights,
@@ -164,7 +164,7 @@ const createExtrinsic = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       { Sha3_384 },
       params.creationType,
       params.marketType,
-      params.disputeMechanism,
+      params.disputeMechanism ?? null,
       params.scoringRule === 'Cpmm' ? 'CPMM' : params.scoringRule ?? 'CPMM',
     )
   }
