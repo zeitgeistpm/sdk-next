@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.23.0
+
+### Minor Changes
+
+- 0872a93: Pool deployment changes in market creation params. Added support for lmsr.
+
 ## 2.22.0
 
 ### Minor Changes

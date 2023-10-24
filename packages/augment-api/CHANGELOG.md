@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.20.0
+
+### Minor Changes
+
+- 0872a93: Pool deployment changes in market creation params. Added support for lmsr.
+
 ## 2.19.0
 
 ### Minor Changes

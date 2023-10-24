@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.15.0
+
+### Minor Changes
+
+- 0872a93: Pool deployment changes in market creation params. Added support for lmsr.
+
 ## 3.14.0
 
 ### Minor Changes

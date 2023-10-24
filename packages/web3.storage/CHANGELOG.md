@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.14.0
+
+### Minor Changes
+
+- 0872a93: Pool deployment changes in market creation params. Added support for lmsr.
+
+### Patch Changes
+
+- Updated dependencies [0872a93]
+  - @zeitgeistpm/utility@2.23.0
+
 ## 2.13.0
 
 ### Minor Changes
