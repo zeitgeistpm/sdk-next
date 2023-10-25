@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.44.2
+
+### Patch Changes
+
+- 2006c2f: Fix market creation saturate, no longer returns pool.
+
 ## 2.44.1
 
 ### Patch Changes
