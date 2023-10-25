@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 2.44.1
+
+### Patch Changes
+
+- d12a38d: Update market creation param types to make more sense.
+
 ## 2.44.0
 
 ### Minor Changes
