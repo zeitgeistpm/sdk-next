@@ -440,7 +440,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
     marketWithMethods.disputeOutcome = Te.from(async params => {
       return await signAndSend({
         api: context.api,
-        tx: context.api.tx.predictionMarkets.dispute(market.marketId, params.outcome),
+        tx: context.api.tx.predictionMarkets.dispute(market.marketId),
         signer: params.signer,
         hooks: params.hooks,
       })
