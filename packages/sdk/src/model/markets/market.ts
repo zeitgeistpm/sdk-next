@@ -11,7 +11,6 @@ import {
   type MarketStatus as IndexerMarketStatus,
 } from '@zeitgeistpm/indexer'
 import {
-  ExtractableResult,
   KeyringPairOrExtSigner,
   TransactionError,
   TransactionHooks,
@@ -35,8 +34,7 @@ import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '.
 import { MarketMetadata, categoryMetadataIsComplete } from '../../meta/market'
 import { Data, ZTG, isIndexedData, isRpcData, parseAssetId } from '../../primitives'
 import { now } from '../time/functions/now'
-import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
-import { extractPoolCreationEventForMarket } from './functions/create'
+import { ExchangeFullSetParams, PoolDeploymentParams } from '../types'
 import { ReportOutcomeParams } from './outcome'
 
 export * from './functions/create/types'
@@ -111,7 +109,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
    */
   deploySwapPool: Te.TaskEither<
     TransactionError,
-    ExtractableResult<E.IEither<Error, RpcPool>>,
+    ISubmittableResult,
     [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
   >
   /**
@@ -122,7 +120,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
    */
   deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
     TransactionError,
-    ExtractableResult<E.IEither<Error, RpcPool>>,
+    ISubmittableResult,
     [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
   >
   /**
@@ -385,11 +383,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         hooks: params.hooks,
       })
 
-      return {
-        raw: extrinsic,
-        saturate: () =>
-          extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId),
-      }
+      return extrinsic
     })
 
     marketWithMethods.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
@@ -411,11 +405,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         hooks: params.hooks,
       })
 
-      return {
-        raw: extrinsic,
-        saturate: () =>
-          extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId),
-      }
+      return extrinsic
     })
 
     marketWithMethods.buyCompleteSet = Te.from(async params => {
