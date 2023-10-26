@@ -71,7 +71,7 @@ export type Markets<C extends Context<MS>, MS extends MetadataStorage = Metadata
         <C extends RpcContext<MS>, P extends CreateMarketParams<C, MS>>(
           params: P,
           feePayingAsset?: ForeignAssetId,
-        ) => Promise<CreateMarketResult<C, MS, P>>,
+        ) => Promise<CreateMarketResult<C, MS>>,
         {
           tx: (params: CreateMarketParams<C, MS>) => CreateMarketTransaction
           calculateFees: (params: CreateMarketParams<C, MS>) => Promise<RuntimeDispatchInfo>

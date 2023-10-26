@@ -1,10 +1,28 @@
 # @zeitgeistpm/augment-api
 
+## 2.21.0
+
+### Minor Changes
+
+- Mainnet release.
+
+## 2.20.0
+
+### Minor Changes
+
+- 0872a93: Pool deployment changes in market creation params. Added support for lmsr.
+
+## 2.19.0
+
+### Minor Changes
+
+- 940eadf: Bump
+
 ## 2.18.0
 
 ### Minor Changes
 
-- 3e4f2a0: Release mainnet compatible stable release.
+- 39dc4a2: New augmented api types. Scoring rule included.
 
 ## 2.17.0
 

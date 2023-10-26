@@ -1,19 +1,101 @@
 # @zeitgeistpm/sdk
 
+## 2.45.0
+
+### Minor Changes
+
+- Mainnet release.
+
+### Patch Changes
+
+- Updated dependencies
+  - @zeitgeistpm/augment-api@2.21.0
+  - @zeitgeistpm/indexer@3.16.0
+  - @zeitgeistpm/rpc@2.14.0
+  - @zeitgeistpm/utility@2.24.0
+  - @zeitgeistpm/web3.storage@2.15.0
+
+## 2.44.2
+
+### Patch Changes
+
+- 2006c2f: Fix market creation saturate, no longer returns pool.
+
+## 2.44.1
+
+### Patch Changes
+
+- d12a38d: Update market creation param types to make more sense.
+
+## 2.44.0
+
+### Minor Changes
+
+- 0872a93: Pool deployment changes in market creation params. Added support for lmsr.
+
+### Patch Changes
+
+- Updated dependencies [0872a93]
+  - @zeitgeistpm/augment-api@2.20.0
+  - @zeitgeistpm/indexer@3.15.0
+  - @zeitgeistpm/rpc@2.13.0
+  - @zeitgeistpm/utility@2.23.0
+  - @zeitgeistpm/web3.storage@2.14.0
+
+## 2.43.1
+
+### Patch Changes
+
+- 96a7fc6: Fix getDisputeMechanism
+
+## 2.43.0
+
+### Minor Changes
+
+- 940eadf: Bump
+
+### Patch Changes
+
+- Updated dependencies [940eadf]
+  - @zeitgeistpm/augment-api@2.19.0
+  - @zeitgeistpm/indexer@3.14.0
+  - @zeitgeistpm/rpc@2.12.0
+  - @zeitgeistpm/utility@2.22.0
+  - @zeitgeistpm/web3.storage@2.13.0
+
+## 2.42.0
+
+### Minor Changes
+
+- 39dc4a2: New augmented api types. Scoring rule included.
+
+### Patch Changes
+
+- Updated dependencies [39dc4a2]
+  - @zeitgeistpm/augment-api@2.18.0
+  - @zeitgeistpm/indexer@3.13.0
+
+## 2.41.0
+
+### Minor Changes
+
+- a633351: add rough court handling to get market stage
+
+### Patch Changes
+
+- Updated dependencies [a633351]
+  - @zeitgeistpm/indexer@3.12.0
+
 ## 2.40.0
 
 ### Minor Changes
 
-- 3e4f2a0: Release mainnet compatible stable release.
+- 146c4f5: add rough court handling to get market stage
 
 ### Patch Changes
 
-- Updated dependencies [3e4f2a0]
-  - @zeitgeistpm/augment-api@2.18.0
+- Updated dependencies [146c4f5]
   - @zeitgeistpm/indexer@3.11.0
-  - @zeitgeistpm/rpc@2.12.0
-  - @zeitgeistpm/utility@2.22.0
-  - @zeitgeistpm/web3.storage@2.13.0
 
 ## 2.39.0
 

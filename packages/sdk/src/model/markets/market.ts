@@ -1,5 +1,8 @@
 import type { u128 } from '@polkadot/types'
-import { ZeitgeistPrimitivesMarket } from '@polkadot/types/lookup'
+import {
+  ZeitgeistPrimitivesMarket,
+  ZeitgeistPrimitivesMarketMarketDisputeMechanism,
+} from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isCodec, isNumber } from '@polkadot/util'
 import {
@@ -8,7 +11,6 @@ import {
   type MarketStatus as IndexerMarketStatus,
 } from '@zeitgeistpm/indexer'
 import {
-  ExtractableResult,
   KeyringPairOrExtSigner,
   TransactionError,
   TransactionHooks,
@@ -32,8 +34,7 @@ import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '.
 import { MarketMetadata, categoryMetadataIsComplete } from '../../meta/market'
 import { Data, ZTG, isIndexedData, isRpcData, parseAssetId } from '../../primitives'
 import { now } from '../time/functions/now'
-import { ExchangeFullSetParams, PoolDeploymentParams, RpcPool } from '../types'
-import { extractPoolCreationEventForMarket } from './functions/create'
+import { ExchangeFullSetParams, PoolDeploymentParams } from '../types'
 import { ReportOutcomeParams } from './outcome'
 
 export * from './functions/create/types'
@@ -108,7 +109,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
    */
   deploySwapPool: Te.TaskEither<
     TransactionError,
-    ExtractableResult<E.IEither<Error, RpcPool>>,
+    ISubmittableResult,
     [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
   >
   /**
@@ -119,7 +120,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
    */
   deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
     TransactionError,
-    ExtractableResult<E.IEither<Error, RpcPool>>,
+    ISubmittableResult,
     [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
   >
   /**
@@ -382,11 +383,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         hooks: params.hooks,
       })
 
-      return {
-        raw: extrinsic,
-        saturate: () =>
-          extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId),
-      }
+      return extrinsic
     })
 
     marketWithMethods.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
@@ -408,11 +405,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
         hooks: params.hooks,
       })
 
-      return {
-        raw: extrinsic,
-        saturate: () =>
-          extractPoolCreationEventForMarket(context, extrinsic.events, market.marketId),
-      }
+      return extrinsic
     })
 
     marketWithMethods.buyCompleteSet = Te.from(async params => {
@@ -648,6 +641,27 @@ export const getReportedAt = (market: Market<Context>) => {
   return O.fromNullable(
     isRpcData(market) ? market.report.unwrapOr(null)?.at.toNumber() : market.report?.at,
   )
+}
+
+/**
+ * Get the dispute mechanism of a market.
+ *
+ * @param market Market<Context>
+ * @returns ZeitgeistPrimitivesMarketMarketDisputeMechanism['type']
+ */
+export const getDisputeMechanism = (
+  market: Market<Context>,
+): O.IOption<ZeitgeistPrimitivesMarketMarketDisputeMechanism['type']> => {
+  if (isRpcData(market)) {
+    if (market.disputeMechanism.isSome) {
+      return O.fromNullable(market.disputeMechanism.unwrap().type)
+    }
+  } else {
+    return O.fromNullable(
+      market.disputeMechanism as ZeitgeistPrimitivesMarketMarketDisputeMechanism['type'],
+    )
+  }
+  return O.option(O.none())
 }
 
 /**

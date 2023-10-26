@@ -123,7 +123,7 @@ export const indexers = {
     parachain: SupportedParachain.KUSAMA,
   },
   bsr: {
-    uri: 'https://processor.bsr.zeitgeist.pm/graphql',
+    uri: 'https://zeitgeist-squid-bsr.stellate.sh/',
     parachain: SupportedParachain.BSR,
   },
   local: {

@@ -6,9 +6,9 @@
 import '@polkadot/api-base/types/consts';
 
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
-import type { Option, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
-import type { Percent, Permill } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, PalletContractsSchedule, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, XcmV1MultiLocation, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
+import type { Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { Perbill, Percent, Permill } from '@polkadot/types/interfaces/runtime';
+import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, PalletContractsSchedule, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, XcmV3MultiLocation, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
 
@@ -134,6 +134,10 @@ declare module '@polkadot/api-base/types/consts' {
        * The maximum length of a contract code in bytes. This limit applies to the instrumented
        * version of the code. Therefore `instantiate_with_code` can fail even when supplying
        * a wasm binary below this maximum size.
+       * 
+       * The value should be chosen carefully taking into the account the overall memory limit
+       * your runtime has, as well as the [maximum allowed callstack
+       * depth](#associatedtype.CallStack). Look into the `integrity_test()` for some insights.
        **/
       maxCodeLen: u32 & AugmentedConst<ApiType>;
       /**
@@ -163,21 +167,76 @@ declare module '@polkadot/api-base/types/consts' {
     };
     court: {
       /**
-       * Block duration to cast a vote on an outcome.
+       * The time in which the jurors should reveal their commitment vote.
        **/
-      courtCaseDuration: u64 & AugmentedConst<ApiType>;
+      aggregationPeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * The required base bond in order to get an appeal initiated.
+       * This bond increases exponentially with the number of appeals.
+       **/
+      appealBond: u128 & AugmentedConst<ApiType>;
+      /**
+       * The time in which a court case can get appealed.
+       **/
+      appealPeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * The expected blocks per year to calculate the inflation emission.
+       **/
+      blocksPerYear: u64 & AugmentedConst<ApiType>;
+      /**
+       * The inflation period in which new tokens are minted.
+       **/
+      inflationPeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * The court lock identifier.
+       **/
+      lockId: U8aFixed & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of appeals until a court fails.
+       **/
+      maxAppeals: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of jurors and delegators that can be registered.
+       **/
+      maxCourtParticipants: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of possible delegations.
+       **/
+      maxDelegations: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of randomly selected n * `MinJurorStake` (n equals all draw weights)
+       * out of all jurors and delegators stake. This configuration parameter should be
+       * the maximum necessary_draws_weight multiplied by 2.
+       * Each `MinJurorStake` (draw weight) out of `n * MinJurorStake` belongs
+       * to one juror or one delegator.
+       * (necessary_draws_weight = 2^(appeals_len) * 31 + 2^(appeals_len) - 1)
+       * Assume MaxAppeals - 1 (= 3), example: 2^3 * 31 + 2^3 - 1 = 255
+       * => 2 * 255 = 510 = `MaxSelectedDraws`.
+       * Why the multiplication by two?
+       * Because each draw weight is associated with one juror account id and
+       * potentially a delegator account id.
+       **/
+      maxSelectedDraws: u32 & AugmentedConst<ApiType>;
+      /**
+       * The minimum stake a user needs to lock to become a juror.
+       **/
+      minJurorStake: u128 & AugmentedConst<ApiType>;
       /**
        * Identifier of this pallet
        **/
       palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
       /**
-       * Weight used to calculate the necessary staking amount to become a juror
+       * The global interval which schedules the start of new court vote periods.
        **/
-      stakeWeight: u128 & AugmentedConst<ApiType>;
+      requestInterval: u64 & AugmentedConst<ApiType>;
       /**
-       * Slashed funds are send to the treasury
+       * The treasury pallet identifier.
        **/
       treasuryPalletId: FrameSupportPalletId & AugmentedConst<ApiType>;
+      /**
+       * The time in which the jurors can cast their commitment vote.
+       **/
+      votePeriod: u64 & AugmentedConst<ApiType>;
     };
     democracy: {
       /**
@@ -241,6 +300,48 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       votingPeriod: u64 & AugmentedConst<ApiType>;
     };
+    globalDisputes: {
+      /**
+       * The time period in which the addition of new outcomes are allowed.
+       **/
+      addOutcomePeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * The time period in which votes are allowed.
+       **/
+      gdVotingPeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * The vote lock identifier.
+       **/
+      globalDisputeLockId: U8aFixed & AugmentedConst<ApiType>;
+      /**
+       * The pallet identifier.
+       **/
+      globalDisputesPalletId: FrameSupportPalletId & AugmentedConst<ApiType>;
+      /**
+       * The maximum numbers of distinct markets
+       * on which one account can simultaneously vote on outcomes.
+       * When the user unlocks, the user has again `MaxGlobalDisputeVotes` number of votes.
+       * This constant is useful to limit the number of for-loop iterations (weight constraints).
+       **/
+      maxGlobalDisputeVotes: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of owners
+       * for a voting outcome for private API calls of `push_vote_outcome`.
+       **/
+      maxOwners: u32 & AugmentedConst<ApiType>;
+      /**
+       * The minimum required amount to vote on an outcome.
+       **/
+      minOutcomeVoteAmount: u128 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of keys to remove from a storage map.
+       **/
+      removeKeysLimit: u32 & AugmentedConst<ApiType>;
+      /**
+       * The fee required to add a voting outcome.
+       **/
+      votingOutcomeFee: u128 & AugmentedConst<ApiType>;
+    };
     identity: {
       /**
        * The amount held on deposit for a registered identity
@@ -300,6 +401,13 @@ declare module '@polkadot/api-base/types/consts' {
        * The maximum amount of signatories allowed in the multisig.
        **/
       maxSignatories: u32 & AugmentedConst<ApiType>;
+    };
+    neoSwaps: {
+      maxSwapFee: u128 & AugmentedConst<ApiType>;
+      palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
+    };
+    orderbook: {
+      palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
     };
     parachainStaking: {
       /**
@@ -378,14 +486,13 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       disputeBond: u128 & AugmentedConst<ApiType>;
       /**
-       * The additional amount of currency that must be bonded when creating a subsequent
-       * dispute.
-       **/
-      disputeFactor: u128 & AugmentedConst<ApiType>;
-      /**
        * The maximum number of categories available for categorical markets.
        **/
       maxCategories: u16 & AugmentedConst<ApiType>;
+      /**
+       * A upper bound for the fee that is charged each trade and given to the market creator.
+       **/
+      maxCreatorFee: Perbill & AugmentedConst<ApiType>;
       /**
        * The maximum number of blocks allowed to be specified as dispute_duration
        * in create_market.
@@ -511,6 +618,19 @@ declare module '@polkadot/api-base/types/consts' {
       maxScheduledPerBlock: u32 & AugmentedConst<ApiType>;
     };
     simpleDisputes: {
+      /**
+       * The maximum number of disputes allowed on any single market.
+       **/
+      maxDisputes: u32 & AugmentedConst<ApiType>;
+      /**
+       * The base amount of currency that must be bonded in order to create a dispute.
+       **/
+      outcomeBond: u128 & AugmentedConst<ApiType>;
+      /**
+       * The additional amount of currency that must be bonded when creating a subsequent
+       * dispute.
+       **/
+      outcomeFactor: u128 & AugmentedConst<ApiType>;
       /**
        * The pallet identifier.
        **/
@@ -671,11 +791,11 @@ declare module '@polkadot/api-base/types/consts' {
        * The actually weight for an XCM message is `T::BaseXcmWeight +
        * T::Weigher::weight(&msg)`.
        **/
-      baseXcmWeight: u64 & AugmentedConst<ApiType>;
+      baseXcmWeight: SpWeightsWeightV2Weight & AugmentedConst<ApiType>;
       /**
        * Self chain location.
        **/
-      selfLocation: XcmV1MultiLocation & AugmentedConst<ApiType>;
+      selfLocation: XcmV3MultiLocation & AugmentedConst<ApiType>;
     };
   } // AugmentedConsts
 } // declare module

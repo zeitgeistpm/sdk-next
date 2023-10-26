@@ -1,14 +1,36 @@
 # @zeitgeistpm/web3.storage
 
+## 2.15.0
+
+### Minor Changes
+
+- Mainnet release.
+
+### Patch Changes
+
+- Updated dependencies
+  - @zeitgeistpm/utility@2.24.0
+
+## 2.14.0
+
+### Minor Changes
+
+- 0872a93: Pool deployment changes in market creation params. Added support for lmsr.
+
+### Patch Changes
+
+- Updated dependencies [0872a93]
+  - @zeitgeistpm/utility@2.23.0
+
 ## 2.13.0
 
 ### Minor Changes
 
-- 3e4f2a0: Release mainnet compatible stable release.
+- 940eadf: Bump
 
 ### Patch Changes
 
-- Updated dependencies [3e4f2a0]
+- Updated dependencies [940eadf]
   - @zeitgeistpm/utility@2.22.0
 
 ## 2.12.0

@@ -10,7 +10,7 @@ import type { Data } from '@polkadot/types';
 import type { Bytes, Compact, Option, Struct, U8aFixed, Vec, bool, i128, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { AnyNumber, IMethod, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, MultiAddress, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
-import type { CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletContractsWasmDeterminism, PalletDemocracyConviction, PalletDemocracyVoteAccountVote, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletVestingVestingInfo, SpWeightsWeightV2Weight, XcmV1MultiLocation, XcmV2WeightLimit, XcmVersionedMultiAsset, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesCustomMetadata, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketDisputeMechanism, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPoolScoringRule, ZeitgeistPrimitivesProxyType, ZeitgeistRuntimeOriginCaller } from '@polkadot/types/lookup';
+import type { BatteryStationRuntimeOriginCaller, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletContractsWasmDeterminism, PalletDemocracyConviction, PalletDemocracyVoteAccountVote, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletVestingVestingInfo, SpWeightsWeightV2Weight, XcmV3MultiLocation, XcmV3WeightLimit, XcmVersionedMultiAsset, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesCustomMetadata, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketDisputeMechanism, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPoolScoringRule, ZeitgeistPrimitivesProxyType, ZrmlCourtVoteItem, ZrmlOrderbookV1OrderSide } from '@polkadot/types/lookup';
 
 export type __AugmentedSubmittable = AugmentedSubmittable<() => unknown>;
 export type __SubmittableExtrinsic<ApiType extends ApiTypes> = SubmittableExtrinsic<ApiType>;
@@ -277,7 +277,7 @@ declare module '@polkadot/api-base/types/submittable' {
     };
     assetRegistry: {
       registerAsset: AugmentedSubmittable<(metadata: OrmlTraitsAssetRegistryAssetMetadata | { decimals?: any; name?: any; symbol?: any; existentialDeposit?: any; location?: any; additional?: any } | string | Uint8Array, assetId: Option<ZeitgeistPrimitivesAsset> | null | Uint8Array | ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string) => SubmittableExtrinsic<ApiType>, [OrmlTraitsAssetRegistryAssetMetadata, Option<ZeitgeistPrimitivesAsset>]>;
-      updateAsset: AugmentedSubmittable<(assetId: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, decimals: Option<u32> | null | Uint8Array | u32 | AnyNumber, name: Option<Bytes> | null | Uint8Array | Bytes | string, symbol: Option<Bytes> | null | Uint8Array | Bytes | string, existentialDeposit: Option<u128> | null | Uint8Array | u128 | AnyNumber, location: Option<Option<XcmVersionedMultiLocation>> | null | Uint8Array | Option<XcmVersionedMultiLocation> | XcmVersionedMultiLocation | { V0: any } | { V1: any } | string, additional: Option<ZeitgeistPrimitivesCustomMetadata> | null | Uint8Array | ZeitgeistPrimitivesCustomMetadata | { xcm?: any; allowAsBaseAsset?: any } | string) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, Option<u32>, Option<Bytes>, Option<Bytes>, Option<u128>, Option<Option<XcmVersionedMultiLocation>>, Option<ZeitgeistPrimitivesCustomMetadata>]>;
+      updateAsset: AugmentedSubmittable<(assetId: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, decimals: Option<u32> | null | Uint8Array | u32 | AnyNumber, name: Option<Bytes> | null | Uint8Array | Bytes | string, symbol: Option<Bytes> | null | Uint8Array | Bytes | string, existentialDeposit: Option<u128> | null | Uint8Array | u128 | AnyNumber, location: Option<Option<XcmVersionedMultiLocation>> | null | Uint8Array | Option<XcmVersionedMultiLocation> | XcmVersionedMultiLocation | { V2: any } | { V3: any } | string, additional: Option<ZeitgeistPrimitivesCustomMetadata> | null | Uint8Array | ZeitgeistPrimitivesCustomMetadata | { xcm?: any; allowAsBaseAsset?: any } | string) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, Option<u32>, Option<Bytes>, Option<Bytes>, Option<u128>, Option<Option<XcmVersionedMultiLocation>>, Option<ZeitgeistPrimitivesCustomMetadata>]>;
     };
     authorFilter: {
       /**
@@ -893,9 +893,180 @@ declare module '@polkadot/api-base/types/submittable' {
       swapMember: AugmentedSubmittable<(remove: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, add: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, MultiAddress]>;
     };
     court: {
-      exitCourt: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
-      joinCourt: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
-      vote: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, outcome: ZeitgeistPrimitivesOutcomeReport | { Categorical: any } | { Scalar: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, ZeitgeistPrimitivesOutcomeReport]>;
+      /**
+       * Initiate an appeal for a court
+       * if the presumptive winner of the last vote round is believed to be incorrect.
+       * The last appeal does not trigger a new court round
+       * but instead it marks the court mechanism for this market as failed.
+       * If the court failed, the prediction markets pallet takes over the dispute resolution.
+       * The prediction markets pallet might allow to trigger a global token holder vote.
+       * 
+       * # Arguments
+       * 
+       * - `court_id`: The identifier of the court.
+       * 
+       * # Weight
+       * 
+       * Complexity: It depends heavily on the complexity of `select_participants`.
+       **/
+      appeal: AugmentedSubmittable<(courtId: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>]>;
+      /**
+       * Join the court to become a delegator.
+       * If the random selection algorithm chooses a delegators stake,
+       * the caller delegates the vote power to the drawn delegated juror.
+       * The delegator gets slashed or rewarded according to the delegated juror's decisions.
+       * If the delegator is already part of the court,
+       * the `amount` needs to be higher than the previous amount to update the delegators stake.
+       * The `amount` of this call represents the total stake of the delegator.
+       * If the pool is full, the lowest staked court participant is removed from the court pool.
+       * If the `amount` is lower than the lowest staked court participant, the call fails.
+       * 
+       * # Arguments
+       * 
+       * - `amount`: The total stake associated with the joining delegator.
+       * - `delegations`: The list of jurors to delegate the vote power to.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(log(n))`, where `n` is the number of jurors in the stake-weighted pool.
+       **/
+      delegate: AugmentedSubmittable<(amount: u128 | AnyNumber | Uint8Array, delegations: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [u128, Vec<AccountId32>]>;
+      /**
+       * Denounce a juror during the voting period for which the commitment vote is known.
+       * This is useful to punish the behaviour that jurors reveal
+       * their commitments to others before the voting period ends.
+       * A check of `commitment_hash == hash(juror ++ vote_item ++ salt)`
+       * is performed for validation.
+       * 
+       * # Arguments
+       * 
+       * - `court_id`: The identifier of the court.
+       * - `juror`: The juror whose commitment vote might be known.
+       * - `vote_item`: The raw vote item which should match with the commitment of the juror.
+       * - `salt`: The hash which is used to proof that the juror did reveal
+       * her vote during the voting period.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(log(n))`, where `n` is the number of selected draws
+       * in the specified court.
+       **/
+      denounceVote: AugmentedSubmittable<(courtId: Compact<u128> | AnyNumber | Uint8Array, juror: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, voteItem: ZrmlCourtVoteItem | { Outcome: any } | { Binary: any } | string | Uint8Array, salt: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, MultiAddress, ZrmlCourtVoteItem, H256]>;
+      /**
+       * Exit the court.
+       * The stake which is not locked by any court case is unlocked.
+       * `prepare_exit_court` must be called before
+       * to remove the court participant (juror or delegator) from the stake-weighted pool.
+       * 
+       * # Arguments
+       * 
+       * - `court_participant`: The court participant,
+       * who is assumed not to be part of the pool anymore.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(log(n))`, where `n` is the number of jurors in the stake-weighted pool.
+       **/
+      exitCourt: AugmentedSubmittable<(courtParticipant: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
+      /**
+       * Join to become a juror, who is able to get randomly selected
+       * for court cases according to the provided stake.
+       * If the juror is already part of the court,
+       * the `amount` needs to be higher than the previous amount to update the juror stake.
+       * If the juror gets selected for a court case, the juror has to vote and reveal the vote.
+       * If the juror does not vote or reveal the vote, the juror gets slashed
+       * by the selected multiple of `MinJurorStake` for the court.
+       * The risked amount depends on the juror random selection algorithm,
+       * but is at most (`MaxSelectedDraws` / 2) mulitplied by the `MinJurorStake`
+       * for all jurors and delegators in one court.
+       * Assume you get randomly selected on one of these `MinJurorStake`'s.
+       * Then you risk at most `MinJurorStake` for this court.
+       * The probability to get selected is higher the more funds are staked.
+       * The `amount` of this call represents the total stake of the juror.
+       * If the pool is full, the lowest staked court participant is removed from the court pool.
+       * If the `amount` is lower than the lowest staked court participant, the call fails.
+       * 
+       * # Arguments
+       * 
+       * - `amount`: The total stake associated with the joining juror.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(log(n))`, where `n` is the number of jurors in the stake-weighted pool.
+       **/
+      joinCourt: AugmentedSubmittable<(amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128]>;
+      /**
+       * Prepare as a court participant (juror or delegator) to exit the court.
+       * When this is called the court participant is not anymore able to get drawn for new cases.
+       * The court participant gets removed from the stake-weighted pool.
+       * After that the court participant can exit the court.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(log(n))`, where `n` is the number of jurors in the stake-weighted pool.
+       **/
+      prepareExitCourt: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
+      /**
+       * Reassign the stakes of the jurors and delegators
+       * for the selected draws of the specified court.
+       * The losing jurors and delegators get slashed and
+       * pay for the winning jurors and delegators.
+       * The tardy (juror did not reveal or did not vote) or denounced jurors
+       * and associated delegators get slashed and reward the winners.
+       * 
+       * # Arguments
+       * 
+       * - `court_id`: The identifier of the court.
+       * 
+       * # Weight
+       * 
+       * Complexity: O(N + M), with `N` being the number of draws and `M` being the total number of valid winners and losers.
+       **/
+      reassignCourtStakes: AugmentedSubmittable<(courtId: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128]>;
+      /**
+       * Reveal the commitment vote of the caller, who is a selected juror.
+       * A check of `commitment_hash == hash(juror ++ vote_item ++ salt)`
+       * is performed for validation.
+       * 
+       * # Arguments
+       * 
+       * - `court_id`: The identifier of the court.
+       * - `vote_item`: The raw vote item which should match with the commitment of the juror.
+       * - `salt`: The hash which is used for the validation.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(log(n))`, where `n` is the number of selected draws
+       * in the specified court.
+       **/
+      revealVote: AugmentedSubmittable<(courtId: Compact<u128> | AnyNumber | Uint8Array, voteItem: ZrmlCourtVoteItem | { Outcome: any } | { Binary: any } | string | Uint8Array, salt: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, ZrmlCourtVoteItem, H256]>;
+      /**
+       * Set the yearly inflation rate of the court system.
+       * This is only allowed to be called by the `MonetaryGovernanceOrigin`.
+       * 
+       * # Arguments
+       * 
+       * - `inflation`: The desired yearly inflation rate.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(1)`
+       **/
+      setInflation: AugmentedSubmittable<(inflation: Perbill | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Perbill]>;
+      /**
+       * Vote as a randomly selected juror for a specific court case.
+       * 
+       * # Arguments
+       * 
+       * - `court_id`: The identifier of the court.
+       * - `commitment_vote`: A hash which consists of `juror ++ vote_item ++ salt`.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(log(n))`, where `n` is the number of participants
+       * in the list of random selections (draws).
+       **/
+      vote: AugmentedSubmittable<(courtId: Compact<u128> | AnyNumber | Uint8Array, commitmentVote: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, H256]>;
     };
     democracy: {
       /**
@@ -1154,19 +1325,96 @@ declare module '@polkadot/api-base/types/submittable' {
     dmpQueue: {
       /**
        * Service a single overweight message.
-       * 
-       * - `origin`: Must pass `ExecuteOverweightOrigin`.
-       * - `index`: The index of the overweight message to service.
-       * - `weight_limit`: The amount of weight that message execution may take.
-       * 
-       * Errors:
-       * - `Unknown`: Message of `index` is unknown.
-       * - `OverLimit`: Message execution may use greater than `weight_limit`.
-       * 
-       * Events:
-       * - `OverweightServiced`: On success.
        **/
-      serviceOverweight: AugmentedSubmittable<(index: u64 | AnyNumber | Uint8Array, weightLimit: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u64]>;
+      serviceOverweight: AugmentedSubmittable<(index: u64 | AnyNumber | Uint8Array, weightLimit: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpWeightsWeightV2Weight]>;
+    };
+    globalDisputes: {
+      /**
+       * Add voting outcome to a global dispute in exchange for a constant fee.
+       * Errors if the voting outcome already exists or
+       * if the global dispute has not started or has already finished.
+       * 
+       * # Arguments
+       * 
+       * - `market_id`: The id of the market.
+       * - `outcome`: The outcome report to add.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(n)`, where `n` is the number of owner(s) of the winner outcome
+       * in the case that this gets called for an already finished global dispute.
+       **/
+      addVoteOutcome: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, outcome: ZeitgeistPrimitivesOutcomeReport | { Categorical: any } | { Scalar: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, ZeitgeistPrimitivesOutcomeReport]>;
+      /**
+       * Purge all outcomes to allow the winning outcome owner(s) to get their reward.
+       * Fails if the global dispute is not concluded yet.
+       * 
+       * # Arguments
+       * 
+       * - `market_id`: The id of the market.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(n)`,
+       * where `n` is the number of all existing outcomes for a global dispute.
+       **/
+      purgeOutcomes: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>]>;
+      /**
+       * Return the voting outcome fees in case the global dispute was destroyed.
+       * 
+       * # Arguments
+       * 
+       * - `market_id`: The id of the market.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(n)`,
+       * where `n` is the number of all existing outcomes for a global dispute.
+       **/
+      refundVoteFees: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>]>;
+      /**
+       * Reward the collected fees to the owner(s) of a voting outcome.
+       * Fails if outcomes is not already purged.
+       * 
+       * # Arguments
+       * 
+       * - `market_id`: The id of the market.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(n)`, where `n` is the number of owners for the winning outcome.
+       **/
+      rewardOutcomeOwner: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>]>;
+      /**
+       * Return all locked native tokens from a finished or destroyed global dispute.
+       * Fails if the global dispute is not concluded yet.
+       * 
+       * # Arguments
+       * 
+       * - `voter`: The account id lookup to unlock funds for.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(n + m)`, where `n` is the number of all current votes on global disputes,
+       * and `m` is the number of owners for the winning outcome.
+       **/
+      unlockVoteBalance: AugmentedSubmittable<(voter: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
+      /**
+       * Vote on existing voting outcomes by locking native tokens.
+       * Fails if the global dispute has not started or has already finished.
+       * 
+       * # Arguments
+       * 
+       * - `market_id`: The id of the market.
+       * - `outcome`: The existing outcome report to vote on.
+       * - `amount`: The amount to vote with.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(n + m)`, where `n` is the number of all current votes on global disputes,
+       * and `m` is the number of owners for the specified outcome.
+       **/
+      voteOnOutcome: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, outcome: ZeitgeistPrimitivesOutcomeReport | { Categorical: any } | { Scalar: any } | string | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, ZeitgeistPrimitivesOutcomeReport, Compact<u128>]>;
     };
     identity: {
       /**
@@ -1571,6 +1819,177 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       cancelAsMulti: AugmentedSubmittable<(threshold: u16 | AnyNumber | Uint8Array, otherSignatories: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], timepoint: PalletMultisigTimepoint | { height?: any; index?: any } | string | Uint8Array, callHash: U8aFixed | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u16, Vec<AccountId32>, PalletMultisigTimepoint, U8aFixed]>;
     };
+    neoSwaps: {
+      /**
+       * Buy outcome tokens from the specified market.
+       * 
+       * The `amount_in` is paid in collateral. The transaction fails if the amount of outcome
+       * tokens received is smaller than `min_amount_out`. The user must correctly specify the
+       * number of outcomes for benchmarking reasons.
+       * 
+       * # Parameters
+       * 
+       * - `origin`: The origin account making the purchase.
+       * - `market_id`: Identifier for the market related to the trade.
+       * - `asset_count`: Number of assets in the pool.
+       * - `asset_out`: Asset to be purchased.
+       * - `amount_in`: Amount of collateral paid by the user.
+       * - `min_amount_out`: Minimum number of outcome tokens the user expects to receive.
+       * 
+       * # Complexity
+       * 
+       * Depends on the implementation of `CompleteSetOperationsApi` and `ExternalFees`; when
+       * using the canonical implementations, the runtime complexity is `O(asset_count)`.
+       **/
+      buy: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, assetCount: u16 | AnyNumber | Uint8Array, assetOut: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, amountIn: Compact<u128> | AnyNumber | Uint8Array, minAmountOut: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, u16, ZeitgeistPrimitivesAsset, Compact<u128>, Compact<u128>]>;
+      /**
+       * Deploy a pool for the specified market and provide liquidity.
+       * 
+       * The sender specifies a vector of `spot_prices` for the market's outcomes in the order
+       * given by the `MarketCommonsApi`. The transaction will fail if the spot prices don't add
+       * up to exactly `BASE`.
+       * 
+       * Depending on the values in the `spot_prices`, the transaction will transfer different
+       * amounts of each outcome to the pool. The sender specifies a maximum `amount` of outcome
+       * tokens to spend.
+       * 
+       * Note that the sender must acquire the outcome tokens in a separate transaction by using
+       * complete set operations. It's therefore convenient to batch this function together with
+       * a `buy_complete_set` with `amount` as amount of complete sets to buy.
+       * 
+       * Deploying the pool will cost the signer an additional fee to the tune of the
+       * collateral's existential deposit. This fee is placed in the pool account and ensures
+       * that swap fees can be stored in the pool account without triggering dusting or failed
+       * transfers.
+       * 
+       * The operation is currently limited to binary and scalar markets.
+       * 
+       * # Complexity
+       * 
+       * `O(n)` where `n` is the number of outcomes in the specified market.
+       **/
+      deployPool: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array, spotPrices: Vec<u128> | (u128 | AnyNumber | Uint8Array)[], swapFee: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, Compact<u128>, Vec<u128>, Compact<u128>]>;
+      /**
+       * Exit the liquidity pool for the specified market.
+       * 
+       * The LP relinquishes pool shares in exchange for withdrawing outcome tokens from the
+       * pool. The `min_amounts_out` vector specifies the minimum number of each outcome token
+       * that the LP expects to withdraw. These minimum amounts are used to adjust the outcome
+       * balances in the pool, taking into account the reduction in the LP's pool share
+       * ownership.
+       * 
+       * The transaction will fail unless the LP withdraws their fees from the pool beforehand. A
+       * batch transaction is very useful here.
+       * 
+       * If the LP withdraws all pool shares that exist, then the pool is afterwards destroyed. A
+       * new pool can be deployed at any time, provided that the market is still open.
+       * 
+       * The LP is not allowed to leave a positive but small amount liquidity in the pool. If the
+       * liquidity parameter drops below a certain threshold, the transaction will fail. The only
+       * solution is to withdraw _all_ liquidity and let the pool die.
+       * 
+       * # Parameters
+       * 
+       * - `market_id`: Identifier for the market related to the pool.
+       * - `pool_shares_amount_out`: The number of pool shares the LP will relinquish.
+       * - `min_amounts_out`: Vector of the minimum amounts of each outcome token the LP expects
+       * to withdraw (with outcomes specified in the order given by `MarketCommonsApi`).
+       * 
+       * # Complexity
+       * 
+       * `O(n)` where `n` is the number of assets in the pool.
+       **/
+      exit: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, poolSharesAmountOut: Compact<u128> | AnyNumber | Uint8Array, minAmountsOut: Vec<u128> | (u128 | AnyNumber | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Compact<u128>, Compact<u128>, Vec<u128>]>;
+      /**
+       * Join the liquidity pool for the specified market.
+       * 
+       * The LP receives pool shares in exchange for staking outcome tokens into the pool. The
+       * `max_amounts_in` vector specifies the maximum number of each outcome token that the LP is
+       * willing to deposit. These amounts are used to adjust the outcome balances in the pool
+       * according to the new proportion of pool shares owned by the LP.
+       * 
+       * Note that the user must acquire the outcome tokens in a separate transaction, either by
+       * buying from the pool or by using complete set operations.
+       * 
+       * # Parameters
+       * 
+       * - `market_id`: Identifier for the market related to the pool.
+       * - `pool_shares_amount`: The number of new pool shares the LP will receive.
+       * - `max_amounts_in`: Vector of the maximum amounts of each outcome token the LP is
+       * willing to deposit (with outcomes specified in the order of `MarketCommonsApi`).
+       * 
+       * # Complexity
+       * 
+       * `O(n)` where `n` is the number of assets in the pool.
+       **/
+      join: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, poolSharesAmount: Compact<u128> | AnyNumber | Uint8Array, maxAmountsIn: Vec<u128> | (u128 | AnyNumber | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Compact<u128>, Compact<u128>, Vec<u128>]>;
+      /**
+       * Sell outcome tokens to the specified market.
+       * 
+       * The `amount_in` is paid in outcome tokens. The transaction fails if the amount of outcome
+       * tokens received is smaller than `min_amount_out`. The user must correctly specify the
+       * number of outcomes for benchmarking reasons.
+       * 
+       * # Parameters
+       * 
+       * - `origin`: The origin account making the sale.
+       * - `market_id`: Identifier for the market related to the trade.
+       * - `asset_count`: Number of assets in the pool.
+       * - `asset_in`: Asset to be sold.
+       * - `amount_in`: Amount of outcome tokens paid by the user.
+       * - `min_amount_out`: Minimum amount of collateral the user expects to receive.
+       * 
+       * # Complexity
+       * 
+       * Depends on the implementation of `CompleteSetOperationsApi` and `ExternalFees`; when
+       * using the canonical implementations, the runtime complexity is `O(asset_count)`.
+       **/
+      sell: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, assetCount: u16 | AnyNumber | Uint8Array, assetIn: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, amountIn: Compact<u128> | AnyNumber | Uint8Array, minAmountOut: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, u16, ZeitgeistPrimitivesAsset, Compact<u128>, Compact<u128>]>;
+      /**
+       * Withdraw swap fees from the specified market.
+       * 
+       * The transaction will fail if the caller is not a liquidity provider. Should always be
+       * used before calling `exit`.
+       * 
+       * # Parameters
+       * 
+       * - `market_id`: Identifier for the market related to the pool.
+       * 
+       * # Complexity
+       * 
+       * `O(1)`.
+       **/
+      withdrawFees: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>]>;
+    };
+    orderbook: {
+      /**
+       * Fill an existing order entirely (`maker_partial_fill` = None)
+       * or partially (`maker_partial_fill` = Some(partial_amount)).
+       * 
+       * NOTE: The `maker_partial_fill` is the partial amount of what the maker wants to fill.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(1)`
+       **/
+      fillOrder: AugmentedSubmittable<(orderId: u128 | AnyNumber | Uint8Array, makerPartialFill: Option<u128> | null | Uint8Array | u128 | AnyNumber) => SubmittableExtrinsic<ApiType>, [u128, Option<u128>]>;
+      /**
+       * Place a new order.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(1)`
+       **/
+      placeOrder: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, outcomeAsset: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, side: ZrmlOrderbookV1OrderSide | 'Bid' | 'Ask' | number | Uint8Array, outcomeAssetAmount: Compact<u128> | AnyNumber | Uint8Array, baseAssetAmount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, ZeitgeistPrimitivesAsset, ZrmlOrderbookV1OrderSide, Compact<u128>, Compact<u128>]>;
+      /**
+       * Removes an order.
+       * 
+       * # Weight
+       * 
+       * Complexity: `O(1)`
+       **/
+      removeOrder: AugmentedSubmittable<(orderId: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128]>;
+    };
     parachainStaking: {
       /**
        * Cancel pending request to adjust the collator candidate self bond
@@ -1758,7 +2177,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * NOTE: A successful return to this does *not* imply that the `msg` was executed successfully
        * to completion; only that *some* of it was executed.
        **/
-      execute: AugmentedSubmittable<(message: XcmVersionedXcm | { V0: any } | { V1: any } | { V2: any } | string | Uint8Array, maxWeight: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedXcm, u64]>;
+      execute: AugmentedSubmittable<(message: XcmVersionedXcm | { V2: any } | { V3: any } | string | Uint8Array, maxWeight: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedXcm, SpWeightsWeightV2Weight]>;
       /**
        * Set a safe XCM version (the version that XCM should be encoded with if the most recent
        * version a destination can accept is unknown).
@@ -1773,7 +2192,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `origin`: Must be Root.
        * - `location`: The location to which we should subscribe for XCM version notifications.
        **/
-      forceSubscribeVersionNotify: AugmentedSubmittable<(location: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation]>;
+      forceSubscribeVersionNotify: AugmentedSubmittable<(location: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation]>;
       /**
        * Require that a particular destination should no longer notify us regarding any XCM
        * version changes.
@@ -1782,7 +2201,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `location`: The location to which we are currently subscribed for XCM version
        * notifications which we no longer desire.
        **/
-      forceUnsubscribeVersionNotify: AugmentedSubmittable<(location: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation]>;
+      forceUnsubscribeVersionNotify: AugmentedSubmittable<(location: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation]>;
       /**
        * Extoll that a particular destination can be communicated with through a particular
        * version of XCM.
@@ -1791,7 +2210,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `location`: The destination that is being described.
        * - `xcm_version`: The latest version of XCM that `location` supports.
        **/
-      forceXcmVersion: AugmentedSubmittable<(location: XcmV1MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, xcmVersion: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmV1MultiLocation, u32]>;
+      forceXcmVersion: AugmentedSubmittable<(location: XcmV3MultiLocation | { parents?: any; interior?: any } | string | Uint8Array, xcmVersion: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmV3MultiLocation, u32]>;
       /**
        * Transfer some assets from the local chain to the sovereign account of a destination
        * chain and forward a notification XCM.
@@ -1812,7 +2231,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * fees.
        * - `weight_limit`: The remote-side weight limit, if any, for the XCM fee purchase.
        **/
-      limitedReserveTransferAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V0: any } | { V1: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array, weightLimit: XcmV2WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32, XcmV2WeightLimit]>;
+      limitedReserveTransferAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array, weightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32, XcmV3WeightLimit]>;
       /**
        * Teleport some assets from the local chain to some destination chain.
        * 
@@ -1832,7 +2251,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * fees.
        * - `weight_limit`: The remote-side weight limit, if any, for the XCM fee purchase.
        **/
-      limitedTeleportAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V0: any } | { V1: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array, weightLimit: XcmV2WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32, XcmV2WeightLimit]>;
+      limitedTeleportAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array, weightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32, XcmV3WeightLimit]>;
       /**
        * Transfer some assets from the local chain to the sovereign account of a destination
        * chain and forward a notification XCM.
@@ -1851,8 +2270,8 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `fee_asset_item`: The index into `assets` of the item which should be used to pay
        * fees.
        **/
-      reserveTransferAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V0: any } | { V1: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32]>;
-      send: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, message: XcmVersionedXcm | { V0: any } | { V1: any } | { V2: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedXcm]>;
+      reserveTransferAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32]>;
+      send: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, message: XcmVersionedXcm | { V2: any } | { V3: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedXcm]>;
       /**
        * Teleport some assets from the local chain to some destination chain.
        * 
@@ -1870,7 +2289,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `fee_asset_item`: The index into `assets` of the item which should be used to pay
        * fees.
        **/
-      teleportAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V0: any } | { V1: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32]>;
+      teleportAssets: AugmentedSubmittable<(dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, beneficiary: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, assets: XcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeAssetItem: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiLocation, XcmVersionedMultiLocation, XcmVersionedMultiAssets, u32]>;
     };
     predictionMarkets: {
       /**
@@ -1959,7 +2378,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * and `m` is the number of market ids,
        * which open at the same time as the specified market.
        **/
-      createCpmmMarketAndDeployAssets: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number | Uint8Array, swapFee: Compact<u128> | AnyNumber | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array, weights: Vec<u128> | (u128 | AnyNumber | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMarketMarketDisputeMechanism, Compact<u128>, Compact<u128>, Vec<u128>]>;
+      createCpmmMarketAndDeployAssets: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, creatorFee: Perbill | AnyNumber | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism> | null | Uint8Array | ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number, swapFee: Compact<u128> | AnyNumber | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array, weights: Vec<u128> | (u128 | AnyNumber | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, Perbill, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketType, Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>, Compact<u128>, Compact<u128>, Vec<u128>]>;
       /**
        * Creates a market.
        * 
@@ -1968,7 +2387,18 @@ declare module '@polkadot/api-base/types/submittable' {
        * Complexity: `O(n)`, where `n` is the number of market ids,
        * which close at the same time as the specified market.
        **/
-      createMarket: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, creation: ZeitgeistPrimitivesMarketMarketCreation | 'Permissionless' | 'Advised' | number | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number | Uint8Array, scoringRule: ZeitgeistPrimitivesPoolScoringRule | 'CPMM' | 'RikiddoSigmoidFeeMarketEma' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMarketMarketDisputeMechanism, ZeitgeistPrimitivesPoolScoringRule]>;
+      createMarket: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, creatorFee: Perbill | AnyNumber | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, creation: ZeitgeistPrimitivesMarketMarketCreation | 'Permissionless' | 'Advised' | number | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism> | null | Uint8Array | ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number, scoringRule: ZeitgeistPrimitivesPoolScoringRule | 'CPMM' | 'RikiddoSigmoidFeeMarketEma' | 'Lmsr' | 'Orderbook' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, Perbill, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketType, Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>, ZeitgeistPrimitivesPoolScoringRule]>;
+      /**
+       * Create a market, deploy a LMSR pool, and buy outcome tokens and provide liquidity to the
+       * market.
+       * 
+       * # Weight
+       * 
+       * `O(n)` where `n` is the number of markets which close on the same block, plus the
+       * resources consumed by `DeployPool::create_pool`. In the standard implementation using
+       * neo-swaps, this is `O(m)` where `m` is the number of assets in the market.
+       **/
+      createMarketAndDeployPool: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, creatorFee: Perbill | AnyNumber | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism> | null | Uint8Array | ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number, amount: Compact<u128> | AnyNumber | Uint8Array, spotPrices: Vec<u128> | (u128 | AnyNumber | Uint8Array)[], swapFee: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, Perbill, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketType, Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>, Compact<u128>, Vec<u128>, Compact<u128>]>;
       /**
        * Buy complete sets and deploy a pool with specified liquidity for a market.
        * 
@@ -2026,7 +2456,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * 
        * Complexity: `O(n)`, where `n` is the number of outstanding disputes.
        **/
-      dispute: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, outcome: ZeitgeistPrimitivesOutcomeReport | { Categorical: any } | { Scalar: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, ZeitgeistPrimitivesOutcomeReport]>;
+      dispute: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>]>;
       /**
        * Edit a proposed market for which request is made.
        * 
@@ -2048,7 +2478,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Complexity: `O(n)`, where `n` is the number of markets
        * which end at the same time as the market before the edit.
        **/
-      editMarket: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, marketId: u128 | AnyNumber | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number | Uint8Array, scoringRule: ZeitgeistPrimitivesPoolScoringRule | 'CPMM' | 'RikiddoSigmoidFeeMarketEma' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, u128, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMarketMarketDisputeMechanism, ZeitgeistPrimitivesPoolScoringRule]>;
+      editMarket: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, marketId: u128 | AnyNumber | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism> | null | Uint8Array | ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number, scoringRule: ZeitgeistPrimitivesPoolScoringRule | 'CPMM' | 'RikiddoSigmoidFeeMarketEma' | 'Lmsr' | 'Orderbook' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, u128, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketType, Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>, ZeitgeistPrimitivesPoolScoringRule]>;
       /**
        * Redeems the winning shares of a prediction market.
        * 
@@ -2104,15 +2534,14 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       sellCompleteSet: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, Compact<u128>]>;
       /**
-       * When the `MaxDisputes` amount of disputes is reached,
-       * this allows to start a global dispute.
+       * Start a global dispute, if the market dispute mechanism fails.
        * 
        * # Arguments
        * 
        * * `market_id`: The identifier of the market.
        * 
        * NOTE:
-       * The outcomes of the disputes and the report outcome
+       * The returned outcomes of the market dispute mechanism and the report outcome
        * are added to the global dispute voting outcomes.
        * The bond of each dispute is the initial vote amount.
        **/
@@ -2224,8 +2653,6 @@ declare module '@polkadot/api-base/types/submittable' {
        * Dispatch the given `call` from an account that the sender is authorised for through
        * `add_proxy`.
        * 
-       * Removes any corresponding announcement(s).
-       * 
        * The dispatch origin for this call must be _Signed_.
        * 
        * Parameters:
@@ -2328,6 +2755,9 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       scheduleNamedAfter: AugmentedSubmittable<(id: U8aFixed | string | Uint8Array, after: u64 | AnyNumber | Uint8Array, maybePeriodic: Option<ITuple<[u64, u32]>> | null | Uint8Array | ITuple<[u64, u32]> | [u64 | AnyNumber | Uint8Array, u32 | AnyNumber | Uint8Array], priority: u8 | AnyNumber | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [U8aFixed, u64, Option<ITuple<[u64, u32]>>, u8, Call]>;
     };
+    simpleDisputes: {
+      suggestOutcome: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, outcome: ZeitgeistPrimitivesOutcomeReport | { Categorical: any } | { Scalar: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, ZeitgeistPrimitivesOutcomeReport]>;
+    };
     styx: {
       /**
        * Burns ZTG(styx.burnAmount()) to cross, granting the ability to claim your zeitgeist avatar.
@@ -2343,6 +2773,61 @@ declare module '@polkadot/api-base/types/submittable' {
        * * `amount`: The amount of the new burn price
        **/
       setBurnAmount: AugmentedSubmittable<(amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>]>;
+    };
+    sudo: {
+      /**
+       * Authenticates the current sudo key and sets the given AccountId (`new`) as the new sudo
+       * key.
+       * 
+       * The dispatch origin for this call must be _Signed_.
+       * 
+       * # <weight>
+       * - O(1).
+       * - Limited storage reads.
+       * - One DB change.
+       * # </weight>
+       **/
+      setKey: AugmentedSubmittable<(updated: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
+      /**
+       * Authenticates the sudo key and dispatches a function call with `Root` origin.
+       * 
+       * The dispatch origin for this call must be _Signed_.
+       * 
+       * # <weight>
+       * - O(1).
+       * - Limited storage reads.
+       * - One DB write (event).
+       * - Weight of derivative `call` execution + 10,000.
+       * # </weight>
+       **/
+      sudo: AugmentedSubmittable<(call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Call]>;
+      /**
+       * Authenticates the sudo key and dispatches a function call with `Signed` origin from
+       * a given account.
+       * 
+       * The dispatch origin for this call must be _Signed_.
+       * 
+       * # <weight>
+       * - O(1).
+       * - Limited storage reads.
+       * - One DB write (event).
+       * - Weight of derivative `call` execution + 10,000.
+       * # </weight>
+       **/
+      sudoAs: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Call]>;
+      /**
+       * Authenticates the sudo key and dispatches a function call with `Root` origin.
+       * This function does not check the weight of the call, and instead allows the
+       * Sudo user to specify the weight of the call.
+       * 
+       * The dispatch origin for this call must be _Signed_.
+       * 
+       * # <weight>
+       * - O(1).
+       * - The weight of this call is defined by the caller.
+       * # </weight>
+       **/
+      sudoUncheckedWeight: AugmentedSubmittable<(call: Call | IMethod | string | Uint8Array, weight: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Call, SpWeightsWeightV2Weight]>;
     };
     swaps: {
       /**
@@ -3006,7 +3491,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - Weight of derivative `call` execution + T::WeightInfo::dispatch_as().
        * # </weight>
        **/
-      dispatchAs: AugmentedSubmittable<(asOrigin: ZeitgeistRuntimeOriginCaller | { system: any } | { Void: any } | { AdvisoryCommittee: any } | { Council: any } | { TechnicalCommittee: any } | { CumulusXcm: any } | { PolkadotXcm: any } | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistRuntimeOriginCaller, Call]>;
+      dispatchAs: AugmentedSubmittable<(asOrigin: BatteryStationRuntimeOriginCaller | { system: any } | { Void: any } | { AdvisoryCommittee: any } | { Council: any } | { TechnicalCommittee: any } | { CumulusXcm: any } | { PolkadotXcm: any } | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [BatteryStationRuntimeOriginCaller, Call]>;
       /**
        * Send a batch of dispatch calls.
        * Unlike `batch`, it allows errors and won't interrupt.
@@ -3159,7 +3644,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Events:
        * - `OverweightServiced`: On success.
        **/
-      serviceOverweight: AugmentedSubmittable<(index: u64 | AnyNumber | Uint8Array, weightLimit: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u64]>;
+      serviceOverweight: AugmentedSubmittable<(index: u64 | AnyNumber | Uint8Array, weightLimit: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, SpWeightsWeightV2Weight]>;
       /**
        * Suspends all XCM executions for the XCMP queue, regardless of the sender's origin.
        * 
@@ -3196,7 +3681,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `origin`: Must pass `Root`.
        * - `new`: Desired value for `QueueConfigData.threshold_weight`
        **/
-      updateThresholdWeight: AugmentedSubmittable<(updated: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
+      updateThresholdWeight: AugmentedSubmittable<(updated: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpWeightsWeightV2Weight]>;
       /**
        * Overwrites the speed to which the available weight approaches the maximum weight.
        * A lower number results in a faster progression. A value of 1 makes the entire weight available initially.
@@ -3204,7 +3689,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `origin`: Must pass `Root`.
        * - `new`: Desired value for `QueueConfigData.weight_restrict_decay`.
        **/
-      updateWeightRestrictDecay: AugmentedSubmittable<(updated: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
+      updateWeightRestrictDecay: AugmentedSubmittable<(updated: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpWeightsWeightV2Weight]>;
       /**
        * Overwrite the maximum amount of weight any individual message may consume.
        * Messages above this weight go into the overweight queue and may only be serviced explicitly.
@@ -3212,7 +3697,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * - `origin`: Must pass `Root`.
        * - `new`: Desired value for `QueueConfigData.xcmp_max_individual_weight`.
        **/
-      updateXcmpMaxIndividualWeight: AugmentedSubmittable<(updated: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
+      updateXcmpMaxIndividualWeight: AugmentedSubmittable<(updated: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpWeightsWeightV2Weight]>;
     };
     xTokens: {
       /**
@@ -3229,7 +3714,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * by the network, and if the receiving chain would handle
        * messages correctly.
        **/
-      transfer: AugmentedSubmittable<(currencyId: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array, dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, destWeightLimit: XcmV2WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, u128, XcmVersionedMultiLocation, XcmV2WeightLimit]>;
+      transfer: AugmentedSubmittable<(currencyId: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array, dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, destWeightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, u128, XcmVersionedMultiLocation, XcmV3WeightLimit]>;
       /**
        * Transfer `MultiAsset`.
        * 
@@ -3244,7 +3729,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * by the network, and if the receiving chain would handle
        * messages correctly.
        **/
-      transferMultiasset: AugmentedSubmittable<(asset: XcmVersionedMultiAsset | { V0: any } | { V1: any } | string | Uint8Array, dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, destWeightLimit: XcmV2WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiAsset, XcmVersionedMultiLocation, XcmV2WeightLimit]>;
+      transferMultiasset: AugmentedSubmittable<(asset: XcmVersionedMultiAsset | { V2: any } | { V3: any } | string | Uint8Array, dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, destWeightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiAsset, XcmVersionedMultiLocation, XcmV3WeightLimit]>;
       /**
        * Transfer several `MultiAsset` specifying the item to be used as fee
        * 
@@ -3262,7 +3747,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * by the network, and if the receiving chain would handle
        * messages correctly.
        **/
-      transferMultiassets: AugmentedSubmittable<(assets: XcmVersionedMultiAssets | { V0: any } | { V1: any } | string | Uint8Array, feeItem: u32 | AnyNumber | Uint8Array, dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, destWeightLimit: XcmV2WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiAssets, u32, XcmVersionedMultiLocation, XcmV2WeightLimit]>;
+      transferMultiassets: AugmentedSubmittable<(assets: XcmVersionedMultiAssets | { V2: any } | { V3: any } | string | Uint8Array, feeItem: u32 | AnyNumber | Uint8Array, dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, destWeightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiAssets, u32, XcmVersionedMultiLocation, XcmV3WeightLimit]>;
       /**
        * Transfer `MultiAsset` specifying the fee and amount as separate.
        * 
@@ -3286,7 +3771,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * by the network, and if the receiving chain would handle
        * messages correctly.
        **/
-      transferMultiassetWithFee: AugmentedSubmittable<(asset: XcmVersionedMultiAsset | { V0: any } | { V1: any } | string | Uint8Array, fee: XcmVersionedMultiAsset | { V0: any } | { V1: any } | string | Uint8Array, dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, destWeightLimit: XcmV2WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiAsset, XcmVersionedMultiAsset, XcmVersionedMultiLocation, XcmV2WeightLimit]>;
+      transferMultiassetWithFee: AugmentedSubmittable<(asset: XcmVersionedMultiAsset | { V2: any } | { V3: any } | string | Uint8Array, fee: XcmVersionedMultiAsset | { V2: any } | { V3: any } | string | Uint8Array, dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, destWeightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [XcmVersionedMultiAsset, XcmVersionedMultiAsset, XcmVersionedMultiLocation, XcmV3WeightLimit]>;
       /**
        * Transfer several currencies specifying the item to be used as fee
        * 
@@ -3304,7 +3789,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * by the network, and if the receiving chain would handle
        * messages correctly.
        **/
-      transferMulticurrencies: AugmentedSubmittable<(currencies: Vec<ITuple<[ZeitgeistPrimitivesAsset, u128]>> | ([ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, u128 | AnyNumber | Uint8Array])[], feeItem: u32 | AnyNumber | Uint8Array, dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, destWeightLimit: XcmV2WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[ZeitgeistPrimitivesAsset, u128]>>, u32, XcmVersionedMultiLocation, XcmV2WeightLimit]>;
+      transferMulticurrencies: AugmentedSubmittable<(currencies: Vec<ITuple<[ZeitgeistPrimitivesAsset, u128]>> | ([ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, u128 | AnyNumber | Uint8Array])[], feeItem: u32 | AnyNumber | Uint8Array, dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, destWeightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Vec<ITuple<[ZeitgeistPrimitivesAsset, u128]>>, u32, XcmVersionedMultiLocation, XcmV3WeightLimit]>;
       /**
        * Transfer native currencies specifying the fee and amount as
        * separate.
@@ -3328,7 +3813,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * by the network, and if the receiving chain would handle
        * messages correctly.
        **/
-      transferWithFee: AugmentedSubmittable<(currencyId: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array, fee: u128 | AnyNumber | Uint8Array, dest: XcmVersionedMultiLocation | { V0: any } | { V1: any } | string | Uint8Array, destWeightLimit: XcmV2WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, u128, u128, XcmVersionedMultiLocation, XcmV2WeightLimit]>;
+      transferWithFee: AugmentedSubmittable<(currencyId: ZeitgeistPrimitivesAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array, fee: u128 | AnyNumber | Uint8Array, dest: XcmVersionedMultiLocation | { V2: any } | { V3: any } | string | Uint8Array, destWeightLimit: XcmV3WeightLimit | { Unlimited: any } | { Limited: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAsset, u128, u128, XcmVersionedMultiLocation, XcmV3WeightLimit]>;
     };
   } // AugmentedSubmittables
 } // declare module

@@ -1,5 +1,5 @@
 const endpoint = process.argv.includes('--bsr')
-  ? 'https://processor.bsr.zeitgeist.pm/graphql'
+  ? 'https://zeitgeist-squid-bsr.stellate.sh/'
   : process.argv.includes('--mainnet')
   ? 'https://processor.rpc-0.zeitgeist.pm/graphql'
   : null
@@ -12,7 +12,7 @@ console.log('CODEGEN: endpoint: ', endpoint)
 
 /** @type {import('@graphql-codegen/cli').CodegenConfig} */
 module.exports = {
-  schema: endpoint, // 'https://processor.bsr.zeitgeist.pm/graphql',
+  schema: endpoint,
   documents: './**/*.graphql',
   generates: {
     './src/graphql/sdk.ts': {

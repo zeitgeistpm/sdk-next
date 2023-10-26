@@ -1,10 +1,40 @@
 # @zeitgeistpm/indexer
 
+## 3.16.0
+
+### Minor Changes
+
+- Mainnet release.
+
+## 3.15.0
+
+### Minor Changes
+
+- 0872a93: Pool deployment changes in market creation params. Added support for lmsr.
+
+## 3.14.0
+
+### Minor Changes
+
+- 940eadf: Bump
+
+## 3.13.0
+
+### Minor Changes
+
+- 39dc4a2: New augmented api types. Scoring rule included.
+
+## 3.12.0
+
+### Minor Changes
+
+- a633351: add rough court handling to get market stage
+
 ## 3.11.0
 
 ### Minor Changes
 
-- 3e4f2a0: Release mainnet compatible stable release.
+- 146c4f5: add rough court handling to get market stage
 
 ## 3.10.0
 

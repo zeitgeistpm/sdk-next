@@ -1,5 +1,6 @@
 import type { SubmittableExtrinsic } from '@polkadot/api/types'
 import { u128 } from '@polkadot/types'
+import { Perbill } from '@polkadot/types/interfaces'
 import type {
   ZeitgeistPrimitivesAsset,
   ZeitgeistPrimitivesMarketMarketCreation,
@@ -17,40 +18,41 @@ import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'
-import { Pool } from '../../../swaps/pool'
 import { Market } from '../../market'
-import { Perbill } from '@polkadot/types/interfaces'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
  */
-export type CreateMarketParams<C extends RpcContext<MS>, MS extends MetadataStorage> = (
-  | CreateStandaloneMarketParams<C, MS>
-  | CreateMarketWithPoolParams<C, MS>
-) &
-  TransactionHooks
+export type CreateMarketParams<
+  C extends RpcContext<MS>,
+  MS extends MetadataStorage = C['storage'],
+> = CreateMarketBaseParams<MS> & (WithPool | NoPool) & TransactionHooks
 
 /**
  * Base parameters for creating a market.
  */
-export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends MetadataStorage> = {
+export type CreateMarketBaseParams<MS extends MetadataStorage> = {
   /**
    * The base asset of the market. Can be ZTG or another
    */
   baseAsset: ZeitgeistPrimitivesAsset | AssetId
+
   /**
    * How much does the creator take in fees pr trade in PerBill.
    * Its a value between 0 and 1 billion. Where 1 billion is 100% trade fee.
    */
   creatorFee?: Perbill | AnyNumber | Uint8Array
+
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
   signer: KeyringPairOrExtSigner
+
   /**
    * Metadata to store in external storage alongside the market.
    */
   metadata: Omit<MarketTypeOf<MS>, 'img'> & { img?: Blob | string }
+
   /**
    * Type of market, categorical or scalar
    */
@@ -61,14 +63,17 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
     | {
         Scalar: [number, number] | [string, string]
       }
+
   /**
    * Should the market be signed by a proxy.
    */
   proxy?: KeyringPairOrExtSigner
+
   /**
    * The resolver of the market outcome
    */
   oracle: string
+
   /**
    * The period of the market in tuple of timestamps or block numbers.
    */
@@ -101,15 +106,17 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
      */
     disputeDuration: number
   }
+
   /**
    * Market dispute mechanism.
    * @note Authorized is the only one available atm.
    */
-  disputeMechanism:
+  disputeMechanism?:
     | ZeitgeistPrimitivesMarketMarketDisputeMechanism
     | 'Authorized'
     | 'Court'
     | 'SimpleDisputes'
+
   /**
    * If true, the extrinsic will wait for the market to be finalize in a block before resolving.
    * Otherwise it will resolve immediately after inclusion.
@@ -118,46 +125,76 @@ export type CreateMarketBaseParams<C extends RpcContext<MS>, MS extends Metadata
 }
 
 /**
- * Parameters for creating a market without a pool
+ * Type that represents the params that need to be on the market creation params
+ * if the user wants to deploy a pool in the same go.
+ *
+ * @note CPMM and LMSR supported currently.
  */
-export type CreateStandaloneMarketParams<
-  C extends RpcContext<MS>,
-  MS extends MetadataStorage = C['storage'],
-> = CreateMarketBaseParams<C, MS> & {
-  /**
-   * Market scoring rule.
-   *
-   * @default Cpmm
-   * @note Cpmm is the only one available atm. Rikkido will become available in a future update.
-   */
-  scoringRule?: ZeitgeistPrimitivesPoolScoringRule['type']
-  /**
-   * Market creation type, permissionless or advised.
-   */
-  creationType: ZeitgeistPrimitivesMarketMarketCreation['type']
-}
+export type WithPool = CpmmPool | LmsrPool
 
 /**
- * Parameters for creating a market with a pool.
+ * Params for creating a cpmm market with pool.
  */
-export type CreateMarketWithPoolParams<
-  C extends RpcContext<MS>,
-  MS extends MetadataStorage = C['storage'],
-> = CreateMarketBaseParams<C, MS> & {
+export type CpmmPool = {
+  creationType?: undefined
+  scoringRule: 'Cpmm'
   pool: {
     /**
      * The fee to swap in and out of the pool.
      */
     swapFee: string | u128
+
     /**
      * The ammount to deploy in ZTG
      */
     amount: string | u128
+
     /**
      * Weighting of the assets.
      */
     weights: Array<string | u128>
   }
+}
+
+/**
+ * Params for creating a lmsr market with pool.
+ */
+export type LmsrPool = {
+  creationType?: undefined
+  scoringRule: 'Lmsr'
+  pool: {
+    /**
+     * The fee to swap in and out of the pool.
+     */
+    swapFee: string | u128
+
+    /**
+     * The ammount to deploy in ZTG
+     */
+    amount: string | u128
+
+    /**
+     * Spot prices of the assets.
+     */
+    spotPrices: Array<string | u128>
+  }
+}
+
+/**
+ * Params for creating a standalone market without pool.
+ */
+export type NoPool = {
+  /**
+   * The type of market creation.
+   * @note only applicaple for standalone markets without pool being deployed.
+   */
+  creationType: ZeitgeistPrimitivesMarketMarketCreation['type']
+
+  /**
+   * The scoring rule of the market.
+   * @note can be: "Cpmm" | "Lmsr" | "RikiddoSigmoidFeeMarketEma" | "Orderbook"
+   */
+  scoringRule: ZeitgeistPrimitivesPoolScoringRule['type']
 }
 
 /**
@@ -168,7 +205,7 @@ export type CreateMarketWithPoolParams<
  */
 export const isWithPool = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   params: CreateMarketParams<C, MS>,
-): params is CreateMarketWithPoolParams<C, MS> =>
+): params is CreateMarketBaseParams<MS> & WithPool =>
   params && 'pool' in params && typeof params.pool === 'object'
 
 /**
@@ -180,24 +217,18 @@ export const isWithPool = <C extends RpcContext<MS>, MS extends MetadataStorage>
 export type CreateMarketResult<
   C extends RpcContext<MS>,
   MS extends MetadataStorage = MetadataStorage,
-  P extends CreateMarketParams<C, MS> = CreateMarketParams<C, MS>,
-> = ExtractableResult<IEither<Error, CreateMarketData<C, MS, P>>>
+> = ExtractableResult<IEither<Error, CreateMarketData<C, MS>>>
 
 /**
  * The lazy data extracted from the market creation result.
  *
  * @generic P extends CreateMarketParams - Data will contain market and pool if params is with pool
  */
-export type CreateMarketData<
-  C extends RpcContext<MS>,
-  MS extends MetadataStorage,
-  P extends CreateMarketParams<C, MS>,
-> = {
+export type CreateMarketData<C extends RpcContext<MS>, MS extends MetadataStorage> = {
   /**
    * The market created by the extrinsic.
    */
   market: Market<C, MS>
-  pool: P extends CreateMarketWithPoolParams<C, MS> ? Pool<C, MS> : undefined
 }
 
 /**

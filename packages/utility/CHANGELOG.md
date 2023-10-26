@@ -1,10 +1,22 @@
 # @zeitgeistpm/utility
 
+## 2.24.0
+
+### Minor Changes
+
+- Mainnet release.
+
+## 2.23.0
+
+### Minor Changes
+
+- 0872a93: Pool deployment changes in market creation params. Added support for lmsr.
+
 ## 2.22.0
 
 ### Minor Changes
 
-- 3e4f2a0: Release mainnet compatible stable release.
+- 940eadf: Bump
 
 ## 2.21.0
 

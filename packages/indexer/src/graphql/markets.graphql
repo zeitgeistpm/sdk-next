@@ -74,34 +74,7 @@ fragment FullMarket on Market {
     timestamp
   }
   pool {
-    account {
-      accountId
-      balances {
-        assetId
-        balance
-      }
-    }
-    assets {
-      amountInPool
-      assetId
-      id
-      price
-    }
-    baseAsset
-    createdAt
-    id
-    marketId
-    poolId
-    status
-    scoringRule
-    swapFee
-    totalSubsidy
-    totalWeight
-    volume
-    weights {
-      assetId
-      weight
-    }
+    ...FullPool
   }
   question
   rejectReason
