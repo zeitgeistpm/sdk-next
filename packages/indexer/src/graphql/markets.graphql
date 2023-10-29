@@ -107,7 +107,6 @@ query historicalMarkets(
     market {
       marketId
     }
-    poolId
     resolvedOutcome
     status
     timestamp

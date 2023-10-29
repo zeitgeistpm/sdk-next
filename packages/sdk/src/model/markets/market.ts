@@ -315,7 +315,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       oracle: primitive.oracle.toHuman(),
       deadlines: primitive.deadlines,
       creatorFee: primitive.creatorFee.toNumber(),
-      scoringRule: primitive.scoringRule.type,
+      scoringRule: primitive.scoringRule.toString() as FullMarketFragment['scoringRule'],
       outcomeAssets: outcomeAssets,
       metadata: primitive.metadata.toHex(),
       baseAsset: JSON.stringify(parseAssetId(primitive.baseAsset).unwrap()),
@@ -323,7 +323,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       period: primitive.period.toHuman() as FullMarketFragment['period'],
       marketType: primitive.marketType.toHuman() as FullMarketFragment['marketType'],
       disputeMechanism:
-        primitive.disputeMechanism.toHuman() as FullMarketFragment['disputeMechanism'],
+        primitive.disputeMechanism.toString() as FullMarketFragment['disputeMechanism'],
       report: primitive.report.toHuman() as FullMarketFragment['report'],
       resolvedOutcome:
         primitive.resolvedOutcome.toHuman() as FullMarketFragment['resolvedOutcome'],
