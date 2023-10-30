@@ -264,8 +264,6 @@ export enum AssetOrderByInput {
   PoolMarketIdDesc = 'pool_marketId_DESC',
   PoolPoolIdAsc = 'pool_poolId_ASC',
   PoolPoolIdDesc = 'pool_poolId_DESC',
-  PoolScoringRuleAsc = 'pool_scoringRule_ASC',
-  PoolScoringRuleDesc = 'pool_scoringRule_DESC',
   PoolStatusAsc = 'pool_status_ASC',
   PoolStatusDesc = 'pool_status_DESC',
   PoolSwapFeeAsc = 'pool_swapFee_ASC',
@@ -1558,8 +1556,6 @@ export enum MarketOrderByInput {
   PoolMarketIdDesc = 'pool_marketId_DESC',
   PoolPoolIdAsc = 'pool_poolId_ASC',
   PoolPoolIdDesc = 'pool_poolId_DESC',
-  PoolScoringRuleAsc = 'pool_scoringRule_ASC',
-  PoolScoringRuleDesc = 'pool_scoringRule_DESC',
   PoolStatusAsc = 'pool_status_ASC',
   PoolStatusDesc = 'pool_status_DESC',
   PoolSwapFeeAsc = 'pool_swapFee_ASC',
@@ -2098,8 +2094,6 @@ export type Pool = {
   marketId: Scalars['Int'];
   /** Zeitgeist's identifier for pool */
   poolId: Scalars['Int'];
-  /** Scoring rule used for the pool */
-  scoringRule: ScoringRule;
   /** Status of the pool */
   status: PoolStatus;
   /** Fee applied to each swap */
@@ -2146,8 +2140,6 @@ export enum PoolOrderByInput {
   MarketIdDesc = 'marketId_DESC',
   PoolIdAsc = 'poolId_ASC',
   PoolIdDesc = 'poolId_DESC',
-  ScoringRuleAsc = 'scoringRule_ASC',
-  ScoringRuleDesc = 'scoringRule_DESC',
   StatusAsc = 'status_ASC',
   StatusDesc = 'status_DESC',
   SwapFeeAsc = 'swapFee_ASC',
@@ -2239,11 +2231,6 @@ export type PoolWhereInput = {
   poolId_lte?: InputMaybe<Scalars['Int']>;
   poolId_not_eq?: InputMaybe<Scalars['Int']>;
   poolId_not_in?: InputMaybe<Array<Scalars['Int']>>;
-  scoringRule_eq?: InputMaybe<ScoringRule>;
-  scoringRule_in?: InputMaybe<Array<ScoringRule>>;
-  scoringRule_isNull?: InputMaybe<Scalars['Boolean']>;
-  scoringRule_not_eq?: InputMaybe<ScoringRule>;
-  scoringRule_not_in?: InputMaybe<Array<ScoringRule>>;
   status_eq?: InputMaybe<PoolStatus>;
   status_in?: InputMaybe<Array<PoolStatus>>;
   status_isNull?: InputMaybe<Scalars['Boolean']>;
