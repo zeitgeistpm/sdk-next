@@ -1,5 +1,19 @@
 # @zeitgeistpm/sdk
 
+## 2.46.0
+
+### Minor Changes
+
+- 711f114: Stronger typing of ScoringRule.
+
+### Patch Changes
+
+- 6b9e853: Stronger typing of ScoringRule
+- Updated dependencies [711f114]
+- Updated dependencies [6b9e853]
+  - @zeitgeistpm/augment-api@2.22.0
+  - @zeitgeistpm/indexer@3.17.0
+
 ## 2.45.0
 
 ### Minor Changes

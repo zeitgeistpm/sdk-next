@@ -1,5 +1,15 @@
 # @zeitgeistpm/indexer
 
+## 3.17.0
+
+### Minor Changes
+
+- 711f114: Stronger typing of ScoringRule.
+
+### Patch Changes
+
+- 6b9e853: Stronger typing of ScoringRule
+
 ## 3.16.0
 
 ### Minor Changes

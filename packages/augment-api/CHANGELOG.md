@@ -1,5 +1,15 @@
 # @zeitgeistpm/augment-api
 
+## 2.22.0
+
+### Minor Changes
+
+- 711f114: Stronger typing of ScoringRule.
+
+### Patch Changes
+
+- 6b9e853: Stronger typing of ScoringRule
+
 ## 2.21.0
 
 ### Minor Changes
