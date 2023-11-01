@@ -471,6 +471,14 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       rewardPaymentDelay: u32 & AugmentedConst<ApiType>;
     };
+    parimutuel: {
+      /**
+       * The minimum amount each bet must be. Must be larger than or equal to the existential
+       * deposit of parimutuel shares.
+       **/
+      minBetSize: u128 & AugmentedConst<ApiType>;
+      palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
+    };
     predictionMarkets: {
       /**
        * The base amount of currency that must be bonded for a market approved by the
@@ -481,6 +489,36 @@ declare module '@polkadot/api-base/types/consts' {
        * The percentage of the advisory bond that gets slashed when a market is rejected.
        **/
       advisoryBondSlashPercentage: Percent & AugmentedConst<ApiType>;
+      /**
+       * The block time to wait for the market creator
+       * before the early market close actually happens.
+       **/
+      closeEarlyBlockPeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * The base amount of currency that must be bonded
+       * by the disputant in order to dispute an early market closure of the market creator.
+       **/
+      closeEarlyDisputeBond: u128 & AugmentedConst<ApiType>;
+      /**
+       * The block time to wait for the `CloseMarketsEarlyOrigin`
+       * before the early market close actually happens (fat-finger protection).
+       **/
+      closeEarlyProtectionBlockPeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * The milliseconds to wait for the `CloseMarketsEarlyOrigin`
+       * before the early market close actually happens (fat-finger protection).
+       **/
+      closeEarlyProtectionTimeFramePeriod: u64 & AugmentedConst<ApiType>;
+      /**
+       * The base amount of currency that must be bonded
+       * by the market creator in order to schedule an early market closure.
+       **/
+      closeEarlyRequestBond: u128 & AugmentedConst<ApiType>;
+      /**
+       * The milliseconds to wait for the market creator
+       * before the early market close actually happens.
+       **/
+      closeEarlyTimeFramePeriod: u64 & AugmentedConst<ApiType>;
       /**
        * The base amount of currency that must be bonded in order to create a dispute.
        **/

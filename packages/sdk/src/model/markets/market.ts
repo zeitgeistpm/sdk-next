@@ -455,15 +455,6 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       })
     })
 
-    marketWithMethods.adminDestroyMarket = Te.from(async params => {
-      return await signAndSend({
-        api: context.api,
-        tx: context.api.tx.predictionMarkets.adminDestroyMarket(market.marketId),
-        signer: params.signer,
-        hooks: params.hooks,
-      })
-    })
-
     marketWithMethods.adminMoveMarketToClosed = Te.from(async params => {
       return await signAndSend({
         api: context.api,
