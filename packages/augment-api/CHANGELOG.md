@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.23.0
+
+### Minor Changes
+
+- 5784119: Added NeoSwaps NeoPool schema to indexer.
+
 ## 2.22.0
 
 ### Minor Changes

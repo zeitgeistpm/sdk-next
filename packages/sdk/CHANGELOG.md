@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.47.0
+
+### Minor Changes
+
+- 5784119: Added NeoSwaps NeoPool schema to indexer.
+
+### Patch Changes
+
+- Updated dependencies [5784119]
+  - @zeitgeistpm/augment-api@2.23.0
+  - @zeitgeistpm/indexer@3.18.0
+
 ## 2.46.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.18.0
+
+### Minor Changes
+
+- 5784119: Added NeoSwaps NeoPool schema to indexer.
+
 ## 3.17.0
 
 ### Minor Changes
