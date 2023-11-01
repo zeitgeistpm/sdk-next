@@ -6,10 +6,10 @@
 import '@polkadot/api-base/types/events';
 
 import type { ApiTypes, AugmentedEvent } from '@polkadot/api-base/types';
-import type { Bytes, Null, Option, Result, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { BTreeMap, Bytes, Null, Option, Result, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, H256, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, PalletParachainStakingDelegationRequestsCancelledScheduledRequest, PalletParachainStakingDelegatorAdded, SessionKeysPrimitivesVrfVrfCryptoPublic, SpRuntimeDispatchError, SpWeightsWeightV2Weight, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesMarketReport, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPool, ZeitgeistPrimitivesProxyType, ZrmlCourtVoteItem, ZrmlOrderbookV1Order, ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsEventsPoolAssetEvent, ZrmlSwapsEventsPoolAssetsEvent, ZrmlSwapsEventsSwapEvent } from '@polkadot/types/lookup';
+import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, PalletParachainStakingDelegationRequestsCancelledScheduledRequest, PalletParachainStakingDelegatorAdded, SessionKeysPrimitivesVrfVrfCryptoPublic, SpRuntimeDispatchError, SpWeightsWeightV2Weight, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketEarlyCloseState, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesMarketReport, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPool, ZeitgeistPrimitivesProxyType, ZrmlCourtCourtInfo, ZrmlCourtVoteItem, ZrmlOrderbookOrder, ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsEventsPoolAssetEvent, ZrmlSwapsEventsPoolAssetsEvent, ZrmlSwapsEventsSwapEvent } from '@polkadot/types/lookup';
 
 export type __AugmentedEvent<ApiType extends ApiTypes> = AugmentedEvent<ApiType>;
 
@@ -299,6 +299,10 @@ declare module '@polkadot/api-base/types/events' {
        **/
       CourtAppealed: AugmentedEvent<ApiType, [courtId: u128, appealNumber: u32], { courtId: u128, appealNumber: u32 }>;
       /**
+       * A court case was opened.
+       **/
+      CourtOpened: AugmentedEvent<ApiType, [marketId: u128, courtInfo: ZrmlCourtCourtInfo], { marketId: u128, courtInfo: ZrmlCourtCourtInfo }>;
+      /**
        * A delegator has delegated their stake to jurors.
        **/
       DelegatorJoined: AugmentedEvent<ApiType, [delegator: AccountId32, stake: u128, delegatedJurors: Vec<AccountId32>], { delegator: AccountId32, stake: u128, delegatedJurors: Vec<AccountId32> }>;
@@ -555,7 +559,8 @@ declare module '@polkadot/api-base/types/events' {
     };
     neoSwaps: {
       /**
-       * Informant bought a position.
+       * Informant bought a position. `amount_in` is the amount of collateral paid by `who`,
+       * including swap and external fees.
        **/
       BuyExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, assetOut: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, marketId: u128, assetOut: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
       /**
@@ -573,19 +578,20 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * Pool was createed.
        **/
-      PoolDeployed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, liquidityParameter: u128], { who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, liquidityParameter: u128 }>;
+      PoolDeployed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, accountId: AccountId32, reserves: BTreeMap<ZeitgeistPrimitivesAsset, u128>, collateral: ZeitgeistPrimitivesAsset, liquidityParameter: u128, poolSharesAmount: u128, swapFee: u128], { who: AccountId32, marketId: u128, accountId: AccountId32, reserves: BTreeMap<ZeitgeistPrimitivesAsset, u128>, collateral: ZeitgeistPrimitivesAsset, liquidityParameter: u128, poolSharesAmount: u128, swapFee: u128 }>;
       /**
        * Pool was destroyed.
        **/
-      PoolDestroyed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsOut: Vec<u128>], { who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsOut: Vec<u128> }>;
+      PoolDestroyed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, amountsOut: Vec<u128>], { who: AccountId32, marketId: u128, amountsOut: Vec<u128> }>;
       /**
-       * Informant sold a position.
+       * Informant sold a position. `amount_out` is the amount of collateral received by `who`,
+       * including swap and external fees.
        **/
       SellExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
     };
     orderbook: {
       OrderFilled: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32, taker: AccountId32, filled: u128, unfilledOutcomeAssetAmount: u128, unfilledBaseAssetAmount: u128], { orderId: u128, maker: AccountId32, taker: AccountId32, filled: u128, unfilledOutcomeAssetAmount: u128, unfilledBaseAssetAmount: u128 }>;
-      OrderPlaced: AugmentedEvent<ApiType, [orderId: u128, order: ZrmlOrderbookV1Order], { orderId: u128, order: ZrmlOrderbookV1Order }>;
+      OrderPlaced: AugmentedEvent<ApiType, [orderId: u128, order: ZrmlOrderbookOrder], { orderId: u128, order: ZrmlOrderbookOrder }>;
       OrderRemoved: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32], { orderId: u128, maker: AccountId32 }>;
     };
     parachainStaking: {
@@ -753,6 +759,20 @@ declare module '@polkadot/api-base/types/events' {
        * The validation function has been scheduled to apply.
        **/
       ValidationFunctionStored: AugmentedEvent<ApiType, []>;
+    };
+    parimutuel: {
+      /**
+       * A market base asset was refunded.
+       **/
+      BalanceRefunded: AugmentedEvent<ApiType, [marketId: u128, asset: ZeitgeistPrimitivesAsset, refundedBalance: u128, sender: AccountId32], { marketId: u128, asset: ZeitgeistPrimitivesAsset, refundedBalance: u128, sender: AccountId32 }>;
+      /**
+       * An outcome was bought.
+       **/
+      OutcomeBought: AugmentedEvent<ApiType, [marketId: u128, buyer: AccountId32, asset: ZeitgeistPrimitivesAsset, amountMinusFees: u128, fees: u128], { marketId: u128, buyer: AccountId32, asset: ZeitgeistPrimitivesAsset, amountMinusFees: u128, fees: u128 }>;
+      /**
+       * Rewards of the pot were claimed.
+       **/
+      RewardsClaimed: AugmentedEvent<ApiType, [marketId: u128, asset: ZeitgeistPrimitivesAsset, withdrawnAssetBalance: u128, baseAssetPayoff: u128, sender: AccountId32], { marketId: u128, asset: ZeitgeistPrimitivesAsset, withdrawnAssetBalance: u128, baseAssetPayoff: u128, sender: AccountId32 }>;
     };
     polkadotXcm: {
       /**
@@ -955,9 +975,21 @@ declare module '@polkadot/api-base/types/events' {
        **/
       MarketDestroyed: AugmentedEvent<ApiType, [u128]>;
       /**
-       * A market has been disputed \[market_id, new_market_status\]
+       * A market has been disputed \[market_id, new_market_status, disputant\]
        **/
-      MarketDisputed: AugmentedEvent<ApiType, [u128, ZeitgeistPrimitivesMarketMarketStatus]>;
+      MarketDisputed: AugmentedEvent<ApiType, [u128, ZeitgeistPrimitivesMarketMarketStatus, AccountId32]>;
+      /**
+       * A market early close request has been disputed.
+       **/
+      MarketEarlyCloseDisputed: AugmentedEvent<ApiType, [marketId: u128], { marketId: u128 }>;
+      /**
+       * A market early close request has been rejected.
+       **/
+      MarketEarlyCloseRejected: AugmentedEvent<ApiType, [marketId: u128], { marketId: u128 }>;
+      /**
+       * A market has been scheduled to close early.
+       **/
+      MarketEarlyCloseScheduled: AugmentedEvent<ApiType, [marketId: u128, newPeriod: ZeitgeistPrimitivesMarketMarketPeriod, state: ZeitgeistPrimitivesMarketEarlyCloseState], { marketId: u128, newPeriod: ZeitgeistPrimitivesMarketMarketPeriod, state: ZeitgeistPrimitivesMarketEarlyCloseState }>;
       /**
        * A proposed market has been edited by the market creator. \[market_id, new_market\]
        **/
@@ -1110,13 +1142,14 @@ declare module '@polkadot/api-base/types/events' {
        **/
       DistributeShareHolderRewards: AugmentedEvent<ApiType, [u128, u64, u128]>;
       /**
-       * Fee payment to market creator failed (usually due to existential deposit requirements) \[payer, payee, amount, asset, error\]
+       * Fee payment to market creator failed (usually due to existential deposit requirements)
+       * \[market_id, payer, payee, amount, asset, error\]
        **/
-      MarketCreatorFeePaymentFailed: AugmentedEvent<ApiType, [AccountId32, AccountId32, u128, ZeitgeistPrimitivesAsset, SpRuntimeDispatchError]>;
+      MarketCreatorFeePaymentFailed: AugmentedEvent<ApiType, [u128, AccountId32, AccountId32, u128, ZeitgeistPrimitivesAsset, SpRuntimeDispatchError]>;
       /**
-       * Fees were paid to the market creators. \[payer, payee, amount, asset\]
+       * Fees were paid to the market creator. \[market_id , payer, payee, amount, asset\]
        **/
-      MarketCreatorFeesPaid: AugmentedEvent<ApiType, [AccountId32, AccountId32, u128, ZeitgeistPrimitivesAsset]>;
+      MarketCreatorFeesPaid: AugmentedEvent<ApiType, [u128, AccountId32, AccountId32, u128, ZeitgeistPrimitivesAsset]>;
       /**
        * A pool was opened. \[pool_id\]
        **/

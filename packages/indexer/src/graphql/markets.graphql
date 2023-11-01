@@ -56,6 +56,7 @@ fragment FullMarket on Market {
       scalar
     }
   }
+  hasValidMetaCategories
   id
   img
   marketId
@@ -64,7 +65,9 @@ fragment FullMarket on Market {
     scalar
   }
   metadata
-  hasValidMetaCategories
+  neoPool {
+    ...FullNeoPool
+  }
   oracle
   outcomeAssets
   period {

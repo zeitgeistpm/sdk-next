@@ -1,0 +1,32 @@
+query neoPools(
+  $where: NeoPoolWhereInput
+  $order: [NeoPoolOrderByInput!]
+  $offset: Int
+  $limit: Int
+) {
+  neoPools(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullNeoPool
+  }
+}
+
+fragment FullNeoPool on NeoPool {
+  account {
+    accountId
+    balances {
+      assetId
+      balance
+    }
+  }
+  collateral
+  createdAt
+  id
+  liquidityParameter
+  liquiditySharesManager {
+    fees
+    owner
+    totalShares
+  }
+  marketId
+  poolId
+  swapFee
+}

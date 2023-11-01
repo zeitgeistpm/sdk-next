@@ -1192,6 +1192,76 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       ValidationDataNotAvailable: AugmentedError<ApiType>;
     };
+    parimutuel: {
+      /**
+       * The specified amount is below the minimum bet size.
+       **/
+      AmountTooSmall: AugmentedError<ApiType>;
+      /**
+       * Action cannot be completed because an unexpected error has occurred. This should be
+       * reported to protocol maintainers.
+       **/
+      InconsistentState: AugmentedError<ApiType>;
+      /**
+       * The specified amount can not be transferred.
+       **/
+      InsufficientBalance: AugmentedError<ApiType>;
+      /**
+       * The specified asset was not found in the market assets.
+       **/
+      InvalidOutcomeAsset: AugmentedError<ApiType>;
+      /**
+       * The scoring rule is not parimutuel.
+       **/
+      InvalidScoringRule: AugmentedError<ApiType>;
+      /**
+       * The market is not active.
+       **/
+      MarketIsNotActive: AugmentedError<ApiType>;
+      /**
+       * The market is not resolved yet.
+       **/
+      MarketIsNotResolvedYet: AugmentedError<ApiType>;
+      /**
+       * There is no resolved outcome present for the market.
+       **/
+      NoResolvedOutcome: AugmentedError<ApiType>;
+      /**
+       * There was no buyer for the winning outcome or all winners already claimed their rewards.
+       * Use the `refund` extrinsic to get the initial bet back,
+       * in case there was no buyer for the winning outcome.
+       **/
+      NoRewardShareOutstanding: AugmentedError<ApiType>;
+      /**
+       * There is no reward to distribute.
+       **/
+      NoRewardToDistribute: AugmentedError<ApiType>;
+      /**
+       * Only categorical markets are allowed for parimutuels.
+       **/
+      NotCategorical: AugmentedError<ApiType>;
+      /**
+       * The specified asset is not a parimutuel share.
+       **/
+      NotParimutuelOutcome: AugmentedError<ApiType>;
+      /**
+       * There is no reward, because there are no winning shares.
+       **/
+      NoWinningShares: AugmentedError<ApiType>;
+      /**
+       * There is no balance to refund.
+       **/
+      RefundableBalanceIsZero: AugmentedError<ApiType>;
+      /**
+       * The refund is not allowed.
+       **/
+      RefundNotAllowed: AugmentedError<ApiType>;
+      /**
+       * An unexpected error occured. This should never happen!
+       * There was an internal coding mistake.
+       **/
+      Unexpected: AugmentedError<ApiType>;
+    };
     polkadotXcm: {
       /**
        * The given account is not an identifiable sovereign account for any location.
@@ -1292,6 +1362,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       DisputeDurationSmallerThanMinDisputeDuration: AugmentedError<ApiType>;
       /**
+       * The early close would be scheduled after the original market period end.
+       **/
+      EarlyCloseRequestTooLate: AugmentedError<ApiType>;
+      /**
        * Only creator is able to edit the market.
        **/
       EditorNotCreator: AugmentedError<ApiType>;
@@ -1328,6 +1402,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InvalidDisputeMechanism: AugmentedError<ApiType>;
       /**
+       * This early close state is not valid.
+       **/
+      InvalidEarlyCloseState: AugmentedError<ApiType>;
+      /**
        * Market period is faulty (too short, outside of limits)
        **/
       InvalidMarketPeriod: AugmentedError<ApiType>;
@@ -1347,6 +1425,10 @@ declare module '@polkadot/api-base/types/errors' {
        * The outcome range of the scalar market is invalid.
        **/
       InvalidOutcomeRange: AugmentedError<ApiType>;
+      /**
+       * The resolution mechanism resulting from the scoring rule is not supported.
+       **/
+      InvalidResolutionMechanism: AugmentedError<ApiType>;
       /**
        * An operation is requested that is unsupported for the given scoring rule.
        **/
@@ -1416,6 +1498,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       NoDisputeMechanism: AugmentedError<ApiType>;
       /**
+       * There is no early close scheduled.
+       **/
+      NoEarlyCloseScheduled: AugmentedError<ApiType>;
+      /**
        * The dispute duration is positive but the market has dispute period.
        **/
       NonZeroDisputePeriodOnTrustedMarket: AugmentedError<ApiType>;
@@ -1436,6 +1522,11 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       NoWinningBalance: AugmentedError<ApiType>;
       /**
+       * After there was an early close already scheduled,
+       * only the `CloseMarketsEarlyOrigin` can schedule another one.
+       **/
+      OnlyAuthorizedCanScheduleEarlyClose: AugmentedError<ApiType>;
+      /**
        * Specified oracle_duration is greater than MaxOracleDuration.
        **/
       OracleDurationGreaterThanMaxOracleDuration: AugmentedError<ApiType>;
@@ -1455,6 +1546,10 @@ declare module '@polkadot/api-base/types/errors' {
        * The report is not coming from designated oracle.
        **/
       ReporterNotOracle: AugmentedError<ApiType>;
+      /**
+       * The early market close operation was not requested by the market creator.
+       **/
+      RequesterNotCreator: AugmentedError<ApiType>;
       /**
        * It was tried to append an item to storage beyond the boundaries.
        **/
