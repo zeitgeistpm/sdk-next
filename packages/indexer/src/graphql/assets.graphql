@@ -13,6 +13,9 @@ fragment FullAsset on Asset {
   id
   assetId
   amountInPool
+  market {
+    ...FullMarket
+  }
   price
   pool {
     ...FullPool
