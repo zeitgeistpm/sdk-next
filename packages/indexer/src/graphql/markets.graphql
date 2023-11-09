@@ -19,6 +19,12 @@ query marketStatusCount(
 
 fragment FullMarket on Market {
   authorizedAddress
+  assets {
+    amountInPool
+    assetId
+    id
+    price
+  }
   baseAsset
   bonds {
     creation {
