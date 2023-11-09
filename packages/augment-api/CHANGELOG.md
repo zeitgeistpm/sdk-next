@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.23.1
+
+### Patch Changes
+
+- c200603: Added .assets to FullMarketFragment
+
 ## 2.23.0
 
 ### Minor Changes

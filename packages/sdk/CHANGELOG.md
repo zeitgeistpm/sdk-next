@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 2.47.1
+
+### Patch Changes
+
+- c200603: Added .assets to FullMarketFragment
+- Updated dependencies [c200603]
+  - @zeitgeistpm/augment-api@2.23.1
+  - @zeitgeistpm/indexer@3.18.1
+
 ## 2.47.0
 
 ### Minor Changes

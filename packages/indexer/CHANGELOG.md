@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.18.1
+
+### Patch Changes
+
+- c200603: Added .assets to FullMarketFragment
+
 ## 3.18.0
 
 ### Minor Changes
