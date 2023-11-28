@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.48.0
+
+### Minor Changes
+
+- 24f3fa1: GQL changes: added assetPrice query to indexer, added dispute to market schema, added volume to neoPool
+
+### Patch Changes
+
+- Updated dependencies [24f3fa1]
+  - @zeitgeistpm/augment-api@2.24.0
+  - @zeitgeistpm/indexer@3.19.0
+
 ## 2.47.1
 
 ### Patch Changes

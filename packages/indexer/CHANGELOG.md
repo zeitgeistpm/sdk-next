@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.19.0
+
+### Minor Changes
+
+- 24f3fa1: GQL changes: added assetPrice query to indexer, added dispute to market schema, added volume to neoPool
+
 ## 3.18.1
 
 ### Patch Changes
