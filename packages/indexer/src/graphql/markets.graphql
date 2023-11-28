@@ -32,6 +32,11 @@ fragment FullMarket on Market {
       value
       who
     }
+    dispute {
+      isSettled
+      value
+      who
+    }
     oracle {
       isSettled
       value
