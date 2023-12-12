@@ -259,6 +259,8 @@ export enum AssetOrderByInput {
   MarketAuthorizedAddressDesc = 'market_authorizedAddress_DESC',
   MarketBaseAssetAsc = 'market_baseAsset_ASC',
   MarketBaseAssetDesc = 'market_baseAsset_DESC',
+  MarketCategoryNamesAsc = 'market_categoryNames_ASC',
+  MarketCategoryNamesDesc = 'market_categoryNames_DESC',
   MarketCreationAsc = 'market_creation_ASC',
   MarketCreationDesc = 'market_creation_DESC',
   MarketCreatorFeeAsc = 'market_creatorFee_ASC',
@@ -399,6 +401,11 @@ export type BalanceInfo = {
   assetId: Scalars['String'];
   balance: Scalars['BigInt'];
 };
+
+/** Filtering balance based on event */
+export enum BalanceInfoEvent {
+  MintedInCourt = 'MintedInCourt'
+}
 
 export enum BaseAsset {
   Dot = 'DOT',
@@ -878,6 +885,8 @@ export enum HistoricalMarketOrderByInput {
   MarketAuthorizedAddressDesc = 'market_authorizedAddress_DESC',
   MarketBaseAssetAsc = 'market_baseAsset_ASC',
   MarketBaseAssetDesc = 'market_baseAsset_DESC',
+  MarketCategoryNamesAsc = 'market_categoryNames_ASC',
+  MarketCategoryNamesDesc = 'market_categoryNames_DESC',
   MarketCreationAsc = 'market_creation_ASC',
   MarketCreationDesc = 'market_creation_DESC',
   MarketCreatorFeeAsc = 'market_creatorFee_ASC',
@@ -1419,6 +1428,8 @@ export type Market = {
   bonds?: Maybe<MarketBonds>;
   /** Share details */
   categories?: Maybe<Array<CategoryMetadata>>;
+  /** Name of all categories glued together */
+  categoryNames?: Maybe<Scalars['String']>;
   /** Can be `Permissionless` or `Advised` */
   creation: MarketCreation;
   /** Account address of the market creator */
@@ -1631,6 +1642,8 @@ export enum MarketOrderByInput {
   AuthorizedAddressDesc = 'authorizedAddress_DESC',
   BaseAssetAsc = 'baseAsset_ASC',
   BaseAssetDesc = 'baseAsset_DESC',
+  CategoryNamesAsc = 'categoryNames_ASC',
+  CategoryNamesDesc = 'categoryNames_DESC',
   CreationAsc = 'creation_ASC',
   CreationDesc = 'creation_DESC',
   CreatorFeeAsc = 'creatorFee_ASC',
@@ -1912,6 +1925,23 @@ export type MarketWhereInput = {
   bonds?: InputMaybe<MarketBondsWhereInput>;
   bonds_isNull?: InputMaybe<Scalars['Boolean']>;
   categories_isNull?: InputMaybe<Scalars['Boolean']>;
+  categoryNames_contains?: InputMaybe<Scalars['String']>;
+  categoryNames_containsInsensitive?: InputMaybe<Scalars['String']>;
+  categoryNames_endsWith?: InputMaybe<Scalars['String']>;
+  categoryNames_eq?: InputMaybe<Scalars['String']>;
+  categoryNames_gt?: InputMaybe<Scalars['String']>;
+  categoryNames_gte?: InputMaybe<Scalars['String']>;
+  categoryNames_in?: InputMaybe<Array<Scalars['String']>>;
+  categoryNames_isNull?: InputMaybe<Scalars['Boolean']>;
+  categoryNames_lt?: InputMaybe<Scalars['String']>;
+  categoryNames_lte?: InputMaybe<Scalars['String']>;
+  categoryNames_not_contains?: InputMaybe<Scalars['String']>;
+  categoryNames_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  categoryNames_not_endsWith?: InputMaybe<Scalars['String']>;
+  categoryNames_not_eq?: InputMaybe<Scalars['String']>;
+  categoryNames_not_in?: InputMaybe<Array<Scalars['String']>>;
+  categoryNames_not_startsWith?: InputMaybe<Scalars['String']>;
+  categoryNames_startsWith?: InputMaybe<Scalars['String']>;
   creation_eq?: InputMaybe<MarketCreation>;
   creation_in?: InputMaybe<Array<MarketCreation>>;
   creation_isNull?: InputMaybe<Scalars['Boolean']>;
@@ -2632,7 +2662,7 @@ export type Query = {
   assetPrice: Array<AssetPrice>;
   assets: Array<Asset>;
   assetsConnection: AssetsConnection;
-  balanceInfo?: Maybe<BalanceInfo>;
+  balanceInfo: BalanceInfo;
   historicalAccountBalanceById?: Maybe<HistoricalAccountBalance>;
   /** @deprecated Use historicalAccountBalanceById */
   historicalAccountBalanceByUniqueInput?: Maybe<HistoricalAccountBalance>;
@@ -2678,7 +2708,7 @@ export type Query = {
   poolsConnection: PoolsConnection;
   priceHistory?: Maybe<Array<PriceHistory>>;
   squidStatus?: Maybe<SquidStatus>;
-  stats: Array<Stats>;
+  stats: Stats;
 };
 
 
@@ -2768,8 +2798,9 @@ export type QueryAssetsConnectionArgs = {
 
 export type QueryBalanceInfoArgs = {
   accountId: Scalars['String'];
-  assetId: AssetKindValue;
-  blockNumber: Scalars['String'];
+  assetId?: InputMaybe<AssetKindValue>;
+  blockNumber?: InputMaybe<Scalars['String']>;
+  event?: InputMaybe<BalanceInfoEvent>;
 };
 
 
@@ -3023,6 +3054,7 @@ export type SquidStatus = {
 export type Stats = {
   __typename?: 'Stats';
   totalLiquidity: Scalars['BigInt'];
+  totalMintedInCourt: Scalars['BigInt'];
   totalVolume: Scalars['BigInt'];
 };
 
@@ -3252,6 +3284,16 @@ export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: '
 
 export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, amountInPool: any, price: number, market: { __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: MarketCreation, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: DisputeMechanism, hasValidMetaCategories: boolean, id: string, img?: string | null, marketId: number, metadata: string, oracle: string, outcomeAssets: Array<string>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: ScoringRule, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, bonds?: { __typename?: 'MarketBonds', creation: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string }, dispute?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null }> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, neoPool?: { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: { __typename?: 'LiquiditySharesManager', fees: any, owner: string, totalShares: any } } | null, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null }, pool?: { __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null };
 
+export type BalanceInfoQueryVariables = Exact<{
+  accountId: Scalars['String'];
+  assetId?: InputMaybe<AssetKindValue>;
+  blockNumber?: InputMaybe<Scalars['String']>;
+  event?: InputMaybe<BalanceInfoEvent>;
+}>;
+
+
+export type BalanceInfoQuery = { __typename?: 'Query', balanceInfo: { __typename?: 'BalanceInfo', assetId: string, balance: any } };
+
 export type HistoricalAccountBalancesQueryVariables = Exact<{
   where?: InputMaybe<HistoricalAccountBalanceWhereInput>;
   order?: InputMaybe<Array<HistoricalAccountBalanceOrderByInput> | HistoricalAccountBalanceOrderByInput>;
@@ -3380,7 +3422,7 @@ export type SquidStatusQuery = { __typename?: 'Query', squidStatus?: { __typenam
 export type StatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StatsQuery = { __typename?: 'Query', stats: Array<{ __typename?: 'Stats', totalLiquidity: any, totalVolume: any }> };
+export type StatsQuery = { __typename?: 'Query', stats: { __typename?: 'Stats', totalLiquidity: any, totalMintedInCourt: any, totalVolume: any } };
 
 export const FullAccountBalanceFragmentDoc = gql`
     fragment FullAccountBalance on AccountBalance {
@@ -3633,6 +3675,19 @@ export const AssetsDocument = gql`
   }
 }
     ${FullAssetFragmentDoc}`;
+export const BalanceInfoDocument = gql`
+    query balanceInfo($accountId: String!, $assetId: AssetKindValue, $blockNumber: String, $event: BalanceInfoEvent) {
+  balanceInfo(
+    accountId: $accountId
+    assetId: $assetId
+    blockNumber: $blockNumber
+    event: $event
+  ) {
+    assetId
+    balance
+  }
+}
+    `;
 export const HistoricalAccountBalancesDocument = gql`
     query historicalAccountBalances($where: HistoricalAccountBalanceWhereInput, $order: [HistoricalAccountBalanceOrderByInput!], $offset: Int, $limit: Int) {
   historicalAccountBalances(
@@ -3755,6 +3810,7 @@ export const StatsDocument = gql`
     query stats {
   stats {
     totalLiquidity
+    totalMintedInCourt
     totalVolume
   }
 }
@@ -3775,6 +3831,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     assets(variables?: AssetsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AssetsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<AssetsQuery>(AssetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'assets', 'query');
+    },
+    balanceInfo(variables: BalanceInfoQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<BalanceInfoQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BalanceInfoQuery>(BalanceInfoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'balanceInfo', 'query');
     },
     historicalAccountBalances(variables?: HistoricalAccountBalancesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalAccountBalancesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HistoricalAccountBalancesQuery>(HistoricalAccountBalancesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalAccountBalances', 'query');
