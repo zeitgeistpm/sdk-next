@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.20.0
+
+### Minor Changes
+
+- e365fde: GQL schema changes
+
 ## 3.19.0
 
 ### Minor Changes

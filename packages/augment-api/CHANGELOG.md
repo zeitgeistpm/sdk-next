@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.25.0
+
+### Minor Changes
+
+- e365fde: GQL schema changes
+
 ## 2.24.0
 
 ### Minor Changes

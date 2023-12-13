@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.49.0
+
+### Minor Changes
+
+- e365fde: GQL schema changes
+
+### Patch Changes
+
+- Updated dependencies [e365fde]
+  - @zeitgeistpm/augment-api@2.25.0
+  - @zeitgeistpm/indexer@3.20.0
+
 ## 2.48.0
 
 ### Minor Changes
