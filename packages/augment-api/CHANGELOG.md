@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.25.1
+
+### Patch Changes
+
+- 25dc9b8: Bump
+
 ## 2.25.0
 
 ### Minor Changes

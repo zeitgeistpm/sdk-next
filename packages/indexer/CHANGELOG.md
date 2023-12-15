@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.20.1
+
+### Patch Changes
+
+- 25dc9b8: Bump
+
 ## 3.20.0
 
 ### Minor Changes

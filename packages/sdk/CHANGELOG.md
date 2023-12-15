@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.49.1
+
+### Patch Changes
+
+- 25dc9b8: Bump
+- Updated dependencies [25dc9b8]
+  - @zeitgeistpm/augment-api@2.25.1
+  - @zeitgeistpm/indexer@3.20.1
+  - @zeitgeistpm/utility@2.24.1
+
 ## 2.49.0
 
 ### Minor Changes
