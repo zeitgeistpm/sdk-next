@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.25.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
 ## 2.24.2
 
 ### Patch Changes

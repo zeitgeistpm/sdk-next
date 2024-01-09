@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.21.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
 ## 3.20.2
 
 ### Patch Changes

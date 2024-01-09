@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 2.50.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
+### Patch Changes
+
+- Updated dependencies [f91b1b1]
+  - @zeitgeistpm/augment-api@2.26.0
+  - @zeitgeistpm/indexer@3.21.0
+  - @zeitgeistpm/utility@2.25.0
+  - @zeitgeistpm/rpc@2.15.0
+  - @zeitgeistpm/web3.storage@2.16.0
+
 ## 2.49.2
 
 ### Patch Changes

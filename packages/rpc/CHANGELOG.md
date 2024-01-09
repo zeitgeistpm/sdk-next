@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 2.15.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
+### Patch Changes
+
+- Updated dependencies [f91b1b1]
+  - @zeitgeistpm/augment-api@2.26.0
+  - @zeitgeistpm/utility@2.25.0
+
 ## 2.14.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.26.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
 ## 2.25.2
 
 ### Patch Changes
