@@ -66,17 +66,29 @@ export type AccountBalanceEdge = {
 
 export enum AccountBalanceOrderByInput {
   AccountAccountIdAsc = 'account_accountId_ASC',
+  AccountAccountIdAscNullsFirst = 'account_accountId_ASC_NULLS_FIRST',
   AccountAccountIdDesc = 'account_accountId_DESC',
+  AccountAccountIdDescNullsLast = 'account_accountId_DESC_NULLS_LAST',
   AccountIdAsc = 'account_id_ASC',
+  AccountIdAscNullsFirst = 'account_id_ASC_NULLS_FIRST',
   AccountIdDesc = 'account_id_DESC',
+  AccountIdDescNullsLast = 'account_id_DESC_NULLS_LAST',
   AccountMarketIdAsc = 'account_marketId_ASC',
+  AccountMarketIdAscNullsFirst = 'account_marketId_ASC_NULLS_FIRST',
   AccountMarketIdDesc = 'account_marketId_DESC',
+  AccountMarketIdDescNullsLast = 'account_marketId_DESC_NULLS_LAST',
   AssetIdAsc = 'assetId_ASC',
+  AssetIdAscNullsFirst = 'assetId_ASC_NULLS_FIRST',
   AssetIdDesc = 'assetId_DESC',
+  AssetIdDescNullsLast = 'assetId_DESC_NULLS_LAST',
   BalanceAsc = 'balance_ASC',
+  BalanceAscNullsFirst = 'balance_ASC_NULLS_FIRST',
   BalanceDesc = 'balance_DESC',
+  BalanceDescNullsLast = 'balance_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC'
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
+  IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST'
 }
 
 export type AccountBalanceWhereInput = {
@@ -144,11 +156,17 @@ export type AccountEdge = {
 
 export enum AccountOrderByInput {
   AccountIdAsc = 'accountId_ASC',
+  AccountIdAscNullsFirst = 'accountId_ASC_NULLS_FIRST',
   AccountIdDesc = 'accountId_DESC',
+  AccountIdDescNullsLast = 'accountId_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   MarketIdAsc = 'marketId_ASC',
-  MarketIdDesc = 'marketId_DESC'
+  MarketIdAscNullsFirst = 'marketId_ASC_NULLS_FIRST',
+  MarketIdDesc = 'marketId_DESC',
+  MarketIdDescNullsLast = 'marketId_DESC_NULLS_LAST'
 }
 
 export type AccountWhereInput = {
@@ -250,73 +268,145 @@ export type AssetKindValue = {
 
 export enum AssetOrderByInput {
   AmountInPoolAsc = 'amountInPool_ASC',
+  AmountInPoolAscNullsFirst = 'amountInPool_ASC_NULLS_FIRST',
   AmountInPoolDesc = 'amountInPool_DESC',
+  AmountInPoolDescNullsLast = 'amountInPool_DESC_NULLS_LAST',
   AssetIdAsc = 'assetId_ASC',
+  AssetIdAscNullsFirst = 'assetId_ASC_NULLS_FIRST',
   AssetIdDesc = 'assetId_DESC',
+  AssetIdDescNullsLast = 'assetId_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   MarketAuthorizedAddressAsc = 'market_authorizedAddress_ASC',
+  MarketAuthorizedAddressAscNullsFirst = 'market_authorizedAddress_ASC_NULLS_FIRST',
   MarketAuthorizedAddressDesc = 'market_authorizedAddress_DESC',
+  MarketAuthorizedAddressDescNullsLast = 'market_authorizedAddress_DESC_NULLS_LAST',
   MarketBaseAssetAsc = 'market_baseAsset_ASC',
+  MarketBaseAssetAscNullsFirst = 'market_baseAsset_ASC_NULLS_FIRST',
   MarketBaseAssetDesc = 'market_baseAsset_DESC',
+  MarketBaseAssetDescNullsLast = 'market_baseAsset_DESC_NULLS_LAST',
+  MarketCategoryNamesAsc = 'market_categoryNames_ASC',
+  MarketCategoryNamesAscNullsFirst = 'market_categoryNames_ASC_NULLS_FIRST',
+  MarketCategoryNamesDesc = 'market_categoryNames_DESC',
+  MarketCategoryNamesDescNullsLast = 'market_categoryNames_DESC_NULLS_LAST',
   MarketCreationAsc = 'market_creation_ASC',
+  MarketCreationAscNullsFirst = 'market_creation_ASC_NULLS_FIRST',
   MarketCreationDesc = 'market_creation_DESC',
+  MarketCreationDescNullsLast = 'market_creation_DESC_NULLS_LAST',
   MarketCreatorFeeAsc = 'market_creatorFee_ASC',
+  MarketCreatorFeeAscNullsFirst = 'market_creatorFee_ASC_NULLS_FIRST',
   MarketCreatorFeeDesc = 'market_creatorFee_DESC',
+  MarketCreatorFeeDescNullsLast = 'market_creatorFee_DESC_NULLS_LAST',
   MarketCreatorAsc = 'market_creator_ASC',
+  MarketCreatorAscNullsFirst = 'market_creator_ASC_NULLS_FIRST',
   MarketCreatorDesc = 'market_creator_DESC',
+  MarketCreatorDescNullsLast = 'market_creator_DESC_NULLS_LAST',
   MarketDescriptionAsc = 'market_description_ASC',
+  MarketDescriptionAscNullsFirst = 'market_description_ASC_NULLS_FIRST',
   MarketDescriptionDesc = 'market_description_DESC',
+  MarketDescriptionDescNullsLast = 'market_description_DESC_NULLS_LAST',
   MarketDisputeMechanismAsc = 'market_disputeMechanism_ASC',
+  MarketDisputeMechanismAscNullsFirst = 'market_disputeMechanism_ASC_NULLS_FIRST',
   MarketDisputeMechanismDesc = 'market_disputeMechanism_DESC',
+  MarketDisputeMechanismDescNullsLast = 'market_disputeMechanism_DESC_NULLS_LAST',
   MarketHasValidMetaCategoriesAsc = 'market_hasValidMetaCategories_ASC',
+  MarketHasValidMetaCategoriesAscNullsFirst = 'market_hasValidMetaCategories_ASC_NULLS_FIRST',
   MarketHasValidMetaCategoriesDesc = 'market_hasValidMetaCategories_DESC',
+  MarketHasValidMetaCategoriesDescNullsLast = 'market_hasValidMetaCategories_DESC_NULLS_LAST',
   MarketIdAsc = 'market_id_ASC',
+  MarketIdAscNullsFirst = 'market_id_ASC_NULLS_FIRST',
   MarketIdDesc = 'market_id_DESC',
+  MarketIdDescNullsLast = 'market_id_DESC_NULLS_LAST',
   MarketImgAsc = 'market_img_ASC',
+  MarketImgAscNullsFirst = 'market_img_ASC_NULLS_FIRST',
   MarketImgDesc = 'market_img_DESC',
+  MarketImgDescNullsLast = 'market_img_DESC_NULLS_LAST',
   MarketMarketIdAsc = 'market_marketId_ASC',
+  MarketMarketIdAscNullsFirst = 'market_marketId_ASC_NULLS_FIRST',
   MarketMarketIdDesc = 'market_marketId_DESC',
+  MarketMarketIdDescNullsLast = 'market_marketId_DESC_NULLS_LAST',
   MarketMetadataAsc = 'market_metadata_ASC',
+  MarketMetadataAscNullsFirst = 'market_metadata_ASC_NULLS_FIRST',
   MarketMetadataDesc = 'market_metadata_DESC',
+  MarketMetadataDescNullsLast = 'market_metadata_DESC_NULLS_LAST',
   MarketOracleAsc = 'market_oracle_ASC',
+  MarketOracleAscNullsFirst = 'market_oracle_ASC_NULLS_FIRST',
   MarketOracleDesc = 'market_oracle_DESC',
+  MarketOracleDescNullsLast = 'market_oracle_DESC_NULLS_LAST',
   MarketQuestionAsc = 'market_question_ASC',
+  MarketQuestionAscNullsFirst = 'market_question_ASC_NULLS_FIRST',
   MarketQuestionDesc = 'market_question_DESC',
+  MarketQuestionDescNullsLast = 'market_question_DESC_NULLS_LAST',
   MarketRejectReasonAsc = 'market_rejectReason_ASC',
+  MarketRejectReasonAscNullsFirst = 'market_rejectReason_ASC_NULLS_FIRST',
   MarketRejectReasonDesc = 'market_rejectReason_DESC',
+  MarketRejectReasonDescNullsLast = 'market_rejectReason_DESC_NULLS_LAST',
   MarketResolvedOutcomeAsc = 'market_resolvedOutcome_ASC',
+  MarketResolvedOutcomeAscNullsFirst = 'market_resolvedOutcome_ASC_NULLS_FIRST',
   MarketResolvedOutcomeDesc = 'market_resolvedOutcome_DESC',
+  MarketResolvedOutcomeDescNullsLast = 'market_resolvedOutcome_DESC_NULLS_LAST',
   MarketScalarTypeAsc = 'market_scalarType_ASC',
+  MarketScalarTypeAscNullsFirst = 'market_scalarType_ASC_NULLS_FIRST',
   MarketScalarTypeDesc = 'market_scalarType_DESC',
+  MarketScalarTypeDescNullsLast = 'market_scalarType_DESC_NULLS_LAST',
   MarketScoringRuleAsc = 'market_scoringRule_ASC',
+  MarketScoringRuleAscNullsFirst = 'market_scoringRule_ASC_NULLS_FIRST',
   MarketScoringRuleDesc = 'market_scoringRule_DESC',
+  MarketScoringRuleDescNullsLast = 'market_scoringRule_DESC_NULLS_LAST',
   MarketSlugAsc = 'market_slug_ASC',
+  MarketSlugAscNullsFirst = 'market_slug_ASC_NULLS_FIRST',
   MarketSlugDesc = 'market_slug_DESC',
+  MarketSlugDescNullsLast = 'market_slug_DESC_NULLS_LAST',
   MarketStatusAsc = 'market_status_ASC',
+  MarketStatusAscNullsFirst = 'market_status_ASC_NULLS_FIRST',
   MarketStatusDesc = 'market_status_DESC',
+  MarketStatusDescNullsLast = 'market_status_DESC_NULLS_LAST',
   PoolBaseAssetAsc = 'pool_baseAsset_ASC',
+  PoolBaseAssetAscNullsFirst = 'pool_baseAsset_ASC_NULLS_FIRST',
   PoolBaseAssetDesc = 'pool_baseAsset_DESC',
+  PoolBaseAssetDescNullsLast = 'pool_baseAsset_DESC_NULLS_LAST',
   PoolCreatedAtAsc = 'pool_createdAt_ASC',
+  PoolCreatedAtAscNullsFirst = 'pool_createdAt_ASC_NULLS_FIRST',
   PoolCreatedAtDesc = 'pool_createdAt_DESC',
+  PoolCreatedAtDescNullsLast = 'pool_createdAt_DESC_NULLS_LAST',
   PoolIdAsc = 'pool_id_ASC',
+  PoolIdAscNullsFirst = 'pool_id_ASC_NULLS_FIRST',
   PoolIdDesc = 'pool_id_DESC',
+  PoolIdDescNullsLast = 'pool_id_DESC_NULLS_LAST',
   PoolMarketIdAsc = 'pool_marketId_ASC',
+  PoolMarketIdAscNullsFirst = 'pool_marketId_ASC_NULLS_FIRST',
   PoolMarketIdDesc = 'pool_marketId_DESC',
+  PoolMarketIdDescNullsLast = 'pool_marketId_DESC_NULLS_LAST',
   PoolPoolIdAsc = 'pool_poolId_ASC',
+  PoolPoolIdAscNullsFirst = 'pool_poolId_ASC_NULLS_FIRST',
   PoolPoolIdDesc = 'pool_poolId_DESC',
+  PoolPoolIdDescNullsLast = 'pool_poolId_DESC_NULLS_LAST',
   PoolStatusAsc = 'pool_status_ASC',
+  PoolStatusAscNullsFirst = 'pool_status_ASC_NULLS_FIRST',
   PoolStatusDesc = 'pool_status_DESC',
+  PoolStatusDescNullsLast = 'pool_status_DESC_NULLS_LAST',
   PoolSwapFeeAsc = 'pool_swapFee_ASC',
+  PoolSwapFeeAscNullsFirst = 'pool_swapFee_ASC_NULLS_FIRST',
   PoolSwapFeeDesc = 'pool_swapFee_DESC',
+  PoolSwapFeeDescNullsLast = 'pool_swapFee_DESC_NULLS_LAST',
   PoolTotalSubsidyAsc = 'pool_totalSubsidy_ASC',
+  PoolTotalSubsidyAscNullsFirst = 'pool_totalSubsidy_ASC_NULLS_FIRST',
   PoolTotalSubsidyDesc = 'pool_totalSubsidy_DESC',
+  PoolTotalSubsidyDescNullsLast = 'pool_totalSubsidy_DESC_NULLS_LAST',
   PoolTotalWeightAsc = 'pool_totalWeight_ASC',
+  PoolTotalWeightAscNullsFirst = 'pool_totalWeight_ASC_NULLS_FIRST',
   PoolTotalWeightDesc = 'pool_totalWeight_DESC',
+  PoolTotalWeightDescNullsLast = 'pool_totalWeight_DESC_NULLS_LAST',
   PoolVolumeAsc = 'pool_volume_ASC',
+  PoolVolumeAscNullsFirst = 'pool_volume_ASC_NULLS_FIRST',
   PoolVolumeDesc = 'pool_volume_DESC',
+  PoolVolumeDescNullsLast = 'pool_volume_DESC_NULLS_LAST',
   PriceAsc = 'price_ASC',
-  PriceDesc = 'price_DESC'
+  PriceAscNullsFirst = 'price_ASC_NULLS_FIRST',
+  PriceDesc = 'price_DESC',
+  PriceDescNullsLast = 'price_DESC_NULLS_LAST'
 }
 
 export type AssetPrice = {
@@ -400,6 +490,11 @@ export type BalanceInfo = {
   balance: Scalars['BigInt'];
 };
 
+/** Filtering balance based on event */
+export enum BalanceInfoEvent {
+  MintedInCourt = 'MintedInCourt'
+}
+
 export enum BaseAsset {
   Dot = 'DOT',
   Usdc = 'USDC',
@@ -433,7 +528,7 @@ export type Extrinsic = {
   /** Extrinsic hash */
   hash: Scalars['String'];
   /** Name of the extrinsic */
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
 };
 
 export type ExtrinsicWhereInput = {
@@ -505,23 +600,41 @@ export type HistoricalAccountBalanceEdge = {
 
 export enum HistoricalAccountBalanceOrderByInput {
   AccountIdAsc = 'accountId_ASC',
+  AccountIdAscNullsFirst = 'accountId_ASC_NULLS_FIRST',
   AccountIdDesc = 'accountId_DESC',
+  AccountIdDescNullsLast = 'accountId_DESC_NULLS_LAST',
   AssetIdAsc = 'assetId_ASC',
+  AssetIdAscNullsFirst = 'assetId_ASC_NULLS_FIRST',
   AssetIdDesc = 'assetId_DESC',
+  AssetIdDescNullsLast = 'assetId_DESC_NULLS_LAST',
   BlockNumberAsc = 'blockNumber_ASC',
+  BlockNumberAscNullsFirst = 'blockNumber_ASC_NULLS_FIRST',
   BlockNumberDesc = 'blockNumber_DESC',
+  BlockNumberDescNullsLast = 'blockNumber_DESC_NULLS_LAST',
   DBalanceAsc = 'dBalance_ASC',
+  DBalanceAscNullsFirst = 'dBalance_ASC_NULLS_FIRST',
   DBalanceDesc = 'dBalance_DESC',
+  DBalanceDescNullsLast = 'dBalance_DESC_NULLS_LAST',
   EventAsc = 'event_ASC',
+  EventAscNullsFirst = 'event_ASC_NULLS_FIRST',
   EventDesc = 'event_DESC',
+  EventDescNullsLast = 'event_DESC_NULLS_LAST',
   ExtrinsicHashAsc = 'extrinsic_hash_ASC',
+  ExtrinsicHashAscNullsFirst = 'extrinsic_hash_ASC_NULLS_FIRST',
   ExtrinsicHashDesc = 'extrinsic_hash_DESC',
+  ExtrinsicHashDescNullsLast = 'extrinsic_hash_DESC_NULLS_LAST',
   ExtrinsicNameAsc = 'extrinsic_name_ASC',
+  ExtrinsicNameAscNullsFirst = 'extrinsic_name_ASC_NULLS_FIRST',
   ExtrinsicNameDesc = 'extrinsic_name_DESC',
+  ExtrinsicNameDescNullsLast = 'extrinsic_name_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   TimestampAsc = 'timestamp_ASC',
-  TimestampDesc = 'timestamp_DESC'
+  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
+  TimestampDesc = 'timestamp_DESC',
+  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
 }
 
 export type HistoricalAccountBalanceWhereInput = {
@@ -668,27 +781,49 @@ export type HistoricalAssetEdge = {
 
 export enum HistoricalAssetOrderByInput {
   AccountIdAsc = 'accountId_ASC',
+  AccountIdAscNullsFirst = 'accountId_ASC_NULLS_FIRST',
   AccountIdDesc = 'accountId_DESC',
+  AccountIdDescNullsLast = 'accountId_DESC_NULLS_LAST',
   AssetIdAsc = 'assetId_ASC',
+  AssetIdAscNullsFirst = 'assetId_ASC_NULLS_FIRST',
   AssetIdDesc = 'assetId_DESC',
+  AssetIdDescNullsLast = 'assetId_DESC_NULLS_LAST',
   BaseAssetTradedAsc = 'baseAssetTraded_ASC',
+  BaseAssetTradedAscNullsFirst = 'baseAssetTraded_ASC_NULLS_FIRST',
   BaseAssetTradedDesc = 'baseAssetTraded_DESC',
+  BaseAssetTradedDescNullsLast = 'baseAssetTraded_DESC_NULLS_LAST',
   BlockNumberAsc = 'blockNumber_ASC',
+  BlockNumberAscNullsFirst = 'blockNumber_ASC_NULLS_FIRST',
   BlockNumberDesc = 'blockNumber_DESC',
+  BlockNumberDescNullsLast = 'blockNumber_DESC_NULLS_LAST',
   DAmountInPoolAsc = 'dAmountInPool_ASC',
+  DAmountInPoolAscNullsFirst = 'dAmountInPool_ASC_NULLS_FIRST',
   DAmountInPoolDesc = 'dAmountInPool_DESC',
+  DAmountInPoolDescNullsLast = 'dAmountInPool_DESC_NULLS_LAST',
   DPriceAsc = 'dPrice_ASC',
+  DPriceAscNullsFirst = 'dPrice_ASC_NULLS_FIRST',
   DPriceDesc = 'dPrice_DESC',
+  DPriceDescNullsLast = 'dPrice_DESC_NULLS_LAST',
   EventAsc = 'event_ASC',
+  EventAscNullsFirst = 'event_ASC_NULLS_FIRST',
   EventDesc = 'event_DESC',
+  EventDescNullsLast = 'event_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   NewAmountInPoolAsc = 'newAmountInPool_ASC',
+  NewAmountInPoolAscNullsFirst = 'newAmountInPool_ASC_NULLS_FIRST',
   NewAmountInPoolDesc = 'newAmountInPool_DESC',
+  NewAmountInPoolDescNullsLast = 'newAmountInPool_DESC_NULLS_LAST',
   NewPriceAsc = 'newPrice_ASC',
+  NewPriceAscNullsFirst = 'newPrice_ASC_NULLS_FIRST',
   NewPriceDesc = 'newPrice_DESC',
+  NewPriceDescNullsLast = 'newPrice_DESC_NULLS_LAST',
   TimestampAsc = 'timestamp_ASC',
-  TimestampDesc = 'timestamp_DESC'
+  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
+  TimestampDesc = 'timestamp_DESC',
+  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
 }
 
 export type HistoricalAssetWhereInput = {
@@ -867,63 +1002,125 @@ export type HistoricalMarketEdge = {
 
 export enum HistoricalMarketOrderByInput {
   BlockNumberAsc = 'blockNumber_ASC',
+  BlockNumberAscNullsFirst = 'blockNumber_ASC_NULLS_FIRST',
   BlockNumberDesc = 'blockNumber_DESC',
+  BlockNumberDescNullsLast = 'blockNumber_DESC_NULLS_LAST',
   ByAsc = 'by_ASC',
+  ByAscNullsFirst = 'by_ASC_NULLS_FIRST',
   ByDesc = 'by_DESC',
+  ByDescNullsLast = 'by_DESC_NULLS_LAST',
   EventAsc = 'event_ASC',
+  EventAscNullsFirst = 'event_ASC_NULLS_FIRST',
   EventDesc = 'event_DESC',
+  EventDescNullsLast = 'event_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   MarketAuthorizedAddressAsc = 'market_authorizedAddress_ASC',
+  MarketAuthorizedAddressAscNullsFirst = 'market_authorizedAddress_ASC_NULLS_FIRST',
   MarketAuthorizedAddressDesc = 'market_authorizedAddress_DESC',
+  MarketAuthorizedAddressDescNullsLast = 'market_authorizedAddress_DESC_NULLS_LAST',
   MarketBaseAssetAsc = 'market_baseAsset_ASC',
+  MarketBaseAssetAscNullsFirst = 'market_baseAsset_ASC_NULLS_FIRST',
   MarketBaseAssetDesc = 'market_baseAsset_DESC',
+  MarketBaseAssetDescNullsLast = 'market_baseAsset_DESC_NULLS_LAST',
+  MarketCategoryNamesAsc = 'market_categoryNames_ASC',
+  MarketCategoryNamesAscNullsFirst = 'market_categoryNames_ASC_NULLS_FIRST',
+  MarketCategoryNamesDesc = 'market_categoryNames_DESC',
+  MarketCategoryNamesDescNullsLast = 'market_categoryNames_DESC_NULLS_LAST',
   MarketCreationAsc = 'market_creation_ASC',
+  MarketCreationAscNullsFirst = 'market_creation_ASC_NULLS_FIRST',
   MarketCreationDesc = 'market_creation_DESC',
+  MarketCreationDescNullsLast = 'market_creation_DESC_NULLS_LAST',
   MarketCreatorFeeAsc = 'market_creatorFee_ASC',
+  MarketCreatorFeeAscNullsFirst = 'market_creatorFee_ASC_NULLS_FIRST',
   MarketCreatorFeeDesc = 'market_creatorFee_DESC',
+  MarketCreatorFeeDescNullsLast = 'market_creatorFee_DESC_NULLS_LAST',
   MarketCreatorAsc = 'market_creator_ASC',
+  MarketCreatorAscNullsFirst = 'market_creator_ASC_NULLS_FIRST',
   MarketCreatorDesc = 'market_creator_DESC',
+  MarketCreatorDescNullsLast = 'market_creator_DESC_NULLS_LAST',
   MarketDescriptionAsc = 'market_description_ASC',
+  MarketDescriptionAscNullsFirst = 'market_description_ASC_NULLS_FIRST',
   MarketDescriptionDesc = 'market_description_DESC',
+  MarketDescriptionDescNullsLast = 'market_description_DESC_NULLS_LAST',
   MarketDisputeMechanismAsc = 'market_disputeMechanism_ASC',
+  MarketDisputeMechanismAscNullsFirst = 'market_disputeMechanism_ASC_NULLS_FIRST',
   MarketDisputeMechanismDesc = 'market_disputeMechanism_DESC',
+  MarketDisputeMechanismDescNullsLast = 'market_disputeMechanism_DESC_NULLS_LAST',
   MarketHasValidMetaCategoriesAsc = 'market_hasValidMetaCategories_ASC',
+  MarketHasValidMetaCategoriesAscNullsFirst = 'market_hasValidMetaCategories_ASC_NULLS_FIRST',
   MarketHasValidMetaCategoriesDesc = 'market_hasValidMetaCategories_DESC',
+  MarketHasValidMetaCategoriesDescNullsLast = 'market_hasValidMetaCategories_DESC_NULLS_LAST',
   MarketIdAsc = 'market_id_ASC',
+  MarketIdAscNullsFirst = 'market_id_ASC_NULLS_FIRST',
   MarketIdDesc = 'market_id_DESC',
+  MarketIdDescNullsLast = 'market_id_DESC_NULLS_LAST',
   MarketImgAsc = 'market_img_ASC',
+  MarketImgAscNullsFirst = 'market_img_ASC_NULLS_FIRST',
   MarketImgDesc = 'market_img_DESC',
+  MarketImgDescNullsLast = 'market_img_DESC_NULLS_LAST',
   MarketMarketIdAsc = 'market_marketId_ASC',
+  MarketMarketIdAscNullsFirst = 'market_marketId_ASC_NULLS_FIRST',
   MarketMarketIdDesc = 'market_marketId_DESC',
+  MarketMarketIdDescNullsLast = 'market_marketId_DESC_NULLS_LAST',
   MarketMetadataAsc = 'market_metadata_ASC',
+  MarketMetadataAscNullsFirst = 'market_metadata_ASC_NULLS_FIRST',
   MarketMetadataDesc = 'market_metadata_DESC',
+  MarketMetadataDescNullsLast = 'market_metadata_DESC_NULLS_LAST',
   MarketOracleAsc = 'market_oracle_ASC',
+  MarketOracleAscNullsFirst = 'market_oracle_ASC_NULLS_FIRST',
   MarketOracleDesc = 'market_oracle_DESC',
+  MarketOracleDescNullsLast = 'market_oracle_DESC_NULLS_LAST',
   MarketQuestionAsc = 'market_question_ASC',
+  MarketQuestionAscNullsFirst = 'market_question_ASC_NULLS_FIRST',
   MarketQuestionDesc = 'market_question_DESC',
+  MarketQuestionDescNullsLast = 'market_question_DESC_NULLS_LAST',
   MarketRejectReasonAsc = 'market_rejectReason_ASC',
+  MarketRejectReasonAscNullsFirst = 'market_rejectReason_ASC_NULLS_FIRST',
   MarketRejectReasonDesc = 'market_rejectReason_DESC',
+  MarketRejectReasonDescNullsLast = 'market_rejectReason_DESC_NULLS_LAST',
   MarketResolvedOutcomeAsc = 'market_resolvedOutcome_ASC',
+  MarketResolvedOutcomeAscNullsFirst = 'market_resolvedOutcome_ASC_NULLS_FIRST',
   MarketResolvedOutcomeDesc = 'market_resolvedOutcome_DESC',
+  MarketResolvedOutcomeDescNullsLast = 'market_resolvedOutcome_DESC_NULLS_LAST',
   MarketScalarTypeAsc = 'market_scalarType_ASC',
+  MarketScalarTypeAscNullsFirst = 'market_scalarType_ASC_NULLS_FIRST',
   MarketScalarTypeDesc = 'market_scalarType_DESC',
+  MarketScalarTypeDescNullsLast = 'market_scalarType_DESC_NULLS_LAST',
   MarketScoringRuleAsc = 'market_scoringRule_ASC',
+  MarketScoringRuleAscNullsFirst = 'market_scoringRule_ASC_NULLS_FIRST',
   MarketScoringRuleDesc = 'market_scoringRule_DESC',
+  MarketScoringRuleDescNullsLast = 'market_scoringRule_DESC_NULLS_LAST',
   MarketSlugAsc = 'market_slug_ASC',
+  MarketSlugAscNullsFirst = 'market_slug_ASC_NULLS_FIRST',
   MarketSlugDesc = 'market_slug_DESC',
+  MarketSlugDescNullsLast = 'market_slug_DESC_NULLS_LAST',
   MarketStatusAsc = 'market_status_ASC',
+  MarketStatusAscNullsFirst = 'market_status_ASC_NULLS_FIRST',
   MarketStatusDesc = 'market_status_DESC',
+  MarketStatusDescNullsLast = 'market_status_DESC_NULLS_LAST',
   OutcomeCategoricalAsc = 'outcome_categorical_ASC',
+  OutcomeCategoricalAscNullsFirst = 'outcome_categorical_ASC_NULLS_FIRST',
   OutcomeCategoricalDesc = 'outcome_categorical_DESC',
+  OutcomeCategoricalDescNullsLast = 'outcome_categorical_DESC_NULLS_LAST',
   OutcomeScalarAsc = 'outcome_scalar_ASC',
+  OutcomeScalarAscNullsFirst = 'outcome_scalar_ASC_NULLS_FIRST',
   OutcomeScalarDesc = 'outcome_scalar_DESC',
+  OutcomeScalarDescNullsLast = 'outcome_scalar_DESC_NULLS_LAST',
   ResolvedOutcomeAsc = 'resolvedOutcome_ASC',
+  ResolvedOutcomeAscNullsFirst = 'resolvedOutcome_ASC_NULLS_FIRST',
   ResolvedOutcomeDesc = 'resolvedOutcome_DESC',
+  ResolvedOutcomeDescNullsLast = 'resolvedOutcome_DESC_NULLS_LAST',
   StatusAsc = 'status_ASC',
+  StatusAscNullsFirst = 'status_ASC_NULLS_FIRST',
   StatusDesc = 'status_DESC',
+  StatusDescNullsLast = 'status_DESC_NULLS_LAST',
   TimestampAsc = 'timestamp_ASC',
-  TimestampDesc = 'timestamp_DESC'
+  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
+  TimestampDesc = 'timestamp_DESC',
+  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
 }
 
 export type HistoricalMarketWhereInput = {
@@ -1052,21 +1249,37 @@ export type HistoricalPoolEdge = {
 
 export enum HistoricalPoolOrderByInput {
   BlockNumberAsc = 'blockNumber_ASC',
+  BlockNumberAscNullsFirst = 'blockNumber_ASC_NULLS_FIRST',
   BlockNumberDesc = 'blockNumber_DESC',
+  BlockNumberDescNullsLast = 'blockNumber_DESC_NULLS_LAST',
   DVolumeAsc = 'dVolume_ASC',
+  DVolumeAscNullsFirst = 'dVolume_ASC_NULLS_FIRST',
   DVolumeDesc = 'dVolume_DESC',
+  DVolumeDescNullsLast = 'dVolume_DESC_NULLS_LAST',
   EventAsc = 'event_ASC',
+  EventAscNullsFirst = 'event_ASC_NULLS_FIRST',
   EventDesc = 'event_DESC',
+  EventDescNullsLast = 'event_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   PoolIdAsc = 'poolId_ASC',
+  PoolIdAscNullsFirst = 'poolId_ASC_NULLS_FIRST',
   PoolIdDesc = 'poolId_DESC',
+  PoolIdDescNullsLast = 'poolId_DESC_NULLS_LAST',
   StatusAsc = 'status_ASC',
+  StatusAscNullsFirst = 'status_ASC_NULLS_FIRST',
   StatusDesc = 'status_DESC',
+  StatusDescNullsLast = 'status_DESC_NULLS_LAST',
   TimestampAsc = 'timestamp_ASC',
+  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
   TimestampDesc = 'timestamp_DESC',
+  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
   VolumeAsc = 'volume_ASC',
-  VolumeDesc = 'volume_DESC'
+  VolumeAscNullsFirst = 'volume_ASC_NULLS_FIRST',
+  VolumeDesc = 'volume_DESC',
+  VolumeDescNullsLast = 'volume_DESC_NULLS_LAST'
 }
 
 export type HistoricalPoolWhereInput = {
@@ -1198,27 +1411,49 @@ export type HistoricalSwapEdge = {
 
 export enum HistoricalSwapOrderByInput {
   AccountIdAsc = 'accountId_ASC',
+  AccountIdAscNullsFirst = 'accountId_ASC_NULLS_FIRST',
   AccountIdDesc = 'accountId_DESC',
+  AccountIdDescNullsLast = 'accountId_DESC_NULLS_LAST',
   AssetAmountInAsc = 'assetAmountIn_ASC',
+  AssetAmountInAscNullsFirst = 'assetAmountIn_ASC_NULLS_FIRST',
   AssetAmountInDesc = 'assetAmountIn_DESC',
+  AssetAmountInDescNullsLast = 'assetAmountIn_DESC_NULLS_LAST',
   AssetAmountOutAsc = 'assetAmountOut_ASC',
+  AssetAmountOutAscNullsFirst = 'assetAmountOut_ASC_NULLS_FIRST',
   AssetAmountOutDesc = 'assetAmountOut_DESC',
+  AssetAmountOutDescNullsLast = 'assetAmountOut_DESC_NULLS_LAST',
   AssetInAsc = 'assetIn_ASC',
+  AssetInAscNullsFirst = 'assetIn_ASC_NULLS_FIRST',
   AssetInDesc = 'assetIn_DESC',
+  AssetInDescNullsLast = 'assetIn_DESC_NULLS_LAST',
   AssetOutAsc = 'assetOut_ASC',
+  AssetOutAscNullsFirst = 'assetOut_ASC_NULLS_FIRST',
   AssetOutDesc = 'assetOut_DESC',
+  AssetOutDescNullsLast = 'assetOut_DESC_NULLS_LAST',
   BlockNumberAsc = 'blockNumber_ASC',
+  BlockNumberAscNullsFirst = 'blockNumber_ASC_NULLS_FIRST',
   BlockNumberDesc = 'blockNumber_DESC',
+  BlockNumberDescNullsLast = 'blockNumber_DESC_NULLS_LAST',
   EventAsc = 'event_ASC',
+  EventAscNullsFirst = 'event_ASC_NULLS_FIRST',
   EventDesc = 'event_DESC',
+  EventDescNullsLast = 'event_DESC_NULLS_LAST',
   ExtrinsicHashAsc = 'extrinsic_hash_ASC',
+  ExtrinsicHashAscNullsFirst = 'extrinsic_hash_ASC_NULLS_FIRST',
   ExtrinsicHashDesc = 'extrinsic_hash_DESC',
+  ExtrinsicHashDescNullsLast = 'extrinsic_hash_DESC_NULLS_LAST',
   ExtrinsicNameAsc = 'extrinsic_name_ASC',
+  ExtrinsicNameAscNullsFirst = 'extrinsic_name_ASC_NULLS_FIRST',
   ExtrinsicNameDesc = 'extrinsic_name_DESC',
+  ExtrinsicNameDescNullsLast = 'extrinsic_name_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   TimestampAsc = 'timestamp_ASC',
-  TimestampDesc = 'timestamp_DESC'
+  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
+  TimestampDesc = 'timestamp_DESC',
+  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
 }
 
 export type HistoricalSwapWhereInput = {
@@ -1419,6 +1654,8 @@ export type Market = {
   bonds?: Maybe<MarketBonds>;
   /** Share details */
   categories?: Maybe<Array<CategoryMetadata>>;
+  /** Name of all categories glued together */
+  categoryNames?: Maybe<Scalars['String']>;
   /** Can be `Permissionless` or `Advised` */
   creation: MarketCreation;
   /** Account address of the market creator */
@@ -1613,9 +1850,11 @@ export enum MarketEvent {
   MarketDestroyed = 'MarketDestroyed',
   MarketDisputed = 'MarketDisputed',
   MarketExpired = 'MarketExpired',
+  MarketInsufficientSubsidy = 'MarketInsufficientSubsidy',
   MarketRejected = 'MarketRejected',
   MarketReported = 'MarketReported',
   MarketResolved = 'MarketResolved',
+  MarketStartedWithSubsidy = 'MarketStartedWithSubsidy',
   PoolDeployed = 'PoolDeployed'
 }
 
@@ -1628,97 +1867,193 @@ export type MarketMetadata = {
 
 export enum MarketOrderByInput {
   AuthorizedAddressAsc = 'authorizedAddress_ASC',
+  AuthorizedAddressAscNullsFirst = 'authorizedAddress_ASC_NULLS_FIRST',
   AuthorizedAddressDesc = 'authorizedAddress_DESC',
+  AuthorizedAddressDescNullsLast = 'authorizedAddress_DESC_NULLS_LAST',
   BaseAssetAsc = 'baseAsset_ASC',
+  BaseAssetAscNullsFirst = 'baseAsset_ASC_NULLS_FIRST',
   BaseAssetDesc = 'baseAsset_DESC',
+  BaseAssetDescNullsLast = 'baseAsset_DESC_NULLS_LAST',
+  CategoryNamesAsc = 'categoryNames_ASC',
+  CategoryNamesAscNullsFirst = 'categoryNames_ASC_NULLS_FIRST',
+  CategoryNamesDesc = 'categoryNames_DESC',
+  CategoryNamesDescNullsLast = 'categoryNames_DESC_NULLS_LAST',
   CreationAsc = 'creation_ASC',
+  CreationAscNullsFirst = 'creation_ASC_NULLS_FIRST',
   CreationDesc = 'creation_DESC',
+  CreationDescNullsLast = 'creation_DESC_NULLS_LAST',
   CreatorFeeAsc = 'creatorFee_ASC',
+  CreatorFeeAscNullsFirst = 'creatorFee_ASC_NULLS_FIRST',
   CreatorFeeDesc = 'creatorFee_DESC',
+  CreatorFeeDescNullsLast = 'creatorFee_DESC_NULLS_LAST',
   CreatorAsc = 'creator_ASC',
+  CreatorAscNullsFirst = 'creator_ASC_NULLS_FIRST',
   CreatorDesc = 'creator_DESC',
+  CreatorDescNullsLast = 'creator_DESC_NULLS_LAST',
   DeadlinesDisputeDurationAsc = 'deadlines_disputeDuration_ASC',
+  DeadlinesDisputeDurationAscNullsFirst = 'deadlines_disputeDuration_ASC_NULLS_FIRST',
   DeadlinesDisputeDurationDesc = 'deadlines_disputeDuration_DESC',
+  DeadlinesDisputeDurationDescNullsLast = 'deadlines_disputeDuration_DESC_NULLS_LAST',
   DeadlinesGracePeriodAsc = 'deadlines_gracePeriod_ASC',
+  DeadlinesGracePeriodAscNullsFirst = 'deadlines_gracePeriod_ASC_NULLS_FIRST',
   DeadlinesGracePeriodDesc = 'deadlines_gracePeriod_DESC',
+  DeadlinesGracePeriodDescNullsLast = 'deadlines_gracePeriod_DESC_NULLS_LAST',
   DeadlinesOracleDurationAsc = 'deadlines_oracleDuration_ASC',
+  DeadlinesOracleDurationAscNullsFirst = 'deadlines_oracleDuration_ASC_NULLS_FIRST',
   DeadlinesOracleDurationDesc = 'deadlines_oracleDuration_DESC',
+  DeadlinesOracleDurationDescNullsLast = 'deadlines_oracleDuration_DESC_NULLS_LAST',
   DescriptionAsc = 'description_ASC',
+  DescriptionAscNullsFirst = 'description_ASC_NULLS_FIRST',
   DescriptionDesc = 'description_DESC',
+  DescriptionDescNullsLast = 'description_DESC_NULLS_LAST',
   DisputeMechanismAsc = 'disputeMechanism_ASC',
+  DisputeMechanismAscNullsFirst = 'disputeMechanism_ASC_NULLS_FIRST',
   DisputeMechanismDesc = 'disputeMechanism_DESC',
+  DisputeMechanismDescNullsLast = 'disputeMechanism_DESC_NULLS_LAST',
   HasValidMetaCategoriesAsc = 'hasValidMetaCategories_ASC',
+  HasValidMetaCategoriesAscNullsFirst = 'hasValidMetaCategories_ASC_NULLS_FIRST',
   HasValidMetaCategoriesDesc = 'hasValidMetaCategories_DESC',
+  HasValidMetaCategoriesDescNullsLast = 'hasValidMetaCategories_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   ImgAsc = 'img_ASC',
+  ImgAscNullsFirst = 'img_ASC_NULLS_FIRST',
   ImgDesc = 'img_DESC',
+  ImgDescNullsLast = 'img_DESC_NULLS_LAST',
   MarketIdAsc = 'marketId_ASC',
+  MarketIdAscNullsFirst = 'marketId_ASC_NULLS_FIRST',
   MarketIdDesc = 'marketId_DESC',
+  MarketIdDescNullsLast = 'marketId_DESC_NULLS_LAST',
   MarketTypeCategoricalAsc = 'marketType_categorical_ASC',
+  MarketTypeCategoricalAscNullsFirst = 'marketType_categorical_ASC_NULLS_FIRST',
   MarketTypeCategoricalDesc = 'marketType_categorical_DESC',
+  MarketTypeCategoricalDescNullsLast = 'marketType_categorical_DESC_NULLS_LAST',
   MetadataAsc = 'metadata_ASC',
+  MetadataAscNullsFirst = 'metadata_ASC_NULLS_FIRST',
   MetadataDesc = 'metadata_DESC',
+  MetadataDescNullsLast = 'metadata_DESC_NULLS_LAST',
   NeoPoolCollateralAsc = 'neoPool_collateral_ASC',
+  NeoPoolCollateralAscNullsFirst = 'neoPool_collateral_ASC_NULLS_FIRST',
   NeoPoolCollateralDesc = 'neoPool_collateral_DESC',
+  NeoPoolCollateralDescNullsLast = 'neoPool_collateral_DESC_NULLS_LAST',
   NeoPoolCreatedAtAsc = 'neoPool_createdAt_ASC',
+  NeoPoolCreatedAtAscNullsFirst = 'neoPool_createdAt_ASC_NULLS_FIRST',
   NeoPoolCreatedAtDesc = 'neoPool_createdAt_DESC',
+  NeoPoolCreatedAtDescNullsLast = 'neoPool_createdAt_DESC_NULLS_LAST',
   NeoPoolIdAsc = 'neoPool_id_ASC',
+  NeoPoolIdAscNullsFirst = 'neoPool_id_ASC_NULLS_FIRST',
   NeoPoolIdDesc = 'neoPool_id_DESC',
+  NeoPoolIdDescNullsLast = 'neoPool_id_DESC_NULLS_LAST',
   NeoPoolLiquidityParameterAsc = 'neoPool_liquidityParameter_ASC',
+  NeoPoolLiquidityParameterAscNullsFirst = 'neoPool_liquidityParameter_ASC_NULLS_FIRST',
   NeoPoolLiquidityParameterDesc = 'neoPool_liquidityParameter_DESC',
+  NeoPoolLiquidityParameterDescNullsLast = 'neoPool_liquidityParameter_DESC_NULLS_LAST',
   NeoPoolMarketIdAsc = 'neoPool_marketId_ASC',
+  NeoPoolMarketIdAscNullsFirst = 'neoPool_marketId_ASC_NULLS_FIRST',
   NeoPoolMarketIdDesc = 'neoPool_marketId_DESC',
+  NeoPoolMarketIdDescNullsLast = 'neoPool_marketId_DESC_NULLS_LAST',
   NeoPoolPoolIdAsc = 'neoPool_poolId_ASC',
+  NeoPoolPoolIdAscNullsFirst = 'neoPool_poolId_ASC_NULLS_FIRST',
   NeoPoolPoolIdDesc = 'neoPool_poolId_DESC',
+  NeoPoolPoolIdDescNullsLast = 'neoPool_poolId_DESC_NULLS_LAST',
   NeoPoolSwapFeeAsc = 'neoPool_swapFee_ASC',
+  NeoPoolSwapFeeAscNullsFirst = 'neoPool_swapFee_ASC_NULLS_FIRST',
   NeoPoolSwapFeeDesc = 'neoPool_swapFee_DESC',
+  NeoPoolSwapFeeDescNullsLast = 'neoPool_swapFee_DESC_NULLS_LAST',
   NeoPoolVolumeAsc = 'neoPool_volume_ASC',
+  NeoPoolVolumeAscNullsFirst = 'neoPool_volume_ASC_NULLS_FIRST',
   NeoPoolVolumeDesc = 'neoPool_volume_DESC',
+  NeoPoolVolumeDescNullsLast = 'neoPool_volume_DESC_NULLS_LAST',
   OracleAsc = 'oracle_ASC',
+  OracleAscNullsFirst = 'oracle_ASC_NULLS_FIRST',
   OracleDesc = 'oracle_DESC',
+  OracleDescNullsLast = 'oracle_DESC_NULLS_LAST',
   PeriodEndAsc = 'period_end_ASC',
+  PeriodEndAscNullsFirst = 'period_end_ASC_NULLS_FIRST',
   PeriodEndDesc = 'period_end_DESC',
+  PeriodEndDescNullsLast = 'period_end_DESC_NULLS_LAST',
   PeriodStartAsc = 'period_start_ASC',
+  PeriodStartAscNullsFirst = 'period_start_ASC_NULLS_FIRST',
   PeriodStartDesc = 'period_start_DESC',
+  PeriodStartDescNullsLast = 'period_start_DESC_NULLS_LAST',
   PoolBaseAssetAsc = 'pool_baseAsset_ASC',
+  PoolBaseAssetAscNullsFirst = 'pool_baseAsset_ASC_NULLS_FIRST',
   PoolBaseAssetDesc = 'pool_baseAsset_DESC',
+  PoolBaseAssetDescNullsLast = 'pool_baseAsset_DESC_NULLS_LAST',
   PoolCreatedAtAsc = 'pool_createdAt_ASC',
+  PoolCreatedAtAscNullsFirst = 'pool_createdAt_ASC_NULLS_FIRST',
   PoolCreatedAtDesc = 'pool_createdAt_DESC',
+  PoolCreatedAtDescNullsLast = 'pool_createdAt_DESC_NULLS_LAST',
   PoolIdAsc = 'pool_id_ASC',
+  PoolIdAscNullsFirst = 'pool_id_ASC_NULLS_FIRST',
   PoolIdDesc = 'pool_id_DESC',
+  PoolIdDescNullsLast = 'pool_id_DESC_NULLS_LAST',
   PoolMarketIdAsc = 'pool_marketId_ASC',
+  PoolMarketIdAscNullsFirst = 'pool_marketId_ASC_NULLS_FIRST',
   PoolMarketIdDesc = 'pool_marketId_DESC',
+  PoolMarketIdDescNullsLast = 'pool_marketId_DESC_NULLS_LAST',
   PoolPoolIdAsc = 'pool_poolId_ASC',
+  PoolPoolIdAscNullsFirst = 'pool_poolId_ASC_NULLS_FIRST',
   PoolPoolIdDesc = 'pool_poolId_DESC',
+  PoolPoolIdDescNullsLast = 'pool_poolId_DESC_NULLS_LAST',
   PoolStatusAsc = 'pool_status_ASC',
+  PoolStatusAscNullsFirst = 'pool_status_ASC_NULLS_FIRST',
   PoolStatusDesc = 'pool_status_DESC',
+  PoolStatusDescNullsLast = 'pool_status_DESC_NULLS_LAST',
   PoolSwapFeeAsc = 'pool_swapFee_ASC',
+  PoolSwapFeeAscNullsFirst = 'pool_swapFee_ASC_NULLS_FIRST',
   PoolSwapFeeDesc = 'pool_swapFee_DESC',
+  PoolSwapFeeDescNullsLast = 'pool_swapFee_DESC_NULLS_LAST',
   PoolTotalSubsidyAsc = 'pool_totalSubsidy_ASC',
+  PoolTotalSubsidyAscNullsFirst = 'pool_totalSubsidy_ASC_NULLS_FIRST',
   PoolTotalSubsidyDesc = 'pool_totalSubsidy_DESC',
+  PoolTotalSubsidyDescNullsLast = 'pool_totalSubsidy_DESC_NULLS_LAST',
   PoolTotalWeightAsc = 'pool_totalWeight_ASC',
+  PoolTotalWeightAscNullsFirst = 'pool_totalWeight_ASC_NULLS_FIRST',
   PoolTotalWeightDesc = 'pool_totalWeight_DESC',
+  PoolTotalWeightDescNullsLast = 'pool_totalWeight_DESC_NULLS_LAST',
   PoolVolumeAsc = 'pool_volume_ASC',
+  PoolVolumeAscNullsFirst = 'pool_volume_ASC_NULLS_FIRST',
   PoolVolumeDesc = 'pool_volume_DESC',
+  PoolVolumeDescNullsLast = 'pool_volume_DESC_NULLS_LAST',
   QuestionAsc = 'question_ASC',
+  QuestionAscNullsFirst = 'question_ASC_NULLS_FIRST',
   QuestionDesc = 'question_DESC',
+  QuestionDescNullsLast = 'question_DESC_NULLS_LAST',
   RejectReasonAsc = 'rejectReason_ASC',
+  RejectReasonAscNullsFirst = 'rejectReason_ASC_NULLS_FIRST',
   RejectReasonDesc = 'rejectReason_DESC',
+  RejectReasonDescNullsLast = 'rejectReason_DESC_NULLS_LAST',
   ReportAtAsc = 'report_at_ASC',
+  ReportAtAscNullsFirst = 'report_at_ASC_NULLS_FIRST',
   ReportAtDesc = 'report_at_DESC',
+  ReportAtDescNullsLast = 'report_at_DESC_NULLS_LAST',
   ReportByAsc = 'report_by_ASC',
+  ReportByAscNullsFirst = 'report_by_ASC_NULLS_FIRST',
   ReportByDesc = 'report_by_DESC',
+  ReportByDescNullsLast = 'report_by_DESC_NULLS_LAST',
   ResolvedOutcomeAsc = 'resolvedOutcome_ASC',
+  ResolvedOutcomeAscNullsFirst = 'resolvedOutcome_ASC_NULLS_FIRST',
   ResolvedOutcomeDesc = 'resolvedOutcome_DESC',
+  ResolvedOutcomeDescNullsLast = 'resolvedOutcome_DESC_NULLS_LAST',
   ScalarTypeAsc = 'scalarType_ASC',
+  ScalarTypeAscNullsFirst = 'scalarType_ASC_NULLS_FIRST',
   ScalarTypeDesc = 'scalarType_DESC',
+  ScalarTypeDescNullsLast = 'scalarType_DESC_NULLS_LAST',
   ScoringRuleAsc = 'scoringRule_ASC',
+  ScoringRuleAscNullsFirst = 'scoringRule_ASC_NULLS_FIRST',
   ScoringRuleDesc = 'scoringRule_DESC',
+  ScoringRuleDescNullsLast = 'scoringRule_DESC_NULLS_LAST',
   SlugAsc = 'slug_ASC',
+  SlugAscNullsFirst = 'slug_ASC_NULLS_FIRST',
   SlugDesc = 'slug_DESC',
+  SlugDescNullsLast = 'slug_DESC_NULLS_LAST',
   StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC'
+  StatusAscNullsFirst = 'status_ASC_NULLS_FIRST',
+  StatusDesc = 'status_DESC',
+  StatusDescNullsLast = 'status_DESC_NULLS_LAST'
 }
 
 /** Time period of the market */
@@ -1912,6 +2247,23 @@ export type MarketWhereInput = {
   bonds?: InputMaybe<MarketBondsWhereInput>;
   bonds_isNull?: InputMaybe<Scalars['Boolean']>;
   categories_isNull?: InputMaybe<Scalars['Boolean']>;
+  categoryNames_contains?: InputMaybe<Scalars['String']>;
+  categoryNames_containsInsensitive?: InputMaybe<Scalars['String']>;
+  categoryNames_endsWith?: InputMaybe<Scalars['String']>;
+  categoryNames_eq?: InputMaybe<Scalars['String']>;
+  categoryNames_gt?: InputMaybe<Scalars['String']>;
+  categoryNames_gte?: InputMaybe<Scalars['String']>;
+  categoryNames_in?: InputMaybe<Array<Scalars['String']>>;
+  categoryNames_isNull?: InputMaybe<Scalars['Boolean']>;
+  categoryNames_lt?: InputMaybe<Scalars['String']>;
+  categoryNames_lte?: InputMaybe<Scalars['String']>;
+  categoryNames_not_contains?: InputMaybe<Scalars['String']>;
+  categoryNames_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  categoryNames_not_endsWith?: InputMaybe<Scalars['String']>;
+  categoryNames_not_eq?: InputMaybe<Scalars['String']>;
+  categoryNames_not_in?: InputMaybe<Array<Scalars['String']>>;
+  categoryNames_not_startsWith?: InputMaybe<Scalars['String']>;
+  categoryNames_startsWith?: InputMaybe<Scalars['String']>;
   creation_eq?: InputMaybe<MarketCreation>;
   creation_in?: InputMaybe<Array<MarketCreation>>;
   creation_isNull?: InputMaybe<Scalars['Boolean']>;
@@ -2193,33 +2545,61 @@ export type NeoPoolEdge = {
 
 export enum NeoPoolOrderByInput {
   AccountAccountIdAsc = 'account_accountId_ASC',
+  AccountAccountIdAscNullsFirst = 'account_accountId_ASC_NULLS_FIRST',
   AccountAccountIdDesc = 'account_accountId_DESC',
+  AccountAccountIdDescNullsLast = 'account_accountId_DESC_NULLS_LAST',
   AccountIdAsc = 'account_id_ASC',
+  AccountIdAscNullsFirst = 'account_id_ASC_NULLS_FIRST',
   AccountIdDesc = 'account_id_DESC',
+  AccountIdDescNullsLast = 'account_id_DESC_NULLS_LAST',
   AccountMarketIdAsc = 'account_marketId_ASC',
+  AccountMarketIdAscNullsFirst = 'account_marketId_ASC_NULLS_FIRST',
   AccountMarketIdDesc = 'account_marketId_DESC',
+  AccountMarketIdDescNullsLast = 'account_marketId_DESC_NULLS_LAST',
   CollateralAsc = 'collateral_ASC',
+  CollateralAscNullsFirst = 'collateral_ASC_NULLS_FIRST',
   CollateralDesc = 'collateral_DESC',
+  CollateralDescNullsLast = 'collateral_DESC_NULLS_LAST',
   CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtAscNullsFirst = 'createdAt_ASC_NULLS_FIRST',
   CreatedAtDesc = 'createdAt_DESC',
+  CreatedAtDescNullsLast = 'createdAt_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   LiquidityParameterAsc = 'liquidityParameter_ASC',
+  LiquidityParameterAscNullsFirst = 'liquidityParameter_ASC_NULLS_FIRST',
   LiquidityParameterDesc = 'liquidityParameter_DESC',
+  LiquidityParameterDescNullsLast = 'liquidityParameter_DESC_NULLS_LAST',
   LiquiditySharesManagerFeesAsc = 'liquiditySharesManager_fees_ASC',
+  LiquiditySharesManagerFeesAscNullsFirst = 'liquiditySharesManager_fees_ASC_NULLS_FIRST',
   LiquiditySharesManagerFeesDesc = 'liquiditySharesManager_fees_DESC',
+  LiquiditySharesManagerFeesDescNullsLast = 'liquiditySharesManager_fees_DESC_NULLS_LAST',
   LiquiditySharesManagerOwnerAsc = 'liquiditySharesManager_owner_ASC',
+  LiquiditySharesManagerOwnerAscNullsFirst = 'liquiditySharesManager_owner_ASC_NULLS_FIRST',
   LiquiditySharesManagerOwnerDesc = 'liquiditySharesManager_owner_DESC',
+  LiquiditySharesManagerOwnerDescNullsLast = 'liquiditySharesManager_owner_DESC_NULLS_LAST',
   LiquiditySharesManagerTotalSharesAsc = 'liquiditySharesManager_totalShares_ASC',
+  LiquiditySharesManagerTotalSharesAscNullsFirst = 'liquiditySharesManager_totalShares_ASC_NULLS_FIRST',
   LiquiditySharesManagerTotalSharesDesc = 'liquiditySharesManager_totalShares_DESC',
+  LiquiditySharesManagerTotalSharesDescNullsLast = 'liquiditySharesManager_totalShares_DESC_NULLS_LAST',
   MarketIdAsc = 'marketId_ASC',
+  MarketIdAscNullsFirst = 'marketId_ASC_NULLS_FIRST',
   MarketIdDesc = 'marketId_DESC',
+  MarketIdDescNullsLast = 'marketId_DESC_NULLS_LAST',
   PoolIdAsc = 'poolId_ASC',
+  PoolIdAscNullsFirst = 'poolId_ASC_NULLS_FIRST',
   PoolIdDesc = 'poolId_DESC',
+  PoolIdDescNullsLast = 'poolId_DESC_NULLS_LAST',
   SwapFeeAsc = 'swapFee_ASC',
+  SwapFeeAscNullsFirst = 'swapFee_ASC_NULLS_FIRST',
   SwapFeeDesc = 'swapFee_DESC',
+  SwapFeeDescNullsLast = 'swapFee_DESC_NULLS_LAST',
   VolumeAsc = 'volume_ASC',
-  VolumeDesc = 'volume_DESC'
+  VolumeAscNullsFirst = 'volume_ASC_NULLS_FIRST',
+  VolumeDesc = 'volume_DESC',
+  VolumeDescNullsLast = 'volume_DESC_NULLS_LAST'
 }
 
 export type NeoPoolWhereInput = {
@@ -2382,7 +2762,7 @@ export type Pool = {
   /** List of assets connected to the pool */
   assets: Array<Asset>;
   /** The base asset in the market swap pool (usually a currency) */
-  baseAsset: Scalars['String'];
+  baseAsset?: Maybe<Scalars['String']>;
   /** Timestamp of pool creation */
   createdAt: Scalars['DateTime'];
   id: Scalars['String'];
@@ -2397,7 +2777,7 @@ export type Pool = {
   /** Subsidy gathered for the market */
   totalSubsidy?: Maybe<Scalars['String']>;
   /** Sum of `weights` */
-  totalWeight: Scalars['String'];
+  totalWeight?: Maybe<Scalars['String']>;
   /** Total amount of ZTG that has moved through a market's liquidity pool */
   volume: Scalars['BigInt'];
   /** List of lengths for each asset */
@@ -2421,31 +2801,57 @@ export type PoolEdge = {
 
 export enum PoolOrderByInput {
   AccountAccountIdAsc = 'account_accountId_ASC',
+  AccountAccountIdAscNullsFirst = 'account_accountId_ASC_NULLS_FIRST',
   AccountAccountIdDesc = 'account_accountId_DESC',
+  AccountAccountIdDescNullsLast = 'account_accountId_DESC_NULLS_LAST',
   AccountIdAsc = 'account_id_ASC',
+  AccountIdAscNullsFirst = 'account_id_ASC_NULLS_FIRST',
   AccountIdDesc = 'account_id_DESC',
+  AccountIdDescNullsLast = 'account_id_DESC_NULLS_LAST',
   AccountMarketIdAsc = 'account_marketId_ASC',
+  AccountMarketIdAscNullsFirst = 'account_marketId_ASC_NULLS_FIRST',
   AccountMarketIdDesc = 'account_marketId_DESC',
+  AccountMarketIdDescNullsLast = 'account_marketId_DESC_NULLS_LAST',
   BaseAssetAsc = 'baseAsset_ASC',
+  BaseAssetAscNullsFirst = 'baseAsset_ASC_NULLS_FIRST',
   BaseAssetDesc = 'baseAsset_DESC',
+  BaseAssetDescNullsLast = 'baseAsset_DESC_NULLS_LAST',
   CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtAscNullsFirst = 'createdAt_ASC_NULLS_FIRST',
   CreatedAtDesc = 'createdAt_DESC',
+  CreatedAtDescNullsLast = 'createdAt_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
   MarketIdAsc = 'marketId_ASC',
+  MarketIdAscNullsFirst = 'marketId_ASC_NULLS_FIRST',
   MarketIdDesc = 'marketId_DESC',
+  MarketIdDescNullsLast = 'marketId_DESC_NULLS_LAST',
   PoolIdAsc = 'poolId_ASC',
+  PoolIdAscNullsFirst = 'poolId_ASC_NULLS_FIRST',
   PoolIdDesc = 'poolId_DESC',
+  PoolIdDescNullsLast = 'poolId_DESC_NULLS_LAST',
   StatusAsc = 'status_ASC',
+  StatusAscNullsFirst = 'status_ASC_NULLS_FIRST',
   StatusDesc = 'status_DESC',
+  StatusDescNullsLast = 'status_DESC_NULLS_LAST',
   SwapFeeAsc = 'swapFee_ASC',
+  SwapFeeAscNullsFirst = 'swapFee_ASC_NULLS_FIRST',
   SwapFeeDesc = 'swapFee_DESC',
+  SwapFeeDescNullsLast = 'swapFee_DESC_NULLS_LAST',
   TotalSubsidyAsc = 'totalSubsidy_ASC',
+  TotalSubsidyAscNullsFirst = 'totalSubsidy_ASC_NULLS_FIRST',
   TotalSubsidyDesc = 'totalSubsidy_DESC',
+  TotalSubsidyDescNullsLast = 'totalSubsidy_DESC_NULLS_LAST',
   TotalWeightAsc = 'totalWeight_ASC',
+  TotalWeightAscNullsFirst = 'totalWeight_ASC_NULLS_FIRST',
   TotalWeightDesc = 'totalWeight_DESC',
+  TotalWeightDescNullsLast = 'totalWeight_DESC_NULLS_LAST',
   VolumeAsc = 'volume_ASC',
-  VolumeDesc = 'volume_DESC'
+  VolumeAscNullsFirst = 'volume_ASC_NULLS_FIRST',
+  VolumeDesc = 'volume_DESC',
+  VolumeDescNullsLast = 'volume_DESC_NULLS_LAST'
 }
 
 /** Pools' status options */
@@ -2632,7 +3038,7 @@ export type Query = {
   assetPrice: Array<AssetPrice>;
   assets: Array<Asset>;
   assetsConnection: AssetsConnection;
-  balanceInfo?: Maybe<BalanceInfo>;
+  balanceInfo: BalanceInfo;
   historicalAccountBalanceById?: Maybe<HistoricalAccountBalance>;
   /** @deprecated Use historicalAccountBalanceById */
   historicalAccountBalanceByUniqueInput?: Maybe<HistoricalAccountBalance>;
@@ -2678,7 +3084,7 @@ export type Query = {
   poolsConnection: PoolsConnection;
   priceHistory?: Maybe<Array<PriceHistory>>;
   squidStatus?: Maybe<SquidStatus>;
-  stats: Array<Stats>;
+  stats: Stats;
 };
 
 
@@ -2768,8 +3174,9 @@ export type QueryAssetsConnectionArgs = {
 
 export type QueryBalanceInfoArgs = {
   accountId: Scalars['String'];
-  assetId: AssetKindValue;
-  blockNumber: Scalars['String'];
+  assetId?: InputMaybe<AssetKindValue>;
+  blockNumber?: InputMaybe<Scalars['String']>;
+  event?: InputMaybe<BalanceInfoEvent>;
 };
 
 
@@ -3023,6 +3430,7 @@ export type SquidStatus = {
 export type Stats = {
   __typename?: 'Stats';
   totalLiquidity: Scalars['BigInt'];
+  totalMintedInCourt: Scalars['BigInt'];
   totalVolume: Scalars['BigInt'];
 };
 
@@ -3248,9 +3656,9 @@ export type AssetsQueryVariables = Exact<{
 }>;
 
 
-export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: 'Asset', id: string, assetId: string, amountInPool: any, price: number, market: { __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: MarketCreation, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: DisputeMechanism, hasValidMetaCategories: boolean, id: string, img?: string | null, marketId: number, metadata: string, oracle: string, outcomeAssets: Array<string>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: ScoringRule, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, bonds?: { __typename?: 'MarketBonds', creation: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string }, dispute?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null }> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, neoPool?: { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: { __typename?: 'LiquiditySharesManager', fees: any, owner: string, totalShares: any } } | null, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null }, pool?: { __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null }> };
+export type AssetsQuery = { __typename?: 'Query', assets: Array<{ __typename?: 'Asset', id: string, assetId: string, amountInPool: any, price: number, market: { __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: MarketCreation, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: DisputeMechanism, hasValidMetaCategories: boolean, id: string, img?: string | null, marketId: number, metadata: string, oracle: string, outcomeAssets: Array<string>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: ScoringRule, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, bonds?: { __typename?: 'MarketBonds', creation: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string }, dispute?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null }> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, neoPool?: { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: { __typename?: 'LiquiditySharesManager', fees: any, owner: string, totalShares: any } } | null, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', baseAsset?: string | null, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight?: string | null, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null }, pool?: { __typename?: 'Pool', baseAsset?: string | null, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight?: string | null, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null }> };
 
-export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, amountInPool: any, price: number, market: { __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: MarketCreation, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: DisputeMechanism, hasValidMetaCategories: boolean, id: string, img?: string | null, marketId: number, metadata: string, oracle: string, outcomeAssets: Array<string>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: ScoringRule, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, bonds?: { __typename?: 'MarketBonds', creation: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string }, dispute?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null }> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, neoPool?: { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: { __typename?: 'LiquiditySharesManager', fees: any, owner: string, totalShares: any } } | null, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null }, pool?: { __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null };
+export type FullAssetFragment = { __typename?: 'Asset', id: string, assetId: string, amountInPool: any, price: number, market: { __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: MarketCreation, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: DisputeMechanism, hasValidMetaCategories: boolean, id: string, img?: string | null, marketId: number, metadata: string, oracle: string, outcomeAssets: Array<string>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: ScoringRule, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, bonds?: { __typename?: 'MarketBonds', creation: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string }, dispute?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null }> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, neoPool?: { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: { __typename?: 'LiquiditySharesManager', fees: any, owner: string, totalShares: any } } | null, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', baseAsset?: string | null, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight?: string | null, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null }, pool?: { __typename?: 'Pool', baseAsset?: string | null, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight?: string | null, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null };
 
 export type HistoricalAccountBalancesQueryVariables = Exact<{
   where?: InputMaybe<HistoricalAccountBalanceWhereInput>;
@@ -3260,9 +3668,9 @@ export type HistoricalAccountBalancesQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalAccountBalancesQuery = { __typename?: 'Query', historicalAccountBalances: Array<{ __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null }> };
+export type HistoricalAccountBalancesQuery = { __typename?: 'Query', historicalAccountBalances: Array<{ __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null }> };
 
-export type FullHistoricalAccountBalanceFragment = { __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null };
+export type FullHistoricalAccountBalanceFragment = { __typename?: 'HistoricalAccountBalance', accountId: string, assetId: string, blockNumber: number, dBalance: any, event: string, id: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null };
 
 export type HistoricalAssetsQueryVariables = Exact<{
   where?: InputMaybe<HistoricalAssetWhereInput>;
@@ -3284,9 +3692,9 @@ export type HistoricalSwapsQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalSwapsQuery = { __typename?: 'Query', historicalSwaps: Array<{ __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null }> };
+export type HistoricalSwapsQuery = { __typename?: 'Query', historicalSwaps: Array<{ __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null }> };
 
-export type FullHistoricalSwapFragment = { __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name: string } | null };
+export type FullHistoricalSwapFragment = { __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null };
 
 export type MarketMetadataQueryVariables = Exact<{
   marketId: Array<Scalars['Int']> | Scalars['Int'];
@@ -3312,7 +3720,7 @@ export type MarketsQueryVariables = Exact<{
 }>;
 
 
-export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: MarketCreation, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: DisputeMechanism, hasValidMetaCategories: boolean, id: string, img?: string | null, marketId: number, metadata: string, oracle: string, outcomeAssets: Array<string>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: ScoringRule, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, bonds?: { __typename?: 'MarketBonds', creation: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string }, dispute?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null }> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, neoPool?: { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: { __typename?: 'LiquiditySharesManager', fees: any, owner: string, totalShares: any } } | null, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null }> };
+export type MarketsQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: MarketCreation, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: DisputeMechanism, hasValidMetaCategories: boolean, id: string, img?: string | null, marketId: number, metadata: string, oracle: string, outcomeAssets: Array<string>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: ScoringRule, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, bonds?: { __typename?: 'MarketBonds', creation: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string }, dispute?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null }> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, neoPool?: { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: { __typename?: 'LiquiditySharesManager', fees: any, owner: string, totalShares: any } } | null, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', baseAsset?: string | null, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight?: string | null, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null }> };
 
 export type MarketStatusCountQueryVariables = Exact<{
   status: MarketStatus;
@@ -3321,7 +3729,7 @@ export type MarketStatusCountQueryVariables = Exact<{
 
 export type MarketStatusCountQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string }> };
 
-export type FullMarketFragment = { __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: MarketCreation, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: DisputeMechanism, hasValidMetaCategories: boolean, id: string, img?: string | null, marketId: number, metadata: string, oracle: string, outcomeAssets: Array<string>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: ScoringRule, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, bonds?: { __typename?: 'MarketBonds', creation: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string }, dispute?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null }> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, neoPool?: { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: { __typename?: 'LiquiditySharesManager', fees: any, owner: string, totalShares: any } } | null, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null };
+export type FullMarketFragment = { __typename?: 'Market', authorizedAddress?: string | null, baseAsset: string, creation: MarketCreation, creator: string, creatorFee?: number | null, description?: string | null, disputeMechanism: DisputeMechanism, hasValidMetaCategories: boolean, id: string, img?: string | null, marketId: number, metadata: string, oracle: string, outcomeAssets: Array<string>, question?: string | null, rejectReason?: string | null, resolvedOutcome?: string | null, scalarType?: string | null, scoringRule: ScoringRule, slug?: string | null, status: MarketStatus, tags?: Array<string | null> | null, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, bonds?: { __typename?: 'MarketBonds', creation: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string }, dispute?: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } | null, oracle: { __typename?: 'MarketBond', isSettled: boolean, value: any, who: string } } | null, categories?: Array<{ __typename?: 'CategoryMetadata', color?: string | null, img?: string | null, name?: string | null, ticker?: string | null }> | null, deadlines?: { __typename?: 'MarketDeadlines', disputeDuration: any, gracePeriod: any, oracleDuration: any } | null, disputes?: Array<{ __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null> | null, marketType: { __typename?: 'MarketType', categorical?: string | null, scalar?: Array<string | null> | null }, neoPool?: { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: { __typename?: 'LiquiditySharesManager', fees: any, owner: string, totalShares: any } } | null, period: { __typename?: 'MarketPeriod', block?: Array<any | null> | null, end: any, start: any, timestamp?: Array<any | null> | null }, pool?: { __typename?: 'Pool', baseAsset?: string | null, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight?: string | null, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> } | null, report?: { __typename?: 'MarketReport', at?: number | null, by?: string | null, outcome?: { __typename?: 'OutcomeReport', categorical?: number | null, scalar?: any | null } | null } | null };
 
 export type HistoricalMarketsQueryVariables = Exact<{
   where?: InputMaybe<HistoricalMarketWhereInput>;
@@ -3358,9 +3766,9 @@ export type PoolsQueryVariables = Exact<{
 }>;
 
 
-export type PoolsQuery = { __typename?: 'Query', pools: Array<{ __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> }> };
+export type PoolsQuery = { __typename?: 'Query', pools: Array<{ __typename?: 'Pool', baseAsset?: string | null, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight?: string | null, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> }> };
 
-export type FullPoolFragment = { __typename?: 'Pool', baseAsset: string, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight: string, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> };
+export type FullPoolFragment = { __typename?: 'Pool', baseAsset?: string | null, createdAt: any, id: string, marketId: number, poolId: number, status: PoolStatus, swapFee?: string | null, totalSubsidy?: string | null, totalWeight?: string | null, volume: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, assets: Array<{ __typename?: 'Asset', amountInPool: any, assetId: string, id: string, price: number }>, weights: Array<{ __typename?: 'Weight', assetId: string, weight: any }> };
 
 export type HistoricalPoolsQueryVariables = Exact<{
   where?: InputMaybe<HistoricalPoolWhereInput>;
@@ -3380,7 +3788,7 @@ export type SquidStatusQuery = { __typename?: 'Query', squidStatus?: { __typenam
 export type StatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StatsQuery = { __typename?: 'Query', stats: Array<{ __typename?: 'Stats', totalLiquidity: any, totalVolume: any }> };
+export type StatsQuery = { __typename?: 'Query', stats: { __typename?: 'Stats', totalLiquidity: any, totalVolume: any } };
 
 export const FullAccountBalanceFragmentDoc = gql`
     fragment FullAccountBalance on AccountBalance {

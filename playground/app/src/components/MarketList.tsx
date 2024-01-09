@@ -7,7 +7,7 @@ import {
   RpcContext,
   Sdk,
 } from '@zeitgeistpm/sdk'
-import { IndexedMarket, Market } from '@zeitgeistpm/sdk/dist/model/types'
+import { Market } from '@zeitgeistpm/sdk/dist/model/types'
 import { useEffect, useState } from 'react'
 
 export const MarketList: React.FC<{ sdk: Partial<Sdk<Context>> }> = ({ sdk }) => {
