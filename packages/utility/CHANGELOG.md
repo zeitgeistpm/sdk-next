@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 2.24.2
+
+### Patch Changes
+
+- cf074b1: Fix market create proxy type
+
 ## 2.24.1
 
 ### Patch Changes

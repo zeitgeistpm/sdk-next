@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.20.2
+
+### Patch Changes
+
+- cf074b1: Fix market create proxy type
+
 ## 3.20.1
 
 ### Patch Changes

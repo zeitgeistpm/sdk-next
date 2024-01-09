@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.25.2
+
+### Patch Changes
+
+- cf074b1: Fix market create proxy type
+
 ## 2.25.1
 
 ### Patch Changes

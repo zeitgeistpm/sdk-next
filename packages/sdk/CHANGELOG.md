@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 2.49.2
+
+### Patch Changes
+
+- cf074b1: Fix market create proxy type
+- Updated dependencies [cf074b1]
+  - @zeitgeistpm/augment-api@2.25.2
+  - @zeitgeistpm/indexer@3.20.2
+  - @zeitgeistpm/utility@2.24.2
+
 ## 2.49.1
 
 ### Patch Changes
