@@ -185,7 +185,7 @@ const createExtrinsic = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   }
 
   if (params.proxy) {
-    tx = context.api.tx.proxy.proxy(params.signer.address, 'Any', tx)
+    tx = context.api.tx.proxy.proxy(params.signer.address, null, tx)
   }
 
   return tx
