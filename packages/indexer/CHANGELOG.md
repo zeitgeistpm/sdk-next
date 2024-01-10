@@ -1,5 +1,57 @@
 # @zeitgeistpm/indexer
 
+## 3.21.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
+## 3.20.2
+
+### Patch Changes
+
+- cf074b1: Fix market create proxy type
+
+## 3.20.1
+
+### Patch Changes
+
+- 25dc9b8: Bump
+
+## 3.20.0
+
+### Minor Changes
+
+- e365fde: GQL schema changes
+
+## 3.19.0
+
+### Minor Changes
+
+- 24f3fa1: GQL changes: added assetPrice query to indexer, added dispute to market schema, added volume to neoPool
+
+## 3.18.1
+
+### Patch Changes
+
+- c200603: Added .assets to FullMarketFragment
+
+## 3.18.0
+
+### Minor Changes
+
+- 5784119: Added NeoSwaps NeoPool schema to indexer.
+
+## 3.17.0
+
+### Minor Changes
+
+- 711f114: Stronger typing of ScoringRule.
+
+### Patch Changes
+
+- 6b9e853: Stronger typing of ScoringRule
+
 ## 3.16.0
 
 ### Minor Changes

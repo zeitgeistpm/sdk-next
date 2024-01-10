@@ -61,7 +61,7 @@ export default {
     }
   },
   /**
-   * Lookup18: frame_system::EventRecord<zeitgeist_runtime::RuntimeEvent, primitive_types::H256>
+   * Lookup18: frame_system::EventRecord<battery_station_runtime::RuntimeEvent, primitive_types::H256>
    **/
   FrameSystemEventRecord: {
     phase: 'FrameSystemPhase',
@@ -788,7 +788,8 @@ export default {
       CombinatorialOutcome: 'Null',
       PoolShare: 'u128',
       Ztg: 'Null',
-      ForeignAsset: 'u32'
+      ForeignAsset: 'u32',
+      ParimutuelShare: '(u128,u16)'
     }
   },
   /**
@@ -822,6 +823,10 @@ export default {
    **/
   ZrmlCourtEvent: {
     _enum: {
+      CourtOpened: {
+        marketId: 'u128',
+        courtInfo: 'ZrmlCourtCourtInfo',
+      },
       JurorJoined: {
         juror: 'AccountId32',
         stake: 'u128',
@@ -874,7 +879,24 @@ export default {
     }
   },
   /**
-   * Lookup70: zrml_court::types::VoteItem
+   * Lookup70: zrml_court::types::CourtInfo<BlockNumber, sp_core::bounded::bounded_vec::BoundedVec<zrml_court::types::AppealInfo<sp_core::crypto::AccountId32, Balance>, S>>
+   **/
+  ZrmlCourtCourtInfo: {
+    status: 'ZrmlCourtCourtStatus',
+    appeals: 'Vec<ZrmlCourtAppealInfo>',
+    roundEnds: 'ZrmlCourtRoundTiming',
+    voteItemType: 'ZrmlCourtVoteItemType'
+  },
+  /**
+   * Lookup72: zrml_court::types::AppealInfo<sp_core::crypto::AccountId32, Balance>
+   **/
+  ZrmlCourtAppealInfo: {
+    backer: 'AccountId32',
+    bond: 'u128',
+    appealedVoteItem: 'ZrmlCourtVoteItem'
+  },
+  /**
+   * Lookup73: zrml_court::types::VoteItem
    **/
   ZrmlCourtVoteItem: {
     _enum: {
@@ -883,7 +905,34 @@ export default {
     }
   },
   /**
-   * Lookup73: zrml_liquidity_mining::pallet::Event<T>
+   * Lookup75: zrml_court::types::CourtStatus
+   **/
+  ZrmlCourtCourtStatus: {
+    _enum: {
+      Open: 'Null',
+      Closed: {
+        winner: 'ZrmlCourtVoteItem',
+      },
+      Reassigned: 'Null'
+    }
+  },
+  /**
+   * Lookup76: zrml_court::types::RoundTiming<BlockNumber>
+   **/
+  ZrmlCourtRoundTiming: {
+    preVote: 'u64',
+    vote: 'u64',
+    aggregation: 'u64',
+    appeal: 'u64'
+  },
+  /**
+   * Lookup77: zrml_court::types::VoteItemType
+   **/
+  ZrmlCourtVoteItemType: {
+    _enum: ['Outcome', 'Binary']
+  },
+  /**
+   * Lookup80: zrml_liquidity_mining::pallet::Event<T>
    **/
   ZrmlLiquidityMiningEvent: {
     _enum: {
@@ -893,7 +942,7 @@ export default {
     }
   },
   /**
-   * Lookup75: zrml_simple_disputes::pallet::Event<T>
+   * Lookup82: zrml_simple_disputes::pallet::Event<T>
    **/
   ZrmlSimpleDisputesEvent: {
     _enum: {
@@ -904,7 +953,7 @@ export default {
     }
   },
   /**
-   * Lookup76: zeitgeist_primitives::market::MarketDispute<sp_core::crypto::AccountId32, BlockNumber, Balance>
+   * Lookup83: zeitgeist_primitives::market::MarketDispute<sp_core::crypto::AccountId32, BlockNumber, Balance>
    **/
   ZeitgeistPrimitivesMarketMarketDispute: {
     at: 'u64',
@@ -913,7 +962,7 @@ export default {
     bond: 'u128'
   },
   /**
-   * Lookup77: zrml_swaps::pallet::Event<T>
+   * Lookup84: zrml_swaps::pallet::Event<T>
    **/
   ZrmlSwapsEvent: {
     _enum: {
@@ -938,19 +987,19 @@ export default {
       PoolDestroyedInSubsidyPhase: '(u128,Vec<(AccountId32,u128)>)',
       SwapExactAmountIn: 'ZrmlSwapsEventsSwapEvent',
       SwapExactAmountOut: 'ZrmlSwapsEventsSwapEvent',
-      MarketCreatorFeesPaid: '(AccountId32,AccountId32,u128,ZeitgeistPrimitivesAsset)',
-      MarketCreatorFeePaymentFailed: '(AccountId32,AccountId32,u128,ZeitgeistPrimitivesAsset,SpRuntimeDispatchError)'
+      MarketCreatorFeesPaid: '(u128,AccountId32,AccountId32,u128,ZeitgeistPrimitivesAsset)',
+      MarketCreatorFeePaymentFailed: '(u128,AccountId32,AccountId32,u128,ZeitgeistPrimitivesAsset,SpRuntimeDispatchError)'
     }
   },
   /**
-   * Lookup78: zrml_swaps::events::CommonPoolEventParams<sp_core::crypto::AccountId32>
+   * Lookup85: zrml_swaps::events::CommonPoolEventParams<sp_core::crypto::AccountId32>
    **/
   ZrmlSwapsEventsCommonPoolEventParams: {
     poolId: 'u128',
     who: 'AccountId32'
   },
   /**
-   * Lookup79: zeitgeist_primitives::pool::Pool<Balance, MarketId>
+   * Lookup86: zeitgeist_primitives::pool::Pool<Balance, MarketId>
    **/
   ZeitgeistPrimitivesPool: {
     assets: 'Vec<ZeitgeistPrimitivesAsset>',
@@ -964,19 +1013,19 @@ export default {
     weights: 'Option<BTreeMap<ZeitgeistPrimitivesAsset, u128>>'
   },
   /**
-   * Lookup81: zeitgeist_primitives::pool_status::PoolStatus
+   * Lookup88: zeitgeist_primitives::pool_status::PoolStatus
    **/
   ZeitgeistPrimitivesPoolStatus: {
     _enum: ['Active', 'CollectingSubsidy', 'Closed', 'Clean', 'Initialized']
   },
   /**
-   * Lookup82: zeitgeist_primitives::pool::ScoringRule
+   * Lookup89: zeitgeist_primitives::pool::ScoringRule
    **/
   ZeitgeistPrimitivesPoolScoringRule: {
-    _enum: ['CPMM', 'RikiddoSigmoidFeeMarketEma', 'Lmsr', 'Orderbook']
+    _enum: ['CPMM', 'RikiddoSigmoidFeeMarketEma', 'Lmsr', 'Orderbook', 'Parimutuel']
   },
   /**
-   * Lookup88: zrml_swaps::events::PoolAssetsEvent<sp_core::crypto::AccountId32, zeitgeist_primitives::asset::Asset<MI>, B>
+   * Lookup95: zrml_swaps::events::PoolAssetsEvent<sp_core::crypto::AccountId32, zeitgeist_primitives::asset::Asset<MI>, B>
    **/
   ZrmlSwapsEventsPoolAssetsEvent: {
     assets: 'Vec<ZeitgeistPrimitivesAsset>',
@@ -986,7 +1035,7 @@ export default {
     poolAmount: 'u128'
   },
   /**
-   * Lookup90: zrml_swaps::events::PoolAssetEvent<sp_core::crypto::AccountId32, zeitgeist_primitives::asset::Asset<MI>, B>
+   * Lookup97: zrml_swaps::events::PoolAssetEvent<sp_core::crypto::AccountId32, zeitgeist_primitives::asset::Asset<MI>, B>
    **/
   ZrmlSwapsEventsPoolAssetEvent: {
     asset: 'ZeitgeistPrimitivesAsset',
@@ -996,7 +1045,7 @@ export default {
     poolAmount: 'u128'
   },
   /**
-   * Lookup93: zrml_swaps::events::SwapEvent<sp_core::crypto::AccountId32, zeitgeist_primitives::asset::Asset<MI>, B>
+   * Lookup100: zrml_swaps::events::SwapEvent<sp_core::crypto::AccountId32, zeitgeist_primitives::asset::Asset<MI>, B>
    **/
   ZrmlSwapsEventsSwapEvent: {
     assetAmountIn: 'u128',
@@ -1008,7 +1057,7 @@ export default {
     maxPrice: 'Option<u128>'
   },
   /**
-   * Lookup94: zrml_prediction_markets::pallet::Event<T>
+   * Lookup101: zrml_prediction_markets::pallet::Event<T>
    **/
   ZrmlPredictionMarketsEvent: {
     _enum: {
@@ -1020,7 +1069,18 @@ export default {
       MarketStartedWithSubsidy: '(u128,ZeitgeistPrimitivesMarketMarketStatus)',
       MarketInsufficientSubsidy: '(u128,ZeitgeistPrimitivesMarketMarketStatus)',
       MarketClosed: 'u128',
-      MarketDisputed: '(u128,ZeitgeistPrimitivesMarketMarketStatus)',
+      MarketEarlyCloseScheduled: {
+        marketId: 'u128',
+        newPeriod: 'ZeitgeistPrimitivesMarketMarketPeriod',
+        state: 'ZeitgeistPrimitivesMarketEarlyCloseState',
+      },
+      MarketEarlyCloseDisputed: {
+        marketId: 'u128',
+      },
+      MarketEarlyCloseRejected: {
+        marketId: 'u128',
+      },
+      MarketDisputed: '(u128,ZeitgeistPrimitivesMarketMarketStatus,AccountId32)',
       MarketExpired: 'u128',
       MarketRejected: '(u128,Bytes)',
       MarketReported: '(u128,ZeitgeistPrimitivesMarketMarketStatus,ZeitgeistPrimitivesMarketReport)',
@@ -1033,13 +1093,13 @@ export default {
     }
   },
   /**
-   * Lookup95: zeitgeist_primitives::market::MarketStatus
+   * Lookup102: zeitgeist_primitives::market::MarketStatus
    **/
   ZeitgeistPrimitivesMarketMarketStatus: {
     _enum: ['Proposed', 'Active', 'Suspended', 'Closed', 'CollectingSubsidy', 'InsufficientSubsidy', 'Reported', 'Disputed', 'Resolved']
   },
   /**
-   * Lookup96: zeitgeist_primitives::market::Market<sp_core::crypto::AccountId32, BA, BN, M, zeitgeist_primitives::asset::Asset<MI>>
+   * Lookup103: zeitgeist_primitives::market::Market<sp_core::crypto::AccountId32, BA, BN, M, zeitgeist_primitives::asset::Asset<MI>>
    **/
   ZeitgeistPrimitivesMarket: {
     baseAsset: 'ZeitgeistPrimitivesAsset',
@@ -1056,16 +1116,17 @@ export default {
     report: 'Option<ZeitgeistPrimitivesMarketReport>',
     resolvedOutcome: 'Option<ZeitgeistPrimitivesOutcomeReport>',
     disputeMechanism: 'Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>',
-    bonds: 'ZeitgeistPrimitivesMarketMarketBonds'
+    bonds: 'ZeitgeistPrimitivesMarketMarketBonds',
+    earlyClose: 'Option<ZeitgeistPrimitivesMarketEarlyClose>'
   },
   /**
-   * Lookup97: zeitgeist_primitives::market::MarketCreation
+   * Lookup104: zeitgeist_primitives::market::MarketCreation
    **/
   ZeitgeistPrimitivesMarketMarketCreation: {
     _enum: ['Permissionless', 'Advised']
   },
   /**
-   * Lookup98: zeitgeist_primitives::market::MarketType
+   * Lookup105: zeitgeist_primitives::market::MarketType
    **/
   ZeitgeistPrimitivesMarketMarketType: {
     _enum: {
@@ -1074,7 +1135,7 @@ export default {
     }
   },
   /**
-   * Lookup100: zeitgeist_primitives::market::MarketPeriod<BN, M>
+   * Lookup107: zeitgeist_primitives::market::MarketPeriod<BN, M>
    **/
   ZeitgeistPrimitivesMarketMarketPeriod: {
     _enum: {
@@ -1083,7 +1144,7 @@ export default {
     }
   },
   /**
-   * Lookup102: zeitgeist_primitives::market::Deadlines<BN>
+   * Lookup109: zeitgeist_primitives::market::Deadlines<BN>
    **/
   ZeitgeistPrimitivesMarketDeadlines: {
     gracePeriod: 'u64',
@@ -1091,7 +1152,7 @@ export default {
     disputeDuration: 'u64'
   },
   /**
-   * Lookup104: zeitgeist_primitives::market::Report<sp_core::crypto::AccountId32, BlockNumber>
+   * Lookup111: zeitgeist_primitives::market::Report<sp_core::crypto::AccountId32, BlockNumber>
    **/
   ZeitgeistPrimitivesMarketReport: {
     at: 'u64',
@@ -1099,22 +1160,24 @@ export default {
     outcome: 'ZeitgeistPrimitivesOutcomeReport'
   },
   /**
-   * Lookup107: zeitgeist_primitives::market::MarketDisputeMechanism
+   * Lookup114: zeitgeist_primitives::market::MarketDisputeMechanism
    **/
   ZeitgeistPrimitivesMarketMarketDisputeMechanism: {
     _enum: ['Authorized', 'Court', 'SimpleDisputes']
   },
   /**
-   * Lookup108: zeitgeist_primitives::market::MarketBonds<sp_core::crypto::AccountId32, BA>
+   * Lookup115: zeitgeist_primitives::market::MarketBonds<sp_core::crypto::AccountId32, BA>
    **/
   ZeitgeistPrimitivesMarketMarketBonds: {
     creation: 'Option<ZeitgeistPrimitivesMarketBond>',
     oracle: 'Option<ZeitgeistPrimitivesMarketBond>',
     outsider: 'Option<ZeitgeistPrimitivesMarketBond>',
-    dispute: 'Option<ZeitgeistPrimitivesMarketBond>'
+    dispute: 'Option<ZeitgeistPrimitivesMarketBond>',
+    closeRequest: 'Option<ZeitgeistPrimitivesMarketBond>',
+    closeDispute: 'Option<ZeitgeistPrimitivesMarketBond>'
   },
   /**
-   * Lookup110: zeitgeist_primitives::market::Bond<sp_core::crypto::AccountId32, BA>
+   * Lookup117: zeitgeist_primitives::market::Bond<sp_core::crypto::AccountId32, BA>
    **/
   ZeitgeistPrimitivesMarketBond: {
     who: 'AccountId32',
@@ -1122,7 +1185,24 @@ export default {
     isSettled: 'bool'
   },
   /**
-   * Lookup113: zrml_styx::pallet::Event<T>
+   * Lookup119: zeitgeist_primitives::market::EarlyClose<BN, M>
+   **/
+  ZeitgeistPrimitivesMarketEarlyClose: {
+    _alias: {
+      new_: 'new'
+    },
+    old: 'ZeitgeistPrimitivesMarketMarketPeriod',
+    new_: 'ZeitgeistPrimitivesMarketMarketPeriod',
+    state: 'ZeitgeistPrimitivesMarketEarlyCloseState'
+  },
+  /**
+   * Lookup120: zeitgeist_primitives::market::EarlyCloseState
+   **/
+  ZeitgeistPrimitivesMarketEarlyCloseState: {
+    _enum: ['ScheduledAsMarketCreator', 'ScheduledAsOther', 'Disputed', 'Rejected']
+  },
+  /**
+   * Lookup123: zrml_styx::pallet::Event<T>
    **/
   ZrmlStyxEvent: {
     _enum: {
@@ -1131,7 +1211,7 @@ export default {
     }
   },
   /**
-   * Lookup114: zrml_global_disputes::pallet::Event<T>
+   * Lookup124: zrml_global_disputes::pallet::Event<T>
    **/
   ZrmlGlobalDisputesEvent: {
     _enum: {
@@ -1166,7 +1246,7 @@ export default {
     }
   },
   /**
-   * Lookup115: zrml_neo_swaps::pallet::Event<T>
+   * Lookup125: zrml_neo_swaps::pallet::Event<T>
    **/
   ZrmlNeoSwapsEvent: {
     _enum: {
@@ -1210,22 +1290,24 @@ export default {
       PoolDeployed: {
         who: 'AccountId32',
         marketId: 'u128',
-        poolSharesAmount: 'u128',
-        amountsIn: 'Vec<u128>',
+        accountId: 'AccountId32',
+        reserves: 'BTreeMap<ZeitgeistPrimitivesAsset, u128>',
+        collateral: 'ZeitgeistPrimitivesAsset',
         liquidityParameter: 'u128',
+        poolSharesAmount: 'u128',
+        swapFee: 'u128',
       },
       PoolDestroyed: {
         who: 'AccountId32',
         marketId: 'u128',
-        poolSharesAmount: 'u128',
         amountsOut: 'Vec<u128>'
       }
     }
   },
   /**
-   * Lookup116: zrml_orderbook_v1::pallet::Event<T>
+   * Lookup126: zrml_orderbook::pallet::Event<T>
    **/
-  ZrmlOrderbookV1Event: {
+  ZrmlOrderbookEvent: {
     _enum: {
       OrderFilled: {
         orderId: 'u128',
@@ -1237,7 +1319,7 @@ export default {
       },
       OrderPlaced: {
         orderId: 'u128',
-        order: 'ZrmlOrderbookV1Order',
+        order: 'ZrmlOrderbookOrder',
       },
       OrderRemoved: {
         orderId: 'u128',
@@ -1246,11 +1328,11 @@ export default {
     }
   },
   /**
-   * Lookup117: zrml_orderbook_v1::types::Order<sp_core::crypto::AccountId32, Balance, MarketId>
+   * Lookup127: zrml_orderbook::types::Order<sp_core::crypto::AccountId32, Balance, MarketId>
    **/
-  ZrmlOrderbookV1Order: {
+  ZrmlOrderbookOrder: {
     marketId: 'u128',
-    side: 'ZrmlOrderbookV1OrderSide',
+    side: 'ZrmlOrderbookOrderSide',
     maker: 'AccountId32',
     outcomeAsset: 'ZeitgeistPrimitivesAsset',
     baseAsset: 'ZeitgeistPrimitivesAsset',
@@ -1258,13 +1340,40 @@ export default {
     baseAssetAmount: 'u128'
   },
   /**
-   * Lookup118: zrml_orderbook_v1::types::OrderSide
+   * Lookup128: zrml_orderbook::types::OrderSide
    **/
-  ZrmlOrderbookV1OrderSide: {
+  ZrmlOrderbookOrderSide: {
     _enum: ['Bid', 'Ask']
   },
   /**
-   * Lookup119: cumulus_pallet_parachain_system::pallet::Event<T>
+   * Lookup129: zrml_parimutuel::pallet::Event<T>
+   **/
+  ZrmlParimutuelEvent: {
+    _enum: {
+      OutcomeBought: {
+        marketId: 'u128',
+        buyer: 'AccountId32',
+        asset: 'ZeitgeistPrimitivesAsset',
+        amountMinusFees: 'u128',
+        fees: 'u128',
+      },
+      RewardsClaimed: {
+        marketId: 'u128',
+        asset: 'ZeitgeistPrimitivesAsset',
+        withdrawnAssetBalance: 'u128',
+        baseAssetPayoff: 'u128',
+        sender: 'AccountId32',
+      },
+      BalanceRefunded: {
+        marketId: 'u128',
+        asset: 'ZeitgeistPrimitivesAsset',
+        refundedBalance: 'u128',
+        sender: 'AccountId32'
+      }
+    }
+  },
+  /**
+   * Lookup130: cumulus_pallet_parachain_system::pallet::Event<T>
    **/
   CumulusPalletParachainSystemEvent: {
     _enum: {
@@ -1289,7 +1398,7 @@ export default {
     }
   },
   /**
-   * Lookup120: pallet_parachain_staking::pallet::Event<T>
+   * Lookup131: pallet_parachain_staking::pallet::Event<T>
    **/
   PalletParachainStakingEvent: {
     _enum: {
@@ -1486,14 +1595,14 @@ export default {
     }
   },
   /**
-   * Lookup121: pallet_parachain_staking::delegation_requests::CancelledScheduledRequest<Balance>
+   * Lookup132: pallet_parachain_staking::delegation_requests::CancelledScheduledRequest<Balance>
    **/
   PalletParachainStakingDelegationRequestsCancelledScheduledRequest: {
     whenExecutable: 'u32',
     action: 'PalletParachainStakingDelegationRequestsDelegationAction'
   },
   /**
-   * Lookup122: pallet_parachain_staking::delegation_requests::DelegationAction<Balance>
+   * Lookup133: pallet_parachain_staking::delegation_requests::DelegationAction<Balance>
    **/
   PalletParachainStakingDelegationRequestsDelegationAction: {
     _enum: {
@@ -1502,7 +1611,7 @@ export default {
     }
   },
   /**
-   * Lookup123: pallet_parachain_staking::types::DelegatorAdded<B>
+   * Lookup134: pallet_parachain_staking::types::DelegatorAdded<B>
    **/
   PalletParachainStakingDelegatorAdded: {
     _enum: {
@@ -1513,7 +1622,7 @@ export default {
     }
   },
   /**
-   * Lookup125: pallet_author_slot_filter::pallet::Event
+   * Lookup136: pallet_author_slot_filter::pallet::Event
    **/
   PalletAuthorSlotFilterEvent: {
     _enum: {
@@ -1521,7 +1630,7 @@ export default {
     }
   },
   /**
-   * Lookup127: pallet_author_mapping::pallet::Event<T>
+   * Lookup138: pallet_author_mapping::pallet::Event<T>
    **/
   PalletAuthorMappingEvent: {
     _enum: {
@@ -1549,19 +1658,19 @@ export default {
     }
   },
   /**
-   * Lookup128: nimbus_primitives::nimbus_crypto::Public
+   * Lookup139: nimbus_primitives::nimbus_crypto::Public
    **/
   NimbusPrimitivesNimbusCryptoPublic: 'SpCoreSr25519Public',
   /**
-   * Lookup129: sp_core::sr25519::Public
+   * Lookup140: sp_core::sr25519::Public
    **/
   SpCoreSr25519Public: '[u8;32]',
   /**
-   * Lookup130: session_keys_primitives::vrf::vrf_crypto::Public
+   * Lookup141: session_keys_primitives::vrf::vrf_crypto::Public
    **/
   SessionKeysPrimitivesVrfVrfCryptoPublic: 'SpCoreSr25519Public',
   /**
-   * Lookup131: cumulus_pallet_xcm::pallet::Event<T>
+   * Lookup142: cumulus_pallet_xcm::pallet::Event<T>
    **/
   CumulusPalletXcmEvent: {
     _enum: {
@@ -1571,7 +1680,7 @@ export default {
     }
   },
   /**
-   * Lookup132: xcm::v3::traits::Outcome
+   * Lookup143: xcm::v3::traits::Outcome
    **/
   XcmV3TraitsOutcome: {
     _enum: {
@@ -1581,7 +1690,7 @@ export default {
     }
   },
   /**
-   * Lookup133: xcm::v3::traits::Error
+   * Lookup144: xcm::v3::traits::Error
    **/
   XcmV3TraitsError: {
     _enum: {
@@ -1628,7 +1737,7 @@ export default {
     }
   },
   /**
-   * Lookup134: cumulus_pallet_dmp_queue::pallet::Event<T>
+   * Lookup145: cumulus_pallet_dmp_queue::pallet::Event<T>
    **/
   CumulusPalletDmpQueueEvent: {
     _enum: {
@@ -1662,7 +1771,7 @@ export default {
     }
   },
   /**
-   * Lookup135: pallet_xcm::pallet::Event<T>
+   * Lookup146: pallet_xcm::pallet::Event<T>
    **/
   PalletXcmEvent: {
     _enum: {
@@ -1692,14 +1801,14 @@ export default {
     }
   },
   /**
-   * Lookup136: xcm::v3::multilocation::MultiLocation
+   * Lookup147: xcm::v3::multilocation::MultiLocation
    **/
   XcmV3MultiLocation: {
     parents: 'u8',
     interior: 'XcmV3Junctions'
   },
   /**
-   * Lookup137: xcm::v3::junctions::Junctions
+   * Lookup148: xcm::v3::junctions::Junctions
    **/
   XcmV3Junctions: {
     _enum: {
@@ -1715,7 +1824,7 @@ export default {
     }
   },
   /**
-   * Lookup138: xcm::v3::junction::Junction
+   * Lookup149: xcm::v3::junction::Junction
    **/
   XcmV3Junction: {
     _enum: {
@@ -1747,7 +1856,7 @@ export default {
     }
   },
   /**
-   * Lookup141: xcm::v3::junction::NetworkId
+   * Lookup152: xcm::v3::junction::NetworkId
    **/
   XcmV3JunctionNetworkId: {
     _enum: {
@@ -1769,7 +1878,7 @@ export default {
     }
   },
   /**
-   * Lookup144: xcm::v3::junction::BodyId
+   * Lookup155: xcm::v3::junction::BodyId
    **/
   XcmV3JunctionBodyId: {
     _enum: {
@@ -1786,7 +1895,7 @@ export default {
     }
   },
   /**
-   * Lookup145: xcm::v3::junction::BodyPart
+   * Lookup156: xcm::v3::junction::BodyPart
    **/
   XcmV3JunctionBodyPart: {
     _enum: {
@@ -1809,11 +1918,11 @@ export default {
     }
   },
   /**
-   * Lookup146: xcm::v3::Xcm<Call>
+   * Lookup157: xcm::v3::Xcm<Call>
    **/
   XcmV3Xcm: 'Vec<XcmV3Instruction>',
   /**
-   * Lookup148: xcm::v3::Instruction<Call>
+   * Lookup159: xcm::v3::Instruction<Call>
    **/
   XcmV3Instruction: {
     _enum: {
@@ -1955,18 +2064,18 @@ export default {
     }
   },
   /**
-   * Lookup149: xcm::v3::multiasset::MultiAssets
+   * Lookup160: xcm::v3::multiasset::MultiAssets
    **/
   XcmV3MultiassetMultiAssets: 'Vec<XcmV3MultiAsset>',
   /**
-   * Lookup151: xcm::v3::multiasset::MultiAsset
+   * Lookup162: xcm::v3::multiasset::MultiAsset
    **/
   XcmV3MultiAsset: {
     id: 'XcmV3MultiassetAssetId',
     fun: 'XcmV3MultiassetFungibility'
   },
   /**
-   * Lookup152: xcm::v3::multiasset::AssetId
+   * Lookup163: xcm::v3::multiasset::AssetId
    **/
   XcmV3MultiassetAssetId: {
     _enum: {
@@ -1975,7 +2084,7 @@ export default {
     }
   },
   /**
-   * Lookup153: xcm::v3::multiasset::Fungibility
+   * Lookup164: xcm::v3::multiasset::Fungibility
    **/
   XcmV3MultiassetFungibility: {
     _enum: {
@@ -1984,7 +2093,7 @@ export default {
     }
   },
   /**
-   * Lookup154: xcm::v3::multiasset::AssetInstance
+   * Lookup165: xcm::v3::multiasset::AssetInstance
    **/
   XcmV3MultiassetAssetInstance: {
     _enum: {
@@ -1997,7 +2106,7 @@ export default {
     }
   },
   /**
-   * Lookup156: xcm::v3::Response
+   * Lookup167: xcm::v3::Response
    **/
   XcmV3Response: {
     _enum: {
@@ -2010,11 +2119,11 @@ export default {
     }
   },
   /**
-   * Lookup159: xcm::v3::VecPalletInfo
+   * Lookup170: xcm::v3::VecPalletInfo
    **/
   XcmV3VecPalletInfo: 'Vec<XcmV3PalletInfo>',
   /**
-   * Lookup161: xcm::v3::PalletInfo
+   * Lookup172: xcm::v3::PalletInfo
    **/
   XcmV3PalletInfo: {
     index: 'Compact<u32>',
@@ -2025,7 +2134,7 @@ export default {
     patch: 'Compact<u32>'
   },
   /**
-   * Lookup162: xcm::v3::MaybeErrorCode
+   * Lookup173: xcm::v3::MaybeErrorCode
    **/
   XcmV3MaybeErrorCode: {
     _enum: {
@@ -2035,19 +2144,19 @@ export default {
     }
   },
   /**
-   * Lookup164: xcm::v2::OriginKind
+   * Lookup175: xcm::v2::OriginKind
    **/
   XcmV2OriginKind: {
     _enum: ['Native', 'SovereignAccount', 'Superuser', 'Xcm']
   },
   /**
-   * Lookup165: xcm::double_encoded::DoubleEncoded<T>
+   * Lookup176: xcm::double_encoded::DoubleEncoded<T>
    **/
   XcmDoubleEncoded: {
     encoded: 'Bytes'
   },
   /**
-   * Lookup166: xcm::v3::QueryResponseInfo
+   * Lookup177: xcm::v3::QueryResponseInfo
    **/
   XcmV3QueryResponseInfo: {
     destination: 'XcmV3MultiLocation',
@@ -2055,7 +2164,7 @@ export default {
     maxWeight: 'SpWeightsWeightV2Weight'
   },
   /**
-   * Lookup167: xcm::v3::multiasset::MultiAssetFilter
+   * Lookup178: xcm::v3::multiasset::MultiAssetFilter
    **/
   XcmV3MultiassetMultiAssetFilter: {
     _enum: {
@@ -2064,7 +2173,7 @@ export default {
     }
   },
   /**
-   * Lookup168: xcm::v3::multiasset::WildMultiAsset
+   * Lookup179: xcm::v3::multiasset::WildMultiAsset
    **/
   XcmV3MultiassetWildMultiAsset: {
     _enum: {
@@ -2082,13 +2191,13 @@ export default {
     }
   },
   /**
-   * Lookup169: xcm::v3::multiasset::WildFungibility
+   * Lookup180: xcm::v3::multiasset::WildFungibility
    **/
   XcmV3MultiassetWildFungibility: {
     _enum: ['Fungible', 'NonFungible']
   },
   /**
-   * Lookup170: xcm::v3::WeightLimit
+   * Lookup181: xcm::v3::WeightLimit
    **/
   XcmV3WeightLimit: {
     _enum: {
@@ -2097,7 +2206,7 @@ export default {
     }
   },
   /**
-   * Lookup171: xcm::VersionedMultiAssets
+   * Lookup182: xcm::VersionedMultiAssets
    **/
   XcmVersionedMultiAssets: {
     _enum: {
@@ -2108,18 +2217,18 @@ export default {
     }
   },
   /**
-   * Lookup172: xcm::v2::multiasset::MultiAssets
+   * Lookup183: xcm::v2::multiasset::MultiAssets
    **/
   XcmV2MultiassetMultiAssets: 'Vec<XcmV2MultiAsset>',
   /**
-   * Lookup174: xcm::v2::multiasset::MultiAsset
+   * Lookup185: xcm::v2::multiasset::MultiAsset
    **/
   XcmV2MultiAsset: {
     id: 'XcmV2MultiassetAssetId',
     fun: 'XcmV2MultiassetFungibility'
   },
   /**
-   * Lookup175: xcm::v2::multiasset::AssetId
+   * Lookup186: xcm::v2::multiasset::AssetId
    **/
   XcmV2MultiassetAssetId: {
     _enum: {
@@ -2128,14 +2237,14 @@ export default {
     }
   },
   /**
-   * Lookup176: xcm::v2::multilocation::MultiLocation
+   * Lookup187: xcm::v2::multilocation::MultiLocation
    **/
   XcmV2MultiLocation: {
     parents: 'u8',
     interior: 'XcmV2MultilocationJunctions'
   },
   /**
-   * Lookup177: xcm::v2::multilocation::Junctions
+   * Lookup188: xcm::v2::multilocation::Junctions
    **/
   XcmV2MultilocationJunctions: {
     _enum: {
@@ -2151,7 +2260,7 @@ export default {
     }
   },
   /**
-   * Lookup178: xcm::v2::junction::Junction
+   * Lookup189: xcm::v2::junction::Junction
    **/
   XcmV2Junction: {
     _enum: {
@@ -2179,7 +2288,7 @@ export default {
     }
   },
   /**
-   * Lookup179: xcm::v2::NetworkId
+   * Lookup190: xcm::v2::NetworkId
    **/
   XcmV2NetworkId: {
     _enum: {
@@ -2190,7 +2299,7 @@ export default {
     }
   },
   /**
-   * Lookup181: xcm::v2::BodyId
+   * Lookup192: xcm::v2::BodyId
    **/
   XcmV2BodyId: {
     _enum: {
@@ -2207,7 +2316,7 @@ export default {
     }
   },
   /**
-   * Lookup182: xcm::v2::BodyPart
+   * Lookup193: xcm::v2::BodyPart
    **/
   XcmV2BodyPart: {
     _enum: {
@@ -2230,7 +2339,7 @@ export default {
     }
   },
   /**
-   * Lookup183: xcm::v2::multiasset::Fungibility
+   * Lookup194: xcm::v2::multiasset::Fungibility
    **/
   XcmV2MultiassetFungibility: {
     _enum: {
@@ -2239,7 +2348,7 @@ export default {
     }
   },
   /**
-   * Lookup184: xcm::v2::multiasset::AssetInstance
+   * Lookup195: xcm::v2::multiasset::AssetInstance
    **/
   XcmV2MultiassetAssetInstance: {
     _enum: {
@@ -2253,7 +2362,7 @@ export default {
     }
   },
   /**
-   * Lookup185: xcm::VersionedMultiLocation
+   * Lookup196: xcm::VersionedMultiLocation
    **/
   XcmVersionedMultiLocation: {
     _enum: {
@@ -2264,7 +2373,7 @@ export default {
     }
   },
   /**
-   * Lookup186: cumulus_pallet_xcmp_queue::pallet::Event<T>
+   * Lookup197: cumulus_pallet_xcmp_queue::pallet::Event<T>
    **/
   CumulusPalletXcmpQueueEvent: {
     _enum: {
@@ -2299,7 +2408,7 @@ export default {
     }
   },
   /**
-   * Lookup188: orml_asset_registry::module::Event<T>
+   * Lookup199: orml_asset_registry::module::Event<T>
    **/
   OrmlAssetRegistryModuleEvent: {
     _enum: {
@@ -2314,7 +2423,7 @@ export default {
     }
   },
   /**
-   * Lookup189: orml_traits::asset_registry::AssetMetadata<Balance, zeitgeist_primitives::types::CustomMetadata>
+   * Lookup200: orml_traits::asset_registry::AssetMetadata<Balance, zeitgeist_primitives::types::CustomMetadata>
    **/
   OrmlTraitsAssetRegistryAssetMetadata: {
     decimals: 'u32',
@@ -2325,20 +2434,20 @@ export default {
     additional: 'ZeitgeistPrimitivesCustomMetadata'
   },
   /**
-   * Lookup190: zeitgeist_primitives::types::CustomMetadata
+   * Lookup201: zeitgeist_primitives::types::CustomMetadata
    **/
   ZeitgeistPrimitivesCustomMetadata: {
     xcm: 'ZeitgeistPrimitivesXcmMetadata',
     allowAsBaseAsset: 'bool'
   },
   /**
-   * Lookup191: zeitgeist_primitives::types::XcmMetadata
+   * Lookup202: zeitgeist_primitives::types::XcmMetadata
    **/
   ZeitgeistPrimitivesXcmMetadata: {
     feeFactor: 'Option<u128>'
   },
   /**
-   * Lookup193: orml_unknown_tokens::module::Event
+   * Lookup204: orml_unknown_tokens::module::Event
    **/
   OrmlUnknownTokensModuleEvent: {
     _enum: {
@@ -2353,7 +2462,7 @@ export default {
     }
   },
   /**
-   * Lookup194: orml_xtokens::module::Event<T>
+   * Lookup205: orml_xtokens::module::Event<T>
    **/
   OrmlXtokensModuleEvent: {
     _enum: {
@@ -2366,7 +2475,23 @@ export default {
     }
   },
   /**
-   * Lookup195: frame_system::Phase
+   * Lookup206: pallet_sudo::pallet::Event<T>
+   **/
+  PalletSudoEvent: {
+    _enum: {
+      Sudid: {
+        sudoResult: 'Result<Null, SpRuntimeDispatchError>',
+      },
+      KeyChanged: {
+        oldSudoer: 'Option<AccountId32>',
+      },
+      SudoAsDone: {
+        sudoResult: 'Result<Null, SpRuntimeDispatchError>'
+      }
+    }
+  },
+  /**
+   * Lookup208: frame_system::Phase
    **/
   FrameSystemPhase: {
     _enum: {
@@ -2376,14 +2501,14 @@ export default {
     }
   },
   /**
-   * Lookup198: frame_system::LastRuntimeUpgradeInfo
+   * Lookup211: frame_system::LastRuntimeUpgradeInfo
    **/
   FrameSystemLastRuntimeUpgradeInfo: {
     specVersion: 'Compact<u32>',
     specName: 'Text'
   },
   /**
-   * Lookup200: frame_system::pallet::Call<T>
+   * Lookup213: frame_system::pallet::Call<T>
    **/
   FrameSystemCall: {
     _enum: {
@@ -2418,7 +2543,7 @@ export default {
     }
   },
   /**
-   * Lookup204: frame_system::limits::BlockWeights
+   * Lookup217: frame_system::limits::BlockWeights
    **/
   FrameSystemLimitsBlockWeights: {
     baseBlock: 'SpWeightsWeightV2Weight',
@@ -2426,7 +2551,7 @@ export default {
     perClass: 'FrameSupportDispatchPerDispatchClassWeightsPerClass'
   },
   /**
-   * Lookup205: frame_support::dispatch::PerDispatchClass<frame_system::limits::WeightsPerClass>
+   * Lookup218: frame_support::dispatch::PerDispatchClass<frame_system::limits::WeightsPerClass>
    **/
   FrameSupportDispatchPerDispatchClassWeightsPerClass: {
     normal: 'FrameSystemLimitsWeightsPerClass',
@@ -2434,7 +2559,7 @@ export default {
     mandatory: 'FrameSystemLimitsWeightsPerClass'
   },
   /**
-   * Lookup206: frame_system::limits::WeightsPerClass
+   * Lookup219: frame_system::limits::WeightsPerClass
    **/
   FrameSystemLimitsWeightsPerClass: {
     baseExtrinsic: 'SpWeightsWeightV2Weight',
@@ -2443,13 +2568,13 @@ export default {
     reserved: 'Option<SpWeightsWeightV2Weight>'
   },
   /**
-   * Lookup208: frame_system::limits::BlockLength
+   * Lookup221: frame_system::limits::BlockLength
    **/
   FrameSystemLimitsBlockLength: {
     max: 'FrameSupportDispatchPerDispatchClassU32'
   },
   /**
-   * Lookup209: frame_support::dispatch::PerDispatchClass<T>
+   * Lookup222: frame_support::dispatch::PerDispatchClass<T>
    **/
   FrameSupportDispatchPerDispatchClassU32: {
     normal: 'u32',
@@ -2457,14 +2582,14 @@ export default {
     mandatory: 'u32'
   },
   /**
-   * Lookup210: sp_weights::RuntimeDbWeight
+   * Lookup223: sp_weights::RuntimeDbWeight
    **/
   SpWeightsRuntimeDbWeight: {
     read: 'u64',
     write: 'u64'
   },
   /**
-   * Lookup211: sp_version::RuntimeVersion
+   * Lookup224: sp_version::RuntimeVersion
    **/
   SpVersionRuntimeVersion: {
     specName: 'Text',
@@ -2477,13 +2602,13 @@ export default {
     stateVersion: 'u8'
   },
   /**
-   * Lookup215: frame_system::pallet::Error<T>
+   * Lookup228: frame_system::pallet::Error<T>
    **/
   FrameSystemError: {
     _enum: ['InvalidSpecName', 'SpecVersionNeedsToIncrease', 'FailedToExtractRuntimeVersion', 'NonDefaultComposite', 'NonZeroRefCount', 'CallFiltered']
   },
   /**
-   * Lookup216: pallet_timestamp::pallet::Call<T>
+   * Lookup229: pallet_timestamp::pallet::Call<T>
    **/
   PalletTimestampCall: {
     _enum: {
@@ -2493,17 +2618,17 @@ export default {
     }
   },
   /**
-   * Lookup220: pallet_scheduler::Scheduled<Name, frame_support::traits::preimages::Bounded<zeitgeist_runtime::RuntimeCall>, BlockNumber, zeitgeist_runtime::OriginCaller, sp_core::crypto::AccountId32>
+   * Lookup233: pallet_scheduler::Scheduled<Name, frame_support::traits::preimages::Bounded<battery_station_runtime::RuntimeCall>, BlockNumber, battery_station_runtime::OriginCaller, sp_core::crypto::AccountId32>
    **/
   PalletSchedulerScheduled: {
     maybeId: 'Option<[u8;32]>',
     priority: 'u8',
     call: 'FrameSupportPreimagesBounded',
     maybePeriodic: 'Option<(u64,u32)>',
-    origin: 'ZeitgeistRuntimeOriginCaller'
+    origin: 'BatteryStationRuntimeOriginCaller'
   },
   /**
-   * Lookup221: frame_support::traits::preimages::Bounded<zeitgeist_runtime::RuntimeCall>
+   * Lookup234: frame_support::traits::preimages::Bounded<battery_station_runtime::RuntimeCall>
    **/
   FrameSupportPreimagesBounded: {
     _enum: {
@@ -2524,7 +2649,7 @@ export default {
     }
   },
   /**
-   * Lookup223: pallet_scheduler::pallet::Call<T>
+   * Lookup236: pallet_scheduler::pallet::Call<T>
    **/
   PalletSchedulerCall: {
     _enum: {
@@ -2564,7 +2689,7 @@ export default {
     }
   },
   /**
-   * Lookup225: pallet_preimage::pallet::Call<T>
+   * Lookup238: pallet_preimage::pallet::Call<T>
    **/
   PalletPreimageCall: {
     _enum: {
@@ -2592,7 +2717,7 @@ export default {
     }
   },
   /**
-   * Lookup226: pallet_balances::pallet::Call<T, I>
+   * Lookup239: pallet_balances::pallet::Call<T, I>
    **/
   PalletBalancesCall: {
     _enum: {
@@ -2625,7 +2750,7 @@ export default {
     }
   },
   /**
-   * Lookup229: pallet_treasury::pallet::Call<T, I>
+   * Lookup242: pallet_treasury::pallet::Call<T, I>
    **/
   PalletTreasuryCall: {
     _enum: {
@@ -2649,7 +2774,7 @@ export default {
     }
   },
   /**
-   * Lookup230: pallet_vesting::pallet::Call<T>
+   * Lookup243: pallet_vesting::pallet::Call<T>
    **/
   PalletVestingCall: {
     _enum: {
@@ -2673,7 +2798,7 @@ export default {
     }
   },
   /**
-   * Lookup231: pallet_vesting::vesting_info::VestingInfo<Balance, BlockNumber>
+   * Lookup244: pallet_vesting::vesting_info::VestingInfo<Balance, BlockNumber>
    **/
   PalletVestingVestingInfo: {
     locked: 'u128',
@@ -2681,7 +2806,7 @@ export default {
     startingBlock: 'u64'
   },
   /**
-   * Lookup232: pallet_multisig::pallet::Call<T>
+   * Lookup245: pallet_multisig::pallet::Call<T>
    **/
   PalletMultisigCall: {
     _enum: {
@@ -2712,7 +2837,7 @@ export default {
     }
   },
   /**
-   * Lookup234: pallet_bounties::pallet::Call<T, I>
+   * Lookup247: pallet_bounties::pallet::Call<T, I>
    **/
   PalletBountiesCall: {
     _enum: {
@@ -2751,7 +2876,7 @@ export default {
     }
   },
   /**
-   * Lookup235: pallet_democracy::pallet::Call<T>
+   * Lookup248: pallet_democracy::pallet::Call<T>
    **/
   PalletDemocracyCall: {
     _enum: {
@@ -2816,13 +2941,13 @@ export default {
     }
   },
   /**
-   * Lookup236: pallet_democracy::conviction::Conviction
+   * Lookup249: pallet_democracy::conviction::Conviction
    **/
   PalletDemocracyConviction: {
     _enum: ['None', 'Locked1x', 'Locked2x', 'Locked3x', 'Locked4x', 'Locked5x', 'Locked6x']
   },
   /**
-   * Lookup237: pallet_collective::pallet::Call<T, I>
+   * Lookup250: pallet_collective::pallet::Call<T, I>
    **/
   PalletCollectiveCall: {
     _enum: {
@@ -2863,7 +2988,7 @@ export default {
     }
   },
   /**
-   * Lookup241: pallet_membership::pallet::Call<T, I>
+   * Lookup253: pallet_membership::pallet::Call<T, I>
    **/
   PalletMembershipCall: {
     _enum: {
@@ -2893,7 +3018,7 @@ export default {
     }
   },
   /**
-   * Lookup246: pallet_identity::pallet::Call<T>
+   * Lookup258: pallet_identity::pallet::Call<T>
    **/
   PalletIdentityCall: {
     _enum: {
@@ -2953,7 +3078,7 @@ export default {
     }
   },
   /**
-   * Lookup247: pallet_identity::types::IdentityInfo<FieldLimit>
+   * Lookup259: pallet_identity::types::IdentityInfo<FieldLimit>
    **/
   PalletIdentityIdentityInfo: {
     additional: 'Vec<(Data,Data)>',
@@ -2967,7 +3092,7 @@ export default {
     twitter: 'Data'
   },
   /**
-   * Lookup283: pallet_identity::types::BitFlags<pallet_identity::types::IdentityField>
+   * Lookup295: pallet_identity::types::BitFlags<pallet_identity::types::IdentityField>
    **/
   PalletIdentityBitFlags: {
     _bitLength: 64,
@@ -2981,13 +3106,13 @@ export default {
     Twitter: 128
   },
   /**
-   * Lookup284: pallet_identity::types::IdentityField
+   * Lookup296: pallet_identity::types::IdentityField
    **/
   PalletIdentityIdentityField: {
     _enum: ['__Unused0', 'Display', 'Legal', '__Unused3', 'Web', '__Unused5', '__Unused6', '__Unused7', 'Riot', '__Unused9', '__Unused10', '__Unused11', '__Unused12', '__Unused13', '__Unused14', '__Unused15', 'Email', '__Unused17', '__Unused18', '__Unused19', '__Unused20', '__Unused21', '__Unused22', '__Unused23', '__Unused24', '__Unused25', '__Unused26', '__Unused27', '__Unused28', '__Unused29', '__Unused30', '__Unused31', 'PgpFingerprint', '__Unused33', '__Unused34', '__Unused35', '__Unused36', '__Unused37', '__Unused38', '__Unused39', '__Unused40', '__Unused41', '__Unused42', '__Unused43', '__Unused44', '__Unused45', '__Unused46', '__Unused47', '__Unused48', '__Unused49', '__Unused50', '__Unused51', '__Unused52', '__Unused53', '__Unused54', '__Unused55', '__Unused56', '__Unused57', '__Unused58', '__Unused59', '__Unused60', '__Unused61', '__Unused62', '__Unused63', 'Image', '__Unused65', '__Unused66', '__Unused67', '__Unused68', '__Unused69', '__Unused70', '__Unused71', '__Unused72', '__Unused73', '__Unused74', '__Unused75', '__Unused76', '__Unused77', '__Unused78', '__Unused79', '__Unused80', '__Unused81', '__Unused82', '__Unused83', '__Unused84', '__Unused85', '__Unused86', '__Unused87', '__Unused88', '__Unused89', '__Unused90', '__Unused91', '__Unused92', '__Unused93', '__Unused94', '__Unused95', '__Unused96', '__Unused97', '__Unused98', '__Unused99', '__Unused100', '__Unused101', '__Unused102', '__Unused103', '__Unused104', '__Unused105', '__Unused106', '__Unused107', '__Unused108', '__Unused109', '__Unused110', '__Unused111', '__Unused112', '__Unused113', '__Unused114', '__Unused115', '__Unused116', '__Unused117', '__Unused118', '__Unused119', '__Unused120', '__Unused121', '__Unused122', '__Unused123', '__Unused124', '__Unused125', '__Unused126', '__Unused127', 'Twitter']
   },
   /**
-   * Lookup285: pallet_identity::types::Judgement<Balance>
+   * Lookup297: pallet_identity::types::Judgement<Balance>
    **/
   PalletIdentityJudgement: {
     _enum: {
@@ -3001,7 +3126,7 @@ export default {
     }
   },
   /**
-   * Lookup286: pallet_utility::pallet::Call<T>
+   * Lookup298: pallet_utility::pallet::Call<T>
    **/
   PalletUtilityCall: {
     _enum: {
@@ -3016,7 +3141,7 @@ export default {
         calls: 'Vec<Call>',
       },
       dispatch_as: {
-        asOrigin: 'ZeitgeistRuntimeOriginCaller',
+        asOrigin: 'BatteryStationRuntimeOriginCaller',
         call: 'Call',
       },
       force_batch: {
@@ -3029,9 +3154,9 @@ export default {
     }
   },
   /**
-   * Lookup288: zeitgeist_runtime::OriginCaller
+   * Lookup300: battery_station_runtime::OriginCaller
    **/
-  ZeitgeistRuntimeOriginCaller: {
+  BatteryStationRuntimeOriginCaller: {
     _enum: {
       system: 'FrameSupportDispatchRawOrigin',
       __Unused1: 'Null',
@@ -3159,7 +3284,7 @@ export default {
     }
   },
   /**
-   * Lookup289: frame_support::dispatch::RawOrigin<sp_core::crypto::AccountId32>
+   * Lookup301: frame_support::dispatch::RawOrigin<sp_core::crypto::AccountId32>
    **/
   FrameSupportDispatchRawOrigin: {
     _enum: {
@@ -3169,7 +3294,7 @@ export default {
     }
   },
   /**
-   * Lookup290: pallet_collective::RawOrigin<sp_core::crypto::AccountId32, I>
+   * Lookup302: pallet_collective::RawOrigin<sp_core::crypto::AccountId32, I>
    **/
   PalletCollectiveRawOrigin: {
     _enum: {
@@ -3179,7 +3304,7 @@ export default {
     }
   },
   /**
-   * Lookup293: cumulus_pallet_xcm::pallet::Origin
+   * Lookup305: cumulus_pallet_xcm::pallet::Origin
    **/
   CumulusPalletXcmOrigin: {
     _enum: {
@@ -3188,7 +3313,7 @@ export default {
     }
   },
   /**
-   * Lookup294: pallet_xcm::pallet::Origin
+   * Lookup306: pallet_xcm::pallet::Origin
    **/
   PalletXcmOrigin: {
     _enum: {
@@ -3197,11 +3322,11 @@ export default {
     }
   },
   /**
-   * Lookup295: sp_core::Void
+   * Lookup307: sp_core::Void
    **/
   SpCoreVoid: 'Null',
   /**
-   * Lookup296: pallet_proxy::pallet::Call<T>
+   * Lookup308: pallet_proxy::pallet::Call<T>
    **/
   PalletProxyCall: {
     _enum: {
@@ -3254,7 +3379,7 @@ export default {
     }
   },
   /**
-   * Lookup298: pallet_contracts::pallet::Call<T>
+   * Lookup310: pallet_contracts::pallet::Call<T>
    **/
   PalletContractsCall: {
     _enum: {
@@ -3319,13 +3444,13 @@ export default {
     }
   },
   /**
-   * Lookup300: pallet_contracts::wasm::Determinism
+   * Lookup312: pallet_contracts::wasm::Determinism
    **/
   PalletContractsWasmDeterminism: {
     _enum: ['Deterministic', 'AllowIndeterminism']
   },
   /**
-   * Lookup301: orml_currencies::module::Call<T>
+   * Lookup313: orml_currencies::module::Call<T>
    **/
   OrmlCurrenciesModuleCall: {
     _enum: {
@@ -3346,7 +3471,7 @@ export default {
     }
   },
   /**
-   * Lookup303: zrml_authorized::pallet::Call<T>
+   * Lookup315: zrml_authorized::pallet::Call<T>
    **/
   ZrmlAuthorizedCall: {
     _enum: {
@@ -3357,7 +3482,7 @@ export default {
     }
   },
   /**
-   * Lookup304: zrml_court::pallet::Call<T>
+   * Lookup316: zrml_court::pallet::Call<T>
    **/
   ZrmlCourtCall: {
     _enum: {
@@ -3399,7 +3524,7 @@ export default {
     }
   },
   /**
-   * Lookup305: zrml_liquidity_mining::pallet::Call<T>
+   * Lookup317: zrml_liquidity_mining::pallet::Call<T>
    **/
   ZrmlLiquidityMiningCall: {
     _enum: {
@@ -3409,7 +3534,7 @@ export default {
     }
   },
   /**
-   * Lookup306: zrml_simple_disputes::pallet::Call<T>
+   * Lookup318: zrml_simple_disputes::pallet::Call<T>
    **/
   ZrmlSimpleDisputesCall: {
     _enum: {
@@ -3420,7 +3545,7 @@ export default {
     }
   },
   /**
-   * Lookup307: zrml_swaps::pallet::Call<T>
+   * Lookup319: zrml_swaps::pallet::Call<T>
    **/
   ZrmlSwapsCall: {
     _enum: {
@@ -3489,13 +3614,11 @@ export default {
     }
   },
   /**
-   * Lookup308: zrml_prediction_markets::pallet::Call<T>
+   * Lookup320: zrml_prediction_markets::pallet::Call<T>
    **/
   ZrmlPredictionMarketsCall: {
     _enum: {
-      admin_destroy_market: {
-        marketId: 'Compact<u128>',
-      },
+      __Unused0: 'Null',
       admin_move_market_to_closed: {
         marketId: 'Compact<u128>',
       },
@@ -3593,12 +3716,21 @@ export default {
         disputeMechanism: 'Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>',
         amount: 'Compact<u128>',
         spotPrices: 'Vec<u128>',
-        swapFee: 'Compact<u128>'
+        swapFee: 'Compact<u128>',
+      },
+      schedule_early_close: {
+        marketId: 'Compact<u128>',
+      },
+      dispute_early_close: {
+        marketId: 'Compact<u128>',
+      },
+      reject_early_close: {
+        marketId: 'Compact<u128>'
       }
     }
   },
   /**
-   * Lookup309: zeitgeist_primitives::types::MultiHash
+   * Lookup321: zeitgeist_primitives::types::MultiHash
    **/
   ZeitgeistPrimitivesMultiHash: {
     _enum: {
@@ -3606,7 +3738,7 @@ export default {
     }
   },
   /**
-   * Lookup311: zrml_styx::pallet::Call<T>
+   * Lookup323: zrml_styx::pallet::Call<T>
    **/
   ZrmlStyxCall: {
     _enum: {
@@ -3617,7 +3749,7 @@ export default {
     }
   },
   /**
-   * Lookup312: zrml_global_disputes::pallet::Call<T>
+   * Lookup324: zrml_global_disputes::pallet::Call<T>
    **/
   ZrmlGlobalDisputesCall: {
     _enum: {
@@ -3645,7 +3777,7 @@ export default {
     }
   },
   /**
-   * Lookup313: zrml_neo_swaps::pallet::Call<T>
+   * Lookup325: zrml_neo_swaps::pallet::Call<T>
    **/
   ZrmlNeoSwapsCall: {
     _enum: {
@@ -3685,9 +3817,9 @@ export default {
     }
   },
   /**
-   * Lookup314: zrml_orderbook_v1::pallet::Call<T>
+   * Lookup326: zrml_orderbook::pallet::Call<T>
    **/
-  ZrmlOrderbookV1Call: {
+  ZrmlOrderbookCall: {
     _enum: {
       remove_order: {
         orderId: 'u128',
@@ -3699,14 +3831,31 @@ export default {
       place_order: {
         marketId: 'Compact<u128>',
         outcomeAsset: 'ZeitgeistPrimitivesAsset',
-        side: 'ZrmlOrderbookV1OrderSide',
+        side: 'ZrmlOrderbookOrderSide',
         outcomeAssetAmount: 'Compact<u128>',
         baseAssetAmount: 'Compact<u128>'
       }
     }
   },
   /**
-   * Lookup315: cumulus_pallet_parachain_system::pallet::Call<T>
+   * Lookup327: zrml_parimutuel::pallet::Call<T>
+   **/
+  ZrmlParimutuelCall: {
+    _enum: {
+      buy: {
+        asset: 'ZeitgeistPrimitivesAsset',
+        amount: 'Compact<u128>',
+      },
+      claim_rewards: {
+        marketId: 'u128',
+      },
+      claim_refunds: {
+        refundAsset: 'ZeitgeistPrimitivesAsset'
+      }
+    }
+  },
+  /**
+   * Lookup328: cumulus_pallet_parachain_system::pallet::Call<T>
    **/
   CumulusPalletParachainSystemCall: {
     _enum: {
@@ -3725,7 +3874,7 @@ export default {
     }
   },
   /**
-   * Lookup316: cumulus_primitives_parachain_inherent::ParachainInherentData
+   * Lookup329: cumulus_primitives_parachain_inherent::ParachainInherentData
    **/
   CumulusPrimitivesParachainInherentParachainInherentData: {
     validationData: 'PolkadotPrimitivesV2PersistedValidationData',
@@ -3734,7 +3883,7 @@ export default {
     horizontalMessages: 'BTreeMap<u32, Vec<PolkadotCorePrimitivesInboundHrmpMessage>>'
   },
   /**
-   * Lookup317: polkadot_primitives::v2::PersistedValidationData<primitive_types::H256, N>
+   * Lookup330: polkadot_primitives::v2::PersistedValidationData<primitive_types::H256, N>
    **/
   PolkadotPrimitivesV2PersistedValidationData: {
     parentHead: 'Bytes',
@@ -3743,27 +3892,27 @@ export default {
     maxPovSize: 'u32'
   },
   /**
-   * Lookup319: sp_trie::storage_proof::StorageProof
+   * Lookup332: sp_trie::storage_proof::StorageProof
    **/
   SpTrieStorageProof: {
     trieNodes: 'BTreeSet<Bytes>'
   },
   /**
-   * Lookup322: polkadot_core_primitives::InboundDownwardMessage<BlockNumber>
+   * Lookup335: polkadot_core_primitives::InboundDownwardMessage<BlockNumber>
    **/
   PolkadotCorePrimitivesInboundDownwardMessage: {
     sentAt: 'u32',
     msg: 'Bytes'
   },
   /**
-   * Lookup325: polkadot_core_primitives::InboundHrmpMessage<BlockNumber>
+   * Lookup338: polkadot_core_primitives::InboundHrmpMessage<BlockNumber>
    **/
   PolkadotCorePrimitivesInboundHrmpMessage: {
     sentAt: 'u32',
     data: 'Bytes'
   },
   /**
-   * Lookup328: pallet_parachain_staking::pallet::Call<T>
+   * Lookup341: pallet_parachain_staking::pallet::Call<T>
    **/
   PalletParachainStakingCall: {
     _enum: {
@@ -3887,13 +4036,13 @@ export default {
     }
   },
   /**
-   * Lookup331: pallet_author_inherent::pallet::Call<T>
+   * Lookup344: pallet_author_inherent::pallet::Call<T>
    **/
   PalletAuthorInherentCall: {
     _enum: ['kick_off_authorship_validation']
   },
   /**
-   * Lookup332: pallet_author_slot_filter::pallet::Call<T>
+   * Lookup345: pallet_author_slot_filter::pallet::Call<T>
    **/
   PalletAuthorSlotFilterCall: {
     _enum: {
@@ -3906,7 +4055,7 @@ export default {
     }
   },
   /**
-   * Lookup333: pallet_author_mapping::pallet::Call<T>
+   * Lookup346: pallet_author_mapping::pallet::Call<T>
    **/
   PalletAuthorMappingCall: {
     _enum: {
@@ -3930,7 +4079,7 @@ export default {
     }
   },
   /**
-   * Lookup334: cumulus_pallet_dmp_queue::pallet::Call<T>
+   * Lookup347: cumulus_pallet_dmp_queue::pallet::Call<T>
    **/
   CumulusPalletDmpQueueCall: {
     _enum: {
@@ -3941,7 +4090,7 @@ export default {
     }
   },
   /**
-   * Lookup335: pallet_xcm::pallet::Call<T>
+   * Lookup348: pallet_xcm::pallet::Call<T>
    **/
   PalletXcmCall: {
     _enum: {
@@ -3995,7 +4144,7 @@ export default {
     }
   },
   /**
-   * Lookup336: xcm::VersionedXcm<RuntimeCall>
+   * Lookup349: xcm::VersionedXcm<RuntimeCall>
    **/
   XcmVersionedXcm: {
     _enum: {
@@ -4006,11 +4155,11 @@ export default {
     }
   },
   /**
-   * Lookup337: xcm::v2::Xcm<RuntimeCall>
+   * Lookup350: xcm::v2::Xcm<RuntimeCall>
    **/
   XcmV2Xcm: 'Vec<XcmV2Instruction>',
   /**
-   * Lookup339: xcm::v2::Instruction<RuntimeCall>
+   * Lookup352: xcm::v2::Instruction<RuntimeCall>
    **/
   XcmV2Instruction: {
     _enum: {
@@ -4108,7 +4257,7 @@ export default {
     }
   },
   /**
-   * Lookup340: xcm::v2::Response
+   * Lookup353: xcm::v2::Response
    **/
   XcmV2Response: {
     _enum: {
@@ -4119,7 +4268,7 @@ export default {
     }
   },
   /**
-   * Lookup343: xcm::v2::traits::Error
+   * Lookup356: xcm::v2::traits::Error
    **/
   XcmV2TraitsError: {
     _enum: {
@@ -4152,7 +4301,7 @@ export default {
     }
   },
   /**
-   * Lookup344: xcm::v2::multiasset::MultiAssetFilter
+   * Lookup357: xcm::v2::multiasset::MultiAssetFilter
    **/
   XcmV2MultiassetMultiAssetFilter: {
     _enum: {
@@ -4161,7 +4310,7 @@ export default {
     }
   },
   /**
-   * Lookup345: xcm::v2::multiasset::WildMultiAsset
+   * Lookup358: xcm::v2::multiasset::WildMultiAsset
    **/
   XcmV2MultiassetWildMultiAsset: {
     _enum: {
@@ -4173,13 +4322,13 @@ export default {
     }
   },
   /**
-   * Lookup346: xcm::v2::multiasset::WildFungibility
+   * Lookup359: xcm::v2::multiasset::WildFungibility
    **/
   XcmV2MultiassetWildFungibility: {
     _enum: ['Fungible', 'NonFungible']
   },
   /**
-   * Lookup347: xcm::v2::WeightLimit
+   * Lookup360: xcm::v2::WeightLimit
    **/
   XcmV2WeightLimit: {
     _enum: {
@@ -4188,7 +4337,7 @@ export default {
     }
   },
   /**
-   * Lookup356: cumulus_pallet_xcmp_queue::pallet::Call<T>
+   * Lookup369: cumulus_pallet_xcmp_queue::pallet::Call<T>
    **/
   CumulusPalletXcmpQueueCall: {
     _enum: {
@@ -4237,7 +4386,7 @@ export default {
     }
   },
   /**
-   * Lookup357: orml_asset_registry::module::Call<T>
+   * Lookup370: orml_asset_registry::module::Call<T>
    **/
   OrmlAssetRegistryModuleCall: {
     _enum: {
@@ -4257,7 +4406,7 @@ export default {
     }
   },
   /**
-   * Lookup362: orml_xtokens::module::Call<T>
+   * Lookup375: orml_xtokens::module::Call<T>
    **/
   OrmlXtokensModuleCall: {
     _enum: {
@@ -4300,7 +4449,7 @@ export default {
     }
   },
   /**
-   * Lookup363: xcm::VersionedMultiAsset
+   * Lookup376: xcm::VersionedMultiAsset
    **/
   XcmVersionedMultiAsset: {
     _enum: {
@@ -4311,13 +4460,37 @@ export default {
     }
   },
   /**
-   * Lookup366: pallet_scheduler::pallet::Error<T>
+   * Lookup377: pallet_sudo::pallet::Call<T>
+   **/
+  PalletSudoCall: {
+    _enum: {
+      sudo: {
+        call: 'Call',
+      },
+      sudo_unchecked_weight: {
+        call: 'Call',
+        weight: 'SpWeightsWeightV2Weight',
+      },
+      set_key: {
+        _alias: {
+          new_: 'new',
+        },
+        new_: 'MultiAddress',
+      },
+      sudo_as: {
+        who: 'MultiAddress',
+        call: 'Call'
+      }
+    }
+  },
+  /**
+   * Lookup380: pallet_scheduler::pallet::Error<T>
    **/
   PalletSchedulerError: {
     _enum: ['FailedToSchedule', 'NotFound', 'TargetBlockNumberInPast', 'RescheduleNoChange', 'Named']
   },
   /**
-   * Lookup367: pallet_preimage::RequestStatus<sp_core::crypto::AccountId32, Balance>
+   * Lookup381: pallet_preimage::RequestStatus<sp_core::crypto::AccountId32, Balance>
    **/
   PalletPreimageRequestStatus: {
     _enum: {
@@ -4333,13 +4506,13 @@ export default {
     }
   },
   /**
-   * Lookup371: pallet_preimage::pallet::Error<T>
+   * Lookup385: pallet_preimage::pallet::Error<T>
    **/
   PalletPreimageError: {
     _enum: ['TooBig', 'AlreadyNoted', 'NotAuthorized', 'NotNoted', 'Requested', 'NotRequested']
   },
   /**
-   * Lookup373: pallet_balances::BalanceLock<Balance>
+   * Lookup387: pallet_balances::BalanceLock<Balance>
    **/
   PalletBalancesBalanceLock: {
     id: '[u8;8]',
@@ -4347,32 +4520,32 @@ export default {
     reasons: 'PalletBalancesReasons'
   },
   /**
-   * Lookup374: pallet_balances::Reasons
+   * Lookup388: pallet_balances::Reasons
    **/
   PalletBalancesReasons: {
     _enum: ['Fee', 'Misc', 'All']
   },
   /**
-   * Lookup377: pallet_balances::ReserveData<ReserveIdentifier, Balance>
+   * Lookup391: pallet_balances::ReserveData<ReserveIdentifier, Balance>
    **/
   PalletBalancesReserveData: {
     id: '[u8;8]',
     amount: 'u128'
   },
   /**
-   * Lookup379: pallet_balances::pallet::Error<T, I>
+   * Lookup393: pallet_balances::pallet::Error<T, I>
    **/
   PalletBalancesError: {
     _enum: ['VestingBalance', 'LiquidityRestrictions', 'InsufficientBalance', 'ExistentialDeposit', 'KeepAlive', 'ExistingVestingSchedule', 'DeadAccount', 'TooManyReserves']
   },
   /**
-   * Lookup381: pallet_transaction_payment::Releases
+   * Lookup395: pallet_transaction_payment::Releases
    **/
   PalletTransactionPaymentReleases: {
     _enum: ['V1Ancient', 'V2']
   },
   /**
-   * Lookup382: pallet_treasury::Proposal<sp_core::crypto::AccountId32, Balance>
+   * Lookup396: pallet_treasury::Proposal<sp_core::crypto::AccountId32, Balance>
    **/
   PalletTreasuryProposal: {
     proposer: 'AccountId32',
@@ -4381,29 +4554,29 @@ export default {
     bond: 'u128'
   },
   /**
-   * Lookup386: frame_support::PalletId
+   * Lookup400: frame_support::PalletId
    **/
   FrameSupportPalletId: '[u8;8]',
   /**
-   * Lookup387: pallet_treasury::pallet::Error<T, I>
+   * Lookup401: pallet_treasury::pallet::Error<T, I>
    **/
   PalletTreasuryError: {
     _enum: ['InsufficientProposersBalance', 'InvalidIndex', 'TooManyApprovals', 'InsufficientPermission', 'ProposalNotApproved']
   },
   /**
-   * Lookup390: pallet_vesting::Releases
+   * Lookup404: pallet_vesting::Releases
    **/
   PalletVestingReleases: {
     _enum: ['V0', 'V1']
   },
   /**
-   * Lookup391: pallet_vesting::pallet::Error<T>
+   * Lookup405: pallet_vesting::pallet::Error<T>
    **/
   PalletVestingError: {
     _enum: ['NotVesting', 'AtMaxVestingSchedules', 'AmountLow', 'ScheduleIndexOutOfBounds', 'InvalidScheduleParams']
   },
   /**
-   * Lookup393: pallet_multisig::Multisig<BlockNumber, Balance, sp_core::crypto::AccountId32, MaxApprovals>
+   * Lookup407: pallet_multisig::Multisig<BlockNumber, Balance, sp_core::crypto::AccountId32, MaxApprovals>
    **/
   PalletMultisigMultisig: {
     when: 'PalletMultisigTimepoint',
@@ -4412,13 +4585,13 @@ export default {
     approvals: 'Vec<AccountId32>'
   },
   /**
-   * Lookup395: pallet_multisig::pallet::Error<T>
+   * Lookup409: pallet_multisig::pallet::Error<T>
    **/
   PalletMultisigError: {
     _enum: ['MinimumThreshold', 'AlreadyApproved', 'NoApprovalsNeeded', 'TooFewSignatories', 'TooManySignatories', 'SignatoriesOutOfOrder', 'SenderInSignatories', 'NotFound', 'NotOwner', 'NoTimepoint', 'WrongTimepoint', 'UnexpectedTimepoint', 'MaxWeightTooLow', 'AlreadyStored']
   },
   /**
-   * Lookup396: pallet_bounties::Bounty<sp_core::crypto::AccountId32, Balance, BlockNumber>
+   * Lookup410: pallet_bounties::Bounty<sp_core::crypto::AccountId32, Balance, BlockNumber>
    **/
   PalletBountiesBounty: {
     proposer: 'AccountId32',
@@ -4429,7 +4602,7 @@ export default {
     status: 'PalletBountiesBountyStatus'
   },
   /**
-   * Lookup397: pallet_bounties::BountyStatus<sp_core::crypto::AccountId32, BlockNumber>
+   * Lookup411: pallet_bounties::BountyStatus<sp_core::crypto::AccountId32, BlockNumber>
    **/
   PalletBountiesBountyStatus: {
     _enum: {
@@ -4451,13 +4624,13 @@ export default {
     }
   },
   /**
-   * Lookup399: pallet_bounties::pallet::Error<T, I>
+   * Lookup413: pallet_bounties::pallet::Error<T, I>
    **/
   PalletBountiesError: {
     _enum: ['InsufficientProposersBalance', 'InvalidIndex', 'ReasonTooBig', 'UnexpectedStatus', 'RequireCurator', 'InvalidValue', 'InvalidFee', 'PendingPayout', 'Premature', 'HasActiveChildBounty', 'TooManyQueued']
   },
   /**
-   * Lookup404: pallet_democracy::types::ReferendumInfo<BlockNumber, frame_support::traits::preimages::Bounded<zeitgeist_runtime::RuntimeCall>, Balance>
+   * Lookup418: pallet_democracy::types::ReferendumInfo<BlockNumber, frame_support::traits::preimages::Bounded<battery_station_runtime::RuntimeCall>, Balance>
    **/
   PalletDemocracyReferendumInfo: {
     _enum: {
@@ -4469,7 +4642,7 @@ export default {
     }
   },
   /**
-   * Lookup405: pallet_democracy::types::ReferendumStatus<BlockNumber, frame_support::traits::preimages::Bounded<zeitgeist_runtime::RuntimeCall>, Balance>
+   * Lookup419: pallet_democracy::types::ReferendumStatus<BlockNumber, frame_support::traits::preimages::Bounded<battery_station_runtime::RuntimeCall>, Balance>
    **/
   PalletDemocracyReferendumStatus: {
     end: 'u64',
@@ -4479,7 +4652,7 @@ export default {
     tally: 'PalletDemocracyTally'
   },
   /**
-   * Lookup406: pallet_democracy::types::Tally<Balance>
+   * Lookup420: pallet_democracy::types::Tally<Balance>
    **/
   PalletDemocracyTally: {
     ayes: 'u128',
@@ -4487,7 +4660,7 @@ export default {
     turnout: 'u128'
   },
   /**
-   * Lookup407: pallet_democracy::vote::Voting<Balance, sp_core::crypto::AccountId32, BlockNumber, MaxVotes>
+   * Lookup421: pallet_democracy::vote::Voting<Balance, sp_core::crypto::AccountId32, BlockNumber, MaxVotes>
    **/
   PalletDemocracyVoteVoting: {
     _enum: {
@@ -4506,24 +4679,24 @@ export default {
     }
   },
   /**
-   * Lookup411: pallet_democracy::types::Delegations<Balance>
+   * Lookup425: pallet_democracy::types::Delegations<Balance>
    **/
   PalletDemocracyDelegations: {
     votes: 'u128',
     capital: 'u128'
   },
   /**
-   * Lookup412: pallet_democracy::vote::PriorLock<BlockNumber, Balance>
+   * Lookup426: pallet_democracy::vote::PriorLock<BlockNumber, Balance>
    **/
   PalletDemocracyVotePriorLock: '(u64,u128)',
   /**
-   * Lookup415: pallet_democracy::pallet::Error<T>
+   * Lookup429: pallet_democracy::pallet::Error<T>
    **/
   PalletDemocracyError: {
     _enum: ['ValueLow', 'ProposalMissing', 'AlreadyCanceled', 'DuplicateProposal', 'ProposalBlacklisted', 'NotSimpleMajority', 'InvalidHash', 'NoProposal', 'AlreadyVetoed', 'ReferendumInvalid', 'NoneWaiting', 'NotVoter', 'NoPermission', 'AlreadyDelegating', 'InsufficientFunds', 'NotDelegating', 'VotesExist', 'InstantNotAllowed', 'Nonsense', 'WrongUpperBound', 'MaxVotesReached', 'TooMany', 'VotingPeriodLow']
   },
   /**
-   * Lookup417: pallet_collective::Votes<sp_core::crypto::AccountId32, BlockNumber>
+   * Lookup431: pallet_collective::Votes<sp_core::crypto::AccountId32, BlockNumber>
    **/
   PalletCollectiveVotes: {
     index: 'u32',
@@ -4533,19 +4706,19 @@ export default {
     end: 'u64'
   },
   /**
-   * Lookup418: pallet_collective::pallet::Error<T, I>
+   * Lookup432: pallet_collective::pallet::Error<T, I>
    **/
   PalletCollectiveError: {
     _enum: ['NotMember', 'DuplicateProposal', 'ProposalMissing', 'WrongIndex', 'DuplicateVote', 'AlreadyInitialized', 'TooEarly', 'TooManyProposals', 'WrongProposalWeight', 'WrongProposalLength']
   },
   /**
-   * Lookup420: pallet_membership::pallet::Error<T, I>
+   * Lookup434: pallet_membership::pallet::Error<T, I>
    **/
   PalletMembershipError: {
     _enum: ['AlreadyMember', 'NotMember', 'TooManyMembers']
   },
   /**
-   * Lookup429: pallet_identity::types::Registration<Balance, MaxJudgements, MaxAdditionalFields>
+   * Lookup443: pallet_identity::types::Registration<Balance, MaxJudgements, MaxAdditionalFields>
    **/
   PalletIdentityRegistration: {
     judgements: 'Vec<(u32,PalletIdentityJudgement)>',
@@ -4553,7 +4726,7 @@ export default {
     info: 'PalletIdentityIdentityInfo'
   },
   /**
-   * Lookup437: pallet_identity::types::RegistrarInfo<Balance, sp_core::crypto::AccountId32>
+   * Lookup451: pallet_identity::types::RegistrarInfo<Balance, sp_core::crypto::AccountId32>
    **/
   PalletIdentityRegistrarInfo: {
     account: 'AccountId32',
@@ -4561,19 +4734,19 @@ export default {
     fields: 'PalletIdentityBitFlags'
   },
   /**
-   * Lookup439: pallet_identity::pallet::Error<T>
+   * Lookup453: pallet_identity::pallet::Error<T>
    **/
   PalletIdentityError: {
     _enum: ['TooManySubAccounts', 'NotFound', 'NotNamed', 'EmptyIndex', 'FeeChanged', 'NoIdentity', 'StickyJudgement', 'JudgementGiven', 'InvalidJudgement', 'InvalidIndex', 'InvalidTarget', 'TooManyFields', 'TooManyRegistrars', 'AlreadyClaimed', 'NotSub', 'NotOwned', 'JudgementForDifferentIdentity', 'JudgementPaymentFailed']
   },
   /**
-   * Lookup440: pallet_utility::pallet::Error<T>
+   * Lookup454: pallet_utility::pallet::Error<T>
    **/
   PalletUtilityError: {
     _enum: ['TooManyCalls']
   },
   /**
-   * Lookup443: pallet_proxy::ProxyDefinition<sp_core::crypto::AccountId32, zeitgeist_primitives::proxy_type::ProxyType, BlockNumber>
+   * Lookup457: pallet_proxy::ProxyDefinition<sp_core::crypto::AccountId32, zeitgeist_primitives::proxy_type::ProxyType, BlockNumber>
    **/
   PalletProxyProxyDefinition: {
     delegate: 'AccountId32',
@@ -4581,7 +4754,7 @@ export default {
     delay: 'u64'
   },
   /**
-   * Lookup447: pallet_proxy::Announcement<sp_core::crypto::AccountId32, primitive_types::H256, BlockNumber>
+   * Lookup461: pallet_proxy::Announcement<sp_core::crypto::AccountId32, primitive_types::H256, BlockNumber>
    **/
   PalletProxyAnnouncement: {
     real: 'AccountId32',
@@ -4589,13 +4762,13 @@ export default {
     height: 'u64'
   },
   /**
-   * Lookup449: pallet_proxy::pallet::Error<T>
+   * Lookup463: pallet_proxy::pallet::Error<T>
    **/
   PalletProxyError: {
     _enum: ['TooMany', 'NotFound', 'NotProxy', 'Unproxyable', 'Duplicate', 'NoPermission', 'Unannounced', 'NoSelfProxy']
   },
   /**
-   * Lookup451: pallet_contracts::wasm::PrefabWasmModule<T>
+   * Lookup465: pallet_contracts::wasm::PrefabWasmModule<T>
    **/
   PalletContractsWasmPrefabWasmModule: {
     instructionWeightsVersion: 'Compact<u32>',
@@ -4605,7 +4778,7 @@ export default {
     determinism: 'PalletContractsWasmDeterminism'
   },
   /**
-   * Lookup453: pallet_contracts::wasm::OwnerInfo<T>
+   * Lookup467: pallet_contracts::wasm::OwnerInfo<T>
    **/
   PalletContractsWasmOwnerInfo: {
     owner: 'AccountId32',
@@ -4613,7 +4786,7 @@ export default {
     refcount: 'Compact<u64>'
   },
   /**
-   * Lookup454: pallet_contracts::storage::ContractInfo<T>
+   * Lookup468: pallet_contracts::storage::ContractInfo<T>
    **/
   PalletContractsStorageContractInfo: {
     trieId: 'Bytes',
@@ -4625,13 +4798,13 @@ export default {
     storageBaseDeposit: 'u128'
   },
   /**
-   * Lookup456: pallet_contracts::storage::DeletedContract
+   * Lookup470: pallet_contracts::storage::DeletedContract
    **/
   PalletContractsStorageDeletedContract: {
     trieId: 'Bytes'
   },
   /**
-   * Lookup458: pallet_contracts::schedule::Schedule<T>
+   * Lookup472: pallet_contracts::schedule::Schedule<T>
    **/
   PalletContractsSchedule: {
     limits: 'PalletContractsScheduleLimits',
@@ -4639,7 +4812,7 @@ export default {
     hostFnWeights: 'PalletContractsScheduleHostFnWeights'
   },
   /**
-   * Lookup459: pallet_contracts::schedule::Limits
+   * Lookup473: pallet_contracts::schedule::Limits
    **/
   PalletContractsScheduleLimits: {
     eventTopics: 'u32',
@@ -4653,7 +4826,7 @@ export default {
     payloadLen: 'u32'
   },
   /**
-   * Lookup460: pallet_contracts::schedule::InstructionWeights<T>
+   * Lookup474: pallet_contracts::schedule::InstructionWeights<T>
    **/
   PalletContractsScheduleInstructionWeights: {
     _alias: {
@@ -4715,7 +4888,7 @@ export default {
     i64rotr: 'u32'
   },
   /**
-   * Lookup461: pallet_contracts::schedule::HostFnWeights<T>
+   * Lookup475: pallet_contracts::schedule::HostFnWeights<T>
    **/
   PalletContractsScheduleHostFnWeights: {
     _alias: {
@@ -4781,26 +4954,26 @@ export default {
     instantiationNonce: 'SpWeightsWeightV2Weight'
   },
   /**
-   * Lookup462: pallet_contracts::pallet::Error<T>
+   * Lookup476: pallet_contracts::pallet::Error<T>
    **/
   PalletContractsError: {
     _enum: ['InvalidScheduleVersion', 'InvalidCallFlags', 'OutOfGas', 'OutputBufferTooSmall', 'TransferFailed', 'MaxCallDepthReached', 'ContractNotFound', 'CodeTooLarge', 'CodeNotFound', 'OutOfBounds', 'DecodingFailed', 'ContractTrapped', 'ValueTooLarge', 'TerminatedWhileReentrant', 'InputForwarded', 'RandomSubjectTooLong', 'TooManyTopics', 'NoChainExtension', 'DeletionQueueFull', 'DuplicateContract', 'TerminatedInConstructor', 'DebugMessageInvalidUTF8', 'ReentranceDenied', 'StorageDepositNotEnoughFunds', 'StorageDepositLimitExhausted', 'CodeInUse', 'ContractReverted', 'CodeRejected', 'Indeterministic']
   },
   /**
-   * Lookup463: orml_currencies::module::Error<T>
+   * Lookup477: orml_currencies::module::Error<T>
    **/
   OrmlCurrenciesModuleError: {
     _enum: ['AmountIntoBalanceFailed', 'BalanceTooLow', 'DepositFailed']
   },
   /**
-   * Lookup466: orml_tokens::BalanceLock<Balance>
+   * Lookup480: orml_tokens::BalanceLock<Balance>
    **/
   OrmlTokensBalanceLock: {
     id: '[u8;8]',
     amount: 'u128'
   },
   /**
-   * Lookup468: orml_tokens::AccountData<Balance>
+   * Lookup482: orml_tokens::AccountData<Balance>
    **/
   OrmlTokensAccountData: {
     free: 'u128',
@@ -4808,39 +4981,39 @@ export default {
     frozen: 'u128'
   },
   /**
-   * Lookup470: orml_tokens::ReserveData<ReserveIdentifier, Balance>
+   * Lookup484: orml_tokens::ReserveData<ReserveIdentifier, Balance>
    **/
   OrmlTokensReserveData: {
     id: '[u8;8]',
     amount: 'u128'
   },
   /**
-   * Lookup472: orml_tokens::module::Error<T>
+   * Lookup486: orml_tokens::module::Error<T>
    **/
   OrmlTokensModuleError: {
     _enum: ['BalanceTooLow', 'AmountIntoBalanceFailed', 'LiquidityRestrictions', 'MaxLocksExceeded', 'KeepAlive', 'ExistentialDeposit', 'DeadAccount', 'TooManyReserves']
   },
   /**
-   * Lookup473: zrml_market_commons::pallet::Error<T>
+   * Lookup487: zrml_market_commons::pallet::Error<T>
    **/
   ZrmlMarketCommonsError: {
     _enum: ['MarketDoesNotExist', 'MarketPoolDoesNotExist', 'NoMarketHasBeenCreated', 'NoReport', 'PoolAlreadyExists']
   },
   /**
-   * Lookup474: zeitgeist_primitives::market::AuthorityReport<BlockNumber>
+   * Lookup488: zeitgeist_primitives::market::AuthorityReport<BlockNumber>
    **/
   ZeitgeistPrimitivesMarketAuthorityReport: {
     resolveAt: 'u64',
     outcome: 'ZeitgeistPrimitivesOutcomeReport'
   },
   /**
-   * Lookup475: zrml_authorized::pallet::Error<T>
+   * Lookup489: zrml_authorized::pallet::Error<T>
    **/
   ZrmlAuthorizedError: {
     _enum: ['MarketDoesNotHaveDisputeMechanismAuthorized', 'MarketIsNotDisputed', 'OutcomeMismatch']
   },
   /**
-   * Lookup477: zrml_court::types::CourtPoolItem<sp_core::crypto::AccountId32, Balance, BlockNumber>
+   * Lookup491: zrml_court::types::CourtPoolItem<sp_core::crypto::AccountId32, Balance, BlockNumber>
    **/
   ZrmlCourtCourtPoolItem: {
     stake: 'u128',
@@ -4849,7 +5022,7 @@ export default {
     joinedAt: 'u64'
   },
   /**
-   * Lookup479: zrml_court::types::CourtParticipantInfo<Balance, BlockNumber, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
+   * Lookup493: zrml_court::types::CourtParticipantInfo<Balance, BlockNumber, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
    **/
   ZrmlCourtCourtParticipantInfo: {
     stake: 'u128',
@@ -4858,7 +5031,7 @@ export default {
     delegations: 'Option<Vec<AccountId32>>'
   },
   /**
-   * Lookup484: zrml_court::types::Draw<sp_core::crypto::AccountId32, Balance, primitive_types::H256, sp_core::bounded::bounded_vec::BoundedVec<T, S>>
+   * Lookup498: zrml_court::types::Draw<sp_core::crypto::AccountId32, Balance, primitive_types::H256, sp_core::bounded::bounded_vec::BoundedVec<T, S>>
    **/
   ZrmlCourtDraw: {
     courtParticipant: 'AccountId32',
@@ -4867,7 +5040,7 @@ export default {
     slashable: 'u128'
   },
   /**
-   * Lookup486: zrml_court::types::Vote<primitive_types::H256, sp_core::bounded::bounded_vec::BoundedVec<T, S>>
+   * Lookup500: zrml_court::types::Vote<primitive_types::H256, sp_core::bounded::bounded_vec::BoundedVec<T, S>>
    **/
   ZrmlCourtVote: {
     _enum: {
@@ -4891,57 +5064,13 @@ export default {
     }
   },
   /**
-   * Lookup488: zrml_court::types::CourtInfo<BlockNumber, sp_core::bounded::bounded_vec::BoundedVec<zrml_court::types::AppealInfo<sp_core::crypto::AccountId32, Balance>, S>>
-   **/
-  ZrmlCourtCourtInfo: {
-    status: 'ZrmlCourtCourtStatus',
-    appeals: 'Vec<ZrmlCourtAppealInfo>',
-    roundEnds: 'ZrmlCourtRoundTiming',
-    voteItemType: 'ZrmlCourtVoteItemType'
-  },
-  /**
-   * Lookup490: zrml_court::types::AppealInfo<sp_core::crypto::AccountId32, Balance>
-   **/
-  ZrmlCourtAppealInfo: {
-    backer: 'AccountId32',
-    bond: 'u128',
-    appealedVoteItem: 'ZrmlCourtVoteItem'
-  },
-  /**
-   * Lookup492: zrml_court::types::CourtStatus
-   **/
-  ZrmlCourtCourtStatus: {
-    _enum: {
-      Open: 'Null',
-      Closed: {
-        winner: 'ZrmlCourtVoteItem',
-      },
-      Reassigned: 'Null'
-    }
-  },
-  /**
-   * Lookup493: zrml_court::types::RoundTiming<BlockNumber>
-   **/
-  ZrmlCourtRoundTiming: {
-    preVote: 'u64',
-    vote: 'u64',
-    aggregation: 'u64',
-    appeal: 'u64'
-  },
-  /**
-   * Lookup494: zrml_court::types::VoteItemType
-   **/
-  ZrmlCourtVoteItemType: {
-    _enum: ['Outcome', 'Binary']
-  },
-  /**
-   * Lookup495: zrml_court::pallet::Error<T>
+   * Lookup502: zrml_court::pallet::Error<T>
    **/
   ZrmlCourtError: {
     _enum: ['JurorDoesNotExist', 'MarketDoesNotHaveCourtMechanism', 'MarketIsNotDisputed', 'CallerIsNotACourtParticipant', 'VoteAlreadyRevealed', 'CommitmentHashMismatch', 'CourtNotFound', 'NotInVotingPeriod', 'NotInAggregationPeriod', 'MaxAppealsReached', 'NotInAppealPeriod', 'InvalidVoteState', 'BelowMinJurorStake', 'MaxCourtParticipantsReached', 'AlreadyPreparedExit', 'JurorNotDrawn', 'JurorDidNotVote', 'VoteAlreadyDenounced', 'CallerDenouncedItself', 'CourtNotClosed', 'CourtAlreadyReassigned', 'NotEnoughJurorsAndDelegatorsStake', 'MarketReportNotFound', 'MaxCourtIdReached', 'AmountExceedsBalance', 'AmountBelowLastJoin', 'AmountBelowLowestJuror', 'CourtParticipantTwiceInPool', 'CallerNotInSelectedDraws', 'AppealBondExceedsBalance', 'PrematureExit', 'PrepareExitAtNotPresent', 'MaxDelegationsReached', 'JurorDelegated', 'SelfDelegationNotAllowed', 'IdenticalDelegationsNotAllowed', 'NoDelegations', 'DelegatedToInvalidJuror', 'MarketIdToCourtIdNotFound', 'CourtIdToMarketIdNotFound', 'InvalidVoteItemForOutcomeCourt', 'InvalidVoteItemForBinaryCourt', 'AppealedVoteItemIsNoOutcome', 'WinnerVoteItemIsNoOutcome', 'OutcomeMismatch', 'VoteItemIsNoOutcome']
   },
   /**
-   * Lookup497: zrml_liquidity_mining::owned_values_params::OwnedValuesParams<BA, BN>
+   * Lookup504: zrml_liquidity_mining::owned_values_params::OwnedValuesParams<BA, BN>
    **/
   ZrmlLiquidityMiningOwnedValuesParams: {
     participatedBlocks: 'u64',
@@ -4950,13 +5079,13 @@ export default {
     totalShares: 'u128'
   },
   /**
-   * Lookup498: zrml_liquidity_mining::pallet::Error<T>
+   * Lookup505: zrml_liquidity_mining::pallet::Error<T>
    **/
   ZrmlLiquidityMiningError: {
     _enum: ['FundDoesNotHaveEnoughBalance']
   },
   /**
-   * Lookup499: zrml_rikiddo::types::rikiddo_sigmoid_mv::RikiddoSigmoidMV<substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>, substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>, zrml_rikiddo::types::sigmoid_fee::FeeSigmoid<substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>, zrml_rikiddo::types::ema_market_volume::EmaMarketVolume<substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>>
+   * Lookup506: zrml_rikiddo::types::rikiddo_sigmoid_mv::RikiddoSigmoidMV<substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>, substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>, zrml_rikiddo::types::sigmoid_fee::FeeSigmoid<substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>, zrml_rikiddo::types::ema_market_volume::EmaMarketVolume<substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>>
    **/
   ZrmlRikiddoRikiddoSigmoidMV: {
     config: 'ZrmlRikiddoRikiddoSigmoidMvRikiddoConfig',
@@ -4965,51 +5094,51 @@ export default {
     maLong: 'ZrmlRikiddoEmaMarketVolume'
   },
   /**
-   * Lookup500: substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>
+   * Lookup507: substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>
    **/
   SubstrateFixedFixedU128: {
     bits: 'u128'
   },
   /**
-   * Lookup505: typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>
+   * Lookup512: typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>
    **/
   TypenumUIntUInt: {
     msb: 'TypenumUIntUTerm',
     lsb: 'TypenumBitB0'
   },
   /**
-   * Lookup506: typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>
+   * Lookup513: typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>
    **/
   TypenumUIntUTerm: {
     msb: 'TypenumUintUTerm',
     lsb: 'TypenumBitB1'
   },
   /**
-   * Lookup507: typenum::uint::UTerm
+   * Lookup514: typenum::uint::UTerm
    **/
   TypenumUintUTerm: 'Null',
   /**
-   * Lookup508: typenum::bit::B1
+   * Lookup515: typenum::bit::B1
    **/
   TypenumBitB1: 'Null',
   /**
-   * Lookup509: typenum::bit::B0
+   * Lookup516: typenum::bit::B0
    **/
   TypenumBitB0: 'Null',
   /**
-   * Lookup510: substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>
+   * Lookup517: substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>
    **/
   SubstrateFixedFixedI128: {
     bits: 'i128'
   },
   /**
-   * Lookup511: zrml_rikiddo::types::sigmoid_fee::FeeSigmoid<substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
+   * Lookup518: zrml_rikiddo::types::sigmoid_fee::FeeSigmoid<substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
    **/
   ZrmlRikiddoSigmoidFeeFeeSigmoid: {
     config: 'ZrmlRikiddoSigmoidFeeFeeSigmoidConfig'
   },
   /**
-   * Lookup512: zrml_rikiddo::types::sigmoid_fee::FeeSigmoidConfig<substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
+   * Lookup519: zrml_rikiddo::types::sigmoid_fee::FeeSigmoidConfig<substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
    **/
   ZrmlRikiddoSigmoidFeeFeeSigmoidConfig: {
     m: 'SubstrateFixedFixedI128',
@@ -5019,7 +5148,7 @@ export default {
     minRevenue: 'SubstrateFixedFixedI128'
   },
   /**
-   * Lookup513: zrml_rikiddo::types::ema_market_volume::EmaMarketVolume<substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
+   * Lookup520: zrml_rikiddo::types::ema_market_volume::EmaMarketVolume<substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
    **/
   ZrmlRikiddoEmaMarketVolume: {
     config: 'ZrmlRikiddoEmaMarketVolumeEmaConfig',
@@ -5031,7 +5160,7 @@ export default {
     volumesPerPeriod: 'SubstrateFixedFixedU128'
   },
   /**
-   * Lookup514: zrml_rikiddo::types::ema_market_volume::EmaConfig<substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
+   * Lookup521: zrml_rikiddo::types::ema_market_volume::EmaConfig<substrate_fixed::FixedU128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
    **/
   ZrmlRikiddoEmaMarketVolumeEmaConfig: {
     emaPeriod: 'ZrmlRikiddoTimespan',
@@ -5039,7 +5168,7 @@ export default {
     smoothing: 'SubstrateFixedFixedU128'
   },
   /**
-   * Lookup515: zrml_rikiddo::types::Timespan
+   * Lookup522: zrml_rikiddo::types::Timespan
    **/
   ZrmlRikiddoTimespan: {
     _enum: {
@@ -5051,38 +5180,38 @@ export default {
     }
   },
   /**
-   * Lookup517: zrml_rikiddo::types::ema_market_volume::MarketVolumeState
+   * Lookup524: zrml_rikiddo::types::ema_market_volume::MarketVolumeState
    **/
   ZrmlRikiddoEmaMarketVolumeMarketVolumeState: {
     _enum: ['Uninitialized', 'DataCollectionStarted', 'DataCollected']
   },
   /**
-   * Lookup518: zrml_rikiddo::types::rikiddo_sigmoid_mv::RikiddoConfig<substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
+   * Lookup525: zrml_rikiddo::types::rikiddo_sigmoid_mv::RikiddoConfig<substrate_fixed::FixedI128<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UInt<typenum::uint::UTerm, typenum::bit::B1>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B0>, typenum::bit::B1>>>
    **/
   ZrmlRikiddoRikiddoSigmoidMvRikiddoConfig: {
     initialFee: 'SubstrateFixedFixedI128',
     log2E: 'SubstrateFixedFixedI128'
   },
   /**
-   * Lookup519: zrml_rikiddo::pallet::Error<T, I>
+   * Lookup526: zrml_rikiddo::pallet::Error<T, I>
    **/
   ZrmlRikiddoError: {
     _enum: ['FixedConversionImpossible', 'RikiddoNotFoundForPool', 'RikiddoAlreadyExistsForPool']
   },
   /**
-   * Lookup522: zrml_simple_disputes::pallet::Error<T>
+   * Lookup529: zrml_simple_disputes::pallet::Error<T>
    **/
   ZrmlSimpleDisputesError: {
     _enum: ['InvalidMarketStatus', 'MarketDoesNotHaveSimpleDisputesMechanism', 'StorageOverflow', 'OutcomeMismatch', 'CannotDisputeSameOutcome', 'MarketIsNotReported', 'MaxDisputesReached']
   },
   /**
-   * Lookup524: zrml_swaps::pallet::Error<T>
+   * Lookup531: zrml_swaps::pallet::Error<T>
    **/
   ZrmlSwapsError: {
     _enum: ['AboveMaximumWeight', 'AssetNotBound', 'AssetNotInPool', 'BaseAssetNotFound', 'BadLimitPrice', 'BelowMinimumWeight', 'InsufficientBalance', 'InsufficientLiquidity', 'InsufficientSubsidy', 'InvalidAmountArgument', 'InvalidFeeArgument', 'InvalidPoolStatus', 'InvalidScoringRule', 'InvalidStateTransition', 'InvalidWeightArgument', 'LimitIn', 'InvalidSubsidyAmount', 'LimitMissing', 'LimitOut', 'MathApproximation', 'MaxInRatio', 'MaxOutRatio', 'MaxTotalWeight', 'NoSubsidyProvided', 'PoolDoesNotExist', 'PoolDrain', 'PoolIsNotActive', 'PoolMissingFee', 'PoolMissingSubsidy', 'PoolMissingWeight', 'ProvidedValuesLenMustEqualAssetsLen', 'SwapFeeMissing', 'SwapFeeTooHigh', 'TooFewAssets', 'TooManyAssets', 'SomeIdenticalAssets', 'UnsupportedTrade', 'WinningAssetNotFound', 'ZeroAmount']
   },
   /**
-   * Lookup526: zeitgeist_primitives::market::OldMarketDispute<sp_core::crypto::AccountId32, BlockNumber>
+   * Lookup533: zeitgeist_primitives::market::OldMarketDispute<sp_core::crypto::AccountId32, BlockNumber>
    **/
   ZeitgeistPrimitivesMarketOldMarketDispute: {
     at: 'u64',
@@ -5090,33 +5219,33 @@ export default {
     outcome: 'ZeitgeistPrimitivesOutcomeReport'
   },
   /**
-   * Lookup530: zeitgeist_primitives::market::SubsidyUntil<BN, MO, MI>
+   * Lookup537: zeitgeist_primitives::market::SubsidyUntil<BN, MO, MI>
    **/
   ZeitgeistPrimitivesMarketSubsidyUntil: {
     marketId: 'u128',
     period: 'ZeitgeistPrimitivesMarketMarketPeriod'
   },
   /**
-   * Lookup532: zrml_prediction_markets::pallet::Error<T>
+   * Lookup539: zrml_prediction_markets::pallet::Error<T>
    **/
   ZrmlPredictionMarketsError: {
-    _enum: ['CannotDisputeSameOutcome', 'EditorNotCreator', 'EditReasonLengthExceedsMaxEditReasonLen', 'InsufficientFundsInMarketAccount', 'InsufficientShareBalance', 'InvalidMultihash', 'InvalidMarketType', 'InvalidScoringRule', 'NotEnoughBalance', 'MarketAlreadyReported', 'MarketDurationTooLong', 'MarketEditRequestAlreadyInProgress', 'MarketEditNotRequested', 'MarketIsNotActive', 'MarketIsNotClosed', 'MarketIsNotCollectingSubsidy', 'MarketIsNotProposed', 'MarketIsNotReported', 'MarketIsNotDisputed', 'MarketIsNotResolved', 'MarketStartTooSoon', 'MarketStartTooLate', 'MarketDisputeMechanismNotFailed', 'MissingBond', 'NotEnoughCategories', 'NoWinningBalance', 'OutcomeMismatch', 'RejectReasonLengthExceedsMaxRejectReasonLen', 'ReporterNotOracle', 'StorageOverflow', 'TooManyCategories', 'InvalidDisputeMechanism', 'InvalidMarketStatus', 'UnexpectedNoneInPostInfo', 'ZeroAmount', 'InvalidMarketPeriod', 'InvalidOutcomeRange', 'NotAllowedToReportYet', 'DisputeDurationSmallerThanMinDisputeDuration', 'OracleDurationSmallerThanMinOracleDuration', 'DisputeDurationGreaterThanMaxDisputeDuration', 'GracePeriodGreaterThanMaxGracePeriod', 'OracleDurationGreaterThanMaxOracleDuration', 'WeightsLenMustEqualAssetsLen', 'InvalidBaseAsset', 'UnregisteredForeignAsset', 'GlobalDisputeExistsAlready', 'NoDisputeMechanism', 'NonZeroDisputePeriodOnTrustedMarket', 'FeeTooHigh']
+    _enum: ['CannotDisputeSameOutcome', 'EditorNotCreator', 'EditReasonLengthExceedsMaxEditReasonLen', 'InsufficientFundsInMarketAccount', 'InsufficientShareBalance', 'InvalidMultihash', 'InvalidMarketType', 'InvalidScoringRule', 'NotEnoughBalance', 'MarketAlreadyReported', 'MarketDurationTooLong', 'MarketEditRequestAlreadyInProgress', 'MarketEditNotRequested', 'MarketIsNotActive', 'MarketIsNotClosed', 'MarketIsNotCollectingSubsidy', 'MarketIsNotProposed', 'MarketIsNotReported', 'MarketIsNotDisputed', 'MarketIsNotResolved', 'MarketStartTooSoon', 'MarketStartTooLate', 'MarketDisputeMechanismNotFailed', 'MissingBond', 'NotEnoughCategories', 'NoWinningBalance', 'OutcomeMismatch', 'RejectReasonLengthExceedsMaxRejectReasonLen', 'ReporterNotOracle', 'StorageOverflow', 'TooManyCategories', 'InvalidDisputeMechanism', 'InvalidMarketStatus', 'UnexpectedNoneInPostInfo', 'ZeroAmount', 'InvalidMarketPeriod', 'InvalidOutcomeRange', 'NotAllowedToReportYet', 'DisputeDurationSmallerThanMinDisputeDuration', 'OracleDurationSmallerThanMinOracleDuration', 'DisputeDurationGreaterThanMaxDisputeDuration', 'GracePeriodGreaterThanMaxGracePeriod', 'OracleDurationGreaterThanMaxOracleDuration', 'WeightsLenMustEqualAssetsLen', 'InvalidBaseAsset', 'UnregisteredForeignAsset', 'GlobalDisputeExistsAlready', 'NoDisputeMechanism', 'NonZeroDisputePeriodOnTrustedMarket', 'FeeTooHigh', 'InvalidResolutionMechanism', 'RequesterNotCreator', 'EarlyCloseRequestTooLate', 'InvalidEarlyCloseState', 'NoEarlyCloseScheduled', 'OnlyAuthorizedCanScheduleEarlyClose']
   },
   /**
-   * Lookup533: zrml_styx::pallet::Error<T>
+   * Lookup540: zrml_styx::pallet::Error<T>
    **/
   ZrmlStyxError: {
     _enum: ['FundDoesNotHaveEnoughFreeBalance', 'HasAlreadyCrossed']
   },
   /**
-   * Lookup538: zrml_global_disputes::types::OutcomeInfo<sp_core::crypto::AccountId32, Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
+   * Lookup545: zrml_global_disputes::types::OutcomeInfo<sp_core::crypto::AccountId32, Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
    **/
   ZrmlGlobalDisputesOutcomeInfo: {
     outcomeSum: 'u128',
     possession: 'ZrmlGlobalDisputesPossession'
   },
   /**
-   * Lookup540: zrml_global_disputes::types::Possession<sp_core::crypto::AccountId32, Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
+   * Lookup547: zrml_global_disputes::types::Possession<sp_core::crypto::AccountId32, Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
    **/
   ZrmlGlobalDisputesPossession: {
     _enum: {
@@ -5130,7 +5259,7 @@ export default {
     }
   },
   /**
-   * Lookup541: zrml_global_disputes::types::GlobalDisputeInfo<sp_core::crypto::AccountId32, Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>, BlockNumber>
+   * Lookup548: zrml_global_disputes::types::GlobalDisputeInfo<sp_core::crypto::AccountId32, Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>, BlockNumber>
    **/
   ZrmlGlobalDisputesGlobalDisputeInfo: {
     winnerOutcome: 'ZeitgeistPrimitivesOutcomeReport',
@@ -5138,7 +5267,7 @@ export default {
     status: 'ZrmlGlobalDisputesGdStatus'
   },
   /**
-   * Lookup542: zrml_global_disputes::types::GdStatus<BlockNumber>
+   * Lookup549: zrml_global_disputes::types::GdStatus<BlockNumber>
    **/
   ZrmlGlobalDisputesGdStatus: {
     _enum: {
@@ -5151,7 +5280,7 @@ export default {
     }
   },
   /**
-   * Lookup543: zrml_global_disputes::types::OldWinnerInfo<Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
+   * Lookup550: zrml_global_disputes::types::OldWinnerInfo<Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
    **/
   ZrmlGlobalDisputesOldWinnerInfo: {
     outcome: 'ZeitgeistPrimitivesOutcomeReport',
@@ -5159,20 +5288,20 @@ export default {
     isFinished: 'bool'
   },
   /**
-   * Lookup544: zrml_global_disputes::types::OldOutcomeInfo<Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
+   * Lookup551: zrml_global_disputes::types::OldOutcomeInfo<Balance, sp_core::bounded::bounded_vec::BoundedVec<sp_core::crypto::AccountId32, S>>
    **/
   ZrmlGlobalDisputesOldOutcomeInfo: {
     outcomeSum: 'u128',
     owners: 'Vec<AccountId32>'
   },
   /**
-   * Lookup545: zrml_global_disputes::pallet::Error<T>
+   * Lookup552: zrml_global_disputes::pallet::Error<T>
    **/
   ZrmlGlobalDisputesError: {
     _enum: ['AmountTooLow', 'InvalidGlobalDisputeStatus', 'InsufficientAmount', 'MaxOwnersReached', 'MaxVotesReached', 'NoFundsToReward', 'GlobalDisputeNotFound', 'OutcomeAlreadyExists', 'OutcomeDoesNotExist', 'OutcomeMismatch', 'OutcomesNotFullyCleaned', 'SharedPossessionRequired', 'UnfinishedGlobalDispute', 'AddOutcomePeriodIsOver', 'NotInGdVotingPeriod', 'GlobalDisputeNotDestroyed', 'GlobalDisputeAlreadyExists']
   },
   /**
-   * Lookup546: zrml_neo_swaps::types::pool::Pool<T, zrml_neo_swaps::types::solo_lp::SoloLp<T>>
+   * Lookup553: zrml_neo_swaps::types::pool::Pool<T, zrml_neo_swaps::types::solo_lp::SoloLp<T>>
    **/
   ZrmlNeoSwapsPool: {
     accountId: 'AccountId32',
@@ -5183,7 +5312,7 @@ export default {
     swapFee: 'u128'
   },
   /**
-   * Lookup547: zrml_neo_swaps::types::solo_lp::SoloLp<T>
+   * Lookup554: zrml_neo_swaps::types::solo_lp::SoloLp<T>
    **/
   ZrmlNeoSwapsSoloLp: {
     owner: 'AccountId32',
@@ -5191,25 +5320,54 @@ export default {
     fees: 'u128'
   },
   /**
-   * Lookup548: zrml_neo_swaps::pallet::Error<T>
+   * Lookup555: zrml_neo_swaps::pallet::Error<T>
    **/
   ZrmlNeoSwapsError: {
     _enum: ['AssetCountAboveMax', 'AmountInAboveMax', 'AmountOutBelowMin', 'AssetNotFound', 'DuplicatePool', 'IncorrectAssetCount', 'IncorrectVecLen', 'InsufficientPoolShares', 'LiquidityTooLow', 'InvalidSpotPrices', 'InvalidTradingMechanism', 'MarketNotActive', 'MarketNotBinaryOrScalar', 'MathError', 'NotAllowed', 'NotImplemented', 'NumericalLimits', 'OutstandingFees', 'PoolNotFound', 'SpotPriceAboveMax', 'SpotPriceBelowMin', 'SwapFeeAboveMax', 'SwapFeeBelowMin', 'Unexpected', 'ZeroAmount']
   },
   /**
-   * Lookup549: zrml_orderbook_v1::pallet::Error<T>
+   * Lookup556: zrml_orderbook::pallet::Error<T>
    **/
-  ZrmlOrderbookV1Error: {
+  ZrmlOrderbookError: {
     _enum: ['NotOrderCreator', 'OrderDoesNotExist', 'MarketIsNotActive', 'InvalidScoringRule', 'AmountTooHighForOrder', 'AmountIsZero', 'InvalidOutcomeAsset', 'MakerPartialFillTooLow']
   },
   /**
-   * Lookup551: polkadot_primitives::v2::UpgradeRestriction
+   * Lookup557: zrml_parimutuel::pallet::Error<T>
+   **/
+  ZrmlParimutuelError: {
+    _enum: {
+      NoRewardShareOutstanding: 'Null',
+      MarketIsNotActive: 'Null',
+      AmountTooSmall: 'Null',
+      NotParimutuelOutcome: 'Null',
+      InvalidOutcomeAsset: 'Null',
+      InvalidScoringRule: 'Null',
+      InsufficientBalance: 'Null',
+      MarketIsNotResolvedYet: 'Null',
+      Unexpected: 'Null',
+      NoResolvedOutcome: 'Null',
+      RefundNotAllowed: 'Null',
+      RefundableBalanceIsZero: 'Null',
+      NoWinningShares: 'Null',
+      NotCategorical: 'Null',
+      NoRewardToDistribute: 'Null',
+      InconsistentState: 'ZrmlParimutuelInconsistentStateError'
+    }
+  },
+  /**
+   * Lookup558: zrml_parimutuel::pallet::InconsistentStateError
+   **/
+  ZrmlParimutuelInconsistentStateError: {
+    _enum: ['InsufficientFundsInPotAccount', 'OutcomeIssuanceGreaterCollateral']
+  },
+  /**
+   * Lookup560: polkadot_primitives::v2::UpgradeRestriction
    **/
   PolkadotPrimitivesV2UpgradeRestriction: {
     _enum: ['Present']
   },
   /**
-   * Lookup552: cumulus_pallet_parachain_system::relay_state_snapshot::MessagingStateSnapshot
+   * Lookup561: cumulus_pallet_parachain_system::relay_state_snapshot::MessagingStateSnapshot
    **/
   CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot: {
     dmqMqcHead: 'H256',
@@ -5218,7 +5376,7 @@ export default {
     egressChannels: 'Vec<(u32,PolkadotPrimitivesV2AbridgedHrmpChannel)>'
   },
   /**
-   * Lookup556: polkadot_primitives::v2::AbridgedHrmpChannel
+   * Lookup565: polkadot_primitives::v2::AbridgedHrmpChannel
    **/
   PolkadotPrimitivesV2AbridgedHrmpChannel: {
     maxCapacity: 'u32',
@@ -5229,7 +5387,7 @@ export default {
     mqcHead: 'Option<H256>'
   },
   /**
-   * Lookup558: polkadot_primitives::v2::AbridgedHostConfiguration
+   * Lookup567: polkadot_primitives::v2::AbridgedHostConfiguration
    **/
   PolkadotPrimitivesV2AbridgedHostConfiguration: {
     maxCodeSize: 'u32',
@@ -5243,27 +5401,27 @@ export default {
     validationUpgradeDelay: 'u32'
   },
   /**
-   * Lookup564: polkadot_core_primitives::OutboundHrmpMessage<polkadot_parachain::primitives::Id>
+   * Lookup573: polkadot_core_primitives::OutboundHrmpMessage<polkadot_parachain::primitives::Id>
    **/
   PolkadotCorePrimitivesOutboundHrmpMessage: {
     recipient: 'u32',
     data: 'Bytes'
   },
   /**
-   * Lookup565: cumulus_pallet_parachain_system::pallet::Error<T>
+   * Lookup574: cumulus_pallet_parachain_system::pallet::Error<T>
    **/
   CumulusPalletParachainSystemError: {
     _enum: ['OverlappingUpgrades', 'ProhibitedByPolkadot', 'TooBig', 'ValidationDataNotAvailable', 'HostConfigurationNotAvailable', 'NotScheduled', 'NothingAuthorized', 'Unauthorized']
   },
   /**
-   * Lookup566: pallet_parachain_staking::types::ParachainBondConfig<sp_core::crypto::AccountId32>
+   * Lookup575: pallet_parachain_staking::types::ParachainBondConfig<sp_core::crypto::AccountId32>
    **/
   PalletParachainStakingParachainBondConfig: {
     account: 'AccountId32',
     percent: 'Percent'
   },
   /**
-   * Lookup567: pallet_parachain_staking::types::RoundInfo<BlockNumber>
+   * Lookup576: pallet_parachain_staking::types::RoundInfo<BlockNumber>
    **/
   PalletParachainStakingRoundInfo: {
     current: 'u32',
@@ -5271,7 +5429,7 @@ export default {
     length: 'u32'
   },
   /**
-   * Lookup568: pallet_parachain_staking::types::Delegator<sp_core::crypto::AccountId32, Balance>
+   * Lookup577: pallet_parachain_staking::types::Delegator<sp_core::crypto::AccountId32, Balance>
    **/
   PalletParachainStakingDelegator: {
     id: 'AccountId32',
@@ -5281,18 +5439,18 @@ export default {
     status: 'PalletParachainStakingDelegatorStatus'
   },
   /**
-   * Lookup569: pallet_parachain_staking::set::OrderedSet<pallet_parachain_staking::types::Bond<sp_core::crypto::AccountId32, Balance>>
+   * Lookup578: pallet_parachain_staking::set::OrderedSet<pallet_parachain_staking::types::Bond<sp_core::crypto::AccountId32, Balance>>
    **/
   PalletParachainStakingSetOrderedSet: 'Vec<PalletParachainStakingBond>',
   /**
-   * Lookup570: pallet_parachain_staking::types::Bond<sp_core::crypto::AccountId32, Balance>
+   * Lookup579: pallet_parachain_staking::types::Bond<sp_core::crypto::AccountId32, Balance>
    **/
   PalletParachainStakingBond: {
     owner: 'AccountId32',
     amount: 'u128'
   },
   /**
-   * Lookup572: pallet_parachain_staking::types::DelegatorStatus
+   * Lookup581: pallet_parachain_staking::types::DelegatorStatus
    **/
   PalletParachainStakingDelegatorStatus: {
     _enum: {
@@ -5301,7 +5459,7 @@ export default {
     }
   },
   /**
-   * Lookup573: pallet_parachain_staking::types::CandidateMetadata<Balance>
+   * Lookup582: pallet_parachain_staking::types::CandidateMetadata<Balance>
    **/
   PalletParachainStakingCandidateMetadata: {
     bond: 'u128',
@@ -5316,20 +5474,20 @@ export default {
     status: 'PalletParachainStakingCollatorStatus'
   },
   /**
-   * Lookup574: pallet_parachain_staking::types::CapacityStatus
+   * Lookup583: pallet_parachain_staking::types::CapacityStatus
    **/
   PalletParachainStakingCapacityStatus: {
     _enum: ['Full', 'Empty', 'Partial']
   },
   /**
-   * Lookup576: pallet_parachain_staking::types::CandidateBondLessRequest<Balance>
+   * Lookup585: pallet_parachain_staking::types::CandidateBondLessRequest<Balance>
    **/
   PalletParachainStakingCandidateBondLessRequest: {
     amount: 'u128',
     whenExecutable: 'u32'
   },
   /**
-   * Lookup577: pallet_parachain_staking::types::CollatorStatus
+   * Lookup586: pallet_parachain_staking::types::CollatorStatus
    **/
   PalletParachainStakingCollatorStatus: {
     _enum: {
@@ -5339,7 +5497,7 @@ export default {
     }
   },
   /**
-   * Lookup579: pallet_parachain_staking::delegation_requests::ScheduledRequest<sp_core::crypto::AccountId32, Balance>
+   * Lookup588: pallet_parachain_staking::delegation_requests::ScheduledRequest<sp_core::crypto::AccountId32, Balance>
    **/
   PalletParachainStakingDelegationRequestsScheduledRequest: {
     delegator: 'AccountId32',
@@ -5347,21 +5505,21 @@ export default {
     action: 'PalletParachainStakingDelegationRequestsDelegationAction'
   },
   /**
-   * Lookup581: pallet_parachain_staking::auto_compound::AutoCompoundConfig<sp_core::crypto::AccountId32>
+   * Lookup590: pallet_parachain_staking::auto_compound::AutoCompoundConfig<sp_core::crypto::AccountId32>
    **/
   PalletParachainStakingAutoCompoundAutoCompoundConfig: {
     delegator: 'AccountId32',
     value: 'Percent'
   },
   /**
-   * Lookup582: pallet_parachain_staking::types::Delegations<sp_core::crypto::AccountId32, Balance>
+   * Lookup591: pallet_parachain_staking::types::Delegations<sp_core::crypto::AccountId32, Balance>
    **/
   PalletParachainStakingDelegations: {
     delegations: 'Vec<PalletParachainStakingBond>',
     total: 'u128'
   },
   /**
-   * Lookup584: pallet_parachain_staking::types::CollatorSnapshot<sp_core::crypto::AccountId32, Balance>
+   * Lookup593: pallet_parachain_staking::types::CollatorSnapshot<sp_core::crypto::AccountId32, Balance>
    **/
   PalletParachainStakingCollatorSnapshot: {
     bond: 'u128',
@@ -5369,7 +5527,7 @@ export default {
     total: 'u128'
   },
   /**
-   * Lookup586: pallet_parachain_staking::types::BondWithAutoCompound<sp_core::crypto::AccountId32, Balance>
+   * Lookup595: pallet_parachain_staking::types::BondWithAutoCompound<sp_core::crypto::AccountId32, Balance>
    **/
   PalletParachainStakingBondWithAutoCompound: {
     owner: 'AccountId32',
@@ -5377,7 +5535,7 @@ export default {
     autoCompound: 'Percent'
   },
   /**
-   * Lookup587: pallet_parachain_staking::types::DelayedPayout<Balance>
+   * Lookup596: pallet_parachain_staking::types::DelayedPayout<Balance>
    **/
   PalletParachainStakingDelayedPayout: {
     roundIssuance: 'u128',
@@ -5385,7 +5543,7 @@ export default {
     collatorCommission: 'Perbill'
   },
   /**
-   * Lookup588: pallet_parachain_staking::inflation::InflationInfo<Balance>
+   * Lookup597: pallet_parachain_staking::inflation::InflationInfo<Balance>
    **/
   PalletParachainStakingInflationInflationInfo: {
     expect: {
@@ -5405,19 +5563,19 @@ export default {
     }
   },
   /**
-   * Lookup589: pallet_parachain_staking::pallet::Error<T>
+   * Lookup598: pallet_parachain_staking::pallet::Error<T>
    **/
   PalletParachainStakingError: {
     _enum: ['DelegatorDNE', 'DelegatorDNEinTopNorBottom', 'DelegatorDNEInDelegatorSet', 'CandidateDNE', 'DelegationDNE', 'DelegatorExists', 'CandidateExists', 'CandidateBondBelowMin', 'InsufficientBalance', 'DelegatorBondBelowMin', 'DelegationBelowMin', 'AlreadyOffline', 'AlreadyActive', 'DelegatorAlreadyLeaving', 'DelegatorNotLeaving', 'DelegatorCannotLeaveYet', 'CannotDelegateIfLeaving', 'CandidateAlreadyLeaving', 'CandidateNotLeaving', 'CandidateCannotLeaveYet', 'CannotGoOnlineIfLeaving', 'ExceedMaxDelegationsPerDelegator', 'AlreadyDelegatedCandidate', 'InvalidSchedule', 'CannotSetBelowMin', 'RoundLengthMustBeGreaterThanTotalSelectedCollators', 'NoWritingSameValue', 'TooLowCandidateCountWeightHintJoinCandidates', 'TooLowCandidateCountWeightHintCancelLeaveCandidates', 'TooLowCandidateCountToLeaveCandidates', 'TooLowDelegationCountToDelegate', 'TooLowCandidateDelegationCountToDelegate', 'TooLowCandidateDelegationCountToLeaveCandidates', 'TooLowDelegationCountToLeaveDelegators', 'PendingCandidateRequestsDNE', 'PendingCandidateRequestAlreadyExists', 'PendingCandidateRequestNotDueYet', 'PendingDelegationRequestDNE', 'PendingDelegationRequestAlreadyExists', 'PendingDelegationRequestNotDueYet', 'CannotDelegateLessThanOrEqualToLowestBottomWhenFull', 'PendingDelegationRevoke', 'TooLowDelegationCountToAutoCompound', 'TooLowCandidateAutoCompoundingDelegationCountToAutoCompound', 'TooLowCandidateAutoCompoundingDelegationCountToDelegate']
   },
   /**
-   * Lookup590: pallet_author_inherent::pallet::Error<T>
+   * Lookup599: pallet_author_inherent::pallet::Error<T>
    **/
   PalletAuthorInherentError: {
     _enum: ['AuthorAlreadySet', 'NoAccountId', 'CannotBeAuthor']
   },
   /**
-   * Lookup591: pallet_author_mapping::pallet::RegistrationInfo<T>
+   * Lookup600: pallet_author_mapping::pallet::RegistrationInfo<T>
    **/
   PalletAuthorMappingRegistrationInfo: {
     _alias: {
@@ -5428,23 +5586,23 @@ export default {
     keys_: 'SessionKeysPrimitivesVrfVrfCryptoPublic'
   },
   /**
-   * Lookup592: pallet_author_mapping::pallet::Error<T>
+   * Lookup601: pallet_author_mapping::pallet::Error<T>
    **/
   PalletAuthorMappingError: {
     _enum: ['AssociationNotFound', 'NotYourAssociation', 'CannotAffordSecurityDeposit', 'AlreadyAssociated', 'OldAuthorIdNotFound', 'WrongKeySize', 'DecodeNimbusFailed', 'DecodeKeysFailed']
   },
   /**
-   * Lookup593: cumulus_pallet_xcm::pallet::Error<T>
+   * Lookup602: cumulus_pallet_xcm::pallet::Error<T>
    **/
   CumulusPalletXcmError: 'Null',
   /**
-   * Lookup594: cumulus_pallet_dmp_queue::ConfigData
+   * Lookup603: cumulus_pallet_dmp_queue::ConfigData
    **/
   CumulusPalletDmpQueueConfigData: {
     maxIndividual: 'SpWeightsWeightV2Weight'
   },
   /**
-   * Lookup595: cumulus_pallet_dmp_queue::PageIndexData
+   * Lookup604: cumulus_pallet_dmp_queue::PageIndexData
    **/
   CumulusPalletDmpQueuePageIndexData: {
     beginUsed: 'u32',
@@ -5452,13 +5610,13 @@ export default {
     overweightCount: 'u64'
   },
   /**
-   * Lookup598: cumulus_pallet_dmp_queue::pallet::Error<T>
+   * Lookup607: cumulus_pallet_dmp_queue::pallet::Error<T>
    **/
   CumulusPalletDmpQueueError: {
     _enum: ['Unknown', 'OverLimit']
   },
   /**
-   * Lookup599: pallet_xcm::pallet::QueryStatus<BlockNumber>
+   * Lookup608: pallet_xcm::pallet::QueryStatus<BlockNumber>
    **/
   PalletXcmQueryStatus: {
     _enum: {
@@ -5479,7 +5637,7 @@ export default {
     }
   },
   /**
-   * Lookup602: xcm::VersionedResponse
+   * Lookup611: xcm::VersionedResponse
    **/
   XcmVersionedResponse: {
     _enum: {
@@ -5490,7 +5648,7 @@ export default {
     }
   },
   /**
-   * Lookup608: pallet_xcm::pallet::VersionMigrationStage
+   * Lookup617: pallet_xcm::pallet::VersionMigrationStage
    **/
   PalletXcmVersionMigrationStage: {
     _enum: {
@@ -5501,7 +5659,7 @@ export default {
     }
   },
   /**
-   * Lookup610: xcm::VersionedAssetId
+   * Lookup619: xcm::VersionedAssetId
    **/
   XcmVersionedAssetId: {
     _enum: {
@@ -5512,7 +5670,7 @@ export default {
     }
   },
   /**
-   * Lookup611: pallet_xcm::pallet::RemoteLockedFungibleRecord
+   * Lookup620: pallet_xcm::pallet::RemoteLockedFungibleRecord
    **/
   PalletXcmRemoteLockedFungibleRecord: {
     amount: 'u128',
@@ -5521,13 +5679,13 @@ export default {
     users: 'u32'
   },
   /**
-   * Lookup615: pallet_xcm::pallet::Error<T>
+   * Lookup624: pallet_xcm::pallet::Error<T>
    **/
   PalletXcmError: {
     _enum: ['Unreachable', 'SendFailure', 'Filtered', 'UnweighableMessage', 'DestinationNotInvertible', 'Empty', 'CannotReanchor', 'TooManyAssets', 'InvalidOrigin', 'BadVersion', 'BadLocation', 'NoSubscription', 'AlreadySubscribed', 'InvalidAsset', 'LowBalance', 'TooManyLocks', 'AccountNotSovereign', 'FeesNotMet', 'LockNotFound', 'InUse']
   },
   /**
-   * Lookup617: cumulus_pallet_xcmp_queue::InboundChannelDetails
+   * Lookup626: cumulus_pallet_xcmp_queue::InboundChannelDetails
    **/
   CumulusPalletXcmpQueueInboundChannelDetails: {
     sender: 'u32',
@@ -5535,19 +5693,19 @@ export default {
     messageMetadata: 'Vec<(u32,PolkadotParachainPrimitivesXcmpMessageFormat)>'
   },
   /**
-   * Lookup618: cumulus_pallet_xcmp_queue::InboundState
+   * Lookup627: cumulus_pallet_xcmp_queue::InboundState
    **/
   CumulusPalletXcmpQueueInboundState: {
     _enum: ['Ok', 'Suspended']
   },
   /**
-   * Lookup621: polkadot_parachain::primitives::XcmpMessageFormat
+   * Lookup630: polkadot_parachain::primitives::XcmpMessageFormat
    **/
   PolkadotParachainPrimitivesXcmpMessageFormat: {
     _enum: ['ConcatenatedVersionedXcm', 'ConcatenatedEncodedBlob', 'Signals']
   },
   /**
-   * Lookup624: cumulus_pallet_xcmp_queue::OutboundChannelDetails
+   * Lookup633: cumulus_pallet_xcmp_queue::OutboundChannelDetails
    **/
   CumulusPalletXcmpQueueOutboundChannelDetails: {
     recipient: 'u32',
@@ -5557,13 +5715,13 @@ export default {
     lastIndex: 'u16'
   },
   /**
-   * Lookup625: cumulus_pallet_xcmp_queue::OutboundState
+   * Lookup634: cumulus_pallet_xcmp_queue::OutboundState
    **/
   CumulusPalletXcmpQueueOutboundState: {
     _enum: ['Ok', 'Suspended']
   },
   /**
-   * Lookup627: cumulus_pallet_xcmp_queue::QueueConfigData
+   * Lookup636: cumulus_pallet_xcmp_queue::QueueConfigData
    **/
   CumulusPalletXcmpQueueQueueConfigData: {
     suspendThreshold: 'u32',
@@ -5574,31 +5732,37 @@ export default {
     xcmpMaxIndividualWeight: 'SpWeightsWeightV2Weight'
   },
   /**
-   * Lookup629: cumulus_pallet_xcmp_queue::pallet::Error<T>
+   * Lookup638: cumulus_pallet_xcmp_queue::pallet::Error<T>
    **/
   CumulusPalletXcmpQueueError: {
     _enum: ['FailedToSend', 'BadXcmOrigin', 'BadXcm', 'BadOverweightIndex', 'WeightOverLimit']
   },
   /**
-   * Lookup630: orml_asset_registry::module::Error<T>
+   * Lookup639: orml_asset_registry::module::Error<T>
    **/
   OrmlAssetRegistryModuleError: {
     _enum: ['AssetNotFound', 'BadVersion', 'InvalidAssetId', 'ConflictingLocation', 'ConflictingAssetId']
   },
   /**
-   * Lookup633: orml_unknown_tokens::module::Error<T>
+   * Lookup642: orml_unknown_tokens::module::Error<T>
    **/
   OrmlUnknownTokensModuleError: {
     _enum: ['BalanceTooLow', 'BalanceOverflow', 'UnhandledAsset']
   },
   /**
-   * Lookup634: orml_xtokens::module::Error<T>
+   * Lookup643: orml_xtokens::module::Error<T>
    **/
   OrmlXtokensModuleError: {
     _enum: ['AssetHasNoReserve', 'NotCrossChainTransfer', 'InvalidDest', 'NotCrossChainTransferableCurrency', 'UnweighableMessage', 'XcmExecutionFailed', 'CannotReanchor', 'InvalidAncestry', 'InvalidAsset', 'DestinationNotInvertible', 'BadVersion', 'DistinctReserveForAssetAndFee', 'ZeroFee', 'ZeroAmount', 'TooManyAssetsBeingSent', 'AssetIndexNonExistent', 'FeeNotEnough', 'NotSupportedMultiLocation', 'MinXcmFeeNotDefined']
   },
   /**
-   * Lookup636: sp_runtime::MultiSignature
+   * Lookup644: pallet_sudo::pallet::Error<T>
+   **/
+  PalletSudoError: {
+    _enum: ['RequireSudo']
+  },
+  /**
+   * Lookup646: sp_runtime::MultiSignature
    **/
   SpRuntimeMultiSignature: {
     _enum: {
@@ -5608,50 +5772,50 @@ export default {
     }
   },
   /**
-   * Lookup637: sp_core::ed25519::Signature
+   * Lookup647: sp_core::ed25519::Signature
    **/
   SpCoreEd25519Signature: '[u8;64]',
   /**
-   * Lookup639: sp_core::sr25519::Signature
+   * Lookup649: sp_core::sr25519::Signature
    **/
   SpCoreSr25519Signature: '[u8;64]',
   /**
-   * Lookup640: sp_core::ecdsa::Signature
+   * Lookup650: sp_core::ecdsa::Signature
    **/
   SpCoreEcdsaSignature: '[u8;65]',
   /**
-   * Lookup643: frame_system::extensions::check_non_zero_sender::CheckNonZeroSender<T>
+   * Lookup653: frame_system::extensions::check_non_zero_sender::CheckNonZeroSender<T>
    **/
   FrameSystemExtensionsCheckNonZeroSender: 'Null',
   /**
-   * Lookup644: frame_system::extensions::check_spec_version::CheckSpecVersion<T>
+   * Lookup654: frame_system::extensions::check_spec_version::CheckSpecVersion<T>
    **/
   FrameSystemExtensionsCheckSpecVersion: 'Null',
   /**
-   * Lookup645: frame_system::extensions::check_tx_version::CheckTxVersion<T>
+   * Lookup655: frame_system::extensions::check_tx_version::CheckTxVersion<T>
    **/
   FrameSystemExtensionsCheckTxVersion: 'Null',
   /**
-   * Lookup646: frame_system::extensions::check_genesis::CheckGenesis<T>
+   * Lookup656: frame_system::extensions::check_genesis::CheckGenesis<T>
    **/
   FrameSystemExtensionsCheckGenesis: 'Null',
   /**
-   * Lookup649: frame_system::extensions::check_nonce::CheckNonce<T>
+   * Lookup659: frame_system::extensions::check_nonce::CheckNonce<T>
    **/
   FrameSystemExtensionsCheckNonce: 'Compact<u64>',
   /**
-   * Lookup650: frame_system::extensions::check_weight::CheckWeight<T>
+   * Lookup660: frame_system::extensions::check_weight::CheckWeight<T>
    **/
   FrameSystemExtensionsCheckWeight: 'Null',
   /**
-   * Lookup651: pallet_asset_tx_payment::ChargeAssetTxPayment<T>
+   * Lookup661: pallet_asset_tx_payment::ChargeAssetTxPayment<T>
    **/
   PalletAssetTxPaymentChargeAssetTxPayment: {
     tip: 'Compact<u128>',
     assetId: 'Option<u32>'
   },
   /**
-   * Lookup652: zeitgeist_runtime::Runtime
+   * Lookup662: battery_station_runtime::Runtime
    **/
-  ZeitgeistRuntimeRuntime: 'Null'
+  BatteryStationRuntimeRuntime: 'Null'
 };

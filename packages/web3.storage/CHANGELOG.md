@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 2.16.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
+### Patch Changes
+
+- Updated dependencies [f91b1b1]
+  - @zeitgeistpm/utility@2.25.0
+
 ## 2.15.0
 
 ### Minor Changes

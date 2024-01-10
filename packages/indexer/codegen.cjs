@@ -1,5 +1,5 @@
 const endpoint = process.argv.includes('--bsr')
-  ? 'https://zeitgeist-squid-bsr.stellate.sh/'
+  ? 'https://processor.bsr.zeitgeist.pm/graphql'
   : process.argv.includes('--mainnet')
   ? 'https://processor.rpc-0.zeitgeist.pm/graphql'
   : null

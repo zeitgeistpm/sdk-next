@@ -6,4 +6,5 @@
  * @param value T
  * @returns value is T
  */
-export const isNotNull = <T>(value: T | null): value is T => value !== null
+export const isNotNull = <T>(value: T | null | undefined): value is T =>
+  value !== null && value !== undefined

@@ -1,5 +1,23 @@
 # @zeitgeistpm/utility
 
+## 2.25.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
+## 2.24.2
+
+### Patch Changes
+
+- cf074b1: Fix market create proxy type
+
+## 2.24.1
+
+### Patch Changes
+
+- 25dc9b8: Bump
+
 ## 2.24.0
 
 ### Minor Changes

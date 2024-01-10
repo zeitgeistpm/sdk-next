@@ -1,0 +1,10 @@
+query assetPrice(
+  $base: [BaseAsset!]!
+  $target: [TargetAsset!]!
+) {
+  assetPrice(base: $base, target: $target) {
+    pair
+    price
+    timestamp
+  }
+}

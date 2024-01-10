@@ -1,5 +1,99 @@
 # @zeitgeistpm/sdk
 
+## 2.50.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
+### Patch Changes
+
+- Updated dependencies [f91b1b1]
+  - @zeitgeistpm/augment-api@2.26.0
+  - @zeitgeistpm/indexer@3.21.0
+  - @zeitgeistpm/utility@2.25.0
+  - @zeitgeistpm/rpc@2.15.0
+  - @zeitgeistpm/web3.storage@2.16.0
+
+## 2.49.2
+
+### Patch Changes
+
+- cf074b1: Fix market create proxy type
+- Updated dependencies [cf074b1]
+  - @zeitgeistpm/augment-api@2.25.2
+  - @zeitgeistpm/indexer@3.20.2
+  - @zeitgeistpm/utility@2.24.2
+
+## 2.49.1
+
+### Patch Changes
+
+- 25dc9b8: Bump
+- Updated dependencies [25dc9b8]
+  - @zeitgeistpm/augment-api@2.25.1
+  - @zeitgeistpm/indexer@3.20.1
+  - @zeitgeistpm/utility@2.24.1
+
+## 2.49.0
+
+### Minor Changes
+
+- e365fde: GQL schema changes
+
+### Patch Changes
+
+- Updated dependencies [e365fde]
+  - @zeitgeistpm/augment-api@2.25.0
+  - @zeitgeistpm/indexer@3.20.0
+
+## 2.48.0
+
+### Minor Changes
+
+- 24f3fa1: GQL changes: added assetPrice query to indexer, added dispute to market schema, added volume to neoPool
+
+### Patch Changes
+
+- Updated dependencies [24f3fa1]
+  - @zeitgeistpm/augment-api@2.24.0
+  - @zeitgeistpm/indexer@3.19.0
+
+## 2.47.1
+
+### Patch Changes
+
+- c200603: Added .assets to FullMarketFragment
+- Updated dependencies [c200603]
+  - @zeitgeistpm/augment-api@2.23.1
+  - @zeitgeistpm/indexer@3.18.1
+
+## 2.47.0
+
+### Minor Changes
+
+- 5784119: Added NeoSwaps NeoPool schema to indexer.
+
+### Patch Changes
+
+- Updated dependencies [5784119]
+  - @zeitgeistpm/augment-api@2.23.0
+  - @zeitgeistpm/indexer@3.18.0
+
+## 2.46.0
+
+### Minor Changes
+
+- 711f114: Stronger typing of ScoringRule.
+
+### Patch Changes
+
+- 6b9e853: Stronger typing of ScoringRule
+- Updated dependencies [711f114]
+- Updated dependencies [6b9e853]
+  - @zeitgeistpm/augment-api@2.22.0
+  - @zeitgeistpm/indexer@3.17.0
+
 ## 2.45.0
 
 ### Minor Changes

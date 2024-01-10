@@ -29,7 +29,6 @@ fragment FullPool on Pool {
   marketId
   poolId
   status
-  scoringRule
   swapFee
   totalSubsidy
   totalWeight

@@ -1,5 +1,57 @@
 # @zeitgeistpm/augment-api
 
+## 2.26.0
+
+### Minor Changes
+
+- f91b1b1: Release mainnet
+
+## 2.25.2
+
+### Patch Changes
+
+- cf074b1: Fix market create proxy type
+
+## 2.25.1
+
+### Patch Changes
+
+- 25dc9b8: Bump
+
+## 2.25.0
+
+### Minor Changes
+
+- e365fde: GQL schema changes
+
+## 2.24.0
+
+### Minor Changes
+
+- 24f3fa1: GQL changes: added assetPrice query to indexer, added dispute to market schema, added volume to neoPool
+
+## 2.23.1
+
+### Patch Changes
+
+- c200603: Added .assets to FullMarketFragment
+
+## 2.23.0
+
+### Minor Changes
+
+- 5784119: Added NeoSwaps NeoPool schema to indexer.
+
+## 2.22.0
+
+### Minor Changes
+
+- 711f114: Stronger typing of ScoringRule.
+
+### Patch Changes
+
+- 6b9e853: Stronger typing of ScoringRule
+
 ## 2.21.0
 
 ### Minor Changes
