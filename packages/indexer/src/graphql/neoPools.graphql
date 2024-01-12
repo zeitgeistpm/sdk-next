@@ -29,5 +29,4 @@ fragment FullNeoPool on NeoPool {
   marketId
   poolId
   swapFee
-  volume
 }
