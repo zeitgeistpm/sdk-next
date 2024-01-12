@@ -1,5 +1,16 @@
 # @zeitgeistpm/sdk
 
+## 2.51.0
+
+### Minor Changes
+
+- 81491f1: GQL Pool and NeoPool changes.
+
+### Patch Changes
+
+- Updated dependencies [81491f1]
+  - @zeitgeistpm/indexer@3.22.0
+
 ## 2.50.0
 
 ### Minor Changes

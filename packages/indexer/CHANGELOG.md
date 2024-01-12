@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.22.0
+
+### Minor Changes
+
+- 81491f1: GQL Pool and NeoPool changes.
+
 ## 3.21.0
 
 ### Minor Changes
