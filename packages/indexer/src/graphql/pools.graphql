@@ -32,7 +32,6 @@ fragment FullPool on Pool {
   swapFee
   totalSubsidy
   totalWeight
-  volume
   weights {
     assetId
     weight
@@ -47,12 +46,10 @@ query historicalPools(
 ) {
   historicalPools {
     blockNumber
-    dVolume
     event
     id
     poolId
     status
     timestamp
-    volume
   }
 }
