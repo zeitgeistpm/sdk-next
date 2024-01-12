@@ -1,0 +1,16 @@
+query balanceInfo(
+  $accountId: String!
+  $assetId: AssetKindValue
+  $blockNumber: String
+  $event: BalanceInfoEvent
+) {
+  balanceInfo(
+    accountId: $accountId, 
+    assetId: $assetId, 
+    blockNumber: $blockNumber, 
+    event: $event
+  ) {
+    assetId
+    balance
+  }
+}
