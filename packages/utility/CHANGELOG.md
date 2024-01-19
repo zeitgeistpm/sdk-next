@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 3.0.0
+
+### Major Changes
+
+- e12c3cf: Remove CPMM markets.
+
 ## 2.25.0
 
 ### Minor Changes

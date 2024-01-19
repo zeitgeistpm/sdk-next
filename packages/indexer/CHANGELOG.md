@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.0.0
+
+### Major Changes
+
+- e12c3cf: Remove CPMM markets.
+
 ## 3.22.0
 
 ### Minor Changes
