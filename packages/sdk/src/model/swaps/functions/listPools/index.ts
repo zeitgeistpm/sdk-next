@@ -1,5 +1,5 @@
 import type { Option, StorageKey, u128 } from '@polkadot/types'
-import type { ZeitgeistPrimitivesPool } from '@polkadot/types/lookup'
+import type { ZrmlSwapsPool } from '@polkadot/types/lookup'
 import { isNull } from '@polkadot/util'
 import {
   Context,
@@ -68,7 +68,7 @@ const listFromRpc = async <C extends RpcContext<MS>, MS extends MetadataStorage>
   ctx: C,
   query?: PoolsListQuery<C, MS>,
 ): Promise<Pool<C, MS>[]> => {
-  let entries: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][]
+  let entries: [StorageKey<[u128]>, Option<ZrmlSwapsPool>][]
 
   if (query && isPaginated(query)) {
     const keys = query.keys ?? (await ctx.api.query.swaps.pools.keys())

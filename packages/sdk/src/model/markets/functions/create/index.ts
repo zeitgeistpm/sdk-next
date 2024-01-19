@@ -140,35 +140,19 @@ const createExtrinsic = <C extends RpcContext<MS>, MS extends MetadataStorage>(
     : params.metadataKey.cid.multihash.bytes
 
   if (isWithPool(params)) {
-    if (params.scoringRule === 'Cpmm') {
-      tx = context.api.tx.predictionMarkets.createCpmmMarketAndDeployAssets(
-        params.baseAsset,
-        params.creatorFee ?? 0,
-        params.oracle,
-        params.period,
-        params.deadlines,
-        { Sha3_384 },
-        params.marketType,
-        params.disputeMechanism ?? null,
-        params.pool.swapFee,
-        params.pool.amount,
-        params.pool.weights,
-      )
-    } else {
-      tx = context.api.tx.predictionMarkets.createMarketAndDeployPool(
-        params.baseAsset,
-        params.creatorFee ?? 0,
-        params.oracle,
-        params.period,
-        params.deadlines,
-        { Sha3_384 },
-        params.marketType,
-        params.disputeMechanism ?? null,
-        params.pool.amount,
-        params.pool.spotPrices,
-        params.pool.swapFee,
-      )
-    }
+    tx = context.api.tx.predictionMarkets.createMarketAndDeployPool(
+      params.baseAsset,
+      params.creatorFee ?? 0,
+      params.oracle,
+      params.period,
+      params.deadlines,
+      { Sha3_384 },
+      params.marketType,
+      params.disputeMechanism ?? null,
+      params.pool.amount,
+      params.pool.spotPrices,
+      params.pool.swapFee,
+    )
   } else {
     tx = context.api.tx.predictionMarkets.createMarket(
       params.baseAsset,
@@ -180,7 +164,7 @@ const createExtrinsic = <C extends RpcContext<MS>, MS extends MetadataStorage>(
       params.creationType,
       params.marketType,
       params.disputeMechanism ?? null,
-      params.scoringRule === 'Cpmm' ? 'CPMM' : params.scoringRule,
+      params.scoringRule,
     )
   }
 

@@ -16,7 +16,6 @@ import {
   TransactionHooks,
   signAndSend,
 } from '@zeitgeistpm/rpc'
-import { assert } from '@zeitgeistpm/utility/dist/assert'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import * as O from '@zeitgeistpm/utility/dist/option'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
@@ -34,7 +33,7 @@ import { MarketTypeOf, MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '.
 import { MarketMetadata, categoryMetadataIsComplete } from '../../meta/market'
 import { Data, ZTG, isIndexedData, isRpcData, parseAssetId } from '../../primitives'
 import { now } from '../time/functions/now'
-import { ExchangeFullSetParams, PoolDeploymentParams } from '../types'
+import { ExchangeFullSetParams } from '../types'
 import { ReportOutcomeParams } from './outcome'
 
 export * from './functions/create/types'
@@ -101,28 +100,7 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
    * Fetch metadata from external storage(default IPFS).
    */
   fetchMetadata: Te.TaskEither<Error, O.IOption<MarketTypeOf<MS>>, []>
-  /**
-   * Deploy a swap pool for the market.
-   *
-   * @param params Omit<PoolDeploymentParams, 'marketId'>
-   * @returns Promise<EitherInterface<Error, RpcPool>>
-   */
-  deploySwapPool: Te.TaskEither<
-    TransactionError,
-    ISubmittableResult,
-    [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
-  >
-  /**
-   * Deploy a swap pool for the market and add liquidity.
-   *
-   * @param params Omit<PoolDeploymentParams, 'marketId'>
-   * @returns Promise<EitherInterface<Error, RpcPool>>
-   */
-  deploySwapPoolAndAdditionalLiquidity: Te.TaskEither<
-    TransactionError,
-    ISubmittableResult,
-    [params: Omit<PoolDeploymentParams, 'marketId'> & TransactionHooks]
-  >
+
   /**
    * Buy a full set of market assets.
    *
@@ -229,18 +207,6 @@ export type MarketMethods<C extends Context<MS>, MS extends MetadataStorage> = {
     Error,
     ISubmittableResult,
     [params: { signer: KeyringPairOrExtSigner } & TransactionHooks]
-  >
-  /**
-   * Clean up the pool of a resolved market.
-   *
-   * @origin The root origin.
-   * @param params Omit<ReportOutcomeParams, 'marketId'>
-   * @returns Promise<EitherInterface<Error, ISubmittableResult>>
-   */
-  adminCleanUpPool: Te.TaskEither<
-    TransactionError,
-    ISubmittableResult,
-    [params: Omit<ReportOutcomeParams, 'marketId'> & TransactionHooks]
   >
 }
 
@@ -364,50 +330,6 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       return metadata
     })
 
-    marketWithMethods.deploySwapPool = Te.from(async params => {
-      assert(!(await hasPool(context, market)), () => {
-        throw new Error('Cannot deploy pool for market that allready has pool.')
-      })
-
-      const tx = context.api.tx.predictionMarkets.deploySwapPoolForMarket(
-        market.marketId,
-        params.swapFee,
-        params.amount,
-        params.weights,
-      )
-
-      const extrinsic = await signAndSend({
-        api: context.api,
-        tx,
-        signer: params.signer,
-        hooks: params.hooks,
-      })
-
-      return extrinsic
-    })
-
-    marketWithMethods.deploySwapPoolAndAdditionalLiquidity = Te.from(async params => {
-      assert(!(await hasPool(context, market)), () => {
-        throw new Error('Cannot deploy pool for market that allready has pool.')
-      })
-
-      const tx = context.api.tx.predictionMarkets.deploySwapPoolAndAdditionalLiquidity(
-        market.marketId,
-        params.swapFee,
-        params.amount,
-        params.weights,
-      )
-
-      const extrinsic = await signAndSend({
-        api: context.api,
-        tx,
-        signer: params.signer,
-        hooks: params.hooks,
-      })
-
-      return extrinsic
-    })
-
     marketWithMethods.buyCompleteSet = Te.from(async params => {
       return await signAndSend({
         api: context.api,
@@ -477,15 +399,6 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
       return await signAndSend({
         api: context.api,
         tx: context.api.tx.predictionMarkets.approveMarket(market.marketId),
-        signer: params.signer,
-        hooks: params.hooks,
-      })
-    })
-
-    marketWithMethods.adminCleanUpPool = Te.from(async params => {
-      return await signAndSend({
-        api: context.api,
-        tx: context.api.tx.swaps.adminCleanUpPool(market.marketId, params.outcome),
         signer: params.signer,
         hooks: params.hooks,
       })

@@ -948,6 +948,8 @@ declare module '@polkadot/types/lookup' {
       readonly courtId: u128;
       readonly voteItem: ZrmlCourtVoteItem;
       readonly salt: H256;
+      readonly slashableAmount: u128;
+      readonly drawWeight: u32;
     } & Struct;
     readonly isDenouncedJurorVote: boolean;
     readonly asDenouncedJurorVote: {
@@ -966,7 +968,8 @@ declare module '@polkadot/types/lookup' {
     readonly isCourtAppealed: boolean;
     readonly asCourtAppealed: {
       readonly courtId: u128;
-      readonly appealNumber: u32;
+      readonly appealInfo: ZrmlCourtAppealInfo;
+      readonly newRoundEnds: Option<ZrmlCourtRoundTiming>;
     } & Struct;
     readonly isMintedInCourt: boolean;
     readonly asMintedInCourt: {
@@ -1034,7 +1037,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Outcome' | 'Binary';
   }
 
-  /** @name ZrmlLiquidityMiningEvent (80) */
+  /** @name ZrmlLiquidityMiningEvent (81) */
   interface ZrmlLiquidityMiningEvent extends Enum {
     readonly isAddedIncentives: boolean;
     readonly asAddedIncentives: u64;
@@ -1045,7 +1048,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AddedIncentives' | 'DistributedIncentives' | 'SubtractedIncentives';
   }
 
-  /** @name ZrmlSimpleDisputesEvent (82) */
+  /** @name ZrmlSimpleDisputesEvent (83) */
   interface ZrmlSimpleDisputesEvent extends Enum {
     readonly isOutcomeReserved: boolean;
     readonly asOutcomeReserved: {
@@ -1055,7 +1058,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'OutcomeReserved';
   }
 
-  /** @name ZeitgeistPrimitivesMarketMarketDispute (83) */
+  /** @name ZeitgeistPrimitivesMarketMarketDispute (84) */
   interface ZeitgeistPrimitivesMarketMarketDispute extends Struct {
     readonly at: u64;
     readonly by: AccountId32;
@@ -1063,18 +1066,12 @@ declare module '@polkadot/types/lookup' {
     readonly bond: u128;
   }
 
-  /** @name ZrmlSwapsEvent (84) */
+  /** @name ZrmlSwapsEvent (85) */
   interface ZrmlSwapsEvent extends Enum {
-    readonly isArbitrageBuyBurn: boolean;
-    readonly asArbitrageBuyBurn: ITuple<[u128, u128]>;
-    readonly isArbitrageMintSell: boolean;
-    readonly asArbitrageMintSell: ITuple<[u128, u128]>;
-    readonly isArbitrageSkipped: boolean;
-    readonly asArbitrageSkipped: u128;
     readonly isDistributeShareHolderRewards: boolean;
     readonly asDistributeShareHolderRewards: ITuple<[u128, u64, u128]>;
     readonly isPoolCreate: boolean;
-    readonly asPoolCreate: ITuple<[ZrmlSwapsEventsCommonPoolEventParams, ZeitgeistPrimitivesPool, u128, AccountId32]>;
+    readonly asPoolCreate: ITuple<[ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsPool, u128, AccountId32]>;
     readonly isPoolClosed: boolean;
     readonly asPoolClosed: u128;
     readonly isPoolCleanedUp: boolean;
@@ -1083,22 +1080,16 @@ declare module '@polkadot/types/lookup' {
     readonly asPoolActive: u128;
     readonly isPoolExit: boolean;
     readonly asPoolExit: ZrmlSwapsEventsPoolAssetsEvent;
-    readonly isPoolExitSubsidy: boolean;
-    readonly asPoolExitSubsidy: ITuple<[ZeitgeistPrimitivesAsset, u128, ZrmlSwapsEventsCommonPoolEventParams, u128]>;
     readonly isPoolExitWithExactAssetAmount: boolean;
     readonly asPoolExitWithExactAssetAmount: ZrmlSwapsEventsPoolAssetEvent;
     readonly isPoolExitWithExactPoolAmount: boolean;
     readonly asPoolExitWithExactPoolAmount: ZrmlSwapsEventsPoolAssetEvent;
     readonly isPoolJoin: boolean;
     readonly asPoolJoin: ZrmlSwapsEventsPoolAssetsEvent;
-    readonly isPoolJoinSubsidy: boolean;
-    readonly asPoolJoinSubsidy: ITuple<[ZeitgeistPrimitivesAsset, u128, ZrmlSwapsEventsCommonPoolEventParams]>;
     readonly isPoolJoinWithExactAssetAmount: boolean;
     readonly asPoolJoinWithExactAssetAmount: ZrmlSwapsEventsPoolAssetEvent;
     readonly isPoolJoinWithExactPoolAmount: boolean;
     readonly asPoolJoinWithExactPoolAmount: ZrmlSwapsEventsPoolAssetEvent;
-    readonly isSubsidyCollected: boolean;
-    readonly asSubsidyCollected: ITuple<[u128, Vec<ITuple<[AccountId32, u128]>>, u128]>;
     readonly isPoolDestroyed: boolean;
     readonly asPoolDestroyed: u128;
     readonly isPoolDestroyedInSubsidyPhase: boolean;
@@ -1107,50 +1098,29 @@ declare module '@polkadot/types/lookup' {
     readonly asSwapExactAmountIn: ZrmlSwapsEventsSwapEvent;
     readonly isSwapExactAmountOut: boolean;
     readonly asSwapExactAmountOut: ZrmlSwapsEventsSwapEvent;
-    readonly isMarketCreatorFeesPaid: boolean;
-    readonly asMarketCreatorFeesPaid: ITuple<[u128, AccountId32, AccountId32, u128, ZeitgeistPrimitivesAsset]>;
-    readonly isMarketCreatorFeePaymentFailed: boolean;
-    readonly asMarketCreatorFeePaymentFailed: ITuple<[u128, AccountId32, AccountId32, u128, ZeitgeistPrimitivesAsset, SpRuntimeDispatchError]>;
-    readonly type: 'ArbitrageBuyBurn' | 'ArbitrageMintSell' | 'ArbitrageSkipped' | 'DistributeShareHolderRewards' | 'PoolCreate' | 'PoolClosed' | 'PoolCleanedUp' | 'PoolActive' | 'PoolExit' | 'PoolExitSubsidy' | 'PoolExitWithExactAssetAmount' | 'PoolExitWithExactPoolAmount' | 'PoolJoin' | 'PoolJoinSubsidy' | 'PoolJoinWithExactAssetAmount' | 'PoolJoinWithExactPoolAmount' | 'SubsidyCollected' | 'PoolDestroyed' | 'PoolDestroyedInSubsidyPhase' | 'SwapExactAmountIn' | 'SwapExactAmountOut' | 'MarketCreatorFeesPaid' | 'MarketCreatorFeePaymentFailed';
+    readonly type: 'DistributeShareHolderRewards' | 'PoolCreate' | 'PoolClosed' | 'PoolCleanedUp' | 'PoolActive' | 'PoolExit' | 'PoolExitWithExactAssetAmount' | 'PoolExitWithExactPoolAmount' | 'PoolJoin' | 'PoolJoinWithExactAssetAmount' | 'PoolJoinWithExactPoolAmount' | 'PoolDestroyed' | 'PoolDestroyedInSubsidyPhase' | 'SwapExactAmountIn' | 'SwapExactAmountOut';
   }
 
-  /** @name ZrmlSwapsEventsCommonPoolEventParams (85) */
+  /** @name ZrmlSwapsEventsCommonPoolEventParams (86) */
   interface ZrmlSwapsEventsCommonPoolEventParams extends Struct {
     readonly poolId: u128;
     readonly who: AccountId32;
   }
 
-  /** @name ZeitgeistPrimitivesPool (86) */
-  interface ZeitgeistPrimitivesPool extends Struct {
+  /** @name ZrmlSwapsPool (87) */
+  interface ZrmlSwapsPool extends Struct {
     readonly assets: Vec<ZeitgeistPrimitivesAsset>;
-    readonly baseAsset: ZeitgeistPrimitivesAsset;
-    readonly marketId: u128;
-    readonly poolStatus: ZeitgeistPrimitivesPoolStatus;
-    readonly scoringRule: ZeitgeistPrimitivesPoolScoringRule;
-    readonly swapFee: Option<u128>;
-    readonly totalSubsidy: Option<u128>;
-    readonly totalWeight: Option<u128>;
-    readonly weights: Option<BTreeMap<ZeitgeistPrimitivesAsset, u128>>;
+    readonly status: ZrmlSwapsPoolPoolStatus;
+    readonly swapFee: u128;
+    readonly totalWeight: u128;
+    readonly weights: BTreeMap<ZeitgeistPrimitivesAsset, u128>;
   }
 
-  /** @name ZeitgeistPrimitivesPoolStatus (88) */
-  interface ZeitgeistPrimitivesPoolStatus extends Enum {
-    readonly isActive: boolean;
-    readonly isCollectingSubsidy: boolean;
+  /** @name ZrmlSwapsPoolPoolStatus (90) */
+  interface ZrmlSwapsPoolPoolStatus extends Enum {
+    readonly isOpen: boolean;
     readonly isClosed: boolean;
-    readonly isClean: boolean;
-    readonly isInitialized: boolean;
-    readonly type: 'Active' | 'CollectingSubsidy' | 'Closed' | 'Clean' | 'Initialized';
-  }
-
-  /** @name ZeitgeistPrimitivesPoolScoringRule (89) */
-  interface ZeitgeistPrimitivesPoolScoringRule extends Enum {
-    readonly isCpmm: boolean;
-    readonly isRikiddoSigmoidFeeMarketEma: boolean;
-    readonly isLmsr: boolean;
-    readonly isOrderbook: boolean;
-    readonly isParimutuel: boolean;
-    readonly type: 'Cpmm' | 'RikiddoSigmoidFeeMarketEma' | 'Lmsr' | 'Orderbook' | 'Parimutuel';
+    readonly type: 'Open' | 'Closed';
   }
 
   /** @name ZrmlSwapsEventsPoolAssetsEvent (95) */
@@ -1182,7 +1152,7 @@ declare module '@polkadot/types/lookup' {
     readonly maxPrice: Option<u128>;
   }
 
-  /** @name ZrmlPredictionMarketsEvent (101) */
+  /** @name ZrmlPredictionMarketsEvent (102) */
   interface ZrmlPredictionMarketsEvent extends Enum {
     readonly isBadOnInitialize: boolean;
     readonly isBoughtCompleteSet: boolean;
@@ -1193,10 +1163,6 @@ declare module '@polkadot/types/lookup' {
     readonly asMarketCreated: ITuple<[u128, AccountId32, ZeitgeistPrimitivesMarket]>;
     readonly isMarketDestroyed: boolean;
     readonly asMarketDestroyed: u128;
-    readonly isMarketStartedWithSubsidy: boolean;
-    readonly asMarketStartedWithSubsidy: ITuple<[u128, ZeitgeistPrimitivesMarketMarketStatus]>;
-    readonly isMarketInsufficientSubsidy: boolean;
-    readonly asMarketInsufficientSubsidy: ITuple<[u128, ZeitgeistPrimitivesMarketMarketStatus]>;
     readonly isMarketClosed: boolean;
     readonly asMarketClosed: u128;
     readonly isMarketEarlyCloseScheduled: boolean;
@@ -1233,24 +1199,26 @@ declare module '@polkadot/types/lookup' {
     readonly asTokensRedeemed: ITuple<[u128, ZeitgeistPrimitivesAsset, u128, u128, AccountId32]>;
     readonly isGlobalDisputeStarted: boolean;
     readonly asGlobalDisputeStarted: u128;
-    readonly type: 'BadOnInitialize' | 'BoughtCompleteSet' | 'MarketApproved' | 'MarketCreated' | 'MarketDestroyed' | 'MarketStartedWithSubsidy' | 'MarketInsufficientSubsidy' | 'MarketClosed' | 'MarketEarlyCloseScheduled' | 'MarketEarlyCloseDisputed' | 'MarketEarlyCloseRejected' | 'MarketDisputed' | 'MarketExpired' | 'MarketRejected' | 'MarketReported' | 'MarketResolved' | 'MarketRequestedEdit' | 'MarketEdited' | 'SoldCompleteSet' | 'TokensRedeemed' | 'GlobalDisputeStarted';
+    readonly isRecoveryLimitReached: boolean;
+    readonly asRecoveryLimitReached: {
+      readonly lastTimeFrame: u64;
+      readonly limitTimeFrame: u64;
+    } & Struct;
+    readonly type: 'BadOnInitialize' | 'BoughtCompleteSet' | 'MarketApproved' | 'MarketCreated' | 'MarketDestroyed' | 'MarketClosed' | 'MarketEarlyCloseScheduled' | 'MarketEarlyCloseDisputed' | 'MarketEarlyCloseRejected' | 'MarketDisputed' | 'MarketExpired' | 'MarketRejected' | 'MarketReported' | 'MarketResolved' | 'MarketRequestedEdit' | 'MarketEdited' | 'SoldCompleteSet' | 'TokensRedeemed' | 'GlobalDisputeStarted' | 'RecoveryLimitReached';
   }
 
-  /** @name ZeitgeistPrimitivesMarketMarketStatus (102) */
+  /** @name ZeitgeistPrimitivesMarketMarketStatus (103) */
   interface ZeitgeistPrimitivesMarketMarketStatus extends Enum {
     readonly isProposed: boolean;
     readonly isActive: boolean;
-    readonly isSuspended: boolean;
     readonly isClosed: boolean;
-    readonly isCollectingSubsidy: boolean;
-    readonly isInsufficientSubsidy: boolean;
     readonly isReported: boolean;
     readonly isDisputed: boolean;
     readonly isResolved: boolean;
-    readonly type: 'Proposed' | 'Active' | 'Suspended' | 'Closed' | 'CollectingSubsidy' | 'InsufficientSubsidy' | 'Reported' | 'Disputed' | 'Resolved';
+    readonly type: 'Proposed' | 'Active' | 'Closed' | 'Reported' | 'Disputed' | 'Resolved';
   }
 
-  /** @name ZeitgeistPrimitivesMarket (103) */
+  /** @name ZeitgeistPrimitivesMarket (104) */
   interface ZeitgeistPrimitivesMarket extends Struct {
     readonly baseAsset: ZeitgeistPrimitivesAsset;
     readonly creator: AccountId32;
@@ -1261,7 +1229,7 @@ declare module '@polkadot/types/lookup' {
     readonly marketType: ZeitgeistPrimitivesMarketMarketType;
     readonly period: ZeitgeistPrimitivesMarketMarketPeriod;
     readonly deadlines: ZeitgeistPrimitivesMarketDeadlines;
-    readonly scoringRule: ZeitgeistPrimitivesPoolScoringRule;
+    readonly scoringRule: ZeitgeistPrimitivesMarketScoringRule;
     readonly status: ZeitgeistPrimitivesMarketMarketStatus;
     readonly report: Option<ZeitgeistPrimitivesMarketReport>;
     readonly resolvedOutcome: Option<ZeitgeistPrimitivesOutcomeReport>;
@@ -1270,14 +1238,14 @@ declare module '@polkadot/types/lookup' {
     readonly earlyClose: Option<ZeitgeistPrimitivesMarketEarlyClose>;
   }
 
-  /** @name ZeitgeistPrimitivesMarketMarketCreation (104) */
+  /** @name ZeitgeistPrimitivesMarketMarketCreation (105) */
   interface ZeitgeistPrimitivesMarketMarketCreation extends Enum {
     readonly isPermissionless: boolean;
     readonly isAdvised: boolean;
     readonly type: 'Permissionless' | 'Advised';
   }
 
-  /** @name ZeitgeistPrimitivesMarketMarketType (105) */
+  /** @name ZeitgeistPrimitivesMarketMarketType (106) */
   interface ZeitgeistPrimitivesMarketMarketType extends Enum {
     readonly isCategorical: boolean;
     readonly asCategorical: u16;
@@ -1286,7 +1254,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Categorical' | 'Scalar';
   }
 
-  /** @name ZeitgeistPrimitivesMarketMarketPeriod (107) */
+  /** @name ZeitgeistPrimitivesMarketMarketPeriod (108) */
   interface ZeitgeistPrimitivesMarketMarketPeriod extends Enum {
     readonly isBlock: boolean;
     readonly asBlock: Range<u64>;
@@ -1295,21 +1263,29 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Block' | 'Timestamp';
   }
 
-  /** @name ZeitgeistPrimitivesMarketDeadlines (109) */
+  /** @name ZeitgeistPrimitivesMarketDeadlines (110) */
   interface ZeitgeistPrimitivesMarketDeadlines extends Struct {
     readonly gracePeriod: u64;
     readonly oracleDuration: u64;
     readonly disputeDuration: u64;
   }
 
-  /** @name ZeitgeistPrimitivesMarketReport (111) */
+  /** @name ZeitgeistPrimitivesMarketScoringRule (111) */
+  interface ZeitgeistPrimitivesMarketScoringRule extends Enum {
+    readonly isLmsr: boolean;
+    readonly isOrderbook: boolean;
+    readonly isParimutuel: boolean;
+    readonly type: 'Lmsr' | 'Orderbook' | 'Parimutuel';
+  }
+
+  /** @name ZeitgeistPrimitivesMarketReport (113) */
   interface ZeitgeistPrimitivesMarketReport extends Struct {
     readonly at: u64;
     readonly by: AccountId32;
     readonly outcome: ZeitgeistPrimitivesOutcomeReport;
   }
 
-  /** @name ZeitgeistPrimitivesMarketMarketDisputeMechanism (114) */
+  /** @name ZeitgeistPrimitivesMarketMarketDisputeMechanism (116) */
   interface ZeitgeistPrimitivesMarketMarketDisputeMechanism extends Enum {
     readonly isAuthorized: boolean;
     readonly isCourt: boolean;
@@ -1317,7 +1293,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Authorized' | 'Court' | 'SimpleDisputes';
   }
 
-  /** @name ZeitgeistPrimitivesMarketMarketBonds (115) */
+  /** @name ZeitgeistPrimitivesMarketMarketBonds (117) */
   interface ZeitgeistPrimitivesMarketMarketBonds extends Struct {
     readonly creation: Option<ZeitgeistPrimitivesMarketBond>;
     readonly oracle: Option<ZeitgeistPrimitivesMarketBond>;
@@ -1327,21 +1303,21 @@ declare module '@polkadot/types/lookup' {
     readonly closeDispute: Option<ZeitgeistPrimitivesMarketBond>;
   }
 
-  /** @name ZeitgeistPrimitivesMarketBond (117) */
+  /** @name ZeitgeistPrimitivesMarketBond (119) */
   interface ZeitgeistPrimitivesMarketBond extends Struct {
     readonly who: AccountId32;
     readonly value: u128;
     readonly isSettled: bool;
   }
 
-  /** @name ZeitgeistPrimitivesMarketEarlyClose (119) */
+  /** @name ZeitgeistPrimitivesMarketEarlyClose (121) */
   interface ZeitgeistPrimitivesMarketEarlyClose extends Struct {
     readonly old: ZeitgeistPrimitivesMarketMarketPeriod;
     readonly new_: ZeitgeistPrimitivesMarketMarketPeriod;
     readonly state: ZeitgeistPrimitivesMarketEarlyCloseState;
   }
 
-  /** @name ZeitgeistPrimitivesMarketEarlyCloseState (120) */
+  /** @name ZeitgeistPrimitivesMarketEarlyCloseState (122) */
   interface ZeitgeistPrimitivesMarketEarlyCloseState extends Enum {
     readonly isScheduledAsMarketCreator: boolean;
     readonly isScheduledAsOther: boolean;
@@ -1350,7 +1326,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ScheduledAsMarketCreator' | 'ScheduledAsOther' | 'Disputed' | 'Rejected';
   }
 
-  /** @name ZrmlStyxEvent (123) */
+  /** @name ZrmlStyxEvent (125) */
   interface ZrmlStyxEvent extends Enum {
     readonly isAccountCrossed: boolean;
     readonly asAccountCrossed: ITuple<[AccountId32, u128]>;
@@ -1359,7 +1335,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AccountCrossed' | 'CrossingFeeChanged';
   }
 
-  /** @name ZrmlGlobalDisputesEvent (124) */
+  /** @name ZrmlGlobalDisputesEvent (126) */
   interface ZrmlGlobalDisputesEvent extends Enum {
     readonly isAddedVotingOutcome: boolean;
     readonly asAddedVotingOutcome: {
@@ -1399,7 +1375,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AddedVotingOutcome' | 'GlobalDisputeWinnerDetermined' | 'OutcomeOwnersRewarded' | 'OutcomeOwnerRewarded' | 'OutcomesPartiallyCleaned' | 'OutcomesFullyCleaned' | 'VotedOnOutcome';
   }
 
-  /** @name ZrmlNeoSwapsEvent (125) */
+  /** @name ZrmlNeoSwapsEvent (127) */
   interface ZrmlNeoSwapsEvent extends Enum {
     readonly isBuyExecuted: boolean;
     readonly asBuyExecuted: {
@@ -1463,16 +1439,17 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'BuyExecuted' | 'SellExecuted' | 'FeesWithdrawn' | 'JoinExecuted' | 'ExitExecuted' | 'PoolDeployed' | 'PoolDestroyed';
   }
 
-  /** @name ZrmlOrderbookEvent (126) */
+  /** @name ZrmlOrderbookEvent (128) */
   interface ZrmlOrderbookEvent extends Enum {
     readonly isOrderFilled: boolean;
     readonly asOrderFilled: {
       readonly orderId: u128;
       readonly maker: AccountId32;
       readonly taker: AccountId32;
-      readonly filled: u128;
-      readonly unfilledOutcomeAssetAmount: u128;
-      readonly unfilledBaseAssetAmount: u128;
+      readonly filledMakerAmount: u128;
+      readonly filledTakerAmount: u128;
+      readonly unfilledMakerAmount: u128;
+      readonly unfilledTakerAmount: u128;
     } & Struct;
     readonly isOrderPlaced: boolean;
     readonly asOrderPlaced: {
@@ -1487,25 +1464,17 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'OrderFilled' | 'OrderPlaced' | 'OrderRemoved';
   }
 
-  /** @name ZrmlOrderbookOrder (127) */
+  /** @name ZrmlOrderbookOrder (129) */
   interface ZrmlOrderbookOrder extends Struct {
     readonly marketId: u128;
-    readonly side: ZrmlOrderbookOrderSide;
     readonly maker: AccountId32;
-    readonly outcomeAsset: ZeitgeistPrimitivesAsset;
-    readonly baseAsset: ZeitgeistPrimitivesAsset;
-    readonly outcomeAssetAmount: u128;
-    readonly baseAssetAmount: u128;
+    readonly makerAsset: ZeitgeistPrimitivesAsset;
+    readonly makerAmount: u128;
+    readonly takerAsset: ZeitgeistPrimitivesAsset;
+    readonly takerAmount: u128;
   }
 
-  /** @name ZrmlOrderbookOrderSide (128) */
-  interface ZrmlOrderbookOrderSide extends Enum {
-    readonly isBid: boolean;
-    readonly isAsk: boolean;
-    readonly type: 'Bid' | 'Ask';
-  }
-
-  /** @name ZrmlParimutuelEvent (129) */
+  /** @name ZrmlParimutuelEvent (130) */
   interface ZrmlParimutuelEvent extends Enum {
     readonly isOutcomeBought: boolean;
     readonly asOutcomeBought: {
@@ -1533,7 +1502,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'OutcomeBought' | 'RewardsClaimed' | 'BalanceRefunded';
   }
 
-  /** @name CumulusPalletParachainSystemEvent (130) */
+  /** @name CumulusPalletParachainSystemEvent (131) */
   interface CumulusPalletParachainSystemEvent extends Enum {
     readonly isValidationFunctionStored: boolean;
     readonly isValidationFunctionApplied: boolean;
@@ -1561,7 +1530,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ValidationFunctionStored' | 'ValidationFunctionApplied' | 'ValidationFunctionDiscarded' | 'UpgradeAuthorized' | 'DownwardMessagesReceived' | 'DownwardMessagesProcessed' | 'UpwardMessageSent';
   }
 
-  /** @name PalletParachainStakingEvent (131) */
+  /** @name PalletParachainStakingEvent (132) */
   interface PalletParachainStakingEvent extends Enum {
     readonly isNewRound: boolean;
     readonly asNewRound: {
@@ -1776,13 +1745,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'NewRound' | 'JoinedCollatorCandidates' | 'CollatorChosen' | 'CandidateBondLessRequested' | 'CandidateBondedMore' | 'CandidateBondedLess' | 'CandidateWentOffline' | 'CandidateBackOnline' | 'CandidateScheduledExit' | 'CancelledCandidateExit' | 'CancelledCandidateBondLess' | 'CandidateLeft' | 'DelegationDecreaseScheduled' | 'DelegationIncreased' | 'DelegationDecreased' | 'DelegatorExitScheduled' | 'DelegationRevocationScheduled' | 'DelegatorLeft' | 'DelegationRevoked' | 'DelegationKicked' | 'DelegatorExitCancelled' | 'CancelledDelegationRequest' | 'Delegation' | 'DelegatorLeftCandidate' | 'Rewarded' | 'ReservedForParachainBond' | 'ParachainBondAccountSet' | 'ParachainBondReservePercentSet' | 'InflationSet' | 'StakeExpectationsSet' | 'TotalSelectedSet' | 'CollatorCommissionSet' | 'BlocksPerRoundSet' | 'AutoCompoundSet' | 'Compounded';
   }
 
-  /** @name PalletParachainStakingDelegationRequestsCancelledScheduledRequest (132) */
+  /** @name PalletParachainStakingDelegationRequestsCancelledScheduledRequest (133) */
   interface PalletParachainStakingDelegationRequestsCancelledScheduledRequest extends Struct {
     readonly whenExecutable: u32;
     readonly action: PalletParachainStakingDelegationRequestsDelegationAction;
   }
 
-  /** @name PalletParachainStakingDelegationRequestsDelegationAction (133) */
+  /** @name PalletParachainStakingDelegationRequestsDelegationAction (134) */
   interface PalletParachainStakingDelegationRequestsDelegationAction extends Enum {
     readonly isRevoke: boolean;
     readonly asRevoke: u128;
@@ -1791,7 +1760,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Revoke' | 'Decrease';
   }
 
-  /** @name PalletParachainStakingDelegatorAdded (134) */
+  /** @name PalletParachainStakingDelegatorAdded (135) */
   interface PalletParachainStakingDelegatorAdded extends Enum {
     readonly isAddedToTop: boolean;
     readonly asAddedToTop: {
@@ -1801,14 +1770,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AddedToTop' | 'AddedToBottom';
   }
 
-  /** @name PalletAuthorSlotFilterEvent (136) */
+  /** @name PalletAuthorSlotFilterEvent (137) */
   interface PalletAuthorSlotFilterEvent extends Enum {
     readonly isEligibleUpdated: boolean;
     readonly asEligibleUpdated: u32;
     readonly type: 'EligibleUpdated';
   }
 
-  /** @name PalletAuthorMappingEvent (138) */
+  /** @name PalletAuthorMappingEvent (139) */
   interface PalletAuthorMappingEvent extends Enum {
     readonly isKeysRegistered: boolean;
     readonly asKeysRegistered: {
@@ -1831,16 +1800,16 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'KeysRegistered' | 'KeysRemoved' | 'KeysRotated';
   }
 
-  /** @name NimbusPrimitivesNimbusCryptoPublic (139) */
+  /** @name NimbusPrimitivesNimbusCryptoPublic (140) */
   interface NimbusPrimitivesNimbusCryptoPublic extends SpCoreSr25519Public {}
 
-  /** @name SpCoreSr25519Public (140) */
+  /** @name SpCoreSr25519Public (141) */
   interface SpCoreSr25519Public extends U8aFixed {}
 
-  /** @name SessionKeysPrimitivesVrfVrfCryptoPublic (141) */
+  /** @name SessionKeysPrimitivesVrfVrfCryptoPublic (142) */
   interface SessionKeysPrimitivesVrfVrfCryptoPublic extends SpCoreSr25519Public {}
 
-  /** @name CumulusPalletXcmEvent (142) */
+  /** @name CumulusPalletXcmEvent (143) */
   interface CumulusPalletXcmEvent extends Enum {
     readonly isInvalidFormat: boolean;
     readonly asInvalidFormat: U8aFixed;
@@ -1851,7 +1820,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'InvalidFormat' | 'UnsupportedVersion' | 'ExecutedDownward';
   }
 
-  /** @name XcmV3TraitsOutcome (143) */
+  /** @name XcmV3TraitsOutcome (144) */
   interface XcmV3TraitsOutcome extends Enum {
     readonly isComplete: boolean;
     readonly asComplete: SpWeightsWeightV2Weight;
@@ -1862,7 +1831,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Complete' | 'Incomplete' | 'Error';
   }
 
-  /** @name XcmV3TraitsError (144) */
+  /** @name XcmV3TraitsError (145) */
   interface XcmV3TraitsError extends Enum {
     readonly isOverflow: boolean;
     readonly isUnimplemented: boolean;
@@ -1909,7 +1878,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Overflow' | 'Unimplemented' | 'UntrustedReserveLocation' | 'UntrustedTeleportLocation' | 'LocationFull' | 'LocationNotInvertible' | 'BadOrigin' | 'InvalidLocation' | 'AssetNotFound' | 'FailedToTransactAsset' | 'NotWithdrawable' | 'LocationCannotHold' | 'ExceedsMaxMessageSize' | 'DestinationUnsupported' | 'Transport' | 'Unroutable' | 'UnknownClaim' | 'FailedToDecode' | 'MaxWeightInvalid' | 'NotHoldingFees' | 'TooExpensive' | 'Trap' | 'ExpectationFalse' | 'PalletNotFound' | 'NameMismatch' | 'VersionIncompatible' | 'HoldingWouldOverflow' | 'ExportError' | 'ReanchorFailed' | 'NoDeal' | 'FeesNotMet' | 'LockError' | 'NoPermission' | 'Unanchored' | 'NotDepositable' | 'UnhandledXcmVersion' | 'WeightLimitReached' | 'Barrier' | 'WeightNotComputable' | 'ExceedsStackLimit';
   }
 
-  /** @name CumulusPalletDmpQueueEvent (145) */
+  /** @name CumulusPalletDmpQueueEvent (146) */
   interface CumulusPalletDmpQueueEvent extends Enum {
     readonly isInvalidFormat: boolean;
     readonly asInvalidFormat: {
@@ -1948,7 +1917,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'InvalidFormat' | 'UnsupportedVersion' | 'ExecutedDownward' | 'WeightExhausted' | 'OverweightEnqueued' | 'OverweightServiced' | 'MaxMessagesExhausted';
   }
 
-  /** @name PalletXcmEvent (146) */
+  /** @name PalletXcmEvent (147) */
   interface PalletXcmEvent extends Enum {
     readonly isAttempted: boolean;
     readonly asAttempted: XcmV3TraitsOutcome;
@@ -1999,13 +1968,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Attempted' | 'Sent' | 'UnexpectedResponse' | 'ResponseReady' | 'Notified' | 'NotifyOverweight' | 'NotifyDispatchError' | 'NotifyDecodeFailed' | 'InvalidResponder' | 'InvalidResponderVersion' | 'ResponseTaken' | 'AssetsTrapped' | 'VersionChangeNotified' | 'SupportedVersionChanged' | 'NotifyTargetSendFail' | 'NotifyTargetMigrationFail' | 'InvalidQuerierVersion' | 'InvalidQuerier' | 'VersionNotifyStarted' | 'VersionNotifyRequested' | 'VersionNotifyUnrequested' | 'FeesPaid' | 'AssetsClaimed';
   }
 
-  /** @name XcmV3MultiLocation (147) */
+  /** @name XcmV3MultiLocation (148) */
   interface XcmV3MultiLocation extends Struct {
     readonly parents: u8;
     readonly interior: XcmV3Junctions;
   }
 
-  /** @name XcmV3Junctions (148) */
+  /** @name XcmV3Junctions (149) */
   interface XcmV3Junctions extends Enum {
     readonly isHere: boolean;
     readonly isX1: boolean;
@@ -2027,7 +1996,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Here' | 'X1' | 'X2' | 'X3' | 'X4' | 'X5' | 'X6' | 'X7' | 'X8';
   }
 
-  /** @name XcmV3Junction (149) */
+  /** @name XcmV3Junction (150) */
   interface XcmV3Junction extends Enum {
     readonly isParachain: boolean;
     readonly asParachain: Compact<u32>;
@@ -2066,7 +2035,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Parachain' | 'AccountId32' | 'AccountIndex64' | 'AccountKey20' | 'PalletInstance' | 'GeneralIndex' | 'GeneralKey' | 'OnlyChild' | 'Plurality' | 'GlobalConsensus';
   }
 
-  /** @name XcmV3JunctionNetworkId (152) */
+  /** @name XcmV3JunctionNetworkId (153) */
   interface XcmV3JunctionNetworkId extends Enum {
     readonly isByGenesis: boolean;
     readonly asByGenesis: U8aFixed;
@@ -2089,7 +2058,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ByGenesis' | 'ByFork' | 'Polkadot' | 'Kusama' | 'Westend' | 'Rococo' | 'Wococo' | 'Ethereum' | 'BitcoinCore' | 'BitcoinCash';
   }
 
-  /** @name XcmV3JunctionBodyId (155) */
+  /** @name XcmV3JunctionBodyId (156) */
   interface XcmV3JunctionBodyId extends Enum {
     readonly isUnit: boolean;
     readonly isMoniker: boolean;
@@ -2106,7 +2075,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Unit' | 'Moniker' | 'Index' | 'Executive' | 'Technical' | 'Legislative' | 'Judicial' | 'Defense' | 'Administration' | 'Treasury';
   }
 
-  /** @name XcmV3JunctionBodyPart (156) */
+  /** @name XcmV3JunctionBodyPart (157) */
   interface XcmV3JunctionBodyPart extends Enum {
     readonly isVoice: boolean;
     readonly isMembers: boolean;
@@ -2131,10 +2100,10 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Voice' | 'Members' | 'Fraction' | 'AtLeastProportion' | 'MoreThanProportion';
   }
 
-  /** @name XcmV3Xcm (157) */
+  /** @name XcmV3Xcm (158) */
   interface XcmV3Xcm extends Vec<XcmV3Instruction> {}
 
-  /** @name XcmV3Instruction (159) */
+  /** @name XcmV3Instruction (160) */
   interface XcmV3Instruction extends Enum {
     readonly isWithdrawAsset: boolean;
     readonly asWithdrawAsset: XcmV3MultiassetMultiAssets;
@@ -2316,16 +2285,16 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'WithdrawAsset' | 'ReserveAssetDeposited' | 'ReceiveTeleportedAsset' | 'QueryResponse' | 'TransferAsset' | 'TransferReserveAsset' | 'Transact' | 'HrmpNewChannelOpenRequest' | 'HrmpChannelAccepted' | 'HrmpChannelClosing' | 'ClearOrigin' | 'DescendOrigin' | 'ReportError' | 'DepositAsset' | 'DepositReserveAsset' | 'ExchangeAsset' | 'InitiateReserveWithdraw' | 'InitiateTeleport' | 'ReportHolding' | 'BuyExecution' | 'RefundSurplus' | 'SetErrorHandler' | 'SetAppendix' | 'ClearError' | 'ClaimAsset' | 'Trap' | 'SubscribeVersion' | 'UnsubscribeVersion' | 'BurnAsset' | 'ExpectAsset' | 'ExpectOrigin' | 'ExpectError' | 'ExpectTransactStatus' | 'QueryPallet' | 'ExpectPallet' | 'ReportTransactStatus' | 'ClearTransactStatus' | 'UniversalOrigin' | 'ExportMessage' | 'LockAsset' | 'UnlockAsset' | 'NoteUnlockable' | 'RequestUnlock' | 'SetFeesMode' | 'SetTopic' | 'ClearTopic' | 'AliasOrigin' | 'UnpaidExecution';
   }
 
-  /** @name XcmV3MultiassetMultiAssets (160) */
+  /** @name XcmV3MultiassetMultiAssets (161) */
   interface XcmV3MultiassetMultiAssets extends Vec<XcmV3MultiAsset> {}
 
-  /** @name XcmV3MultiAsset (162) */
+  /** @name XcmV3MultiAsset (163) */
   interface XcmV3MultiAsset extends Struct {
     readonly id: XcmV3MultiassetAssetId;
     readonly fun: XcmV3MultiassetFungibility;
   }
 
-  /** @name XcmV3MultiassetAssetId (163) */
+  /** @name XcmV3MultiassetAssetId (164) */
   interface XcmV3MultiassetAssetId extends Enum {
     readonly isConcrete: boolean;
     readonly asConcrete: XcmV3MultiLocation;
@@ -2334,7 +2303,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Concrete' | 'Abstract';
   }
 
-  /** @name XcmV3MultiassetFungibility (164) */
+  /** @name XcmV3MultiassetFungibility (165) */
   interface XcmV3MultiassetFungibility extends Enum {
     readonly isFungible: boolean;
     readonly asFungible: Compact<u128>;
@@ -2343,7 +2312,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Fungible' | 'NonFungible';
   }
 
-  /** @name XcmV3MultiassetAssetInstance (165) */
+  /** @name XcmV3MultiassetAssetInstance (166) */
   interface XcmV3MultiassetAssetInstance extends Enum {
     readonly isUndefined: boolean;
     readonly isIndex: boolean;
@@ -2359,7 +2328,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Undefined' | 'Index' | 'Array4' | 'Array8' | 'Array16' | 'Array32';
   }
 
-  /** @name XcmV3Response (167) */
+  /** @name XcmV3Response (168) */
   interface XcmV3Response extends Enum {
     readonly isNull: boolean;
     readonly isAssets: boolean;
@@ -2375,10 +2344,10 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Null' | 'Assets' | 'ExecutionResult' | 'Version' | 'PalletsInfo' | 'DispatchResult';
   }
 
-  /** @name XcmV3VecPalletInfo (170) */
+  /** @name XcmV3VecPalletInfo (171) */
   interface XcmV3VecPalletInfo extends Vec<XcmV3PalletInfo> {}
 
-  /** @name XcmV3PalletInfo (172) */
+  /** @name XcmV3PalletInfo (173) */
   interface XcmV3PalletInfo extends Struct {
     readonly index: Compact<u32>;
     readonly name: Bytes;
@@ -2388,7 +2357,7 @@ declare module '@polkadot/types/lookup' {
     readonly patch: Compact<u32>;
   }
 
-  /** @name XcmV3MaybeErrorCode (173) */
+  /** @name XcmV3MaybeErrorCode (174) */
   interface XcmV3MaybeErrorCode extends Enum {
     readonly isSuccess: boolean;
     readonly isError: boolean;
@@ -2398,7 +2367,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Success' | 'Error' | 'TruncatedError';
   }
 
-  /** @name XcmV2OriginKind (175) */
+  /** @name XcmV2OriginKind (176) */
   interface XcmV2OriginKind extends Enum {
     readonly isNative: boolean;
     readonly isSovereignAccount: boolean;
@@ -2407,19 +2376,19 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Native' | 'SovereignAccount' | 'Superuser' | 'Xcm';
   }
 
-  /** @name XcmDoubleEncoded (176) */
+  /** @name XcmDoubleEncoded (177) */
   interface XcmDoubleEncoded extends Struct {
     readonly encoded: Bytes;
   }
 
-  /** @name XcmV3QueryResponseInfo (177) */
+  /** @name XcmV3QueryResponseInfo (178) */
   interface XcmV3QueryResponseInfo extends Struct {
     readonly destination: XcmV3MultiLocation;
     readonly queryId: Compact<u64>;
     readonly maxWeight: SpWeightsWeightV2Weight;
   }
 
-  /** @name XcmV3MultiassetMultiAssetFilter (178) */
+  /** @name XcmV3MultiassetMultiAssetFilter (179) */
   interface XcmV3MultiassetMultiAssetFilter extends Enum {
     readonly isDefinite: boolean;
     readonly asDefinite: XcmV3MultiassetMultiAssets;
@@ -2428,7 +2397,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Definite' | 'Wild';
   }
 
-  /** @name XcmV3MultiassetWildMultiAsset (179) */
+  /** @name XcmV3MultiassetWildMultiAsset (180) */
   interface XcmV3MultiassetWildMultiAsset extends Enum {
     readonly isAll: boolean;
     readonly isAllOf: boolean;
@@ -2447,14 +2416,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'All' | 'AllOf' | 'AllCounted' | 'AllOfCounted';
   }
 
-  /** @name XcmV3MultiassetWildFungibility (180) */
+  /** @name XcmV3MultiassetWildFungibility (181) */
   interface XcmV3MultiassetWildFungibility extends Enum {
     readonly isFungible: boolean;
     readonly isNonFungible: boolean;
     readonly type: 'Fungible' | 'NonFungible';
   }
 
-  /** @name XcmV3WeightLimit (181) */
+  /** @name XcmV3WeightLimit (182) */
   interface XcmV3WeightLimit extends Enum {
     readonly isUnlimited: boolean;
     readonly isLimited: boolean;
@@ -2462,7 +2431,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Unlimited' | 'Limited';
   }
 
-  /** @name XcmVersionedMultiAssets (182) */
+  /** @name XcmVersionedMultiAssets (183) */
   interface XcmVersionedMultiAssets extends Enum {
     readonly isV2: boolean;
     readonly asV2: XcmV2MultiassetMultiAssets;
@@ -2471,16 +2440,16 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'V2' | 'V3';
   }
 
-  /** @name XcmV2MultiassetMultiAssets (183) */
+  /** @name XcmV2MultiassetMultiAssets (184) */
   interface XcmV2MultiassetMultiAssets extends Vec<XcmV2MultiAsset> {}
 
-  /** @name XcmV2MultiAsset (185) */
+  /** @name XcmV2MultiAsset (186) */
   interface XcmV2MultiAsset extends Struct {
     readonly id: XcmV2MultiassetAssetId;
     readonly fun: XcmV2MultiassetFungibility;
   }
 
-  /** @name XcmV2MultiassetAssetId (186) */
+  /** @name XcmV2MultiassetAssetId (187) */
   interface XcmV2MultiassetAssetId extends Enum {
     readonly isConcrete: boolean;
     readonly asConcrete: XcmV2MultiLocation;
@@ -2489,13 +2458,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Concrete' | 'Abstract';
   }
 
-  /** @name XcmV2MultiLocation (187) */
+  /** @name XcmV2MultiLocation (188) */
   interface XcmV2MultiLocation extends Struct {
     readonly parents: u8;
     readonly interior: XcmV2MultilocationJunctions;
   }
 
-  /** @name XcmV2MultilocationJunctions (188) */
+  /** @name XcmV2MultilocationJunctions (189) */
   interface XcmV2MultilocationJunctions extends Enum {
     readonly isHere: boolean;
     readonly isX1: boolean;
@@ -2517,7 +2486,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Here' | 'X1' | 'X2' | 'X3' | 'X4' | 'X5' | 'X6' | 'X7' | 'X8';
   }
 
-  /** @name XcmV2Junction (189) */
+  /** @name XcmV2Junction (190) */
   interface XcmV2Junction extends Enum {
     readonly isParachain: boolean;
     readonly asParachain: Compact<u32>;
@@ -2551,7 +2520,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Parachain' | 'AccountId32' | 'AccountIndex64' | 'AccountKey20' | 'PalletInstance' | 'GeneralIndex' | 'GeneralKey' | 'OnlyChild' | 'Plurality';
   }
 
-  /** @name XcmV2NetworkId (190) */
+  /** @name XcmV2NetworkId (191) */
   interface XcmV2NetworkId extends Enum {
     readonly isAny: boolean;
     readonly isNamed: boolean;
@@ -2561,7 +2530,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Any' | 'Named' | 'Polkadot' | 'Kusama';
   }
 
-  /** @name XcmV2BodyId (192) */
+  /** @name XcmV2BodyId (193) */
   interface XcmV2BodyId extends Enum {
     readonly isUnit: boolean;
     readonly isNamed: boolean;
@@ -2578,7 +2547,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Unit' | 'Named' | 'Index' | 'Executive' | 'Technical' | 'Legislative' | 'Judicial' | 'Defense' | 'Administration' | 'Treasury';
   }
 
-  /** @name XcmV2BodyPart (193) */
+  /** @name XcmV2BodyPart (194) */
   interface XcmV2BodyPart extends Enum {
     readonly isVoice: boolean;
     readonly isMembers: boolean;
@@ -2603,7 +2572,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Voice' | 'Members' | 'Fraction' | 'AtLeastProportion' | 'MoreThanProportion';
   }
 
-  /** @name XcmV2MultiassetFungibility (194) */
+  /** @name XcmV2MultiassetFungibility (195) */
   interface XcmV2MultiassetFungibility extends Enum {
     readonly isFungible: boolean;
     readonly asFungible: Compact<u128>;
@@ -2612,7 +2581,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Fungible' | 'NonFungible';
   }
 
-  /** @name XcmV2MultiassetAssetInstance (195) */
+  /** @name XcmV2MultiassetAssetInstance (196) */
   interface XcmV2MultiassetAssetInstance extends Enum {
     readonly isUndefined: boolean;
     readonly isIndex: boolean;
@@ -2630,7 +2599,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Undefined' | 'Index' | 'Array4' | 'Array8' | 'Array16' | 'Array32' | 'Blob';
   }
 
-  /** @name XcmVersionedMultiLocation (196) */
+  /** @name XcmVersionedMultiLocation (197) */
   interface XcmVersionedMultiLocation extends Enum {
     readonly isV2: boolean;
     readonly asV2: XcmV2MultiLocation;
@@ -2639,7 +2608,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'V2' | 'V3';
   }
 
-  /** @name CumulusPalletXcmpQueueEvent (197) */
+  /** @name CumulusPalletXcmpQueueEvent (198) */
   interface CumulusPalletXcmpQueueEvent extends Enum {
     readonly isSuccess: boolean;
     readonly asSuccess: {
@@ -2679,7 +2648,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Success' | 'Fail' | 'BadVersion' | 'BadFormat' | 'XcmpMessageSent' | 'OverweightEnqueued' | 'OverweightServiced';
   }
 
-  /** @name OrmlAssetRegistryModuleEvent (199) */
+  /** @name OrmlAssetRegistryModuleEvent (200) */
   interface OrmlAssetRegistryModuleEvent extends Enum {
     readonly isRegisteredAsset: boolean;
     readonly asRegisteredAsset: {
@@ -2694,7 +2663,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'RegisteredAsset' | 'UpdatedAsset';
   }
 
-  /** @name OrmlTraitsAssetRegistryAssetMetadata (200) */
+  /** @name OrmlTraitsAssetRegistryAssetMetadata (201) */
   interface OrmlTraitsAssetRegistryAssetMetadata extends Struct {
     readonly decimals: u32;
     readonly name: Bytes;
@@ -2704,18 +2673,18 @@ declare module '@polkadot/types/lookup' {
     readonly additional: ZeitgeistPrimitivesCustomMetadata;
   }
 
-  /** @name ZeitgeistPrimitivesCustomMetadata (201) */
+  /** @name ZeitgeistPrimitivesCustomMetadata (202) */
   interface ZeitgeistPrimitivesCustomMetadata extends Struct {
     readonly xcm: ZeitgeistPrimitivesXcmMetadata;
     readonly allowAsBaseAsset: bool;
   }
 
-  /** @name ZeitgeistPrimitivesXcmMetadata (202) */
+  /** @name ZeitgeistPrimitivesXcmMetadata (203) */
   interface ZeitgeistPrimitivesXcmMetadata extends Struct {
     readonly feeFactor: Option<u128>;
   }
 
-  /** @name OrmlUnknownTokensModuleEvent (204) */
+  /** @name OrmlUnknownTokensModuleEvent (205) */
   interface OrmlUnknownTokensModuleEvent extends Enum {
     readonly isDeposited: boolean;
     readonly asDeposited: {
@@ -2730,7 +2699,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Deposited' | 'Withdrawn';
   }
 
-  /** @name OrmlXtokensModuleEvent (205) */
+  /** @name OrmlXtokensModuleEvent (206) */
   interface OrmlXtokensModuleEvent extends Enum {
     readonly isTransferredMultiAssets: boolean;
     readonly asTransferredMultiAssets: {
@@ -2742,7 +2711,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'TransferredMultiAssets';
   }
 
-  /** @name PalletSudoEvent (206) */
+  /** @name PalletSudoEvent (207) */
   interface PalletSudoEvent extends Enum {
     readonly isSudid: boolean;
     readonly asSudid: {
@@ -2759,7 +2728,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Sudid' | 'KeyChanged' | 'SudoAsDone';
   }
 
-  /** @name FrameSystemPhase (208) */
+  /** @name FrameSystemPhase (209) */
   interface FrameSystemPhase extends Enum {
     readonly isApplyExtrinsic: boolean;
     readonly asApplyExtrinsic: u32;
@@ -2768,13 +2737,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ApplyExtrinsic' | 'Finalization' | 'Initialization';
   }
 
-  /** @name FrameSystemLastRuntimeUpgradeInfo (211) */
+  /** @name FrameSystemLastRuntimeUpgradeInfo (212) */
   interface FrameSystemLastRuntimeUpgradeInfo extends Struct {
     readonly specVersion: Compact<u32>;
     readonly specName: Text;
   }
 
-  /** @name FrameSystemCall (213) */
+  /** @name FrameSystemCall (214) */
   interface FrameSystemCall extends Enum {
     readonly isRemark: boolean;
     readonly asRemark: {
@@ -2812,21 +2781,21 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Remark' | 'SetHeapPages' | 'SetCode' | 'SetCodeWithoutChecks' | 'SetStorage' | 'KillStorage' | 'KillPrefix' | 'RemarkWithEvent';
   }
 
-  /** @name FrameSystemLimitsBlockWeights (217) */
+  /** @name FrameSystemLimitsBlockWeights (218) */
   interface FrameSystemLimitsBlockWeights extends Struct {
     readonly baseBlock: SpWeightsWeightV2Weight;
     readonly maxBlock: SpWeightsWeightV2Weight;
     readonly perClass: FrameSupportDispatchPerDispatchClassWeightsPerClass;
   }
 
-  /** @name FrameSupportDispatchPerDispatchClassWeightsPerClass (218) */
+  /** @name FrameSupportDispatchPerDispatchClassWeightsPerClass (219) */
   interface FrameSupportDispatchPerDispatchClassWeightsPerClass extends Struct {
     readonly normal: FrameSystemLimitsWeightsPerClass;
     readonly operational: FrameSystemLimitsWeightsPerClass;
     readonly mandatory: FrameSystemLimitsWeightsPerClass;
   }
 
-  /** @name FrameSystemLimitsWeightsPerClass (219) */
+  /** @name FrameSystemLimitsWeightsPerClass (220) */
   interface FrameSystemLimitsWeightsPerClass extends Struct {
     readonly baseExtrinsic: SpWeightsWeightV2Weight;
     readonly maxExtrinsic: Option<SpWeightsWeightV2Weight>;
@@ -2834,25 +2803,25 @@ declare module '@polkadot/types/lookup' {
     readonly reserved: Option<SpWeightsWeightV2Weight>;
   }
 
-  /** @name FrameSystemLimitsBlockLength (221) */
+  /** @name FrameSystemLimitsBlockLength (222) */
   interface FrameSystemLimitsBlockLength extends Struct {
     readonly max: FrameSupportDispatchPerDispatchClassU32;
   }
 
-  /** @name FrameSupportDispatchPerDispatchClassU32 (222) */
+  /** @name FrameSupportDispatchPerDispatchClassU32 (223) */
   interface FrameSupportDispatchPerDispatchClassU32 extends Struct {
     readonly normal: u32;
     readonly operational: u32;
     readonly mandatory: u32;
   }
 
-  /** @name SpWeightsRuntimeDbWeight (223) */
+  /** @name SpWeightsRuntimeDbWeight (224) */
   interface SpWeightsRuntimeDbWeight extends Struct {
     readonly read: u64;
     readonly write: u64;
   }
 
-  /** @name SpVersionRuntimeVersion (224) */
+  /** @name SpVersionRuntimeVersion (225) */
   interface SpVersionRuntimeVersion extends Struct {
     readonly specName: Text;
     readonly implName: Text;
@@ -2864,7 +2833,7 @@ declare module '@polkadot/types/lookup' {
     readonly stateVersion: u8;
   }
 
-  /** @name FrameSystemError (228) */
+  /** @name FrameSystemError (229) */
   interface FrameSystemError extends Enum {
     readonly isInvalidSpecName: boolean;
     readonly isSpecVersionNeedsToIncrease: boolean;
@@ -2875,7 +2844,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'InvalidSpecName' | 'SpecVersionNeedsToIncrease' | 'FailedToExtractRuntimeVersion' | 'NonDefaultComposite' | 'NonZeroRefCount' | 'CallFiltered';
   }
 
-  /** @name PalletTimestampCall (229) */
+  /** @name PalletTimestampCall (230) */
   interface PalletTimestampCall extends Enum {
     readonly isSet: boolean;
     readonly asSet: {
@@ -2884,7 +2853,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Set';
   }
 
-  /** @name PalletSchedulerScheduled (233) */
+  /** @name PalletSchedulerScheduled (234) */
   interface PalletSchedulerScheduled extends Struct {
     readonly maybeId: Option<U8aFixed>;
     readonly priority: u8;
@@ -2893,7 +2862,7 @@ declare module '@polkadot/types/lookup' {
     readonly origin: BatteryStationRuntimeOriginCaller;
   }
 
-  /** @name FrameSupportPreimagesBounded (234) */
+  /** @name FrameSupportPreimagesBounded (235) */
   interface FrameSupportPreimagesBounded extends Enum {
     readonly isLegacy: boolean;
     readonly asLegacy: {
@@ -2909,7 +2878,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Legacy' | 'Inline' | 'Lookup';
   }
 
-  /** @name PalletSchedulerCall (236) */
+  /** @name PalletSchedulerCall (237) */
   interface PalletSchedulerCall extends Enum {
     readonly isSchedule: boolean;
     readonly asSchedule: {
@@ -2953,7 +2922,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Schedule' | 'Cancel' | 'ScheduleNamed' | 'CancelNamed' | 'ScheduleAfter' | 'ScheduleNamedAfter';
   }
 
-  /** @name PalletPreimageCall (238) */
+  /** @name PalletPreimageCall (239) */
   interface PalletPreimageCall extends Enum {
     readonly isNotePreimage: boolean;
     readonly asNotePreimage: {
@@ -2974,7 +2943,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'NotePreimage' | 'UnnotePreimage' | 'RequestPreimage' | 'UnrequestPreimage';
   }
 
-  /** @name PalletBalancesCall (239) */
+  /** @name PalletBalancesCall (240) */
   interface PalletBalancesCall extends Enum {
     readonly isTransfer: boolean;
     readonly asTransfer: {
@@ -3011,7 +2980,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Transfer' | 'SetBalance' | 'ForceTransfer' | 'TransferKeepAlive' | 'TransferAll' | 'ForceUnreserve';
   }
 
-  /** @name PalletTreasuryCall (242) */
+  /** @name PalletTreasuryCall (243) */
   interface PalletTreasuryCall extends Enum {
     readonly isProposeSpend: boolean;
     readonly asProposeSpend: {
@@ -3038,7 +3007,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ProposeSpend' | 'RejectProposal' | 'ApproveProposal' | 'Spend' | 'RemoveApproval';
   }
 
-  /** @name PalletVestingCall (243) */
+  /** @name PalletVestingCall (244) */
   interface PalletVestingCall extends Enum {
     readonly isVest: boolean;
     readonly isVestOther: boolean;
@@ -3064,14 +3033,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Vest' | 'VestOther' | 'VestedTransfer' | 'ForceVestedTransfer' | 'MergeSchedules';
   }
 
-  /** @name PalletVestingVestingInfo (244) */
+  /** @name PalletVestingVestingInfo (245) */
   interface PalletVestingVestingInfo extends Struct {
     readonly locked: u128;
     readonly perBlock: u128;
     readonly startingBlock: u64;
   }
 
-  /** @name PalletMultisigCall (245) */
+  /** @name PalletMultisigCall (246) */
   interface PalletMultisigCall extends Enum {
     readonly isAsMultiThreshold1: boolean;
     readonly asAsMultiThreshold1: {
@@ -3104,7 +3073,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AsMultiThreshold1' | 'AsMulti' | 'ApproveAsMulti' | 'CancelAsMulti';
   }
 
-  /** @name PalletBountiesCall (247) */
+  /** @name PalletBountiesCall (248) */
   interface PalletBountiesCall extends Enum {
     readonly isProposeBounty: boolean;
     readonly asProposeBounty: {
@@ -3150,7 +3119,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ProposeBounty' | 'ApproveBounty' | 'ProposeCurator' | 'UnassignCurator' | 'AcceptCurator' | 'AwardBounty' | 'ClaimBounty' | 'CloseBounty' | 'ExtendBountyExpiry';
   }
 
-  /** @name PalletDemocracyCall (248) */
+  /** @name PalletDemocracyCall (249) */
   interface PalletDemocracyCall extends Enum {
     readonly isPropose: boolean;
     readonly asPropose: {
@@ -3229,7 +3198,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Propose' | 'Second' | 'Vote' | 'EmergencyCancel' | 'ExternalPropose' | 'ExternalProposeMajority' | 'ExternalProposeDefault' | 'FastTrack' | 'VetoExternal' | 'CancelReferendum' | 'Delegate' | 'Undelegate' | 'ClearPublicProposals' | 'Unlock' | 'RemoveVote' | 'RemoveOtherVote' | 'Blacklist' | 'CancelProposal';
   }
 
-  /** @name PalletDemocracyConviction (249) */
+  /** @name PalletDemocracyConviction (250) */
   interface PalletDemocracyConviction extends Enum {
     readonly isNone: boolean;
     readonly isLocked1x: boolean;
@@ -3241,7 +3210,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'None' | 'Locked1x' | 'Locked2x' | 'Locked3x' | 'Locked4x' | 'Locked5x' | 'Locked6x';
   }
 
-  /** @name PalletCollectiveCall (250) */
+  /** @name PalletCollectiveCall (251) */
   interface PalletCollectiveCall extends Enum {
     readonly isSetMembers: boolean;
     readonly asSetMembers: {
@@ -3287,7 +3256,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'SetMembers' | 'Execute' | 'Propose' | 'Vote' | 'CloseOldWeight' | 'DisapproveProposal' | 'Close';
   }
 
-  /** @name PalletMembershipCall (253) */
+  /** @name PalletMembershipCall (254) */
   interface PalletMembershipCall extends Enum {
     readonly isAddMember: boolean;
     readonly asAddMember: {
@@ -3318,7 +3287,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AddMember' | 'RemoveMember' | 'SwapMember' | 'ResetMembers' | 'ChangeKey' | 'SetPrime' | 'ClearPrime';
   }
 
-  /** @name PalletIdentityCall (258) */
+  /** @name PalletIdentityCall (259) */
   interface PalletIdentityCall extends Enum {
     readonly isAddRegistrar: boolean;
     readonly asAddRegistrar: {
@@ -3386,7 +3355,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AddRegistrar' | 'SetIdentity' | 'SetSubs' | 'ClearIdentity' | 'RequestJudgement' | 'CancelRequest' | 'SetFee' | 'SetAccountId' | 'SetFields' | 'ProvideJudgement' | 'KillIdentity' | 'AddSub' | 'RenameSub' | 'RemoveSub' | 'QuitSub';
   }
 
-  /** @name PalletIdentityIdentityInfo (259) */
+  /** @name PalletIdentityIdentityInfo (260) */
   interface PalletIdentityIdentityInfo extends Struct {
     readonly additional: Vec<ITuple<[Data, Data]>>;
     readonly display: Data;
@@ -3399,7 +3368,7 @@ declare module '@polkadot/types/lookup' {
     readonly twitter: Data;
   }
 
-  /** @name PalletIdentityBitFlags (295) */
+  /** @name PalletIdentityBitFlags (296) */
   interface PalletIdentityBitFlags extends Set {
     readonly isDisplay: boolean;
     readonly isLegal: boolean;
@@ -3411,7 +3380,7 @@ declare module '@polkadot/types/lookup' {
     readonly isTwitter: boolean;
   }
 
-  /** @name PalletIdentityIdentityField (296) */
+  /** @name PalletIdentityIdentityField (297) */
   interface PalletIdentityIdentityField extends Enum {
     readonly isDisplay: boolean;
     readonly isLegal: boolean;
@@ -3424,7 +3393,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Display' | 'Legal' | 'Web' | 'Riot' | 'Email' | 'PgpFingerprint' | 'Image' | 'Twitter';
   }
 
-  /** @name PalletIdentityJudgement (297) */
+  /** @name PalletIdentityJudgement (298) */
   interface PalletIdentityJudgement extends Enum {
     readonly isUnknown: boolean;
     readonly isFeePaid: boolean;
@@ -3437,7 +3406,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Unknown' | 'FeePaid' | 'Reasonable' | 'KnownGood' | 'OutOfDate' | 'LowQuality' | 'Erroneous';
   }
 
-  /** @name PalletUtilityCall (298) */
+  /** @name PalletUtilityCall (299) */
   interface PalletUtilityCall extends Enum {
     readonly isBatch: boolean;
     readonly asBatch: {
@@ -3469,7 +3438,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Batch' | 'AsDerivative' | 'BatchAll' | 'DispatchAs' | 'ForceBatch' | 'WithWeight';
   }
 
-  /** @name BatteryStationRuntimeOriginCaller (300) */
+  /** @name BatteryStationRuntimeOriginCaller (301) */
   interface BatteryStationRuntimeOriginCaller extends Enum {
     readonly isSystem: boolean;
     readonly asSystem: FrameSupportDispatchRawOrigin;
@@ -3487,7 +3456,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'System' | 'Void' | 'AdvisoryCommittee' | 'Council' | 'TechnicalCommittee' | 'CumulusXcm' | 'PolkadotXcm';
   }
 
-  /** @name FrameSupportDispatchRawOrigin (301) */
+  /** @name FrameSupportDispatchRawOrigin (302) */
   interface FrameSupportDispatchRawOrigin extends Enum {
     readonly isRoot: boolean;
     readonly isSigned: boolean;
@@ -3496,7 +3465,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Root' | 'Signed' | 'None';
   }
 
-  /** @name PalletCollectiveRawOrigin (302) */
+  /** @name PalletCollectiveRawOrigin (303) */
   interface PalletCollectiveRawOrigin extends Enum {
     readonly isMembers: boolean;
     readonly asMembers: ITuple<[u32, u32]>;
@@ -3506,7 +3475,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Members' | 'Member' | 'Phantom';
   }
 
-  /** @name CumulusPalletXcmOrigin (305) */
+  /** @name CumulusPalletXcmOrigin (306) */
   interface CumulusPalletXcmOrigin extends Enum {
     readonly isRelay: boolean;
     readonly isSiblingParachain: boolean;
@@ -3514,7 +3483,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Relay' | 'SiblingParachain';
   }
 
-  /** @name PalletXcmOrigin (306) */
+  /** @name PalletXcmOrigin (307) */
   interface PalletXcmOrigin extends Enum {
     readonly isXcm: boolean;
     readonly asXcm: XcmV3MultiLocation;
@@ -3523,10 +3492,10 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Xcm' | 'Response';
   }
 
-  /** @name SpCoreVoid (307) */
+  /** @name SpCoreVoid (308) */
   type SpCoreVoid = Null;
 
-  /** @name PalletProxyCall (308) */
+  /** @name PalletProxyCall (309) */
   interface PalletProxyCall extends Enum {
     readonly isProxy: boolean;
     readonly asProxy: {
@@ -3586,7 +3555,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Proxy' | 'AddProxy' | 'RemoveProxy' | 'RemoveProxies' | 'CreatePure' | 'KillPure' | 'Announce' | 'RemoveAnnouncement' | 'RejectAnnouncement' | 'ProxyAnnounced';
   }
 
-  /** @name PalletContractsCall (310) */
+  /** @name PalletContractsCall (311) */
   interface PalletContractsCall extends Enum {
     readonly isCallOldWeight: boolean;
     readonly asCallOldWeight: {
@@ -3658,14 +3627,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'CallOldWeight' | 'InstantiateWithCodeOldWeight' | 'InstantiateOldWeight' | 'UploadCode' | 'RemoveCode' | 'SetCode' | 'Call' | 'InstantiateWithCode' | 'Instantiate';
   }
 
-  /** @name PalletContractsWasmDeterminism (312) */
+  /** @name PalletContractsWasmDeterminism (313) */
   interface PalletContractsWasmDeterminism extends Enum {
     readonly isDeterministic: boolean;
     readonly isAllowIndeterminism: boolean;
     readonly type: 'Deterministic' | 'AllowIndeterminism';
   }
 
-  /** @name OrmlCurrenciesModuleCall (313) */
+  /** @name OrmlCurrenciesModuleCall (314) */
   interface OrmlCurrenciesModuleCall extends Enum {
     readonly isTransfer: boolean;
     readonly asTransfer: {
@@ -3687,7 +3656,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Transfer' | 'TransferNativeCurrency' | 'UpdateBalance';
   }
 
-  /** @name ZrmlAuthorizedCall (315) */
+  /** @name ZrmlAuthorizedCall (316) */
   interface ZrmlAuthorizedCall extends Enum {
     readonly isAuthorizeMarketOutcome: boolean;
     readonly asAuthorizeMarketOutcome: {
@@ -3697,7 +3666,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AuthorizeMarketOutcome';
   }
 
-  /** @name ZrmlCourtCall (316) */
+  /** @name ZrmlCourtCall (317) */
   interface ZrmlCourtCall extends Enum {
     readonly isJoinCourt: boolean;
     readonly asJoinCourt: {
@@ -3746,7 +3715,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'JoinCourt' | 'Delegate' | 'PrepareExitCourt' | 'ExitCourt' | 'Vote' | 'DenounceVote' | 'RevealVote' | 'Appeal' | 'ReassignCourtStakes' | 'SetInflation';
   }
 
-  /** @name ZrmlLiquidityMiningCall (317) */
+  /** @name ZrmlLiquidityMiningCall (318) */
   interface ZrmlLiquidityMiningCall extends Enum {
     readonly isSetPerBlockDistribution: boolean;
     readonly asSetPerBlockDistribution: {
@@ -3755,7 +3724,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'SetPerBlockDistribution';
   }
 
-  /** @name ZrmlSimpleDisputesCall (318) */
+  /** @name ZrmlSimpleDisputesCall (319) */
   interface ZrmlSimpleDisputesCall extends Enum {
     readonly isSuggestOutcome: boolean;
     readonly asSuggestOutcome: {
@@ -3765,23 +3734,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'SuggestOutcome';
   }
 
-  /** @name ZrmlSwapsCall (319) */
+  /** @name ZrmlSwapsCall (320) */
   interface ZrmlSwapsCall extends Enum {
-    readonly isAdminCleanUpPool: boolean;
-    readonly asAdminCleanUpPool: {
-      readonly marketId: Compact<u128>;
-      readonly outcomeReport: ZeitgeistPrimitivesOutcomeReport;
-    } & Struct;
     readonly isPoolExit: boolean;
     readonly asPoolExit: {
       readonly poolId: Compact<u128>;
       readonly poolAmount: Compact<u128>;
       readonly minAssetsOut: Vec<u128>;
-    } & Struct;
-    readonly isPoolExitSubsidy: boolean;
-    readonly asPoolExitSubsidy: {
-      readonly poolId: Compact<u128>;
-      readonly amount: Compact<u128>;
     } & Struct;
     readonly isPoolExitWithExactAssetAmount: boolean;
     readonly asPoolExitWithExactAssetAmount: {
@@ -3802,11 +3761,6 @@ declare module '@polkadot/types/lookup' {
       readonly poolId: Compact<u128>;
       readonly poolAmount: Compact<u128>;
       readonly maxAssetsIn: Vec<u128>;
-    } & Struct;
-    readonly isPoolJoinSubsidy: boolean;
-    readonly asPoolJoinSubsidy: {
-      readonly poolId: Compact<u128>;
-      readonly amount: Compact<u128>;
     } & Struct;
     readonly isPoolJoinWithExactAssetAmount: boolean;
     readonly asPoolJoinWithExactAssetAmount: {
@@ -3840,10 +3794,17 @@ declare module '@polkadot/types/lookup' {
       readonly assetAmountOut: Compact<u128>;
       readonly maxPrice: Option<u128>;
     } & Struct;
-    readonly type: 'AdminCleanUpPool' | 'PoolExit' | 'PoolExitSubsidy' | 'PoolExitWithExactAssetAmount' | 'PoolExitWithExactPoolAmount' | 'PoolJoin' | 'PoolJoinSubsidy' | 'PoolJoinWithExactAssetAmount' | 'PoolJoinWithExactPoolAmount' | 'SwapExactAmountIn' | 'SwapExactAmountOut';
+    readonly isForcePoolExit: boolean;
+    readonly asForcePoolExit: {
+      readonly who: AccountId32;
+      readonly poolId: Compact<u128>;
+      readonly poolAmount: Compact<u128>;
+      readonly minAssetsOut: Vec<u128>;
+    } & Struct;
+    readonly type: 'PoolExit' | 'PoolExitWithExactAssetAmount' | 'PoolExitWithExactPoolAmount' | 'PoolJoin' | 'PoolJoinWithExactAssetAmount' | 'PoolJoinWithExactPoolAmount' | 'SwapExactAmountIn' | 'SwapExactAmountOut' | 'ForcePoolExit';
   }
 
-  /** @name ZrmlPredictionMarketsCall (320) */
+  /** @name ZrmlPredictionMarketsCall (321) */
   interface ZrmlPredictionMarketsCall extends Enum {
     readonly isAdminMoveMarketToClosed: boolean;
     readonly asAdminMoveMarketToClosed: {
@@ -3871,20 +3832,6 @@ declare module '@polkadot/types/lookup' {
     readonly asDispute: {
       readonly marketId: Compact<u128>;
     } & Struct;
-    readonly isCreateCpmmMarketAndDeployAssets: boolean;
-    readonly asCreateCpmmMarketAndDeployAssets: {
-      readonly baseAsset: ZeitgeistPrimitivesAsset;
-      readonly creatorFee: Perbill;
-      readonly oracle: AccountId32;
-      readonly period: ZeitgeistPrimitivesMarketMarketPeriod;
-      readonly deadlines: ZeitgeistPrimitivesMarketDeadlines;
-      readonly metadata: ZeitgeistPrimitivesMultiHash;
-      readonly marketType: ZeitgeistPrimitivesMarketMarketType;
-      readonly disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>;
-      readonly swapFee: Compact<u128>;
-      readonly amount: Compact<u128>;
-      readonly weights: Vec<u128>;
-    } & Struct;
     readonly isCreateMarket: boolean;
     readonly asCreateMarket: {
       readonly baseAsset: ZeitgeistPrimitivesAsset;
@@ -3896,7 +3843,7 @@ declare module '@polkadot/types/lookup' {
       readonly creation: ZeitgeistPrimitivesMarketMarketCreation;
       readonly marketType: ZeitgeistPrimitivesMarketMarketType;
       readonly disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>;
-      readonly scoringRule: ZeitgeistPrimitivesPoolScoringRule;
+      readonly scoringRule: ZeitgeistPrimitivesMarketScoringRule;
     } & Struct;
     readonly isEditMarket: boolean;
     readonly asEditMarket: {
@@ -3908,21 +3855,7 @@ declare module '@polkadot/types/lookup' {
       readonly metadata: ZeitgeistPrimitivesMultiHash;
       readonly marketType: ZeitgeistPrimitivesMarketMarketType;
       readonly disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>;
-      readonly scoringRule: ZeitgeistPrimitivesPoolScoringRule;
-    } & Struct;
-    readonly isDeploySwapPoolAndAdditionalLiquidity: boolean;
-    readonly asDeploySwapPoolAndAdditionalLiquidity: {
-      readonly marketId: Compact<u128>;
-      readonly swapFee: Compact<u128>;
-      readonly amount: Compact<u128>;
-      readonly weights: Vec<u128>;
-    } & Struct;
-    readonly isDeploySwapPoolForMarket: boolean;
-    readonly asDeploySwapPoolForMarket: {
-      readonly marketId: Compact<u128>;
-      readonly swapFee: Compact<u128>;
-      readonly amount: Compact<u128>;
-      readonly weights: Vec<u128>;
+      readonly scoringRule: ZeitgeistPrimitivesMarketScoringRule;
     } & Struct;
     readonly isRedeemShares: boolean;
     readonly asRedeemShares: {
@@ -3973,17 +3906,25 @@ declare module '@polkadot/types/lookup' {
     readonly asRejectEarlyClose: {
       readonly marketId: Compact<u128>;
     } & Struct;
-    readonly type: 'AdminMoveMarketToClosed' | 'AdminMoveMarketToResolved' | 'ApproveMarket' | 'RequestEdit' | 'BuyCompleteSet' | 'Dispute' | 'CreateCpmmMarketAndDeployAssets' | 'CreateMarket' | 'EditMarket' | 'DeploySwapPoolAndAdditionalLiquidity' | 'DeploySwapPoolForMarket' | 'RedeemShares' | 'RejectMarket' | 'Report' | 'SellCompleteSet' | 'StartGlobalDispute' | 'CreateMarketAndDeployPool' | 'ScheduleEarlyClose' | 'DisputeEarlyClose' | 'RejectEarlyClose';
+    readonly isCloseTrustedMarket: boolean;
+    readonly asCloseTrustedMarket: {
+      readonly marketId: Compact<u128>;
+    } & Struct;
+    readonly isManuallyCloseMarket: boolean;
+    readonly asManuallyCloseMarket: {
+      readonly marketId: Compact<u128>;
+    } & Struct;
+    readonly type: 'AdminMoveMarketToClosed' | 'AdminMoveMarketToResolved' | 'ApproveMarket' | 'RequestEdit' | 'BuyCompleteSet' | 'Dispute' | 'CreateMarket' | 'EditMarket' | 'RedeemShares' | 'RejectMarket' | 'Report' | 'SellCompleteSet' | 'StartGlobalDispute' | 'CreateMarketAndDeployPool' | 'ScheduleEarlyClose' | 'DisputeEarlyClose' | 'RejectEarlyClose' | 'CloseTrustedMarket' | 'ManuallyCloseMarket';
   }
 
-  /** @name ZeitgeistPrimitivesMultiHash (321) */
+  /** @name ZeitgeistPrimitivesMultiHash (322) */
   interface ZeitgeistPrimitivesMultiHash extends Enum {
     readonly isSha3384: boolean;
     readonly asSha3384: U8aFixed;
     readonly type: 'Sha3384';
   }
 
-  /** @name ZrmlStyxCall (323) */
+  /** @name ZrmlStyxCall (324) */
   interface ZrmlStyxCall extends Enum {
     readonly isCross: boolean;
     readonly isSetBurnAmount: boolean;
@@ -3993,7 +3934,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Cross' | 'SetBurnAmount';
   }
 
-  /** @name ZrmlGlobalDisputesCall (324) */
+  /** @name ZrmlGlobalDisputesCall (325) */
   interface ZrmlGlobalDisputesCall extends Enum {
     readonly isAddVoteOutcome: boolean;
     readonly asAddVoteOutcome: {
@@ -4025,7 +3966,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AddVoteOutcome' | 'PurgeOutcomes' | 'RewardOutcomeOwner' | 'VoteOnOutcome' | 'UnlockVoteBalance' | 'RefundVoteFees';
   }
 
-  /** @name ZrmlNeoSwapsCall (325) */
+  /** @name ZrmlNeoSwapsCall (326) */
   interface ZrmlNeoSwapsCall extends Enum {
     readonly isBuy: boolean;
     readonly asBuy: {
@@ -4069,7 +4010,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Buy' | 'Sell' | 'Join' | 'Exit' | 'WithdrawFees' | 'DeployPool';
   }
 
-  /** @name ZrmlOrderbookCall (326) */
+  /** @name ZrmlOrderbookCall (327) */
   interface ZrmlOrderbookCall extends Enum {
     readonly isRemoveOrder: boolean;
     readonly asRemoveOrder: {
@@ -4083,15 +4024,15 @@ declare module '@polkadot/types/lookup' {
     readonly isPlaceOrder: boolean;
     readonly asPlaceOrder: {
       readonly marketId: Compact<u128>;
-      readonly outcomeAsset: ZeitgeistPrimitivesAsset;
-      readonly side: ZrmlOrderbookOrderSide;
-      readonly outcomeAssetAmount: Compact<u128>;
-      readonly baseAssetAmount: Compact<u128>;
+      readonly makerAsset: ZeitgeistPrimitivesAsset;
+      readonly makerAmount: Compact<u128>;
+      readonly takerAsset: ZeitgeistPrimitivesAsset;
+      readonly takerAmount: Compact<u128>;
     } & Struct;
     readonly type: 'RemoveOrder' | 'FillOrder' | 'PlaceOrder';
   }
 
-  /** @name ZrmlParimutuelCall (327) */
+  /** @name ZrmlParimutuelCall (328) */
   interface ZrmlParimutuelCall extends Enum {
     readonly isBuy: boolean;
     readonly asBuy: {
@@ -4109,7 +4050,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Buy' | 'ClaimRewards' | 'ClaimRefunds';
   }
 
-  /** @name CumulusPalletParachainSystemCall (328) */
+  /** @name CumulusPalletParachainSystemCall (329) */
   interface CumulusPalletParachainSystemCall extends Enum {
     readonly isSetValidationData: boolean;
     readonly asSetValidationData: {
@@ -4130,7 +4071,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'SetValidationData' | 'SudoSendUpwardMessage' | 'AuthorizeUpgrade' | 'EnactAuthorizedUpgrade';
   }
 
-  /** @name CumulusPrimitivesParachainInherentParachainInherentData (329) */
+  /** @name CumulusPrimitivesParachainInherentParachainInherentData (330) */
   interface CumulusPrimitivesParachainInherentParachainInherentData extends Struct {
     readonly validationData: PolkadotPrimitivesV2PersistedValidationData;
     readonly relayChainState: SpTrieStorageProof;
@@ -4138,7 +4079,7 @@ declare module '@polkadot/types/lookup' {
     readonly horizontalMessages: BTreeMap<u32, Vec<PolkadotCorePrimitivesInboundHrmpMessage>>;
   }
 
-  /** @name PolkadotPrimitivesV2PersistedValidationData (330) */
+  /** @name PolkadotPrimitivesV2PersistedValidationData (331) */
   interface PolkadotPrimitivesV2PersistedValidationData extends Struct {
     readonly parentHead: Bytes;
     readonly relayParentNumber: u32;
@@ -4146,24 +4087,24 @@ declare module '@polkadot/types/lookup' {
     readonly maxPovSize: u32;
   }
 
-  /** @name SpTrieStorageProof (332) */
+  /** @name SpTrieStorageProof (333) */
   interface SpTrieStorageProof extends Struct {
     readonly trieNodes: BTreeSet<Bytes>;
   }
 
-  /** @name PolkadotCorePrimitivesInboundDownwardMessage (335) */
+  /** @name PolkadotCorePrimitivesInboundDownwardMessage (336) */
   interface PolkadotCorePrimitivesInboundDownwardMessage extends Struct {
     readonly sentAt: u32;
     readonly msg: Bytes;
   }
 
-  /** @name PolkadotCorePrimitivesInboundHrmpMessage (338) */
+  /** @name PolkadotCorePrimitivesInboundHrmpMessage (339) */
   interface PolkadotCorePrimitivesInboundHrmpMessage extends Struct {
     readonly sentAt: u32;
     readonly data: Bytes;
   }
 
-  /** @name PalletParachainStakingCall (341) */
+  /** @name PalletParachainStakingCall (342) */
   interface PalletParachainStakingCall extends Enum {
     readonly isSetStakingExpectations: boolean;
     readonly asSetStakingExpectations: {
@@ -4294,13 +4235,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'SetStakingExpectations' | 'SetInflation' | 'SetParachainBondAccount' | 'SetParachainBondReservePercent' | 'SetTotalSelected' | 'SetCollatorCommission' | 'SetBlocksPerRound' | 'JoinCandidates' | 'ScheduleLeaveCandidates' | 'ExecuteLeaveCandidates' | 'CancelLeaveCandidates' | 'GoOffline' | 'GoOnline' | 'CandidateBondMore' | 'ScheduleCandidateBondLess' | 'ExecuteCandidateBondLess' | 'CancelCandidateBondLess' | 'Delegate' | 'DelegateWithAutoCompound' | 'ScheduleLeaveDelegators' | 'ExecuteLeaveDelegators' | 'CancelLeaveDelegators' | 'ScheduleRevokeDelegation' | 'DelegatorBondMore' | 'ScheduleDelegatorBondLess' | 'ExecuteDelegationRequest' | 'CancelDelegationRequest' | 'SetAutoCompound' | 'HotfixRemoveDelegationRequestsExitedCandidates';
   }
 
-  /** @name PalletAuthorInherentCall (344) */
+  /** @name PalletAuthorInherentCall (345) */
   interface PalletAuthorInherentCall extends Enum {
     readonly isKickOffAuthorshipValidation: boolean;
     readonly type: 'KickOffAuthorshipValidation';
   }
 
-  /** @name PalletAuthorSlotFilterCall (345) */
+  /** @name PalletAuthorSlotFilterCall (346) */
   interface PalletAuthorSlotFilterCall extends Enum {
     readonly isSetEligible: boolean;
     readonly asSetEligible: {
@@ -4309,7 +4250,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'SetEligible';
   }
 
-  /** @name PalletAuthorMappingCall (346) */
+  /** @name PalletAuthorMappingCall (347) */
   interface PalletAuthorMappingCall extends Enum {
     readonly isAddAssociation: boolean;
     readonly asAddAssociation: {
@@ -4332,7 +4273,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AddAssociation' | 'UpdateAssociation' | 'ClearAssociation' | 'RemoveKeys' | 'SetKeys';
   }
 
-  /** @name CumulusPalletDmpQueueCall (347) */
+  /** @name CumulusPalletDmpQueueCall (348) */
   interface CumulusPalletDmpQueueCall extends Enum {
     readonly isServiceOverweight: boolean;
     readonly asServiceOverweight: {
@@ -4342,7 +4283,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ServiceOverweight';
   }
 
-  /** @name PalletXcmCall (348) */
+  /** @name PalletXcmCall (349) */
   interface PalletXcmCall extends Enum {
     readonly isSend: boolean;
     readonly asSend: {
@@ -4404,7 +4345,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Send' | 'TeleportAssets' | 'ReserveTransferAssets' | 'Execute' | 'ForceXcmVersion' | 'ForceDefaultXcmVersion' | 'ForceSubscribeVersionNotify' | 'ForceUnsubscribeVersionNotify' | 'LimitedReserveTransferAssets' | 'LimitedTeleportAssets';
   }
 
-  /** @name XcmVersionedXcm (349) */
+  /** @name XcmVersionedXcm (350) */
   interface XcmVersionedXcm extends Enum {
     readonly isV2: boolean;
     readonly asV2: XcmV2Xcm;
@@ -4413,10 +4354,10 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'V2' | 'V3';
   }
 
-  /** @name XcmV2Xcm (350) */
+  /** @name XcmV2Xcm (351) */
   interface XcmV2Xcm extends Vec<XcmV2Instruction> {}
 
-  /** @name XcmV2Instruction (352) */
+  /** @name XcmV2Instruction (353) */
   interface XcmV2Instruction extends Enum {
     readonly isWithdrawAsset: boolean;
     readonly asWithdrawAsset: XcmV2MultiassetMultiAssets;
@@ -4536,7 +4477,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'WithdrawAsset' | 'ReserveAssetDeposited' | 'ReceiveTeleportedAsset' | 'QueryResponse' | 'TransferAsset' | 'TransferReserveAsset' | 'Transact' | 'HrmpNewChannelOpenRequest' | 'HrmpChannelAccepted' | 'HrmpChannelClosing' | 'ClearOrigin' | 'DescendOrigin' | 'ReportError' | 'DepositAsset' | 'DepositReserveAsset' | 'ExchangeAsset' | 'InitiateReserveWithdraw' | 'InitiateTeleport' | 'QueryHolding' | 'BuyExecution' | 'RefundSurplus' | 'SetErrorHandler' | 'SetAppendix' | 'ClearError' | 'ClaimAsset' | 'Trap' | 'SubscribeVersion' | 'UnsubscribeVersion';
   }
 
-  /** @name XcmV2Response (353) */
+  /** @name XcmV2Response (354) */
   interface XcmV2Response extends Enum {
     readonly isNull: boolean;
     readonly isAssets: boolean;
@@ -4548,7 +4489,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Null' | 'Assets' | 'ExecutionResult' | 'Version';
   }
 
-  /** @name XcmV2TraitsError (356) */
+  /** @name XcmV2TraitsError (357) */
   interface XcmV2TraitsError extends Enum {
     readonly isOverflow: boolean;
     readonly isUnimplemented: boolean;
@@ -4581,7 +4522,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Overflow' | 'Unimplemented' | 'UntrustedReserveLocation' | 'UntrustedTeleportLocation' | 'MultiLocationFull' | 'MultiLocationNotInvertible' | 'BadOrigin' | 'InvalidLocation' | 'AssetNotFound' | 'FailedToTransactAsset' | 'NotWithdrawable' | 'LocationCannotHold' | 'ExceedsMaxMessageSize' | 'DestinationUnsupported' | 'Transport' | 'Unroutable' | 'UnknownClaim' | 'FailedToDecode' | 'MaxWeightInvalid' | 'NotHoldingFees' | 'TooExpensive' | 'Trap' | 'UnhandledXcmVersion' | 'WeightLimitReached' | 'Barrier' | 'WeightNotComputable';
   }
 
-  /** @name XcmV2MultiassetMultiAssetFilter (357) */
+  /** @name XcmV2MultiassetMultiAssetFilter (358) */
   interface XcmV2MultiassetMultiAssetFilter extends Enum {
     readonly isDefinite: boolean;
     readonly asDefinite: XcmV2MultiassetMultiAssets;
@@ -4590,7 +4531,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Definite' | 'Wild';
   }
 
-  /** @name XcmV2MultiassetWildMultiAsset (358) */
+  /** @name XcmV2MultiassetWildMultiAsset (359) */
   interface XcmV2MultiassetWildMultiAsset extends Enum {
     readonly isAll: boolean;
     readonly isAllOf: boolean;
@@ -4601,14 +4542,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'All' | 'AllOf';
   }
 
-  /** @name XcmV2MultiassetWildFungibility (359) */
+  /** @name XcmV2MultiassetWildFungibility (360) */
   interface XcmV2MultiassetWildFungibility extends Enum {
     readonly isFungible: boolean;
     readonly isNonFungible: boolean;
     readonly type: 'Fungible' | 'NonFungible';
   }
 
-  /** @name XcmV2WeightLimit (360) */
+  /** @name XcmV2WeightLimit (361) */
   interface XcmV2WeightLimit extends Enum {
     readonly isUnlimited: boolean;
     readonly isLimited: boolean;
@@ -4616,7 +4557,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Unlimited' | 'Limited';
   }
 
-  /** @name CumulusPalletXcmpQueueCall (369) */
+  /** @name CumulusPalletXcmpQueueCall (370) */
   interface CumulusPalletXcmpQueueCall extends Enum {
     readonly isServiceOverweight: boolean;
     readonly asServiceOverweight: {
@@ -4652,7 +4593,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ServiceOverweight' | 'SuspendXcmExecution' | 'ResumeXcmExecution' | 'UpdateSuspendThreshold' | 'UpdateDropThreshold' | 'UpdateResumeThreshold' | 'UpdateThresholdWeight' | 'UpdateWeightRestrictDecay' | 'UpdateXcmpMaxIndividualWeight';
   }
 
-  /** @name OrmlAssetRegistryModuleCall (370) */
+  /** @name OrmlAssetRegistryModuleCall (371) */
   interface OrmlAssetRegistryModuleCall extends Enum {
     readonly isRegisterAsset: boolean;
     readonly asRegisterAsset: {
@@ -4672,7 +4613,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'RegisterAsset' | 'UpdateAsset';
   }
 
-  /** @name OrmlXtokensModuleCall (375) */
+  /** @name OrmlXtokensModuleCall (376) */
   interface OrmlXtokensModuleCall extends Enum {
     readonly isTransfer: boolean;
     readonly asTransfer: {
@@ -4719,7 +4660,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Transfer' | 'TransferMultiasset' | 'TransferWithFee' | 'TransferMultiassetWithFee' | 'TransferMulticurrencies' | 'TransferMultiassets';
   }
 
-  /** @name XcmVersionedMultiAsset (376) */
+  /** @name XcmVersionedMultiAsset (377) */
   interface XcmVersionedMultiAsset extends Enum {
     readonly isV2: boolean;
     readonly asV2: XcmV2MultiAsset;
@@ -4728,7 +4669,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'V2' | 'V3';
   }
 
-  /** @name PalletSudoCall (377) */
+  /** @name PalletSudoCall (378) */
   interface PalletSudoCall extends Enum {
     readonly isSudo: boolean;
     readonly asSudo: {
@@ -4751,7 +4692,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Sudo' | 'SudoUncheckedWeight' | 'SetKey' | 'SudoAs';
   }
 
-  /** @name PalletSchedulerError (380) */
+  /** @name PalletSchedulerError (381) */
   interface PalletSchedulerError extends Enum {
     readonly isFailedToSchedule: boolean;
     readonly isNotFound: boolean;
@@ -4761,7 +4702,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'FailedToSchedule' | 'NotFound' | 'TargetBlockNumberInPast' | 'RescheduleNoChange' | 'Named';
   }
 
-  /** @name PalletPreimageRequestStatus (381) */
+  /** @name PalletPreimageRequestStatus (382) */
   interface PalletPreimageRequestStatus extends Enum {
     readonly isUnrequested: boolean;
     readonly asUnrequested: {
@@ -4777,7 +4718,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Unrequested' | 'Requested';
   }
 
-  /** @name PalletPreimageError (385) */
+  /** @name PalletPreimageError (386) */
   interface PalletPreimageError extends Enum {
     readonly isTooBig: boolean;
     readonly isAlreadyNoted: boolean;
@@ -4788,14 +4729,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'TooBig' | 'AlreadyNoted' | 'NotAuthorized' | 'NotNoted' | 'Requested' | 'NotRequested';
   }
 
-  /** @name PalletBalancesBalanceLock (387) */
+  /** @name PalletBalancesBalanceLock (388) */
   interface PalletBalancesBalanceLock extends Struct {
     readonly id: U8aFixed;
     readonly amount: u128;
     readonly reasons: PalletBalancesReasons;
   }
 
-  /** @name PalletBalancesReasons (388) */
+  /** @name PalletBalancesReasons (389) */
   interface PalletBalancesReasons extends Enum {
     readonly isFee: boolean;
     readonly isMisc: boolean;
@@ -4803,13 +4744,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Fee' | 'Misc' | 'All';
   }
 
-  /** @name PalletBalancesReserveData (391) */
+  /** @name PalletBalancesReserveData (392) */
   interface PalletBalancesReserveData extends Struct {
     readonly id: U8aFixed;
     readonly amount: u128;
   }
 
-  /** @name PalletBalancesError (393) */
+  /** @name PalletBalancesError (394) */
   interface PalletBalancesError extends Enum {
     readonly isVestingBalance: boolean;
     readonly isLiquidityRestrictions: boolean;
@@ -4822,14 +4763,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'VestingBalance' | 'LiquidityRestrictions' | 'InsufficientBalance' | 'ExistentialDeposit' | 'KeepAlive' | 'ExistingVestingSchedule' | 'DeadAccount' | 'TooManyReserves';
   }
 
-  /** @name PalletTransactionPaymentReleases (395) */
+  /** @name PalletTransactionPaymentReleases (396) */
   interface PalletTransactionPaymentReleases extends Enum {
     readonly isV1Ancient: boolean;
     readonly isV2: boolean;
     readonly type: 'V1Ancient' | 'V2';
   }
 
-  /** @name PalletTreasuryProposal (396) */
+  /** @name PalletTreasuryProposal (397) */
   interface PalletTreasuryProposal extends Struct {
     readonly proposer: AccountId32;
     readonly value: u128;
@@ -4837,10 +4778,10 @@ declare module '@polkadot/types/lookup' {
     readonly bond: u128;
   }
 
-  /** @name FrameSupportPalletId (400) */
+  /** @name FrameSupportPalletId (401) */
   interface FrameSupportPalletId extends U8aFixed {}
 
-  /** @name PalletTreasuryError (401) */
+  /** @name PalletTreasuryError (402) */
   interface PalletTreasuryError extends Enum {
     readonly isInsufficientProposersBalance: boolean;
     readonly isInvalidIndex: boolean;
@@ -4850,14 +4791,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'InsufficientProposersBalance' | 'InvalidIndex' | 'TooManyApprovals' | 'InsufficientPermission' | 'ProposalNotApproved';
   }
 
-  /** @name PalletVestingReleases (404) */
+  /** @name PalletVestingReleases (405) */
   interface PalletVestingReleases extends Enum {
     readonly isV0: boolean;
     readonly isV1: boolean;
     readonly type: 'V0' | 'V1';
   }
 
-  /** @name PalletVestingError (405) */
+  /** @name PalletVestingError (406) */
   interface PalletVestingError extends Enum {
     readonly isNotVesting: boolean;
     readonly isAtMaxVestingSchedules: boolean;
@@ -4867,7 +4808,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'NotVesting' | 'AtMaxVestingSchedules' | 'AmountLow' | 'ScheduleIndexOutOfBounds' | 'InvalidScheduleParams';
   }
 
-  /** @name PalletMultisigMultisig (407) */
+  /** @name PalletMultisigMultisig (408) */
   interface PalletMultisigMultisig extends Struct {
     readonly when: PalletMultisigTimepoint;
     readonly deposit: u128;
@@ -4875,7 +4816,7 @@ declare module '@polkadot/types/lookup' {
     readonly approvals: Vec<AccountId32>;
   }
 
-  /** @name PalletMultisigError (409) */
+  /** @name PalletMultisigError (410) */
   interface PalletMultisigError extends Enum {
     readonly isMinimumThreshold: boolean;
     readonly isAlreadyApproved: boolean;
@@ -4894,7 +4835,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'MinimumThreshold' | 'AlreadyApproved' | 'NoApprovalsNeeded' | 'TooFewSignatories' | 'TooManySignatories' | 'SignatoriesOutOfOrder' | 'SenderInSignatories' | 'NotFound' | 'NotOwner' | 'NoTimepoint' | 'WrongTimepoint' | 'UnexpectedTimepoint' | 'MaxWeightTooLow' | 'AlreadyStored';
   }
 
-  /** @name PalletBountiesBounty (410) */
+  /** @name PalletBountiesBounty (411) */
   interface PalletBountiesBounty extends Struct {
     readonly proposer: AccountId32;
     readonly value: u128;
@@ -4904,7 +4845,7 @@ declare module '@polkadot/types/lookup' {
     readonly status: PalletBountiesBountyStatus;
   }
 
-  /** @name PalletBountiesBountyStatus (411) */
+  /** @name PalletBountiesBountyStatus (412) */
   interface PalletBountiesBountyStatus extends Enum {
     readonly isProposed: boolean;
     readonly isApproved: boolean;
@@ -4927,7 +4868,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Proposed' | 'Approved' | 'Funded' | 'CuratorProposed' | 'Active' | 'PendingPayout';
   }
 
-  /** @name PalletBountiesError (413) */
+  /** @name PalletBountiesError (414) */
   interface PalletBountiesError extends Enum {
     readonly isInsufficientProposersBalance: boolean;
     readonly isInvalidIndex: boolean;
@@ -4943,7 +4884,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'InsufficientProposersBalance' | 'InvalidIndex' | 'ReasonTooBig' | 'UnexpectedStatus' | 'RequireCurator' | 'InvalidValue' | 'InvalidFee' | 'PendingPayout' | 'Premature' | 'HasActiveChildBounty' | 'TooManyQueued';
   }
 
-  /** @name PalletDemocracyReferendumInfo (418) */
+  /** @name PalletDemocracyReferendumInfo (419) */
   interface PalletDemocracyReferendumInfo extends Enum {
     readonly isOngoing: boolean;
     readonly asOngoing: PalletDemocracyReferendumStatus;
@@ -4955,7 +4896,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Ongoing' | 'Finished';
   }
 
-  /** @name PalletDemocracyReferendumStatus (419) */
+  /** @name PalletDemocracyReferendumStatus (420) */
   interface PalletDemocracyReferendumStatus extends Struct {
     readonly end: u64;
     readonly proposal: FrameSupportPreimagesBounded;
@@ -4964,14 +4905,14 @@ declare module '@polkadot/types/lookup' {
     readonly tally: PalletDemocracyTally;
   }
 
-  /** @name PalletDemocracyTally (420) */
+  /** @name PalletDemocracyTally (421) */
   interface PalletDemocracyTally extends Struct {
     readonly ayes: u128;
     readonly nays: u128;
     readonly turnout: u128;
   }
 
-  /** @name PalletDemocracyVoteVoting (421) */
+  /** @name PalletDemocracyVoteVoting (422) */
   interface PalletDemocracyVoteVoting extends Enum {
     readonly isDirect: boolean;
     readonly asDirect: {
@@ -4990,16 +4931,16 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Direct' | 'Delegating';
   }
 
-  /** @name PalletDemocracyDelegations (425) */
+  /** @name PalletDemocracyDelegations (426) */
   interface PalletDemocracyDelegations extends Struct {
     readonly votes: u128;
     readonly capital: u128;
   }
 
-  /** @name PalletDemocracyVotePriorLock (426) */
+  /** @name PalletDemocracyVotePriorLock (427) */
   interface PalletDemocracyVotePriorLock extends ITuple<[u64, u128]> {}
 
-  /** @name PalletDemocracyError (429) */
+  /** @name PalletDemocracyError (430) */
   interface PalletDemocracyError extends Enum {
     readonly isValueLow: boolean;
     readonly isProposalMissing: boolean;
@@ -5027,7 +4968,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ValueLow' | 'ProposalMissing' | 'AlreadyCanceled' | 'DuplicateProposal' | 'ProposalBlacklisted' | 'NotSimpleMajority' | 'InvalidHash' | 'NoProposal' | 'AlreadyVetoed' | 'ReferendumInvalid' | 'NoneWaiting' | 'NotVoter' | 'NoPermission' | 'AlreadyDelegating' | 'InsufficientFunds' | 'NotDelegating' | 'VotesExist' | 'InstantNotAllowed' | 'Nonsense' | 'WrongUpperBound' | 'MaxVotesReached' | 'TooMany' | 'VotingPeriodLow';
   }
 
-  /** @name PalletCollectiveVotes (431) */
+  /** @name PalletCollectiveVotes (432) */
   interface PalletCollectiveVotes extends Struct {
     readonly index: u32;
     readonly threshold: u32;
@@ -5036,7 +4977,7 @@ declare module '@polkadot/types/lookup' {
     readonly end: u64;
   }
 
-  /** @name PalletCollectiveError (432) */
+  /** @name PalletCollectiveError (433) */
   interface PalletCollectiveError extends Enum {
     readonly isNotMember: boolean;
     readonly isDuplicateProposal: boolean;
@@ -5051,7 +4992,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'NotMember' | 'DuplicateProposal' | 'ProposalMissing' | 'WrongIndex' | 'DuplicateVote' | 'AlreadyInitialized' | 'TooEarly' | 'TooManyProposals' | 'WrongProposalWeight' | 'WrongProposalLength';
   }
 
-  /** @name PalletMembershipError (434) */
+  /** @name PalletMembershipError (435) */
   interface PalletMembershipError extends Enum {
     readonly isAlreadyMember: boolean;
     readonly isNotMember: boolean;
@@ -5059,21 +5000,21 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AlreadyMember' | 'NotMember' | 'TooManyMembers';
   }
 
-  /** @name PalletIdentityRegistration (443) */
+  /** @name PalletIdentityRegistration (444) */
   interface PalletIdentityRegistration extends Struct {
     readonly judgements: Vec<ITuple<[u32, PalletIdentityJudgement]>>;
     readonly deposit: u128;
     readonly info: PalletIdentityIdentityInfo;
   }
 
-  /** @name PalletIdentityRegistrarInfo (451) */
+  /** @name PalletIdentityRegistrarInfo (452) */
   interface PalletIdentityRegistrarInfo extends Struct {
     readonly account: AccountId32;
     readonly fee: u128;
     readonly fields: PalletIdentityBitFlags;
   }
 
-  /** @name PalletIdentityError (453) */
+  /** @name PalletIdentityError (454) */
   interface PalletIdentityError extends Enum {
     readonly isTooManySubAccounts: boolean;
     readonly isNotFound: boolean;
@@ -5096,27 +5037,27 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'TooManySubAccounts' | 'NotFound' | 'NotNamed' | 'EmptyIndex' | 'FeeChanged' | 'NoIdentity' | 'StickyJudgement' | 'JudgementGiven' | 'InvalidJudgement' | 'InvalidIndex' | 'InvalidTarget' | 'TooManyFields' | 'TooManyRegistrars' | 'AlreadyClaimed' | 'NotSub' | 'NotOwned' | 'JudgementForDifferentIdentity' | 'JudgementPaymentFailed';
   }
 
-  /** @name PalletUtilityError (454) */
+  /** @name PalletUtilityError (455) */
   interface PalletUtilityError extends Enum {
     readonly isTooManyCalls: boolean;
     readonly type: 'TooManyCalls';
   }
 
-  /** @name PalletProxyProxyDefinition (457) */
+  /** @name PalletProxyProxyDefinition (458) */
   interface PalletProxyProxyDefinition extends Struct {
     readonly delegate: AccountId32;
     readonly proxyType: ZeitgeistPrimitivesProxyType;
     readonly delay: u64;
   }
 
-  /** @name PalletProxyAnnouncement (461) */
+  /** @name PalletProxyAnnouncement (462) */
   interface PalletProxyAnnouncement extends Struct {
     readonly real: AccountId32;
     readonly callHash: H256;
     readonly height: u64;
   }
 
-  /** @name PalletProxyError (463) */
+  /** @name PalletProxyError (464) */
   interface PalletProxyError extends Enum {
     readonly isTooMany: boolean;
     readonly isNotFound: boolean;
@@ -5129,7 +5070,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'TooMany' | 'NotFound' | 'NotProxy' | 'Unproxyable' | 'Duplicate' | 'NoPermission' | 'Unannounced' | 'NoSelfProxy';
   }
 
-  /** @name PalletContractsWasmPrefabWasmModule (465) */
+  /** @name PalletContractsWasmPrefabWasmModule (466) */
   interface PalletContractsWasmPrefabWasmModule extends Struct {
     readonly instructionWeightsVersion: Compact<u32>;
     readonly initial: Compact<u32>;
@@ -5138,14 +5079,14 @@ declare module '@polkadot/types/lookup' {
     readonly determinism: PalletContractsWasmDeterminism;
   }
 
-  /** @name PalletContractsWasmOwnerInfo (467) */
+  /** @name PalletContractsWasmOwnerInfo (468) */
   interface PalletContractsWasmOwnerInfo extends Struct {
     readonly owner: AccountId32;
     readonly deposit: Compact<u128>;
     readonly refcount: Compact<u64>;
   }
 
-  /** @name PalletContractsStorageContractInfo (468) */
+  /** @name PalletContractsStorageContractInfo (469) */
   interface PalletContractsStorageContractInfo extends Struct {
     readonly trieId: Bytes;
     readonly codeHash: H256;
@@ -5156,19 +5097,19 @@ declare module '@polkadot/types/lookup' {
     readonly storageBaseDeposit: u128;
   }
 
-  /** @name PalletContractsStorageDeletedContract (470) */
+  /** @name PalletContractsStorageDeletedContract (471) */
   interface PalletContractsStorageDeletedContract extends Struct {
     readonly trieId: Bytes;
   }
 
-  /** @name PalletContractsSchedule (472) */
+  /** @name PalletContractsSchedule (473) */
   interface PalletContractsSchedule extends Struct {
     readonly limits: PalletContractsScheduleLimits;
     readonly instructionWeights: PalletContractsScheduleInstructionWeights;
     readonly hostFnWeights: PalletContractsScheduleHostFnWeights;
   }
 
-  /** @name PalletContractsScheduleLimits (473) */
+  /** @name PalletContractsScheduleLimits (474) */
   interface PalletContractsScheduleLimits extends Struct {
     readonly eventTopics: u32;
     readonly globals: u32;
@@ -5181,7 +5122,7 @@ declare module '@polkadot/types/lookup' {
     readonly payloadLen: u32;
   }
 
-  /** @name PalletContractsScheduleInstructionWeights (474) */
+  /** @name PalletContractsScheduleInstructionWeights (475) */
   interface PalletContractsScheduleInstructionWeights extends Struct {
     readonly version: u32;
     readonly fallback: u32;
@@ -5239,7 +5180,7 @@ declare module '@polkadot/types/lookup' {
     readonly i64rotr: u32;
   }
 
-  /** @name PalletContractsScheduleHostFnWeights (475) */
+  /** @name PalletContractsScheduleHostFnWeights (476) */
   interface PalletContractsScheduleHostFnWeights extends Struct {
     readonly caller: SpWeightsWeightV2Weight;
     readonly isContract: SpWeightsWeightV2Weight;
@@ -5301,7 +5242,7 @@ declare module '@polkadot/types/lookup' {
     readonly instantiationNonce: SpWeightsWeightV2Weight;
   }
 
-  /** @name PalletContractsError (476) */
+  /** @name PalletContractsError (477) */
   interface PalletContractsError extends Enum {
     readonly isInvalidScheduleVersion: boolean;
     readonly isInvalidCallFlags: boolean;
@@ -5335,7 +5276,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'InvalidScheduleVersion' | 'InvalidCallFlags' | 'OutOfGas' | 'OutputBufferTooSmall' | 'TransferFailed' | 'MaxCallDepthReached' | 'ContractNotFound' | 'CodeTooLarge' | 'CodeNotFound' | 'OutOfBounds' | 'DecodingFailed' | 'ContractTrapped' | 'ValueTooLarge' | 'TerminatedWhileReentrant' | 'InputForwarded' | 'RandomSubjectTooLong' | 'TooManyTopics' | 'NoChainExtension' | 'DeletionQueueFull' | 'DuplicateContract' | 'TerminatedInConstructor' | 'DebugMessageInvalidUTF8' | 'ReentranceDenied' | 'StorageDepositNotEnoughFunds' | 'StorageDepositLimitExhausted' | 'CodeInUse' | 'ContractReverted' | 'CodeRejected' | 'Indeterministic';
   }
 
-  /** @name OrmlCurrenciesModuleError (477) */
+  /** @name OrmlCurrenciesModuleError (478) */
   interface OrmlCurrenciesModuleError extends Enum {
     readonly isAmountIntoBalanceFailed: boolean;
     readonly isBalanceTooLow: boolean;
@@ -5343,26 +5284,26 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AmountIntoBalanceFailed' | 'BalanceTooLow' | 'DepositFailed';
   }
 
-  /** @name OrmlTokensBalanceLock (480) */
+  /** @name OrmlTokensBalanceLock (481) */
   interface OrmlTokensBalanceLock extends Struct {
     readonly id: U8aFixed;
     readonly amount: u128;
   }
 
-  /** @name OrmlTokensAccountData (482) */
+  /** @name OrmlTokensAccountData (483) */
   interface OrmlTokensAccountData extends Struct {
     readonly free: u128;
     readonly reserved: u128;
     readonly frozen: u128;
   }
 
-  /** @name OrmlTokensReserveData (484) */
+  /** @name OrmlTokensReserveData (485) */
   interface OrmlTokensReserveData extends Struct {
     readonly id: U8aFixed;
     readonly amount: u128;
   }
 
-  /** @name OrmlTokensModuleError (486) */
+  /** @name OrmlTokensModuleError (487) */
   interface OrmlTokensModuleError extends Enum {
     readonly isBalanceTooLow: boolean;
     readonly isAmountIntoBalanceFailed: boolean;
@@ -5375,7 +5316,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'BalanceTooLow' | 'AmountIntoBalanceFailed' | 'LiquidityRestrictions' | 'MaxLocksExceeded' | 'KeepAlive' | 'ExistentialDeposit' | 'DeadAccount' | 'TooManyReserves';
   }
 
-  /** @name ZrmlMarketCommonsError (487) */
+  /** @name ZrmlMarketCommonsError (488) */
   interface ZrmlMarketCommonsError extends Enum {
     readonly isMarketDoesNotExist: boolean;
     readonly isMarketPoolDoesNotExist: boolean;
@@ -5385,13 +5326,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'MarketDoesNotExist' | 'MarketPoolDoesNotExist' | 'NoMarketHasBeenCreated' | 'NoReport' | 'PoolAlreadyExists';
   }
 
-  /** @name ZeitgeistPrimitivesMarketAuthorityReport (488) */
+  /** @name ZeitgeistPrimitivesMarketAuthorityReport (489) */
   interface ZeitgeistPrimitivesMarketAuthorityReport extends Struct {
     readonly resolveAt: u64;
     readonly outcome: ZeitgeistPrimitivesOutcomeReport;
   }
 
-  /** @name ZrmlAuthorizedError (489) */
+  /** @name ZrmlAuthorizedError (490) */
   interface ZrmlAuthorizedError extends Enum {
     readonly isMarketDoesNotHaveDisputeMechanismAuthorized: boolean;
     readonly isMarketIsNotDisputed: boolean;
@@ -5399,7 +5340,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'MarketDoesNotHaveDisputeMechanismAuthorized' | 'MarketIsNotDisputed' | 'OutcomeMismatch';
   }
 
-  /** @name ZrmlCourtCourtPoolItem (491) */
+  /** @name ZrmlCourtCourtPoolItem (492) */
   interface ZrmlCourtCourtPoolItem extends Struct {
     readonly stake: u128;
     readonly courtParticipant: AccountId32;
@@ -5407,7 +5348,7 @@ declare module '@polkadot/types/lookup' {
     readonly joinedAt: u64;
   }
 
-  /** @name ZrmlCourtCourtParticipantInfo (493) */
+  /** @name ZrmlCourtCourtParticipantInfo (494) */
   interface ZrmlCourtCourtParticipantInfo extends Struct {
     readonly stake: u128;
     readonly activeLock: u128;
@@ -5415,7 +5356,7 @@ declare module '@polkadot/types/lookup' {
     readonly delegations: Option<Vec<AccountId32>>;
   }
 
-  /** @name ZrmlCourtDraw (498) */
+  /** @name ZrmlCourtDraw (499) */
   interface ZrmlCourtDraw extends Struct {
     readonly courtParticipant: AccountId32;
     readonly weight: u32;
@@ -5423,7 +5364,7 @@ declare module '@polkadot/types/lookup' {
     readonly slashable: u128;
   }
 
-  /** @name ZrmlCourtVote (500) */
+  /** @name ZrmlCourtVote (501) */
   interface ZrmlCourtVote extends Enum {
     readonly isDelegated: boolean;
     readonly asDelegated: {
@@ -5449,7 +5390,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Delegated' | 'Drawn' | 'Secret' | 'Revealed' | 'Denounced';
   }
 
-  /** @name ZrmlCourtError (502) */
+  /** @name ZrmlCourtError (503) */
   interface ZrmlCourtError extends Enum {
     readonly isJurorDoesNotExist: boolean;
     readonly isMarketDoesNotHaveCourtMechanism: boolean;
@@ -5497,10 +5438,19 @@ declare module '@polkadot/types/lookup' {
     readonly isWinnerVoteItemIsNoOutcome: boolean;
     readonly isOutcomeMismatch: boolean;
     readonly isVoteItemIsNoOutcome: boolean;
-    readonly type: 'JurorDoesNotExist' | 'MarketDoesNotHaveCourtMechanism' | 'MarketIsNotDisputed' | 'CallerIsNotACourtParticipant' | 'VoteAlreadyRevealed' | 'CommitmentHashMismatch' | 'CourtNotFound' | 'NotInVotingPeriod' | 'NotInAggregationPeriod' | 'MaxAppealsReached' | 'NotInAppealPeriod' | 'InvalidVoteState' | 'BelowMinJurorStake' | 'MaxCourtParticipantsReached' | 'AlreadyPreparedExit' | 'JurorNotDrawn' | 'JurorDidNotVote' | 'VoteAlreadyDenounced' | 'CallerDenouncedItself' | 'CourtNotClosed' | 'CourtAlreadyReassigned' | 'NotEnoughJurorsAndDelegatorsStake' | 'MarketReportNotFound' | 'MaxCourtIdReached' | 'AmountExceedsBalance' | 'AmountBelowLastJoin' | 'AmountBelowLowestJuror' | 'CourtParticipantTwiceInPool' | 'CallerNotInSelectedDraws' | 'AppealBondExceedsBalance' | 'PrematureExit' | 'PrepareExitAtNotPresent' | 'MaxDelegationsReached' | 'JurorDelegated' | 'SelfDelegationNotAllowed' | 'IdenticalDelegationsNotAllowed' | 'NoDelegations' | 'DelegatedToInvalidJuror' | 'MarketIdToCourtIdNotFound' | 'CourtIdToMarketIdNotFound' | 'InvalidVoteItemForOutcomeCourt' | 'InvalidVoteItemForBinaryCourt' | 'AppealedVoteItemIsNoOutcome' | 'WinnerVoteItemIsNoOutcome' | 'OutcomeMismatch' | 'VoteItemIsNoOutcome';
+    readonly isUnexpected: boolean;
+    readonly asUnexpected: ZrmlCourtUnexpectedError;
+    readonly isInflationExceedsMaxYearlyInflation: boolean;
+    readonly type: 'JurorDoesNotExist' | 'MarketDoesNotHaveCourtMechanism' | 'MarketIsNotDisputed' | 'CallerIsNotACourtParticipant' | 'VoteAlreadyRevealed' | 'CommitmentHashMismatch' | 'CourtNotFound' | 'NotInVotingPeriod' | 'NotInAggregationPeriod' | 'MaxAppealsReached' | 'NotInAppealPeriod' | 'InvalidVoteState' | 'BelowMinJurorStake' | 'MaxCourtParticipantsReached' | 'AlreadyPreparedExit' | 'JurorNotDrawn' | 'JurorDidNotVote' | 'VoteAlreadyDenounced' | 'CallerDenouncedItself' | 'CourtNotClosed' | 'CourtAlreadyReassigned' | 'NotEnoughJurorsAndDelegatorsStake' | 'MarketReportNotFound' | 'MaxCourtIdReached' | 'AmountExceedsBalance' | 'AmountBelowLastJoin' | 'AmountBelowLowestJuror' | 'CourtParticipantTwiceInPool' | 'CallerNotInSelectedDraws' | 'AppealBondExceedsBalance' | 'PrematureExit' | 'PrepareExitAtNotPresent' | 'MaxDelegationsReached' | 'JurorDelegated' | 'SelfDelegationNotAllowed' | 'IdenticalDelegationsNotAllowed' | 'NoDelegations' | 'DelegatedToInvalidJuror' | 'MarketIdToCourtIdNotFound' | 'CourtIdToMarketIdNotFound' | 'InvalidVoteItemForOutcomeCourt' | 'InvalidVoteItemForBinaryCourt' | 'AppealedVoteItemIsNoOutcome' | 'WinnerVoteItemIsNoOutcome' | 'OutcomeMismatch' | 'VoteItemIsNoOutcome' | 'Unexpected' | 'InflationExceedsMaxYearlyInflation';
   }
 
-  /** @name ZrmlLiquidityMiningOwnedValuesParams (504) */
+  /** @name ZrmlCourtUnexpectedError (504) */
+  interface ZrmlCourtUnexpectedError extends Enum {
+    readonly isBinarySearchByKeyFailed: boolean;
+    readonly type: 'BinarySearchByKeyFailed';
+  }
+
+  /** @name ZrmlLiquidityMiningOwnedValuesParams (506) */
   interface ZrmlLiquidityMiningOwnedValuesParams extends Struct {
     readonly participatedBlocks: u64;
     readonly perpetualIncentives: u128;
@@ -5508,13 +5458,13 @@ declare module '@polkadot/types/lookup' {
     readonly totalShares: u128;
   }
 
-  /** @name ZrmlLiquidityMiningError (505) */
+  /** @name ZrmlLiquidityMiningError (507) */
   interface ZrmlLiquidityMiningError extends Enum {
     readonly isFundDoesNotHaveEnoughBalance: boolean;
     readonly type: 'FundDoesNotHaveEnoughBalance';
   }
 
-  /** @name ZrmlRikiddoRikiddoSigmoidMV (506) */
+  /** @name ZrmlRikiddoRikiddoSigmoidMV (508) */
   interface ZrmlRikiddoRikiddoSigmoidMV extends Struct {
     readonly config: ZrmlRikiddoRikiddoSigmoidMvRikiddoConfig;
     readonly fees: ZrmlRikiddoSigmoidFeeFeeSigmoid;
@@ -5522,43 +5472,43 @@ declare module '@polkadot/types/lookup' {
     readonly maLong: ZrmlRikiddoEmaMarketVolume;
   }
 
-  /** @name SubstrateFixedFixedU128 (507) */
+  /** @name SubstrateFixedFixedU128 (509) */
   interface SubstrateFixedFixedU128 extends Struct {
     readonly bits: u128;
   }
 
-  /** @name TypenumUIntUInt (512) */
+  /** @name TypenumUIntUInt (514) */
   interface TypenumUIntUInt extends Struct {
     readonly msb: TypenumUIntUTerm;
     readonly lsb: TypenumBitB0;
   }
 
-  /** @name TypenumUIntUTerm (513) */
+  /** @name TypenumUIntUTerm (515) */
   interface TypenumUIntUTerm extends Struct {
     readonly msb: TypenumUintUTerm;
     readonly lsb: TypenumBitB1;
   }
 
-  /** @name TypenumUintUTerm (514) */
+  /** @name TypenumUintUTerm (516) */
   type TypenumUintUTerm = Null;
 
-  /** @name TypenumBitB1 (515) */
+  /** @name TypenumBitB1 (517) */
   type TypenumBitB1 = Null;
 
-  /** @name TypenumBitB0 (516) */
+  /** @name TypenumBitB0 (518) */
   type TypenumBitB0 = Null;
 
-  /** @name SubstrateFixedFixedI128 (517) */
+  /** @name SubstrateFixedFixedI128 (519) */
   interface SubstrateFixedFixedI128 extends Struct {
     readonly bits: i128;
   }
 
-  /** @name ZrmlRikiddoSigmoidFeeFeeSigmoid (518) */
+  /** @name ZrmlRikiddoSigmoidFeeFeeSigmoid (520) */
   interface ZrmlRikiddoSigmoidFeeFeeSigmoid extends Struct {
     readonly config: ZrmlRikiddoSigmoidFeeFeeSigmoidConfig;
   }
 
-  /** @name ZrmlRikiddoSigmoidFeeFeeSigmoidConfig (519) */
+  /** @name ZrmlRikiddoSigmoidFeeFeeSigmoidConfig (521) */
   interface ZrmlRikiddoSigmoidFeeFeeSigmoidConfig extends Struct {
     readonly m: SubstrateFixedFixedI128;
     readonly p: SubstrateFixedFixedI128;
@@ -5567,7 +5517,7 @@ declare module '@polkadot/types/lookup' {
     readonly minRevenue: SubstrateFixedFixedI128;
   }
 
-  /** @name ZrmlRikiddoEmaMarketVolume (520) */
+  /** @name ZrmlRikiddoEmaMarketVolume (522) */
   interface ZrmlRikiddoEmaMarketVolume extends Struct {
     readonly config: ZrmlRikiddoEmaMarketVolumeEmaConfig;
     readonly ema: SubstrateFixedFixedU128;
@@ -5578,14 +5528,14 @@ declare module '@polkadot/types/lookup' {
     readonly volumesPerPeriod: SubstrateFixedFixedU128;
   }
 
-  /** @name ZrmlRikiddoEmaMarketVolumeEmaConfig (521) */
+  /** @name ZrmlRikiddoEmaMarketVolumeEmaConfig (523) */
   interface ZrmlRikiddoEmaMarketVolumeEmaConfig extends Struct {
     readonly emaPeriod: ZrmlRikiddoTimespan;
     readonly emaPeriodEstimateAfter: Option<ZrmlRikiddoTimespan>;
     readonly smoothing: SubstrateFixedFixedU128;
   }
 
-  /** @name ZrmlRikiddoTimespan (522) */
+  /** @name ZrmlRikiddoTimespan (524) */
   interface ZrmlRikiddoTimespan extends Enum {
     readonly isSeconds: boolean;
     readonly asSeconds: u32;
@@ -5600,7 +5550,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Seconds' | 'Minutes' | 'Hours' | 'Days' | 'Weeks';
   }
 
-  /** @name ZrmlRikiddoEmaMarketVolumeMarketVolumeState (524) */
+  /** @name ZrmlRikiddoEmaMarketVolumeMarketVolumeState (526) */
   interface ZrmlRikiddoEmaMarketVolumeMarketVolumeState extends Enum {
     readonly isUninitialized: boolean;
     readonly isDataCollectionStarted: boolean;
@@ -5608,13 +5558,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Uninitialized' | 'DataCollectionStarted' | 'DataCollected';
   }
 
-  /** @name ZrmlRikiddoRikiddoSigmoidMvRikiddoConfig (525) */
+  /** @name ZrmlRikiddoRikiddoSigmoidMvRikiddoConfig (527) */
   interface ZrmlRikiddoRikiddoSigmoidMvRikiddoConfig extends Struct {
     readonly initialFee: SubstrateFixedFixedI128;
     readonly log2E: SubstrateFixedFixedI128;
   }
 
-  /** @name ZrmlRikiddoError (526) */
+  /** @name ZrmlRikiddoError (528) */
   interface ZrmlRikiddoError extends Enum {
     readonly isFixedConversionImpossible: boolean;
     readonly isRikiddoNotFoundForPool: boolean;
@@ -5622,7 +5572,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'FixedConversionImpossible' | 'RikiddoNotFoundForPool' | 'RikiddoAlreadyExistsForPool';
   }
 
-  /** @name ZrmlSimpleDisputesError (529) */
+  /** @name ZrmlSimpleDisputesError (531) */
   interface ZrmlSimpleDisputesError extends Enum {
     readonly isInvalidMarketStatus: boolean;
     readonly isMarketDoesNotHaveSimpleDisputesMechanism: boolean;
@@ -5634,7 +5584,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'InvalidMarketStatus' | 'MarketDoesNotHaveSimpleDisputesMechanism' | 'StorageOverflow' | 'OutcomeMismatch' | 'CannotDisputeSameOutcome' | 'MarketIsNotReported' | 'MaxDisputesReached';
   }
 
-  /** @name ZrmlSwapsError (531) */
+  /** @name ZrmlSwapsError (532) */
   interface ZrmlSwapsError extends Enum {
     readonly isAboveMaximumWeight: boolean;
     readonly isAssetNotBound: boolean;
@@ -5644,11 +5594,9 @@ declare module '@polkadot/types/lookup' {
     readonly isBelowMinimumWeight: boolean;
     readonly isInsufficientBalance: boolean;
     readonly isInsufficientLiquidity: boolean;
-    readonly isInsufficientSubsidy: boolean;
     readonly isInvalidAmountArgument: boolean;
     readonly isInvalidFeeArgument: boolean;
     readonly isInvalidPoolStatus: boolean;
-    readonly isInvalidScoringRule: boolean;
     readonly isInvalidStateTransition: boolean;
     readonly isInvalidWeightArgument: boolean;
     readonly isLimitIn: boolean;
@@ -5659,7 +5607,6 @@ declare module '@polkadot/types/lookup' {
     readonly isMaxInRatio: boolean;
     readonly isMaxOutRatio: boolean;
     readonly isMaxTotalWeight: boolean;
-    readonly isNoSubsidyProvided: boolean;
     readonly isPoolDoesNotExist: boolean;
     readonly isPoolDrain: boolean;
     readonly isPoolIsNotActive: boolean;
@@ -5675,23 +5622,24 @@ declare module '@polkadot/types/lookup' {
     readonly isUnsupportedTrade: boolean;
     readonly isWinningAssetNotFound: boolean;
     readonly isZeroAmount: boolean;
-    readonly type: 'AboveMaximumWeight' | 'AssetNotBound' | 'AssetNotInPool' | 'BaseAssetNotFound' | 'BadLimitPrice' | 'BelowMinimumWeight' | 'InsufficientBalance' | 'InsufficientLiquidity' | 'InsufficientSubsidy' | 'InvalidAmountArgument' | 'InvalidFeeArgument' | 'InvalidPoolStatus' | 'InvalidScoringRule' | 'InvalidStateTransition' | 'InvalidWeightArgument' | 'LimitIn' | 'InvalidSubsidyAmount' | 'LimitMissing' | 'LimitOut' | 'MathApproximation' | 'MaxInRatio' | 'MaxOutRatio' | 'MaxTotalWeight' | 'NoSubsidyProvided' | 'PoolDoesNotExist' | 'PoolDrain' | 'PoolIsNotActive' | 'PoolMissingFee' | 'PoolMissingSubsidy' | 'PoolMissingWeight' | 'ProvidedValuesLenMustEqualAssetsLen' | 'SwapFeeMissing' | 'SwapFeeTooHigh' | 'TooFewAssets' | 'TooManyAssets' | 'SomeIdenticalAssets' | 'UnsupportedTrade' | 'WinningAssetNotFound' | 'ZeroAmount';
+    readonly isUnexpected: boolean;
+    readonly asUnexpected: ZrmlSwapsUnexpectedError;
+    readonly type: 'AboveMaximumWeight' | 'AssetNotBound' | 'AssetNotInPool' | 'BaseAssetNotFound' | 'BadLimitPrice' | 'BelowMinimumWeight' | 'InsufficientBalance' | 'InsufficientLiquidity' | 'InvalidAmountArgument' | 'InvalidFeeArgument' | 'InvalidPoolStatus' | 'InvalidStateTransition' | 'InvalidWeightArgument' | 'LimitIn' | 'InvalidSubsidyAmount' | 'LimitMissing' | 'LimitOut' | 'MathApproximation' | 'MaxInRatio' | 'MaxOutRatio' | 'MaxTotalWeight' | 'PoolDoesNotExist' | 'PoolDrain' | 'PoolIsNotActive' | 'PoolMissingFee' | 'PoolMissingSubsidy' | 'PoolMissingWeight' | 'ProvidedValuesLenMustEqualAssetsLen' | 'SwapFeeMissing' | 'SwapFeeTooHigh' | 'TooFewAssets' | 'TooManyAssets' | 'SomeIdenticalAssets' | 'UnsupportedTrade' | 'WinningAssetNotFound' | 'ZeroAmount' | 'Unexpected';
   }
 
-  /** @name ZeitgeistPrimitivesMarketOldMarketDispute (533) */
-  interface ZeitgeistPrimitivesMarketOldMarketDispute extends Struct {
-    readonly at: u64;
-    readonly by: AccountId32;
-    readonly outcome: ZeitgeistPrimitivesOutcomeReport;
+  /** @name ZrmlSwapsUnexpectedError (533) */
+  interface ZrmlSwapsUnexpectedError extends Enum {
+    readonly isStorageOverflow: boolean;
+    readonly type: 'StorageOverflow';
   }
 
-  /** @name ZeitgeistPrimitivesMarketSubsidyUntil (537) */
+  /** @name ZeitgeistPrimitivesMarketSubsidyUntil (536) */
   interface ZeitgeistPrimitivesMarketSubsidyUntil extends Struct {
     readonly marketId: u128;
     readonly period: ZeitgeistPrimitivesMarketMarketPeriod;
   }
 
-  /** @name ZrmlPredictionMarketsError (539) */
+  /** @name ZrmlPredictionMarketsError (538) */
   interface ZrmlPredictionMarketsError extends Enum {
     readonly isCannotDisputeSameOutcome: boolean;
     readonly isEditorNotCreator: boolean;
@@ -5749,23 +5697,28 @@ declare module '@polkadot/types/lookup' {
     readonly isInvalidEarlyCloseState: boolean;
     readonly isNoEarlyCloseScheduled: boolean;
     readonly isOnlyAuthorizedCanScheduleEarlyClose: boolean;
-    readonly type: 'CannotDisputeSameOutcome' | 'EditorNotCreator' | 'EditReasonLengthExceedsMaxEditReasonLen' | 'InsufficientFundsInMarketAccount' | 'InsufficientShareBalance' | 'InvalidMultihash' | 'InvalidMarketType' | 'InvalidScoringRule' | 'NotEnoughBalance' | 'MarketAlreadyReported' | 'MarketDurationTooLong' | 'MarketEditRequestAlreadyInProgress' | 'MarketEditNotRequested' | 'MarketIsNotActive' | 'MarketIsNotClosed' | 'MarketIsNotCollectingSubsidy' | 'MarketIsNotProposed' | 'MarketIsNotReported' | 'MarketIsNotDisputed' | 'MarketIsNotResolved' | 'MarketStartTooSoon' | 'MarketStartTooLate' | 'MarketDisputeMechanismNotFailed' | 'MissingBond' | 'NotEnoughCategories' | 'NoWinningBalance' | 'OutcomeMismatch' | 'RejectReasonLengthExceedsMaxRejectReasonLen' | 'ReporterNotOracle' | 'StorageOverflow' | 'TooManyCategories' | 'InvalidDisputeMechanism' | 'InvalidMarketStatus' | 'UnexpectedNoneInPostInfo' | 'ZeroAmount' | 'InvalidMarketPeriod' | 'InvalidOutcomeRange' | 'NotAllowedToReportYet' | 'DisputeDurationSmallerThanMinDisputeDuration' | 'OracleDurationSmallerThanMinOracleDuration' | 'DisputeDurationGreaterThanMaxDisputeDuration' | 'GracePeriodGreaterThanMaxGracePeriod' | 'OracleDurationGreaterThanMaxOracleDuration' | 'WeightsLenMustEqualAssetsLen' | 'InvalidBaseAsset' | 'UnregisteredForeignAsset' | 'GlobalDisputeExistsAlready' | 'NoDisputeMechanism' | 'NonZeroDisputePeriodOnTrustedMarket' | 'FeeTooHigh' | 'InvalidResolutionMechanism' | 'RequesterNotCreator' | 'EarlyCloseRequestTooLate' | 'InvalidEarlyCloseState' | 'NoEarlyCloseScheduled' | 'OnlyAuthorizedCanScheduleEarlyClose';
+    readonly isCallerNotMarketCreator: boolean;
+    readonly isMarketIsNotTrusted: boolean;
+    readonly isNotAllowedForBlockBasedMarkets: boolean;
+    readonly isMarketNotInCloseTimeFrameList: boolean;
+    readonly isMarketPeriodEndNotAlreadyReachedYet: boolean;
+    readonly type: 'CannotDisputeSameOutcome' | 'EditorNotCreator' | 'EditReasonLengthExceedsMaxEditReasonLen' | 'InsufficientFundsInMarketAccount' | 'InsufficientShareBalance' | 'InvalidMultihash' | 'InvalidMarketType' | 'InvalidScoringRule' | 'NotEnoughBalance' | 'MarketAlreadyReported' | 'MarketDurationTooLong' | 'MarketEditRequestAlreadyInProgress' | 'MarketEditNotRequested' | 'MarketIsNotActive' | 'MarketIsNotClosed' | 'MarketIsNotCollectingSubsidy' | 'MarketIsNotProposed' | 'MarketIsNotReported' | 'MarketIsNotDisputed' | 'MarketIsNotResolved' | 'MarketStartTooSoon' | 'MarketStartTooLate' | 'MarketDisputeMechanismNotFailed' | 'MissingBond' | 'NotEnoughCategories' | 'NoWinningBalance' | 'OutcomeMismatch' | 'RejectReasonLengthExceedsMaxRejectReasonLen' | 'ReporterNotOracle' | 'StorageOverflow' | 'TooManyCategories' | 'InvalidDisputeMechanism' | 'InvalidMarketStatus' | 'UnexpectedNoneInPostInfo' | 'ZeroAmount' | 'InvalidMarketPeriod' | 'InvalidOutcomeRange' | 'NotAllowedToReportYet' | 'DisputeDurationSmallerThanMinDisputeDuration' | 'OracleDurationSmallerThanMinOracleDuration' | 'DisputeDurationGreaterThanMaxDisputeDuration' | 'GracePeriodGreaterThanMaxGracePeriod' | 'OracleDurationGreaterThanMaxOracleDuration' | 'WeightsLenMustEqualAssetsLen' | 'InvalidBaseAsset' | 'UnregisteredForeignAsset' | 'GlobalDisputeExistsAlready' | 'NoDisputeMechanism' | 'NonZeroDisputePeriodOnTrustedMarket' | 'FeeTooHigh' | 'InvalidResolutionMechanism' | 'RequesterNotCreator' | 'EarlyCloseRequestTooLate' | 'InvalidEarlyCloseState' | 'NoEarlyCloseScheduled' | 'OnlyAuthorizedCanScheduleEarlyClose' | 'CallerNotMarketCreator' | 'MarketIsNotTrusted' | 'NotAllowedForBlockBasedMarkets' | 'MarketNotInCloseTimeFrameList' | 'MarketPeriodEndNotAlreadyReachedYet';
   }
 
-  /** @name ZrmlStyxError (540) */
+  /** @name ZrmlStyxError (539) */
   interface ZrmlStyxError extends Enum {
     readonly isFundDoesNotHaveEnoughFreeBalance: boolean;
     readonly isHasAlreadyCrossed: boolean;
     readonly type: 'FundDoesNotHaveEnoughFreeBalance' | 'HasAlreadyCrossed';
   }
 
-  /** @name ZrmlGlobalDisputesOutcomeInfo (545) */
+  /** @name ZrmlGlobalDisputesOutcomeInfo (544) */
   interface ZrmlGlobalDisputesOutcomeInfo extends Struct {
     readonly outcomeSum: u128;
     readonly possession: ZrmlGlobalDisputesPossession;
   }
 
-  /** @name ZrmlGlobalDisputesPossession (547) */
+  /** @name ZrmlGlobalDisputesPossession (546) */
   interface ZrmlGlobalDisputesPossession extends Enum {
     readonly isPaid: boolean;
     readonly asPaid: {
@@ -5779,14 +5732,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Paid' | 'Shared';
   }
 
-  /** @name ZrmlGlobalDisputesGlobalDisputeInfo (548) */
+  /** @name ZrmlGlobalDisputesGlobalDisputeInfo (547) */
   interface ZrmlGlobalDisputesGlobalDisputeInfo extends Struct {
     readonly winnerOutcome: ZeitgeistPrimitivesOutcomeReport;
     readonly outcomeInfo: ZrmlGlobalDisputesOutcomeInfo;
     readonly status: ZrmlGlobalDisputesGdStatus;
   }
 
-  /** @name ZrmlGlobalDisputesGdStatus (549) */
+  /** @name ZrmlGlobalDisputesGdStatus (548) */
   interface ZrmlGlobalDisputesGdStatus extends Enum {
     readonly isActive: boolean;
     readonly asActive: {
@@ -5798,20 +5751,20 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Active' | 'Finished' | 'Destroyed';
   }
 
-  /** @name ZrmlGlobalDisputesOldWinnerInfo (550) */
+  /** @name ZrmlGlobalDisputesOldWinnerInfo (549) */
   interface ZrmlGlobalDisputesOldWinnerInfo extends Struct {
     readonly outcome: ZeitgeistPrimitivesOutcomeReport;
     readonly outcomeInfo: ZrmlGlobalDisputesOldOutcomeInfo;
     readonly isFinished: bool;
   }
 
-  /** @name ZrmlGlobalDisputesOldOutcomeInfo (551) */
+  /** @name ZrmlGlobalDisputesOldOutcomeInfo (550) */
   interface ZrmlGlobalDisputesOldOutcomeInfo extends Struct {
     readonly outcomeSum: u128;
     readonly owners: Vec<AccountId32>;
   }
 
-  /** @name ZrmlGlobalDisputesError (552) */
+  /** @name ZrmlGlobalDisputesError (551) */
   interface ZrmlGlobalDisputesError extends Enum {
     readonly isAmountTooLow: boolean;
     readonly isInvalidGlobalDisputeStatus: boolean;
@@ -5833,24 +5786,33 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AmountTooLow' | 'InvalidGlobalDisputeStatus' | 'InsufficientAmount' | 'MaxOwnersReached' | 'MaxVotesReached' | 'NoFundsToReward' | 'GlobalDisputeNotFound' | 'OutcomeAlreadyExists' | 'OutcomeDoesNotExist' | 'OutcomeMismatch' | 'OutcomesNotFullyCleaned' | 'SharedPossessionRequired' | 'UnfinishedGlobalDispute' | 'AddOutcomePeriodIsOver' | 'NotInGdVotingPeriod' | 'GlobalDisputeNotDestroyed' | 'GlobalDisputeAlreadyExists';
   }
 
-  /** @name ZrmlNeoSwapsPool (553) */
+  /** @name ZrmlNeoSwapsPool (552) */
   interface ZrmlNeoSwapsPool extends Struct {
     readonly accountId: AccountId32;
     readonly reserves: BTreeMap<ZeitgeistPrimitivesAsset, u128>;
     readonly collateral: ZeitgeistPrimitivesAsset;
     readonly liquidityParameter: u128;
-    readonly liquiditySharesManager: ZrmlNeoSwapsSoloLp;
+    readonly liquiditySharesManager: ZrmlNeoSwapsLiquidityTreeTypesLiquidityTree;
     readonly swapFee: u128;
   }
 
-  /** @name ZrmlNeoSwapsSoloLp (554) */
-  interface ZrmlNeoSwapsSoloLp extends Struct {
-    readonly owner: AccountId32;
-    readonly totalShares: u128;
-    readonly fees: u128;
+  /** @name ZrmlNeoSwapsLiquidityTreeTypesLiquidityTree (553) */
+  interface ZrmlNeoSwapsLiquidityTreeTypesLiquidityTree extends Struct {
+    readonly nodes: Vec<ZrmlNeoSwapsLiquidityTreeTypesNode>;
+    readonly accountToIndex: BTreeMap<AccountId32, u32>;
+    readonly abandonedNodes: Vec<u32>;
   }
 
-  /** @name ZrmlNeoSwapsError (555) */
+  /** @name ZrmlNeoSwapsLiquidityTreeTypesNode (555) */
+  interface ZrmlNeoSwapsLiquidityTreeTypesNode extends Struct {
+    readonly account: Option<AccountId32>;
+    readonly stake: u128;
+    readonly fees: u128;
+    readonly descendantStake: u128;
+    readonly lazyFees: u128;
+  }
+
+  /** @name ZrmlNeoSwapsError (562) */
   interface ZrmlNeoSwapsError extends Enum {
     readonly isAssetCountAboveMax: boolean;
     readonly isAmountInAboveMax: boolean;
@@ -5864,11 +5826,11 @@ declare module '@polkadot/types/lookup' {
     readonly isInvalidSpotPrices: boolean;
     readonly isInvalidTradingMechanism: boolean;
     readonly isMarketNotActive: boolean;
-    readonly isMarketNotBinaryOrScalar: boolean;
     readonly isMathError: boolean;
     readonly isNotAllowed: boolean;
     readonly isNotImplemented: boolean;
     readonly isNumericalLimits: boolean;
+    readonly asNumericalLimits: ZrmlNeoSwapsNumericalLimitsError;
     readonly isOutstandingFees: boolean;
     readonly isPoolNotFound: boolean;
     readonly isSpotPriceAboveMax: boolean;
@@ -5877,27 +5839,61 @@ declare module '@polkadot/types/lookup' {
     readonly isSwapFeeBelowMin: boolean;
     readonly isUnexpected: boolean;
     readonly isZeroAmount: boolean;
-    readonly type: 'AssetCountAboveMax' | 'AmountInAboveMax' | 'AmountOutBelowMin' | 'AssetNotFound' | 'DuplicatePool' | 'IncorrectAssetCount' | 'IncorrectVecLen' | 'InsufficientPoolShares' | 'LiquidityTooLow' | 'InvalidSpotPrices' | 'InvalidTradingMechanism' | 'MarketNotActive' | 'MarketNotBinaryOrScalar' | 'MathError' | 'NotAllowed' | 'NotImplemented' | 'NumericalLimits' | 'OutstandingFees' | 'PoolNotFound' | 'SpotPriceAboveMax' | 'SpotPriceBelowMin' | 'SwapFeeAboveMax' | 'SwapFeeBelowMin' | 'Unexpected' | 'ZeroAmount';
+    readonly isLiquidityTreeError: boolean;
+    readonly asLiquidityTreeError: ZrmlNeoSwapsLiquidityTreeTypesLiquidityTreeError;
+    readonly isMinRelativeLiquidityThresholdViolated: boolean;
+    readonly type: 'AssetCountAboveMax' | 'AmountInAboveMax' | 'AmountOutBelowMin' | 'AssetNotFound' | 'DuplicatePool' | 'IncorrectAssetCount' | 'IncorrectVecLen' | 'InsufficientPoolShares' | 'LiquidityTooLow' | 'InvalidSpotPrices' | 'InvalidTradingMechanism' | 'MarketNotActive' | 'MathError' | 'NotAllowed' | 'NotImplemented' | 'NumericalLimits' | 'OutstandingFees' | 'PoolNotFound' | 'SpotPriceAboveMax' | 'SpotPriceBelowMin' | 'SwapFeeAboveMax' | 'SwapFeeBelowMin' | 'Unexpected' | 'ZeroAmount' | 'LiquidityTreeError' | 'MinRelativeLiquidityThresholdViolated';
   }
 
-  /** @name ZrmlOrderbookError (556) */
+  /** @name ZrmlNeoSwapsNumericalLimitsError (563) */
+  interface ZrmlNeoSwapsNumericalLimitsError extends Enum {
+    readonly isSpotPriceTooLow: boolean;
+    readonly isSpotPriceSlippedTooLow: boolean;
+    readonly isMaxAmountExceeded: boolean;
+    readonly isMinAmountNotMet: boolean;
+    readonly type: 'SpotPriceTooLow' | 'SpotPriceSlippedTooLow' | 'MaxAmountExceeded' | 'MinAmountNotMet';
+  }
+
+  /** @name ZrmlNeoSwapsLiquidityTreeTypesLiquidityTreeError (564) */
+  interface ZrmlNeoSwapsLiquidityTreeTypesLiquidityTreeError extends Enum {
+    readonly isAccountNotFound: boolean;
+    readonly isNodeNotFound: boolean;
+    readonly isUnwithdrawnFees: boolean;
+    readonly isTreeIsFull: boolean;
+    readonly isInsufficientStake: boolean;
+    readonly isMaxIterationsReached: boolean;
+    readonly isStorageOverflow: boolean;
+    readonly asStorageOverflow: ZrmlNeoSwapsLiquidityTreeTypesLiquidityTreeErrorStorageOverflowError;
+    readonly type: 'AccountNotFound' | 'NodeNotFound' | 'UnwithdrawnFees' | 'TreeIsFull' | 'InsufficientStake' | 'MaxIterationsReached' | 'StorageOverflow';
+  }
+
+  /** @name ZrmlNeoSwapsLiquidityTreeTypesLiquidityTreeErrorStorageOverflowError (565) */
+  interface ZrmlNeoSwapsLiquidityTreeTypesLiquidityTreeErrorStorageOverflowError extends Enum {
+    readonly isNodes: boolean;
+    readonly isAccountToIndex: boolean;
+    readonly isAbandonedNodes: boolean;
+    readonly type: 'Nodes' | 'AccountToIndex' | 'AbandonedNodes';
+  }
+
+  /** @name ZrmlOrderbookError (566) */
   interface ZrmlOrderbookError extends Enum {
     readonly isNotOrderCreator: boolean;
     readonly isOrderDoesNotExist: boolean;
     readonly isMarketIsNotActive: boolean;
     readonly isInvalidScoringRule: boolean;
     readonly isAmountTooHighForOrder: boolean;
-    readonly isAmountIsZero: boolean;
     readonly isInvalidOutcomeAsset: boolean;
-    readonly isMakerPartialFillTooLow: boolean;
-    readonly type: 'NotOrderCreator' | 'OrderDoesNotExist' | 'MarketIsNotActive' | 'InvalidScoringRule' | 'AmountTooHighForOrder' | 'AmountIsZero' | 'InvalidOutcomeAsset' | 'MakerPartialFillTooLow';
+    readonly isPartialFillNearFullFillNotAllowed: boolean;
+    readonly isMarketBaseAssetNotPresent: boolean;
+    readonly isBelowMinimumBalance: boolean;
+    readonly type: 'NotOrderCreator' | 'OrderDoesNotExist' | 'MarketIsNotActive' | 'InvalidScoringRule' | 'AmountTooHighForOrder' | 'InvalidOutcomeAsset' | 'PartialFillNearFullFillNotAllowed' | 'MarketBaseAssetNotPresent' | 'BelowMinimumBalance';
   }
 
-  /** @name ZrmlParimutuelError (557) */
+  /** @name ZrmlParimutuelError (567) */
   interface ZrmlParimutuelError extends Enum {
     readonly isNoRewardShareOutstanding: boolean;
     readonly isMarketIsNotActive: boolean;
-    readonly isAmountTooSmall: boolean;
+    readonly isAmountBelowMinimumBetSize: boolean;
     readonly isNotParimutuelOutcome: boolean;
     readonly isInvalidOutcomeAsset: boolean;
     readonly isInvalidScoringRule: boolean;
@@ -5912,23 +5908,23 @@ declare module '@polkadot/types/lookup' {
     readonly isNoRewardToDistribute: boolean;
     readonly isInconsistentState: boolean;
     readonly asInconsistentState: ZrmlParimutuelInconsistentStateError;
-    readonly type: 'NoRewardShareOutstanding' | 'MarketIsNotActive' | 'AmountTooSmall' | 'NotParimutuelOutcome' | 'InvalidOutcomeAsset' | 'InvalidScoringRule' | 'InsufficientBalance' | 'MarketIsNotResolvedYet' | 'Unexpected' | 'NoResolvedOutcome' | 'RefundNotAllowed' | 'RefundableBalanceIsZero' | 'NoWinningShares' | 'NotCategorical' | 'NoRewardToDistribute' | 'InconsistentState';
+    readonly type: 'NoRewardShareOutstanding' | 'MarketIsNotActive' | 'AmountBelowMinimumBetSize' | 'NotParimutuelOutcome' | 'InvalidOutcomeAsset' | 'InvalidScoringRule' | 'InsufficientBalance' | 'MarketIsNotResolvedYet' | 'Unexpected' | 'NoResolvedOutcome' | 'RefundNotAllowed' | 'RefundableBalanceIsZero' | 'NoWinningShares' | 'NotCategorical' | 'NoRewardToDistribute' | 'InconsistentState';
   }
 
-  /** @name ZrmlParimutuelInconsistentStateError (558) */
+  /** @name ZrmlParimutuelInconsistentStateError (568) */
   interface ZrmlParimutuelInconsistentStateError extends Enum {
     readonly isInsufficientFundsInPotAccount: boolean;
     readonly isOutcomeIssuanceGreaterCollateral: boolean;
     readonly type: 'InsufficientFundsInPotAccount' | 'OutcomeIssuanceGreaterCollateral';
   }
 
-  /** @name PolkadotPrimitivesV2UpgradeRestriction (560) */
+  /** @name PolkadotPrimitivesV2UpgradeRestriction (570) */
   interface PolkadotPrimitivesV2UpgradeRestriction extends Enum {
     readonly isPresent: boolean;
     readonly type: 'Present';
   }
 
-  /** @name CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot (561) */
+  /** @name CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot (571) */
   interface CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot extends Struct {
     readonly dmqMqcHead: H256;
     readonly relayDispatchQueueSize: ITuple<[u32, u32]>;
@@ -5936,7 +5932,7 @@ declare module '@polkadot/types/lookup' {
     readonly egressChannels: Vec<ITuple<[u32, PolkadotPrimitivesV2AbridgedHrmpChannel]>>;
   }
 
-  /** @name PolkadotPrimitivesV2AbridgedHrmpChannel (565) */
+  /** @name PolkadotPrimitivesV2AbridgedHrmpChannel (575) */
   interface PolkadotPrimitivesV2AbridgedHrmpChannel extends Struct {
     readonly maxCapacity: u32;
     readonly maxTotalSize: u32;
@@ -5946,7 +5942,7 @@ declare module '@polkadot/types/lookup' {
     readonly mqcHead: Option<H256>;
   }
 
-  /** @name PolkadotPrimitivesV2AbridgedHostConfiguration (567) */
+  /** @name PolkadotPrimitivesV2AbridgedHostConfiguration (577) */
   interface PolkadotPrimitivesV2AbridgedHostConfiguration extends Struct {
     readonly maxCodeSize: u32;
     readonly maxHeadDataSize: u32;
@@ -5959,13 +5955,13 @@ declare module '@polkadot/types/lookup' {
     readonly validationUpgradeDelay: u32;
   }
 
-  /** @name PolkadotCorePrimitivesOutboundHrmpMessage (573) */
+  /** @name PolkadotCorePrimitivesOutboundHrmpMessage (583) */
   interface PolkadotCorePrimitivesOutboundHrmpMessage extends Struct {
     readonly recipient: u32;
     readonly data: Bytes;
   }
 
-  /** @name CumulusPalletParachainSystemError (574) */
+  /** @name CumulusPalletParachainSystemError (584) */
   interface CumulusPalletParachainSystemError extends Enum {
     readonly isOverlappingUpgrades: boolean;
     readonly isProhibitedByPolkadot: boolean;
@@ -5978,20 +5974,20 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'OverlappingUpgrades' | 'ProhibitedByPolkadot' | 'TooBig' | 'ValidationDataNotAvailable' | 'HostConfigurationNotAvailable' | 'NotScheduled' | 'NothingAuthorized' | 'Unauthorized';
   }
 
-  /** @name PalletParachainStakingParachainBondConfig (575) */
+  /** @name PalletParachainStakingParachainBondConfig (585) */
   interface PalletParachainStakingParachainBondConfig extends Struct {
     readonly account: AccountId32;
     readonly percent: Percent;
   }
 
-  /** @name PalletParachainStakingRoundInfo (576) */
+  /** @name PalletParachainStakingRoundInfo (586) */
   interface PalletParachainStakingRoundInfo extends Struct {
     readonly current: u32;
     readonly first: u64;
     readonly length: u32;
   }
 
-  /** @name PalletParachainStakingDelegator (577) */
+  /** @name PalletParachainStakingDelegator (587) */
   interface PalletParachainStakingDelegator extends Struct {
     readonly id: AccountId32;
     readonly delegations: PalletParachainStakingSetOrderedSet;
@@ -6000,16 +5996,16 @@ declare module '@polkadot/types/lookup' {
     readonly status: PalletParachainStakingDelegatorStatus;
   }
 
-  /** @name PalletParachainStakingSetOrderedSet (578) */
+  /** @name PalletParachainStakingSetOrderedSet (588) */
   interface PalletParachainStakingSetOrderedSet extends Vec<PalletParachainStakingBond> {}
 
-  /** @name PalletParachainStakingBond (579) */
+  /** @name PalletParachainStakingBond (589) */
   interface PalletParachainStakingBond extends Struct {
     readonly owner: AccountId32;
     readonly amount: u128;
   }
 
-  /** @name PalletParachainStakingDelegatorStatus (581) */
+  /** @name PalletParachainStakingDelegatorStatus (591) */
   interface PalletParachainStakingDelegatorStatus extends Enum {
     readonly isActive: boolean;
     readonly isLeaving: boolean;
@@ -6017,7 +6013,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Active' | 'Leaving';
   }
 
-  /** @name PalletParachainStakingCandidateMetadata (582) */
+  /** @name PalletParachainStakingCandidateMetadata (592) */
   interface PalletParachainStakingCandidateMetadata extends Struct {
     readonly bond: u128;
     readonly delegationCount: u32;
@@ -6031,7 +6027,7 @@ declare module '@polkadot/types/lookup' {
     readonly status: PalletParachainStakingCollatorStatus;
   }
 
-  /** @name PalletParachainStakingCapacityStatus (583) */
+  /** @name PalletParachainStakingCapacityStatus (593) */
   interface PalletParachainStakingCapacityStatus extends Enum {
     readonly isFull: boolean;
     readonly isEmpty: boolean;
@@ -6039,13 +6035,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Full' | 'Empty' | 'Partial';
   }
 
-  /** @name PalletParachainStakingCandidateBondLessRequest (585) */
+  /** @name PalletParachainStakingCandidateBondLessRequest (595) */
   interface PalletParachainStakingCandidateBondLessRequest extends Struct {
     readonly amount: u128;
     readonly whenExecutable: u32;
   }
 
-  /** @name PalletParachainStakingCollatorStatus (586) */
+  /** @name PalletParachainStakingCollatorStatus (596) */
   interface PalletParachainStakingCollatorStatus extends Enum {
     readonly isActive: boolean;
     readonly isIdle: boolean;
@@ -6054,47 +6050,47 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Active' | 'Idle' | 'Leaving';
   }
 
-  /** @name PalletParachainStakingDelegationRequestsScheduledRequest (588) */
+  /** @name PalletParachainStakingDelegationRequestsScheduledRequest (598) */
   interface PalletParachainStakingDelegationRequestsScheduledRequest extends Struct {
     readonly delegator: AccountId32;
     readonly whenExecutable: u32;
     readonly action: PalletParachainStakingDelegationRequestsDelegationAction;
   }
 
-  /** @name PalletParachainStakingAutoCompoundAutoCompoundConfig (590) */
+  /** @name PalletParachainStakingAutoCompoundAutoCompoundConfig (600) */
   interface PalletParachainStakingAutoCompoundAutoCompoundConfig extends Struct {
     readonly delegator: AccountId32;
     readonly value: Percent;
   }
 
-  /** @name PalletParachainStakingDelegations (591) */
+  /** @name PalletParachainStakingDelegations (601) */
   interface PalletParachainStakingDelegations extends Struct {
     readonly delegations: Vec<PalletParachainStakingBond>;
     readonly total: u128;
   }
 
-  /** @name PalletParachainStakingCollatorSnapshot (593) */
+  /** @name PalletParachainStakingCollatorSnapshot (603) */
   interface PalletParachainStakingCollatorSnapshot extends Struct {
     readonly bond: u128;
     readonly delegations: Vec<PalletParachainStakingBondWithAutoCompound>;
     readonly total: u128;
   }
 
-  /** @name PalletParachainStakingBondWithAutoCompound (595) */
+  /** @name PalletParachainStakingBondWithAutoCompound (605) */
   interface PalletParachainStakingBondWithAutoCompound extends Struct {
     readonly owner: AccountId32;
     readonly amount: u128;
     readonly autoCompound: Percent;
   }
 
-  /** @name PalletParachainStakingDelayedPayout (596) */
+  /** @name PalletParachainStakingDelayedPayout (606) */
   interface PalletParachainStakingDelayedPayout extends Struct {
     readonly roundIssuance: u128;
     readonly totalStakingReward: u128;
     readonly collatorCommission: Perbill;
   }
 
-  /** @name PalletParachainStakingInflationInflationInfo (597) */
+  /** @name PalletParachainStakingInflationInflationInfo (607) */
   interface PalletParachainStakingInflationInflationInfo extends Struct {
     readonly expect: {
       readonly min: u128;
@@ -6113,7 +6109,7 @@ declare module '@polkadot/types/lookup' {
     } & Struct;
   }
 
-  /** @name PalletParachainStakingError (598) */
+  /** @name PalletParachainStakingError (608) */
   interface PalletParachainStakingError extends Enum {
     readonly isDelegatorDNE: boolean;
     readonly isDelegatorDNEinTopNorBottom: boolean;
@@ -6163,7 +6159,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'DelegatorDNE' | 'DelegatorDNEinTopNorBottom' | 'DelegatorDNEInDelegatorSet' | 'CandidateDNE' | 'DelegationDNE' | 'DelegatorExists' | 'CandidateExists' | 'CandidateBondBelowMin' | 'InsufficientBalance' | 'DelegatorBondBelowMin' | 'DelegationBelowMin' | 'AlreadyOffline' | 'AlreadyActive' | 'DelegatorAlreadyLeaving' | 'DelegatorNotLeaving' | 'DelegatorCannotLeaveYet' | 'CannotDelegateIfLeaving' | 'CandidateAlreadyLeaving' | 'CandidateNotLeaving' | 'CandidateCannotLeaveYet' | 'CannotGoOnlineIfLeaving' | 'ExceedMaxDelegationsPerDelegator' | 'AlreadyDelegatedCandidate' | 'InvalidSchedule' | 'CannotSetBelowMin' | 'RoundLengthMustBeGreaterThanTotalSelectedCollators' | 'NoWritingSameValue' | 'TooLowCandidateCountWeightHintJoinCandidates' | 'TooLowCandidateCountWeightHintCancelLeaveCandidates' | 'TooLowCandidateCountToLeaveCandidates' | 'TooLowDelegationCountToDelegate' | 'TooLowCandidateDelegationCountToDelegate' | 'TooLowCandidateDelegationCountToLeaveCandidates' | 'TooLowDelegationCountToLeaveDelegators' | 'PendingCandidateRequestsDNE' | 'PendingCandidateRequestAlreadyExists' | 'PendingCandidateRequestNotDueYet' | 'PendingDelegationRequestDNE' | 'PendingDelegationRequestAlreadyExists' | 'PendingDelegationRequestNotDueYet' | 'CannotDelegateLessThanOrEqualToLowestBottomWhenFull' | 'PendingDelegationRevoke' | 'TooLowDelegationCountToAutoCompound' | 'TooLowCandidateAutoCompoundingDelegationCountToAutoCompound' | 'TooLowCandidateAutoCompoundingDelegationCountToDelegate';
   }
 
-  /** @name PalletAuthorInherentError (599) */
+  /** @name PalletAuthorInherentError (609) */
   interface PalletAuthorInherentError extends Enum {
     readonly isAuthorAlreadySet: boolean;
     readonly isNoAccountId: boolean;
@@ -6171,14 +6167,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AuthorAlreadySet' | 'NoAccountId' | 'CannotBeAuthor';
   }
 
-  /** @name PalletAuthorMappingRegistrationInfo (600) */
+  /** @name PalletAuthorMappingRegistrationInfo (610) */
   interface PalletAuthorMappingRegistrationInfo extends Struct {
     readonly account: AccountId32;
     readonly deposit: u128;
     readonly keys_: SessionKeysPrimitivesVrfVrfCryptoPublic;
   }
 
-  /** @name PalletAuthorMappingError (601) */
+  /** @name PalletAuthorMappingError (611) */
   interface PalletAuthorMappingError extends Enum {
     readonly isAssociationNotFound: boolean;
     readonly isNotYourAssociation: boolean;
@@ -6191,29 +6187,29 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AssociationNotFound' | 'NotYourAssociation' | 'CannotAffordSecurityDeposit' | 'AlreadyAssociated' | 'OldAuthorIdNotFound' | 'WrongKeySize' | 'DecodeNimbusFailed' | 'DecodeKeysFailed';
   }
 
-  /** @name CumulusPalletXcmError (602) */
+  /** @name CumulusPalletXcmError (612) */
   type CumulusPalletXcmError = Null;
 
-  /** @name CumulusPalletDmpQueueConfigData (603) */
+  /** @name CumulusPalletDmpQueueConfigData (613) */
   interface CumulusPalletDmpQueueConfigData extends Struct {
     readonly maxIndividual: SpWeightsWeightV2Weight;
   }
 
-  /** @name CumulusPalletDmpQueuePageIndexData (604) */
+  /** @name CumulusPalletDmpQueuePageIndexData (614) */
   interface CumulusPalletDmpQueuePageIndexData extends Struct {
     readonly beginUsed: u32;
     readonly endUsed: u32;
     readonly overweightCount: u64;
   }
 
-  /** @name CumulusPalletDmpQueueError (607) */
+  /** @name CumulusPalletDmpQueueError (617) */
   interface CumulusPalletDmpQueueError extends Enum {
     readonly isUnknown: boolean;
     readonly isOverLimit: boolean;
     readonly type: 'Unknown' | 'OverLimit';
   }
 
-  /** @name PalletXcmQueryStatus (608) */
+  /** @name PalletXcmQueryStatus (618) */
   interface PalletXcmQueryStatus extends Enum {
     readonly isPending: boolean;
     readonly asPending: {
@@ -6235,7 +6231,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Pending' | 'VersionNotifier' | 'Ready';
   }
 
-  /** @name XcmVersionedResponse (611) */
+  /** @name XcmVersionedResponse (621) */
   interface XcmVersionedResponse extends Enum {
     readonly isV2: boolean;
     readonly asV2: XcmV2Response;
@@ -6244,7 +6240,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'V2' | 'V3';
   }
 
-  /** @name PalletXcmVersionMigrationStage (617) */
+  /** @name PalletXcmVersionMigrationStage (627) */
   interface PalletXcmVersionMigrationStage extends Enum {
     readonly isMigrateSupportedVersion: boolean;
     readonly isMigrateVersionNotifiers: boolean;
@@ -6254,14 +6250,14 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'MigrateSupportedVersion' | 'MigrateVersionNotifiers' | 'NotifyCurrentTargets' | 'MigrateAndNotifyOldTargets';
   }
 
-  /** @name XcmVersionedAssetId (619) */
+  /** @name XcmVersionedAssetId (629) */
   interface XcmVersionedAssetId extends Enum {
     readonly isV3: boolean;
     readonly asV3: XcmV3MultiassetAssetId;
     readonly type: 'V3';
   }
 
-  /** @name PalletXcmRemoteLockedFungibleRecord (620) */
+  /** @name PalletXcmRemoteLockedFungibleRecord (630) */
   interface PalletXcmRemoteLockedFungibleRecord extends Struct {
     readonly amount: u128;
     readonly owner: XcmVersionedMultiLocation;
@@ -6269,7 +6265,7 @@ declare module '@polkadot/types/lookup' {
     readonly users: u32;
   }
 
-  /** @name PalletXcmError (624) */
+  /** @name PalletXcmError (634) */
   interface PalletXcmError extends Enum {
     readonly isUnreachable: boolean;
     readonly isSendFailure: boolean;
@@ -6294,21 +6290,21 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Unreachable' | 'SendFailure' | 'Filtered' | 'UnweighableMessage' | 'DestinationNotInvertible' | 'Empty' | 'CannotReanchor' | 'TooManyAssets' | 'InvalidOrigin' | 'BadVersion' | 'BadLocation' | 'NoSubscription' | 'AlreadySubscribed' | 'InvalidAsset' | 'LowBalance' | 'TooManyLocks' | 'AccountNotSovereign' | 'FeesNotMet' | 'LockNotFound' | 'InUse';
   }
 
-  /** @name CumulusPalletXcmpQueueInboundChannelDetails (626) */
+  /** @name CumulusPalletXcmpQueueInboundChannelDetails (636) */
   interface CumulusPalletXcmpQueueInboundChannelDetails extends Struct {
     readonly sender: u32;
     readonly state: CumulusPalletXcmpQueueInboundState;
     readonly messageMetadata: Vec<ITuple<[u32, PolkadotParachainPrimitivesXcmpMessageFormat]>>;
   }
 
-  /** @name CumulusPalletXcmpQueueInboundState (627) */
+  /** @name CumulusPalletXcmpQueueInboundState (637) */
   interface CumulusPalletXcmpQueueInboundState extends Enum {
     readonly isOk: boolean;
     readonly isSuspended: boolean;
     readonly type: 'Ok' | 'Suspended';
   }
 
-  /** @name PolkadotParachainPrimitivesXcmpMessageFormat (630) */
+  /** @name PolkadotParachainPrimitivesXcmpMessageFormat (640) */
   interface PolkadotParachainPrimitivesXcmpMessageFormat extends Enum {
     readonly isConcatenatedVersionedXcm: boolean;
     readonly isConcatenatedEncodedBlob: boolean;
@@ -6316,7 +6312,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'ConcatenatedVersionedXcm' | 'ConcatenatedEncodedBlob' | 'Signals';
   }
 
-  /** @name CumulusPalletXcmpQueueOutboundChannelDetails (633) */
+  /** @name CumulusPalletXcmpQueueOutboundChannelDetails (643) */
   interface CumulusPalletXcmpQueueOutboundChannelDetails extends Struct {
     readonly recipient: u32;
     readonly state: CumulusPalletXcmpQueueOutboundState;
@@ -6325,14 +6321,14 @@ declare module '@polkadot/types/lookup' {
     readonly lastIndex: u16;
   }
 
-  /** @name CumulusPalletXcmpQueueOutboundState (634) */
+  /** @name CumulusPalletXcmpQueueOutboundState (644) */
   interface CumulusPalletXcmpQueueOutboundState extends Enum {
     readonly isOk: boolean;
     readonly isSuspended: boolean;
     readonly type: 'Ok' | 'Suspended';
   }
 
-  /** @name CumulusPalletXcmpQueueQueueConfigData (636) */
+  /** @name CumulusPalletXcmpQueueQueueConfigData (646) */
   interface CumulusPalletXcmpQueueQueueConfigData extends Struct {
     readonly suspendThreshold: u32;
     readonly dropThreshold: u32;
@@ -6342,7 +6338,7 @@ declare module '@polkadot/types/lookup' {
     readonly xcmpMaxIndividualWeight: SpWeightsWeightV2Weight;
   }
 
-  /** @name CumulusPalletXcmpQueueError (638) */
+  /** @name CumulusPalletXcmpQueueError (648) */
   interface CumulusPalletXcmpQueueError extends Enum {
     readonly isFailedToSend: boolean;
     readonly isBadXcmOrigin: boolean;
@@ -6352,7 +6348,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'FailedToSend' | 'BadXcmOrigin' | 'BadXcm' | 'BadOverweightIndex' | 'WeightOverLimit';
   }
 
-  /** @name OrmlAssetRegistryModuleError (639) */
+  /** @name OrmlAssetRegistryModuleError (649) */
   interface OrmlAssetRegistryModuleError extends Enum {
     readonly isAssetNotFound: boolean;
     readonly isBadVersion: boolean;
@@ -6362,7 +6358,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AssetNotFound' | 'BadVersion' | 'InvalidAssetId' | 'ConflictingLocation' | 'ConflictingAssetId';
   }
 
-  /** @name OrmlUnknownTokensModuleError (642) */
+  /** @name OrmlUnknownTokensModuleError (652) */
   interface OrmlUnknownTokensModuleError extends Enum {
     readonly isBalanceTooLow: boolean;
     readonly isBalanceOverflow: boolean;
@@ -6370,7 +6366,7 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'BalanceTooLow' | 'BalanceOverflow' | 'UnhandledAsset';
   }
 
-  /** @name OrmlXtokensModuleError (643) */
+  /** @name OrmlXtokensModuleError (653) */
   interface OrmlXtokensModuleError extends Enum {
     readonly isAssetHasNoReserve: boolean;
     readonly isNotCrossChainTransfer: boolean;
@@ -6394,13 +6390,13 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'AssetHasNoReserve' | 'NotCrossChainTransfer' | 'InvalidDest' | 'NotCrossChainTransferableCurrency' | 'UnweighableMessage' | 'XcmExecutionFailed' | 'CannotReanchor' | 'InvalidAncestry' | 'InvalidAsset' | 'DestinationNotInvertible' | 'BadVersion' | 'DistinctReserveForAssetAndFee' | 'ZeroFee' | 'ZeroAmount' | 'TooManyAssetsBeingSent' | 'AssetIndexNonExistent' | 'FeeNotEnough' | 'NotSupportedMultiLocation' | 'MinXcmFeeNotDefined';
   }
 
-  /** @name PalletSudoError (644) */
+  /** @name PalletSudoError (654) */
   interface PalletSudoError extends Enum {
     readonly isRequireSudo: boolean;
     readonly type: 'RequireSudo';
   }
 
-  /** @name SpRuntimeMultiSignature (646) */
+  /** @name SpRuntimeMultiSignature (656) */
   interface SpRuntimeMultiSignature extends Enum {
     readonly isEd25519: boolean;
     readonly asEd25519: SpCoreEd25519Signature;
@@ -6411,40 +6407,40 @@ declare module '@polkadot/types/lookup' {
     readonly type: 'Ed25519' | 'Sr25519' | 'Ecdsa';
   }
 
-  /** @name SpCoreEd25519Signature (647) */
+  /** @name SpCoreEd25519Signature (657) */
   interface SpCoreEd25519Signature extends U8aFixed {}
 
-  /** @name SpCoreSr25519Signature (649) */
+  /** @name SpCoreSr25519Signature (659) */
   interface SpCoreSr25519Signature extends U8aFixed {}
 
-  /** @name SpCoreEcdsaSignature (650) */
+  /** @name SpCoreEcdsaSignature (660) */
   interface SpCoreEcdsaSignature extends U8aFixed {}
 
-  /** @name FrameSystemExtensionsCheckNonZeroSender (653) */
+  /** @name FrameSystemExtensionsCheckNonZeroSender (663) */
   type FrameSystemExtensionsCheckNonZeroSender = Null;
 
-  /** @name FrameSystemExtensionsCheckSpecVersion (654) */
+  /** @name FrameSystemExtensionsCheckSpecVersion (664) */
   type FrameSystemExtensionsCheckSpecVersion = Null;
 
-  /** @name FrameSystemExtensionsCheckTxVersion (655) */
+  /** @name FrameSystemExtensionsCheckTxVersion (665) */
   type FrameSystemExtensionsCheckTxVersion = Null;
 
-  /** @name FrameSystemExtensionsCheckGenesis (656) */
+  /** @name FrameSystemExtensionsCheckGenesis (666) */
   type FrameSystemExtensionsCheckGenesis = Null;
 
-  /** @name FrameSystemExtensionsCheckNonce (659) */
+  /** @name FrameSystemExtensionsCheckNonce (669) */
   interface FrameSystemExtensionsCheckNonce extends Compact<u64> {}
 
-  /** @name FrameSystemExtensionsCheckWeight (660) */
+  /** @name FrameSystemExtensionsCheckWeight (670) */
   type FrameSystemExtensionsCheckWeight = Null;
 
-  /** @name PalletAssetTxPaymentChargeAssetTxPayment (661) */
+  /** @name PalletAssetTxPaymentChargeAssetTxPayment (671) */
   interface PalletAssetTxPaymentChargeAssetTxPayment extends Struct {
     readonly tip: Compact<u128>;
     readonly assetId: Option<u32>;
   }
 
-  /** @name BatteryStationRuntimeRuntime (662) */
+  /** @name BatteryStationRuntimeRuntime (672) */
   type BatteryStationRuntimeRuntime = Null;
 
 } // declare module

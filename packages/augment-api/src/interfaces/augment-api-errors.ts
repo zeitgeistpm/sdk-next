@@ -526,6 +526,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       IdenticalDelegationsNotAllowed: AugmentedError<ApiType>;
       /**
+       * The inflation rate is too high.
+       **/
+      InflationExceedsMaxYearlyInflation: AugmentedError<ApiType>;
+      /**
        * The vote item is not valid for this (binary) court.
        **/
       InvalidVoteItemForBinaryCourt: AugmentedError<ApiType>;
@@ -622,6 +626,11 @@ declare module '@polkadot/api-base/types/errors' {
        * A delegation to the own account is not possible.
        **/
       SelfDelegationNotAllowed: AugmentedError<ApiType>;
+      /**
+       * Action cannot be completed because an unexpected error has occurred. This should be
+       * reported to protocol maintainers.
+       **/
+      Unexpected: AugmentedError<ApiType>;
       /**
        * The juror was already denounced.
        **/
@@ -1020,17 +1029,21 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       LiquidityTooLow: AugmentedError<ApiType>;
       /**
+       * An error occurred when handling the liquidty tree.
+       **/
+      LiquidityTreeError: AugmentedError<ApiType>;
+      /**
        * Pool can only be traded on if the market is active.
        **/
       MarketNotActive: AugmentedError<ApiType>;
       /**
-       * Deploying pools is only supported for scalar or binary markets.
-       **/
-      MarketNotBinaryOrScalar: AugmentedError<ApiType>;
-      /**
        * Some calculation failed. This shouldn't happen.
        **/
       MathError: AugmentedError<ApiType>;
+      /**
+       * The relative value of a new LP position is too low.
+       **/
+      MinRelativeLiquidityThresholdViolated: AugmentedError<ApiType>;
       /**
        * The user is not allowed to execute this command.
        **/
@@ -1078,25 +1091,25 @@ declare module '@polkadot/api-base/types/errors' {
     };
     orderbook: {
       /**
-       * The specified amount parameter is zero.
-       **/
-      AmountIsZero: AugmentedError<ApiType>;
-      /**
        * The specified amount parameter is too high for the order.
        **/
       AmountTooHighForOrder: AugmentedError<ApiType>;
+      /**
+       * The specified amount is below the minimum balance.
+       **/
+      BelowMinimumBalance: AugmentedError<ApiType>;
       /**
        * The specified outcome asset is not part of the market.
        **/
       InvalidOutcomeAsset: AugmentedError<ApiType>;
       /**
-       * The scoring rule is not orderbook.
+       * The scoring rule is not order book.
        **/
       InvalidScoringRule: AugmentedError<ApiType>;
       /**
-       * The maker partial fill leads to a too low quotient for the next order execution.
+       * The market base asset is not present.
        **/
-      MakerPartialFillTooLow: AugmentedError<ApiType>;
+      MarketBaseAssetNotPresent: AugmentedError<ApiType>;
       /**
        * The market is not active.
        **/
@@ -1109,6 +1122,10 @@ declare module '@polkadot/api-base/types/errors' {
        * The order does not exist.
        **/
       OrderDoesNotExist: AugmentedError<ApiType>;
+      /**
+       * The maker partial fill leads to a too low quotient for the next order execution.
+       **/
+      PartialFillNearFullFillNotAllowed: AugmentedError<ApiType>;
     };
     parachainStaking: {
       AlreadyActive: AugmentedError<ApiType>;
@@ -1196,7 +1213,7 @@ declare module '@polkadot/api-base/types/errors' {
       /**
        * The specified amount is below the minimum bet size.
        **/
-      AmountTooSmall: AugmentedError<ApiType>;
+      AmountBelowMinimumBetSize: AugmentedError<ApiType>;
       /**
        * Action cannot be completed because an unexpected error has occurred. This should be
        * reported to protocol maintainers.
@@ -1349,6 +1366,10 @@ declare module '@polkadot/api-base/types/errors' {
     };
     predictionMarkets: {
       /**
+       * The caller is not the market creator.
+       **/
+      CallerNotMarketCreator: AugmentedError<ApiType>;
+      /**
        * Someone is trying to call `dispute` with the same outcome that is currently
        * registered on-chain.
        **/
@@ -1482,6 +1503,18 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       MarketIsNotResolved: AugmentedError<ApiType>;
       /**
+       * The market is not trusted.
+       **/
+      MarketIsNotTrusted: AugmentedError<ApiType>;
+      /**
+       * The market is not in the close time frame list.
+       **/
+      MarketNotInCloseTimeFrameList: AugmentedError<ApiType>;
+      /**
+       * The market period end was not already reached yet.
+       **/
+      MarketPeriodEndNotAlreadyReachedYet: AugmentedError<ApiType>;
+      /**
        * The point in time when the market becomes active is too late.
        **/
       MarketStartTooLate: AugmentedError<ApiType>;
@@ -1505,6 +1538,10 @@ declare module '@polkadot/api-base/types/errors' {
        * The dispute duration is positive but the market has dispute period.
        **/
       NonZeroDisputePeriodOnTrustedMarket: AugmentedError<ApiType>;
+      /**
+       * The operation is not allowed for market with a block period.
+       **/
+      NotAllowedForBlockBasedMarkets: AugmentedError<ApiType>;
       /**
        * Can not report before market.deadlines.grace_period is ended.
        **/
@@ -1740,10 +1777,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InsufficientLiquidity: AugmentedError<ApiType>;
       /**
-       * The market was not started since the subsidy goal was not reached.
-       **/
-      InsufficientSubsidy: AugmentedError<ApiType>;
-      /**
        * Could not create CPMM pool since no amount was specified.
        **/
       InvalidAmountArgument: AugmentedError<ApiType>;
@@ -1755,11 +1788,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Dispatch called on pool with invalid status.
        **/
       InvalidPoolStatus: AugmentedError<ApiType>;
-      /**
-       * A function that is only valid for pools with specific scoring rules was called for a
-       * pool with another scoring rule.
-       **/
-      InvalidScoringRule: AugmentedError<ApiType>;
       /**
        * A function was called for a swaps pool that does not fulfill the state requirement.
        **/
@@ -1804,11 +1832,6 @@ declare module '@polkadot/api-base/types/errors' {
        * by a constant.
        **/
       MaxTotalWeight: AugmentedError<ApiType>;
-      /**
-       * It was tried to remove subsidy from a pool which does not have subsidy provided by
-       * the address that tried to remove the subsidy.
-       **/
-      NoSubsidyProvided: AugmentedError<ApiType>;
       /**
        * The pool in question does not exist.
        **/
@@ -1859,6 +1882,11 @@ declare module '@polkadot/api-base/types/errors' {
        * a constant.
        **/
       TooManyAssets: AugmentedError<ApiType>;
+      /**
+       * An unexpected error occurred. This is the result of faulty pallet logic and should be
+       * reported to the pallet maintainers.
+       **/
+      Unexpected: AugmentedError<ApiType>;
       /**
        * The pool does not support swapping the assets in question.
        **/

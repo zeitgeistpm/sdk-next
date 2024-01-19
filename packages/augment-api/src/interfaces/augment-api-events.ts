@@ -9,7 +9,7 @@ import type { ApiTypes, AugmentedEvent } from '@polkadot/api-base/types';
 import type { BTreeMap, Bytes, Null, Option, Result, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, H256, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, PalletParachainStakingDelegationRequestsCancelledScheduledRequest, PalletParachainStakingDelegatorAdded, SessionKeysPrimitivesVrfVrfCryptoPublic, SpRuntimeDispatchError, SpWeightsWeightV2Weight, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketEarlyCloseState, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesMarketReport, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesPool, ZeitgeistPrimitivesProxyType, ZrmlCourtCourtInfo, ZrmlCourtVoteItem, ZrmlOrderbookOrder, ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsEventsPoolAssetEvent, ZrmlSwapsEventsPoolAssetsEvent, ZrmlSwapsEventsSwapEvent } from '@polkadot/types/lookup';
+import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, PalletParachainStakingDelegationRequestsCancelledScheduledRequest, PalletParachainStakingDelegatorAdded, SessionKeysPrimitivesVrfVrfCryptoPublic, SpRuntimeDispatchError, SpWeightsWeightV2Weight, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketEarlyCloseState, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesMarketReport, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesProxyType, ZrmlCourtAppealInfo, ZrmlCourtCourtInfo, ZrmlCourtRoundTiming, ZrmlCourtVoteItem, ZrmlOrderbookOrder, ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsEventsPoolAssetEvent, ZrmlSwapsEventsPoolAssetsEvent, ZrmlSwapsEventsSwapEvent, ZrmlSwapsPool } from '@polkadot/types/lookup';
 
 export type __AugmentedEvent<ApiType extends ApiTypes> = AugmentedEvent<ApiType>;
 
@@ -297,7 +297,7 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * A market has been appealed.
        **/
-      CourtAppealed: AugmentedEvent<ApiType, [courtId: u128, appealNumber: u32], { courtId: u128, appealNumber: u32 }>;
+      CourtAppealed: AugmentedEvent<ApiType, [courtId: u128, appealInfo: ZrmlCourtAppealInfo, newRoundEnds: Option<ZrmlCourtRoundTiming>], { courtId: u128, appealInfo: ZrmlCourtAppealInfo, newRoundEnds: Option<ZrmlCourtRoundTiming> }>;
       /**
        * A court case was opened.
        **/
@@ -329,7 +329,7 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * A juror has revealed their vote.
        **/
-      JurorRevealedVote: AugmentedEvent<ApiType, [juror: AccountId32, courtId: u128, voteItem: ZrmlCourtVoteItem, salt: H256], { juror: AccountId32, courtId: u128, voteItem: ZrmlCourtVoteItem, salt: H256 }>;
+      JurorRevealedVote: AugmentedEvent<ApiType, [juror: AccountId32, courtId: u128, voteItem: ZrmlCourtVoteItem, salt: H256, slashableAmount: u128, drawWeight: u32], { juror: AccountId32, courtId: u128, voteItem: ZrmlCourtVoteItem, salt: H256, slashableAmount: u128, drawWeight: u32 }>;
       /**
        * A juror has voted in a court.
        **/
@@ -590,7 +590,7 @@ declare module '@polkadot/api-base/types/events' {
       SellExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
     };
     orderbook: {
-      OrderFilled: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32, taker: AccountId32, filled: u128, unfilledOutcomeAssetAmount: u128, unfilledBaseAssetAmount: u128], { orderId: u128, maker: AccountId32, taker: AccountId32, filled: u128, unfilledOutcomeAssetAmount: u128, unfilledBaseAssetAmount: u128 }>;
+      OrderFilled: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32, taker: AccountId32, filledMakerAmount: u128, filledTakerAmount: u128, unfilledMakerAmount: u128, unfilledTakerAmount: u128], { orderId: u128, maker: AccountId32, taker: AccountId32, filledMakerAmount: u128, filledTakerAmount: u128, unfilledMakerAmount: u128, unfilledTakerAmount: u128 }>;
       OrderPlaced: AugmentedEvent<ApiType, [orderId: u128, order: ZrmlOrderbookOrder], { orderId: u128, order: ZrmlOrderbookOrder }>;
       OrderRemoved: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32], { orderId: u128, maker: AccountId32 }>;
     };
@@ -999,11 +999,6 @@ declare module '@polkadot/api-base/types/events' {
        **/
       MarketExpired: AugmentedEvent<ApiType, [u128]>;
       /**
-       * A market was discarded after failing to gather enough subsidy.
-       * \[market_id, new_market_status\]
-       **/
-      MarketInsufficientSubsidy: AugmentedEvent<ApiType, [u128, ZeitgeistPrimitivesMarketMarketStatus]>;
-      /**
        * A pending market has been rejected as invalid with a reason.
        * \[market_id, reject_reason\]
        **/
@@ -1021,9 +1016,9 @@ declare module '@polkadot/api-base/types/events' {
        **/
       MarketResolved: AugmentedEvent<ApiType, [u128, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesOutcomeReport]>;
       /**
-       * A market was started after gathering enough subsidy. \[market_id, new_market_status\]
+       * The recovery limit for timestamp based markets was reached due to a prolonged chain stall.
        **/
-      MarketStartedWithSubsidy: AugmentedEvent<ApiType, [u128, ZeitgeistPrimitivesMarketMarketStatus]>;
+      RecoveryLimitReached: AugmentedEvent<ApiType, [lastTimeFrame: u64, limitTimeFrame: u64], { lastTimeFrame: u64, limitTimeFrame: u64 }>;
       /**
        * A complete set of assets has been sold. \[market_id, amount_per_asset, seller\]
        **/
@@ -1126,30 +1121,9 @@ declare module '@polkadot/api-base/types/events' {
     };
     swaps: {
       /**
-       * Buy-burn arbitrage was executed on a CPMM pool. \[pool_id, amount\]
-       **/
-      ArbitrageBuyBurn: AugmentedEvent<ApiType, [u128, u128]>;
-      /**
-       * Mint-sell arbitrage was executed on a CPMM pool. \[pool_id, amount\]
-       **/
-      ArbitrageMintSell: AugmentedEvent<ApiType, [u128, u128]>;
-      /**
-       * Arbitrage was skipped on a CPMM pool. \[pool_id\]
-       **/
-      ArbitrageSkipped: AugmentedEvent<ApiType, [u128]>;
-      /**
        * Share holder rewards were distributed. \[pool_id, num_accounts_rewarded, amount\]
        **/
       DistributeShareHolderRewards: AugmentedEvent<ApiType, [u128, u64, u128]>;
-      /**
-       * Fee payment to market creator failed (usually due to existential deposit requirements)
-       * \[market_id, payer, payee, amount, asset, error\]
-       **/
-      MarketCreatorFeePaymentFailed: AugmentedEvent<ApiType, [u128, AccountId32, AccountId32, u128, ZeitgeistPrimitivesAsset, SpRuntimeDispatchError]>;
-      /**
-       * Fees were paid to the market creator. \[market_id , payer, payee, amount, asset\]
-       **/
-      MarketCreatorFeesPaid: AugmentedEvent<ApiType, [u128, AccountId32, AccountId32, u128, ZeitgeistPrimitivesAsset]>;
       /**
        * A pool was opened. \[pool_id\]
        **/
@@ -1165,7 +1139,7 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * A new pool has been created. \[CommonPoolEventParams, pool, pool_amount, pool_account\]
        **/
-      PoolCreate: AugmentedEvent<ApiType, [ZrmlSwapsEventsCommonPoolEventParams, ZeitgeistPrimitivesPool, u128, AccountId32]>;
+      PoolCreate: AugmentedEvent<ApiType, [ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsPool, u128, AccountId32]>;
       /**
        * Pool was manually destroyed. \[pool_id\]
        **/
@@ -1179,10 +1153,6 @@ declare module '@polkadot/api-base/types/events' {
        **/
       PoolExit: AugmentedEvent<ApiType, [ZrmlSwapsEventsPoolAssetsEvent]>;
       /**
-       * Someone has (partially) exited a pool by removing subsidy. \[asset, bound, pool_id, who, amount\]
-       **/
-      PoolExitSubsidy: AugmentedEvent<ApiType, [ZeitgeistPrimitivesAsset, u128, ZrmlSwapsEventsCommonPoolEventParams, u128]>;
-      /**
        * Exits a pool given an exact amount of an asset. \[PoolAssetEvent\]
        **/
       PoolExitWithExactAssetAmount: AugmentedEvent<ApiType, [ZrmlSwapsEventsPoolAssetEvent]>;
@@ -1195,10 +1165,6 @@ declare module '@polkadot/api-base/types/events' {
        **/
       PoolJoin: AugmentedEvent<ApiType, [ZrmlSwapsEventsPoolAssetsEvent]>;
       /**
-       * Someone has joined a pool by providing subsidy. \[asset, amount, pool_id, who\]
-       **/
-      PoolJoinSubsidy: AugmentedEvent<ApiType, [ZeitgeistPrimitivesAsset, u128, ZrmlSwapsEventsCommonPoolEventParams]>;
-      /**
        * Joins a pool given an exact amount of an asset. \[PoolAssetEvent\]
        **/
       PoolJoinWithExactAssetAmount: AugmentedEvent<ApiType, [ZrmlSwapsEventsPoolAssetEvent]>;
@@ -1206,10 +1172,6 @@ declare module '@polkadot/api-base/types/events' {
        * Joins a pool given an exact pool's amount. \[PoolAssetEvent\]
        **/
       PoolJoinWithExactPoolAmount: AugmentedEvent<ApiType, [ZrmlSwapsEventsPoolAssetEvent]>;
-      /**
-       * Total subsidy collected for a pool. \[pool_id, \[(provider, subsidy), ...\], total_subsidy\]
-       **/
-      SubsidyCollected: AugmentedEvent<ApiType, [u128, Vec<ITuple<[AccountId32, u128]>>, u128]>;
       /**
        * An exact amount of an asset is entering the pool. \[SwapEvent\]
        **/

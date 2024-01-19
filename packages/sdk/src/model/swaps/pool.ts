@@ -1,9 +1,6 @@
 import type { Option, StorageKey, u128, Vec } from '@polkadot/types'
 
-import type {
-  ZeitgeistPrimitivesAsset,
-  ZeitgeistPrimitivesPool,
-} from '@polkadot/types/lookup'
+import type { ZeitgeistPrimitivesAsset, ZrmlSwapsPool } from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isCodec, isNumber } from '@polkadot/util'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
@@ -61,7 +58,7 @@ export type IndexedPool<
 /**
  * Concrete Pool type for rpc Pool.
  */
-export type RpcPool = (ZeitgeistPrimitivesPool & PoolMethods & PoolRpcOnlyMethods) & {
+export type RpcPool = (ZrmlSwapsPool & PoolMethods & PoolRpcOnlyMethods) & {
   /**
    * The pool id/index on chain.
    */
@@ -73,13 +70,13 @@ export type RpcPool = (ZeitgeistPrimitivesPool & PoolMethods & PoolRpcOnlyMethod
  *
  * @param ctx RpcContext
  * @param poolId number | u128
- * @param primitive ZeitgeistPrimitivesPool
+ * @param primitive ZrmlSwapsPool
  * @returns RpcPool
  */
 export const rpcPool = (
   ctx: RpcContext,
   poolId: number | u128,
-  primitive: ZeitgeistPrimitivesPool,
+  primitive: ZrmlSwapsPool,
 ): RpcPool => {
   let pool = primitive as RpcPool
   pool.poolId = isNumber(poolId) ? poolId : poolId.toNumber()
@@ -98,7 +95,7 @@ export const attachPoolMethods = <
   MS extends MetadataStorage = MetadataStorage,
 >(
   ctx: C,
-  primitive: ZeitgeistPrimitivesPool | Unpacked<PoolsQuery['pools']>,
+  primitive: ZrmlSwapsPool | Unpacked<PoolsQuery['pools']>,
 ) => {
   let pool = primitive as Pool<C, MS>
 
@@ -135,11 +132,7 @@ export type PoolRpcOnlyMethods = {
     ISubmittableResult,
     [params: Omit<PoolJoinParams, 'poolId'> & TransactionHooks]
   >
-  joinSubsidy: Te.TaskEither<
-    TransactionError,
-    ISubmittableResult,
-    [params: Omit<PoolJoinParams, 'poolId' | 'maxAssetsIn'> & TransactionHooks]
-  >
+
   joinWithExactAssetAmount: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
@@ -155,11 +148,7 @@ export type PoolRpcOnlyMethods = {
     ISubmittableResult,
     [params: Omit<PoolExitParams, 'poolId'> & TransactionHooks]
   >
-  exitSubsidy: Te.TaskEither<
-    TransactionError,
-    ISubmittableResult,
-    [params: Omit<PoolExitSubsidyParams, 'poolId'> & TransactionHooks]
-  >
+
   exitWithExactAssetAmount: Te.TaskEither<
     TransactionError,
     ISubmittableResult,
@@ -177,12 +166,12 @@ export type PoolRpcOnlyMethods = {
  *
  * @param ctx RpcContext
  * @param poolId number | u128
- * @param primitive ZeitgeistPrimitivesPool
+ * @param primitive ZrmlSwapsPool
  * @returns RpcPool
  */
 export const attachPoolRcpOnlyMethods = (
   ctx: RpcContext,
-  primitive: ZeitgeistPrimitivesPool | Unpacked<PoolsQuery['pools']>,
+  primitive: ZrmlSwapsPool | Unpacked<PoolsQuery['pools']>,
 ): RpcPool => {
   let pool = primitive as RpcPool
 
@@ -238,15 +227,6 @@ export const attachPoolRcpOnlyMethods = (
     }),
   )
 
-  pool.joinSubsidy = Te.from(async params =>
-    signAndSend({
-      api: ctx.api,
-      tx: ctx.api.tx.swaps.poolJoinSubsidy(pool.poolId, params.poolAmount),
-      signer: params.signer,
-      hooks: params.hooks,
-    }),
-  )
-
   pool.joinWithExactAssetAmount = Te.from(async params =>
     signAndSend({
       api: ctx.api,
@@ -279,15 +259,6 @@ export const attachPoolRcpOnlyMethods = (
     signAndSend({
       api: ctx.api,
       tx: ctx.api.tx.swaps.poolExit(pool.poolId, params.poolAmount, params.minAssetsOut),
-      signer: params.signer,
-      hooks: params.hooks,
-    }),
-  )
-
-  pool.exitSubsidy = Te.from(async params =>
-    signAndSend({
-      api: ctx.api,
-      tx: ctx.api.tx.swaps.poolExitSubsidy(pool.poolId, params.amount),
       signer: params.signer,
       hooks: params.hooks,
     }),
@@ -426,7 +397,7 @@ export const getSwapFee = <C extends Context<MS>, MS extends MetadataStorage>(
   pool: Pool<C, MS>,
 ): Decimal => {
   if (isRpcData(pool)) {
-    return new Decimal(pool.swapFee.unwrapOrDefault().toNumber())
+    return new Decimal(pool.swapFee.toNumber())
   } else {
     return new Decimal(pool.swapFee || '0')
   }
@@ -480,7 +451,7 @@ export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage
   const assetId = isCodec(_assetId) ? parseAssetId(_assetId).unwrap() : _assetId
 
   if (isRpcData(pool)) {
-    const weights = pool.weights.unwrapOr(null)
+    const weights = pool.weights
 
     if (!weights) {
       return O.option(O.none())
@@ -588,12 +559,12 @@ export const getTotalIssuance = async <C extends Context<MS>, MS extends Metadat
  * Map storage entries to rpc pools
  *
  * @param ctx RpcContext<MS>
- * @param entries [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][]
+ * @param entries [StorageKey<[u128]>, Option<ZrmlSwapsPool>][]
  * @returns RpcPool[]
  */
 export const fromEntries = <C extends RpcContext<MS>, MS extends MetadataStorage>(
   ctx: C,
-  entries: [StorageKey<[u128]>, Option<ZeitgeistPrimitivesPool>][],
+  entries: [StorageKey<[u128]>, Option<ZrmlSwapsPool>][],
 ): Pool<C, MS>[] => {
   return entries.map(
     ([
