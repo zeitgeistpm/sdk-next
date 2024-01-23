@@ -29,6 +29,7 @@ const signer: KeyringPair = getBsrTestingSigner()
 const params: CreateMarketParams<typeof sdk> = {
   signer,
   baseAsset: { Ztg: null },
+  scoringRule: 'Lmsr',
   disputeMechanism: 'Authorized',
   marketType: { Categorical: 2 },
   oracle: signer.address,
@@ -49,7 +50,6 @@ const params: CreateMarketParams<typeof sdk> = {
     ],
     tags: ['dev'],
   },
-  scoringRule: 'Lmsr',
   pool: {
     amount: ZTG.mul(100).toString(),
     swapFee: swapFeeFromFloat(1).toString(),
