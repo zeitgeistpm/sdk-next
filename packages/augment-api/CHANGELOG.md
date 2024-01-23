@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 3.1.0
+
+### Minor Changes
+
+- 96c3064: Shares manager and other gql schema changes
+
 ## 3.0.0
 
 ### Major Changes

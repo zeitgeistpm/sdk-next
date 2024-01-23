@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 3.1.0
+
+### Minor Changes
+
+- 96c3064: Shares manager and other gql schema changes
+
+### Patch Changes
+
+- Updated dependencies [96c3064]
+  - @zeitgeistpm/utility@3.1.0
+
 ## 3.0.0
 
 ### Major Changes
