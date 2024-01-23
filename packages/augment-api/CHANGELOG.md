@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.27.0
+
+### Minor Changes
+
+- 8d9c885: Pool volumes
+
 ## 2.26.0
 
 ### Minor Changes

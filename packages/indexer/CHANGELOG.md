@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.22.0
+
+### Minor Changes
+
+- 8d9c885: Pool volumes
+
 ## 3.21.0
 
 ### Minor Changes
