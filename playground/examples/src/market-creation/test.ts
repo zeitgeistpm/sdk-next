@@ -2,18 +2,14 @@ import { KeyringPair } from '@polkadot/keyring/types'
 import {
   batterystation,
   create,
-  CreateMarketBaseParams,
   CreateMarketParams,
-  evenWeights,
   RpcContext,
   Sdk,
   swapFeeFromFloat,
   ZTG,
 } from '@zeitgeistpm/sdk'
-import * as FS from 'fs'
-import * as Path from 'path'
-import { getBsrTestingSigner } from '../getSigner'
 import Decimal from 'decimal.js'
+import { getBsrTestingSigner } from '../getSigner'
 
 /**
  * Initialize the SDK in full or rpc mode to be able to submit transactions to the chein.
