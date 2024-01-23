@@ -26,9 +26,6 @@ const sdk: Sdk<RpcContext> = await create(batterystation())
  * Get the signer from the wallet extension or other keyring.
  */
 const signer: KeyringPair = getBsrTestingSigner()
-const cwd = process.cwd()
-const imagePath = Path.join(cwd, './playground/examples/src/market-creation/img.png')
-const imageBlob = new Blob([FS.readFileSync(imagePath)])
 
 /**
  * Params for creating a standalone market without pool.
