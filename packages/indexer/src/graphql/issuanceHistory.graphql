@@ -1,0 +1,11 @@
+query issuanceHistory(
+  $assetId: AssetKindValue
+) {
+  issuanceHistory(assetId: $assetId) {
+    assetId
+    issuances {
+      date
+      issuance
+    }
+  }
+}

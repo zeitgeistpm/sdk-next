@@ -22,11 +22,12 @@ fragment FullNeoPool on NeoPool {
   id
   liquidityParameter
   liquiditySharesManager {
+    account
     fees
-    owner
-    totalShares
+    stake
   }
   marketId
   poolId
   swapFee
+  totalStake
 }

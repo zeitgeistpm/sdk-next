@@ -1,0 +1,20 @@
+query liquiditySharesManagers(
+  $where: LiquiditySharesManagerWhereInput
+  $order: [LiquiditySharesManagerOrderByInput!]
+  $offset: Int
+  $limit: Int
+) {
+  liquiditySharesManagers(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullLiquiditySharesManager
+  }
+}
+
+fragment FullLiquiditySharesManager on LiquiditySharesManager {
+  account
+  fees
+  id
+  neoPool {
+    ...FullNeoPool
+  }
+  stake
+}
