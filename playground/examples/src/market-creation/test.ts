@@ -27,9 +27,8 @@ const signer: KeyringPair = getBsrTestingSigner()
  * Params for creating a standalone market without pool.
  */
 const params: CreateMarketParams<typeof sdk> = {
-  waitForFinalization: false,
-  baseAsset: { Ztg: null },
   signer,
+  baseAsset: { Ztg: null },
   disputeMechanism: 'Authorized',
   marketType: { Categorical: 2 },
   oracle: signer.address,
@@ -55,10 +54,14 @@ const params: CreateMarketParams<typeof sdk> = {
     amount: ZTG.mul(100).toString(),
     swapFee: swapFeeFromFloat(1).toString(),
     spotPrices: [
-      new Decimal(0.5).mul(ZTG).toString(),
-      new Decimal(0.5).mul(ZTG).toString(),
+      new Decimal(0.2).mul(ZTG).toString(),
+      new Decimal(0.8).mul(ZTG).toString(),
     ],
   },
 }
 
 const response = await sdk.model.markets.create(params)
+
+console.log(response)
+
+process.exit()
