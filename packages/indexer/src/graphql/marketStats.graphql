@@ -3,5 +3,6 @@ query marketStats($ids: [Int!]!) {
     liquidity
     marketId
     participants
+    volume
   }
 }
