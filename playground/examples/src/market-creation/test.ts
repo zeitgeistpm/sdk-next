@@ -13,6 +13,7 @@ import {
 import * as FS from 'fs'
 import * as Path from 'path'
 import { getBsrTestingSigner } from '../getSigner'
+import Decimal from 'decimal.js'
 
 /**
  * Initialize the SDK in full or rpc mode to be able to submit transactions to the chein.
@@ -60,33 +61,10 @@ const params: CreateMarketParams<typeof sdk> = {
   pool: {
     amount: ZTG.mul(100).toString(),
     swapFee: swapFeeFromFloat(1).toString(),
-    weights: evenWeights(2),
-  },
-}
-
-const base: CreateMarketBaseParams<typeof sdk['storage']> = {
-  waitForFinalization: false,
-  baseAsset: { Ztg: null },
-  signer,
-  disputeMechanism: 'Authorized',
-  marketType: { Categorical: 2 },
-  oracle: signer.address,
-  period: { Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] },
-  deadlines: {
-    disputeDuration: 5000,
-    gracePeriod: 200,
-    oracleDuration: 500,
-  },
-  metadata: {
-    __meta: 'markets',
-    question: 'Will the example work?',
-    description: 'Testing the sdk.',
-    slug: 'standalone-market-example',
-    categories: [
-      { name: 'yes', ticker: 'Y' },
-      { name: 'no', ticker: 'N' },
+    spotPrices: [
+      new Decimal(0.5).mul(ZTG).toString(),
+      new Decimal(0.5).mul(ZTG).toString(),
     ],
-    tags: ['dev'],
   },
 }
 
