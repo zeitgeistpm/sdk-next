@@ -1,0 +1,6 @@
+query volumeHistory {
+  volumeHistory {
+    date
+    volume
+  }
+}

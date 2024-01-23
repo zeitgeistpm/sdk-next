@@ -3853,6 +3853,13 @@ export type HistoricalSwapsQuery = { __typename?: 'Query', historicalSwaps: Arra
 
 export type FullHistoricalSwapFragment = { __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null };
 
+export type IssuanceHistoryQueryVariables = Exact<{
+  assetId?: InputMaybe<AssetKindValue>;
+}>;
+
+
+export type IssuanceHistoryQuery = { __typename?: 'Query', issuanceHistory: { __typename?: 'IssuanceHistory', assetId: string, issuances: Array<{ __typename?: 'Issuance', date: string, issuance: any }> } };
+
 export type LiquiditySharesManagersQueryVariables = Exact<{
   where?: InputMaybe<LiquiditySharesManagerWhereInput>;
   order?: InputMaybe<Array<LiquiditySharesManagerOrderByInput> | LiquiditySharesManagerOrderByInput>;
@@ -3958,6 +3965,11 @@ export type StatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type StatsQuery = { __typename?: 'Query', stats: { __typename?: 'Stats', totalLiquidity: any, totalMintedInCourt: any, totalVolume: any } };
+
+export type VolumeHistoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type VolumeHistoryQuery = { __typename?: 'Query', volumeHistory: Array<{ __typename?: 'VolumeHistory', date: string, volume: any }> };
 
 export const FullAccountBalanceFragmentDoc = gql`
     fragment FullAccountBalance on AccountBalance {
@@ -4259,6 +4271,17 @@ export const HistoricalSwapsDocument = gql`
   }
 }
     ${FullHistoricalSwapFragmentDoc}`;
+export const IssuanceHistoryDocument = gql`
+    query issuanceHistory($assetId: AssetKindValue) {
+  issuanceHistory(assetId: $assetId) {
+    assetId
+    issuances {
+      date
+      issuance
+    }
+  }
+}
+    `;
 export const LiquiditySharesManagersDocument = gql`
     query liquiditySharesManagers($where: LiquiditySharesManagerWhereInput, $order: [LiquiditySharesManagerOrderByInput!], $offset: Int, $limit: Int) {
   liquiditySharesManagers(
@@ -4373,6 +4396,14 @@ export const StatsDocument = gql`
   }
 }
     `;
+export const VolumeHistoryDocument = gql`
+    query volumeHistory {
+  volumeHistory {
+    date
+    volume
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -4401,6 +4432,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     historicalSwaps(variables?: HistoricalSwapsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalSwapsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HistoricalSwapsQuery>(HistoricalSwapsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalSwaps', 'query');
+    },
+    issuanceHistory(variables?: IssuanceHistoryQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<IssuanceHistoryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<IssuanceHistoryQuery>(IssuanceHistoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'issuanceHistory', 'query');
     },
     liquiditySharesManagers(variables?: LiquiditySharesManagersQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<LiquiditySharesManagersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LiquiditySharesManagersQuery>(LiquiditySharesManagersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'liquiditySharesManagers', 'query');
@@ -4437,6 +4471,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     stats(variables?: StatsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<StatsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<StatsQuery>(StatsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'stats', 'query');
+    },
+    volumeHistory(variables?: VolumeHistoryQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<VolumeHistoryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<VolumeHistoryQuery>(VolumeHistoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'volumeHistory', 'query');
     }
   };
 }
