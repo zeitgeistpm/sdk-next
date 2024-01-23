@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 2.28.0
+
+### Minor Changes
+
+- d52af4e: Bump
+
 ## 2.27.0
 
 ### Minor Changes

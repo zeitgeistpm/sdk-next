@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 3.23.0
+
+### Minor Changes
+
+- d52af4e: Bump
+
 ## 3.22.0
 
 ### Minor Changes

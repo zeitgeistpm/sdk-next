@@ -1,7 +1,7 @@
 {
   "name": "@zeitgeistpm/augment-api",
   "description": "Generated types for the Zeitgeist network.",
-  "version": "2.27.0",
+  "version": "2.28.0",
   "publishConfig": {
     "access": "public"
   },

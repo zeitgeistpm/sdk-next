@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 2.51.0
+
+### Minor Changes
+
+- d52af4e: Bump
+
+### Patch Changes
+
+- Updated dependencies [d52af4e]
+  - @zeitgeistpm/augment-api@2.28.0
+  - @zeitgeistpm/indexer@3.23.0
+
 ## 2.50.0
 
 ### Minor Changes
