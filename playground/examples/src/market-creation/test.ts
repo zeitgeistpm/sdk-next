@@ -24,6 +24,21 @@ const sdk: Sdk<RpcContext> = await create(batterystation())
 const signer: KeyringPair = getBsrTestingSigner()
 
 /**
+ * Tags that are usable in production.
+ */
+const usableTags = [
+  'Politics',
+  'Crypto',
+  'Dotsama',
+  'Zeitgeist',
+  'Technology',
+  'Science',
+  'News',
+  'Sports',
+  'E-Sports',
+] as const
+
+/**
  * Params for creating a standalone market without pool.
  */
 const params: CreateMarketParams<typeof sdk> = {
@@ -31,7 +46,7 @@ const params: CreateMarketParams<typeof sdk> = {
   baseAsset: { Ztg: null },
   scoringRule: 'Lmsr',
   disputeMechanism: 'Authorized',
-  marketType: { Categorical: 2 },
+  marketType: { Categorical: 2 }, // 2 outcomes have to be the same number as metadata.categories.length
   oracle: signer.address,
   period: { Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] },
   deadlines: {
@@ -48,14 +63,14 @@ const params: CreateMarketParams<typeof sdk> = {
       { name: 'yes', ticker: 'Y' },
       { name: 'no', ticker: 'N' },
     ],
-    tags: ['dev'],
+    tags: ['Science'], // !NOTE: see usableTags above
   },
   pool: {
-    amount: ZTG.mul(100).toString(),
-    swapFee: swapFeeFromFloat(1).toString(),
+    amount: ZTG.mul(100).toString(), // ammount of base asset in the pool: 100 ZTG,
+    swapFee: swapFeeFromFloat(1).toString(), // 1% swap fee,
     spotPrices: [
-      new Decimal(0.2).mul(ZTG).toString(),
-      new Decimal(0.8).mul(ZTG).toString(),
+      new Decimal(0.2).mul(ZTG).toString(), // yes will have 20% prediction,
+      new Decimal(0.8).mul(ZTG).toString(), // no will have 80% prediction,
     ],
   },
 }
