@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 3.1.1
+
+### Patch Changes
+
+- 4238402: Schema changes.
+- Updated dependencies [4238402]
+  - @zeitgeistpm/utility@3.1.1
+
 ## 3.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 3.1.1
+
+### Patch Changes
+
+- 4238402: Schema changes.
+
 ## 3.1.0
 
 ### Minor Changes
