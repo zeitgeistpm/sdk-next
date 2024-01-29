@@ -67,6 +67,7 @@ fragment FullMarket on Market {
       scalar
     }
   }
+  earlyClose
   hasValidMetaCategories
   id
   img
