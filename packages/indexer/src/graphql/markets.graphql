@@ -67,9 +67,11 @@ fragment FullMarket on Market {
       scalar
     }
   }
+  earlyClose
   hasValidMetaCategories
   id
   img
+  liquidity
   marketId
   marketType {
     categorical
@@ -117,9 +119,11 @@ query historicalMarkets(
 ) {
   historicalMarkets(where: $where, limit: $limit, offset: $offset, orderBy: $order) {
     blockNumber
+    dLiquidity
     dVolume
     event
     id
+    liquidity
     market {
       marketId
     }

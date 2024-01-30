@@ -1,16 +1,57 @@
 # @zeitgeistpm/sdk
 
+## 3.1.1
+
+### Patch Changes
+
+- 4238402: Schema changes.
+- Updated dependencies [4238402]
+  - @zeitgeistpm/augment-api@3.1.1
+  - @zeitgeistpm/indexer@4.1.1
+  - @zeitgeistpm/rpc@3.1.1
+  - @zeitgeistpm/utility@3.1.1
+  - @zeitgeistpm/web3.storage@3.1.1
+
+## 3.1.0
+
+### Minor Changes
+
+- 96c3064: Shares manager and other gql schema changes
+
+### Patch Changes
+
+- Updated dependencies [96c3064]
+  - @zeitgeistpm/augment-api@3.1.0
+  - @zeitgeistpm/indexer@4.1.0
+  - @zeitgeistpm/rpc@3.1.0
+  - @zeitgeistpm/utility@3.1.0
+  - @zeitgeistpm/web3.storage@3.1.0
+
+## 3.0.0
+
+### Major Changes
+
+- e12c3cf: Remove CPMM markets.
+
+### Patch Changes
+
+- Updated dependencies [e12c3cf]
+  - @zeitgeistpm/augment-api@3.0.0
+  - @zeitgeistpm/indexer@4.0.0
+  - @zeitgeistpm/rpc@3.0.0
+  - @zeitgeistpm/utility@3.0.0
+  - @zeitgeistpm/web3.storage@3.0.0
+
 ## 2.51.0
 
 ### Minor Changes
 
-- d52af4e: Bump
+- 81491f1: GQL Pool and NeoPool changes.
 
 ### Patch Changes
 
-- Updated dependencies [d52af4e]
-  - @zeitgeistpm/augment-api@2.28.0
-  - @zeitgeistpm/indexer@3.23.0
+- Updated dependencies [81491f1]
+  - @zeitgeistpm/indexer@3.22.0
 
 ## 2.50.0
 

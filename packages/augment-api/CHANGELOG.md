@@ -1,16 +1,22 @@
 # @zeitgeistpm/augment-api
 
-## 2.28.0
+## 3.1.1
+
+### Patch Changes
+
+- 4238402: Schema changes.
+
+## 3.1.0
 
 ### Minor Changes
 
-- d52af4e: Bump
+- 96c3064: Shares manager and other gql schema changes
 
-## 2.27.0
+## 3.0.0
 
-### Minor Changes
+### Major Changes
 
-- 8d9c885: Pool volumes
+- e12c3cf: Remove CPMM markets.
 
 ## 2.26.0
 

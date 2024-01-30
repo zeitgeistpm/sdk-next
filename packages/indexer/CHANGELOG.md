@@ -1,16 +1,28 @@
 # @zeitgeistpm/indexer
 
-## 3.23.0
+## 4.1.1
+
+### Patch Changes
+
+- 4238402: Schema changes.
+
+## 4.1.0
 
 ### Minor Changes
 
-- d52af4e: Bump
+- 96c3064: Shares manager and other gql schema changes
+
+## 4.0.0
+
+### Major Changes
+
+- e12c3cf: Remove CPMM markets.
 
 ## 3.22.0
 
 ### Minor Changes
 
-- 8d9c885: Pool volumes
+- 81491f1: GQL Pool and NeoPool changes.
 
 ## 3.21.0
 

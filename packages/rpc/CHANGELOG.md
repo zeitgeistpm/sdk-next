@@ -1,5 +1,38 @@
 # @zeitgeistpm/rpc
 
+## 3.1.1
+
+### Patch Changes
+
+- 4238402: Schema changes.
+- Updated dependencies [4238402]
+  - @zeitgeistpm/augment-api@3.1.1
+  - @zeitgeistpm/utility@3.1.1
+
+## 3.1.0
+
+### Minor Changes
+
+- 96c3064: Shares manager and other gql schema changes
+
+### Patch Changes
+
+- Updated dependencies [96c3064]
+  - @zeitgeistpm/augment-api@3.1.0
+  - @zeitgeistpm/utility@3.1.0
+
+## 3.0.0
+
+### Major Changes
+
+- e12c3cf: Remove CPMM markets.
+
+### Patch Changes
+
+- Updated dependencies [e12c3cf]
+  - @zeitgeistpm/augment-api@3.0.0
+  - @zeitgeistpm/utility@3.0.0
+
 ## 2.15.0
 
 ### Minor Changes

@@ -218,6 +218,10 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maxSelectedDraws: u32 & AugmentedConst<ApiType>;
       /**
+       * The maximum yearly inflation rate.
+       **/
+      maxYearlyInflation: Perbill & AugmentedConst<ApiType>;
+      /**
        * The minimum stake a user needs to lock to become a juror.
        **/
       minJurorStake: u128 & AugmentedConst<ApiType>;
@@ -375,12 +379,6 @@ declare module '@polkadot/api-base/types/consts' {
     liquidityMining: {
       palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
     };
-    marketCommons: {
-      /**
-       * The prefix used to calculate the prize pool accounts.
-       **/
-      predictionMarketsPalletId: FrameSupportPalletId & AugmentedConst<ApiType>;
-    };
     multisig: {
       /**
        * The base amount of currency needed to reserve for creating a multisig execution or to
@@ -403,6 +401,11 @@ declare module '@polkadot/api-base/types/consts' {
       maxSignatories: u32 & AugmentedConst<ApiType>;
     };
     neoSwaps: {
+      /**
+       * The maximum allowed liquidity tree depth per pool. Each pool can support `2^(depth + 1)
+       * - 1` liquidity providers. **Must** be less than 16.
+       **/
+      maxLiquidityTreeDepth: u32 & AugmentedConst<ApiType>;
       maxSwapFee: u128 & AugmentedConst<ApiType>;
       palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
     };
@@ -563,10 +566,6 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       maxRejectReasonLen: u32 & AugmentedConst<ApiType>;
       /**
-       * The shortest period of collecting subsidy for a Rikiddo market.
-       **/
-      maxSubsidyPeriod: u64 & AugmentedConst<ApiType>;
-      /**
        * The minimum number of categories available for categorical markets.
        **/
       minCategories: u16 & AugmentedConst<ApiType>;
@@ -580,10 +579,6 @@ declare module '@polkadot/api-base/types/consts' {
        * in create_market.
        **/
       minOracleDuration: u64 & AugmentedConst<ApiType>;
-      /**
-       * The shortest period of collecting subsidy for a Rikiddo market.
-       **/
-      minSubsidyPeriod: u64 & AugmentedConst<ApiType>;
       /**
        * The base amount of currency that must be bonded to ensure the oracle reports
        * in a timely manner.
@@ -689,15 +684,6 @@ declare module '@polkadot/api-base/types/consts' {
        * The minimum amount of assets in a pool.
        **/
       minAssets: u16 & AugmentedConst<ApiType>;
-      /**
-       * The minimum amount of subsidy required to state transit a market into active state.
-       * Must be greater than 0, but can be arbitrarily close to 0.
-       **/
-      minSubsidy: u128 & AugmentedConst<ApiType>;
-      /**
-       * The minimum amount of subsidy that each subsidy provider must contribute.
-       **/
-      minSubsidyPerAccount: u128 & AugmentedConst<ApiType>;
       minWeight: u128 & AugmentedConst<ApiType>;
       /**
        * The module identifier.

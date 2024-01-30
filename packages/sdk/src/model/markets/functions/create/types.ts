@@ -5,7 +5,7 @@ import type {
   ZeitgeistPrimitivesAsset,
   ZeitgeistPrimitivesMarketMarketCreation,
   ZeitgeistPrimitivesMarketMarketDisputeMechanism,
-  ZeitgeistPrimitivesPoolScoringRule,
+  ZeitgeistPrimitivesMarketScoringRule,
 } from '@polkadot/types/lookup'
 import type { AnyNumber, ISubmittableResult } from '@polkadot/types/types'
 import type {
@@ -130,31 +130,7 @@ export type CreateMarketBaseParams<MS extends MetadataStorage> = {
  *
  * @note CPMM and LMSR supported currently.
  */
-export type WithPool = CpmmPool | LmsrPool
-
-/**
- * Params for creating a cpmm market with pool.
- */
-export type CpmmPool = {
-  creationType?: undefined
-  scoringRule: 'Cpmm'
-  pool: {
-    /**
-     * The fee to swap in and out of the pool.
-     */
-    swapFee: string | u128
-
-    /**
-     * The ammount to deploy in ZTG
-     */
-    amount: string | u128
-
-    /**
-     * Weighting of the assets.
-     */
-    weights: Array<string | u128>
-  }
-}
+export type WithPool = LmsrPool
 
 /**
  * Params for creating a lmsr market with pool.
@@ -194,7 +170,7 @@ export type NoPool = {
    * The scoring rule of the market.
    * @note can be: "Cpmm" | "Lmsr" | "RikiddoSigmoidFeeMarketEma" | "Orderbook"
    */
-  scoringRule: ZeitgeistPrimitivesPoolScoringRule['type']
+  scoringRule: ZeitgeistPrimitivesMarketScoringRule['type']
 }
 
 /**
