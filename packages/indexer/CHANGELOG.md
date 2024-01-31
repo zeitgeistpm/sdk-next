@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.1.2
+
+### Patch Changes
+
+- a559197: Schema changes
+
 ## 4.1.1
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 3.1.2
+
+### Patch Changes
+
+- a559197: Schema changes
+- Updated dependencies [a559197]
+  - @zeitgeistpm/augment-api@3.1.2
+  - @zeitgeistpm/indexer@4.1.2
+
 ## 3.1.1
 
 ### Patch Changes

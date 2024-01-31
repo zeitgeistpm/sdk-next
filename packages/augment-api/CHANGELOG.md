@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 3.1.2
+
+### Patch Changes
+
+- a559197: Schema changes
+
 ## 3.1.1
 
 ### Patch Changes
