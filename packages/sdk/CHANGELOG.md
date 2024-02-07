@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 3.1.3
+
+### Patch Changes
+
+- 1ed38ed: Reject on dispatch errors
+
 ## 3.1.2
 
 ### Patch Changes
