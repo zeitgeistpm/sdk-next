@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 3.1.3
+
+### Patch Changes
+
+- 7f9d10f: Reject on dispatch errors
+
 ## 3.1.2
 
 ### Patch Changes
