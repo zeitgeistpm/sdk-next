@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.2.0
+
+### Minor Changes
+
+- 4245a15: Remove ability to delete metadata in storage, disable rolback on failed transaction, dry run create market extrinsic before pinning data.
+
 ## 4.1.2
 
 ### Patch Changes

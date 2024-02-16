@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 3.2.0
+
+### Minor Changes
+
+- 4245a15: Remove ability to delete metadata in storage, disable rolback on failed transaction, dry run create market extrinsic before pinning data.
+
+### Patch Changes
+
+- Updated dependencies [4245a15]
+  - @zeitgeistpm/augment-api@3.2.0
+  - @zeitgeistpm/indexer@4.2.0
+  - @zeitgeistpm/rpc@3.2.0
+  - @zeitgeistpm/web3.storage@3.2.0
+  - @zeitgeistpm/utility@3.2.0
+
 ## 3.1.3
 
 ### Patch Changes
