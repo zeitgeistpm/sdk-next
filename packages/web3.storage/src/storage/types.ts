@@ -24,12 +24,7 @@ export type Storage<A, ID = CID, P = any> = {
    * @generic T - type of data
    */
   put: TaskEither<StorageError, ID, [data: A]>
-  /**
-   * delete item from storage
-   *
-   * @generic ID - id type
-   */
-  del: TaskEither<StorageError, void, [ID]>
+
   /**
    * Get hash of item from storage.
    */

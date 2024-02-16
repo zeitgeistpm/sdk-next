@@ -1,4 +1,5 @@
 import type RpcError from '@polkadot/rpc-provider/coder/error'
+import type { TransactionValidityError } from '@polkadot/types/interfaces'
 import type { ISubmittableResult, RegistryError } from '@polkadot/types/types'
 
 export type ExtractableResult<R> = {
@@ -27,6 +28,7 @@ export type TransactionError =
   | RegistryError
   | RetractedError
   | UnknownDispatchError
+  | TransactionValidityError
   | Error
 
 export class RetractedError extends Error {

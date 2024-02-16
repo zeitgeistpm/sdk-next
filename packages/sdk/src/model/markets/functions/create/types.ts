@@ -215,5 +215,4 @@ export type CreateMarketData<C extends RpcContext<MS>, MS extends MetadataStorag
  */
 export type CreateMarketTransaction = {
   tx: SubmittableExtrinsic<'promise', ISubmittableResult>
-  rollbackMetadata: Te.TaskEither<Error, void[], []>
 }

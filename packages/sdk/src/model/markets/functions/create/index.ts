@@ -34,7 +34,7 @@ export const create = async <
   params: P,
   feePayingAsset?: ForeignAssetId,
 ) => {
-  const { tx, rollbackMetadata } = await transaction(context, params)
+  const { tx } = await transaction(context, params)
 
   const signer = params.proxy ? params.proxy : params.signer
 
@@ -47,7 +47,6 @@ export const create = async <
   })
 
   const submittableResult = await response.unrightOr(error => {
-    rollbackMetadata()
     throw error
   })
 
@@ -80,27 +79,27 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
 
   const marketStorage = context.storage.of('markets')
 
-  const key = await marketStorage.put({
+  const metadata = {
     ...params.metadata,
     img: marketImageCid?.toString(),
-  } as StorageTypeOf<MS['markets']>)
+  } as StorageTypeOf<MS['markets']>
 
-  const rollbackMetadata = Te.from(async () => {
-    let operations = [context.storage?.of('markets').del(key)]
+  const storageHashKey = await marketStorage.hash(metadata)
 
-    if (marketImageCid && !isString(marketImageCid)) {
-      marketImageCid
-      operations.push(context.storage?.files.del(marketImageCid))
-    }
+  const dryRunResult = await context.api.rpc.system.dryRun(
+    createExtrinsic(context, { ...params, metadataKey: storageHashKey }).toU8a(),
+  )
 
-    return Promise.all(operations)
-  })
+  if (dryRunResult.isErr) {
+    throw dryRunResult.asErr
+  }
+
+  const key = await marketStorage.put(metadata)
 
   const tx = createExtrinsic(context, { ...params, metadataKey: key })
 
   return {
     tx,
-    rollbackMetadata,
   }
 }
 

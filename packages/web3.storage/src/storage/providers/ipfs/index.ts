@@ -78,17 +78,6 @@ export const storage = <T>(
       },
       (message, error) => new StorageError(message, error),
     ),
-    del: Te.from(
-      async cid => {
-        if (config.cluster) {
-          await cluster.unpin(cid.toString(), config.cluster)
-        }
-        node.pin
-          .rm(cid.toString())
-          .catch(error => console.warn("Couldn't unpin from node", error))
-      },
-      (message, error) => new StorageError(message, error),
-    ),
     withCodec: codec => storage(config, codec, node),
     provider: node,
   }

@@ -852,6 +852,12 @@ declare module '@polkadot/api-base/types/storage' {
        **/
       crossings: AugmentedQuery<ApiType, (arg: AccountId32 | string | Uint8Array) => Observable<Option<Null>>, [AccountId32]>;
     };
+    sudo: {
+      /**
+       * The `AccountId` of the sudo key.
+       **/
+      key: AugmentedQuery<ApiType, () => Observable<Option<AccountId32>>, []>;
+    };
     swaps: {
       nextPoolId: AugmentedQuery<ApiType, () => Observable<u128>, []>;
       pools: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<ZrmlSwapsPool>>, [u128]>;
