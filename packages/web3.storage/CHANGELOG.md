@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 3.2.1
+
+### Patch Changes
+
+- ff10741: Remove dry run of transactions for now since its not enabled on the node.
+- Updated dependencies [ff10741]
+  - @zeitgeistpm/utility@3.2.1
+
 ## 3.2.0
 
 ### Minor Changes

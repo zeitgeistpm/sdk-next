@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.2.1
+
+### Patch Changes
+
+- ff10741: Remove dry run of transactions for now since its not enabled on the node.
+
 ## 4.2.0
 
 ### Minor Changes
