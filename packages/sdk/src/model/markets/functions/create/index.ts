@@ -84,15 +84,16 @@ export const transaction = async <C extends RpcContext<MS>, MS extends MetadataS
     img: marketImageCid?.toString(),
   } as StorageTypeOf<MS['markets']>
 
-  const storageHashKey = await marketStorage.hash(metadata)
+  // NOTE: Dry runs arent support on the node currently
+  // const storageHashKey = await marketStorage.hash(metadata)
 
-  const dryRunResult = await context.api.rpc.system.dryRun(
-    createExtrinsic(context, { ...params, metadataKey: storageHashKey }).toU8a(),
-  )
+  // const dryRunResult = await context.api.rpc.system.dryRun(
+  //   createExtrinsic(context, { ...params, metadataKey: storageHashKey }).toU8a(),
+  // )
 
-  if (dryRunResult.isErr) {
-    throw dryRunResult.asErr
-  }
+  // if (dryRunResult.isErr) {
+  //   throw dryRunResult.asErr
+  // }
 
   const key = await marketStorage.put(metadata)
 
