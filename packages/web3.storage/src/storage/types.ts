@@ -43,9 +43,9 @@ const StorageErrorSym = Symbol('StorageError')
 
 export class StorageError extends Error {
   readonly sym = StorageErrorSym
-  readonly raw: Error
+  readonly raw?: Error
 
-  constructor(message: string, raw: Error) {
+  constructor(message: string, raw?: Error) {
     super(message)
     this.name = 'StorageError'
     this.raw = raw

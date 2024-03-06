@@ -1,4 +1,4 @@
-import { createStorage, MetadataStorage } from '../../meta/types'
+import { createStorage, MetadataStorage } from '../../../meta/types'
 import { IPFS } from '@zeitgeistpm/web3.storage'
 
 /**

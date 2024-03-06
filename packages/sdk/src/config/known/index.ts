@@ -1,7 +1,7 @@
 import { IPFS } from '@zeitgeistpm/web3.storage'
-import { createStorage, MarketMetadata, MetadataStorage } from '../../meta'
+import { createStorage, MetadataStorage } from '../../meta'
 import type { FullConfig, IndexerConfig, RpcConfig } from '../types'
-import { ZeitgeistIpfs } from './storage'
+import { ZeitgeistIpfs, ZeitgeistIpfsApi } from './storage'
 import { SupportedParachain } from './types'
 
 export * from './storage'
@@ -15,7 +15,7 @@ export const mainnet = <MS extends MetadataStorage<any>>(): FullConfig<MS> => {
   return {
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
     indexer: indexers.zeitgeist.uri,
-    storage: ZeitgeistIpfs<MS>(),
+    storage: ZeitgeistIpfsApi<MS>(),
   }
 }
 
@@ -26,7 +26,7 @@ export const mainnet = <MS extends MetadataStorage<any>>(): FullConfig<MS> => {
 export const mainnetRpc = <MS extends MetadataStorage<any>>(): RpcConfig<MS> => {
   return {
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
-    storage: ZeitgeistIpfs<MS>(),
+    storage: ZeitgeistIpfsApi<MS>(),
   }
 }
 
@@ -48,7 +48,7 @@ export const batterystation = <MS extends MetadataStorage<any>>(): FullConfig<MS
   return {
     provider: [rpcs.bsr.uri],
     indexer: indexers.bsr.uri,
-    storage: ZeitgeistIpfs<MS>(),
+    storage: ZeitgeistIpfsApi<MS>(),
   }
 }
 
@@ -59,7 +59,7 @@ export const batterystation = <MS extends MetadataStorage<any>>(): FullConfig<MS
 export const batterystationRpc = <MS extends MetadataStorage<any>>(): RpcConfig<MS> => {
   return {
     provider: [rpcs.bsr.uri],
-    storage: ZeitgeistIpfs<MS>(),
+    storage: ZeitgeistIpfsApi<MS>(),
   }
 }
 

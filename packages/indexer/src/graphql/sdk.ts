@@ -1430,10 +1430,14 @@ export type HistoricalSwap = {
   blockNumber: Scalars['Int'];
   /** Event method which initiated this swap */
   event: Scalars['String'];
+  /** External fees occuring out of trade */
+  externalFeeAmount?: Maybe<Scalars['BigInt']>;
   /** Extrinsic responsible for this change */
   extrinsic?: Maybe<Extrinsic>;
   /** Unique identifier of the object */
   id: Scalars['String'];
+  /** Swap fees */
+  swapFeeAmount?: Maybe<Scalars['BigInt']>;
   /** Timestamp of the block */
   timestamp: Scalars['DateTime'];
 };
@@ -1473,6 +1477,10 @@ export enum HistoricalSwapOrderByInput {
   EventAscNullsFirst = 'event_ASC_NULLS_FIRST',
   EventDesc = 'event_DESC',
   EventDescNullsLast = 'event_DESC_NULLS_LAST',
+  ExternalFeeAmountAsc = 'externalFeeAmount_ASC',
+  ExternalFeeAmountAscNullsFirst = 'externalFeeAmount_ASC_NULLS_FIRST',
+  ExternalFeeAmountDesc = 'externalFeeAmount_DESC',
+  ExternalFeeAmountDescNullsLast = 'externalFeeAmount_DESC_NULLS_LAST',
   ExtrinsicHashAsc = 'extrinsic_hash_ASC',
   ExtrinsicHashAscNullsFirst = 'extrinsic_hash_ASC_NULLS_FIRST',
   ExtrinsicHashDesc = 'extrinsic_hash_DESC',
@@ -1485,6 +1493,10 @@ export enum HistoricalSwapOrderByInput {
   IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
   IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  SwapFeeAmountAsc = 'swapFeeAmount_ASC',
+  SwapFeeAmountAscNullsFirst = 'swapFeeAmount_ASC_NULLS_FIRST',
+  SwapFeeAmountDesc = 'swapFeeAmount_DESC',
+  SwapFeeAmountDescNullsLast = 'swapFeeAmount_DESC_NULLS_LAST',
   TimestampAsc = 'timestamp_ASC',
   TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
   TimestampDesc = 'timestamp_DESC',
@@ -1589,6 +1601,15 @@ export type HistoricalSwapWhereInput = {
   event_not_in?: InputMaybe<Array<Scalars['String']>>;
   event_not_startsWith?: InputMaybe<Scalars['String']>;
   event_startsWith?: InputMaybe<Scalars['String']>;
+  externalFeeAmount_eq?: InputMaybe<Scalars['BigInt']>;
+  externalFeeAmount_gt?: InputMaybe<Scalars['BigInt']>;
+  externalFeeAmount_gte?: InputMaybe<Scalars['BigInt']>;
+  externalFeeAmount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  externalFeeAmount_isNull?: InputMaybe<Scalars['Boolean']>;
+  externalFeeAmount_lt?: InputMaybe<Scalars['BigInt']>;
+  externalFeeAmount_lte?: InputMaybe<Scalars['BigInt']>;
+  externalFeeAmount_not_eq?: InputMaybe<Scalars['BigInt']>;
+  externalFeeAmount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   extrinsic?: InputMaybe<ExtrinsicWhereInput>;
   extrinsic_isNull?: InputMaybe<Scalars['Boolean']>;
   id_contains?: InputMaybe<Scalars['String']>;
@@ -1608,6 +1629,15 @@ export type HistoricalSwapWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
+  swapFeeAmount_eq?: InputMaybe<Scalars['BigInt']>;
+  swapFeeAmount_gt?: InputMaybe<Scalars['BigInt']>;
+  swapFeeAmount_gte?: InputMaybe<Scalars['BigInt']>;
+  swapFeeAmount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  swapFeeAmount_isNull?: InputMaybe<Scalars['Boolean']>;
+  swapFeeAmount_lt?: InputMaybe<Scalars['BigInt']>;
+  swapFeeAmount_lte?: InputMaybe<Scalars['BigInt']>;
+  swapFeeAmount_not_eq?: InputMaybe<Scalars['BigInt']>;
+  swapFeeAmount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   timestamp_eq?: InputMaybe<Scalars['DateTime']>;
   timestamp_gt?: InputMaybe<Scalars['DateTime']>;
   timestamp_gte?: InputMaybe<Scalars['DateTime']>;
@@ -2893,6 +2923,18 @@ export type NeoPoolsConnection = {
   totalCount: Scalars['Int'];
 };
 
+/** A type that records the order history of a market. */
+export type Order = {
+  __typename?: 'Order';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  maker: OrderRecord;
+  makerAccountId: Scalars['String'];
+  marketId: Scalars['Int'];
+  taker: OrderRecord;
+  updatedAt: Scalars['DateTime'];
+};
+
 /** Ordering stats */
 export enum OrderBy {
   LiquidityAsc = 'liquidity_ASC',
@@ -2902,6 +2944,181 @@ export enum OrderBy {
   VolumeAsc = 'volume_ASC',
   VolumeDesc = 'volume_DESC'
 }
+
+export type OrderEdge = {
+  __typename?: 'OrderEdge';
+  cursor: Scalars['String'];
+  node: Order;
+};
+
+export enum OrderOrderByInput {
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtAscNullsFirst = 'createdAt_ASC_NULLS_FIRST',
+  CreatedAtDesc = 'createdAt_DESC',
+  CreatedAtDescNullsLast = 'createdAt_DESC_NULLS_LAST',
+  IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
+  IdDesc = 'id_DESC',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  MakerAccountIdAsc = 'makerAccountId_ASC',
+  MakerAccountIdAscNullsFirst = 'makerAccountId_ASC_NULLS_FIRST',
+  MakerAccountIdDesc = 'makerAccountId_DESC',
+  MakerAccountIdDescNullsLast = 'makerAccountId_DESC_NULLS_LAST',
+  MakerAssetAsc = 'maker_asset_ASC',
+  MakerAssetAscNullsFirst = 'maker_asset_ASC_NULLS_FIRST',
+  MakerAssetDesc = 'maker_asset_DESC',
+  MakerAssetDescNullsLast = 'maker_asset_DESC_NULLS_LAST',
+  MakerFilledAmountAsc = 'maker_filledAmount_ASC',
+  MakerFilledAmountAscNullsFirst = 'maker_filledAmount_ASC_NULLS_FIRST',
+  MakerFilledAmountDesc = 'maker_filledAmount_DESC',
+  MakerFilledAmountDescNullsLast = 'maker_filledAmount_DESC_NULLS_LAST',
+  MakerInitialAmountAsc = 'maker_initialAmount_ASC',
+  MakerInitialAmountAscNullsFirst = 'maker_initialAmount_ASC_NULLS_FIRST',
+  MakerInitialAmountDesc = 'maker_initialAmount_DESC',
+  MakerInitialAmountDescNullsLast = 'maker_initialAmount_DESC_NULLS_LAST',
+  MarketIdAsc = 'marketId_ASC',
+  MarketIdAscNullsFirst = 'marketId_ASC_NULLS_FIRST',
+  MarketIdDesc = 'marketId_DESC',
+  MarketIdDescNullsLast = 'marketId_DESC_NULLS_LAST',
+  TakerAssetAsc = 'taker_asset_ASC',
+  TakerAssetAscNullsFirst = 'taker_asset_ASC_NULLS_FIRST',
+  TakerAssetDesc = 'taker_asset_DESC',
+  TakerAssetDescNullsLast = 'taker_asset_DESC_NULLS_LAST',
+  TakerFilledAmountAsc = 'taker_filledAmount_ASC',
+  TakerFilledAmountAscNullsFirst = 'taker_filledAmount_ASC_NULLS_FIRST',
+  TakerFilledAmountDesc = 'taker_filledAmount_DESC',
+  TakerFilledAmountDescNullsLast = 'taker_filledAmount_DESC_NULLS_LAST',
+  TakerInitialAmountAsc = 'taker_initialAmount_ASC',
+  TakerInitialAmountAscNullsFirst = 'taker_initialAmount_ASC_NULLS_FIRST',
+  TakerInitialAmountDesc = 'taker_initialAmount_DESC',
+  TakerInitialAmountDescNullsLast = 'taker_initialAmount_DESC_NULLS_LAST',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtAscNullsFirst = 'updatedAt_ASC_NULLS_FIRST',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  UpdatedAtDescNullsLast = 'updatedAt_DESC_NULLS_LAST'
+}
+
+export type OrderRecord = {
+  __typename?: 'OrderRecord';
+  asset: Scalars['String'];
+  filledAmount: Scalars['BigInt'];
+  initialAmount: Scalars['BigInt'];
+};
+
+export type OrderRecordWhereInput = {
+  asset_contains?: InputMaybe<Scalars['String']>;
+  asset_containsInsensitive?: InputMaybe<Scalars['String']>;
+  asset_endsWith?: InputMaybe<Scalars['String']>;
+  asset_eq?: InputMaybe<Scalars['String']>;
+  asset_gt?: InputMaybe<Scalars['String']>;
+  asset_gte?: InputMaybe<Scalars['String']>;
+  asset_in?: InputMaybe<Array<Scalars['String']>>;
+  asset_isNull?: InputMaybe<Scalars['Boolean']>;
+  asset_lt?: InputMaybe<Scalars['String']>;
+  asset_lte?: InputMaybe<Scalars['String']>;
+  asset_not_contains?: InputMaybe<Scalars['String']>;
+  asset_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  asset_not_endsWith?: InputMaybe<Scalars['String']>;
+  asset_not_eq?: InputMaybe<Scalars['String']>;
+  asset_not_in?: InputMaybe<Array<Scalars['String']>>;
+  asset_not_startsWith?: InputMaybe<Scalars['String']>;
+  asset_startsWith?: InputMaybe<Scalars['String']>;
+  filledAmount_eq?: InputMaybe<Scalars['BigInt']>;
+  filledAmount_gt?: InputMaybe<Scalars['BigInt']>;
+  filledAmount_gte?: InputMaybe<Scalars['BigInt']>;
+  filledAmount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  filledAmount_isNull?: InputMaybe<Scalars['Boolean']>;
+  filledAmount_lt?: InputMaybe<Scalars['BigInt']>;
+  filledAmount_lte?: InputMaybe<Scalars['BigInt']>;
+  filledAmount_not_eq?: InputMaybe<Scalars['BigInt']>;
+  filledAmount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  initialAmount_eq?: InputMaybe<Scalars['BigInt']>;
+  initialAmount_gt?: InputMaybe<Scalars['BigInt']>;
+  initialAmount_gte?: InputMaybe<Scalars['BigInt']>;
+  initialAmount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  initialAmount_isNull?: InputMaybe<Scalars['Boolean']>;
+  initialAmount_lt?: InputMaybe<Scalars['BigInt']>;
+  initialAmount_lte?: InputMaybe<Scalars['BigInt']>;
+  initialAmount_not_eq?: InputMaybe<Scalars['BigInt']>;
+  initialAmount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+};
+
+export type OrderWhereInput = {
+  AND?: InputMaybe<Array<OrderWhereInput>>;
+  OR?: InputMaybe<Array<OrderWhereInput>>;
+  createdAt_eq?: InputMaybe<Scalars['DateTime']>;
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdAt_isNull?: InputMaybe<Scalars['Boolean']>;
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  createdAt_not_eq?: InputMaybe<Scalars['DateTime']>;
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  maker?: InputMaybe<OrderRecordWhereInput>;
+  makerAccountId_contains?: InputMaybe<Scalars['String']>;
+  makerAccountId_containsInsensitive?: InputMaybe<Scalars['String']>;
+  makerAccountId_endsWith?: InputMaybe<Scalars['String']>;
+  makerAccountId_eq?: InputMaybe<Scalars['String']>;
+  makerAccountId_gt?: InputMaybe<Scalars['String']>;
+  makerAccountId_gte?: InputMaybe<Scalars['String']>;
+  makerAccountId_in?: InputMaybe<Array<Scalars['String']>>;
+  makerAccountId_isNull?: InputMaybe<Scalars['Boolean']>;
+  makerAccountId_lt?: InputMaybe<Scalars['String']>;
+  makerAccountId_lte?: InputMaybe<Scalars['String']>;
+  makerAccountId_not_contains?: InputMaybe<Scalars['String']>;
+  makerAccountId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  makerAccountId_not_endsWith?: InputMaybe<Scalars['String']>;
+  makerAccountId_not_eq?: InputMaybe<Scalars['String']>;
+  makerAccountId_not_in?: InputMaybe<Array<Scalars['String']>>;
+  makerAccountId_not_startsWith?: InputMaybe<Scalars['String']>;
+  makerAccountId_startsWith?: InputMaybe<Scalars['String']>;
+  maker_isNull?: InputMaybe<Scalars['Boolean']>;
+  marketId_eq?: InputMaybe<Scalars['Int']>;
+  marketId_gt?: InputMaybe<Scalars['Int']>;
+  marketId_gte?: InputMaybe<Scalars['Int']>;
+  marketId_in?: InputMaybe<Array<Scalars['Int']>>;
+  marketId_isNull?: InputMaybe<Scalars['Boolean']>;
+  marketId_lt?: InputMaybe<Scalars['Int']>;
+  marketId_lte?: InputMaybe<Scalars['Int']>;
+  marketId_not_eq?: InputMaybe<Scalars['Int']>;
+  marketId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  taker?: InputMaybe<OrderRecordWhereInput>;
+  taker_isNull?: InputMaybe<Scalars['Boolean']>;
+  updatedAt_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedAt_isNull?: InputMaybe<Scalars['Boolean']>;
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  updatedAt_not_eq?: InputMaybe<Scalars['DateTime']>;
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type OrdersConnection = {
+  __typename?: 'OrdersConnection';
+  edges: Array<OrderEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
 
 /** Market's outcome details */
 export type OutcomeReport = {
@@ -3256,6 +3473,11 @@ export type Query = {
   neoPoolByUniqueInput?: Maybe<NeoPool>;
   neoPools: Array<NeoPool>;
   neoPoolsConnection: NeoPoolsConnection;
+  orderById?: Maybe<Order>;
+  /** @deprecated Use orderById */
+  orderByUniqueInput?: Maybe<Order>;
+  orders: Array<Order>;
+  ordersConnection: OrdersConnection;
   poolById?: Maybe<Pool>;
   /** @deprecated Use poolById */
   poolByUniqueInput?: Maybe<Pool>;
@@ -3591,6 +3813,32 @@ export type QueryNeoPoolsConnectionArgs = {
 };
 
 
+export type QueryOrderByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryOrderByUniqueInputArgs = {
+  where: WhereIdInput;
+};
+
+
+export type QueryOrdersArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<OrderOrderByInput>>;
+  where?: InputMaybe<OrderWhereInput>;
+};
+
+
+export type QueryOrdersConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy: Array<OrderOrderByInput>;
+  where?: InputMaybe<OrderWhereInput>;
+};
+
+
 export type QueryPoolByIdArgs = {
   id: Scalars['String'];
 };
@@ -3670,6 +3918,8 @@ export type Subscription = {
   markets: Array<Market>;
   neoPoolById?: Maybe<NeoPool>;
   neoPools: Array<NeoPool>;
+  orderById?: Maybe<Order>;
+  orders: Array<Order>;
   poolById?: Maybe<Pool>;
   pools: Array<Pool>;
 };
@@ -3815,6 +4065,19 @@ export type SubscriptionNeoPoolsArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Array<NeoPoolOrderByInput>>;
   where?: InputMaybe<NeoPoolWhereInput>;
+};
+
+
+export type SubscriptionOrderByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionOrdersArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<OrderOrderByInput>>;
+  where?: InputMaybe<OrderWhereInput>;
 };
 
 
