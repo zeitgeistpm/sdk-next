@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 3.2.2
+
+### Patch Changes
+
+- 4e6700d: Use official zeitgeist IPFS api in sdk config helpers.
+
 ## 3.2.1
 
 ### Patch Changes

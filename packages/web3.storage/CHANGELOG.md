@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 3.2.2
+
+### Patch Changes
+
+- 4e6700d: Use official zeitgeist IPFS api in sdk config helpers.
+- Updated dependencies [4e6700d]
+  - @zeitgeistpm/utility@3.2.2
+
 ## 3.2.1
 
 ### Patch Changes
