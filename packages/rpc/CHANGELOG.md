@@ -1,5 +1,13 @@
 # @zeitgeistpm/rpc
 
+## 3.2.4
+
+### Patch Changes
+
+- db626c6: Include the Order gql query in the indexer SDK.
+- Updated dependencies [db626c6]
+  - @zeitgeistpm/augment-api@3.2.4
+
 ## 3.2.3
 
 ### Patch Changes
