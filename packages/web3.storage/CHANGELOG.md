@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 3.2.3
+
+### Patch Changes
+
+- 7e5fd7b: Enable setting ipfs api and gateway root url in storage creators.
+- Updated dependencies [7e5fd7b]
+  - @zeitgeistpm/utility@3.2.3
+
 ## 3.2.2
 
 ### Patch Changes

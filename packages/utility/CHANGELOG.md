@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 3.2.3
+
+### Patch Changes
+
+- 7e5fd7b: Enable setting ipfs api and gateway root url in storage creators.
+
 ## 3.2.2
 
 ### Patch Changes
