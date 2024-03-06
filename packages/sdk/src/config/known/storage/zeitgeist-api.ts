@@ -1,10 +1,12 @@
 import { createStorage, MetadataStorage } from '../../../meta/types'
-import { IPFS, IPFSApi } from '@zeitgeistpm/web3.storage'
+import { IPFSApi } from '@zeitgeistpm/web3.storage'
 
 /**
  * Default IPFS metadata storage for the zeitgeist ecosystem.
  * @returns MetadataStorage
  */
-export const ZeitgeistIpfsApi = <MS extends MetadataStorage<any>>(): MS => {
-  return createStorage(IPFSApi.storage()) as MS
+export const ZeitgeistIpfsApi = <MS extends MetadataStorage<any>>(
+  config?: IPFSApi.ZeitgeistIpfsApiConfig,
+): MS => {
+  return createStorage(IPFSApi.storage(config)) as MS
 }

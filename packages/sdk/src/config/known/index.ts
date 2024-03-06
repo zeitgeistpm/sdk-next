@@ -15,7 +15,9 @@ export const mainnet = <MS extends MetadataStorage<any>>(): FullConfig<MS> => {
   return {
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
     indexer: indexers.zeitgeist.uri,
-    storage: ZeitgeistIpfsApi<MS>(),
+    storage: ZeitgeistIpfsApi<MS>({
+      apiUrl: 'https://app.zeitgeist.pm',
+    }),
   }
 }
 
@@ -26,7 +28,9 @@ export const mainnet = <MS extends MetadataStorage<any>>(): FullConfig<MS> => {
 export const mainnetRpc = <MS extends MetadataStorage<any>>(): RpcConfig<MS> => {
   return {
     provider: [rpcs.dwellir.uri, rpcs.zeitgeist.uri, rpcs.onfinality.uri],
-    storage: ZeitgeistIpfsApi<MS>(),
+    storage: ZeitgeistIpfsApi<MS>({
+      apiUrl: 'https://app.zeitgeist.pm',
+    }),
   }
 }
 
@@ -48,7 +52,9 @@ export const batterystation = <MS extends MetadataStorage<any>>(): FullConfig<MS
   return {
     provider: [rpcs.bsr.uri],
     indexer: indexers.bsr.uri,
-    storage: ZeitgeistIpfsApi<MS>(),
+    storage: ZeitgeistIpfsApi<MS>({
+      apiUrl: 'https://test.staging.zeitgeist.pm',
+    }),
   }
 }
 
@@ -59,7 +65,9 @@ export const batterystation = <MS extends MetadataStorage<any>>(): FullConfig<MS
 export const batterystationRpc = <MS extends MetadataStorage<any>>(): RpcConfig<MS> => {
   return {
     provider: [rpcs.bsr.uri],
-    storage: ZeitgeistIpfsApi<MS>(),
+    storage: ZeitgeistIpfsApi<MS>({
+      apiUrl: 'https://test.staging.zeitgeist.pm',
+    }),
   }
 }
 

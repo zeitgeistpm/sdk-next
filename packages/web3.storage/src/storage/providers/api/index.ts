@@ -9,15 +9,21 @@ const node = IPFSHTTPClient.create({
   url: process.env.NEXT_PUBLIC_IPFS_NODE_URL,
 })
 
-export const storage = <T>(): Storage<
-  T,
-  IPFSHTTPClient.CID,
-  IPFSHTTPClient.IPFSHTTPClient
-> => {
+export type ZeitgeistIpfsApiConfig = {
+  apiUrl?: string
+  gateWayUrl?: string
+}
+
+export const storage = <T>(
+  config?: ZeitgeistIpfsApiConfig,
+): Storage<T, IPFSHTTPClient.CID, IPFSHTTPClient.IPFSHTTPClient> => {
+  const apiUrl = config?.apiUrl ?? 'https://app.zeitgeist.pm'
+  const gateWayUrl = config?.gateWayUrl ?? 'https://ipfs-gateway.zeitgeist.pm'
+
   return {
     put: Te.from(
       async data => {
-        const response = await fetch('https://app.zeitgeist.pm/api/ipfs', {
+        const response = await fetch(`${apiUrl}/api/ipfs`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -39,7 +45,7 @@ export const storage = <T>(): Storage<
     ),
     hash: Te.from(
       async data => {
-        const response = await fetch('/api/ipfs?only-hash=true', {
+        const response = await fetch(`${apiUrl}/api/ipfs?only-hash=true`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -61,7 +67,7 @@ export const storage = <T>(): Storage<
     ),
     get: Te.from(
       async cid => {
-        const response = await fetch(`https://ipfs-gateway.zeitgeist.pm/ipfs/${cid}`)
+        const response = await fetch(`${gateWayUrl}/ipfs/${cid}`)
 
         if (!response.ok) {
           throw new StorageError('Failed to fetch data from IPFS')
