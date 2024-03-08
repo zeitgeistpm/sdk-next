@@ -1,5 +1,11 @@
 # @zeitgeistpm/sdk
 
+## 3.2.5
+
+### Patch Changes
+
+- f9aeb60: Support Parimutuel asset ids in parseAssetId helpers and types.
+
 ## 3.2.4
 
 ### Patch Changes
