@@ -15,6 +15,7 @@
   },
   "packageManager": "yarn@3.2.2",
   "devDependencies": {
+    "@acala-network/chopsticks": "^0.9.10",
     "@changesets/cli": "^2.25.0",
     "@open-web3/dev-config": "^0.2.3",
     "@open-web3/util": "^2.0.1",
