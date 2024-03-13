@@ -1,0 +1,35 @@
+
+
+query orders(
+  $where: OrderWhereInput
+  $orderBy: [OrderOrderByInput!]
+  $offset: Int
+  $limit: Int
+) {
+  orders(
+    where: $where
+    orderBy: $orderBy
+    offset: $offset
+    limit: $limit
+  ) {
+    ...FullOrder
+  }
+}
+
+fragment FullOrder on Order {
+  id
+  makerAccountId
+  marketId
+  maker {
+    filledAmount
+    initialAmount
+    asset
+  }
+  taker {
+    asset
+    filledAmount
+    initialAmount
+  }
+  updatedAt
+  createdAt
+}

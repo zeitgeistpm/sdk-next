@@ -13,7 +13,7 @@ import {
 
 const sdk: Sdk<RpcContext> = await create(batterystationRpc())
 const market = await sdk.model.markets.get({
-  marketId: 845,
+  marketId: 862,
 })
 
 const metadata = await market.unwrap()?.saturate()

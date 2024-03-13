@@ -4283,6 +4283,18 @@ export type NeoPoolsQuery = { __typename?: 'Query', neoPools: Array<{ __typename
 
 export type FullNeoPoolFragment = { __typename?: 'NeoPool', collateral: string, createdAt: any, id: string, liquidityParameter: any, marketId: number, poolId: number, swapFee: any, totalStake: any, account: { __typename?: 'Account', accountId: string, balances: Array<{ __typename?: 'AccountBalance', assetId: string, balance: any }> }, liquiditySharesManager: Array<{ __typename?: 'LiquiditySharesManager', account: string, fees: any, stake: any }> };
 
+export type OrdersQueryVariables = Exact<{
+  where?: InputMaybe<OrderWhereInput>;
+  orderBy?: InputMaybe<Array<OrderOrderByInput> | OrderOrderByInput>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', id: string, makerAccountId: string, marketId: number, updatedAt: any, createdAt: any, maker: { __typename?: 'OrderRecord', filledAmount: any, initialAmount: any, asset: string }, taker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, initialAmount: any } }> };
+
+export type FullOrderFragment = { __typename?: 'Order', id: string, makerAccountId: string, marketId: number, updatedAt: any, createdAt: any, maker: { __typename?: 'OrderRecord', filledAmount: any, initialAmount: any, asset: string }, taker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, initialAmount: any } };
+
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4565,6 +4577,25 @@ export const FullMarketMetadataFragmentDoc = gql`
   marketId
 }
     `;
+export const FullOrderFragmentDoc = gql`
+    fragment FullOrder on Order {
+  id
+  makerAccountId
+  marketId
+  maker {
+    filledAmount
+    initialAmount
+    asset
+  }
+  taker {
+    asset
+    filledAmount
+    initialAmount
+  }
+  updatedAt
+  createdAt
+}
+    `;
 export const AccountBalancesDocument = gql`
     query accountBalances($where: AccountBalanceWhereInput, $order: [AccountBalanceOrderByInput!], $offset: Int, $limit: Int) {
   accountBalances(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
@@ -4721,6 +4752,13 @@ export const NeoPoolsDocument = gql`
   }
 }
     ${FullNeoPoolFragmentDoc}`;
+export const OrdersDocument = gql`
+    query orders($where: OrderWhereInput, $orderBy: [OrderOrderByInput!], $offset: Int, $limit: Int) {
+  orders(where: $where, orderBy: $orderBy, offset: $offset, limit: $limit) {
+    ...FullOrder
+  }
+}
+    ${FullOrderFragmentDoc}`;
 export const PingQueryDocument = gql`
     query pingQuery {
   markets(limit: 1) {
@@ -4826,6 +4864,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     neoPools(variables?: NeoPoolsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<NeoPoolsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<NeoPoolsQuery>(NeoPoolsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'neoPools', 'query');
+    },
+    orders(variables?: OrdersQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<OrdersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<OrdersQuery>(OrdersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'orders', 'query');
     },
     pingQuery(variables?: PingQueryQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<PingQueryQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PingQueryQuery>(PingQueryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'pingQuery', 'query');

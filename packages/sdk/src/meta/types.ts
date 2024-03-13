@@ -43,7 +43,7 @@ export type TaggedMetadata<T extends keyof MetadataStorage> = { __meta: T }
  * Create a tagged metadata storage object id.
  * @generic T extends keyof MetadataStorage
  */
-export type TaggedID<T extends keyof MetadataStorage> = { __meta: T; cid: CID }
+export type TaggedID<T extends keyof MetadataStorage> = { __meta: T; id: CID }
 
 /**
  * Type helper to extract the storage type at a given key in a MetadataStorage
@@ -114,19 +114,19 @@ export const tagged = <T extends TaggedMetadata<any>>(
   storage: Storage<T, CID>,
 ) =>
   ({
-    get: ({ cid }: TaggedID<any>) => storage.get(cid),
+    get: ({ id: cid }: TaggedID<any>) => storage.get(cid),
     hash: Te.from<TaggedID<any>, StorageError, [any]>(async data => {
       const cid = await storage.hash(data)
       return {
         __meta: key,
-        cid: cid,
+        id: cid,
       }
     }),
     put: Te.from<TaggedID<any>, StorageError, [any]>(async data => {
       const cid = await storage.put(data)
       return {
         __meta: key,
-        cid: cid,
+        id: cid,
       }
     }),
     withCodec: <A>(codec: Codec<string | Uint8Array, A>) =>

@@ -25,6 +25,7 @@
     "compile": "rimraf ./dist && rollup -c"
   },
   "dependencies": {
+    "@multiformats/sha3": "^3.0.2",
     "@zeitgeistpm/utility": "^3.2.3",
     "cids": "^1.1.9",
     "ipfs-http-client": "^60.0.0",

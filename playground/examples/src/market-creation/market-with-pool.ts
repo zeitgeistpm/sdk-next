@@ -1,23 +1,26 @@
 import { KeyringPair } from '@polkadot/keyring/types'
 import {
-  batterystation,
-  mainnet,
-  create,
   CreateMarketParams,
   FullContext,
   Sdk,
-  swapFeeFromFloat,
-  ZTG,
+  batterystation,
+  create,
+  createStorage,
 } from '@zeitgeistpm/sdk'
+import { Memory, IPFSApi } from '@zeitgeistpm/web3.storage'
 import { getBsrTestingSigner } from '../getSigner'
-import Decimal from 'decimal.js'
 
 /**
  * Initialize the SDK in full or rpc mode to be able to submit transactions to the chein.
  */
 // const sdk: Sdk<RpcContext> = await create(mainnet())
 
-const sdk: Sdk<FullContext> = await create(batterystation())
+const storage = IPFSApi.storage()
+
+const sdk: Sdk<FullContext> = await create({
+  ...batterystation(),
+  storage: createStorage(storage),
+})
 
 /**
  * Get the signer from the wallet extension or other keyring.
@@ -43,25 +46,18 @@ const params: CreateMarketParams<FullContext> = {
     gracePeriod: 200,
     oracleDuration: 500,
   },
+  creationType: 'Advised',
   scoringRule: 'Lmsr',
   metadata: {
     __meta: 'markets',
-    question: 'Testing new IPFS API storage in sdk',
-    description: 'Some new description',
+    question: 'Testing advised markets',
+    description: 'Description for testing advised markets',
     slug: 'ipfs-api-test',
     categories: [
       { name: 'yes', ticker: 'Y' },
       { name: 'no', ticker: 'N' },
     ],
     tags: ['dev'],
-  },
-  pool: {
-    amount: ZTG.mul(100).toString(),
-    swapFee: swapFeeFromFloat(1).toString(),
-    spotPrices: [
-      new Decimal(0.2).mul(ZTG).toString(), // yes will have 20% prediction,
-      new Decimal(0.8).mul(ZTG).toString(), // no will have 80% prediction,
-    ],
   },
 }
 

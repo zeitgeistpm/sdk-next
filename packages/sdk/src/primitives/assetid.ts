@@ -13,6 +13,7 @@ import { IOMarketId, MarketId } from './marketid'
 export type AssetId = Infer<typeof IOAssetId>
 export type ScalarAssetId = Infer<typeof IOScalarAssetId>
 export type CategoricalAssetId = Infer<typeof IOCategoricalAssetId>
+export type ParimutuelShareAssetId = Infer<typeof IOParimituelShareAssetId>
 export type PoolShareAssetId = Infer<typeof IOPoolShareAssetId>
 export type ZtgAssetId = Infer<typeof IOZtgAssetId>
 export type ForeignAssetId = Infer<typeof IOForeignAssetId>
@@ -22,6 +23,7 @@ export type MarketOutcomeAssetId = Infer<typeof IOMarketOutcomeAssetId>
 
 export type ScalarIndex = Infer<typeof IOScalarIndex>
 export type CategoricalIndex = Infer<typeof IOCategoricalIndex>
+export type ParimutuelShareIndex = Infer<typeof IOParimutuelShareIndex>
 export type ScalarPosition = Infer<typeof IOScalarPosition>
 
 /**
@@ -32,6 +34,7 @@ export type ScalarPosition = Infer<typeof IOScalarPosition>
 export const IOScalarPosition = union([literal('Short'), literal('Long')])
 
 export const IOCategoricalIndex = tuple([IOMarketId, number()])
+export const IOParimutuelShareIndex = tuple([IOMarketId, number()])
 export const IOScalarIndex = tuple([IOMarketId, IOScalarPosition])
 
 export const IOCategoricalAssetId = type({
@@ -40,6 +43,10 @@ export const IOCategoricalAssetId = type({
 
 export const IOScalarAssetId = type({
   ScalarOutcome: IOScalarIndex,
+})
+
+export const IOParimituelShareAssetId = type({
+  ParimutuelShare: IOParimutuelShareIndex,
 })
 
 export const IOMarketOutcomeAssetId = union([IOCategoricalAssetId, IOScalarAssetId])
@@ -62,6 +69,7 @@ export const IOAssetId = union([
   IOCategoricalAssetId,
   IOScalarAssetId,
   IOPoolShareAssetId,
+  IOParimituelShareAssetId,
   IOBaseAssetId,
 ])
 
@@ -89,6 +97,13 @@ export const fromPrimitive = (
     assetId = { ForeignAsset: asset.asForeignAsset.toNumber() }
   } else if (asset.isZtg) {
     assetId = { Ztg: null }
+  } else if (asset.isParimutuelShare) {
+    assetId = {
+      ParimutuelShare: [
+        asset.asParimutuelShare[0].toNumber() as MarketId,
+        asset.asParimutuelShare[1].toNumber(),
+      ],
+    }
   }
 
   if (assetId) {
@@ -104,8 +119,14 @@ export const fromPrimitive = (
  * @param assetId ScalarAssetId | CategoricalAssetId
  * @returns MarketId
  */
-export const getMarketIdOf = (assetId: ScalarAssetId | CategoricalAssetId): MarketId =>
-  IOScalarAssetId.is(assetId) ? assetId.ScalarOutcome[0] : assetId.CategoricalOutcome[0]
+export const getMarketIdOf = (
+  assetId: ScalarAssetId | CategoricalAssetId | ParimutuelShareAssetId,
+): MarketId =>
+  IOScalarAssetId.is(assetId)
+    ? assetId.ScalarOutcome[0]
+    : IOParimituelShareAssetId.is(assetId)
+    ? assetId.ParimutuelShare[0]
+    : assetId.CategoricalOutcome[0]
 
 /**
  * Get asset index of a scalar asset, short being 0 and long being 1

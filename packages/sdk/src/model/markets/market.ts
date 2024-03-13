@@ -325,7 +325,7 @@ export const attachMarketMethods = <C extends Context<MS>, MS extends MetadataSt
     marketWithMethods.fetchMetadata = Te.from(async () => {
       const hex = isCodec(market.metadata) ? market.metadata.toHex() : market.metadata
       const cid = new CID('f0155' + hex.slice(2))
-      const id = { __meta: 'markets', cid: cid } as StorageIdTypeOf<MS['markets']>
+      const id = { __meta: 'markets', id: cid } as StorageIdTypeOf<MS['markets']>
       const metadata = await context.storage.of('markets').get(id)
       return metadata
     })

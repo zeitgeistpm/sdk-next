@@ -135,9 +135,9 @@ const createExtrinsic = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 
   const Sha3_384 = isString(params.metadataKey)
     ? params.metadataKey
-    : isU8a(params.metadataKey.cid)
-    ? u8aToHex(params.metadataKey.cid)
-    : params.metadataKey.cid.multihash.bytes
+    : isU8a(params.metadataKey.id)
+    ? u8aToHex(params.metadataKey.id)
+    : params.metadataKey.id.multihash.bytes
 
   if (isWithPool(params)) {
     tx = context.api.tx.predictionMarkets.createMarketAndDeployPool(

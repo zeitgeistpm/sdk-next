@@ -5543,6 +5543,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@multiformats/sha3@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@multiformats/sha3@npm:3.0.2"
+  dependencies:
+    js-sha3: ^0.9.1
+    multiformats: ^13.0.0
+  checksum: 48e81c16af675693b07e78ec76a39b6d0da28043de66229406a7e47a821662ea8cabae62ef2b544e4316fd23ecd691e0f4284ac2cccbe89b709441cd6a12cd2c
+  languageName: node
+  linkType: hard
+
 "@nicolo-ribaudo/chokidar-2@npm:2.1.8-no-fsevents.3":
   version: 2.1.8-no-fsevents.3
   resolution: "@nicolo-ribaudo/chokidar-2@npm:2.1.8-no-fsevents.3"
@@ -8043,7 +8053,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zeitgeistpm/augment-api@^2.26.0, @zeitgeistpm/augment-api@workspace:packages/augment-api":
+"@zeitgeistpm/augment-api@^3.2.4, @zeitgeistpm/augment-api@workspace:packages/augment-api":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/augment-api@workspace:packages/augment-api"
   dependencies:
@@ -8055,7 +8065,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/indexer@^3.21.0, @zeitgeistpm/indexer@workspace:packages/indexer":
+"@zeitgeistpm/indexer@^4.2.4, @zeitgeistpm/indexer@workspace:packages/indexer":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/indexer@workspace:packages/indexer"
   dependencies:
@@ -8071,12 +8081,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/rpc@^2.15.0, @zeitgeistpm/rpc@workspace:packages/rpc":
+"@zeitgeistpm/rpc@^3.2.4, @zeitgeistpm/rpc@workspace:packages/rpc":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/rpc@workspace:packages/rpc"
   dependencies:
-    "@zeitgeistpm/augment-api": ^2.26.0
-    "@zeitgeistpm/utility": ^2.25.0
+    "@zeitgeistpm/augment-api": ^3.2.4
+    "@zeitgeistpm/utility": ^3.2.3
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/keyring": "*"
@@ -8091,11 +8101,11 @@ __metadata:
     "@types/lodash-es": ^4.17.6
     "@types/lodash.memoize": ^4.1.7
     "@types/ms": ^0.7.31
-    "@zeitgeistpm/augment-api": ^2.26.0
-    "@zeitgeistpm/indexer": ^3.21.0
-    "@zeitgeistpm/rpc": ^2.15.0
-    "@zeitgeistpm/utility": ^2.25.0
-    "@zeitgeistpm/web3.storage": ^2.16.0
+    "@zeitgeistpm/augment-api": ^3.2.4
+    "@zeitgeistpm/indexer": ^4.2.4
+    "@zeitgeistpm/rpc": ^3.2.4
+    "@zeitgeistpm/utility": ^3.2.3
+    "@zeitgeistpm/web3.storage": ^3.2.3
     cids: ^1.1.9
     decimal.js: ^10.4.3
     human-object-diff: ^3.0.0
@@ -8112,7 +8122,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^2.25.0, @zeitgeistpm/utility@workspace:packages/utility":
+"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^3.2.3, @zeitgeistpm/utility@workspace:packages/utility":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/utility@workspace:packages/utility"
   dependencies:
@@ -8128,11 +8138,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/web3.storage@^2.16.0, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
+"@zeitgeistpm/web3.storage@^3.2.3, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/web3.storage@workspace:packages/web3.storage"
   dependencies:
-    "@zeitgeistpm/utility": ^2.25.0
+    "@multiformats/sha3": ^3.0.2
+    "@zeitgeistpm/utility": ^3.2.3
     cids: ^1.1.9
     ipfs-http-client: ^60.0.0
     ipfs-only-hash: ^4.0.0
@@ -15312,6 +15323,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-sha3@npm:^0.9.1":
+  version: 0.9.3
+  resolution: "js-sha3@npm:0.9.3"
+  checksum: cfab12cdb3aa9c0c8e8466761d89cb9770653880910b920682fa676dd102868a827709c857cb089bdc0d6120542137f92a7c1699ab428c0f4057c823aef24601
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -16690,6 +16708,13 @@ __metadata:
   version: 11.0.1
   resolution: "multiformats@npm:11.0.1"
   checksum: 056dec14b5ee0570eaa43204385bc16783f93dc8668a8ddcee806c4232adfa58cfc272abb587ce94d9314627eb6f2c115e53ff01169c9909768f8c7d0deaa9e6
+  languageName: node
+  linkType: hard
+
+"multiformats@npm:^13.0.0":
+  version: 13.1.0
+  resolution: "multiformats@npm:13.1.0"
+  checksum: b970e3622a80192a4df8c23378c4854520df8b2d17db773ac8b77c19750019e1c9813cc05e12b0e3b0d03599ff5d073681e847d43b4b273efca5aabbb28eb0e0
   languageName: node
   linkType: hard
 
