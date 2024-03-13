@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 3.4.0
+
+### Minor Changes
+
+- 2ea4e5d: Mainnet release.
+
 ## 3.3.0
 
 ### Minor Changes

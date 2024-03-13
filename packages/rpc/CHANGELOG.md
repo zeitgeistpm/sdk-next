@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 3.4.0
+
+### Minor Changes
+
+- 2ea4e5d: Mainnet release.
+
+### Patch Changes
+
+- Updated dependencies [2ea4e5d]
+  - @zeitgeistpm/augment-api@3.4.0
+  - @zeitgeistpm/utility@3.4.0
+
 ## 3.3.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 3.4.0
+
+### Minor Changes
+
+- 2ea4e5d: Mainnet release.
+
+### Patch Changes
+
+- Updated dependencies [2ea4e5d]
+  - @zeitgeistpm/utility@3.4.0
+
 ## 3.3.0
 
 ### Minor Changes
