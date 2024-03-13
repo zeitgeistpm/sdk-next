@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.3.0
+
+### Minor Changes
+
+- 5a2b5d0: Implement in memory metadata storage module.
+
 ## 4.2.4
 
 ### Patch Changes

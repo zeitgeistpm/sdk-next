@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 3.3.0
+
+### Minor Changes
+
+- 5a2b5d0: Implement in memory metadata storage module.
+
+### Patch Changes
+
+- Updated dependencies [5a2b5d0]
+  - @zeitgeistpm/utility@3.3.0
+
 ## 3.2.3
 
 ### Patch Changes

@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 3.3.0
+
+### Minor Changes
+
+- 5a2b5d0: Implement in memory metadata storage module.
+
+### Patch Changes
+
+- Updated dependencies [5a2b5d0]
+  - @zeitgeistpm/augment-api@3.3.0
+  - @zeitgeistpm/indexer@4.3.0
+  - @zeitgeistpm/rpc@3.3.0
+  - @zeitgeistpm/utility@3.3.0
+  - @zeitgeistpm/web3.storage@3.3.0
+
 ## 3.2.5
 
 ### Patch Changes

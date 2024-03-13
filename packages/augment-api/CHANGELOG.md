@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 3.3.0
+
+### Minor Changes
+
+- 5a2b5d0: Implement in memory metadata storage module.
+
 ## 3.2.4
 
 ### Patch Changes
