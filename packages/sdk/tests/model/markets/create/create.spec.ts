@@ -3,7 +3,7 @@ import { waitReady } from '@polkadot/wasm-crypto'
 import { Memory } from '@zeitgeistpm/web3.storage'
 import * as Zeitgeist from '../../../../src'
 import { afterAll, describe, it } from 'vitest'
-import { initChopsticks } from '../../../util/initChopsticks'
+import { initChopsticks } from '../../../initChopsticks'
 
 describe(
   'creat market',
