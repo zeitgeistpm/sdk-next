@@ -1,46 +1,24 @@
-import { spawn, ChildProcessWithoutNullStreams } from 'node:child_process'
-import * as path from 'node:path'
-import { Memory } from '@zeitgeistpm/web3.storage'
 import { Keyring } from '@polkadot/api'
-import { stringToU8a, u8aToHex } from '@polkadot/util'
 import { waitReady } from '@polkadot/wasm-crypto'
-import { mnemonicGenerate } from '@polkadot/util-crypto'
+import { Memory } from '@zeitgeistpm/web3.storage'
 import * as Zeitgeist from '../../../../src'
-
-import { describe, expect, it, beforeAll, afterAll } from 'vitest'
-import { initChopsticks } from '../../../initChopsticks'
+import { afterAll, describe, it } from 'vitest'
+import { initChopsticks } from '../../../util/initChopsticks'
 
 describe(
   'creat market',
   async () => {
-    let chopsticks: ChildProcessWithoutNullStreams
-
-    let sdk: Zeitgeist.Sdk<Zeitgeist.RpcContext>
+    await waitReady()
 
     const keyring = new Keyring({ ss58Format: 73, type: 'sr25519' })
-
-    const signer = keyring.addFromMnemonic(
-      'sick actor between bamboo hedgehog uncle staff juice reveal friend kit priority',
-    )
-
     const alice = keyring.addFromUri('//Alice', { name: 'Alice default' })
 
-    beforeAll(async () => {
-      await waitReady()
+    const { port, process: chopsticks } = await initChopsticks()
 
-      const { port, process } = await initChopsticks()
-
-      chopsticks = process
-
-      sdk = await Zeitgeist.create({
-        provider: `ws://127.0.0.1:${port}`,
-        storage: Zeitgeist.createStorage(Memory.storage()),
-      })
-
-      await sdk.api.tx.balances
-        .transfer(alice.address, Zeitgeist.ZTG.mul(9).toString())
-        .signAndSend(alice)
-    }, 30 * 1000)
+    const sdk = await Zeitgeist.create({
+      provider: `ws://127.0.0.1:${port}`,
+      storage: Zeitgeist.createStorage(Memory.storage()),
+    })
 
     afterAll(async () => {
       chopsticks.kill()
@@ -52,17 +30,17 @@ describe(
         const params: Zeitgeist.CreateMarketParams<Zeitgeist.RpcContext> = {
           waitForFinalization: false,
           baseAsset: { Ztg: null },
-          signer,
+          signer: alice,
           disputeMechanism: 'Authorized',
           marketType: { Categorical: 2 },
-          oracle: signer.address,
+          oracle: alice.address,
           period: { Timestamp: [Date.now(), Date.now() + 60 * 60 * 24 * 1000 * 2] },
           deadlines: {
             disputeDuration: 5000,
             gracePeriod: 200,
             oracleDuration: 500,
           },
-          creationType: 'Advised',
+          creationType: 'Permissionless',
           scoringRule: 'Lmsr',
           metadata: {
             __meta: 'markets',
