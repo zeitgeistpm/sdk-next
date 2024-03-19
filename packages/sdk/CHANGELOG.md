@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 3.4.1
+
+### Patch Changes
+
+- 5d62dfb: Implement api for custom transaction signer on market create.
+- Updated dependencies [5d62dfb]
+  - @zeitgeistpm/augment-api@3.4.1
+  - @zeitgeistpm/indexer@4.4.1
+  - @zeitgeistpm/web3.storage@3.4.1
+
 ## 3.4.0
 
 ### Minor Changes

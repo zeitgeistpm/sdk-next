@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 3.4.1
+
+### Patch Changes
+
+- 5d62dfb: Implement api for custom transaction signer on market create.
+
 ## 3.4.0
 
 ### Minor Changes
