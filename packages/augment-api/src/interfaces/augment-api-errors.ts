@@ -1737,6 +1737,12 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       HasAlreadyCrossed: AugmentedError<ApiType>;
     };
+    sudo: {
+      /**
+       * Sender must be the Sudo account
+       **/
+      RequireSudo: AugmentedError<ApiType>;
+    };
     swaps: {
       /**
        * The weight of an asset in a CPMM swap pool is greather than the upper weight cap.

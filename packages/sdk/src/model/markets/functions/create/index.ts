@@ -1,10 +1,11 @@
 import type { AddressOrPair, SubmittableExtrinsic } from '@polkadot/api/types'
 import type { EventRecord, RuntimeDispatchInfo } from '@polkadot/types/interfaces'
 import type { ISubmittableResult } from '@polkadot/types/types'
-import { isString, isU8a, u8aToHex } from '@polkadot/util'
-import { signAndSend } from '@zeitgeistpm/rpc'
+import { isFunction, isString, isU8a, u8aToHex } from '@polkadot/util'
+import { TransactionError, signAndSend } from '@zeitgeistpm/rpc'
 import * as E from '@zeitgeistpm/utility/dist/either'
-import * as Te from '@zeitgeistpm/utility/dist/taskeither'
+import * as AE from '@zeitgeistpm/utility/dist/aeither'
+
 import { FullContext, RpcContext } from '../../../../context'
 import { MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../../../meta'
 import { ForeignAssetId } from '../../../../primitives'
@@ -13,8 +14,10 @@ import {
   CreateMarketData,
   CreateMarketParams,
   CreateMarketTransaction,
+  isCustomTransactionSigner,
   isWithPool,
 } from './types'
+import { IAEither } from '@zeitgeistpm/utility/dist/aeither'
 
 /**
  * Create a market on chain.
@@ -38,13 +41,21 @@ export const create = async <
 
   const signer = params.proxy ? params.proxy : params.signer
 
-  const response = signAndSend({
-    api: context.api,
-    tx,
-    signer,
-    feePayingAsset,
-    hooks: params.hooks,
-  })
+  let response: IAEither<TransactionError, ISubmittableResult>
+
+  if (isCustomTransactionSigner(signer)) {
+    response = AE.from(async () => {
+      return await signer.handle(tx)
+    })
+  } else {
+    response = signAndSend({
+      api: context.api,
+      tx,
+      signer,
+      feePayingAsset,
+      hooks: params.hooks,
+    })
+  }
 
   const submittableResult = await response.unrightOr(error => {
     throw error

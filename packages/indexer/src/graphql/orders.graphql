@@ -18,18 +18,18 @@ query orders(
 
 fragment FullOrder on Order {
   id
-  makerAccountId
   marketId
+  makerAccountId
+  updatedAt
+  createdAt
   maker {
-    filledAmount
-    initialAmount
     asset
+    filledAmount
+    unfilledAmount
   }
   taker {
     asset
     filledAmount
-    initialAmount
+    unfilledAmount
   }
-  updatedAt
-  createdAt
 }

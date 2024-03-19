@@ -19,6 +19,8 @@ import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage } from '../../../../meta'
 import { AssetId } from '../../../../primitives'
 import { Market } from '../../market'
+import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
+import { isFunction } from 'lodash-es'
 
 /**
  * Union type for creating a standalone market or permissionless cpmm market with pool.
@@ -46,7 +48,14 @@ export type CreateMarketBaseParams<MS extends MetadataStorage> = {
   /**
    * The signer of the transaction. Can be a unlocked keyring pair or extension.
    */
-  signer: KeyringPairOrExtSigner
+  signer:
+    | KeyringPairOrExtSigner
+    | {
+        handle: (
+          extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>,
+        ) => Promise<ISubmittableResult>
+        address: string
+      }
 
   /**
    * Metadata to store in external storage alongside the market.
@@ -216,3 +225,13 @@ export type CreateMarketData<C extends RpcContext<MS>, MS extends MetadataStorag
 export type CreateMarketTransaction = {
   tx: SubmittableExtrinsic<'promise', ISubmittableResult>
 }
+
+export type CustomTransactionSigner = {
+  handle: (
+    extrinsic: SubmittableExtrinsic<'promise', ISubmittableResult>,
+  ) => Promise<ISubmittableResult>
+  address: string
+}
+
+export const isCustomTransactionSigner = (signer: any): signer is CustomTransactionSigner =>
+  'handle' in signer && isFunction(signer.handle)

@@ -32,8 +32,8 @@ export const storage = <T>(
         })
 
         if (response.status === 400) {
-          const { message } = await response.json()
-          throw new Error(message)
+          const error = await response.json()
+          throw error
         }
 
         const { cid: cidString } = await response.json()
@@ -41,7 +41,7 @@ export const storage = <T>(
 
         return cid
       },
-      (message, error) => new StorageError(message, error),
+      (_, error: any) => new StorageError(error.detail ?? error.message, error),
     ),
     hash: Te.from(
       async data => {
@@ -54,8 +54,8 @@ export const storage = <T>(
         })
 
         if (response.status === 400) {
-          const { message } = await response.json()
-          throw new Error(message)
+          const error = await response.json()
+          throw error
         }
 
         const { cid: cidString } = await response.json()
@@ -63,7 +63,7 @@ export const storage = <T>(
 
         return cid
       },
-      (message, error) => new StorageError(message, error),
+      (_, error: any) => new StorageError(error.detail ?? error.message, error),
     ),
     get: Te.from(
       async cid => {
