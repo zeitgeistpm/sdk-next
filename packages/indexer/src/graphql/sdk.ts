@@ -4460,6 +4460,18 @@ export type HistoricalAssetsQuery = { __typename?: 'Query', historicalAssets: Ar
 
 export type FullHistoricalAssetsFragment = { __typename?: 'HistoricalAsset', accountId?: string | null, assetId: string, blockNumber: number, dAmountInPool?: any | null, dPrice?: number | null, event: string, id: string, newAmountInPool?: any | null, newPrice?: number | null, timestamp: any };
 
+export type HistoricalOrdersQueryVariables = Exact<{
+  where?: InputMaybe<HistoricalOrderWhereInput>;
+  order?: InputMaybe<Array<HistoricalOrderOrderByInput> | HistoricalOrderOrderByInput>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type HistoricalOrdersQuery = { __typename?: 'Query', historicalOrders: Array<{ __typename?: 'HistoricalOrder', accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, blockNumber: number, event: OrderEvent, externalFeeAmount?: any | null, id: string, orderId: number, timestamp: any, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null }> };
+
+export type FullHistoricalOrderFragment = { __typename?: 'HistoricalOrder', accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, blockNumber: number, event: OrderEvent, externalFeeAmount?: any | null, id: string, orderId: number, timestamp: any, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null };
+
 export type HistoricalSwapsQueryVariables = Exact<{
   where?: InputMaybe<HistoricalSwapWhereInput>;
   order?: InputMaybe<Array<HistoricalSwapOrderByInput> | HistoricalSwapOrderByInput>;
@@ -4555,7 +4567,7 @@ export type FullNeoPoolFragment = { __typename?: 'NeoPool', collateral: string, 
 
 export type OrdersQueryVariables = Exact<{
   where?: InputMaybe<OrderWhereInput>;
-  orderBy?: InputMaybe<Array<OrderOrderByInput> | OrderOrderByInput>;
+  order?: InputMaybe<Array<OrderOrderByInput> | OrderOrderByInput>;
   offset?: InputMaybe<Scalars['Int']>;
   limit?: InputMaybe<Scalars['Int']>;
 }>;
@@ -4812,6 +4824,25 @@ export const FullHistoricalAssetsFragmentDoc = gql`
   timestamp
 }
     `;
+export const FullHistoricalOrderFragmentDoc = gql`
+    fragment FullHistoricalOrder on HistoricalOrder {
+  accountId
+  assetAmountIn
+  assetAmountOut
+  assetIn
+  assetOut
+  blockNumber
+  event
+  externalFeeAmount
+  extrinsic {
+    hash
+    name
+  }
+  id
+  orderId
+  timestamp
+}
+    `;
 export const FullHistoricalSwapFragmentDoc = gql`
     fragment FullHistoricalSwap on HistoricalSwap {
   id
@@ -4921,6 +4952,13 @@ export const HistoricalAssetsDocument = gql`
   }
 }
     ${FullHistoricalAssetsFragmentDoc}`;
+export const HistoricalOrdersDocument = gql`
+    query historicalOrders($where: HistoricalOrderWhereInput, $order: [HistoricalOrderOrderByInput!], $offset: Int, $limit: Int) {
+  historicalOrders(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
+    ...FullHistoricalOrder
+  }
+}
+    ${FullHistoricalOrderFragmentDoc}`;
 export const HistoricalSwapsDocument = gql`
     query historicalSwaps($where: HistoricalSwapWhereInput, $order: [HistoricalSwapOrderByInput!], $offset: Int, $limit: Int) {
   historicalSwaps(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
@@ -5023,8 +5061,8 @@ export const NeoPoolsDocument = gql`
 }
     ${FullNeoPoolFragmentDoc}`;
 export const OrdersDocument = gql`
-    query orders($where: OrderWhereInput, $orderBy: [OrderOrderByInput!], $offset: Int, $limit: Int) {
-  orders(where: $where, orderBy: $orderBy, offset: $offset, limit: $limit) {
+    query orders($where: OrderWhereInput, $order: [OrderOrderByInput!], $offset: Int, $limit: Int) {
+  orders(where: $where, orderBy: $order, offset: $offset, limit: $limit) {
     ...FullOrder
   }
 }
@@ -5104,6 +5142,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     historicalAssets(variables?: HistoricalAssetsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalAssetsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HistoricalAssetsQuery>(HistoricalAssetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalAssets', 'query');
+    },
+    historicalOrders(variables?: HistoricalOrdersQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalOrdersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<HistoricalOrdersQuery>(HistoricalOrdersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalOrders', 'query');
     },
     historicalSwaps(variables?: HistoricalSwapsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<HistoricalSwapsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<HistoricalSwapsQuery>(HistoricalSwapsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'historicalSwaps', 'query');

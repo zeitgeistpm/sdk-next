@@ -37,7 +37,7 @@ export default {
       exports: 'named',
       preserveModules: true,
       preserveModulesRoot: 'src',
-      entryFileNames: '[name].js',
+      entryFileNames: '[name].cjs',
     },
   ],
   plugins: [typescript(), commonjs({ exclude: 'node_modules' })],

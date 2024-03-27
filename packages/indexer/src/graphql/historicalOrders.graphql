@@ -1,0 +1,33 @@
+query historicalOrders(
+  $where: HistoricalOrderWhereInput
+  $order: [HistoricalOrderOrderByInput!]
+  $offset: Int
+  $limit: Int
+) {
+  historicalOrders(
+    where: $where
+    orderBy: $order
+    offset: $offset
+    limit: $limit
+  ) {
+    ...FullHistoricalOrder
+  }
+}
+
+fragment FullHistoricalOrder on HistoricalOrder {
+  accountId
+  assetAmountIn
+  assetAmountOut
+  assetIn
+  assetOut
+  blockNumber
+  event
+  externalFeeAmount
+  extrinsic {
+    hash
+    name
+  }
+  id
+  orderId
+  timestamp
+}

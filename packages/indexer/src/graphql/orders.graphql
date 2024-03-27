@@ -2,13 +2,13 @@
 
 query orders(
   $where: OrderWhereInput
-  $orderBy: [OrderOrderByInput!]
+  $order: [OrderOrderByInput!]
   $offset: Int
   $limit: Int
 ) {
   orders(
     where: $where
-    orderBy: $orderBy
+    orderBy: $order
     offset: $offset
     limit: $limit
   ) {
