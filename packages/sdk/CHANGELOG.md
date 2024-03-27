@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 3.4.2
+
+### Patch Changes
+
+- db508c3: Improve package json exports
+- Updated dependencies [db508c3]
+  - @zeitgeistpm/augment-api@3.4.2
+  - @zeitgeistpm/indexer@4.4.2
+  - @zeitgeistpm/rpc@3.4.1
+  - @zeitgeistpm/utility@3.4.1
+  - @zeitgeistpm/web3.storage@3.4.2
+
 ## 3.4.1
 
 ### Patch Changes

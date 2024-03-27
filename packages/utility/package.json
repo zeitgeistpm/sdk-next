@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/utility",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "publishConfig": {
     "access": "public"
   },
@@ -12,102 +12,102 @@
     "./dist/aeither": {
       "types": "./dist/aeither/index.d.ts",
       "import": "./dist/aeither/index.mjs",
-      "default": "./dist/aeither/index.js"
+      "default": "./dist/aeither/index.cjs"
     },
     "./dist/array": {
       "types": "./dist/array/index.d.ts",
       "import": "./dist/array/index.mjs",
-      "default": "./dist/array/index.js"
+      "default": "./dist/array/index.cjs"
     },
     "./dist/assert": {
       "types": "./dist/assert/index.d.ts",
       "import": "./dist/assert/index.mjs",
-      "default": "./dist/assert/index.js"
+      "default": "./dist/assert/index.cjs"
     },
     "./dist/async": {
       "types": "./dist/async/index.d.ts",
       "import": "./dist/async/index.mjs",
-      "default": "./dist/async/index.js"
+      "default": "./dist/async/index.cjs"
     },
     "./dist/btreemap": {
       "types": "./dist/btreemap/index.d.ts",
       "import": "./dist/btreemap/index.mjs",
-      "default": "./dist/btreemap/index.js"
+      "default": "./dist/btreemap/index.cjs"
     },
     "./dist/codec": {
       "types": "./dist/codec/index.d.ts",
       "import": "./dist/codec/index.mjs",
-      "default": "./dist/codec/index.js"
+      "default": "./dist/codec/index.cjs"
     },
     "./dist/either": {
       "types": "./dist/either/index.d.ts",
       "import": "./dist/either/index.mjs",
-      "default": "./dist/either/index.js"
+      "default": "./dist/either/index.cjs"
     },
     "./dist/error": {
       "types": "./dist/error/index.d.ts",
       "import": "./dist/error/index.mjs",
-      "default": "./dist/error/index.js"
+      "default": "./dist/error/index.cjs"
     },
     "./dist/function": {
       "types": "./dist/function/index.d.ts",
       "import": "./dist/function/index.mjs",
-      "default": "./dist/function/index.js"
+      "default": "./dist/function/index.cjs"
     },
     "./dist/index.ts": {
       "types": "./dist/index.ts/index.d.ts",
       "import": "./dist/index.ts/index.mjs",
-      "default": "./dist/index.ts/index.js"
+      "default": "./dist/index.ts/index.cjs"
     },
     "./dist/infinity": {
       "types": "./dist/infinity/index.d.ts",
       "import": "./dist/infinity/index.mjs",
-      "default": "./dist/infinity/index.js"
+      "default": "./dist/infinity/index.cjs"
     },
     "./dist/null": {
       "types": "./dist/null/index.d.ts",
       "import": "./dist/null/index.mjs",
-      "default": "./dist/null/index.js"
+      "default": "./dist/null/index.cjs"
     },
     "./dist/object": {
       "types": "./dist/object/index.d.ts",
       "import": "./dist/object/index.mjs",
-      "default": "./dist/object/index.js"
+      "default": "./dist/object/index.cjs"
     },
     "./dist/observable": {
       "types": "./dist/observable/index.d.ts",
       "import": "./dist/observable/index.mjs",
-      "default": "./dist/observable/index.js"
+      "default": "./dist/observable/index.cjs"
     },
     "./dist/option": {
       "types": "./dist/option/index.d.ts",
       "import": "./dist/option/index.mjs",
-      "default": "./dist/option/index.js"
+      "default": "./dist/option/index.cjs"
     },
     "./dist/pfunc": {
       "types": "./dist/pfunc/index.d.ts",
       "import": "./dist/pfunc/index.mjs",
-      "default": "./dist/pfunc/index.js"
+      "default": "./dist/pfunc/index.cjs"
     },
     "./dist/task": {
       "types": "./dist/task/index.d.ts",
       "import": "./dist/task/index.mjs",
-      "default": "./dist/task/index.js"
+      "default": "./dist/task/index.cjs"
     },
     "./dist/taskeither": {
       "types": "./dist/taskeither/index.d.ts",
       "import": "./dist/taskeither/index.mjs",
-      "default": "./dist/taskeither/index.js"
+      "default": "./dist/taskeither/index.cjs"
     },
     "./dist/time": {
       "types": "./dist/time/index.d.ts",
       "import": "./dist/time/index.mjs",
-      "default": "./dist/time/index.js"
+      "default": "./dist/time/index.cjs"
     },
     "./dist/ztg": {
       "types": "./dist/ztg/index.d.ts",
       "import": "./dist/ztg/index.mjs",
-      "default": "./dist/ztg/index.js"
+      "default": "./dist/ztg/index.cjs"
     }
   },
   "files": [

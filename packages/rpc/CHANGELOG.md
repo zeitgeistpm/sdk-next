@@ -1,5 +1,14 @@
 # @zeitgeistpm/rpc
 
+## 3.4.1
+
+### Patch Changes
+
+- db508c3: Improve package json exports
+- Updated dependencies [db508c3]
+  - @zeitgeistpm/augment-api@3.4.2
+  - @zeitgeistpm/utility@3.4.1
+
 ## 3.4.0
 
 ### Minor Changes

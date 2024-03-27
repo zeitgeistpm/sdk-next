@@ -1,17 +1,17 @@
 {
   "name": "@zeitgeistpm/rpc",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "default": "./dist/index.js"
+      "default": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -24,8 +24,8 @@
     "build:mainnet": "rimraf ./dist && rollup -c"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^3.4.0",
-    "@zeitgeistpm/utility": "^3.4.0"
+    "@zeitgeistpm/augment-api": "^3.4.2",
+    "@zeitgeistpm/utility": "^3.4.1"
   },
   "peerDependencies": {
     "@polkadot/api": "*",

@@ -1,17 +1,17 @@
 {
   "name": "@zeitgeistpm/sdk",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "default": "./dist/index.js"
+      "default": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -31,11 +31,11 @@
     "@polkadot/util": "*"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^3.4.1",
-    "@zeitgeistpm/indexer": "^4.4.1",
-    "@zeitgeistpm/rpc": "^3.4.0",
-    "@zeitgeistpm/utility": "^3.4.0",
-    "@zeitgeistpm/web3.storage": "^3.4.1",
+    "@zeitgeistpm/augment-api": "^3.4.2",
+    "@zeitgeistpm/indexer": "^4.4.2",
+    "@zeitgeistpm/rpc": "^3.4.1",
+    "@zeitgeistpm/utility": "^3.4.1",
+    "@zeitgeistpm/web3.storage": "^3.4.2",
     "cids": "^1.1.9",
     "decimal.js": "^10.4.3",
     "human-object-diff": "^3.0.0",

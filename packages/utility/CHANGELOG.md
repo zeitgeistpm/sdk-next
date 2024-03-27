@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 3.4.1
+
+### Patch Changes
+
+- db508c3: Improve package json exports
+
 ## 3.4.0
 
 ### Minor Changes

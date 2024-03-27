@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.4.2
+
+### Patch Changes
+
+- db508c3: Improve package json exports
+
 ## 4.4.1
 
 ### Patch Changes
