@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.5.0
+
+### Minor Changes
+
+- d88be3a: Added `historicalOrders` query to the indexer and changed some occurences of order being `orderBy` in the params.
+
 ## 4.4.2
 
 ### Patch Changes

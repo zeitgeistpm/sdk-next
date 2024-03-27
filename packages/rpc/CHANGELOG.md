@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 3.5.0
+
+### Minor Changes
+
+- d88be3a: Added `historicalOrders` query to the indexer and changed some occurences of order being `orderBy` in the params.
+
+### Patch Changes
+
+- Updated dependencies [d88be3a]
+  - @zeitgeistpm/augment-api@3.5.0
+  - @zeitgeistpm/utility@3.5.0
+
 ## 3.4.1
 
 ### Patch Changes
