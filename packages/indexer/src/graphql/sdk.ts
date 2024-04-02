@@ -4572,9 +4572,9 @@ export type HistoricalSwapsQueryVariables = Exact<{
 }>;
 
 
-export type HistoricalSwapsQuery = { __typename?: 'Query', historicalSwaps: Array<{ __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null }> };
+export type HistoricalSwapsQuery = { __typename?: 'Query', historicalSwaps: Array<{ __typename?: 'HistoricalSwap', accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, blockNumber: number, externalFeeAmount?: any | null, event: string, id: string, swapFeeAmount?: any | null, timestamp: any, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null }> };
 
-export type FullHistoricalSwapFragment = { __typename?: 'HistoricalSwap', id: string, event: string, blockNumber: number, timestamp: any, accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null };
+export type FullHistoricalSwapFragment = { __typename?: 'HistoricalSwap', accountId: string, assetAmountIn: any, assetAmountOut: any, assetIn: string, assetOut: string, blockNumber: number, externalFeeAmount?: any | null, event: string, id: string, swapFeeAmount?: any | null, timestamp: any, extrinsic?: { __typename?: 'Extrinsic', hash: string, name?: string | null } | null };
 
 export type IssuanceHistoryQueryVariables = Exact<{
   assetId?: InputMaybe<AssetKindValue>;
@@ -4928,19 +4928,21 @@ export const FullHistoricalOrderFragmentDoc = gql`
     `;
 export const FullHistoricalSwapFragmentDoc = gql`
     fragment FullHistoricalSwap on HistoricalSwap {
-  id
-  event
-  blockNumber
-  timestamp
   accountId
   assetAmountIn
   assetAmountOut
   assetIn
   assetOut
+  blockNumber
+  externalFeeAmount
   extrinsic {
     hash
     name
   }
+  event
+  id
+  swapFeeAmount
+  timestamp
 }
     `;
 export const FullLiquiditySharesManagerFragmentDoc = gql`

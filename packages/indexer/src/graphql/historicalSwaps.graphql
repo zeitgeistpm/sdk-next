@@ -15,17 +15,19 @@ query historicalSwaps(
 }
 
 fragment FullHistoricalSwap on HistoricalSwap {
-  id
-  event
-  blockNumber
-  timestamp
   accountId
   assetAmountIn
   assetAmountOut
   assetIn
   assetOut
+  blockNumber
+  externalFeeAmount
   extrinsic {
     hash
     name
   }
+  event
+  id
+  swapFeeAmount
+  timestamp
 }
