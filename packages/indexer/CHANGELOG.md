@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.5.1
+
+### Patch Changes
+
+- 7c95f6c: Add timestamp to historical account balances
+
 ## 4.5.0
 
 ### Minor Changes
