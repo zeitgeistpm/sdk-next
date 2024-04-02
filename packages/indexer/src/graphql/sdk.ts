@@ -237,13 +237,21 @@ export type Asset = {
   amountInPool: Scalars['BigInt'];
   /** Zeitgeist's identifier for asset */
   assetId: Scalars['String'];
+  /** Color identifier */
+  color?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  /** Image identifier */
+  img?: Maybe<Scalars['String']>;
   /** Connected market */
   market: Market;
+  /** Title ex. `Locomotiv will not be defeated` */
+  name?: Maybe<Scalars['String']>;
   /** Connected pool */
   pool?: Maybe<Pool>;
   /** Spot price of the asset in the pool */
   price: Scalars['Float'];
+  /** Short abbreviation ex. `LMDRAW` */
+  ticker?: Maybe<Scalars['String']>;
 };
 
 export type AssetEdge = {
@@ -275,10 +283,18 @@ export enum AssetOrderByInput {
   AssetIdAscNullsFirst = 'assetId_ASC_NULLS_FIRST',
   AssetIdDesc = 'assetId_DESC',
   AssetIdDescNullsLast = 'assetId_DESC_NULLS_LAST',
+  ColorAsc = 'color_ASC',
+  ColorAscNullsFirst = 'color_ASC_NULLS_FIRST',
+  ColorDesc = 'color_DESC',
+  ColorDescNullsLast = 'color_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
   IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdDesc = 'id_DESC',
   IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  ImgAsc = 'img_ASC',
+  ImgAscNullsFirst = 'img_ASC_NULLS_FIRST',
+  ImgDesc = 'img_DESC',
+  ImgDescNullsLast = 'img_DESC_NULLS_LAST',
   MarketAuthorizedAddressAsc = 'market_authorizedAddress_ASC',
   MarketAuthorizedAddressAscNullsFirst = 'market_authorizedAddress_ASC_NULLS_FIRST',
   MarketAuthorizedAddressDesc = 'market_authorizedAddress_DESC',
@@ -375,6 +391,10 @@ export enum AssetOrderByInput {
   MarketVolumeAscNullsFirst = 'market_volume_ASC_NULLS_FIRST',
   MarketVolumeDesc = 'market_volume_DESC',
   MarketVolumeDescNullsLast = 'market_volume_DESC_NULLS_LAST',
+  NameAsc = 'name_ASC',
+  NameAscNullsFirst = 'name_ASC_NULLS_FIRST',
+  NameDesc = 'name_DESC',
+  NameDescNullsLast = 'name_DESC_NULLS_LAST',
   PoolBaseAssetAsc = 'pool_baseAsset_ASC',
   PoolBaseAssetAscNullsFirst = 'pool_baseAsset_ASC_NULLS_FIRST',
   PoolBaseAssetDesc = 'pool_baseAsset_DESC',
@@ -414,7 +434,11 @@ export enum AssetOrderByInput {
   PriceAsc = 'price_ASC',
   PriceAscNullsFirst = 'price_ASC_NULLS_FIRST',
   PriceDesc = 'price_DESC',
-  PriceDescNullsLast = 'price_DESC_NULLS_LAST'
+  PriceDescNullsLast = 'price_DESC_NULLS_LAST',
+  TickerAsc = 'ticker_ASC',
+  TickerAscNullsFirst = 'ticker_ASC_NULLS_FIRST',
+  TickerDesc = 'ticker_DESC',
+  TickerDescNullsLast = 'ticker_DESC_NULLS_LAST'
 }
 
 export type AssetPrice = {
@@ -453,6 +477,23 @@ export type AssetWhereInput = {
   assetId_not_in?: InputMaybe<Array<Scalars['String']>>;
   assetId_not_startsWith?: InputMaybe<Scalars['String']>;
   assetId_startsWith?: InputMaybe<Scalars['String']>;
+  color_contains?: InputMaybe<Scalars['String']>;
+  color_containsInsensitive?: InputMaybe<Scalars['String']>;
+  color_endsWith?: InputMaybe<Scalars['String']>;
+  color_eq?: InputMaybe<Scalars['String']>;
+  color_gt?: InputMaybe<Scalars['String']>;
+  color_gte?: InputMaybe<Scalars['String']>;
+  color_in?: InputMaybe<Array<Scalars['String']>>;
+  color_isNull?: InputMaybe<Scalars['Boolean']>;
+  color_lt?: InputMaybe<Scalars['String']>;
+  color_lte?: InputMaybe<Scalars['String']>;
+  color_not_contains?: InputMaybe<Scalars['String']>;
+  color_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  color_not_endsWith?: InputMaybe<Scalars['String']>;
+  color_not_eq?: InputMaybe<Scalars['String']>;
+  color_not_in?: InputMaybe<Array<Scalars['String']>>;
+  color_not_startsWith?: InputMaybe<Scalars['String']>;
+  color_startsWith?: InputMaybe<Scalars['String']>;
   id_contains?: InputMaybe<Scalars['String']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']>;
   id_endsWith?: InputMaybe<Scalars['String']>;
@@ -470,8 +511,42 @@ export type AssetWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']>;
   id_startsWith?: InputMaybe<Scalars['String']>;
+  img_contains?: InputMaybe<Scalars['String']>;
+  img_containsInsensitive?: InputMaybe<Scalars['String']>;
+  img_endsWith?: InputMaybe<Scalars['String']>;
+  img_eq?: InputMaybe<Scalars['String']>;
+  img_gt?: InputMaybe<Scalars['String']>;
+  img_gte?: InputMaybe<Scalars['String']>;
+  img_in?: InputMaybe<Array<Scalars['String']>>;
+  img_isNull?: InputMaybe<Scalars['Boolean']>;
+  img_lt?: InputMaybe<Scalars['String']>;
+  img_lte?: InputMaybe<Scalars['String']>;
+  img_not_contains?: InputMaybe<Scalars['String']>;
+  img_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  img_not_endsWith?: InputMaybe<Scalars['String']>;
+  img_not_eq?: InputMaybe<Scalars['String']>;
+  img_not_in?: InputMaybe<Array<Scalars['String']>>;
+  img_not_startsWith?: InputMaybe<Scalars['String']>;
+  img_startsWith?: InputMaybe<Scalars['String']>;
   market?: InputMaybe<MarketWhereInput>;
   market_isNull?: InputMaybe<Scalars['Boolean']>;
+  name_contains?: InputMaybe<Scalars['String']>;
+  name_containsInsensitive?: InputMaybe<Scalars['String']>;
+  name_endsWith?: InputMaybe<Scalars['String']>;
+  name_eq?: InputMaybe<Scalars['String']>;
+  name_gt?: InputMaybe<Scalars['String']>;
+  name_gte?: InputMaybe<Scalars['String']>;
+  name_in?: InputMaybe<Array<Scalars['String']>>;
+  name_isNull?: InputMaybe<Scalars['Boolean']>;
+  name_lt?: InputMaybe<Scalars['String']>;
+  name_lte?: InputMaybe<Scalars['String']>;
+  name_not_contains?: InputMaybe<Scalars['String']>;
+  name_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  name_not_endsWith?: InputMaybe<Scalars['String']>;
+  name_not_eq?: InputMaybe<Scalars['String']>;
+  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  name_not_startsWith?: InputMaybe<Scalars['String']>;
+  name_startsWith?: InputMaybe<Scalars['String']>;
   pool?: InputMaybe<PoolWhereInput>;
   pool_isNull?: InputMaybe<Scalars['Boolean']>;
   price_eq?: InputMaybe<Scalars['Float']>;
@@ -483,6 +558,23 @@ export type AssetWhereInput = {
   price_lte?: InputMaybe<Scalars['Float']>;
   price_not_eq?: InputMaybe<Scalars['Float']>;
   price_not_in?: InputMaybe<Array<Scalars['Float']>>;
+  ticker_contains?: InputMaybe<Scalars['String']>;
+  ticker_containsInsensitive?: InputMaybe<Scalars['String']>;
+  ticker_endsWith?: InputMaybe<Scalars['String']>;
+  ticker_eq?: InputMaybe<Scalars['String']>;
+  ticker_gt?: InputMaybe<Scalars['String']>;
+  ticker_gte?: InputMaybe<Scalars['String']>;
+  ticker_in?: InputMaybe<Array<Scalars['String']>>;
+  ticker_isNull?: InputMaybe<Scalars['Boolean']>;
+  ticker_lt?: InputMaybe<Scalars['String']>;
+  ticker_lte?: InputMaybe<Scalars['String']>;
+  ticker_not_contains?: InputMaybe<Scalars['String']>;
+  ticker_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  ticker_not_endsWith?: InputMaybe<Scalars['String']>;
+  ticker_not_eq?: InputMaybe<Scalars['String']>;
+  ticker_not_in?: InputMaybe<Array<Scalars['String']>>;
+  ticker_not_startsWith?: InputMaybe<Scalars['String']>;
+  ticker_startsWith?: InputMaybe<Scalars['String']>;
 };
 
 export type AssetsConnection = {
