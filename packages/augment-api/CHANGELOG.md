@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 3.5.1
+
+### Patch Changes
+
+- e1ea399: Include \_\_typename on all indexer queries.
+
 ## 3.5.0
 
 ### Minor Changes

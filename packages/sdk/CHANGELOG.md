@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 3.5.2
+
+### Patch Changes
+
+- e1ea399: Include \_\_typename on all indexer queries.
+- Updated dependencies [e1ea399]
+  - @zeitgeistpm/augment-api@3.5.1
+  - @zeitgeistpm/indexer@4.5.2
+
 ## 3.5.1
 
 ### Patch Changes
