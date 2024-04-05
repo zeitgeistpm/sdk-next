@@ -1,6 +1,10 @@
 import type { Option, StorageKey, u128, Vec } from '@polkadot/types'
 
-import type { ZeitgeistPrimitivesAsset, ZrmlSwapsPool } from '@polkadot/types/lookup'
+import type {
+  ZeitgeistPrimitivesAssetsAllAssetsAsset,
+  ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass,
+  ZrmlSwapsPool,
+} from '@polkadot/types/lookup'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import { isCodec, isNumber } from '@polkadot/util'
 import { PoolsQuery } from '@zeitgeistpm/indexer'
@@ -20,6 +24,7 @@ import { Context, IndexerContext, isRpcContext, RpcContext } from '../../context
 import { MetadataStorage } from '../../meta'
 import {
   AssetId,
+  CurrencyAssetId,
   getIndexOf,
   IOBaseAssetId,
   IOCategoricalAssetId,
@@ -87,7 +92,11 @@ export type PoolMethods = {
   getSwapFee: () => Decimal
   getAssetIds: () => AssetId[]
   getAssetWeight: (assetId: AssetId) => O.IOption<Decimal>
-  getAssetBalance: Te.TaskEither<Error, Decimal, [assetId: AssetId]>
+  getAssetBalance: Te.TaskEither<
+    Error,
+    Decimal,
+    [assetId: CurrencyAssetId | ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass]
+  >
 }
 
 export const attachPoolMethods = <
@@ -317,9 +326,9 @@ export type ExchangeFullSetParams = {
 
 export type SwapExactAmountInParams = {
   poolId: string | u128 | number | Uint8Array
-  assetIn: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset | AssetId | Uint8Array
   assetAmountIn: string | u128 | number | Uint8Array
-  assetOut: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  assetOut: ZeitgeistPrimitivesAssetsAllAssetsAsset | AssetId | Uint8Array
   minAssetAmountOut?: string | u128 | number | Uint8Array
   maxPrice?: string | u128 | number | Uint8Array
   signer: KeyringPairOrExtSigner
@@ -327,9 +336,9 @@ export type SwapExactAmountInParams = {
 
 export type SwapExactAmountOutParams = {
   poolId: string | u128 | number | Uint8Array
-  assetIn: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset | AssetId | Uint8Array
   maxAssetAmountIn?: string | u128 | number | Uint8Array | null
-  assetOut: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  assetOut: ZeitgeistPrimitivesAssetsAllAssetsAsset | AssetId | Uint8Array
   assetAmountOut: string | u128 | number | Uint8Array
   maxPrice?: string | u128 | number | Uint8Array | null
   signer: KeyringPairOrExtSigner
@@ -344,7 +353,7 @@ export type PoolJoinParams = {
 
 export type PoolJoinWithExactAmountParams = {
   poolId: string | u128 | number | Uint8Array
-  assetIn: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset | AssetId | Uint8Array
   assetAmount: string | u128 | number | Uint8Array
   minPoolAmount: string | u128 | number | Uint8Array
   signer: KeyringPairOrExtSigner
@@ -352,7 +361,7 @@ export type PoolJoinWithExactAmountParams = {
 
 export type PoolJoinWithExactPoolAmount = {
   poolId: string | u128 | number | Uint8Array
-  asset: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  asset: ZeitgeistPrimitivesAssetsAllAssetsAsset | AssetId | Uint8Array
   poolAmount: string | u128 | number | Uint8Array
   maxAssetAmount: string | u128 | number | Uint8Array
   signer: KeyringPairOrExtSigner
@@ -373,7 +382,7 @@ export type PoolExitSubsidyParams = {
 
 export type PoolExitWithExactAssetAmountParams = {
   poolId: string | u128 | number | Uint8Array
-  asset: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  asset: ZeitgeistPrimitivesAssetsAllAssetsAsset | AssetId | Uint8Array
   assetAmount: string | u128 | number | Uint8Array
   maxPoolAmount: string | u128 | number | Uint8Array
   signer: KeyringPairOrExtSigner
@@ -381,7 +390,7 @@ export type PoolExitWithExactAssetAmountParams = {
 
 export type PoolExitWithExactPoolAmountParams = {
   poolId: string | u128 | number | Uint8Array
-  asset: ZeitgeistPrimitivesAsset | AssetId | Uint8Array
+  asset: ZeitgeistPrimitivesAssetsAllAssetsAsset | AssetId | Uint8Array
   poolAmount: string | u128 | number | Uint8Array
   minAssetAmount: string | u128 | number | Uint8Array
   signer: KeyringPairOrExtSigner
@@ -444,7 +453,7 @@ export const getBaseAsset = <C extends Context<MS>, MS extends MetadataStorage>(
  */
 export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage>(
   pool: Pool<C, MS>,
-  _assetId: AssetId | ZeitgeistPrimitivesAsset,
+  _assetId: AssetId | ZeitgeistPrimitivesAssetsAllAssetsAsset,
 ): O.IOption<Decimal> => {
   let weight: string | undefined
 
@@ -502,9 +511,9 @@ export const getAssetWeight = <C extends Context<MS>, MS extends MetadataStorage
 export const getAssetBalance = async <C extends Context<MS>, MS extends MetadataStorage>(
   ctx: C,
   pool: Pool<C, MS>,
-  _assetId: AssetId,
+  _assetId: CurrencyAssetId | ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass,
 ): Promise<Decimal> => {
-  const assetId = isCodec(_assetId) ? parseAssetId(_assetId).unwrap() : _assetId
+  const assetId = parseAssetId(_assetId).unwrap() as CurrencyAssetId
 
   if (isRpcContext(ctx)) {
     const poolAccountId = (await ctx.api.rpc.swaps.poolAccountId(pool.poolId)).toString()

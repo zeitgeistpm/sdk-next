@@ -1,4 +1,4 @@
-import type { ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup'
+import type { ZeitgeistPrimitivesAssetsAllAssetsAsset } from '@polkadot/types/lookup'
 import { isCodec } from '@polkadot/util'
 import * as E from '@zeitgeistpm/utility/dist/either'
 import { upperFirstObjectKeys } from '@zeitgeistpm/utility/dist/object'
@@ -17,6 +17,10 @@ export type ParimutuelShareAssetId = Infer<typeof IOParimituelShareAssetId>
 export type PoolShareAssetId = Infer<typeof IOPoolShareAssetId>
 export type ZtgAssetId = Infer<typeof IOZtgAssetId>
 export type ForeignAssetId = Infer<typeof IOForeignAssetId>
+export type CampaignAssetId = Infer<typeof IOCampaignAssetId>
+export type CustomAssetId = Infer<typeof IOCustomAssetId>
+export type MarketAssetId = Infer<typeof IOMarketAssetId>
+export type CurrencyAssetId = Infer<typeof IOCurrencyAsset>
 export type BaseAssetId = Infer<typeof IOBaseAssetId>
 
 export type MarketOutcomeAssetId = Infer<typeof IOMarketOutcomeAssetId>
@@ -63,18 +67,43 @@ export const IOForeignAssetId = type({
   ForeignAsset: number(),
 })
 
-export const IOBaseAssetId = union([IOZtgAssetId, IOForeignAssetId])
+export const IOCampaignAssetId = type({
+  CampaignAsset: number(),
+})
+
+export const IOCustomAssetId = type({
+  CustomAsset: number(),
+})
+
+export const IOCurrencyAsset = union([
+  IOCategoricalAssetId,
+  IOScalarAssetId,
+  IOPoolShareAssetId,
+  IOForeignAssetId,
+  IOParimituelShareAssetId,
+])
+
+export const IOMarketAssetId = union([
+  IOCategoricalAssetId,
+  IOScalarAssetId,
+  IOPoolShareAssetId,
+  IOParimituelShareAssetId,
+])
+
+export const IOBaseAssetId = union([IOZtgAssetId, IOForeignAssetId, IOCampaignAssetId])
 
 export const IOAssetId = union([
   IOCategoricalAssetId,
   IOScalarAssetId,
   IOPoolShareAssetId,
   IOParimituelShareAssetId,
+  IOCampaignAssetId,
+  IOCustomAssetId,
   IOBaseAssetId,
 ])
 
 export const fromPrimitive = (
-  asset: ZeitgeistPrimitivesAsset,
+  asset: ZeitgeistPrimitivesAssetsAllAssetsAsset,
 ): E.IEither<Error, AssetId> => {
   let assetId: AssetId | undefined
   if (asset.isCategoricalOutcome) {
@@ -104,6 +133,10 @@ export const fromPrimitive = (
         asset.asParimutuelShare[1].toNumber(),
       ],
     }
+  } else if (asset.isCampaignAsset) {
+    assetId = { CampaignAsset: asset.asCampaignAsset.toNumber() }
+  } else if (asset.isCustomAsset) {
+    assetId = { CustomAsset: asset.asCustomAsset.toNumber() }
   }
 
   if (assetId) {
@@ -162,7 +195,7 @@ export const parseAssetId = (raw: any): E.IEither<SyntaxError, AssetId> => {
   if (!raw) return E.either(E.left(new SyntaxError('Invalid asset id structure')))
 
   if (isCodec(raw)) {
-    return fromPrimitive(raw as ZeitgeistPrimitivesAsset)
+    return fromPrimitive(raw as ZeitgeistPrimitivesAssetsAllAssetsAsset)
   }
 
   if (typeof raw === 'string' && raw.toLowerCase() === 'ztg') {

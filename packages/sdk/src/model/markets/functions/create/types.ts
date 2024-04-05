@@ -2,7 +2,7 @@ import type { SubmittableExtrinsic } from '@polkadot/api/types'
 import { u128 } from '@polkadot/types'
 import { Perbill } from '@polkadot/types/interfaces'
 import type {
-  ZeitgeistPrimitivesAsset,
+  ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass,
   ZeitgeistPrimitivesMarketMarketCreation,
   ZeitgeistPrimitivesMarketMarketDisputeMechanism,
   ZeitgeistPrimitivesMarketScoringRule,
@@ -17,7 +17,7 @@ import type { IEither } from '@zeitgeistpm/utility/dist/either'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
 import { RpcContext } from '../../../../context'
 import { MarketTypeOf, MetadataStorage } from '../../../../meta'
-import { AssetId } from '../../../../primitives'
+import { AssetId, BaseAssetId } from '../../../../primitives'
 import { Market } from '../../market'
 import { PFunc } from '@zeitgeistpm/utility/dist/pfunc'
 import { isFunction } from 'lodash-es'
@@ -37,7 +37,7 @@ export type CreateMarketBaseParams<MS extends MetadataStorage> = {
   /**
    * The base asset of the market. Can be ZTG or another
    */
-  baseAsset: ZeitgeistPrimitivesAsset | AssetId
+  baseAsset: ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass | BaseAssetId
 
   /**
    * How much does the creator take in fees pr trade in PerBill.
