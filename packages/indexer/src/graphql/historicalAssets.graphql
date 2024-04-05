@@ -15,6 +15,7 @@ query historicalAssets(
 }
 
 fragment FullHistoricalAssets on HistoricalAsset {
+  __typename
   accountId
   assetId
   blockNumber

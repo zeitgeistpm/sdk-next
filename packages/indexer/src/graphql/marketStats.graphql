@@ -1,5 +1,6 @@
 query marketStats($ids: [Int!]!) {
   marketStats(marketId: $ids) {
+    __typename
     liquidity
     marketId
     participants

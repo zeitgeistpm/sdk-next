@@ -10,6 +10,7 @@ query balanceInfo(
     blockNumber: $blockNumber, 
     event: $event
   ) {
+    __typename
     assetId
     balance
   }

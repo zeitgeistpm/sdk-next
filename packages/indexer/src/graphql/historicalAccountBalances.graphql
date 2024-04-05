@@ -15,12 +15,14 @@ query historicalAccountBalances(
 }
 
 fragment FullHistoricalAccountBalance on HistoricalAccountBalance {
+  __typename
+  id
   accountId
   assetId
   blockNumber
+  timestamp
   dBalance
   event
-  id
   extrinsic {
     hash
     name

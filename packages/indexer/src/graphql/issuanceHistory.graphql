@@ -2,6 +2,7 @@ query issuanceHistory(
   $assetId: AssetKindValue
 ) {
   issuanceHistory(assetId: $assetId) {
+    __typename
     assetId
     issuances {
       date

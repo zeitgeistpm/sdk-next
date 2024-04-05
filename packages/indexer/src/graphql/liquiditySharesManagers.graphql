@@ -10,6 +10,7 @@ query liquiditySharesManagers(
 }
 
 fragment FullLiquiditySharesManager on LiquiditySharesManager {
+  __typename
   account
   fees
   id

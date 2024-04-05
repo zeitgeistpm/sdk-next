@@ -18,6 +18,7 @@ query marketStatusCount(
 }
 
 fragment FullMarket on Market {
+  __typename
   authorizedAddress
   assets {
     amountInPool
@@ -118,6 +119,7 @@ query historicalMarkets(
   $offset: Int
 ) {
   historicalMarkets(where: $where, limit: $limit, offset: $offset, orderBy: $order) {
+    __typename
     blockNumber
     dLiquidity
     dVolume

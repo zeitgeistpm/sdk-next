@@ -15,6 +15,7 @@ query historicalSwaps(
 }
 
 fragment FullHistoricalSwap on HistoricalSwap {
+  __typename
   id
   event
   blockNumber

@@ -8053,7 +8053,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zeitgeistpm/augment-api@^3.2.4, @zeitgeistpm/augment-api@workspace:packages/augment-api":
+"@zeitgeistpm/augment-api@^3.5.0, @zeitgeistpm/augment-api@workspace:packages/augment-api":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/augment-api@workspace:packages/augment-api"
   dependencies:
@@ -8065,7 +8065,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/indexer@^4.2.4, @zeitgeistpm/indexer@workspace:packages/indexer":
+"@zeitgeistpm/indexer@^4.5.0, @zeitgeistpm/indexer@workspace:packages/indexer":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/indexer@workspace:packages/indexer"
   dependencies:
@@ -8081,12 +8081,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/rpc@^3.2.4, @zeitgeistpm/rpc@workspace:packages/rpc":
+"@zeitgeistpm/rpc@^3.5.0, @zeitgeistpm/rpc@workspace:packages/rpc":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/rpc@workspace:packages/rpc"
   dependencies:
-    "@zeitgeistpm/augment-api": ^3.2.4
-    "@zeitgeistpm/utility": ^3.2.3
+    "@zeitgeistpm/augment-api": ^3.5.0
+    "@zeitgeistpm/utility": ^3.5.0
   peerDependencies:
     "@polkadot/api": "*"
     "@polkadot/keyring": "*"
@@ -8101,11 +8101,11 @@ __metadata:
     "@types/lodash-es": ^4.17.6
     "@types/lodash.memoize": ^4.1.7
     "@types/ms": ^0.7.31
-    "@zeitgeistpm/augment-api": ^3.2.4
-    "@zeitgeistpm/indexer": ^4.2.4
-    "@zeitgeistpm/rpc": ^3.2.4
-    "@zeitgeistpm/utility": ^3.2.3
-    "@zeitgeistpm/web3.storage": ^3.2.3
+    "@zeitgeistpm/augment-api": ^3.5.0
+    "@zeitgeistpm/indexer": ^4.5.0
+    "@zeitgeistpm/rpc": ^3.5.0
+    "@zeitgeistpm/utility": ^3.5.0
+    "@zeitgeistpm/web3.storage": ^3.5.0
     cids: ^1.1.9
     decimal.js: ^10.4.3
     human-object-diff: ^3.0.0
@@ -8122,7 +8122,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^3.2.3, @zeitgeistpm/utility@workspace:packages/utility":
+"@zeitgeistpm/utility@*, @zeitgeistpm/utility@^3.5.0, @zeitgeistpm/utility@workspace:packages/utility":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/utility@workspace:packages/utility"
   dependencies:
@@ -8138,12 +8138,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zeitgeistpm/web3.storage@^3.2.3, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
+"@zeitgeistpm/web3.storage@^3.5.0, @zeitgeistpm/web3.storage@workspace:packages/web3.storage":
   version: 0.0.0-use.local
   resolution: "@zeitgeistpm/web3.storage@workspace:packages/web3.storage"
   dependencies:
     "@multiformats/sha3": ^3.0.2
-    "@zeitgeistpm/utility": ^3.2.3
+    "@zeitgeistpm/utility": ^3.5.0
     cids: ^1.1.9
     ipfs-http-client: ^60.0.0
     ipfs-only-hash: ^4.0.0

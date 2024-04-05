@@ -8,14 +8,14 @@ import '@polkadot/api-base/types/consts';
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
 import type { Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { Perbill, Percent, Permill } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, PalletContractsSchedule, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, XcmV3MultiLocation, ZeitgeistPrimitivesAsset } from '@polkadot/types/lookup';
+import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, PalletContractsSchedule, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, XcmV3MultiLocation, ZeitgeistPrimitivesAssetsAllAssetsAsset } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
 
 declare module '@polkadot/api-base/types/consts' {
   interface AugmentedConsts<ApiType extends ApiTypes> {
     assetManager: {
-      getNativeCurrencyId: ZeitgeistPrimitivesAsset & AugmentedConst<ApiType>;
+      getNativeCurrencyId: ZeitgeistPrimitivesAssetsAllAssetsAsset & AugmentedConst<ApiType>;
     };
     authorized: {
       /**
@@ -85,6 +85,40 @@ declare module '@polkadot/api-base/types/consts' {
        * Benchmarks depend on this value, be sure to update weights file when changing this value
        **/
       maximumReasonLength: u32 & AugmentedConst<ApiType>;
+    };
+    campaignAssets: {
+      /**
+       * The amount of funds that must be reserved when creating a new approval.
+       **/
+      approvalDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The amount of funds that must be reserved for a non-provider asset account to be
+       * maintained.
+       **/
+      assetAccountDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The basic amount of funds that must be reserved for an asset.
+       **/
+      assetDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The basic amount of funds that must be reserved when adding metadata to your asset.
+       **/
+      metadataDepositBase: u128 & AugmentedConst<ApiType>;
+      /**
+       * The additional funds that must be reserved for the number of bytes you store in your
+       * metadata.
+       **/
+      metadataDepositPerByte: u128 & AugmentedConst<ApiType>;
+      /**
+       * Max number of items to destroy per `destroy_accounts` and `destroy_approvals` call.
+       * 
+       * Must be configured to result in a weight that makes each call fit in a block.
+       **/
+      removeItemsLimit: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum length of a name or symbol stored on-chain.
+       **/
+      stringLimit: u32 & AugmentedConst<ApiType>;
     };
     contracts: {
       /**
@@ -242,6 +276,40 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       votePeriod: u64 & AugmentedConst<ApiType>;
     };
+    customAssets: {
+      /**
+       * The amount of funds that must be reserved when creating a new approval.
+       **/
+      approvalDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The amount of funds that must be reserved for a non-provider asset account to be
+       * maintained.
+       **/
+      assetAccountDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The basic amount of funds that must be reserved for an asset.
+       **/
+      assetDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The basic amount of funds that must be reserved when adding metadata to your asset.
+       **/
+      metadataDepositBase: u128 & AugmentedConst<ApiType>;
+      /**
+       * The additional funds that must be reserved for the number of bytes you store in your
+       * metadata.
+       **/
+      metadataDepositPerByte: u128 & AugmentedConst<ApiType>;
+      /**
+       * Max number of items to destroy per `destroy_accounts` and `destroy_approvals` call.
+       * 
+       * Must be configured to result in a weight that makes each call fit in a block.
+       **/
+      removeItemsLimit: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum length of a name or symbol stored on-chain.
+       **/
+      stringLimit: u32 & AugmentedConst<ApiType>;
+    };
     democracy: {
       /**
        * Period in blocks where an external proposal may not be re-submitted after being vetoed.
@@ -379,6 +447,40 @@ declare module '@polkadot/api-base/types/consts' {
     liquidityMining: {
       palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
     };
+    marketAssets: {
+      /**
+       * The amount of funds that must be reserved when creating a new approval.
+       **/
+      approvalDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The amount of funds that must be reserved for a non-provider asset account to be
+       * maintained.
+       **/
+      assetAccountDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The basic amount of funds that must be reserved for an asset.
+       **/
+      assetDeposit: u128 & AugmentedConst<ApiType>;
+      /**
+       * The basic amount of funds that must be reserved when adding metadata to your asset.
+       **/
+      metadataDepositBase: u128 & AugmentedConst<ApiType>;
+      /**
+       * The additional funds that must be reserved for the number of bytes you store in your
+       * metadata.
+       **/
+      metadataDepositPerByte: u128 & AugmentedConst<ApiType>;
+      /**
+       * Max number of items to destroy per `destroy_accounts` and `destroy_approvals` call.
+       * 
+       * Must be configured to result in a weight that makes each call fit in a block.
+       **/
+      removeItemsLimit: u32 & AugmentedConst<ApiType>;
+      /**
+       * The maximum length of a name or symbol stored on-chain.
+       **/
+      stringLimit: u32 & AugmentedConst<ApiType>;
+    };
     multisig: {
       /**
        * The base amount of currency needed to reserve for creating a multisig execution or to
@@ -402,8 +504,8 @@ declare module '@polkadot/api-base/types/consts' {
     };
     neoSwaps: {
       /**
-       * The maximum allowed liquidity tree depth per pool. Each pool can support `2^(depth + 1)
-       * - 1` liquidity providers. **Must** be less than 16.
+       * The maximum allowed liquidity tree depth per pool. Each pool can support
+       * `2^(depth + 1) - 1` liquidity providers. **Must** be less than 16.
        **/
       maxLiquidityTreeDepth: u32 & AugmentedConst<ApiType>;
       maxSwapFee: u128 & AugmentedConst<ApiType>;
@@ -674,20 +776,30 @@ declare module '@polkadot/api-base/types/consts' {
        * The fee for exiting a pool.
        **/
       exitFee: u128 & AugmentedConst<ApiType>;
+      /**
+       * The maximum number of assets allowed in a single pool.
+       **/
       maxAssets: u16 & AugmentedConst<ApiType>;
-      maxInRatio: u128 & AugmentedConst<ApiType>;
-      maxOutRatio: u128 & AugmentedConst<ApiType>;
+      /**
+       * The maximum allowed swap fee.
+       **/
       maxSwapFee: u128 & AugmentedConst<ApiType>;
+      /**
+       * The maximum total weight of assets in a pool.
+       **/
       maxTotalWeight: u128 & AugmentedConst<ApiType>;
+      /**
+       * The maximum weight of each individual asset in a pool.
+       **/
       maxWeight: u128 & AugmentedConst<ApiType>;
       /**
-       * The minimum amount of assets in a pool.
+       * The minimum number of assets allowed in a single pool.
        **/
       minAssets: u16 & AugmentedConst<ApiType>;
-      minWeight: u128 & AugmentedConst<ApiType>;
       /**
-       * The module identifier.
+       * The minimum weight of each individual asset in a pool.
        **/
+      minWeight: u128 & AugmentedConst<ApiType>;
       palletId: FrameSupportPalletId & AugmentedConst<ApiType>;
     };
     system: {

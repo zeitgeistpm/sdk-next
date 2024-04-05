@@ -5,6 +5,7 @@ query marketMetadata($marketId: [Int!]!) {
 }
 
 fragment FullMarketMetadata on MarketMetadata {
+  __typename
   decoded
   encoded
   marketId

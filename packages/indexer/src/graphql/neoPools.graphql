@@ -10,6 +10,7 @@ query neoPools(
 }
 
 fragment FullNeoPool on NeoPool {
+  __typename
   account {
     accountId
     balances {

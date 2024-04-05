@@ -15,6 +15,7 @@ query accountBalances(
 }
 
 fragment FullAccountBalance on AccountBalance {
+  __typename
   account {
     accountId
     id

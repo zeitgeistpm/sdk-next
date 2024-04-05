@@ -104,6 +104,32 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InvalidAssetId: AugmentedError<ApiType>;
     };
+    assetRouter: {
+      /**
+       * Cannot convert Amount (MultiCurrencyExtended implementation) into Balance type.
+       **/
+      AmountIntoBalanceFailed: AugmentedError<ApiType>;
+      /**
+       * Cannot start managed destruction as the asset was marked as indestructible.
+       **/
+      AssetIndestructible: AugmentedError<ApiType>;
+      /**
+       * Cannot start managed destruction as a destruction for the asset is in progress.
+       **/
+      DestructionInProgress: AugmentedError<ApiType>;
+      /**
+       * The vector holding all assets to destroy reached it's boundary.
+       **/
+      TooManyManagedDestroys: AugmentedError<ApiType>;
+      /**
+       * Asset conversion failed.
+       **/
+      UnknownAsset: AugmentedError<ApiType>;
+      /**
+       * Operation is not supported for given asset
+       **/
+      Unsupported: AugmentedError<ApiType>;
+    };
     authorInherent: {
       /**
        * Author already set in block.
@@ -246,6 +272,87 @@ declare module '@polkadot/api-base/types/errors' {
        * The bounty status is unexpected.
        **/
       UnexpectedStatus: AugmentedError<ApiType>;
+    };
+    campaignAssets: {
+      /**
+       * The asset-account already exists.
+       **/
+      AlreadyExists: AugmentedError<ApiType>;
+      /**
+       * The asset is not live, and likely being destroyed.
+       **/
+      AssetNotLive: AugmentedError<ApiType>;
+      /**
+       * Invalid metadata given.
+       **/
+      BadMetadata: AugmentedError<ApiType>;
+      /**
+       * Invalid witness data given.
+       **/
+      BadWitness: AugmentedError<ApiType>;
+      /**
+       * Account balance must be greater than or equal to the transfer amount.
+       **/
+      BalanceLow: AugmentedError<ApiType>;
+      /**
+       * The origin account is frozen.
+       **/
+      Frozen: AugmentedError<ApiType>;
+      /**
+       * The asset status is not the expected status.
+       **/
+      IncorrectStatus: AugmentedError<ApiType>;
+      /**
+       * The asset ID is already taken.
+       **/
+      InUse: AugmentedError<ApiType>;
+      /**
+       * The asset is a live asset and is actively being used. Usually emit for operations such
+       * as `start_destroy` which require the asset to be in a destroying state.
+       **/
+      LiveAsset: AugmentedError<ApiType>;
+      /**
+       * Minimum balance should be non-zero.
+       **/
+      MinBalanceZero: AugmentedError<ApiType>;
+      /**
+       * The account to alter does not exist.
+       **/
+      NoAccount: AugmentedError<ApiType>;
+      /**
+       * The asset-account doesn't have an associated deposit.
+       **/
+      NoDeposit: AugmentedError<ApiType>;
+      /**
+       * The signing account has no permission to do the operation.
+       **/
+      NoPermission: AugmentedError<ApiType>;
+      /**
+       * Unable to increment the consumer reference counters on the account. Either no provider
+       * reference exists to allow a non-zero balance of a non-self-sufficient asset, or the
+       * maximum number of consumers has been reached.
+       **/
+      NoProvider: AugmentedError<ApiType>;
+      /**
+       * The asset should be frozen before the given operation.
+       **/
+      NotFrozen: AugmentedError<ApiType>;
+      /**
+       * No approval exists that would allow the transfer.
+       **/
+      Unapproved: AugmentedError<ApiType>;
+      /**
+       * The given asset ID is unknown.
+       **/
+      Unknown: AugmentedError<ApiType>;
+      /**
+       * The operation would result in funds being burned.
+       **/
+      WouldBurn: AugmentedError<ApiType>;
+      /**
+       * The source account would not survive the transfer and it needs to stay alive.
+       **/
+      WouldDie: AugmentedError<ApiType>;
     };
     contracts: {
       /**
@@ -650,6 +757,87 @@ declare module '@polkadot/api-base/types/errors' {
     };
     cumulusXcm: {
     };
+    customAssets: {
+      /**
+       * The asset-account already exists.
+       **/
+      AlreadyExists: AugmentedError<ApiType>;
+      /**
+       * The asset is not live, and likely being destroyed.
+       **/
+      AssetNotLive: AugmentedError<ApiType>;
+      /**
+       * Invalid metadata given.
+       **/
+      BadMetadata: AugmentedError<ApiType>;
+      /**
+       * Invalid witness data given.
+       **/
+      BadWitness: AugmentedError<ApiType>;
+      /**
+       * Account balance must be greater than or equal to the transfer amount.
+       **/
+      BalanceLow: AugmentedError<ApiType>;
+      /**
+       * The origin account is frozen.
+       **/
+      Frozen: AugmentedError<ApiType>;
+      /**
+       * The asset status is not the expected status.
+       **/
+      IncorrectStatus: AugmentedError<ApiType>;
+      /**
+       * The asset ID is already taken.
+       **/
+      InUse: AugmentedError<ApiType>;
+      /**
+       * The asset is a live asset and is actively being used. Usually emit for operations such
+       * as `start_destroy` which require the asset to be in a destroying state.
+       **/
+      LiveAsset: AugmentedError<ApiType>;
+      /**
+       * Minimum balance should be non-zero.
+       **/
+      MinBalanceZero: AugmentedError<ApiType>;
+      /**
+       * The account to alter does not exist.
+       **/
+      NoAccount: AugmentedError<ApiType>;
+      /**
+       * The asset-account doesn't have an associated deposit.
+       **/
+      NoDeposit: AugmentedError<ApiType>;
+      /**
+       * The signing account has no permission to do the operation.
+       **/
+      NoPermission: AugmentedError<ApiType>;
+      /**
+       * Unable to increment the consumer reference counters on the account. Either no provider
+       * reference exists to allow a non-zero balance of a non-self-sufficient asset, or the
+       * maximum number of consumers has been reached.
+       **/
+      NoProvider: AugmentedError<ApiType>;
+      /**
+       * The asset should be frozen before the given operation.
+       **/
+      NotFrozen: AugmentedError<ApiType>;
+      /**
+       * No approval exists that would allow the transfer.
+       **/
+      Unapproved: AugmentedError<ApiType>;
+      /**
+       * The given asset ID is unknown.
+       **/
+      Unknown: AugmentedError<ApiType>;
+      /**
+       * The operation would result in funds being burned.
+       **/
+      WouldBurn: AugmentedError<ApiType>;
+      /**
+       * The source account would not survive the transfer and it needs to stay alive.
+       **/
+      WouldDie: AugmentedError<ApiType>;
+    };
     democracy: {
       /**
        * Cannot cancel the same proposal twice
@@ -904,6 +1092,87 @@ declare module '@polkadot/api-base/types/errors' {
        * Pallet account does not have enough funds
        **/
       FundDoesNotHaveEnoughBalance: AugmentedError<ApiType>;
+    };
+    marketAssets: {
+      /**
+       * The asset-account already exists.
+       **/
+      AlreadyExists: AugmentedError<ApiType>;
+      /**
+       * The asset is not live, and likely being destroyed.
+       **/
+      AssetNotLive: AugmentedError<ApiType>;
+      /**
+       * Invalid metadata given.
+       **/
+      BadMetadata: AugmentedError<ApiType>;
+      /**
+       * Invalid witness data given.
+       **/
+      BadWitness: AugmentedError<ApiType>;
+      /**
+       * Account balance must be greater than or equal to the transfer amount.
+       **/
+      BalanceLow: AugmentedError<ApiType>;
+      /**
+       * The origin account is frozen.
+       **/
+      Frozen: AugmentedError<ApiType>;
+      /**
+       * The asset status is not the expected status.
+       **/
+      IncorrectStatus: AugmentedError<ApiType>;
+      /**
+       * The asset ID is already taken.
+       **/
+      InUse: AugmentedError<ApiType>;
+      /**
+       * The asset is a live asset and is actively being used. Usually emit for operations such
+       * as `start_destroy` which require the asset to be in a destroying state.
+       **/
+      LiveAsset: AugmentedError<ApiType>;
+      /**
+       * Minimum balance should be non-zero.
+       **/
+      MinBalanceZero: AugmentedError<ApiType>;
+      /**
+       * The account to alter does not exist.
+       **/
+      NoAccount: AugmentedError<ApiType>;
+      /**
+       * The asset-account doesn't have an associated deposit.
+       **/
+      NoDeposit: AugmentedError<ApiType>;
+      /**
+       * The signing account has no permission to do the operation.
+       **/
+      NoPermission: AugmentedError<ApiType>;
+      /**
+       * Unable to increment the consumer reference counters on the account. Either no provider
+       * reference exists to allow a non-zero balance of a non-self-sufficient asset, or the
+       * maximum number of consumers has been reached.
+       **/
+      NoProvider: AugmentedError<ApiType>;
+      /**
+       * The asset should be frozen before the given operation.
+       **/
+      NotFrozen: AugmentedError<ApiType>;
+      /**
+       * No approval exists that would allow the transfer.
+       **/
+      Unapproved: AugmentedError<ApiType>;
+      /**
+       * The given asset ID is unknown.
+       **/
+      Unknown: AugmentedError<ApiType>;
+      /**
+       * The operation would result in funds being burned.
+       **/
+      WouldBurn: AugmentedError<ApiType>;
+      /**
+       * The source account would not survive the transfer and it needs to stay alive.
+       **/
+      WouldDie: AugmentedError<ApiType>;
     };
     marketCommons: {
       /**
@@ -1257,10 +1526,6 @@ declare module '@polkadot/api-base/types/errors' {
        * Only categorical markets are allowed for parimutuels.
        **/
       NotCategorical: AugmentedError<ApiType>;
-      /**
-       * The specified asset is not a parimutuel share.
-       **/
-      NotParimutuelOutcome: AugmentedError<ApiType>;
       /**
        * There is no reward, because there are no winning shares.
        **/
@@ -1745,13 +2010,9 @@ declare module '@polkadot/api-base/types/errors' {
     };
     swaps: {
       /**
-       * The weight of an asset in a CPMM swap pool is greather than the upper weight cap.
+       * The weight of an asset in a CPMM swap pool is greater than the upper weight cap.
        **/
       AboveMaximumWeight: AugmentedError<ApiType>;
-      /**
-       * The weight of an asset in a CPMM swap pool could not be found.
-       **/
-      AssetNotBound: AugmentedError<ApiType>;
       /**
        * The asset in question could not be found within the pool.
        **/
@@ -1760,10 +2021,6 @@ declare module '@polkadot/api-base/types/errors' {
        * The spot price of an asset pair was greater than the specified limit.
        **/
       BadLimitPrice: AugmentedError<ApiType>;
-      /**
-       * The base asset of the swaps pool was None although a value was expected.
-       **/
-      BaseAssetNotFound: AugmentedError<ApiType>;
       /**
        * The weight of an asset in a CPMM swap pool is lower than the upper weight cap.
        **/
@@ -1777,14 +2034,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InsufficientLiquidity: AugmentedError<ApiType>;
       /**
-       * Could not create CPMM pool since no amount was specified.
-       **/
-      InvalidAmountArgument: AugmentedError<ApiType>;
-      /**
-       * Could not create CPMM pool since no fee was supplied.
-       **/
-      InvalidFeeArgument: AugmentedError<ApiType>;
-      /**
        * Dispatch called on pool with invalid status.
        **/
       InvalidPoolStatus: AugmentedError<ApiType>;
@@ -1793,15 +2042,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InvalidStateTransition: AugmentedError<ApiType>;
       /**
-       * Subsidy amount is too small.
-       **/
-      InvalidSubsidyAmount: AugmentedError<ApiType>;
-      /**
-       * Could not create CPMM pool since no weights were supplied.
-       **/
-      InvalidWeightArgument: AugmentedError<ApiType>;
-      /**
-       * A transferal of funds into a swaps pool was above a threshhold specified by the sender.
+       * A transferal of funds into a swaps pool was above a threshold specified by the sender.
        **/
       LimitIn: AugmentedError<ApiType>;
       /**
@@ -1809,7 +2050,7 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       LimitMissing: AugmentedError<ApiType>;
       /**
-       * A transferal of funds out of a swaps pool was below a threshhold specified by the
+       * A transferal of funds out of a swaps pool was below a threshold specified by the
        * receiver.
        **/
       LimitOut: AugmentedError<ApiType>;
@@ -1819,16 +2060,16 @@ declare module '@polkadot/api-base/types/errors' {
       MathApproximation: AugmentedError<ApiType>;
       /**
        * The proportion of an asset added into a pool in comparison to the amount
-       * of that asset in the pool is above the threshhold specified by a constant.
+       * of that asset in the pool is above the threshold specified by a constant.
        **/
       MaxInRatio: AugmentedError<ApiType>;
       /**
        * The proportion of an asset taken from a pool in comparison to the amount
-       * of that asset in the pool is above the threshhold specified by a constant.
+       * of that asset in the pool is above the threshold specified by a constant.
        **/
       MaxOutRatio: AugmentedError<ApiType>;
       /**
-       * The total weight of all assets within a CPMM pool is above a treshhold specified
+       * The total weight of all assets within a CPMM pool is above a threshold specified
        * by a constant.
        **/
       MaxTotalWeight: AugmentedError<ApiType>;
@@ -1845,18 +2086,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       PoolIsNotActive: AugmentedError<ApiType>;
       /**
-       * The CPMM pool in question does not have a fee, although it should.
-       **/
-      PoolMissingFee: AugmentedError<ApiType>;
-      /**
-       * The Rikiddo pool in question does not have subsidy, although it should.
-       **/
-      PoolMissingSubsidy: AugmentedError<ApiType>;
-      /**
-       * The CPPM pool in question does not have weights, although it should.
-       **/
-      PoolMissingWeight: AugmentedError<ApiType>;
-      /**
        * Two vectors do not have the same length (usually CPMM pool assets and weights).
        **/
       ProvidedValuesLenMustEqualAssetsLen: AugmentedError<ApiType>;
@@ -1865,20 +2094,16 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       SomeIdenticalAssets: AugmentedError<ApiType>;
       /**
-       * No swap fee information found for CPMM pool
-       **/
-      SwapFeeMissing: AugmentedError<ApiType>;
-      /**
        * The swap fee is higher than the allowed maximum.
        **/
       SwapFeeTooHigh: AugmentedError<ApiType>;
       /**
-       * Tried to create a pool that has less assets than the lower threshhold specified by
+       * Tried to create a pool that has less assets than the lower threshold specified by
        * a constant.
        **/
       TooFewAssets: AugmentedError<ApiType>;
       /**
-       * Tried to create a pool that has more assets than the upper threshhold specified by
+       * Tried to create a pool that has more assets than the upper threshold specified by
        * a constant.
        **/
       TooManyAssets: AugmentedError<ApiType>;
@@ -1887,14 +2112,6 @@ declare module '@polkadot/api-base/types/errors' {
        * reported to the pallet maintainers.
        **/
       Unexpected: AugmentedError<ApiType>;
-      /**
-       * The pool does not support swapping the assets in question.
-       **/
-      UnsupportedTrade: AugmentedError<ApiType>;
-      /**
-       * The outcome asset specified as the winning asset was not found in the pool.
-       **/
-      WinningAssetNotFound: AugmentedError<ApiType>;
       /**
        * Some amount in a transaction equals zero.
        **/

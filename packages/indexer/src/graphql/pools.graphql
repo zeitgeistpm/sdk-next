@@ -10,6 +10,7 @@ query pools(
 }
 
 fragment FullPool on Pool {
+  __typename
   account {
     accountId
     balances {
@@ -45,6 +46,7 @@ query historicalPools(
   $limit: Int
 ) {
   historicalPools {
+    __typename
     blockNumber
     event
     id

@@ -3,6 +3,7 @@ query assetPrice(
   $target: [TargetAsset!]!
 ) {
   assetPrice(base: $base, target: $target) {
+    __typename
     pair
     price
     timestamp

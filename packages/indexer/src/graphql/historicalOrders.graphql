@@ -15,6 +15,7 @@ query historicalOrders(
 }
 
 fragment FullHistoricalOrder on HistoricalOrder {
+  __typename
   accountId
   assetAmountIn
   assetAmountOut
