@@ -14,11 +14,14 @@ fragment FullAsset on Asset {
   id
   assetId
   amountInPool
+  assetId
+  color
+  id
+  img
   market {
-    ...FullMarket
+  ...FullMarket
   }
+  name
   price
-  pool {
-    ...FullPool
-  }
+  ticker
 }

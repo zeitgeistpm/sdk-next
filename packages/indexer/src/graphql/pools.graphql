@@ -18,12 +18,6 @@ fragment FullPool on Pool {
       balance
     }
   }
-  assets {
-    amountInPool
-    assetId
-    id
-    price
-  }
   baseAsset
   createdAt
   id

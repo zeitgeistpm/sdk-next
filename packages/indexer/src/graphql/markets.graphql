@@ -23,8 +23,12 @@ fragment FullMarket on Market {
   assets {
     amountInPool
     assetId
+    color
     id
+    img
+    name
     price
+    ticker
   }
   baseAsset
   bonds {
@@ -43,12 +47,6 @@ fragment FullMarket on Market {
       value
       who
     }
-  }
-  categories {
-    color
-    img
-    name
-    ticker
   }
   creation
   creator
@@ -83,7 +81,6 @@ fragment FullMarket on Market {
     ...FullNeoPool
   }
   oracle
-  outcomeAssets
   period {
     block
     end
