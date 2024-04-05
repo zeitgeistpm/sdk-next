@@ -16,6 +16,9 @@ query historicalOrders(
 
 fragment FullHistoricalOrder on HistoricalOrder {
   __typename
+  id
+  orderId
+  timestamp
   accountId
   assetAmountIn
   assetAmountOut
@@ -28,7 +31,4 @@ fragment FullHistoricalOrder on HistoricalOrder {
     hash
     name
   }
-  id
-  orderId
-  timestamp
 }
