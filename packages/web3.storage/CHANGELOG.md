@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 3.6.0
+
+### Minor Changes
+
+- 22ea2c42: Refactor AssetId and affected methods by the asset class refactor. Generate new types.
+
+### Patch Changes
+
+- Updated dependencies [22ea2c42]
+  - @zeitgeistpm/utility@3.6.0
+
 ## 3.5.0
 
 ### Minor Changes

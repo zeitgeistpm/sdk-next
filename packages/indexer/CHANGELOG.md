@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.6.0
+
+### Minor Changes
+
+- 22ea2c42: Refactor AssetId and affected methods by the asset class refactor. Generate new types.
+
 ## 4.5.2
 
 ### Patch Changes
