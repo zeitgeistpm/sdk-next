@@ -7,11 +7,11 @@ import '@polkadot/rpc-core/types/jsonrpc';
 
 import type { AugmentedRpc } from '@polkadot/rpc-core/types';
 import type { Metadata, StorageKey } from '@polkadot/types';
-import type { Bytes, HashMap, Json, Null, Option, Text, U256, U64, Vec, bool, f64, u128, u32, u64 } from '@polkadot/types-codec';
+import type { Bytes, HashMap, Json, Null, Option, Text, U256, U64, Vec, bool, f64, u32, u64 } from '@polkadot/types-codec';
 import type { AnyNumber, Codec } from '@polkadot/types-codec/types';
 import type { ExtrinsicOrHash, ExtrinsicStatus } from '@polkadot/types/interfaces/author';
 import type { EpochAuthorship } from '@polkadot/types/interfaces/babe';
-import type { BeefySignedCommitment } from '@polkadot/types/interfaces/beefy';
+import type { BeefyVersionedFinalityProof } from '@polkadot/types/interfaces/beefy';
 import type { BlockHash } from '@polkadot/types/interfaces/chain';
 import type { PrefixedStorageKey } from '@polkadot/types/interfaces/childstate';
 import type { AuthorityId } from '@polkadot/types/interfaces/consensus';
@@ -21,15 +21,14 @@ import type { CreatedBlock } from '@polkadot/types/interfaces/engine';
 import type { EthAccount, EthCallRequest, EthFeeHistory, EthFilter, EthFilterChanges, EthLog, EthReceipt, EthRichBlock, EthSubKind, EthSubParams, EthSyncStatus, EthTransaction, EthTransactionRequest, EthWork } from '@polkadot/types/interfaces/eth';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { EncodedFinalityProofs, JustificationNotification, ReportedRoundStates } from '@polkadot/types/interfaces/grandpa';
-import type { MmrLeafBatchProof, MmrLeafProof } from '@polkadot/types/interfaces/mmr';
+import type { MmrHash, MmrLeafBatchProof } from '@polkadot/types/interfaces/mmr';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
-import type { FeeDetails, RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
+import type { FeeDetails, RuntimeDispatchInfoV1 } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
-import type { AccountId, Balance, BlockNumber, H160, H256, H64, Hash, Header, Index, Justification, KeyValue, SignedBlock, StorageData } from '@polkadot/types/interfaces/runtime';
+import type { AccountId, BlockNumber, H160, H256, H64, Hash, Header, Index, Justification, KeyValue, SignedBlock, StorageData } from '@polkadot/types/interfaces/runtime';
 import type { MigrationStatusResult, ReadProof, RuntimeVersion, TraceBlockResponse } from '@polkadot/types/interfaces/state';
 import type { ApplyExtrinsicResult, ChainProperties, ChainType, Health, NetworkState, NodeRole, PeerInfo, SyncState } from '@polkadot/types/interfaces/system';
 import type { IExtrinsic, Observable } from '@polkadot/types/types';
-import type { SwapsAsset } from '@zeitgeistpm/augment-api/interfaces/swaps';
 
 export type __AugmentedRpc = AugmentedRpc<() => unknown>;
 
@@ -81,9 +80,9 @@ declare module '@polkadot/rpc-core/types/jsonrpc' {
        **/
       getFinalizedHead: AugmentedRpc<() => Observable<H256>>;
       /**
-       * Returns the block most recently finalized by BEEFY, alongside side its justification.
+       * Returns the block most recently finalized by BEEFY, alongside its justification.
        **/
-      subscribeJustifications: AugmentedRpc<() => Observable<BeefySignedCommitment>>;
+      subscribeJustifications: AugmentedRpc<() => Observable<BeefyVersionedFinalityProof>>;
     };
     chain: {
       /**
@@ -276,7 +275,7 @@ declare module '@polkadot/rpc-core/types/jsonrpc' {
       /**
        * Returns the number of transactions sent from given address at given time (block number).
        **/
-      getTransactionCount: AugmentedRpc<(hash: H256 | string | Uint8Array, number?: BlockNumber | AnyNumber | Uint8Array) => Observable<U256>>;
+      getTransactionCount: AugmentedRpc<(address: H160 | string | Uint8Array, number?: BlockNumber | AnyNumber | Uint8Array) => Observable<U256>>;
       /**
        * Returns transaction receipt by transaction hash.
        **/
@@ -374,13 +373,21 @@ declare module '@polkadot/rpc-core/types/jsonrpc' {
     };
     mmr: {
       /**
-       * Generate MMR proof for the given leaf indices.
+       * Generate MMR proof for the given block numbers.
        **/
-      generateBatchProof: AugmentedRpc<(leafIndices: Vec<u64> | (u64 | AnyNumber | Uint8Array)[], at?: BlockHash | string | Uint8Array) => Observable<MmrLeafProof>>;
+      generateProof: AugmentedRpc<(blockNumbers: Vec<u64> | (u64 | AnyNumber | Uint8Array)[], bestKnownBlockNumber?: u64 | AnyNumber | Uint8Array, at?: BlockHash | string | Uint8Array) => Observable<MmrLeafBatchProof>>;
       /**
-       * Generate MMR proof for given leaf index.
+       * Get the MMR root hash for the current best block.
        **/
-      generateProof: AugmentedRpc<(leafIndex: u64 | AnyNumber | Uint8Array, at?: BlockHash | string | Uint8Array) => Observable<MmrLeafBatchProof>>;
+      root: AugmentedRpc<(at?: BlockHash | string | Uint8Array) => Observable<MmrHash>>;
+      /**
+       * Verify an MMR proof
+       **/
+      verifyProof: AugmentedRpc<(proof: MmrLeafBatchProof | { blockHash?: any; leaves?: any; proof?: any } | string | Uint8Array) => Observable<bool>>;
+      /**
+       * Verify an MMR proof statelessly given an mmr_root
+       **/
+      verifyProofStateless: AugmentedRpc<(root: MmrHash | string | Uint8Array, proof: MmrLeafBatchProof | { blockHash?: any; leaves?: any; proof?: any } | string | Uint8Array) => Observable<bool>>;
     };
     net: {
       /**
@@ -408,13 +415,15 @@ declare module '@polkadot/rpc-core/types/jsonrpc' {
     };
     payment: {
       /**
+       * @deprecated Use `api.call.transactionPaymentApi.queryFeeDetails` instead
        * Query the detailed fee of a given encoded extrinsic
        **/
       queryFeeDetails: AugmentedRpc<(extrinsic: Bytes | string | Uint8Array, at?: BlockHash | string | Uint8Array) => Observable<FeeDetails>>;
       /**
+       * @deprecated Use `api.call.transactionPaymentApi.queryInfo` instead
        * Retrieves the fee information for an encoded extrinsic
        **/
-      queryInfo: AugmentedRpc<(extrinsic: Bytes | string | Uint8Array, at?: BlockHash | string | Uint8Array) => Observable<RuntimeDispatchInfo>>;
+      queryInfo: AugmentedRpc<(extrinsic: Bytes | string | Uint8Array, at?: BlockHash | string | Uint8Array) => Observable<RuntimeDispatchInfoV1>>;
     };
     rpc: {
       /**
@@ -509,20 +518,6 @@ declare module '@polkadot/rpc-core/types/jsonrpc' {
        * Check current migration state
        **/
       trieMigrationStatus: AugmentedRpc<(at?: BlockHash | string | Uint8Array) => Observable<MigrationStatusResult>>;
-    };
-    swaps: {
-      /**
-       * get spot price
-       **/
-      getSpotPrice: AugmentedRpc<(poolId: u128 | AnyNumber | Uint8Array, assetIn: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, assetOut: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, withFees: bool | boolean | Uint8Array, at: Option<BlockHash> | null | Uint8Array | BlockHash | string) => Observable<u128>>;
-      /**
-       * get spot prices
-       **/
-      getSpotPrices: AugmentedRpc<(poolId: u128 | AnyNumber | Uint8Array, assetIn: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, assetOut: SwapsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { CombinatorialOutcome: any } | { PoolShare: any } | { Ztg: any } | string | Uint8Array, withFees: bool | boolean | Uint8Array, blocks: Vec<u128> | (u128 | AnyNumber | Uint8Array)[]) => Observable<Vec<Balance>>>;
-      /**
-       * Get account id for a pool.
-       **/
-      poolAccountId: AugmentedRpc<(poolId: u128 | AnyNumber | Uint8Array) => Observable<AccountId>>;
     };
     syncstate: {
       /**

@@ -8,7 +8,7 @@
     "_preview": "vite preview"
   },
   "dependencies": {
-    "@polkadot/api": "^9.8.1",
+    "@polkadot/api": "^10.12.6",
     "@zeitgeistpm/sdk": "*",
     "@zeitgeistpm/utility": "*",
     "decimal.js": "^10.4.3",

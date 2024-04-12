@@ -23,7 +23,15 @@ export const options = (opts: ZeitgeistApiOptions): ApiOptions => {
   return {
     types: {
       ...Object.values(definitions).reduce((acc, { types }) => ({ ...acc, ...types }), {}),
+      TAssetConversion: 'Option<ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass>',
     },
+    // typesSpec: {
+    //   "zeitgeist/53": {
+    //     types: {
+    //       TAssetConversion: 'Option<ZeitgeistPrimitivesAsset>',
+    //     },
+    //   },
+    // },
     rpc: {
       ...Object.entries(definitions).reduce(
         (acc, [key, { rpc }]) => ({ ...acc, [key]: rpc }),

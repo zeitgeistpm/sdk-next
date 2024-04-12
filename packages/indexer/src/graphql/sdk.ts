@@ -262,8 +262,11 @@ export type AssetEdge = {
 
 /** Kind of asset */
 export enum AssetKind {
+  CampaignAsset = 'CampaignAsset',
   CategoricalOutcome = 'CategoricalOutcome',
+  CustomAsset = 'CustomAsset',
   ForeignAsset = 'ForeignAsset',
+  ParimutuelShare = 'ParimutuelShare',
   PoolShare = 'PoolShare',
   ScalarOutcome = 'ScalarOutcome',
   Ztg = 'Ztg'
@@ -2348,6 +2351,7 @@ export enum MarketEvent {
   MarketReported = 'MarketReported',
   MarketResolved = 'MarketResolved',
   MarketStartedWithSubsidy = 'MarketStartedWithSubsidy',
+  OutcomeBought = 'OutcomeBought',
   PoolDeployed = 'PoolDeployed',
   PoolDestroyed = 'PoolDestroyed',
   PoolExit = 'PoolExit',

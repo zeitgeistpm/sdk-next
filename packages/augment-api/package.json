@@ -32,7 +32,7 @@
   "author": "Zeitgeist PM <contact@zeitgeist.pm>",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@polkadot/typegen": "^9.8.1"
+    "@polkadot/typegen": "^10.12.6"
   },
   "peerDependencies": {
     "@polkadot/api-base": "*",

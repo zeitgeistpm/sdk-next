@@ -167,9 +167,10 @@ export const createRpcContext = async <MS extends MetadataStorage<any>>(
   debug(`connecting to rpc: ${config.provider}`, config)
 
   const provider = new WsProvider(config.provider)
-  const api = await ApiPromise.create({
-    ...options({ provider }),
-  })
+
+  const apiOptions = options({ provider })
+
+  const api = await ApiPromise.create(apiOptions)
 
   debug(`connected to node rpc`, { ...config, color: '#36a4e3' })
 
