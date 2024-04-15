@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 3.6.1
+
+### Patch Changes
+
+- f9530a5f: Include more assets types as viabl fee paying assets in market creation
+- Updated dependencies [f9530a5f]
+  - @zeitgeistpm/augment-api@3.6.1
+  - @zeitgeistpm/indexer@4.6.1
+  - @zeitgeistpm/rpc@3.6.1
+  - @zeitgeistpm/utility@3.6.1
+  - @zeitgeistpm/web3.storage@3.6.1
+
 ## 3.6.0
 
 ### Minor Changes

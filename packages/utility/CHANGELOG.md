@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 3.6.1
+
+### Patch Changes
+
+- f9530a5f: Include more assets types as viabl fee paying assets in market creation
+
 ## 3.6.0
 
 ### Minor Changes
