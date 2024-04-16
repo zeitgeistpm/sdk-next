@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.6.2
+
+### Patch Changes
+
+- 08d61e4f: Minor changes
+
 ## 4.6.1
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @zeitgeistpm/web3.storage
 
+## 3.6.2
+
+### Patch Changes
+
+- 08d61e4f: Minor changes
+- Updated dependencies [08d61e4f]
+  - @zeitgeistpm/utility@3.6.2
+
 ## 3.6.1
 
 ### Patch Changes

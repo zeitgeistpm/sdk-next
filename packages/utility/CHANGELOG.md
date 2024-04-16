@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 3.6.2
+
+### Patch Changes
+
+- 08d61e4f: Minor changes
+
 ## 3.6.1
 
 ### Patch Changes

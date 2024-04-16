@@ -1,7 +1,7 @@
 {
   "name": "@zeitgeistpm/augment-api",
   "description": "Generated types for the Zeitgeist network.",
-  "version": "3.6.1",
+  "version": "3.6.2",
   "publishConfig": {
     "access": "public"
   },
@@ -32,7 +32,7 @@
   "author": "Zeitgeist PM <contact@zeitgeist.pm>",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@polkadot/typegen": "^10.12.6"
+    "@polkadot/typegen": "^9.8.1"
   },
   "peerDependencies": {
     "@polkadot/api-base": "*",
