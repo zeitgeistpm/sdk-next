@@ -8,7 +8,7 @@ import * as AE from '@zeitgeistpm/utility/dist/aeither'
 
 import { FullContext, RpcContext } from '../../../../context'
 import { MetadataStorage, StorageIdTypeOf, StorageTypeOf } from '../../../../meta'
-import { ForeignAssetId } from '../../../../primitives'
+import { BaseAssetId } from '../../../../primitives'
 import { RpcMarket, rpcMarket } from '../../market'
 import {
   CreateMarketData,
@@ -35,7 +35,7 @@ export const create = async <
 >(
   context: C,
   params: P,
-  feePayingAsset?: ForeignAssetId,
+  feePayingAsset?: BaseAssetId,
 ) => {
   const { tx } = await transaction(context, params)
 

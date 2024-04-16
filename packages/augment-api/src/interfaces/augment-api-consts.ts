@@ -8,6 +8,7 @@ import '@polkadot/api-base/types/consts';
 import type { ApiTypes, AugmentedConst } from '@polkadot/api-base/types';
 import type { Option, U8aFixed, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { Perbill, Percent, Permill } from '@polkadot/types/interfaces/runtime';
+import type { FrameSupportPalletId, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, PalletContractsSchedule, SpVersionRuntimeVersion, SpWeightsRuntimeDbWeight, SpWeightsWeightV2Weight, XcmV3MultiLocation, ZeitgeistPrimitivesAssetsAllAssetsAsset } from '@polkadot/types/lookup';
 
 export type __AugmentedConst<ApiType extends ApiTypes> = AugmentedConst<ApiType>;
 
@@ -412,6 +413,12 @@ declare module '@polkadot/api-base/types/consts' {
        * The fee required to add a voting outcome.
        **/
       votingOutcomeFee: u128 & AugmentedConst<ApiType>;
+    };
+    hybridRouter: {
+      /**
+       * The maximum number of orders that can be used to execute a trade.
+       **/
+      maxOrders: u32 & AugmentedConst<ApiType>;
     };
     identity: {
       /**

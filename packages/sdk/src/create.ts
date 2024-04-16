@@ -1,8 +1,6 @@
-import type { WsProvider } from '@polkadot/api'
 import * as Indexer from '@zeitgeistpm/indexer'
 import { assert } from '@zeitgeistpm/utility/dist/assert'
 import { assign } from '@zeitgeistpm/utility/dist/observable'
-import polly from 'polly-js'
 import { from, Observable, of } from 'rxjs'
 import { mergeMap, shareReplay } from 'rxjs/operators'
 import type { FullContext, IndexerContext, RpcContext } from './context/types'

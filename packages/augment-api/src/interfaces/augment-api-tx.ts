@@ -10,6 +10,7 @@ import type { Data } from '@polkadot/types';
 import type { Bytes, Compact, Option, Struct, U8aFixed, Vec, bool, i128, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { AnyNumber, IMethod, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, MultiAddress, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
+import type { BatteryStationRuntimeOriginCaller, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletContractsWasmDeterminism, PalletDemocracyConviction, PalletDemocracyVoteAccountVote, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletVestingVestingInfo, SpWeightsWeightV2Weight, XcmV3MultiLocation, XcmV3WeightLimit, XcmVersionedMultiAsset, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm, ZeitgeistPrimitivesAssetsAllAssetsAsset, ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass, ZeitgeistPrimitivesAssetsSubsetsParimutuelParimutuelAssetClass, ZeitgeistPrimitivesAssetsSubsetsXcmAssetsXcmAssetClass, ZeitgeistPrimitivesCustomMetadata, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketDisputeMechanism, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMarketScoringRule, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesProxyType, ZrmlCourtVoteItem, ZrmlHybridRouterStrategy } from '@polkadot/types/lookup';
 
 export type __AugmentedSubmittable = AugmentedSubmittable<() => unknown>;
 export type __SubmittableExtrinsic<ApiType extends ApiTypes> = SubmittableExtrinsic<ApiType>;
@@ -2347,6 +2348,64 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       voteOnOutcome: AugmentedSubmittable<(marketId: Compact<u128> | AnyNumber | Uint8Array, outcome: ZeitgeistPrimitivesOutcomeReport | { Categorical: any } | { Scalar: any } | string | Uint8Array, amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>, ZeitgeistPrimitivesOutcomeReport, Compact<u128>]>;
     };
+    hybridRouter: {
+      /**
+       * Routes a buy order to AMM and CDA to achieve the best average execution price.
+       * 
+       * # Parameters
+       * 
+       * * `market_id`: The ID of the market to buy from.
+       * * `asset_count`: The number of assets traded on the market.
+       * * `asset`: The asset to buy.
+       * * `amount_in`: The amount of the market's base asset to sell.
+       * * `max_price`: The maximum price to buy at.
+       * * `orders`: A list of orders from the book to use.
+       * * `strategy`: The strategy to handle the remaining order when the `max_price` is reached.
+       * 
+       * The elements of `orders` are the orders that the router may use to execute the order. If any of
+       * these orders are already filled, they are ignored. It is not necessary for the router to use all
+       * specified orders. The smaller the vector, the larger the risk that the AMM is used to fill large
+       * chunks of the order.
+       * 
+       * The `orders` vector **must** be sorted in ascending order by the price of their associated
+       * orders. Failing this, the behavior of `buy` is undefined.
+       * 
+       * If the maximum price is reached before the entire buy order is filled, the `strategy` parameter
+       * decides if the order is rolled back (`Strategy::ImmediateOrCancel`) or if a limit order for the
+       * remaining amount is placed (`Strategy::LimitOrder`).
+       * 
+       * Complexity: `O(n)`
+       **/
+      buy: AugmentedSubmittable<(marketId: u128 | AnyNumber | Uint8Array, assetCount: Compact<u16> | AnyNumber | Uint8Array, asset: ZeitgeistPrimitivesAssetsAllAssetsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | { ParimutuelShare: any } | { CampaignAsset: any } | { CustomAsset: any } | string | Uint8Array, amountIn: Compact<u128> | AnyNumber | Uint8Array, maxPrice: Compact<u128> | AnyNumber | Uint8Array, orders: Vec<u128> | (u128 | AnyNumber | Uint8Array)[], strategy: ZrmlHybridRouterStrategy | 'ImmediateOrCancel' | 'LimitOrder' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, Compact<u16>, ZeitgeistPrimitivesAssetsAllAssetsAsset, Compact<u128>, Compact<u128>, Vec<u128>, ZrmlHybridRouterStrategy]>;
+      /**
+       * Routes a sell order to AMM and CDA to achieve the best average execution price.
+       * 
+       * # Parameters
+       * 
+       * * `market_id`: The ID of the market to sell on.
+       * * `asset_count`: The number of assets traded on the market.
+       * * `asset`: The asset to sell.
+       * * `amount_in`: The amount of `asset` to sell.
+       * * `min_price`: The minimum price to sell at.
+       * * `orders`: A list of orders from the book to use.
+       * * `strategy`: The strategy to handle the remaining order when the `min_price` is reached.
+       * 
+       * The elements of `orders` are the orders that the router may use to execute the order. If any of
+       * these orders are already filled, they are ignored. It is not necessary for the router to use all
+       * specified orders. The smaller the vector, the larger the risk that the AMM is used to fill large
+       * chunks of the order.
+       * 
+       * The `orders` vector **must** be sorted in ascending order by the price of their associated
+       * orders. Failing this, the behavior of `sell` is undefined.
+       * 
+       * If the maximum price is reached before the entire buy order is filled, the `strategy` parameter
+       * decides if the order is rolled back (`Strategy::ImmediateOrCancel`) or if a limit order for the
+       * remaining amount is placed (`Strategy::LimitOrder`).
+       * 
+       * Complexity: `O(n)`
+       **/
+      sell: AugmentedSubmittable<(marketId: u128 | AnyNumber | Uint8Array, assetCount: Compact<u16> | AnyNumber | Uint8Array, asset: ZeitgeistPrimitivesAssetsAllAssetsAsset | { CategoricalOutcome: any } | { ScalarOutcome: any } | { PoolShare: any } | { Ztg: any } | { ForeignAsset: any } | { ParimutuelShare: any } | { CampaignAsset: any } | { CustomAsset: any } | string | Uint8Array, amountIn: Compact<u128> | AnyNumber | Uint8Array, minPrice: Compact<u128> | AnyNumber | Uint8Array, orders: Vec<u128> | (u128 | AnyNumber | Uint8Array)[], strategy: ZrmlHybridRouterStrategy | 'ImmediateOrCancel' | 'LimitOrder' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, Compact<u16>, ZeitgeistPrimitivesAssetsAllAssetsAsset, Compact<u128>, Compact<u128>, Vec<u128>, ZrmlHybridRouterStrategy]>;
+    };
     identity: {
       /**
        * Add a registrar to the system.
@@ -3815,7 +3874,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Complexity: `O(n)`, where `n` is the number of market ids,
        * which close at the same time as the specified market.
        **/
-      createMarket: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass | { Ztg: any } | { ForeignAsset: any } | { CampaignAsset: any } | string | Uint8Array, creatorFee: Perbill | AnyNumber | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, creation: ZeitgeistPrimitivesMarketMarketCreation | 'Permissionless' | 'Advised' | number | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism> | null | Uint8Array | ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number, scoringRule: ZeitgeistPrimitivesMarketScoringRule | 'Lmsr' | 'Orderbook' | 'Parimutuel' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass, Perbill, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketType, Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>, ZeitgeistPrimitivesMarketScoringRule]>;
+      createMarket: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass | { Ztg: any } | { ForeignAsset: any } | { CampaignAsset: any } | string | Uint8Array, creatorFee: Perbill | AnyNumber | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, creation: ZeitgeistPrimitivesMarketMarketCreation | 'Permissionless' | 'Advised' | number | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism> | null | Uint8Array | ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number, scoringRule: ZeitgeistPrimitivesMarketScoringRule | 'AmmCdaHybrid' | 'Parimutuel' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass, Perbill, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketType, Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>, ZeitgeistPrimitivesMarketScoringRule]>;
       /**
        * Create a market, deploy a LMSR pool, and buy outcome tokens and provide liquidity to the
        * market.
@@ -3872,7 +3931,7 @@ declare module '@polkadot/api-base/types/submittable' {
        * Complexity: `O(n)`, where `n` is the number of markets
        * which end at the same time as the market before the edit.
        **/
-      editMarket: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass | { Ztg: any } | { ForeignAsset: any } | { CampaignAsset: any } | string | Uint8Array, marketId: u128 | AnyNumber | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism> | null | Uint8Array | ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number, scoringRule: ZeitgeistPrimitivesMarketScoringRule | 'Lmsr' | 'Orderbook' | 'Parimutuel' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass, u128, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketType, Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>, ZeitgeistPrimitivesMarketScoringRule]>;
+      editMarket: AugmentedSubmittable<(baseAsset: ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass | { Ztg: any } | { ForeignAsset: any } | { CampaignAsset: any } | string | Uint8Array, marketId: u128 | AnyNumber | Uint8Array, oracle: AccountId32 | string | Uint8Array, period: ZeitgeistPrimitivesMarketMarketPeriod | { Block: any } | { Timestamp: any } | string | Uint8Array, deadlines: ZeitgeistPrimitivesMarketDeadlines | { gracePeriod?: any; oracleDuration?: any; disputeDuration?: any } | string | Uint8Array, metadata: ZeitgeistPrimitivesMultiHash | { Sha3_384: any } | string | Uint8Array, marketType: ZeitgeistPrimitivesMarketMarketType | { Categorical: any } | { Scalar: any } | string | Uint8Array, disputeMechanism: Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism> | null | Uint8Array | ZeitgeistPrimitivesMarketMarketDisputeMechanism | 'Authorized' | 'Court' | 'SimpleDisputes' | number, scoringRule: ZeitgeistPrimitivesMarketScoringRule | 'AmmCdaHybrid' | 'Parimutuel' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass, u128, AccountId32, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesMarketMarketType, Option<ZeitgeistPrimitivesMarketMarketDisputeMechanism>, ZeitgeistPrimitivesMarketScoringRule]>;
       /**
        * Allows the manual closing for "broken" markets.
        * A market is "broken", if an unexpected chain stall happened

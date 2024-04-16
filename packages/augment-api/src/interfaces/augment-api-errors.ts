@@ -1013,6 +1013,44 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       UnfinishedGlobalDispute: AugmentedError<ApiType>;
     };
+    hybridRouter: {
+      /**
+       * The specified amount is zero.
+       **/
+      AmountIsZero: AugmentedError<ApiType>;
+      /**
+       * The asset count does not match the markets asset count.
+       **/
+      AssetCountMismatch: AugmentedError<ApiType>;
+      /**
+       * The asset of an order is not equal to the maker asset of the order book.
+       **/
+      AssetNotEqualToOrderbookMakerAsset: AugmentedError<ApiType>;
+      /**
+       * The asset of an order is not equal to the taker asset of the order book.
+       **/
+      AssetNotEqualToOrderbookTakerAsset: AugmentedError<ApiType>;
+      /**
+       * The strategy "immediate or cancel" was applied.
+       **/
+      CancelStrategyApplied: AugmentedError<ApiType>;
+      /**
+       * The maximum number of orders was exceeded.
+       **/
+      MaxOrdersExceeded: AugmentedError<ApiType>;
+      /**
+       * The price of an order is above the specified maximum price.
+       **/
+      OrderPriceAboveMaxPrice: AugmentedError<ApiType>;
+      /**
+       * The price of an order is below the specified minimum price.
+       **/
+      OrderPriceBelowMinPrice: AugmentedError<ApiType>;
+      /**
+       * The price limit is too high.
+       **/
+      PriceLimitTooHigh: AugmentedError<ApiType>;
+    };
     identity: {
       /**
        * Account ID is already named.
@@ -1176,6 +1214,10 @@ declare module '@polkadot/api-base/types/errors' {
     };
     marketCommons: {
       /**
+       * Unexpectedly failed to build a market due to missing data.
+       **/
+      IncompleteMarketBuilder: AugmentedError<ApiType>;
+      /**
        * A market with the provided ID does not exist.
        **/
       MarketDoesNotExist: AugmentedError<ApiType>;
@@ -1313,6 +1355,10 @@ declare module '@polkadot/api-base/types/errors' {
        * The relative value of a new LP position is too low.
        **/
       MinRelativeLiquidityThresholdViolated: AugmentedError<ApiType>;
+      /**
+       * Narrowing type conversion occurred.
+       **/
+      NarrowingConversion: AugmentedError<ApiType>;
       /**
        * The user is not allowed to execute this command.
        **/

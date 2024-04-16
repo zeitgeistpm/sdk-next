@@ -10,6 +10,7 @@ import type { Data } from '@polkadot/types';
 import type { BTreeMap, Bytes, Null, Option, Struct, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { AnyNumber, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
+import type { CumulusPalletDmpQueueConfigData, CumulusPalletDmpQueuePageIndexData, CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot, CumulusPalletXcmpQueueInboundChannelDetails, CumulusPalletXcmpQueueOutboundChannelDetails, CumulusPalletXcmpQueueQueueConfigData, FrameSupportDispatchPerDispatchClassWeight, FrameSupportPreimagesBounded, FrameSystemAccountInfo, FrameSystemEventRecord, FrameSystemLastRuntimeUpgradeInfo, FrameSystemPhase, NimbusPrimitivesNimbusCryptoPublic, OrmlTokensAccountData, OrmlTokensBalanceLock, OrmlTokensReserveData, OrmlTraitsAssetRegistryAssetMetadata, PalletAssetsApproval, PalletAssetsAssetAccount, PalletAssetsAssetDetails, PalletAssetsAssetMetadata, PalletAuthorMappingRegistrationInfo, PalletBalancesAccountData, PalletBalancesBalanceLock, PalletBalancesReserveData, PalletBountiesBounty, PalletCollectiveVotes, PalletContractsStorageContractInfo, PalletContractsStorageDeletedContract, PalletContractsWasmOwnerInfo, PalletContractsWasmPrefabWasmModule, PalletDemocracyReferendumInfo, PalletDemocracyVoteThreshold, PalletDemocracyVoteVoting, PalletIdentityRegistrarInfo, PalletIdentityRegistration, PalletMultisigMultisig, PalletParachainStakingAutoCompoundAutoCompoundConfig, PalletParachainStakingBond, PalletParachainStakingCandidateMetadata, PalletParachainStakingCollatorSnapshot, PalletParachainStakingDelayedPayout, PalletParachainStakingDelegationRequestsScheduledRequest, PalletParachainStakingDelegations, PalletParachainStakingDelegator, PalletParachainStakingInflationInflationInfo, PalletParachainStakingParachainBondConfig, PalletParachainStakingRoundInfo, PalletParachainStakingSetOrderedSet, PalletPreimageRequestStatus, PalletProxyAnnouncement, PalletProxyProxyDefinition, PalletSchedulerScheduled, PalletTransactionPaymentReleases, PalletTreasuryProposal, PalletVestingReleases, PalletVestingVestingInfo, PalletXcmQueryStatus, PalletXcmRemoteLockedFungibleRecord, PalletXcmVersionMigrationStage, PolkadotCorePrimitivesOutboundHrmpMessage, PolkadotPrimitivesV2AbridgedHostConfiguration, PolkadotPrimitivesV2PersistedValidationData, PolkadotPrimitivesV2UpgradeRestriction, SpRuntimeDigest, SpTrieStorageProof, SpWeightsWeightV2Weight, XcmV3MultiLocation, XcmVersionedAssetId, XcmVersionedMultiLocation, ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, ZeitgeistPrimitivesAssetsSubsetsXcmAssetsXcmAssetClass, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketAuthorityReport, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesOrderbookOrder, ZeitgeistPrimitivesOutcomeReport, ZrmlCourtCourtInfo, ZrmlCourtCourtParticipantInfo, ZrmlCourtCourtPoolItem, ZrmlCourtDraw, ZrmlGlobalDisputesGlobalDisputeInfo, ZrmlGlobalDisputesOldWinnerInfo, ZrmlGlobalDisputesOutcomeInfo, ZrmlLiquidityMiningOwnedValuesParams, ZrmlNeoSwapsPool, ZrmlRikiddoRikiddoSigmoidMV, ZrmlSwapsPool } from '@polkadot/types/lookup';
 import type { Observable } from '@polkadot/types/types';
 
 export type __AugmentedQuery<ApiType extends ApiTypes> = AugmentedQuery<ApiType, () => unknown>;
@@ -454,6 +455,8 @@ declare module '@polkadot/api-base/types/storage' {
       outcomes: AugmentedQuery<ApiType, (arg1: u128 | AnyNumber | Uint8Array, arg2: ZeitgeistPrimitivesOutcomeReport | { Categorical: any } | { Scalar: any } | string | Uint8Array) => Observable<Option<ZrmlGlobalDisputesOutcomeInfo>>, [u128, ZeitgeistPrimitivesOutcomeReport]>;
       winners: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<ZrmlGlobalDisputesOldWinnerInfo>>, [u128]>;
     };
+    hybridRouter: {
+    };
     identity: {
       /**
        * Information that is pertinent to identify the entity behind an account.
@@ -550,7 +553,7 @@ declare module '@polkadot/api-base/types/storage' {
     };
     orderbook: {
       nextOrderId: AugmentedQuery<ApiType, () => Observable<u128>, []>;
-      orders: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<ZrmlOrderbookOrder>>, [u128]>;
+      orders: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<ZeitgeistPrimitivesOrderbookOrder>>, [u128]>;
     };
     parachainInfo: {
       parachainId: AugmentedQuery<ApiType, () => Observable<u32>, []>;

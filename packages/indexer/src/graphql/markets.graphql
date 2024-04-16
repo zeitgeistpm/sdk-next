@@ -51,6 +51,13 @@ fragment FullMarket on Market {
   creation
   creator
   creatorFee
+  outcomeAssets
+  categories {
+    color
+    img
+    name
+    ticker
+  }
   deadlines {
     disputeDuration
     gracePeriod

@@ -9,6 +9,7 @@ import type { ApiTypes, AugmentedEvent } from '@polkadot/api-base/types';
 import type { BTreeMap, Bytes, Null, Option, Result, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, H256, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
+import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, PalletParachainStakingDelegationRequestsCancelledScheduledRequest, PalletParachainStakingDelegatorAdded, SessionKeysPrimitivesVrfVrfCryptoPublic, SpRuntimeDispatchError, SpWeightsWeightV2Weight, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation, ZeitgeistPrimitivesAssetsAllAssetsAsset, ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, ZeitgeistPrimitivesAssetsSubsetsXcmAssetsXcmAssetClass, ZeitgeistPrimitivesHybridRouterApiTypesExternalFee, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketEarlyCloseState, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesMarketReport, ZeitgeistPrimitivesOrderbookOrder, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesProxyType, ZrmlCourtAppealInfo, ZrmlCourtCourtInfo, ZrmlCourtRoundTiming, ZrmlCourtVoteItem, ZrmlHybridRouterTxType, ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsEventsPoolAssetEvent, ZrmlSwapsEventsPoolAssetsEvent, ZrmlSwapsEventsSwapEvent, ZrmlSwapsPool } from '@polkadot/types/lookup';
 
 export type __AugmentedEvent<ApiType extends ApiTypes> = AugmentedEvent<ApiType>;
 
@@ -654,6 +655,12 @@ declare module '@polkadot/api-base/types/events' {
        **/
       VotedOnOutcome: AugmentedEvent<ApiType, [voter: AccountId32, marketId: u128, outcome: ZeitgeistPrimitivesOutcomeReport, voteAmount: u128], { voter: AccountId32, marketId: u128, outcome: ZeitgeistPrimitivesOutcomeReport, voteAmount: u128 }>;
     };
+    hybridRouter: {
+      /**
+       * A trade was executed.
+       **/
+      HybridRouterExecuted: AugmentedEvent<ApiType, [txType: ZrmlHybridRouterTxType, who: AccountId32, marketId: u128, priceLimit: u128, assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, assetOut: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountOut: u128, externalFeeAmount: u128, swapFeeAmount: u128], { txType: ZrmlHybridRouterTxType, who: AccountId32, marketId: u128, priceLimit: u128, assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, assetOut: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountOut: u128, externalFeeAmount: u128, swapFeeAmount: u128 }>;
+    };
     identity: {
       /**
        * A name was cleared, and the given balance returned.
@@ -845,14 +852,13 @@ declare module '@polkadot/api-base/types/events' {
       PoolDestroyed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, amountsOut: Vec<u128>], { who: AccountId32, marketId: u128, amountsOut: Vec<u128> }>;
       /**
        * Informant sold a position. `amount_out` is the amount of collateral received by `who`,
-       * with swap and external fees not yet deducted. The actual amount received is
-       * `amount_out - swap_fee_amount - external_fee_amount`.
+       * with swap and external fees already deducted.
        **/
       SellExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
     };
     orderbook: {
-      OrderFilled: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32, taker: AccountId32, filledMakerAmount: u128, filledTakerAmount: u128, unfilledMakerAmount: u128, unfilledTakerAmount: u128], { orderId: u128, maker: AccountId32, taker: AccountId32, filledMakerAmount: u128, filledTakerAmount: u128, unfilledMakerAmount: u128, unfilledTakerAmount: u128 }>;
-      OrderPlaced: AugmentedEvent<ApiType, [orderId: u128, order: ZrmlOrderbookOrder], { orderId: u128, order: ZrmlOrderbookOrder }>;
+      OrderFilled: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32, taker: AccountId32, filledMakerAmount: u128, filledTakerAmount: u128, unfilledMakerAmount: u128, unfilledTakerAmount: u128, externalFee: ZeitgeistPrimitivesHybridRouterApiTypesExternalFee], { orderId: u128, maker: AccountId32, taker: AccountId32, filledMakerAmount: u128, filledTakerAmount: u128, unfilledMakerAmount: u128, unfilledTakerAmount: u128, externalFee: ZeitgeistPrimitivesHybridRouterApiTypesExternalFee }>;
+      OrderPlaced: AugmentedEvent<ApiType, [orderId: u128, order: ZeitgeistPrimitivesOrderbookOrder], { orderId: u128, order: ZeitgeistPrimitivesOrderbookOrder }>;
       OrderRemoved: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32], { orderId: u128, maker: AccountId32 }>;
     };
     parachainStaking: {

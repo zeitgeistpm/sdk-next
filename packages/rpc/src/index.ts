@@ -2,6 +2,7 @@ import type { WsProvider } from '@polkadot/api'
 import type { ApiOptions } from '@polkadot/api/types'
 
 import { definitions } from '@zeitgeistpm/augment-api'
+import type { OverrideVersionedType } from '@polkadot/types/types'
 
 export * from './types'
 export * from './lib'
@@ -23,15 +24,21 @@ export const options = (opts: ZeitgeistApiOptions): ApiOptions => {
   return {
     types: {
       ...Object.values(definitions).reduce((acc, { types }) => ({ ...acc, ...types }), {}),
-      TAssetConversion: 'Option<ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass>',
+      //TAssetConversion: 'Option<ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass>',
     },
-    // typesSpec: {
-    //   "zeitgeist/53": {
-    //     types: {
-    //       TAssetConversion: 'Option<ZeitgeistPrimitivesAsset>',
-    //     },
-    //   },
-    // },
+    typesSpec: {
+      zeitgeist: {
+        FeePayingAsset: {
+          _enum: {
+            ForeignAsset: 'u32',
+            CampaignAsset: 'Compact<u128>',
+            CustomAsset: 'Compact<u128>',
+            Ztg: null,
+          },
+        },
+        TAssetConversion: 'Option<FeePayingAsset>',
+      },
+    },
     rpc: {
       ...Object.entries(definitions).reduce(
         (acc, [key, { rpc }]) => ({ ...acc, [key]: rpc }),

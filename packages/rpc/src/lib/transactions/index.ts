@@ -6,7 +6,7 @@ import type {
 } from '@polkadot/api/types'
 import type { ISubmittableResult } from '@polkadot/types/types'
 import * as Te from '@zeitgeistpm/utility/dist/taskeither'
-import type { ForeignAssetId } from '@zeitgeistpm/sdk'
+import type { BaseAssetId } from '@zeitgeistpm/sdk'
 import { isExtSigner, KeyringPairOrExtSigner } from '../keyring'
 import { TransactionError, TransactionHooks, UnknownDispatchError } from './types'
 
@@ -14,7 +14,7 @@ export type SignAndSendParams = {
   api: ApiPromise
   tx: SubmittableExtrinsic<'promise', ISubmittableResult>
   signer: KeyringPairOrExtSigner
-  feePayingAsset?: ForeignAssetId
+  feePayingAsset?: BaseAssetId
   waitForFinalization?: boolean
 } & TransactionHooks
 
@@ -70,7 +70,7 @@ export const signAndSend: Te.TaskEither<
       }
 
       if (feePayingAsset) {
-        signerOptions.assetId = feePayingAsset.ForeignAsset
+        signerOptions.assetId = feePayingAsset
       }
 
       try {
