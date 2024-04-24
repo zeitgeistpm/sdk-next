@@ -252,7 +252,7 @@ export const rpcMarket = <C extends RpcContext<MS>, MS extends MetadataStorage>(
 ): Market<C, MS> => {
   let market = attachMarketMethods(context, primitive as Market<C, MS>) as Market<C, MS>
 
-  market.marketId = isNumber(id) ? id : id.toNumber()
+  market.set('marketId', isNumber(id) ? id : id.toNumber())
 
   market.saturate = Te.from(async () => {
     const [metadata, pool] = await Promise.all([

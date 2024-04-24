@@ -235,7 +235,7 @@ export const extractMarketCreationEventForAddress = <
   E.tryCatch(() => {
     for (const { event } of events) {
       if (ctx.api.events.predictionMarkets.MarketCreated.is(event)) {
-        const [id, , primitive] = event.data
+        const [id, _, primitive] = event.data
         if (primitive.creator.eq(address)) {
           return rpcMarket<C, MS>(ctx, id, primitive) as RpcMarket<C, MS>
         }
