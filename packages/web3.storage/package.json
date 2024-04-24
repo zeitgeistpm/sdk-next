@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/web3.storage",
-  "version": "3.6.2",
+  "version": "3.6.3",
   "publishConfig": {
     "access": "public"
   },
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@multiformats/sha3": "^3.0.2",
-    "@zeitgeistpm/utility": "^3.6.2",
+    "@zeitgeistpm/utility": "^3.6.3",
     "cids": "^1.1.9",
     "ipfs-http-client": "^60.0.0",
     "ipfs-only-hash": "^4.0.0",

@@ -1,5 +1,17 @@
 # @zeitgeistpm/sdk
 
+## 3.6.3
+
+### Patch Changes
+
+- 63733086: Fix market id saturation when creating market.
+- Updated dependencies [63733086]
+  - @zeitgeistpm/augment-api@3.6.3
+  - @zeitgeistpm/indexer@4.6.3
+  - @zeitgeistpm/rpc@3.6.3
+  - @zeitgeistpm/utility@3.6.3
+  - @zeitgeistpm/web3.storage@3.6.3
+
 ## 3.6.2
 
 ### Patch Changes

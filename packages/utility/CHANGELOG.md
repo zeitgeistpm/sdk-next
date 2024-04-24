@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 3.6.3
+
+### Patch Changes
+
+- 63733086: Fix market id saturation when creating market.
+
 ## 3.6.2
 
 ### Patch Changes
