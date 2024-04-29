@@ -1,5 +1,15 @@
 # @zeitgeistpm/sdk
 
+## 3.6.4
+
+### Patch Changes
+
+- d44a28b0: Possible fix for the fee paying asset type.
+- Updated dependencies [d44a28b0]
+  - @zeitgeistpm/augment-api@3.6.4
+  - @zeitgeistpm/indexer@4.6.4
+  - @zeitgeistpm/rpc@3.6.4
+
 ## 3.6.3
 
 ### Patch Changes

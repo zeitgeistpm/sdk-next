@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.6.4
+
+### Patch Changes
+
+- d44a28b0: Possible fix for the fee paying asset type.
+
 ## 4.6.3
 
 ### Patch Changes
