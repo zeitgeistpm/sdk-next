@@ -30,10 +30,14 @@ export const options = (opts: ZeitgeistApiOptions): ApiOptions => {
       zeitgeist: {
         FeePayingAsset: {
           _enum: {
+            ScaleIndexPlaceHolder0: null,
+            ScaleIndexPlaceHolder1: null,
+            ScaleIndexPlaceHolder2: null,
+            ScaleIndexPlaceHolder3: null,
+            ScaleIndexPlaceHolder4: null,
             ForeignAsset: 'u32',
+            ScaleIndexPlaceHolder6: null,
             CampaignAsset: 'Compact<u128>',
-            CustomAsset: 'Compact<u128>',
-            Ztg: null,
           },
         },
         TAssetConversion: 'Option<FeePayingAsset>',
