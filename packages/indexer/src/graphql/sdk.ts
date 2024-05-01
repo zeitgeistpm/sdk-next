@@ -4227,7 +4227,6 @@ export type QueryPriceHistoryArgs = {
 export enum ScoringRule {
   AmmCdaHybrid = 'AmmCdaHybrid',
   Cpmm = 'CPMM',
-  Lmsr = 'Lmsr',
   Orderbook = 'Orderbook',
   Parimutuel = 'Parimutuel',
   RikiddoSigmoidFeeMarketEma = 'RikiddoSigmoidFeeMarketEma'
