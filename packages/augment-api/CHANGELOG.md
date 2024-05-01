@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 3.7.0
+
+### Minor Changes
+
+- 35b86b6f: Remove Lmsr scoring rule and add AmmCdaHybrid
+
 ## 3.6.4
 
 ### Patch Changes

@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 3.7.0
+
+### Minor Changes
+
+- 35b86b6f: Remove Lmsr scoring rule and add AmmCdaHybrid
+
+### Patch Changes
+
+- Updated dependencies [35b86b6f]
+  - @zeitgeistpm/augment-api@3.7.0
+  - @zeitgeistpm/indexer@4.7.0
+  - @zeitgeistpm/rpc@3.7.0
+  - @zeitgeistpm/utility@3.7.0
+  - @zeitgeistpm/web3.storage@3.7.0
+
 ## 3.6.4
 
 ### Patch Changes

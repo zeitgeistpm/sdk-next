@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 3.7.0
+
+### Minor Changes
+
+- 35b86b6f: Remove Lmsr scoring rule and add AmmCdaHybrid
+
+### Patch Changes
+
+- Updated dependencies [35b86b6f]
+  - @zeitgeistpm/utility@3.7.0
+
 ## 3.6.3
 
 ### Patch Changes

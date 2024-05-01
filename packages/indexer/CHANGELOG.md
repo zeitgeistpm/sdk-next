@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 4.7.0
+
+### Minor Changes
+
+- 35b86b6f: Remove Lmsr scoring rule and add AmmCdaHybrid
+
 ## 4.6.4
 
 ### Patch Changes
