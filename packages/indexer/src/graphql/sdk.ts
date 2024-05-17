@@ -602,6 +602,7 @@ export enum BaseAsset {
   Dot = 'DOT',
   Usdc = 'USDC',
   Usdt = 'USDT',
+  Wsx = 'WSX',
   Ztg = 'ZTG'
 }
 
@@ -3246,6 +3247,7 @@ export type Order = {
   maker: OrderRecord;
   makerAccountId: Scalars['String'];
   marketId: Scalars['Int'];
+  status: OrderStatus;
   taker: OrderRecord;
   updatedAt: Scalars['DateTime'];
 };
@@ -3300,6 +3302,10 @@ export enum OrderOrderByInput {
   MarketIdAscNullsFirst = 'marketId_ASC_NULLS_FIRST',
   MarketIdDesc = 'marketId_DESC',
   MarketIdDescNullsLast = 'marketId_DESC_NULLS_LAST',
+  StatusAsc = 'status_ASC',
+  StatusAscNullsFirst = 'status_ASC_NULLS_FIRST',
+  StatusDesc = 'status_DESC',
+  StatusDescNullsLast = 'status_DESC_NULLS_LAST',
   TakerAssetAsc = 'taker_asset_ASC',
   TakerAssetAscNullsFirst = 'taker_asset_ASC_NULLS_FIRST',
   TakerAssetDesc = 'taker_asset_DESC',
@@ -3363,6 +3369,13 @@ export type OrderRecordWhereInput = {
   unfilledAmount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
 };
 
+/** Orders' status options */
+export enum OrderStatus {
+  Filled = 'Filled',
+  Placed = 'Placed',
+  Removed = 'Removed'
+}
+
 export type OrderWhereInput = {
   AND?: InputMaybe<Array<OrderWhereInput>>;
   OR?: InputMaybe<Array<OrderWhereInput>>;
@@ -3420,6 +3433,11 @@ export type OrderWhereInput = {
   marketId_lte?: InputMaybe<Scalars['Int']>;
   marketId_not_eq?: InputMaybe<Scalars['Int']>;
   marketId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  status_eq?: InputMaybe<OrderStatus>;
+  status_in?: InputMaybe<Array<OrderStatus>>;
+  status_isNull?: InputMaybe<Scalars['Boolean']>;
+  status_not_eq?: InputMaybe<OrderStatus>;
+  status_not_in?: InputMaybe<Array<OrderStatus>>;
   taker?: InputMaybe<OrderRecordWhereInput>;
   taker_isNull?: InputMaybe<Scalars['Boolean']>;
   updatedAt_eq?: InputMaybe<Scalars['DateTime']>;
@@ -4669,9 +4687,9 @@ export type OrdersQueryVariables = Exact<{
 }>;
 
 
-export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename: 'Order', id: string, marketId: number, makerAccountId: string, updatedAt: any, createdAt: any, maker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, unfilledAmount: any }, taker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, unfilledAmount: any } }> };
+export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename: 'Order', createdAt: any, id: string, makerAccountId: string, marketId: number, status: OrderStatus, updatedAt: any, maker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, unfilledAmount: any }, taker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, unfilledAmount: any } }> };
 
-export type FullOrderFragment = { __typename: 'Order', id: string, marketId: number, makerAccountId: string, updatedAt: any, createdAt: any, maker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, unfilledAmount: any }, taker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, unfilledAmount: any } };
+export type FullOrderFragment = { __typename: 'Order', createdAt: any, id: string, makerAccountId: string, marketId: number, status: OrderStatus, updatedAt: any, maker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, unfilledAmount: any }, taker: { __typename?: 'OrderRecord', asset: string, filledAmount: any, unfilledAmount: any } };
 
 export type PingQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4991,21 +5009,22 @@ export const FullMarketMetadataFragmentDoc = gql`
 export const FullOrderFragmentDoc = gql`
     fragment FullOrder on Order {
   __typename
-  id
-  marketId
-  makerAccountId
-  updatedAt
   createdAt
+  id
   maker {
     asset
     filledAmount
     unfilledAmount
   }
+  makerAccountId
+  marketId
+  status
   taker {
     asset
     filledAmount
     unfilledAmount
   }
+  updatedAt
 }
     `;
 export const AccountBalancesDocument = gql`
