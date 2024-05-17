@@ -3244,7 +3244,15 @@ export type Order = {
   marketId: Scalars['Int'];
   taker: OrderRecord;
   updatedAt: Scalars['DateTime'];
+  status: OrderStatus
 };
+
+/** Order status options */
+export enum OrderStatus {
+  Placed = 'Placed',
+  Filled = 'Filled',
+  Removed = 'Removed',
+}
 
 /** Ordering stats */
 export enum OrderBy {
@@ -3348,6 +3356,11 @@ export type OrderRecordWhereInput = {
   filledAmount_lte?: InputMaybe<Scalars['BigInt']>;
   filledAmount_not_eq?: InputMaybe<Scalars['BigInt']>;
   filledAmount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  status_eq?: InputMaybe<OrderStatus>;
+  status_in?: InputMaybe<Array<OrderStatus>>;
+  status_isNull?: InputMaybe<Scalars['Boolean']>;
+  status_not_eq?: InputMaybe<OrderStatus>;
+  status_not_in?: InputMaybe<Array<OrderStatus>>;
   unfilledAmount_eq?: InputMaybe<Scalars['BigInt']>;
   unfilledAmount_gt?: InputMaybe<Scalars['BigInt']>;
   unfilledAmount_gte?: InputMaybe<Scalars['BigInt']>;
