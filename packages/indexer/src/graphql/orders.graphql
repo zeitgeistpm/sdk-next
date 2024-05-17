@@ -18,19 +18,20 @@ query orders(
 
 fragment FullOrder on Order {
   __typename
-  id
-  marketId
-  makerAccountId
-  updatedAt
   createdAt
+  id
   maker {
     asset
     filledAmount
     unfilledAmount
   }
+  makerAccountId
+  marketId
+  status
   taker {
     asset
     filledAmount
     unfilledAmount
   }
+  updatedAt
 }
