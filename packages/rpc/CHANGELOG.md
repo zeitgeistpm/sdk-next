@@ -1,5 +1,12 @@
 # @zeitgeistpm/rpc
 
+## 3.5.1
+
+### Patch Changes
+
+- Updated dependencies [5a614cc]
+  - @zeitgeistpm/augment-api@4.0.0
+
 ## 3.5.0
 
 ### Minor Changes

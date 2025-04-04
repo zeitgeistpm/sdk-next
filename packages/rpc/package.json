@@ -1,6 +1,6 @@
 {
   "name": "@zeitgeistpm/rpc",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "publishConfig": {
     "access": "public"
   },
@@ -24,7 +24,7 @@
     "build:mainnet": "rimraf ./dist && rollup -c"
   },
   "dependencies": {
-    "@zeitgeistpm/augment-api": "^3.5.0",
+    "@zeitgeistpm/augment-api": "^4.0.0",
     "@zeitgeistpm/utility": "^3.5.0"
   },
   "peerDependencies": {

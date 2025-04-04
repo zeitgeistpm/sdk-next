@@ -1,5 +1,14 @@
 # @zeitgeistpm/sdk
 
+## 3.5.3
+
+### Patch Changes
+
+- Updated dependencies [5a614cc]
+  - @zeitgeistpm/augment-api@4.0.0
+  - @zeitgeistpm/indexer@5.0.0
+  - @zeitgeistpm/rpc@3.5.1
+
 ## 3.5.2
 
 ### Patch Changes
