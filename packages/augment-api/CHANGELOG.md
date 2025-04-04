@@ -1,5 +1,11 @@
 # @zeitgeistpm/augment-api
 
+## 4.0.0
+
+### Major Changes
+
+- 5a614cc: Adapt to incoming changes from specVersion:60
+
 ## 3.5.1
 
 ### Patch Changes
