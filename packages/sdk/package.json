@@ -33,7 +33,7 @@
   "dependencies": {
     "@zeitgeistpm/augment-api": "^4.0.0",
     "@zeitgeistpm/indexer": "^5.0.0",
-    "@zeitgeistpm/rpc": "^3.5.1",
+    "@zeitgeistpm/rpc": "3.5.1",
     "@zeitgeistpm/utility": "^3.5.0",
     "@zeitgeistpm/web3.storage": "^3.5.0",
     "cids": "^1.1.9",
