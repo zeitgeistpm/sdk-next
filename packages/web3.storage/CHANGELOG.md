@@ -1,5 +1,16 @@
 # @zeitgeistpm/web3.storage
 
+## 4.1.0
+
+### Minor Changes
+
+- ebb423e: Adapt to incoming changes from specVersion:60
+
+### Patch Changes
+
+- Updated dependencies [ebb423e]
+  - @zeitgeistpm/utility@4.1.0
+
 ## 4.0.0
 
 ### Major Changes

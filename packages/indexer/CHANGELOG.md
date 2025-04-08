@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 5.1.0
+
+### Minor Changes
+
+- ebb423e: Adapt to incoming changes from specVersion:60
+
 ## 5.0.0
 
 ### Major Changes
