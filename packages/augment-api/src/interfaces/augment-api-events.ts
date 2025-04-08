@@ -9,7 +9,7 @@ import type { ApiTypes, AugmentedEvent } from '@polkadot/api-base/types';
 import type { BTreeMap, Bytes, Null, Option, Result, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, H256, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, PalletParachainStakingDelegationRequestsCancelledScheduledRequest, PalletParachainStakingDelegatorAdded, SessionKeysPrimitivesVrfVrfCryptoPublic, SpRuntimeDispatchError, SpWeightsWeightV2Weight, XcmV3MultiAsset, XcmV3MultiLocation, XcmV3MultiassetMultiAssets, XcmV3Response, XcmV3TraitsError, XcmV3TraitsOutcome, XcmV3Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation, ZeitgeistPrimitivesAssetsAllAssetsAsset, ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, ZeitgeistPrimitivesAssetsSubsetsXcmAssetsXcmAssetClass, ZeitgeistPrimitivesHybridRouterApiTypesExternalFee, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketEarlyCloseState, ZeitgeistPrimitivesMarketMarketDispute, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesMarketReport, ZeitgeistPrimitivesOrderbookOrder, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesProxyType, ZrmlCourtAppealInfo, ZrmlCourtCourtInfo, ZrmlCourtRoundTiming, ZrmlCourtVoteItem, ZrmlHybridRouterTxType, ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsEventsPoolAssetEvent, ZrmlSwapsEventsPoolAssetsEvent, ZrmlSwapsEventsSwapEvent, ZrmlSwapsPool } from '@polkadot/types/lookup';
+import type { FrameSupportDispatchDispatchInfo, FrameSupportTokensMiscBalanceStatus, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyMetadataOwner, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, PalletParachainStakingDelegationRequestsCancelledScheduledRequest, PalletParachainStakingDelegatorAdded, SessionKeysPrimitivesVrfVrfCryptoPublic, SpRuntimeDispatchError, SpWeightsWeightV2Weight, StagingXcmV3MultiAsset, StagingXcmV3MultiLocation, StagingXcmV3MultiassetMultiAssets, StagingXcmV3Response, StagingXcmV3TraitsError, StagingXcmV3TraitsOutcome, StagingXcmV3Xcm, StagingXcmVersionedMultiAssets, StagingXcmVersionedMultiLocation, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesHybridRouterApiTypesExternalFee, ZeitgeistPrimitivesMarket, ZeitgeistPrimitivesMarketEarlyCloseState, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketStatus, ZeitgeistPrimitivesMarketReport, ZeitgeistPrimitivesOrderbookOrder, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesProxyType, ZrmlCourtAppealInfo, ZrmlCourtCourtInfo, ZrmlCourtRoundTiming, ZrmlCourtVoteItem, ZrmlFutarchyProposal, ZrmlHybridRouterTxType, ZrmlSwapsEventsCommonPoolEventParams, ZrmlSwapsEventsPoolAssetEvent, ZrmlSwapsEventsPoolAssetsEvent, ZrmlSwapsEventsSwapEvent, ZrmlSwapsPool } from '@polkadot/types/lookup';
 
 export type __AugmentedEvent<ApiType extends ApiTypes> = AugmentedEvent<ApiType>;
 
@@ -74,15 +74,15 @@ declare module '@polkadot/api-base/types/events' {
       MembersSwapped: AugmentedEvent<ApiType, []>;
     };
     assetRegistry: {
-      RegisteredAsset: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsSubsetsXcmAssetsXcmAssetClass, metadata: OrmlTraitsAssetRegistryAssetMetadata], { assetId: ZeitgeistPrimitivesAssetsSubsetsXcmAssetsXcmAssetClass, metadata: OrmlTraitsAssetRegistryAssetMetadata }>;
-      UpdatedAsset: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsSubsetsXcmAssetsXcmAssetClass, metadata: OrmlTraitsAssetRegistryAssetMetadata], { assetId: ZeitgeistPrimitivesAssetsSubsetsXcmAssetsXcmAssetClass, metadata: OrmlTraitsAssetRegistryAssetMetadata }>;
+      RegisteredAsset: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAsset, metadata: OrmlTraitsAssetRegistryAssetMetadata], { assetId: ZeitgeistPrimitivesAsset, metadata: OrmlTraitsAssetRegistryAssetMetadata }>;
+      UpdatedAsset: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAsset, metadata: OrmlTraitsAssetRegistryAssetMetadata], { assetId: ZeitgeistPrimitivesAsset, metadata: OrmlTraitsAssetRegistryAssetMetadata }>;
     };
     assetTxPayment: {
       /**
        * A transaction fee `actual_fee`, of which `tip` was added to the minimum inclusion fee,
        * has been paid by `who` in an asset `asset_id`.
        **/
-      AssetTxFeePaid: AugmentedEvent<ApiType, [who: AccountId32, actualFee: u128, tip: u128, assetId: Option<ZeitgeistPrimitivesAssetsAllAssetsAsset>], { who: AccountId32, actualFee: u128, tip: u128, assetId: Option<ZeitgeistPrimitivesAssetsAllAssetsAsset> }>;
+      AssetTxFeePaid: AugmentedEvent<ApiType, [who: AccountId32, actualFee: u128, tip: u128, assetId: Option<StagingXcmV3MultiLocation>], { who: AccountId32, actualFee: u128, tip: u128, assetId: Option<StagingXcmV3MultiLocation> }>;
     };
     authorFilter: {
       /**
@@ -114,7 +114,11 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * A balance was set by root.
        **/
-      BalanceSet: AugmentedEvent<ApiType, [who: AccountId32, free: u128, reserved: u128], { who: AccountId32, free: u128, reserved: u128 }>;
+      BalanceSet: AugmentedEvent<ApiType, [who: AccountId32, free: u128], { who: AccountId32, free: u128 }>;
+      /**
+       * Some amount was burned from an account.
+       **/
+      Burned: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
       /**
        * Some amount was deposited (e.g. for transaction fees).
        **/
@@ -129,6 +133,26 @@ declare module '@polkadot/api-base/types/events' {
        **/
       Endowed: AugmentedEvent<ApiType, [account: AccountId32, freeBalance: u128], { account: AccountId32, freeBalance: u128 }>;
       /**
+       * Some balance was frozen.
+       **/
+      Frozen: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
+      /**
+       * Total issuance was increased by `amount`, creating a credit to be balanced.
+       **/
+      Issued: AugmentedEvent<ApiType, [amount: u128], { amount: u128 }>;
+      /**
+       * Some balance was locked.
+       **/
+      Locked: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
+      /**
+       * Some amount was minted into an account.
+       **/
+      Minted: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
+      /**
+       * Total issuance was decreased by `amount`, creating a debt to be balanced.
+       **/
+      Rescinded: AugmentedEvent<ApiType, [amount: u128], { amount: u128 }>;
+      /**
        * Some balance was reserved (moved from free to reserved).
        **/
       Reserved: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
@@ -138,17 +162,37 @@ declare module '@polkadot/api-base/types/events' {
        **/
       ReserveRepatriated: AugmentedEvent<ApiType, [from: AccountId32, to: AccountId32, amount: u128, destinationStatus: FrameSupportTokensMiscBalanceStatus], { from: AccountId32, to: AccountId32, amount: u128, destinationStatus: FrameSupportTokensMiscBalanceStatus }>;
       /**
+       * Some amount was restored into an account.
+       **/
+      Restored: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
+      /**
        * Some amount was removed from the account (e.g. for misbehavior).
        **/
       Slashed: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
+      /**
+       * Some amount was suspended from an account (it can be restored later).
+       **/
+      Suspended: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
+      /**
+       * Some balance was thawed.
+       **/
+      Thawed: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
       /**
        * Transfer succeeded.
        **/
       Transfer: AugmentedEvent<ApiType, [from: AccountId32, to: AccountId32, amount: u128], { from: AccountId32, to: AccountId32, amount: u128 }>;
       /**
+       * Some balance was unlocked.
+       **/
+      Unlocked: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
+      /**
        * Some balance was unreserved (moved from reserved to free).
        **/
       Unreserved: AugmentedEvent<ApiType, [who: AccountId32, amount: u128], { who: AccountId32, amount: u128 }>;
+      /**
+       * An account was upgraded.
+       **/
+      Upgraded: AugmentedEvent<ApiType, [who: AccountId32], { who: AccountId32 }>;
       /**
        * Some amount was withdrawn from the account (e.g. for transaction fees).
        **/
@@ -184,143 +228,32 @@ declare module '@polkadot/api-base/types/events' {
        **/
       BountyRejected: AugmentedEvent<ApiType, [index: u32, bond: u128], { index: u32, bond: u128 }>;
     };
-    campaignAssets: {
+    combinatorialTokens: {
       /**
-       * Accounts were destroyed for given asset.
+       * User `who` has merged `amount` units of each of the tokens in `assets_in` into the same
+       * amount of `asset_out`. The ith element of the `partition` matches the ith element of
+       * `assets_in`, so `assets_in[i]` is the outcome represented by the specified
+       * `parent_collection_id` when split using `partition[i]` in `market_id`. Note that the
+       * `parent_collection_id` is equal to the collection ID of the position `asset_out`; if
+       * `asset_out` is the collateral token, then `parent_collection_id` is `None`.
        **/
-      AccountsDestroyed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, accountsDestroyed: u32, accountsRemaining: u32], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, accountsDestroyed: u32, accountsRemaining: u32 }>;
+      TokenMerged: AugmentedEvent<ApiType, [who: AccountId32, parentCollectionId: Option<U8aFixed>, marketId: u128, partition: Vec<Vec<bool>>, assetOut: ZeitgeistPrimitivesAsset, assetsIn: Vec<ZeitgeistPrimitivesAsset>, amount: u128], { who: AccountId32, parentCollectionId: Option<U8aFixed>, marketId: u128, partition: Vec<Vec<bool>>, assetOut: ZeitgeistPrimitivesAsset, assetsIn: Vec<ZeitgeistPrimitivesAsset>, amount: u128 }>;
       /**
-       * An approval for account `delegate` was cancelled by `owner`.
+       * User `who` has redeemed `amount_in` units of `asset_in` for `amount_out` units of
+       * `asset_out` using the report for the market specified by `market_id`. The
+       * `parent_collection_id` specifies the collection ID of the `asset_out`; it is `None` if
+       * the `asset_out` is the collateral token.
        **/
-      ApprovalCancelled: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32, delegate: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32, delegate: AccountId32 }>;
+      TokenRedeemed: AugmentedEvent<ApiType, [who: AccountId32, parentCollectionId: Option<U8aFixed>, marketId: u128, indexSet: Vec<bool>, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, assetOut: ZeitgeistPrimitivesAsset, amountOut: u128], { who: AccountId32, parentCollectionId: Option<U8aFixed>, marketId: u128, indexSet: Vec<bool>, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, assetOut: ZeitgeistPrimitivesAsset, amountOut: u128 }>;
       /**
-       * Approvals were destroyed for given asset.
+       * User `who` has split `amount` units of token `asset_in` into the same amount of each
+       * token in `assets_out` using `partition`. The ith element of `partition` matches the ith
+       * element of `assets_out`, so `assets_out[i]` is the outcome represented by the specified
+       * `parent_collection_id` when split using `partition[i]` in `market_id`. The same goes for
+       * the `collection_ids` vector, the ith element of which specifies the collection ID of
+       * `assets_out[i]`.
        **/
-      ApprovalsDestroyed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, approvalsDestroyed: u32, approvalsRemaining: u32], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, approvalsDestroyed: u32, approvalsRemaining: u32 }>;
-      /**
-       * (Additional) funds have been approved for transfer to a destination account.
-       **/
-      ApprovedTransfer: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, source: AccountId32, delegate: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, source: AccountId32, delegate: AccountId32, amount: u128 }>;
-      /**
-       * Some asset `asset_id` was frozen.
-       **/
-      AssetFrozen: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass }>;
-      /**
-       * An asset has had its attributes changed by the `Force` origin.
-       **/
-      AssetStatusChanged: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass }>;
-      /**
-       * Some asset `asset_id` was thawed.
-       **/
-      AssetThawed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass }>;
-      /**
-       * Some assets were destroyed.
-       **/
-      Burned: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32, balance: u128], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32, balance: u128 }>;
-      /**
-       * Some asset class was created.
-       **/
-      Created: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, creator: AccountId32, owner: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, creator: AccountId32, owner: AccountId32 }>;
-      /**
-       * An asset class was destroyed.
-       **/
-      Destroyed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass }>;
-      /**
-       * An asset class is in the process of being destroyed.
-       **/
-      DestructionStarted: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass }>;
-      /**
-       * Some asset class was force-created.
-       **/
-      ForceCreated: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32 }>;
-      /**
-       * Some account `who` was frozen.
-       **/
-      Frozen: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, who: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, who: AccountId32 }>;
-      /**
-       * Some assets were issued.
-       **/
-      Issued: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32, amount: u128 }>;
-      /**
-       * Metadata has been cleared for an asset.
-       **/
-      MetadataCleared: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass }>;
-      /**
-       * New metadata has been set for an asset.
-       **/
-      MetadataSet: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, name: Bytes, symbol_: Bytes, decimals: u8, isFrozen: bool], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, name: Bytes, symbol: Bytes, decimals: u8, isFrozen: bool }>;
-      /**
-       * The owner changed.
-       **/
-      OwnerChanged: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32 }>;
-      /**
-       * The management team changed.
-       **/
-      TeamChanged: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, issuer: AccountId32, admin: AccountId32, freezer: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, issuer: AccountId32, admin: AccountId32, freezer: AccountId32 }>;
-      /**
-       * Some account `who` was thawed.
-       **/
-      Thawed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, who: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, who: AccountId32 }>;
-      /**
-       * Some assets were transferred.
-       **/
-      Transferred: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, from: AccountId32, to: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, from: AccountId32, to: AccountId32, amount: u128 }>;
-      /**
-       * An `amount` was transferred in its entirety from `owner` to `destination` by
-       * the approved `delegate`.
-       **/
-      TransferredApproved: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32, delegate: AccountId32, destination: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsCampaignAssetsCampaignAssetClass, owner: AccountId32, delegate: AccountId32, destination: AccountId32, amount: u128 }>;
-    };
-    contracts: {
-      /**
-       * A contract was called either by a plain account or another contract.
-       * 
-       * # Note
-       * 
-       * Please keep in mind that like all events this is only emitted for successful
-       * calls. This is because on failure all storage changes including events are
-       * rolled back.
-       **/
-      Called: AugmentedEvent<ApiType, [caller: AccountId32, contract: AccountId32], { caller: AccountId32, contract: AccountId32 }>;
-      /**
-       * A code with the specified hash was removed.
-       **/
-      CodeRemoved: AugmentedEvent<ApiType, [codeHash: H256], { codeHash: H256 }>;
-      /**
-       * Code with the specified hash has been stored.
-       **/
-      CodeStored: AugmentedEvent<ApiType, [codeHash: H256], { codeHash: H256 }>;
-      /**
-       * A contract's code was updated.
-       **/
-      ContractCodeUpdated: AugmentedEvent<ApiType, [contract: AccountId32, newCodeHash: H256, oldCodeHash: H256], { contract: AccountId32, newCodeHash: H256, oldCodeHash: H256 }>;
-      /**
-       * A custom event emitted by the contract.
-       **/
-      ContractEmitted: AugmentedEvent<ApiType, [contract: AccountId32, data: Bytes], { contract: AccountId32, data: Bytes }>;
-      /**
-       * A contract delegate called a code hash.
-       * 
-       * # Note
-       * 
-       * Please keep in mind that like all events this is only emitted for successful
-       * calls. This is because on failure all storage changes including events are
-       * rolled back.
-       **/
-      DelegateCalled: AugmentedEvent<ApiType, [contract: AccountId32, codeHash: H256], { contract: AccountId32, codeHash: H256 }>;
-      /**
-       * Contract deployed by address at the specified address.
-       **/
-      Instantiated: AugmentedEvent<ApiType, [deployer: AccountId32, contract: AccountId32], { deployer: AccountId32, contract: AccountId32 }>;
-      /**
-       * Contract has been removed.
-       * 
-       * # Note
-       * 
-       * The only way for a contract to be removed and emitting this event is by calling
-       * `seal_terminate`.
-       **/
-      Terminated: AugmentedEvent<ApiType, [contract: AccountId32, beneficiary: AccountId32], { contract: AccountId32, beneficiary: AccountId32 }>;
+      TokenSplit: AugmentedEvent<ApiType, [who: AccountId32, parentCollectionId: Option<U8aFixed>, marketId: u128, partition: Vec<Vec<bool>>, assetIn: ZeitgeistPrimitivesAsset, assetsOut: Vec<ZeitgeistPrimitivesAsset>, collectionIds: Vec<U8aFixed>, amount: u128], { who: AccountId32, parentCollectionId: Option<U8aFixed>, marketId: u128, partition: Vec<Vec<bool>>, assetIn: ZeitgeistPrimitivesAsset, assetsOut: Vec<ZeitgeistPrimitivesAsset>, collectionIds: Vec<U8aFixed>, amount: u128 }>;
     };
     council: {
       /**
@@ -438,7 +371,7 @@ declare module '@polkadot/api-base/types/events' {
        * Downward message executed with the given outcome.
        * \[ id, outcome \]
        **/
-      ExecutedDownward: AugmentedEvent<ApiType, [U8aFixed, XcmV3TraitsOutcome]>;
+      ExecutedDownward: AugmentedEvent<ApiType, [U8aFixed, StagingXcmV3TraitsOutcome]>;
       /**
        * Downward message is invalid XCM.
        * \[ id \]
@@ -449,93 +382,6 @@ declare module '@polkadot/api-base/types/events' {
        * \[ id \]
        **/
       UnsupportedVersion: AugmentedEvent<ApiType, [U8aFixed]>;
-    };
-    customAssets: {
-      /**
-       * Accounts were destroyed for given asset.
-       **/
-      AccountsDestroyed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, accountsDestroyed: u32, accountsRemaining: u32], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, accountsDestroyed: u32, accountsRemaining: u32 }>;
-      /**
-       * An approval for account `delegate` was cancelled by `owner`.
-       **/
-      ApprovalCancelled: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32, delegate: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32, delegate: AccountId32 }>;
-      /**
-       * Approvals were destroyed for given asset.
-       **/
-      ApprovalsDestroyed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, approvalsDestroyed: u32, approvalsRemaining: u32], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, approvalsDestroyed: u32, approvalsRemaining: u32 }>;
-      /**
-       * (Additional) funds have been approved for transfer to a destination account.
-       **/
-      ApprovedTransfer: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, source: AccountId32, delegate: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, source: AccountId32, delegate: AccountId32, amount: u128 }>;
-      /**
-       * Some asset `asset_id` was frozen.
-       **/
-      AssetFrozen: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass }>;
-      /**
-       * An asset has had its attributes changed by the `Force` origin.
-       **/
-      AssetStatusChanged: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass }>;
-      /**
-       * Some asset `asset_id` was thawed.
-       **/
-      AssetThawed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass }>;
-      /**
-       * Some assets were destroyed.
-       **/
-      Burned: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32, balance: u128], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32, balance: u128 }>;
-      /**
-       * Some asset class was created.
-       **/
-      Created: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, creator: AccountId32, owner: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, creator: AccountId32, owner: AccountId32 }>;
-      /**
-       * An asset class was destroyed.
-       **/
-      Destroyed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass }>;
-      /**
-       * An asset class is in the process of being destroyed.
-       **/
-      DestructionStarted: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass }>;
-      /**
-       * Some asset class was force-created.
-       **/
-      ForceCreated: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32 }>;
-      /**
-       * Some account `who` was frozen.
-       **/
-      Frozen: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, who: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, who: AccountId32 }>;
-      /**
-       * Some assets were issued.
-       **/
-      Issued: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32, amount: u128 }>;
-      /**
-       * Metadata has been cleared for an asset.
-       **/
-      MetadataCleared: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass }>;
-      /**
-       * New metadata has been set for an asset.
-       **/
-      MetadataSet: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, name: Bytes, symbol_: Bytes, decimals: u8, isFrozen: bool], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, name: Bytes, symbol: Bytes, decimals: u8, isFrozen: bool }>;
-      /**
-       * The owner changed.
-       **/
-      OwnerChanged: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32 }>;
-      /**
-       * The management team changed.
-       **/
-      TeamChanged: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, issuer: AccountId32, admin: AccountId32, freezer: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, issuer: AccountId32, admin: AccountId32, freezer: AccountId32 }>;
-      /**
-       * Some account `who` was thawed.
-       **/
-      Thawed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, who: AccountId32], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, who: AccountId32 }>;
-      /**
-       * Some assets were transferred.
-       **/
-      Transferred: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, from: AccountId32, to: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, from: AccountId32, to: AccountId32, amount: u128 }>;
-      /**
-       * An `amount` was transferred in its entirety from `owner` to `destination` by
-       * the approved `delegate`.
-       **/
-      TransferredApproved: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32, delegate: AccountId32, destination: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsCustomAssetsCustomAssetClass, owner: AccountId32, delegate: AccountId32, destination: AccountId32, amount: u128 }>;
     };
     democracy: {
       /**
@@ -554,6 +400,18 @@ declare module '@polkadot/api-base/types/events' {
        * An external proposal has been tabled.
        **/
       ExternalTabled: AugmentedEvent<ApiType, []>;
+      /**
+       * Metadata for a proposal or a referendum has been cleared.
+       **/
+      MetadataCleared: AugmentedEvent<ApiType, [owner: PalletDemocracyMetadataOwner, hash_: H256], { owner: PalletDemocracyMetadataOwner, hash_: H256 }>;
+      /**
+       * Metadata for a proposal or a referendum has been set.
+       **/
+      MetadataSet: AugmentedEvent<ApiType, [owner: PalletDemocracyMetadataOwner, hash_: H256], { owner: PalletDemocracyMetadataOwner, hash_: H256 }>;
+      /**
+       * Metadata has been transferred to new owner.
+       **/
+      MetadataTransferred: AugmentedEvent<ApiType, [prevOwner: PalletDemocracyMetadataOwner, owner: PalletDemocracyMetadataOwner, hash_: H256], { prevOwner: PalletDemocracyMetadataOwner, owner: PalletDemocracyMetadataOwner, hash_: H256 }>;
       /**
        * A proposal has been rejected by referendum.
        **/
@@ -599,19 +457,19 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * Downward message executed with the given outcome.
        **/
-      ExecutedDownward: AugmentedEvent<ApiType, [messageId: U8aFixed, outcome: XcmV3TraitsOutcome], { messageId: U8aFixed, outcome: XcmV3TraitsOutcome }>;
+      ExecutedDownward: AugmentedEvent<ApiType, [messageHash: U8aFixed, messageId: U8aFixed, outcome: StagingXcmV3TraitsOutcome], { messageHash: U8aFixed, messageId: U8aFixed, outcome: StagingXcmV3TraitsOutcome }>;
       /**
        * Downward message is invalid XCM.
        **/
-      InvalidFormat: AugmentedEvent<ApiType, [messageId: U8aFixed], { messageId: U8aFixed }>;
+      InvalidFormat: AugmentedEvent<ApiType, [messageHash: U8aFixed], { messageHash: U8aFixed }>;
       /**
-       * The maximum number of downward messages was.
+       * The maximum number of downward messages was reached.
        **/
-      MaxMessagesExhausted: AugmentedEvent<ApiType, [messageId: U8aFixed], { messageId: U8aFixed }>;
+      MaxMessagesExhausted: AugmentedEvent<ApiType, [messageHash: U8aFixed], { messageHash: U8aFixed }>;
       /**
        * Downward message is overweight and was placed in the overweight queue.
        **/
-      OverweightEnqueued: AugmentedEvent<ApiType, [messageId: U8aFixed, overweightIndex: u64, requiredWeight: SpWeightsWeightV2Weight], { messageId: U8aFixed, overweightIndex: u64, requiredWeight: SpWeightsWeightV2Weight }>;
+      OverweightEnqueued: AugmentedEvent<ApiType, [messageHash: U8aFixed, messageId: U8aFixed, overweightIndex: u64, requiredWeight: SpWeightsWeightV2Weight], { messageHash: U8aFixed, messageId: U8aFixed, overweightIndex: u64, requiredWeight: SpWeightsWeightV2Weight }>;
       /**
        * Downward message from the overweight queue was executed.
        **/
@@ -619,11 +477,29 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * Downward message is unsupported version of XCM.
        **/
-      UnsupportedVersion: AugmentedEvent<ApiType, [messageId: U8aFixed], { messageId: U8aFixed }>;
+      UnsupportedVersion: AugmentedEvent<ApiType, [messageHash: U8aFixed], { messageHash: U8aFixed }>;
       /**
        * The weight limit for handling downward messages was reached.
        **/
-      WeightExhausted: AugmentedEvent<ApiType, [messageId: U8aFixed, remainingWeight: SpWeightsWeightV2Weight, requiredWeight: SpWeightsWeightV2Weight], { messageId: U8aFixed, remainingWeight: SpWeightsWeightV2Weight, requiredWeight: SpWeightsWeightV2Weight }>;
+      WeightExhausted: AugmentedEvent<ApiType, [messageHash: U8aFixed, messageId: U8aFixed, remainingWeight: SpWeightsWeightV2Weight, requiredWeight: SpWeightsWeightV2Weight], { messageHash: U8aFixed, messageId: U8aFixed, remainingWeight: SpWeightsWeightV2Weight, requiredWeight: SpWeightsWeightV2Weight }>;
+    };
+    futarchy: {
+      /**
+       * A proposal has been rejected by the oracle.
+       **/
+      Rejected: AugmentedEvent<ApiType, [proposal: ZrmlFutarchyProposal], { proposal: ZrmlFutarchyProposal }>;
+      /**
+       * A proposal has been scheduled for execution.
+       **/
+      Scheduled: AugmentedEvent<ApiType, [proposal: ZrmlFutarchyProposal], { proposal: ZrmlFutarchyProposal }>;
+      /**
+       * A proposal has been submitted.
+       **/
+      Submitted: AugmentedEvent<ApiType, [duration: u64, proposal: ZrmlFutarchyProposal], { duration: u64, proposal: ZrmlFutarchyProposal }>;
+      /**
+       * This is a logic error. You shouldn't see this.
+       **/
+      UnexpectedSchedulerError: AugmentedEvent<ApiType, []>;
     };
     globalDisputes: {
       /**
@@ -659,7 +535,7 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * A trade was executed.
        **/
-      HybridRouterExecuted: AugmentedEvent<ApiType, [txType: ZrmlHybridRouterTxType, who: AccountId32, marketId: u128, priceLimit: u128, assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, assetOut: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountOut: u128, externalFeeAmount: u128, swapFeeAmount: u128], { txType: ZrmlHybridRouterTxType, who: AccountId32, marketId: u128, priceLimit: u128, assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, assetOut: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountOut: u128, externalFeeAmount: u128, swapFeeAmount: u128 }>;
+      HybridRouterExecuted: AugmentedEvent<ApiType, [txType: ZrmlHybridRouterTxType, who: AccountId32, marketId: u128, priceLimit: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, assetOut: ZeitgeistPrimitivesAsset, amountOut: u128, externalFeeAmount: u128, swapFeeAmount: u128], { txType: ZrmlHybridRouterTxType, who: AccountId32, marketId: u128, priceLimit: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, assetOut: ZeitgeistPrimitivesAsset, amountOut: u128, externalFeeAmount: u128, swapFeeAmount: u128 }>;
     };
     identity: {
       /**
@@ -704,108 +580,6 @@ declare module '@polkadot/api-base/types/events' {
        **/
       SubIdentityRevoked: AugmentedEvent<ApiType, [sub: AccountId32, main: AccountId32, deposit: u128], { sub: AccountId32, main: AccountId32, deposit: u128 }>;
     };
-    liquidityMining: {
-      /**
-       * The number of markets that received incentives in a block
-       **/
-      AddedIncentives: AugmentedEvent<ApiType, [u64]>;
-      /**
-       * The total amount of incentives distributed to accounts along side the number
-       * of accounts that received these incentives.
-       **/
-      DistributedIncentives: AugmentedEvent<ApiType, [u128, u64]>;
-      /**
-       * The number of markets that subtracted incentives in a block
-       **/
-      SubtractedIncentives: AugmentedEvent<ApiType, [u64]>;
-    };
-    marketAssets: {
-      /**
-       * Accounts were destroyed for given asset.
-       **/
-      AccountsDestroyed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, accountsDestroyed: u32, accountsRemaining: u32], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, accountsDestroyed: u32, accountsRemaining: u32 }>;
-      /**
-       * An approval for account `delegate` was cancelled by `owner`.
-       **/
-      ApprovalCancelled: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32, delegate: AccountId32], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32, delegate: AccountId32 }>;
-      /**
-       * Approvals were destroyed for given asset.
-       **/
-      ApprovalsDestroyed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, approvalsDestroyed: u32, approvalsRemaining: u32], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, approvalsDestroyed: u32, approvalsRemaining: u32 }>;
-      /**
-       * (Additional) funds have been approved for transfer to a destination account.
-       **/
-      ApprovedTransfer: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, source: AccountId32, delegate: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, source: AccountId32, delegate: AccountId32, amount: u128 }>;
-      /**
-       * Some asset `asset_id` was frozen.
-       **/
-      AssetFrozen: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass }>;
-      /**
-       * An asset has had its attributes changed by the `Force` origin.
-       **/
-      AssetStatusChanged: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass }>;
-      /**
-       * Some asset `asset_id` was thawed.
-       **/
-      AssetThawed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass }>;
-      /**
-       * Some assets were destroyed.
-       **/
-      Burned: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32, balance: u128], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32, balance: u128 }>;
-      /**
-       * Some asset class was created.
-       **/
-      Created: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, creator: AccountId32, owner: AccountId32], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, creator: AccountId32, owner: AccountId32 }>;
-      /**
-       * An asset class was destroyed.
-       **/
-      Destroyed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass }>;
-      /**
-       * An asset class is in the process of being destroyed.
-       **/
-      DestructionStarted: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass }>;
-      /**
-       * Some asset class was force-created.
-       **/
-      ForceCreated: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32 }>;
-      /**
-       * Some account `who` was frozen.
-       **/
-      Frozen: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, who: AccountId32], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, who: AccountId32 }>;
-      /**
-       * Some assets were issued.
-       **/
-      Issued: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32, amount: u128 }>;
-      /**
-       * Metadata has been cleared for an asset.
-       **/
-      MetadataCleared: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass }>;
-      /**
-       * New metadata has been set for an asset.
-       **/
-      MetadataSet: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, name: Bytes, symbol_: Bytes, decimals: u8, isFrozen: bool], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, name: Bytes, symbol: Bytes, decimals: u8, isFrozen: bool }>;
-      /**
-       * The owner changed.
-       **/
-      OwnerChanged: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32 }>;
-      /**
-       * The management team changed.
-       **/
-      TeamChanged: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, issuer: AccountId32, admin: AccountId32, freezer: AccountId32], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, issuer: AccountId32, admin: AccountId32, freezer: AccountId32 }>;
-      /**
-       * Some account `who` was thawed.
-       **/
-      Thawed: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, who: AccountId32], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, who: AccountId32 }>;
-      /**
-       * Some assets were transferred.
-       **/
-      Transferred: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, from: AccountId32, to: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, from: AccountId32, to: AccountId32, amount: u128 }>;
-      /**
-       * An `amount` was transferred in its entirety from `owner` to `destination` by
-       * the approved `delegate`.
-       **/
-      TransferredApproved: AugmentedEvent<ApiType, [assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32, delegate: AccountId32, destination: AccountId32, amount: u128], { assetId: ZeitgeistPrimitivesAssetsMarketAssetsMarketAssetClass, owner: AccountId32, delegate: AccountId32, destination: AccountId32, amount: u128 }>;
-    };
     multisig: {
       /**
        * A multisig operation has been approved by someone.
@@ -829,32 +603,44 @@ declare module '@polkadot/api-base/types/events' {
        * Informant bought a position. `amount_in` is the amount of collateral paid by `who`,
        * including swap and external fees.
        **/
-      BuyExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, assetOut: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, marketId: u128, assetOut: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
-      /**
-       * Liquidity provider left the pool.
-       **/
-      ExitExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsOut: Vec<u128>, newLiquidityParameter: u128], { who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsOut: Vec<u128>, newLiquidityParameter: u128 }>;
-      /**
-       * Liquidity provider withdrew fees.
-       **/
-      FeesWithdrawn: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, amount: u128], { who: AccountId32, marketId: u128, amount: u128 }>;
-      /**
-       * Liquidity provider joined the pool.
-       **/
-      JoinExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, newLiquidityParameter: u128], { who: AccountId32, marketId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, newLiquidityParameter: u128 }>;
+      BuyExecuted: AugmentedEvent<ApiType, [who: AccountId32, poolId: u128, assetOut: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, poolId: u128, assetOut: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
       /**
        * Pool was createed.
        **/
-      PoolDeployed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, accountId: AccountId32, reserves: BTreeMap<ZeitgeistPrimitivesAssetsAllAssetsAsset, u128>, collateral: ZeitgeistPrimitivesAssetsAllAssetsAsset, liquidityParameter: u128, poolSharesAmount: u128, swapFee: u128], { who: AccountId32, marketId: u128, accountId: AccountId32, reserves: BTreeMap<ZeitgeistPrimitivesAssetsAllAssetsAsset, u128>, collateral: ZeitgeistPrimitivesAssetsAllAssetsAsset, liquidityParameter: u128, poolSharesAmount: u128, swapFee: u128 }>;
+      CombinatorialPoolDeployed: AugmentedEvent<ApiType, [who: AccountId32, marketIds: Vec<u128>, poolId: u128, accountId: AccountId32, reserves: BTreeMap<ZeitgeistPrimitivesAsset, u128>, collateral: ZeitgeistPrimitivesAsset, liquidityParameter: u128, poolSharesAmount: u128, swapFee: u128], { who: AccountId32, marketIds: Vec<u128>, poolId: u128, accountId: AccountId32, reserves: BTreeMap<ZeitgeistPrimitivesAsset, u128>, collateral: ZeitgeistPrimitivesAsset, liquidityParameter: u128, poolSharesAmount: u128, swapFee: u128 }>;
+      /**
+       * A combinatorial position was opened.
+       **/
+      ComboBuyExecuted: AugmentedEvent<ApiType, [who: AccountId32, poolId: u128, buy: Vec<ZeitgeistPrimitivesAsset>, sell: Vec<ZeitgeistPrimitivesAsset>, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, poolId: u128, buy: Vec<ZeitgeistPrimitivesAsset>, sell: Vec<ZeitgeistPrimitivesAsset>, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
+      /**
+       * A combinatorial position was closed.
+       **/
+      ComboSellExecuted: AugmentedEvent<ApiType, [who: AccountId32, poolId: u128, buy: Vec<ZeitgeistPrimitivesAsset>, keep: Vec<ZeitgeistPrimitivesAsset>, sell: Vec<ZeitgeistPrimitivesAsset>, amountBuy: u128, amountKeep: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, poolId: u128, buy: Vec<ZeitgeistPrimitivesAsset>, keep: Vec<ZeitgeistPrimitivesAsset>, sell: Vec<ZeitgeistPrimitivesAsset>, amountBuy: u128, amountKeep: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
+      /**
+       * Liquidity provider left the pool.
+       **/
+      ExitExecuted: AugmentedEvent<ApiType, [who: AccountId32, poolId: u128, poolSharesAmount: u128, amountsOut: Vec<u128>, newLiquidityParameter: u128], { who: AccountId32, poolId: u128, poolSharesAmount: u128, amountsOut: Vec<u128>, newLiquidityParameter: u128 }>;
+      /**
+       * Liquidity provider withdrew fees.
+       **/
+      FeesWithdrawn: AugmentedEvent<ApiType, [who: AccountId32, poolId: u128, amount: u128], { who: AccountId32, poolId: u128, amount: u128 }>;
+      /**
+       * Liquidity provider joined the pool.
+       **/
+      JoinExecuted: AugmentedEvent<ApiType, [who: AccountId32, poolId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, newLiquidityParameter: u128], { who: AccountId32, poolId: u128, poolSharesAmount: u128, amountsIn: Vec<u128>, newLiquidityParameter: u128 }>;
+      /**
+       * Pool was createed.
+       **/
+      PoolDeployed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, poolId: u128, accountId: AccountId32, reserves: BTreeMap<ZeitgeistPrimitivesAsset, u128>, collateral: ZeitgeistPrimitivesAsset, liquidityParameter: u128, poolSharesAmount: u128, swapFee: u128], { who: AccountId32, marketId: u128, poolId: u128, accountId: AccountId32, reserves: BTreeMap<ZeitgeistPrimitivesAsset, u128>, collateral: ZeitgeistPrimitivesAsset, liquidityParameter: u128, poolSharesAmount: u128, swapFee: u128 }>;
       /**
        * Pool was destroyed.
        **/
-      PoolDestroyed: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, amountsOut: Vec<u128>], { who: AccountId32, marketId: u128, amountsOut: Vec<u128> }>;
+      PoolDestroyed: AugmentedEvent<ApiType, [who: AccountId32, poolId: u128, amountsOut: Vec<u128>], { who: AccountId32, poolId: u128, amountsOut: Vec<u128> }>;
       /**
        * Informant sold a position. `amount_out` is the amount of collateral received by `who`,
        * with swap and external fees already deducted.
        **/
-      SellExecuted: AugmentedEvent<ApiType, [who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, marketId: u128, assetIn: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
+      SellExecuted: AugmentedEvent<ApiType, [who: AccountId32, poolId: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128], { who: AccountId32, poolId: u128, assetIn: ZeitgeistPrimitivesAsset, amountIn: u128, amountOut: u128, swapFeeAmount: u128, externalFeeAmount: u128 }>;
     };
     orderbook: {
       OrderFilled: AugmentedEvent<ApiType, [orderId: u128, maker: AccountId32, taker: AccountId32, filledMakerAmount: u128, filledTakerAmount: u128, unfilledMakerAmount: u128, unfilledTakerAmount: u128, externalFee: ZeitgeistPrimitivesHybridRouterApiTypesExternalFee], { orderId: u128, maker: AccountId32, taker: AccountId32, filledMakerAmount: u128, filledTakerAmount: u128, unfilledMakerAmount: u128, unfilledTakerAmount: u128, externalFee: ZeitgeistPrimitivesHybridRouterApiTypesExternalFee }>;
@@ -1031,49 +817,39 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * A market base asset was refunded.
        **/
-      BalanceRefunded: AugmentedEvent<ApiType, [marketId: u128, asset: ZeitgeistPrimitivesAssetsAllAssetsAsset, refundedBalance: u128, sender: AccountId32], { marketId: u128, asset: ZeitgeistPrimitivesAssetsAllAssetsAsset, refundedBalance: u128, sender: AccountId32 }>;
+      BalanceRefunded: AugmentedEvent<ApiType, [marketId: u128, asset: ZeitgeistPrimitivesAsset, refundedBalance: u128, sender: AccountId32], { marketId: u128, asset: ZeitgeistPrimitivesAsset, refundedBalance: u128, sender: AccountId32 }>;
       /**
        * An outcome was bought.
        **/
-      OutcomeBought: AugmentedEvent<ApiType, [marketId: u128, buyer: AccountId32, asset: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountMinusFees: u128, fees: u128], { marketId: u128, buyer: AccountId32, asset: ZeitgeistPrimitivesAssetsAllAssetsAsset, amountMinusFees: u128, fees: u128 }>;
+      OutcomeBought: AugmentedEvent<ApiType, [marketId: u128, buyer: AccountId32, asset: ZeitgeistPrimitivesAsset, amountMinusFees: u128, fees: u128], { marketId: u128, buyer: AccountId32, asset: ZeitgeistPrimitivesAsset, amountMinusFees: u128, fees: u128 }>;
       /**
        * Rewards of the pot were claimed.
        **/
-      RewardsClaimed: AugmentedEvent<ApiType, [marketId: u128, asset: ZeitgeistPrimitivesAssetsAllAssetsAsset, withdrawnAssetBalance: u128, baseAssetPayoff: u128, sender: AccountId32], { marketId: u128, asset: ZeitgeistPrimitivesAssetsAllAssetsAsset, withdrawnAssetBalance: u128, baseAssetPayoff: u128, sender: AccountId32 }>;
+      RewardsClaimed: AugmentedEvent<ApiType, [marketId: u128, asset: ZeitgeistPrimitivesAsset, withdrawnAssetBalance: u128, baseAssetPayoff: u128, sender: AccountId32], { marketId: u128, asset: ZeitgeistPrimitivesAsset, withdrawnAssetBalance: u128, baseAssetPayoff: u128, sender: AccountId32 }>;
     };
     polkadotXcm: {
       /**
        * Some assets have been claimed from an asset trap
-       * 
-       * \[ hash, origin, assets \]
        **/
-      AssetsClaimed: AugmentedEvent<ApiType, [H256, XcmV3MultiLocation, XcmVersionedMultiAssets]>;
+      AssetsClaimed: AugmentedEvent<ApiType, [hash_: H256, origin: StagingXcmV3MultiLocation, assets: StagingXcmVersionedMultiAssets], { hash_: H256, origin: StagingXcmV3MultiLocation, assets: StagingXcmVersionedMultiAssets }>;
       /**
        * Some assets have been placed in an asset trap.
-       * 
-       * \[ hash, origin, assets \]
        **/
-      AssetsTrapped: AugmentedEvent<ApiType, [H256, XcmV3MultiLocation, XcmVersionedMultiAssets]>;
+      AssetsTrapped: AugmentedEvent<ApiType, [hash_: H256, origin: StagingXcmV3MultiLocation, assets: StagingXcmVersionedMultiAssets], { hash_: H256, origin: StagingXcmV3MultiLocation, assets: StagingXcmVersionedMultiAssets }>;
       /**
        * Execution of an XCM message was attempted.
-       * 
-       * \[ outcome \]
        **/
-      Attempted: AugmentedEvent<ApiType, [XcmV3TraitsOutcome]>;
+      Attempted: AugmentedEvent<ApiType, [outcome: StagingXcmV3TraitsOutcome], { outcome: StagingXcmV3TraitsOutcome }>;
       /**
        * Fees were paid from a location for an operation (often for using `SendXcm`).
-       * 
-       * \[ paying location, fees \]
        **/
-      FeesPaid: AugmentedEvent<ApiType, [XcmV3MultiLocation, XcmV3MultiassetMultiAssets]>;
+      FeesPaid: AugmentedEvent<ApiType, [paying: StagingXcmV3MultiLocation, fees: StagingXcmV3MultiassetMultiAssets], { paying: StagingXcmV3MultiLocation, fees: StagingXcmV3MultiassetMultiAssets }>;
       /**
        * Expected query response has been received but the querier location of the response does
        * not match the expected. The query remains registered for a later, valid, response to
        * be received and acted upon.
-       * 
-       * \[ origin location, id, expected querier, maybe actual querier \]
        **/
-      InvalidQuerier: AugmentedEvent<ApiType, [XcmV3MultiLocation, u64, XcmV3MultiLocation, Option<XcmV3MultiLocation>]>;
+      InvalidQuerier: AugmentedEvent<ApiType, [origin: StagingXcmV3MultiLocation, queryId: u64, expectedQuerier: StagingXcmV3MultiLocation, maybeActualQuerier: Option<StagingXcmV3MultiLocation>], { origin: StagingXcmV3MultiLocation, queryId: u64, expectedQuerier: StagingXcmV3MultiLocation, maybeActualQuerier: Option<StagingXcmV3MultiLocation> }>;
       /**
        * Expected query response has been received but the expected querier location placed in
        * storage by this runtime previously cannot be decoded. The query remains registered.
@@ -1082,18 +858,14 @@ declare module '@polkadot/api-base/types/events' {
        * runtime should be readable prior to query timeout) and dangerous since the possibly
        * valid response will be dropped. Manual governance intervention is probably going to be
        * needed.
-       * 
-       * \[ origin location, id \]
        **/
-      InvalidQuerierVersion: AugmentedEvent<ApiType, [XcmV3MultiLocation, u64]>;
+      InvalidQuerierVersion: AugmentedEvent<ApiType, [origin: StagingXcmV3MultiLocation, queryId: u64], { origin: StagingXcmV3MultiLocation, queryId: u64 }>;
       /**
        * Expected query response has been received but the origin location of the response does
        * not match that expected. The query remains registered for a later, valid, response to
        * be received and acted upon.
-       * 
-       * \[ origin location, id, expected location \]
        **/
-      InvalidResponder: AugmentedEvent<ApiType, [XcmV3MultiLocation, u64, Option<XcmV3MultiLocation>]>;
+      InvalidResponder: AugmentedEvent<ApiType, [origin: StagingXcmV3MultiLocation, queryId: u64, expectedLocation: Option<StagingXcmV3MultiLocation>], { origin: StagingXcmV3MultiLocation, queryId: u64, expectedLocation: Option<StagingXcmV3MultiLocation> }>;
       /**
        * Expected query response has been received but the expected origin location placed in
        * storage by this runtime previously cannot be decoded. The query remains registered.
@@ -1102,115 +874,84 @@ declare module '@polkadot/api-base/types/events' {
        * runtime should be readable prior to query timeout) and dangerous since the possibly
        * valid response will be dropped. Manual governance intervention is probably going to be
        * needed.
-       * 
-       * \[ origin location, id \]
        **/
-      InvalidResponderVersion: AugmentedEvent<ApiType, [XcmV3MultiLocation, u64]>;
+      InvalidResponderVersion: AugmentedEvent<ApiType, [origin: StagingXcmV3MultiLocation, queryId: u64], { origin: StagingXcmV3MultiLocation, queryId: u64 }>;
       /**
        * Query response has been received and query is removed. The registered notification has
        * been dispatched and executed successfully.
-       * 
-       * \[ id, pallet index, call index \]
        **/
-      Notified: AugmentedEvent<ApiType, [u64, u8, u8]>;
+      Notified: AugmentedEvent<ApiType, [queryId: u64, palletIndex: u8, callIndex: u8], { queryId: u64, palletIndex: u8, callIndex: u8 }>;
       /**
        * Query response has been received and query is removed. The dispatch was unable to be
        * decoded into a `Call`; this might be due to dispatch function having a signature which
        * is not `(origin, QueryId, Response)`.
-       * 
-       * \[ id, pallet index, call index \]
        **/
-      NotifyDecodeFailed: AugmentedEvent<ApiType, [u64, u8, u8]>;
+      NotifyDecodeFailed: AugmentedEvent<ApiType, [queryId: u64, palletIndex: u8, callIndex: u8], { queryId: u64, palletIndex: u8, callIndex: u8 }>;
       /**
        * Query response has been received and query is removed. There was a general error with
        * dispatching the notification call.
-       * 
-       * \[ id, pallet index, call index \]
        **/
-      NotifyDispatchError: AugmentedEvent<ApiType, [u64, u8, u8]>;
+      NotifyDispatchError: AugmentedEvent<ApiType, [queryId: u64, palletIndex: u8, callIndex: u8], { queryId: u64, palletIndex: u8, callIndex: u8 }>;
       /**
-       * Query response has been received and query is removed. The registered notification could
-       * not be dispatched because the dispatch weight is greater than the maximum weight
+       * Query response has been received and query is removed. The registered notification
+       * could not be dispatched because the dispatch weight is greater than the maximum weight
        * originally budgeted by this runtime for the query result.
-       * 
-       * \[ id, pallet index, call index, actual weight, max budgeted weight \]
        **/
-      NotifyOverweight: AugmentedEvent<ApiType, [u64, u8, u8, SpWeightsWeightV2Weight, SpWeightsWeightV2Weight]>;
+      NotifyOverweight: AugmentedEvent<ApiType, [queryId: u64, palletIndex: u8, callIndex: u8, actualWeight: SpWeightsWeightV2Weight, maxBudgetedWeight: SpWeightsWeightV2Weight], { queryId: u64, palletIndex: u8, callIndex: u8, actualWeight: SpWeightsWeightV2Weight, maxBudgetedWeight: SpWeightsWeightV2Weight }>;
       /**
        * A given location which had a version change subscription was dropped owing to an error
        * migrating the location to our new XCM format.
-       * 
-       * \[ location, query ID \]
        **/
-      NotifyTargetMigrationFail: AugmentedEvent<ApiType, [XcmVersionedMultiLocation, u64]>;
+      NotifyTargetMigrationFail: AugmentedEvent<ApiType, [location: StagingXcmVersionedMultiLocation, queryId: u64], { location: StagingXcmVersionedMultiLocation, queryId: u64 }>;
       /**
        * A given location which had a version change subscription was dropped owing to an error
        * sending the notification to it.
-       * 
-       * \[ location, query ID, error \]
        **/
-      NotifyTargetSendFail: AugmentedEvent<ApiType, [XcmV3MultiLocation, u64, XcmV3TraitsError]>;
+      NotifyTargetSendFail: AugmentedEvent<ApiType, [location: StagingXcmV3MultiLocation, queryId: u64, error: StagingXcmV3TraitsError], { location: StagingXcmV3MultiLocation, queryId: u64, error: StagingXcmV3TraitsError }>;
       /**
        * Query response has been received and is ready for taking with `take_response`. There is
        * no registered notification call.
-       * 
-       * \[ id, response \]
        **/
-      ResponseReady: AugmentedEvent<ApiType, [u64, XcmV3Response]>;
+      ResponseReady: AugmentedEvent<ApiType, [queryId: u64, response: StagingXcmV3Response], { queryId: u64, response: StagingXcmV3Response }>;
       /**
        * Received query response has been read and removed.
-       * 
-       * \[ id \]
        **/
-      ResponseTaken: AugmentedEvent<ApiType, [u64]>;
+      ResponseTaken: AugmentedEvent<ApiType, [queryId: u64], { queryId: u64 }>;
       /**
        * A XCM message was sent.
-       * 
-       * \[ origin, destination, message \]
        **/
-      Sent: AugmentedEvent<ApiType, [XcmV3MultiLocation, XcmV3MultiLocation, XcmV3Xcm]>;
+      Sent: AugmentedEvent<ApiType, [origin: StagingXcmV3MultiLocation, destination: StagingXcmV3MultiLocation, message: StagingXcmV3Xcm, messageId: U8aFixed], { origin: StagingXcmV3MultiLocation, destination: StagingXcmV3MultiLocation, message: StagingXcmV3Xcm, messageId: U8aFixed }>;
       /**
        * The supported version of a location has been changed. This might be through an
        * automatic notification or a manual intervention.
-       * 
-       * \[ location, XCM version \]
        **/
-      SupportedVersionChanged: AugmentedEvent<ApiType, [XcmV3MultiLocation, u32]>;
+      SupportedVersionChanged: AugmentedEvent<ApiType, [location: StagingXcmV3MultiLocation, version: u32], { location: StagingXcmV3MultiLocation, version: u32 }>;
       /**
        * Query response received which does not match a registered query. This may be because a
        * matching query was never registered, it may be because it is a duplicate response, or
        * because the query timed out.
-       * 
-       * \[ origin location, id \]
        **/
-      UnexpectedResponse: AugmentedEvent<ApiType, [XcmV3MultiLocation, u64]>;
+      UnexpectedResponse: AugmentedEvent<ApiType, [origin: StagingXcmV3MultiLocation, queryId: u64], { origin: StagingXcmV3MultiLocation, queryId: u64 }>;
       /**
        * An XCM version change notification message has been attempted to be sent.
        * 
        * The cost of sending it (borne by the chain) is included.
-       * 
-       * \[ destination, result, cost \]
        **/
-      VersionChangeNotified: AugmentedEvent<ApiType, [XcmV3MultiLocation, u32, XcmV3MultiassetMultiAssets]>;
+      VersionChangeNotified: AugmentedEvent<ApiType, [destination: StagingXcmV3MultiLocation, result: u32, cost: StagingXcmV3MultiassetMultiAssets, messageId: U8aFixed], { destination: StagingXcmV3MultiLocation, result: u32, cost: StagingXcmV3MultiassetMultiAssets, messageId: U8aFixed }>;
       /**
-       * We have requested that a remote chain sends us XCM version change notifications.
-       * 
-       * \[ destination location, cost \]
+       * We have requested that a remote chain send us XCM version change notifications.
        **/
-      VersionNotifyRequested: AugmentedEvent<ApiType, [XcmV3MultiLocation, XcmV3MultiassetMultiAssets]>;
+      VersionNotifyRequested: AugmentedEvent<ApiType, [destination: StagingXcmV3MultiLocation, cost: StagingXcmV3MultiassetMultiAssets, messageId: U8aFixed], { destination: StagingXcmV3MultiLocation, cost: StagingXcmV3MultiassetMultiAssets, messageId: U8aFixed }>;
       /**
        * A remote has requested XCM version change notification from us and we have honored it.
        * A version information message is sent to them and its cost is included.
-       * 
-       * \[ destination location, cost \]
        **/
-      VersionNotifyStarted: AugmentedEvent<ApiType, [XcmV3MultiLocation, XcmV3MultiassetMultiAssets]>;
+      VersionNotifyStarted: AugmentedEvent<ApiType, [destination: StagingXcmV3MultiLocation, cost: StagingXcmV3MultiassetMultiAssets, messageId: U8aFixed], { destination: StagingXcmV3MultiLocation, cost: StagingXcmV3MultiassetMultiAssets, messageId: U8aFixed }>;
       /**
-       * We have requested that a remote chain stops sending us XCM version change notifications.
-       * 
-       * \[ destination location, cost \]
+       * We have requested that a remote chain stops sending us XCM version change
+       * notifications.
        **/
-      VersionNotifyUnrequested: AugmentedEvent<ApiType, [XcmV3MultiLocation, XcmV3MultiassetMultiAssets]>;
+      VersionNotifyUnrequested: AugmentedEvent<ApiType, [destination: StagingXcmV3MultiLocation, cost: StagingXcmV3MultiassetMultiAssets, messageId: U8aFixed], { destination: StagingXcmV3MultiLocation, cost: StagingXcmV3MultiassetMultiAssets, messageId: U8aFixed }>;
     };
     predictionMarkets: {
       /**
@@ -1294,7 +1035,7 @@ declare module '@polkadot/api-base/types/events' {
        * An amount of winning outcomes have been redeemed.
        * \[market_id, currency_id, amount_redeemed, payout, who\]
        **/
-      TokensRedeemed: AugmentedEvent<ApiType, [u128, ZeitgeistPrimitivesAssetsAllAssetsAsset, u128, u128, AccountId32]>;
+      TokensRedeemed: AugmentedEvent<ApiType, [u128, ZeitgeistPrimitivesAsset, u128, u128, AccountId32]>;
     };
     preimage: {
       /**
@@ -1359,9 +1100,6 @@ declare module '@polkadot/api-base/types/events' {
        **/
       Scheduled: AugmentedEvent<ApiType, [when: u64, index: u32], { when: u64, index: u32 }>;
     };
-    simpleDisputes: {
-      OutcomeReserved: AugmentedEvent<ApiType, [marketId: u128, dispute: ZeitgeistPrimitivesMarketMarketDispute], { marketId: u128, dispute: ZeitgeistPrimitivesMarketMarketDispute }>;
-    };
     styx: {
       /**
        * A account crossed and claimed their right to create their avatar.
@@ -1371,20 +1109,6 @@ declare module '@polkadot/api-base/types/events' {
        * The crossing fee was changed.
        **/
       CrossingFeeChanged: AugmentedEvent<ApiType, [u128]>;
-    };
-    sudo: {
-      /**
-       * The \[sudoer\] just switched identity; the old key is supplied if one existed.
-       **/
-      KeyChanged: AugmentedEvent<ApiType, [oldSudoer: Option<AccountId32>], { oldSudoer: Option<AccountId32> }>;
-      /**
-       * A sudo just took place. \[result\]
-       **/
-      Sudid: AugmentedEvent<ApiType, [sudoResult: Result<Null, SpRuntimeDispatchError>], { sudoResult: Result<Null, SpRuntimeDispatchError> }>;
-      /**
-       * A sudo just took place. \[result\]
-       **/
-      SudoAsDone: AugmentedEvent<ApiType, [sudoResult: Result<Null, SpRuntimeDispatchError>], { sudoResult: Result<Null, SpRuntimeDispatchError> }>;
     };
     swaps: {
       /**
@@ -1532,65 +1256,67 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * A balance was set by root.
        **/
-      BalanceSet: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, free: u128, reserved: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, free: u128, reserved: u128 }>;
+      BalanceSet: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, free: u128, reserved: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, free: u128, reserved: u128 }>;
       /**
        * Deposited some balance into an account
        **/
-      Deposited: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128 }>;
+      Deposited: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128 }>;
       /**
        * An account was removed whose balance was non-zero but below
        * ExistentialDeposit, resulting in an outright loss.
        **/
-      DustLost: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128 }>;
+      DustLost: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128 }>;
       /**
        * An account was created with some free balance.
        **/
-      Endowed: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128 }>;
+      Endowed: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128 }>;
+      Issued: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, amount: u128 }>;
       /**
        * Some free balance was locked.
        **/
-      Locked: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128 }>;
+      Locked: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128 }>;
       /**
        * Some locked funds were unlocked
        **/
-      LockRemoved: AugmentedEvent<ApiType, [lockId: U8aFixed, currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32], { lockId: U8aFixed, currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32 }>;
+      LockRemoved: AugmentedEvent<ApiType, [lockId: U8aFixed, currencyId: ZeitgeistPrimitivesAsset, who: AccountId32], { lockId: U8aFixed, currencyId: ZeitgeistPrimitivesAsset, who: AccountId32 }>;
       /**
        * Some funds are locked
        **/
-      LockSet: AugmentedEvent<ApiType, [lockId: U8aFixed, currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128], { lockId: U8aFixed, currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128 }>;
+      LockSet: AugmentedEvent<ApiType, [lockId: U8aFixed, currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128], { lockId: U8aFixed, currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128 }>;
+      Rescinded: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, amount: u128 }>;
       /**
        * Some balance was reserved (moved from free to reserved).
        **/
-      Reserved: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128 }>;
+      Reserved: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128 }>;
       /**
        * Some reserved balance was repatriated (moved from reserved to
        * another account).
        **/
-      ReserveRepatriated: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, from: AccountId32, to: AccountId32, amount: u128, status: FrameSupportTokensMiscBalanceStatus], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, from: AccountId32, to: AccountId32, amount: u128, status: FrameSupportTokensMiscBalanceStatus }>;
+      ReserveRepatriated: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, from: AccountId32, to: AccountId32, amount: u128, status: FrameSupportTokensMiscBalanceStatus], { currencyId: ZeitgeistPrimitivesAsset, from: AccountId32, to: AccountId32, amount: u128, status: FrameSupportTokensMiscBalanceStatus }>;
       /**
        * Some balances were slashed (e.g. due to mis-behavior)
        **/
-      Slashed: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, freeAmount: u128, reservedAmount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, freeAmount: u128, reservedAmount: u128 }>;
+      Slashed: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, freeAmount: u128, reservedAmount: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, freeAmount: u128, reservedAmount: u128 }>;
       /**
        * The total issuance of an currency has been set
        **/
-      TotalIssuanceSet: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, amount: u128 }>;
+      TotalIssuanceSet: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, amount: u128 }>;
       /**
        * Transfer succeeded.
        **/
-      Transfer: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, from: AccountId32, to: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, from: AccountId32, to: AccountId32, amount: u128 }>;
+      Transfer: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, from: AccountId32, to: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, from: AccountId32, to: AccountId32, amount: u128 }>;
       /**
        * Some locked balance was freed.
        **/
-      Unlocked: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128 }>;
+      Unlocked: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128 }>;
       /**
        * Some balance was unreserved (moved from reserved to free).
        **/
-      Unreserved: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128 }>;
+      Unreserved: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128 }>;
       /**
        * Some balances were withdrawn (e.g. pay for transaction fee)
        **/
-      Withdrawn: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAssetsCurrenciesCurrencyClass, who: AccountId32, amount: u128 }>;
+      Withdrawn: AugmentedEvent<ApiType, [currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128], { currencyId: ZeitgeistPrimitivesAsset, who: AccountId32, amount: u128 }>;
     };
     transactionPayment: {
       /**
@@ -1641,11 +1367,11 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * Deposit success.
        **/
-      Deposited: AugmentedEvent<ApiType, [asset: XcmV3MultiAsset, who: XcmV3MultiLocation], { asset: XcmV3MultiAsset, who: XcmV3MultiLocation }>;
+      Deposited: AugmentedEvent<ApiType, [asset: StagingXcmV3MultiAsset, who: StagingXcmV3MultiLocation], { asset: StagingXcmV3MultiAsset, who: StagingXcmV3MultiLocation }>;
       /**
        * Withdraw success.
        **/
-      Withdrawn: AugmentedEvent<ApiType, [asset: XcmV3MultiAsset, who: XcmV3MultiLocation], { asset: XcmV3MultiAsset, who: XcmV3MultiLocation }>;
+      Withdrawn: AugmentedEvent<ApiType, [asset: StagingXcmV3MultiAsset, who: StagingXcmV3MultiLocation], { asset: StagingXcmV3MultiAsset, who: StagingXcmV3MultiLocation }>;
     };
     utility: {
       /**
@@ -1689,15 +1415,15 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * Bad XCM format used.
        **/
-      BadFormat: AugmentedEvent<ApiType, [messageHash: Option<U8aFixed>], { messageHash: Option<U8aFixed> }>;
+      BadFormat: AugmentedEvent<ApiType, [messageHash: U8aFixed], { messageHash: U8aFixed }>;
       /**
        * Bad XCM version used.
        **/
-      BadVersion: AugmentedEvent<ApiType, [messageHash: Option<U8aFixed>], { messageHash: Option<U8aFixed> }>;
+      BadVersion: AugmentedEvent<ApiType, [messageHash: U8aFixed], { messageHash: U8aFixed }>;
       /**
        * Some XCM failed.
        **/
-      Fail: AugmentedEvent<ApiType, [messageHash: Option<U8aFixed>, error: XcmV3TraitsError, weight: SpWeightsWeightV2Weight], { messageHash: Option<U8aFixed>, error: XcmV3TraitsError, weight: SpWeightsWeightV2Weight }>;
+      Fail: AugmentedEvent<ApiType, [messageHash: U8aFixed, messageId: U8aFixed, error: StagingXcmV3TraitsError, weight: SpWeightsWeightV2Weight], { messageHash: U8aFixed, messageId: U8aFixed, error: StagingXcmV3TraitsError, weight: SpWeightsWeightV2Weight }>;
       /**
        * An XCM exceeded the individual message weight budget.
        **/
@@ -1709,17 +1435,17 @@ declare module '@polkadot/api-base/types/events' {
       /**
        * Some XCM was executed ok.
        **/
-      Success: AugmentedEvent<ApiType, [messageHash: Option<U8aFixed>, weight: SpWeightsWeightV2Weight], { messageHash: Option<U8aFixed>, weight: SpWeightsWeightV2Weight }>;
+      Success: AugmentedEvent<ApiType, [messageHash: U8aFixed, messageId: U8aFixed, weight: SpWeightsWeightV2Weight], { messageHash: U8aFixed, messageId: U8aFixed, weight: SpWeightsWeightV2Weight }>;
       /**
        * An HRMP message was sent to a sibling parachain.
        **/
-      XcmpMessageSent: AugmentedEvent<ApiType, [messageHash: Option<U8aFixed>], { messageHash: Option<U8aFixed> }>;
+      XcmpMessageSent: AugmentedEvent<ApiType, [messageHash: U8aFixed], { messageHash: U8aFixed }>;
     };
     xTokens: {
       /**
        * Transferred `MultiAsset` with fee.
        **/
-      TransferredMultiAssets: AugmentedEvent<ApiType, [sender: AccountId32, assets: XcmV3MultiassetMultiAssets, fee: XcmV3MultiAsset, dest: XcmV3MultiLocation], { sender: AccountId32, assets: XcmV3MultiassetMultiAssets, fee: XcmV3MultiAsset, dest: XcmV3MultiLocation }>;
+      TransferredMultiAssets: AugmentedEvent<ApiType, [sender: AccountId32, assets: StagingXcmV3MultiassetMultiAssets, fee: StagingXcmV3MultiAsset, dest: StagingXcmV3MultiLocation], { sender: AccountId32, assets: StagingXcmV3MultiassetMultiAssets, fee: StagingXcmV3MultiAsset, dest: StagingXcmV3MultiLocation }>;
     };
   } // AugmentedEvents
 } // declare module
