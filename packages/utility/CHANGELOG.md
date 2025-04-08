@@ -1,5 +1,11 @@
 # @zeitgeistpm/utility
 
+## 4.0.0
+
+### Major Changes
+
+- 3098107: Adapt to incoming changes from specVersion:60
+
 ## 3.7.0
 
 ### Minor Changes

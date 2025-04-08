@@ -1,5 +1,20 @@
 # @zeitgeistpm/sdk
 
+## 4.0.0
+
+### Major Changes
+
+- 3098107: Adapt to incoming changes from specVersion:60
+
+### Patch Changes
+
+- Updated dependencies [3098107]
+  - @zeitgeistpm/augment-api@4.0.0
+  - @zeitgeistpm/indexer@5.0.0
+  - @zeitgeistpm/rpc@4.0.0
+  - @zeitgeistpm/utility@4.0.0
+  - @zeitgeistpm/web3.storage@4.0.0
+
 ## 3.7.0
 
 ### Minor Changes

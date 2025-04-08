@@ -1,5 +1,11 @@
 # @zeitgeistpm/indexer
 
+## 5.0.0
+
+### Major Changes
+
+- 3098107: Adapt to incoming changes from specVersion:60
+
 ## 4.7.0
 
 ### Minor Changes
