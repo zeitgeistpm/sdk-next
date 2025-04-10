@@ -26,23 +26,6 @@ export const options = (opts: ZeitgeistApiOptions): ApiOptions => {
       ...Object.values(definitions).reduce((acc, { types }) => ({ ...acc, ...types }), {}),
       //TAssetConversion: 'Option<ZeitgeistPrimitivesAssetsSubsetsBaseAssetsBaseAssetClass>',
     },
-    typesSpec: {
-      zeitgeist: {
-        FeePayingAsset: {
-          _enum: {
-            ScaleIndexPlaceHolder0: null,
-            ScaleIndexPlaceHolder1: null,
-            ScaleIndexPlaceHolder2: null,
-            ScaleIndexPlaceHolder3: null,
-            ScaleIndexPlaceHolder4: null,
-            ForeignAsset: 'u32',
-            ScaleIndexPlaceHolder6: null,
-            CampaignAsset: 'Compact<u128>',
-          },
-        },
-        TAssetConversion: 'Option<FeePayingAsset>',
-      },
-    },
     rpc: {
       ...Object.entries(definitions).reduce(
         (acc, [key, { rpc }]) => ({ ...acc, [key]: rpc }),
