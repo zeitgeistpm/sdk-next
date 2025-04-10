@@ -1,5 +1,17 @@
 # @zeitgeistpm/rpc
 
+## 4.2.0
+
+### Minor Changes
+
+- 2180f39: Remove typesSpec from rpc
+
+### Patch Changes
+
+- Updated dependencies [2180f39]
+  - @zeitgeistpm/augment-api@4.2.0
+  - @zeitgeistpm/utility@4.2.0
+
 ## 4.1.0
 
 ### Minor Changes
