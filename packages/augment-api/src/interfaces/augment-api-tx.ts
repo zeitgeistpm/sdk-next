@@ -10,7 +10,7 @@ import type { Data } from '@polkadot/types';
 import type { Bytes, Compact, Option, Struct, U8aFixed, Vec, bool, i128, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
 import type { AnyNumber, IMethod, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, MultiAddress, Perbill, Percent } from '@polkadot/types/interfaces/runtime';
-import type { BatteryStationRuntimeOriginCaller, CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyConviction, PalletDemocracyMetadataOwner, PalletDemocracyVoteAccountVote, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletVestingVestingInfo, SpWeightsWeightV2Weight, StagingXcmV3MultiLocation, StagingXcmV3WeightLimit, StagingXcmVersionedMultiAsset, StagingXcmVersionedMultiAssets, StagingXcmVersionedMultiLocation, StagingXcmVersionedXcm, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesCustomMetadata, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketDisputeMechanism, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMarketScoringRule, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesProxyType, ZrmlCombinatorialTokensCryptographicIdManagerFuel, ZrmlCourtVoteItem, ZrmlFutarchyProposal, ZrmlHybridRouterStrategy } from '@polkadot/types/lookup';
+import type { CumulusPrimitivesParachainInherentParachainInherentData, FrameSupportPreimagesBounded, NimbusPrimitivesNimbusCryptoPublic, OrmlTraitsAssetRegistryAssetMetadata, PalletDemocracyConviction, PalletDemocracyMetadataOwner, PalletDemocracyVoteAccountVote, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, PalletVestingVestingInfo, SpWeightsWeightV2Weight, StagingXcmV3MultiLocation, StagingXcmV3WeightLimit, StagingXcmVersionedMultiAsset, StagingXcmVersionedMultiAssets, StagingXcmVersionedMultiLocation, StagingXcmVersionedXcm, ZeitgeistPrimitivesAsset, ZeitgeistPrimitivesCustomMetadata, ZeitgeistPrimitivesMarketDeadlines, ZeitgeistPrimitivesMarketMarketCreation, ZeitgeistPrimitivesMarketMarketDisputeMechanism, ZeitgeistPrimitivesMarketMarketPeriod, ZeitgeistPrimitivesMarketMarketType, ZeitgeistPrimitivesMarketScoringRule, ZeitgeistPrimitivesMultiHash, ZeitgeistPrimitivesOutcomeReport, ZeitgeistPrimitivesProxyType, ZeitgeistRuntimeOriginCaller, ZrmlCombinatorialTokensCryptographicIdManagerFuel, ZrmlCourtVoteItem, ZrmlFutarchyProposal, ZrmlHybridRouterStrategy } from '@polkadot/types/lookup';
 
 export type __AugmentedSubmittable = AugmentedSubmittable<() => unknown>;
 export type __SubmittableExtrinsic<ApiType extends ApiTypes> = SubmittableExtrinsic<ApiType>;
@@ -982,24 +982,6 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       setBurnAmount: AugmentedSubmittable<(amount: Compact<u128> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<u128>]>;
     };
-    sudo: {
-      /**
-       * See [`Pallet::set_key`].
-       **/
-      setKey: AugmentedSubmittable<(updated: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress]>;
-      /**
-       * See [`Pallet::sudo`].
-       **/
-      sudo: AugmentedSubmittable<(call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Call]>;
-      /**
-       * See [`Pallet::sudo_as`].
-       **/
-      sudoAs: AugmentedSubmittable<(who: MultiAddress | { Id: any } | { Index: any } | { Raw: any } | { Address32: any } | { Address20: any } | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [MultiAddress, Call]>;
-      /**
-       * See [`Pallet::sudo_unchecked_weight`].
-       **/
-      sudoUncheckedWeight: AugmentedSubmittable<(call: Call | IMethod | string | Uint8Array, weight: SpWeightsWeightV2Weight | { refTime?: any; proofSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Call, SpWeightsWeightV2Weight]>;
-    };
     swaps: {
       /**
        * See [`Pallet::force_pool_exit`].
@@ -1172,7 +1154,7 @@ declare module '@polkadot/api-base/types/submittable' {
       /**
        * See [`Pallet::dispatch_as`].
        **/
-      dispatchAs: AugmentedSubmittable<(asOrigin: BatteryStationRuntimeOriginCaller | { system: any } | { Void: any } | { AdvisoryCommittee: any } | { Council: any } | { TechnicalCommittee: any } | { CumulusXcm: any } | { PolkadotXcm: any } | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [BatteryStationRuntimeOriginCaller, Call]>;
+      dispatchAs: AugmentedSubmittable<(asOrigin: ZeitgeistRuntimeOriginCaller | { system: any } | { Void: any } | { AdvisoryCommittee: any } | { Council: any } | { TechnicalCommittee: any } | { CumulusXcm: any } | { PolkadotXcm: any } | string | Uint8Array, call: Call | IMethod | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [ZeitgeistRuntimeOriginCaller, Call]>;
       /**
        * See [`Pallet::force_batch`].
        **/
