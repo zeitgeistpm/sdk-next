@@ -104,7 +104,7 @@ declare module '@polkadot/api-base/types/storage' {
       /**
        * We maintain a reverse mapping from AccountIds to NimbusIDS
        **/
-      nimbusLookup: AugmentedQuery<ApiType, (arg: AccountId32 | string | Uint8Array) => Observable<Option<U8aFixed>>, [AccountId32]>;
+      nimbusLookup: AugmentedQuery<ApiType, (arg: AccountId32 | string | Uint8Array) => Observable<Option<NimbusPrimitivesNimbusCryptoPublic>>, [AccountId32]>;
     };
     balances: {
       /**
